@@ -217,10 +217,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="assignment1" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Assignment 1: Basic Programming in R</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
-<span class="kw">library</span>(foreach)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(latex2exp)</code></pre></div>
 <p>Report the following results in html format using R markdown. In other words, replicate this document. The deadline is the start time of February 18 class.</p>
 <div id="simulate-data" class="section level2">
 <h2><span class="header-section-number">4.1</span> Simulate data</h2>
@@ -231,11 +227,6 @@ y_{ij} = 1\{j = \text{argmax}_{k = 1, 2} \beta x_k + \epsilon_{ik} \},
 <ol style="list-style-type: decimal">
 <li>To simulate data, first make a data frame as follows:</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="dt">k =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>tibble<span class="op">::</span><span class="kw">as.tibble</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">ifelse</span>(k <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(i, k)
-df</code></pre></div>
 <pre><code>## # A tibble: 2,000 x 3
 ##        i     k     x
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -253,10 +244,6 @@ df</code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Second, draw type-I extreme value random variables. Set the seed at 1. You can use <code>evd</code> package to draw the variables. You should get exactly the same realization if the seed is correctly set.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">e =</span> evd<span class="op">::</span><span class="kw">rgev</span>(<span class="kw">dim</span>(df)[<span class="dv">1</span>]))
-df</code></pre></div>
 <pre><code>## # A tibble: 2,000 x 4
 ##        i     k     x       e
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -274,10 +261,6 @@ df</code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Third, compute the latent value of each option to obtain the following data frame:</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta &lt;-<span class="st"> </span><span class="fl">0.2</span>
-df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">latent =</span> beta <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>e)
-df</code></pre></div>
 <pre><code>## # A tibble: 2,000 x 5
 ##        i     k     x       e  latent
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -295,11 +278,6 @@ df</code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Finally, compute <span class="math inline">\(y\)</span> by comparing the latent values of <span class="math inline">\(k = 1, 2\)</span> for each <span class="math inline">\(i\)</span> to obtain the following result:</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(i) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">ifelse</span>(latent <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(latent), <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>()
-df</code></pre></div>
 <pre><code>## # A tibble: 2,000 x 6
 ##        i     k     x       e  latent     y
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -326,43 +304,10 @@ L(\beta) = \prod_{i = 1}^{1000} p_{i1}(\beta)^{y_{i1}} [1 - p_{i1}(\beta)]^{1 - 
 l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 - p_{i1}(\beta)\}.
 \]</span></p>
 <ol style="list-style-type: decimal">
-<li>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood</code>.</li>
+<li><p>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood</code>.</p></li>
+<li><p>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label: <img src="lecture_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p></li>
+<li><p>Find and report <span class="math inline">\(\beta\)</span> that maximizes the log likelihood for the simulated data. You can use <code>optim</code> function to achieve this. You will use <code>Brent</code> method and set the lower bound at -1 and upper bound at 1 for the parameter search.</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loglikelihood &lt;-<span class="st"> </span>
-<span class="st">  </span><span class="cf">function</span>(b, df) {
-  l &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(i) <span class="op">%&gt;%</span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">p =</span> <span class="kw">exp</span>(b<span class="op">*</span>x)<span class="op">/</span><span class="kw">sum</span>(<span class="kw">exp</span>(b<span class="op">*</span>x))) <span class="op">%&gt;%</span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
-<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)
-  l &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">log</span>(l<span class="op">$</span>p))
-  <span class="kw">return</span>(l)
-}</code></pre></div>
-<ol style="list-style-type: decimal">
-<li>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label:</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b_seq &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)
-output &lt;-<span class="st"> </span>
-<span class="st">  </span><span class="kw">foreach</span> (<span class="dt">b =</span> b_seq,
-           <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{
-  l &lt;-<span class="st"> </span><span class="kw">loglikelihood</span>(b, df)
-  <span class="kw">return</span>(l)
-}
-output &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> b_seq, <span class="dt">y =</span> output)
-<span class="kw">ggplot</span>(output, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(<span class="st">&quot;$</span><span class="ch">\\</span><span class="st">beta$&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Loglikelihood&quot;</span>)</code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<ol style="list-style-type: decimal">
-<li>Find and report <span class="math inline">\(\beta\)</span> that maximizes the log likelihood for the simulated data. You can use <code>optim</code> function to achieve this. You will use <code>Brent</code> method and set the lower bound at -1 and upper bound at 1 for the parameter search.</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result &lt;-<span class="st"> </span><span class="kw">optim</span>(<span class="dt">par =</span> beta,
-                <span class="dt">fn =</span> loglikelihood,
-                <span class="dt">df =</span> df,
-                <span class="dt">method =</span> <span class="st">&quot;Brent&quot;</span>,
-                <span class="dt">lower =</span> <span class="op">-</span><span class="dv">1</span>,
-                <span class="dt">upper =</span> <span class="dv">1</span>,
-                <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
-result</code></pre></div>
 <pre><code>## $par
 ## [1] 0.2371046
 ## 
