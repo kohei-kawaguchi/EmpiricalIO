@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 5 Estimation of Mean in R | ECON 6120I Topics in Empirical Industrial Organization</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 5 Estimation of Mean in R | ECON 6120I Topics in Empirical Industrial Organization />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Estimation of Mean in R | ECON 6120I Topics in Empirical Industrial Organization />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Kohei Kawaguchi">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="probability-distribution-in-r.html">
+<link rel="next" href="hypothesis-testing-in-r.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ECON6120I</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Syllabus</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#instructor-information"><i class="fa fa-check"></i><b>1.1</b> Instructor Information</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#general-information"><i class="fa fa-check"></i><b>1.2</b> General Information</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#class-time"><i class="fa fa-check"></i><b>1.2.1</b> Class Time</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i><b>1.2.2</b> Description</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#expectation-and-goals"><i class="fa fa-check"></i><b>1.2.3</b> Expectation and Goals</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#required-environment"><i class="fa fa-check"></i><b>1.3</b> Required Environment</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#evaluation"><i class="fa fa-check"></i><b>1.4</b> Evaluation</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#academic-integrity"><i class="fa fa-check"></i><b>1.5</b> Academic Integrity</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i><b>1.6</b> Schedule</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#course-materials"><i class="fa fa-check"></i><b>1.7</b> Course Materials</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.7.1</b> R and RStudio</a></li>
+<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#handbook-chapters"><i class="fa fa-check"></i><b>1.7.2</b> Handbook Chapters</a></li>
+<li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.7.3</b> Books</a></li>
+<li class="chapter" data-level="1.7.4" data-path="index.html"><a href="index.html#papers"><i class="fa fa-check"></i><b>1.7.4</b> Papers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#structural-estimation-and-counterfactual-analysis"><i class="fa fa-check"></i><b>2.1</b> Structural Estimation and Counterfactual Analysis</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#recap"><i class="fa fa-check"></i><b>2.1.2</b> Recap</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#historical-remark"><i class="fa fa-check"></i><b>2.1.3</b> Historical Remark</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#setting-up-the-environment"><i class="fa fa-check"></i><b>2.2</b> Setting Up The Environment</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#rstudio-project"><i class="fa fa-check"></i><b>2.2.1</b> RStudio Project</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#basic-programming-in-r"><i class="fa fa-check"></i><b>2.2.2</b> Basic Programming in R</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#basic-statistical-analysis"><i class="fa fa-check"></i><b>2.2.3</b> Basic Statistical Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html"><i class="fa fa-check"></i><b>3</b> Descriptive Analysis in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#qualitative-data"><i class="fa fa-check"></i><b>3.1</b> Qualitative Data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#frequency-distribution"><i class="fa fa-check"></i><b>3.1.1</b> Frequency Distribution</a></li>
+<li class="chapter" data-level="3.1.2" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#relative-frequency-distribution"><i class="fa fa-check"></i><b>3.1.2</b> Relative Frequency Distribution</a></li>
+<li class="chapter" data-level="3.1.3" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#bargraph"><i class="fa fa-check"></i><b>3.1.3</b> Bargraph</a></li>
+<li class="chapter" data-level="3.1.4" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#categorical-statistics"><i class="fa fa-check"></i><b>3.1.4</b> Categorical Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#quantitative-data"><i class="fa fa-check"></i><b>3.2</b> Quantitative Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#frequency-distribution-1"><i class="fa fa-check"></i><b>3.2.1</b> Frequency Distribution</a></li>
+<li class="chapter" data-level="3.2.2" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#histogram"><i class="fa fa-check"></i><b>3.2.2</b> Histogram</a></li>
+<li class="chapter" data-level="3.2.3" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#scatterplot"><i class="fa fa-check"></i><b>3.2.3</b> Scatterplot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#numerical-measures"><i class="fa fa-check"></i><b>3.3</b> Numerical Measures</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#mean"><i class="fa fa-check"></i><b>3.3.1</b> Mean</a></li>
+<li class="chapter" data-level="3.3.2" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#median"><i class="fa fa-check"></i><b>3.3.2</b> Median</a></li>
+<li class="chapter" data-level="3.3.3" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#quartile"><i class="fa fa-check"></i><b>3.3.3</b> Quartile</a></li>
+<li class="chapter" data-level="3.3.4" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#variance"><i class="fa fa-check"></i><b>3.3.4</b> Variance</a></li>
+<li class="chapter" data-level="3.3.5" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#standard-deviation"><i class="fa fa-check"></i><b>3.3.5</b> Standard Deviation</a></li>
+<li class="chapter" data-level="3.3.6" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#covariance"><i class="fa fa-check"></i><b>3.3.6</b> Covariance</a></li>
+<li class="chapter" data-level="3.3.7" data-path="descriptive-analysis-in-r.html"><a href="descriptive-analysis-in-r.html#correlation-coefficient"><i class="fa fa-check"></i><b>3.3.7</b> Correlation Coefficient</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="probability-distribution-in-r.html"><a href="probability-distribution-in-r.html"><i class="fa fa-check"></i><b>4</b> Probability Distribution in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="probability-distribution-in-r.html"><a href="probability-distribution-in-r.html#continuous-uniform-distribution"><i class="fa fa-check"></i><b>4.1</b> Continuous Uniform Distribution</a></li>
+<li class="chapter" data-level="4.2" data-path="probability-distribution-in-r.html"><a href="probability-distribution-in-r.html#normal-distribution"><i class="fa fa-check"></i><b>4.2</b> Normal Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estimation-of-mean-in-r.html"><a href="estimation-of-mean-in-r.html"><i class="fa fa-check"></i><b>5</b> Estimation of Mean in R</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation-of-mean-in-r.html"><a href="estimation-of-mean-in-r.html#point-estimation-of-the-population-mean"><i class="fa fa-check"></i><b>5.1</b> Point Estimation of the Population Mean</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation-of-mean-in-r.html"><a href="estimation-of-mean-in-r.html#interval-estimate-of-population-mean-with-known-variance"><i class="fa fa-check"></i><b>5.2</b> Interval Estimate of Population Mean with Known Variance</a></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-mean-in-r.html"><a href="estimation-of-mean-in-r.html#interval-estimate-of-population-mean-with-unknown-variance"><i class="fa fa-check"></i><b>5.3</b> Interval Estimate of Population Mean with Unknown Variance</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-testing-in-r.html"><a href="hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-testing-in-r.html"><a href="hypothesis-testing-in-r.html#lower-tail-test-of-population-mean-with-known-variance"><i class="fa fa-check"></i><b>6.1</b> Lower Tail Test of Population Mean with Known Variance</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-testing-in-r.html"><a href="hypothesis-testing-in-r.html#two-tailed-test-of-population-mean-with-known-variance"><i class="fa fa-check"></i><b>6.2</b> Two-Tailed Test of Population Mean with Known Variance</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-testing-in-r.html"><a href="hypothesis-testing-in-r.html#lower-tail-test-of-population-mean-with-unknown-variance"><i class="fa fa-check"></i><b>6.3</b> Lower Tail Test of Population Mean with Unknown Variance</a></li>
+<li class="chapter" data-level="6.4" data-path="hypothesis-testing-in-r.html"><a href="hypothesis-testing-in-r.html#two-tailed-test-of-population-mean-with-unknown-variance"><i class="fa fa-check"></i><b>6.4</b> Two-Tailed Test of Population Mean with Unknown Variance</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html"><i class="fa fa-check"></i><b>7</b> Simple Regression in R</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#estimating-a-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.1</b> Estimating a Simple Linear Regression Model</a></li>
+<li class="chapter" data-level="7.2" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#coefficients-of-determination"><i class="fa fa-check"></i><b>7.2</b> Coefficients of Determination</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#significance-test-of-simple-linear-regression"><i class="fa fa-check"></i><b>7.2.1</b> Significance Test of Simple Linear Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#confidence-interval-for-simple-linear-regression"><i class="fa fa-check"></i><b>7.3</b> Confidence Interval for Simple Linear Regression</a></li>
+<li class="chapter" data-level="7.4" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#prediction-interval-for-simple-linear-regression"><i class="fa fa-check"></i><b>7.4</b> Prediction Interval for Simple Linear Regression</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#residual-plot"><i class="fa fa-check"></i><b>7.5</b> Residual Plot</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#reproducible-reports-using-rmarkdown"><i class="fa fa-check"></i><b>7.5.1</b> Reproducible Reports using Rmarkdown</a></li>
+<li class="chapter" data-level="7.5.2" data-path="simple-regression-in-r.html"><a href="simple-regression-in-r.html#integration-with-cc-using-rcpp"><i class="fa fa-check"></i><b>7.5.2</b> Integration with C/C++ using Rcpp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="production.html"><a href="production.html"><i class="fa fa-check"></i><b>8</b> Production and Cost Function Estimation</a><ul>
+<li class="chapter" data-level="8.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>8.1</b> Motivations</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="production.html"><a href="production.html#io"><i class="fa fa-check"></i><b>8.1.1</b> IO</a></li>
+<li class="chapter" data-level="8.1.2" data-path="production.html"><a href="production.html#development"><i class="fa fa-check"></i><b>8.1.2</b> Development</a></li>
+<li class="chapter" data-level="8.1.3" data-path="production.html"><a href="production.html#trade"><i class="fa fa-check"></i><b>8.1.3</b> Trade</a></li>
+<li class="chapter" data-level="8.1.4" data-path="production.html"><a href="production.html#management"><i class="fa fa-check"></i><b>8.1.4</b> Management</a></li>
+<li class="chapter" data-level="8.1.5" data-path="production.html"><a href="production.html#education"><i class="fa fa-check"></i><b>8.1.5</b> Education</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="production.html"><a href="production.html#analyzing-producer-behaviors"><i class="fa fa-check"></i><b>8.2</b> Analyzing Producer Behaviors</a></li>
+<li class="chapter" data-level="8.3" data-path="production.html"><a href="production.html#production-function-estimation"><i class="fa fa-check"></i><b>8.3</b> Production Function Estimation</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="production.html"><a href="production.html#cobb-douglas-specification-as-a-benchmark"><i class="fa fa-check"></i><b>8.3.1</b> Cobb-Douglas Specification as a Benchmark</a></li>
+<li class="chapter" data-level="8.3.2" data-path="production.html"><a href="production.html#potential-bias-i-endogeneity"><i class="fa fa-check"></i><b>8.3.2</b> Potential Bias I: Endogeneity</a></li>
+<li class="chapter" data-level="8.3.3" data-path="production.html"><a href="production.html#potential-bias-ii-selection"><i class="fa fa-check"></i><b>8.3.3</b> Potential Bias II: Selection</a></li>
+<li class="chapter" data-level="8.3.4" data-path="production.html"><a href="production.html#how-to-resolve-endogeneity-bias"><i class="fa fa-check"></i><b>8.3.4</b> How to Resolve Endogeneity Bias?</a></li>
+<li class="chapter" data-level="8.3.5" data-path="production.html"><a href="production.html#panel-data"><i class="fa fa-check"></i><b>8.3.5</b> Panel Data</a></li>
+<li class="chapter" data-level="8.3.6" data-path="production.html"><a href="production.html#first-order-condition-for-inputs"><i class="fa fa-check"></i><b>8.3.6</b> First-Order Condition for Inputs</a></li>
+<li class="chapter" data-level="8.3.7" data-path="production.html"><a href="production.html#productioniv"><i class="fa fa-check"></i><b>8.3.7</b> Instrumental Variable</a></li>
+<li class="chapter" data-level="8.3.8" data-path="production.html"><a href="production.html#olley-pakes-approach"><i class="fa fa-check"></i><b>8.3.8</b> Olley-Pakes Approach</a></li>
+<li class="chapter" data-level="8.3.9" data-path="production.html"><a href="production.html#assumption-i-information-set"><i class="fa fa-check"></i><b>8.3.9</b> Assumption I: Information Set</a></li>
+<li class="chapter" data-level="8.3.10" data-path="production.html"><a href="production.html#assumption-ii-first-order-markov"><i class="fa fa-check"></i><b>8.3.10</b> Assumption II: First Order Markov</a></li>
+<li class="chapter" data-level="8.3.11" data-path="production.html"><a href="production.html#assumption-iii-timing-of-input-choices"><i class="fa fa-check"></i><b>8.3.11</b> Assumption III: Timing of Input Choices</a></li>
+<li class="chapter" data-level="8.3.12" data-path="production.html"><a href="production.html#assumption-iv-scalar-unobservable"><i class="fa fa-check"></i><b>8.3.12</b> Assumption IV: Scalar Unobservable</a></li>
+<li class="chapter" data-level="8.3.13" data-path="production.html"><a href="production.html#assumption-iv-strict-monotonicity"><i class="fa fa-check"></i><b>8.3.13</b> Assumption IV: Strict Monotonicity</a></li>
+<li class="chapter" data-level="8.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>8.3.14</b> Two-step Approach: The First Step</a></li>
+<li class="chapter" data-level="8.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>8.3.15</b> Two-step Approach: The Second Step</a></li>
+<li class="chapter" data-level="8.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>8.3.16</b> Identification of the Anticipated Shocks</a></li>
+<li class="chapter" data-level="8.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>8.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996">1996</a>)</span>.</a></li>
+<li class="chapter" data-level="8.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>8.3.18</b> From An Economic Models to An Econometric Model</a></li>
+<li class="chapter" data-level="8.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>8.3.19</b> How to Resolve Selection Bias</a></li>
+<li class="chapter" data-level="8.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>8.3.20</b> Correction in the First Step</a></li>
+<li class="chapter" data-level="8.3.21" data-path="production.html"><a href="production.html#correction-in-the-second-step-i-the-source-of-bias"><i class="fa fa-check"></i><b>8.3.21</b> Correction in the Second Step I: The Source of Bias</a></li>
+<li class="chapter" data-level="8.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>8.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
+<li class="chapter" data-level="8.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>8.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
+<li class="chapter" data-level="8.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>8.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
+<li class="chapter" data-level="8.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>8.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996">1996</a>)</span></a></li>
+<li class="chapter" data-level="8.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>8.3.26</b> Zero Investment Problem</a></li>
+<li class="chapter" data-level="8.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>8.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
+<li class="chapter" data-level="8.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>8.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
+<li class="chapter" data-level="8.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>8.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996">1996</a>)</span> and <span class="citation">Levinsohn &amp; Petrin (<a href="#ref-Levinsohn2003">2003</a>)</span></a></li>
+<li class="chapter" data-level="8.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>8.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
+<li class="chapter" data-level="8.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>8.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
+<li class="chapter" data-level="8.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>8.3.32</b> Collinearity Problem</a></li>
+<li class="chapter" data-level="8.3.33" data-path="production.html"><a href="production.html#tackle-collinearity-problem-peculiar-assumptions"><i class="fa fa-check"></i><b>8.3.33</b> Tackle Collinearity Problem: Peculiar Assumptions</a></li>
+<li class="chapter" data-level="8.3.34" data-path="production.html"><a href="production.html#tackle-collinearity-problem-share-regression"><i class="fa fa-check"></i><b>8.3.34</b> Tackle Collinearity Problem: Share Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="production.html"><a href="production.html#cost-function-estimation"><i class="fa fa-check"></i><b>8.4</b> Cost Function Estimation</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="production.html"><a href="production.html#cost-function-duality"><i class="fa fa-check"></i><b>8.4.1</b> Cost Function: Duality</a></li>
+<li class="chapter" data-level="8.4.2" data-path="production.html"><a href="production.html#translog-cost-function"><i class="fa fa-check"></i><b>8.4.2</b> Translog Cost Function</a></li>
+<li class="chapter" data-level="8.4.3" data-path="production.html"><a href="production.html#translog-cost-function-integrability"><i class="fa fa-check"></i><b>8.4.3</b> Translog Cost Function: Integrability</a></li>
+<li class="chapter" data-level="8.4.4" data-path="production.html"><a href="production.html#two-approaches"><i class="fa fa-check"></i><b>8.4.4</b> Two Approaches</a></li>
+<li class="chapter" data-level="8.4.5" data-path="production.html"><a href="production.html#cost-data-approach"><i class="fa fa-check"></i><b>8.4.5</b> Cost Data Approach</a></li>
+<li class="chapter" data-level="8.4.6" data-path="production.html"><a href="production.html#revealed-preference-approach"><i class="fa fa-check"></i><b>8.4.6</b> Revealed Preference Approach</a></li>
+<li class="chapter" data-level="8.4.7" data-path="production.html"><a href="production.html#single-product-monopolist"><i class="fa fa-check"></i><b>8.4.7</b> Single-product Monopolist</a></li>
+<li class="chapter" data-level="8.4.8" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>8.4.8</b> Unobserved Heterogeneity in the Cost Function</a></li>
+<li class="chapter" data-level="8.4.9" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>8.4.9</b> Multi-product Monopolist Case</a></li>
+<li class="chapter" data-level="8.4.10" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>8.4.10</b> Oligopoly</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ECON 6120I Topics in Empirical Industrial Organization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="estimation-of-mean-in-r" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Estimation of Mean in R</h1>
+<div id="point-estimation-of-the-population-mean" class="section level2">
+<h2><span class="header-section-number">5.1</span> Point Estimation of the Population Mean</h2>
+<ul>
+<li><p>For any particular random sample, we can always compute its sample mean. Although most often it is not the actual population mean, it does serve as a good point estimate.</p></li>
+<li><p>Example: In the data set <code>survey</code>, the survey is performed on a sample of the student population. We can compute the sample mean and use it as an estimate of the corresponding population parameter.</p></li>
+<li><p>Problem: Find a point estimate of mean university student height with the sample data from survey.</p></li>
+<li><p>Solution: For convenience, we begin with saving the survey data of student heights in a variable <code>height_survey</code>.</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+height_survey &lt;-<span class="st"> </span>survey<span class="op">$</span>Height
+height_survey</code></pre></div>
+<pre><code>##   [1] 173.00 177.80     NA 160.00 165.00 172.72 182.88 157.00 175.00 167.00
+##  [11] 156.20     NA 155.00 155.00     NA 156.00 157.00 182.88 190.50 177.00
+##  [21] 190.50 180.34 180.34 184.00     NA     NA 172.72 175.26     NA 167.00
+##  [31]     NA 180.00 166.40 180.00     NA 190.00 168.00 182.50 185.00 171.00
+##  [41] 169.00 154.94 172.00 176.50 180.34 180.34 180.00 170.00 168.00 165.00
+##  [51] 200.00 190.00 170.18 179.00 182.00 171.00 157.48     NA 177.80 175.26
+##  [61] 187.00 167.64 178.00 170.00 164.00 183.00 172.00     NA 180.00     NA
+##  [71] 170.00 176.00 171.00 167.64 165.00 170.00 165.00 165.10 165.10 185.42
+##  [81]     NA 176.50     NA     NA 167.64 167.00 162.56 170.00 179.00     NA
+##  [91] 183.00     NA 165.00 168.00 179.00     NA 190.00 166.50 165.00 175.26
+## [101] 187.00 170.00 159.00 175.00 163.00 170.00 172.00     NA 180.00 180.34
+## [111] 175.00 190.50 170.18 185.00 162.56 158.00 159.00 193.04 171.00 184.00
+## [121]     NA 177.00 172.00 180.00 175.26 180.34 172.72 178.50 157.00 152.00
+## [131] 187.96 178.00     NA 160.02 175.26 189.00 172.00 182.88 170.00 167.00
+## [141] 175.00 165.00 172.72 180.00 172.00 185.00 187.96 185.42 165.00 164.00
+## [151] 195.00 165.00 152.40 172.72 180.34 173.00     NA 167.64 187.96 187.00
+## [161] 167.00 168.00 191.80 169.20 177.00 168.00 170.00 160.02 189.00 180.34
+## [171] 168.00 182.88     NA 165.00 157.48 170.00 172.72 164.00     NA 162.56
+## [181] 172.00 165.10 162.50 170.00 175.00 168.00 163.00 165.00 173.00 196.00
+## [191] 179.10 180.00 176.00 160.02 157.48 165.00 170.18 154.94 170.00 164.00
+## [201] 167.00 174.00     NA 160.00 179.10 168.00 153.50 160.00 165.00 171.50
+## [211] 160.00 163.00     NA 165.00 168.90 170.00     NA 185.00 173.00 188.00
+## [221] 171.00 167.64 162.56 150.00     NA     NA 170.18 185.00 167.00 185.00
+## [231] 169.00 180.34 165.10 160.00 170.00 183.00 168.50</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(height_survey)</code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<ul>
+<li>It turns out not all students have answered the question, and we must filter out the missing values. Hence we apply the mean function with the “na.rm” argument as TRUE.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(height_survey, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 172.3809</code></pre>
+</div>
+<div id="interval-estimate-of-population-mean-with-known-variance" class="section level2">
+<h2><span class="header-section-number">5.2</span> Interval Estimate of Population Mean with Known Variance</h2>
+<ul>
+<li><p>After we found a point estimate of the population mean, we would need a way to quantify its accuracy. Here, we discuss the case where the population variance σ2 is assumed known.</p></li>
+<li><p>Let us denote the <span class="math inline">\(100(1 −\alpha∕2)\)</span> percentile of the standard normal distribution as <span class="math inline">\(z_{\alpha∕2}\)</span>. For random sample of sufficiently large size, the end points of the interval estimate at <span class="math inline">\((1 − \alpha)\)</span> confidence level is given as follows: <span class="math display">\[
+\overline{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{N}}.
+\]</span></p></li>
+<li><p>Problem: Assume the population standard deviation <span class="math inline">\(\sigma\)</span> of the student height in survey is 9.48. Find the margin of error and interval estimate at 95% confidence level.</p></li>
+<li><p>Solution: We first filter out missing values in <code>survey_height</code> with the <code>na.omit</code> function, and save it in <code>height_response</code>.</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)                  <span class="co"># load the MASS package </span>
+height_response &lt;-<span class="st"> </span><span class="kw">na.omit</span>(survey<span class="op">$</span>Height)</code></pre></div>
+<ul>
+<li>Then we compute the standard error of the mean.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="kw">length</span>(height_response) 
+sigma &lt;-<span class="st"> </span><span class="fl">9.48</span>                   <span class="co"># population standard deviation </span>
+sem &lt;-<span class="st"> </span>sigma<span class="op">/</span><span class="kw">sqrt</span>(N)            <span class="co"># standard error of the mean </span>
+sem</code></pre></div>
+<pre><code>## [1] 0.6557453</code></pre>
+<ul>
+<li>Since there are two tails of the normal distribution, the 95% confidence level would imply the 97.5th percentile of the normal distribution at the upper tail. Therefore, <span class="math inline">\(z_{\alpha/2}\)</span> is given by <code>qnorm(.975)</code>. We multiply it with the standard error of the mean sem and get the margin of error.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E &lt;-<span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">975</span>)<span class="op">*</span>sem
+E</code></pre></div>
+<pre><code>## [1] 1.285237</code></pre>
+<ul>
+<li>We then add it up with the sample mean, and find the confidence interval as told.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(height_response)   <span class="co"># sample mean </span>
+CI95 &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span>E, E)
+CI95</code></pre></div>
+<pre><code>## [1] 171.0956 173.6661</code></pre>
+<ul>
+<li>Library Solution: Instead of using the textbook formula, we can apply the <code>z.test</code> function in the <code>TeachingDemos</code> package. It is not a core R package, and must be installed and loaded into the workspace beforehand.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;TeachingDemos&quot;</span>) <span class="co"># install TeachingDemos package; only once</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(TeachingDemos)         <span class="co"># load TeachingDemos package; every time you use</span>
+<span class="kw">z.test</span>(height_response, <span class="dt">sd =</span> sigma) </code></pre></div>
+<pre><code>## 
+##  One Sample z-test
+## 
+## data:  height_response
+## z = 262.88, n = 209.00000, Std. Dev. = 9.48000, Std. Dev. of the
+## sample mean = 0.65575, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  171.0956 173.6661
+## sample estimates:
+## mean of height_response 
+##                172.3809</code></pre>
+</div>
+<div id="interval-estimate-of-population-mean-with-unknown-variance" class="section level2">
+<h2><span class="header-section-number">5.3</span> Interval Estimate of Population Mean with Unknown Variance</h2>
+<ul>
+<li><p>After we found a point estimate of the population mean, we would need a way to quantify its accuracy. Here, we discuss the case where the population variance is not assumed.</p></li>
+<li><p>Let us denote the <span class="math inline">\(100(1 −\alpha∕2)\)</span> percentile of the Student t distribution with <span class="math inline">\(N − 1\)</span> degrees of freedom as <span class="math inline">\(t_{N - 1, \alpha/2}\)</span>. For random samples of sufficiently large size, and with standard deviation <span class="math inline">\(s\)</span>, the end points of the interval estimate at <span class="math inline">\((1 − \alpha)\)</span> confidence level is given as follows: <span class="math display">\[
+\overline{x} \pm t_{N - 1, \alpha/2} \frac{s}{\sqrt{N}}.
+\]</span></p></li>
+<li><p>Problem: Without assuming the population standard deviation of the student height in survey, find the margin of error and interval estimate at 95% confidence level.</p></li>
+<li><p>Solution: We first filter out missing values in <code>survey_height</code> with the <code>na.omit</code> function, and save it in <code>height_response</code>.</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)                  <span class="co"># load the MASS package </span>
+height_response &lt;-<span class="st"> </span><span class="kw">na.omit</span>(survey<span class="op">$</span>Height)</code></pre></div>
+<ul>
+<li>Then we compute the sample standard deviation.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">N &lt;-<span class="st"> </span><span class="kw">length</span>(height_response) 
+s &lt;-<span class="st"> </span><span class="kw">sd</span>(height_response)        <span class="co"># sample standard deviation </span>
+SE &lt;-<span class="st"> </span>s<span class="op">/</span><span class="kw">sqrt</span>(N)                 <span class="co"># standard error estimate </span>
+SE</code></pre></div>
+<pre><code>## [1] 0.6811677</code></pre>
+<ul>
+<li>Since there are two tails of the Student t distribution, the 95% confidence level would imply the 97.5th percentile of the Student t distribution at the upper tail. Therefore, <span class="math inline">\(t_{\alpha/2}\)</span> is given by <code>qt(.975, df = n - 1)</code>. We multiply it with the standard error estimate SE and get the margin of error.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E &lt;-<span class="st"> </span><span class="kw">qt</span>(.<span class="dv">975</span>, <span class="dt">df =</span> N <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)<span class="op">*</span>SE     <span class="co"># margin of error</span>
+E</code></pre></div>
+<pre><code>## [1] 1.342878</code></pre>
+<ul>
+<li>We then add it up with the sample mean, and find the confidence interval.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xbar &lt;-<span class="st"> </span><span class="kw">mean</span>(height_response)   <span class="co"># sample mean </span>
+CI95 &lt;-<span class="st"> </span>xbar <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span>E, E)
+CI95</code></pre></div>
+<pre><code>## [1] 171.0380 173.7237</code></pre>
+<ul>
+<li>Library Solution: Instead of using the textbook formula, we can apply the t.test function in the built-in stats package.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(height_response) </code></pre></div>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  height_response
+## t = 253.07, df = 208, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  171.0380 173.7237
+## sample estimates:
+## mean of x 
+##  172.3809</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="probability-distribution-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hypothesis-testing-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["lecture.pdf", "lecture.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

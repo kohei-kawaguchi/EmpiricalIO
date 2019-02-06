@@ -1,0 +1,3287 @@
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={ECON 6120I Topics in Empirical Industrial Organization},
+            pdfauthor={Kohei Kawaguchi},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{ECON 6120I Topics in Empirical Industrial Organization}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Kohei Kawaguchi}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{Last updated: 2019-02-05}
+
+\usepackage{booktabs}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\chapter{Syllabus}\label{syllabus}
+
+\section{Instructor Information}\label{instructor-information}
+
+\begin{itemize}
+\tightlist
+\item
+  Instructor:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Name: Kohei Kawaguchi.
+  \item
+    Office: LSK6070, Monday 11:00-12:00.
+  \end{itemize}
+\item
+  All questions related to the class have to be publicly asked on the
+  discussion board of canvas rather than being privately asked in
+  e-mail. The instructor usually does not reply in the evening,
+  weekends, and holidays.
+\end{itemize}
+
+\section{General Information}\label{general-information}
+
+\subsection{Class Time}\label{class-time}
+
+\begin{itemize}
+\tightlist
+\item
+  Date: Monday.
+\item
+  Time: 13:30-17:20.
+\item
+  Venue: CYTG001.
+\end{itemize}
+
+\subsection{Description}\label{description}
+
+\begin{itemize}
+\item
+  This is a PhD-level course for empirical industrial organization. This
+  course covers various econometric methods used in industrial
+  organization that is often referred to as the structural estimation
+  approach. These methods have been gradually developed since 1980s in
+  parallel with the modernization of industrial organization based on
+  the game theory and now widely applied in antitrust policy, business
+  strategy, and neighboring fields such as labor economics and
+  international economics.
+\item
+  This course presumes a good understanding of PhD-level microeconomics
+  and microeconometrics. Participants are expected to understand at
+  least UG-level industrial organization. This course requires
+  participants to write programs mostly in R and sometimes in C++ to
+  implement various econometric methods. In particular, all assignments
+  will involve such a non-trivial programming task. Even though the
+  understanding of these programming languages is not a prerequisite, a
+  sharp learning curve will be required. Some experience in other
+  programming languages will help. Audit without a credit is not
+  admitted for students.
+\end{itemize}
+
+\subsection{Expectation and Goals}\label{expectation-and-goals}
+
+\begin{itemize}
+\tightlist
+\item
+  The goal of this course is to learn and practice econometric methods
+  for empirical industrial organization. The lecture covers the
+  econometric methods that have been developed between 80s and 00s to
+  estimate primitive parameters governing imperfect competition among
+  firms, such as production and cost function estimation, demand
+  function estimation, merger simulation, entry and exit analysis, and
+  dynamic decision models. The lecture also covers various new methods
+  to recover model primitives in certain mechanisms such as auction,
+  matching, network, and bargaining. The emphasis is put on the former
+  group of methods, because they are the basis for other new methods.
+  Participants will not only understand the theoretical background of
+  the methods but also become able to implement these methods from
+  scratches by writing their own programs. I will briefly discuss the
+  latter class of new methods through reading recent papers. The
+  participants will become able to understand and use these new methods.
+\end{itemize}
+
+\section{Required Environment}\label{required-environment}
+
+\begin{itemize}
+\tightlist
+\item
+  Participants should bring their laptop to the class. We have enough
+  extension codes for students. The laptop should have sufficient RAM
+  (at least \(\ge\) 8GB, \(\ge\) 16GB is recommended) and CPU power (at
+  least Core i5 grade, Core i7 grade is recommended). Participants are
+  fully responsible for their hardware issues. Operating System can be
+  arbitrary. The instructor mainly uses OSX High Siera with iMac (Retina
+  5K, 27-inch, Late 2015) and Macbook Pro (TBA).
+\item
+  Please install the following software by the first lecture. Technical
+  issues related to the installment should be resolved by yourself,
+  because it depends on your local environment. If you had an error,
+  copy and paste the error message on a search engine, and find a
+  solution. This solves 99.9\% of the problems.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    R: \url{https://www.r-project.org/}
+  \item
+    RStudio: \url{https://www.rstudio.com/}
+  \item
+    LaTeX:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      MixTex \url{https://miktex.org/}
+    \item
+      TeXLive \url{https://www.tug.org/texlive/}
+    \item
+      MacTeX \url{http://www.tug.org/mactex/}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\section{Evaluation}\label{evaluation}
+
+\begin{itemize}
+\tightlist
+\item
+  Assignments (80): In total 8 homework are assigned. Each homework
+  involves the implementation of the methods covered in the class. Each
+  homework has 10 points. The working hour for each homework will be
+  around 10-20 hours.
+\item
+  Participation (10): Every time a participant asks a question in the
+  class, the participant gets one point, up to 10 points. The
+  participant who asked the question writes the name, ID number, his/her
+  question, and my answer in a discussion board on the course website to
+  claim a point.
+\item
+  Referee report (10): Toward the end of the semester, a paper in
+  industrial organization is randomly assigned to each participant. Each
+  participant writes a critical referee report of the assigned paper in
+  A4 2 pages that consists of the summary, contribution, strong and weak
+  points of the paper.
+\item
+  Grading is based on the absolute scores: A+ with more than 80 points,
+  A with more than 70 points, A- with more than 60 points, B+ with more
+  than 50 points, B with more than 40 points, B- with more than 30
+  points and C otherwise.
+\end{itemize}
+
+\section{Academic Integrity}\label{academic-integrity}
+
+Without academic integrity, there is no serious learning. Thus you are
+expected to hold the highest standard of academic integrity in the
+course. You are encouraged to study and do homework in groups. However,
+no cheating, plagiarism will be tolerated. Anyone caught cheating,
+plagiarism will fail the course. Please make sure adhere to the HKUST
+Academic Honor Code at all time (see
+\url{http://www.ust.hk/vpaao/integrity/}).
+
+\section{Schedule}\label{schedule}
+
+\begin{itemize}
+\tightlist
+\item
+  Introduction to structural estimation, R and RStudio
+\item
+  Production function estimation I
+\item
+  Production function estimation II
+\item
+  Demand function estimation I
+\item
+  Demand function estimation II
+\item
+  Merger Analysis
+\item
+  Entry and Exit
+\item
+  Single-Agent Dynamics I
+\item
+  Single-Agent Dynamics II, I change date due to my business trip
+\item
+  Dynamic Game I
+\item
+  Dynamic Game II
+\item
+  Canceled because of Easter Monday
+\item
+  Auction
+\item
+  Other Mechanisms
+\end{itemize}
+
+\section{Course Materials}\label{course-materials}
+
+\subsection{R and RStudio}\label{r-and-rstudio}
+
+\begin{itemize}
+\tightlist
+\item
+  Grolemund, G., 2014, Hands-On Programming with R, O'Reilly.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Free online version is available:
+    \url{https://rstudio-education.github.io/hopr/}.
+  \end{itemize}
+\item
+  Wickham, H., \& Grolemund, G., 2017, R for Data Science, O'Reilly.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Free online version is available: \url{https://r4ds.had.co.nz/}.
+  \end{itemize}
+\item
+  Boswell, D., \& Foucher, T., 2011, The Art of Readable Code: Simple
+  and Practical Techniques for Writing Better Code, O'Reilly.
+\end{itemize}
+
+\subsection{Handbook Chapters}\label{handbook-chapters}
+
+\begin{itemize}
+\tightlist
+\item
+  Ackerberg, D., Benkard, C., Berry, S., \& Pakes, A. (2007).
+  ``Econometric tools for analyzing market outcomes''. Handbook of
+  econometrics, 6, 4171-4276.
+\item
+  Athey, S., \& Haile, P. A. (2007). ``Nonparametric approaches to
+  auctions''. Handbook of Econometrics, 6, 3847-3965.
+\item
+  Berry, S., \& Reiss, P. (2007). ``Empirical models of entry and market
+  structure''. Handbook of Industrial Organization, 3, 1845-1886.
+\item
+  Bresnahan, T. F. (1989). ``Empirical studies of industries with market
+  power''. Handbook of Industrial Organization, 2, 1011-1057.
+\item
+  Hendricks, K., \& Porter, R. H. (2007). ``An empirical perspective on
+  auctions''. Handbook of Industrial Organization, 3, 2073-2143.
+\item
+  Matzkin, R. L. (2007). ``Nonparametric identification''. Handbook of
+  Econometrics, 6, 5307-5368.
+\item
+  Newey, W. K., \& McFadden, D. (1994). ``Large sample estimation and
+  hypothesis testing''. Handbook of Econometrics, 4, 2111-2245.
+\item
+  Reiss, P. C., \& Wolak, F. A. (2007). ``Structural econometric
+  modeling: Rationales and examples from industrial organization''.
+  Handbook of Econometrics, 6, 4277-4415.
+\end{itemize}
+
+\subsection{Books}\label{books}
+
+\begin{itemize}
+\tightlist
+\item
+  Train, K. E. (2009). Discrete Choice Methods with Simulation,
+  Cambridge university press.
+\item
+  Davis, P., \& Garces, E. (2010). Quantitative Techniques for
+  Competition and Antitrust Analysis, Princeton University Press.
+\item
+  Tirole, J. (1988). The Theory of Industrial Organization, The MIT
+  Press.
+\end{itemize}
+
+\subsection{Papers}\label{papers}
+
+\begin{itemize}
+\tightlist
+\item
+  The list of important papers are occasionally given during the course.
+\end{itemize}
+
+\chapter{Introduction}\label{intro}
+
+\section{Structural Estimation and Counterfactual
+Analysis}\label{structural-estimation-and-counterfactual-analysis}
+
+\subsection{Example}\label{example}
+
+\begin{itemize}
+\item
+  \citet{Igami2017} ``Estimating the Innovator's Dilemma: Structural
+  Analysis of Creative Destruction in the Hard Disk Drive Industry,
+  1981-1998''.
+\item
+  \textbf{Question}:
+\item
+  Does ``Innovator's Dilemma'' \citep{Christensen1997} exist?
+\item
+  Christensen argued that old winners tend to lag behind entrants even
+  when introducing a new technology is not too difficult, with a case
+  study of the HDD industry.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Apple's smartphone vs.~Nokia's feature phones.
+  \item
+    Amazon vs.~Borders.
+  \item
+    Kodak's digital camera.
+  \end{itemize}
+\item
+  How do we empirically answer this question?
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{figuretable/Igam2017Fig1} 
+
+}
+
+\caption{Figure 1 of Igam (2017)}\label{fig:unnamed-chunk-2}
+\end{figure}
+
+\begin{itemize}
+\item
+  \textbf{Hypotheses}:
+\item
+  Identify potentially competing hypotheses to explain the phenomenon.
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Cannibalization: Because of cannibalization, the benefits of
+    introducing a new product are smaller for incumbents than for
+    entrants.
+  \item
+    Different costs: The incumbents may have higher costs for innovation
+    due to the organizational inertia, but at the same time they may
+    have some cost advantage due to accumulated R\&D and better
+    financial access.
+  \item
+    Preemption: The incumbents have additional incentive for innovation
+    to preempt potential rivals.
+  \item
+    Institutional environment: The impacts of the three components
+    differ across different institutional contexts such as the rules
+    governing patents and market size.
+  \end{enumerate}
+\item
+  Casual empiricists pick up their favorite factors to make up a story.
+\item
+  Serious empiricists should try to separate the contributions of each
+  factor from data.
+\item
+  To do so, the author develops an economic model that explicitly
+  incorporates the above mentioned factors, while keeping the model
+  parameters flexible enough to let the data tell the sign and size of
+  the effects of each factor on innovation.
+\item
+  \textbf{Economic model}:
+\item
+  The time is discrete with finite horizon \(t = 1, \cdots, T\).
+\item
+  In each year, there is a finite number of firms indexed by \(i\).
+\item
+  Each firm is in one of the technological states:
+
+  \begin{equation}
+  s_{it} \in \{\text{old only, both, new only, potential entrant}\},
+  \end{equation}
+
+  where the first two states are for incumbents (stick to the old
+  technology or start using the new technology) and the last two states
+  are for actual and potential entrants (enter with the new technology
+  or stay outside the market).
+\item
+  In each year:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Pre-innovation incumbent (\(s_{it} =\) old): exit or innovate by
+    paying a sunk cost \(\kappa^{inc}\) (to be \(s_{i, t + 1} =\) both).
+  \item
+    Post-innovation incumbent (\(s_{it} =\) both): exit or stay to be
+    both.
+  \item
+    Potential entrant (\(s_{it} =\) potential entrant): give up entry or
+    enter with the new technology by paying a sunk cost \(\kappa^{net}\)
+    (to be \(s_{i, t + 1} =\) new).
+  \item
+    Actual entrant (\(s_{it} =\) new): exit or stay to be new.
+  \end{itemize}
+\item
+  Given the industry state \(s_t = \{s_{it}\}_i\), the product market
+  competition opens and the profit of firm \(i\),
+  \(\pi_t(s_{it}, s_{-it})\), is realized for each active firm.
+\item
+  As the product market competition closes:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Pre-innovation incumbents draw private cost shocks and make
+    decisions: \(a_t^{pre}\).
+  \item
+    Observing this, post-innovation incumbents draw private cost shocks
+    and make decisions: \(a_t^{post}\).
+  \item
+    Observing this, actual entrants draw private cost shocks and make
+    decisions: \(a_t^{act}\).
+  \item
+    Observing this, potential entrants draw private cost shocks and make
+    decisions: \(a_t^{pot}\).
+  \end{itemize}
+\item
+  This is a dynamic game. The equilibrium is defined by the concept of
+  \textbf{Markov-perfecet equilibrium} \citep{Maskin1988}.
+\item
+  The representation of the competing theories in the model:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The existence of cannibalization is represented by the assumption
+    that an incumbent maximizes the joint profits of old and new
+    technology products.
+  \item
+    The size of cannibalization is captured by the shape of profit
+    function.
+  \item
+    The difference in the cost of innovation is captured by the
+    difference in the sunk costs of innovation.
+  \item
+    The preemptive incentive for incumbents are embodied in the dynamic
+    optimization problem for each incumbent.
+  \end{itemize}
+\item
+  \textbf{Econometric model}:
+\item
+  The author then turns the economic model into an econometric model.
+\item
+  This amounts to specify which part of the economic model is
+  observed/known and which part is unobserved/unknown.
+\item
+  The author collects the data set of the HDD industry during 1977-99.
+\item
+  Based on the data, the author specify the identities of active firms
+  and their products and the technologies embodied in the products in
+  each year to code their \textbf{state variables}.
+\item
+  Moreover, by tracking the change in the state, the author code their
+  \textbf{action variables}.
+\item
+  Thus, the state and action variables, \(s_t\) and \(a_t\). These are
+  the \textbf{observables}.
+\item
+  The author does not observe:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Profit function \(\pi_t(\cdot)\).
+  \item
+    Sunk cost of innovation for pre-innovation incumbents
+    \(\kappa^{inc}\).
+  \item
+    Sunk cost of entry for potential entrants \(\kappa^{net}\).
+  \item
+    Private cost shocks.
+  \end{itemize}
+\item
+  These are the \textbf{unobservables}.
+\item
+  Among the unobservables, the profit function and sunk costs are the
+  \textbf{parameter of interets} and the private cost shocks are
+  \textbf{nuissance parameters} in the sense only the knowledge about
+  the distribution of the latter is demanded.
+\item
+  \textbf{Identification}:
+\item
+  Can we infer the unobservables from the observables and the
+  restrictions on the distribution of observable by the economic theory?
+\item
+  The profit function is identified from estimating the demand function
+  for each firm's product, and estimating the cost function for each
+  firm from using their price setting behavior.
+\item
+  The sunk costs of innovation are identified from the conditional
+  probability of innovation across various states. If the cost is low,
+  the probability should be high.
+\item
+  \textbf{Estimation}:
+\item
+  The identification established that in principle we can uncover the
+  parameters of interests from observables under the restrictions of
+  economic theory.
+\item
+  Finally, we apply a statistical method to the econometric model and
+  infer the parameters of interest.
+\item
+  \textbf{Counterfactual analysis}:
+\item
+  If we can uncover the parameters of interest, we can conduct
+  \textbf{comparative statics}: study the change in the endogenous
+  variables when the exogenous variables including the model parameters
+  are set different. In the current framework, this exercise is often
+  called the \textbf{counterfactual analysis}.
+\item
+  What if there was no cannibalization?:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    An incumbents separately maximizes the profit from old technology
+    and new technology instead of jointly maximizing the profits. Solve
+    the model under this new assumption everything else being equal.
+  \item
+    Free of cannibalization concerns, 8.95 incumbents start producing
+    new HDDs in the first 10 years, compared with 6.30 in the baseline.
+  \item
+    The cumulative numbers of innovators among incumbents and entrants
+    differ only by 2.8 compared with 6.45 in the baseline.
+  \item
+    Thus cannibalization can explain a significant part of the
+    incumbent-entrant innovation gap.
+  \end{itemize}
+\item
+  What if there was no preemption?:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    A potential entrant ignores the incumbents' innovations upon making
+    entry decisions.
+  \item
+    Without the preemptive motives, only 6.02 incumbents would innovate
+    in the first 10 7ears, compared with 6.30 in the baseline.
+  \item
+    The cumulative incumbent-entrant innovation gap widen to 8.91
+    compared with 6.45 in the baseline.
+  \end{itemize}
+\item
+  The sunk cost of entry is smaller for incumbents than for entrants in
+  the baseline.
+\item
+  \textbf{Interpretations and policy/managerial implication}:
+\item
+  Despite the cost advantage and the preemptive motives, the speed of
+  innovation is slower among incumbents due to the strong
+  cannibalization effect.
+\item
+  Incumbents that attempt to avoid the ``innovator's dilemma'' should
+  separate the decision makings between old and new sections inside the
+  organization so that it can avoid the concern for cannibalization.
+\end{itemize}
+
+\subsection{Recap}\label{recap}
+
+\begin{itemize}
+\tightlist
+\item
+  The structural approach in empirical industrial organization consists
+  of the following components:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Research question.
+\item
+  Competing hypotheses.
+\item
+  Economic model.
+\item
+  Econometric model
+\item
+  Identification.
+\item
+  Data collection.
+\item
+  Data cleaning.
+\item
+  Estimation.
+\item
+  Counterfactual analysis.
+\item
+  Coding.
+\item
+  Interpretations and policy/managerial implications.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  The goal of this course is to be familiar with the standard
+  methodology to complete this process.
+\item
+  The methodology covered in this class is mostly developed to analyze
+  the standard framework to dynamic or oligopoly competition.
+\item
+  The policy implications are centered around competition policies.
+\item
+  But the basic idea can be extend to different class of situations such
+  as auction, matching, voting, contract, marketing, and so on.
+\item
+  Note that the depth of the research question and the relevance of the
+  policy/managerial implications are the most important part of the
+  research.
+\item
+  Focusing on the methodology in this class is to minimize the time to
+  allocate to less important issues and maximize the attention and time
+  to the most valuable part in the future research.
+\item
+  Given a research question, what kind of data is necessary to answer
+  the question?
+\item
+  Given data, what kind of research questions can you address? Which
+  question can be credibly answered? Which question can be an
+  over-stretche?
+\item
+  Given a research question and data, what is the best way to answer the
+  question? What type of problem can you avoid using the method? What is
+  the limitation of your approach? How will you defend the possible
+  referee comments?
+\item
+  Given a result, what kinds of interpretation can you credibly derive?
+  What kinds of interpretation can be contested by potential opponents?
+  What kinds of contribution can you claim?
+\item
+  To address these issues is \textbf{necessary} to publish a paper and
+  it is \textbf{necessary} to be familiar with the methodology to do so.
+\end{itemize}
+
+\subsection{Historical Remark}\label{historical-remark}
+
+\begin{itemize}
+\tightlist
+\item
+  The words \textbf{reduced-form} and \textbf{structural-form} date back
+  to the literature of estimation of simultaneous equations in
+  macroeconomics \citep{Hsiao1983}.
+\item
+  Let \(y\) be the vector of observed endogenous variables, \(x\) be the
+  vector of observed exogenous variables, and \(\epsilon\) be the vector
+  of unobserved exogenous variables.
+\item
+  The equilibrium condition for \(y\) on \(x\) and \(\epsilon\) is often
+  written as:
+
+  \begin{equation}
+  Ay + Bx = \epsilon. \label{eq:structuralform}
+  \end{equation}
+\item
+  These equations \textbf{implicitly} determine the vector of endogenous
+  variables \(y\) .
+\item
+  If \(A\) is invertible, we can solve the equations for \(y\) to
+  obtain:
+
+  \begin{equation}
+  y = - A^{-1} B x + A^{-1} \epsilon. \label{eq:reducedform}
+  \end{equation}
+\item
+  These equations \textbf{explicitly} determine the vector of endogenous
+  variables \(y\).
+\item
+  Equation \eqref{eq:structuralform} is the \textbf{structural-form} and
+  \eqref{eq:reducedform} is the \textbf{reduced-form}.
+\item
+  If \(y\) and \(x\) are observed and \(x\) is of full column rank, then
+  \(A^{-1}B\) and \(A^{-1}\) will be estimated by regression for
+  \eqref{eq:reducedform}. But this does not mean that \(A\) and \(B\) are
+  separately estimated.
+\item
+  This was the traditional identification problems.
+\item
+  Thus, reduced-form does not mean either of:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Regression analysis;
+  \item
+    Statistical analysis free from economic assumptions.
+  \end{itemize}
+\item
+  Recent development in this line of literature of identification is
+  found in \citet{Matzkin2007}.
+\item
+  In econometrics, the idea of imposing restrictions from economic
+  theories seems to have been formalized by the work of
+  \citet{Manski1994a} and \citet{Matzkin1994b}.
+\end{itemize}
+
+\section{Setting Up The Environment}\label{setting-up-the-environment}
+
+\begin{itemize}
+\tightlist
+\item
+  Assume that R, RStudio and LaTex are all installed in the local
+  computer.
+\end{itemize}
+
+\subsection{RStudio Project}\label{rstudio-project}
+
+\begin{itemize}
+\tightlist
+\item
+  The assignments should be conducted inside a project folder for this
+  course.
+\item
+  \texttt{File\ \textgreater{}\ New\ Project...\textgreater{}\ New\ Directory\ \textgreater{}\ New\ Directory\ \textgreater{}\ R\ Package\ using\ RcppEigen}.
+\item
+  Name the directory \texttt{ECON6120I} and place in your favorite
+  location.
+\item
+  You can open this project from the upper right menu of RStudio or by
+  double clicking the \texttt{ECON6120I.Rproj} file in the
+  \texttt{ECON6120I} directory.
+\item
+  This navigates you to the root directory of the project.
+\item
+  In the root directory, make folders named:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{assignment}.
+  \item
+    \texttt{input}.
+  \item
+    \texttt{output}.
+  \item
+    \texttt{figuretable}.
+  \end{itemize}
+\item
+  We will store R functions in \texttt{R} folder, C/C++ functions in
+  \texttt{src} folder, and data in \texttt{input} folder, data generated
+  from the code in \texttt{output}, and figures and tables in
+  \texttt{figurtable} folder.
+\item
+  Open \texttt{src/Makevars} and erase the content. Then, write:
+  \texttt{PKG\_CPPFLAGS\ =\ -w\ -std=c++11\ -O3}
+\item
+  Open \texttt{src/Makevars.win} and erase the content. Then, write:
+  \texttt{PKG\_CPPFLAGS\ =\ -w\ -std=c++11}
+\end{itemize}
+
+\subsection{Basic Programming in R}\label{basic-programming-in-r}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{File\ \textgreater{}\ New\ File\ \textgreater{}\ R\ Script} to
+  open \texttt{Untitled} file.
+\item
+  \texttt{Ctrl\ (Cmd)\ +\ S} to save it with \texttt{test.R} in
+  \texttt{assignment} folder.
+\item
+  In the console, type and push enter:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{100}\OperatorTok{:}\DecValTok{130}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116
+## [18] 117 118 119 120 121 122 123 124 125 126 127 128 129 130
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  This is the interactive way of using R functionalities.
+\item
+  In \texttt{test.R}, write:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  Then, save the file and push \texttt{Run}.
+\item
+  Alternatively, place the mouse over the \texttt{1\ +\ 1} line in
+  \texttt{test.R} file.
+\item
+  Then, \texttt{Ctrl\ (Cmd)\ +\ Enter} to run the line.
+\item
+  In this way, we can write procedures in the file and send to the
+  console to run.
+\item
+  There are functions to conduct basic calculations:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \OperatorTok{+}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \OperatorTok{*}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4} \OperatorTok{-}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{6} \OperatorTok{/}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2}\OperatorTok{^}\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  We can define objects and assign values to them.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\DecValTok{1}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{+}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  In addition to scalar object, we can define a vector by:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2}\OperatorTok{:}\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3}\OperatorTok{:}\DecValTok{20}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  3  5  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3 5 7 9
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{seq} is a function with initial value, end values, and the
+  increment value.
+\item
+  By typing \texttt{seq} in the \texttt{help}, we can read the manual
+  page of the function.
+\item
+  \texttt{seq\ \{base\}} means that this function is named \texttt{seq}
+  and is contained in the library called \texttt{base}.
+\item
+  Some libraries are automatically called when the R is launched, but
+  some are not.
+\item
+  Some libraries are even not installed.
+\item
+  We can install a library from a repository called \texttt{CRAN}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  To use the package, we have to load by:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Use \texttt{qplot} function in \texttt{ggplot2} library to draw a
+  scatter plot.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\OperatorTok{-}\FloatTok{0.8}\NormalTok{, }\OperatorTok{-}\FloatTok{0.6}\NormalTok{, }\OperatorTok{-}\FloatTok{0.4}\NormalTok{, }\OperatorTok{-}\FloatTok{0.2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.4}\NormalTok{, }\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{x}\OperatorTok{^}\DecValTok{3}
+\KeywordTok{qplot}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  We can write own functions.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{roll <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n) \{}
+\NormalTok{  die <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{6}
+\NormalTok{  dice <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(die, }\DataTypeTok{size =}\NormalTok{ n, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{  y <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(dice)}
+  \KeywordTok{return}\NormalTok{(y)}
+\NormalTok{\}}
+\KeywordTok{roll}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{roll}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{roll}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 42
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{roll}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 29
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  We can \texttt{set.seed} to obtain the same realization of random
+  variables.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\KeywordTok{roll}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 38
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\KeywordTok{roll}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 38
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  You can write the functions in the files with executing codes.
+\item
+  But I recommend you to separate files for writing functions and
+  executing codes.
+\item
+  \texttt{File\ \textgreater{}\ New\ File\ \textgreater{}\ R\ Rcript}
+  and name it as \texttt{functions.R} and save to \texttt{R} folder.
+\item
+  Cut the function you wrote and paste it in \texttt{functions.R}.
+\item
+  There are two ways of calling a function in \texttt{functions.R} from
+  \texttt{test.R}.
+\item
+  One way is to use \texttt{source} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{source}\NormalTok{(}\StringTok{"R/functions.R"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  When this line is read, the codes in the file are executed.
+\item
+  The other way is to bundle functions as a package and load it.
+\item
+  Choose \texttt{Build\ \textgreater{}\ Clean\ and\ Rebuild}.
+\item
+  This compiles files in \texttt{src} folder and bundle functions in
+  \texttt{R} folder and build a package named \texttt{ECON6120I}.
+\item
+  Now, the functions in \texttt{R} folder and \texttt{src} folder can be
+  used by loading the package by:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ECON6120I)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Best practice:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Write functions in the scratch file.
+  \item
+    As the functions are tested, move them to \texttt{R/functions.R}.
+  \item
+    Clean and rebuild and load them as a package.
+  \end{enumerate}
+\end{itemize}
+
+\subsection{Reproducible Reports using
+Rmarkdown}\label{reproducible-reports-using-rmarkdown}
+
+\begin{itemize}
+\tightlist
+\item
+  Reporting in empirical studies involves:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Writing texts;
+\item
+  Writing formulas;
+\item
+  Writing and implementing programs;
+\item
+  Demonstrating the results with figures and tables.
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Moreover, this has to be done in a \textbf{reproducible} manner:
+  Whoever can reproduce the output from the scratch.
+\item
+  ``Whoever'' includes yourself in the future. Because the revision
+  process of structural papers is usually lengthy, you often have to
+  remember the content few weeks or few months later. It is inefficient
+  if you cannot recall what you have done.
+\item
+  We use \texttt{Rmarkdown} to achieve this goal.
+\item
+  This assumes that you have LaTex installed.
+\item
+  Install package \texttt{Rmarkdown}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{File\ \textgreater{}\ New\ File\ \textgreater{}\ R\ Markdown...\ \textgreater{}\ HTML}
+  with title \texttt{Test}.
+\item
+  Save it in \texttt{assignment} folder with name \texttt{test.Rmd}.
+\item
+  From \texttt{Knit} tab, choose \texttt{Knit\ to\ HTML}.
+\item
+  This outputs the content to html file.
+\item
+  You can also choose \texttt{Knit\ to\ PDF} from \texttt{Knit} tab to
+  obtain output in pdf file.
+\item
+  Reports should be knit to pdf to submit.
+\item
+  But you can use html output while writing a report because html is
+  lighter to compile.
+\item
+  Refer to the \href{https://rmarkdown.rstudio.com/lesson-1.html}{help
+  page} for further information.
+\end{itemize}
+
+\chapter{Production and Cost Function Estimation}\label{production}
+
+\section{Motivations}\label{motivations}
+
+\begin{itemize}
+\tightlist
+\item
+  Estimating \textbf{production and cost functions} of producers is the
+  cornerstone of economic analysis.
+\item
+  Estimating the functions includes to separate the contribution of
+  observed inputs and the other factors, which is often referred to as
+  the \textbf{productivity}.
+\item
+  ``What determines productivity?'' \citep{Syverson2011}-type research
+  questions naturally follow.
+\item
+  The methods covered in this chapter are widely used across different
+  fields.
+\item
+  Some of them are variants from the standard methods.
+\end{itemize}
+
+\subsection{IO}\label{io}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Olley1996}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How much did the deregulation in the U.S. telecommunication
+    industry, in particular the divestiture of AT\&T in 1984, spurred
+    the productivity growth of the incumbent, facilitated entries, and
+    increased the aggregate productivity?
+  \item
+    To do so, the authors estimate the plant-level production functions
+    and productivity in the telecommunication industry.
+  \end{itemize}
+\item
+  \citet{Doraszelski2013a}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    What is the role of R\&D in determining the differences in
+    productivity across firms and the evolution of firm-level
+    productivity over time?
+  \item
+    To do so, the authors estimate the firm-level production functions
+    and productivity of Spanish manufacturing firms during 1990s in
+    which the transition probability of a productivity is a function of
+    the R\&D activities.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Development}\label{development}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Hsieh2009}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How large is the misallocation of inputs across manufacturing firms
+    in China and India compared to the U.S? How will the aggregate
+    productivity of China and India change if the degree of
+    misallocation is reduced to the U.S. level?
+  \item
+    To do so, the authors measure the revenue productivity of firms,
+    which should be the same across firms within an industry if there
+    were no distortion, and the measurement of the revenue productivity
+    requires to estimate the production function.
+  \end{itemize}
+\item
+  \citet{Gennaioli2013}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    What are the determinants of regional growth? Do geographic,
+    institutional, cultural, and human capital factors explain the
+    difference across regions?
+  \item
+    To do so, the authors construct the data set that covers 74\% of the
+    world's surface and 97\% of its GDP and estimate the production
+    function in which the above mentioned factors could affect the
+    productivity.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Trade}\label{trade}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Haskel2007}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Are there spillovers from FDI to domestic firms?
+  \item
+    To do so, the authors estimate the plant-level production function
+    of the U.K. manufacturing firms during 1973 and 1992 and study how
+    the foreign presence in the U.K. affected the productivity.
+  \end{itemize}
+\item
+  \citet{Loecker2011}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Does the removal of trade barriers induces efficiency gain for
+    producers?
+  \item
+    To do so, the author estimate the production functions of Belgian
+    textile industry during 1994-2002 in which the degree of trade
+    protection can affect the productivity level.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Management}\label{management}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Bloom2007}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How do management practices affect the firm productivity?
+  \item
+    To do so, the authors first estimate the production function and
+    productivity of manufacturing firms in developed countries, and then
+    study how the independently measured management practices of the
+    firms affect the estimated productivity.
+  \end{itemize}
+\item
+  \citet{Braguinsky2015}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How do changes in ownership affect the productivity and
+    profitability of firms?
+  \item
+    To do so, the authors estimate the production function for various
+    outputs including the physical output, return on capital and labor,
+    and the utilization rate, price level, using the cotton spinners
+    data in Japan during 1896 and 1920.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Education}\label{education}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Cunha2010}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    How do childhood and schooling interventions ``produce'' the
+    cognitive and non-cognitive skills of children?
+  \item
+    To do so, the authors estimate the mapping from childhood and
+    schooling interventions to children's cognitive and non-cognitive
+    skills, the ``production function'' of childhood environment and
+    education.
+  \end{itemize}
+\end{itemize}
+
+\section{Analyzing Producer
+Behaviors}\label{analyzing-producer-behaviors}
+
+\begin{itemize}
+\item
+  There are several levels of parameters that govern the behavior of
+  firms:
+\item
+  \textbf{Production function}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Add factor market structure.
+  \item
+    Add cost minimization.
+  \end{itemize}
+\item
+  \(\rightarrow\) \textbf{Cost function}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Add product market structure.
+  \item
+    Add profit maximization.
+  \end{itemize}
+\item
+  \(\rightarrow\) \textbf{Supply function (Pricing function)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Combine cost and supply (pricing) functions.
+  \end{itemize}
+\item
+  \(\rightarrow\) \textbf{Profit function}
+\item
+  Which parameter to identify?
+\item
+  Primitive enough to be invariant to relevant policy changes.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    e.g.~If you conduct a policy experiment that changes the factor
+    market structure, identifying cost functions is not enough.
+  \end{itemize}
+\item
+  As reduced-form as possible among such specifications.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    A reduced-form parameter usually can be rationalized by a class of
+    underlying structural parameters and institutional assumptions.
+    Thus, the analysis becomes robust to some misspecifications.
+  \item
+    e.g.~A non-parametric function \(C(q, w)\) can represent a cost
+    function of a producer who is not necessarily minimizing the cost.
+    If we derive a cost function from a production function and a factor
+    market structure, then the cost function cannot represent such a
+    non-optimization behavior.
+  \end{itemize}
+\end{itemize}
+
+\section{Production Function
+Estimation}\label{production-function-estimation}
+
+\subsection{Cobb-Douglas Specification as a
+Benchmark}\label{cobb-douglas-specification-as-a-benchmark}
+
+\begin{itemize}
+\tightlist
+\item
+  Most of the following argument carries over to a general model.
+\item
+  For firm \(j = 1, \cdots, J\) and time \(t = 1, \cdots, T\), we
+  observe output \(Y_{jt}\), labor \(L_{jt}\), and capital \(K_{jt}\).
+\item
+  We consider an asymptotic of \(J \to \infty\) for a fixed \(T\).
+\item
+  Assume Cobb-Douglas production function:
+
+  \begin{equation}
+  Y_{jt} = A_{jt}  L_{jt}^{\beta_l} K_{jt}^{\beta_k},
+  \end{equation}
+
+  where \(A_{jt}\) is firm \(j\) and time \(t\) specific unobserved
+  heterogeneity in the model.
+\item
+  Taking the logarithm gives:
+
+  \begin{equation}
+  y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \epsilon_{jt},
+  \end{equation}
+
+  where lowercase symbols represent natural logs of variables and
+  \(\ln(A_{jt}) = \beta_0 + \epsilon_{jt}\).
+\item
+  This can be regarded as a first-order log-linear approximation of a
+  production function.
+\item
+  Linear regression model! May OLS work?
+\end{itemize}
+
+\subsection{Potential Bias I:
+Endogeneity}\label{potential-bias-i-endogeneity}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\epsilon_{jt}\) contains everything that cannot be explained by the
+  observed inputs: better capital may be employed, a worker may have
+  obtained better skills, etc.
+\item
+  When the manager of a firm makes an input choice, she should have some
+  information about the realization of \(\epsilon_{jt}\).
+\item
+  Thus, the input choice can be correlated with \(\epsilon_{jt}\); for
+  example under static optimization of \(L_{jt}\) given \(K_{jt}\):
+
+  \begin{equation}
+  L_{jt} = \Bigg[\frac{p_{jt}}{w_{jt}} \beta_l \exp^{\beta_0 + \epsilon_{jt}} K_{jt}^{\beta_k}\Bigg]^{\frac{1}{1 - \beta_l}}.
+  \end{equation}
+\item
+  In this case, OLS estimator for \(\beta_l\) is \textit{positively}
+  biased, because when \(\epsilon_{jt}\) is high, \(l_{jt}\) is high and
+  thus the increase in output caused by \(\epsilon_{jt}\) is captured as
+  if caused by the increase in labor input.
+\item
+  The endogeneity problem was already recognized by
+  \citet{Marschak1944}.
+\end{itemize}
+
+\subsection{Potential Bias II:
+Selection}\label{potential-bias-ii-selection}
+
+\begin{itemize}
+\tightlist
+\item
+  Firms freely enter and exit market.
+\item
+  Therefore, a firm that had low \(\epsilon_{jt}\) is likely to exit.
+\item
+  However, if firms have high capital \(K_{jt}\), it can stay in the
+  market even if the realization of \(\epsilon_{jt}\) is very low.
+\item
+  Therefore, conditional on being in the market, there is a
+  \textit{negative} correlation between the capital \(K_{jt}\) and
+  \(\epsilon_{jt}\).
+\item
+  This problem occurs even if the choice of \(K_{jt}\) itself is not a
+  function of \(\epsilon_{jt}\).
+\end{itemize}
+
+\subsection{How to Resolve Endogeneity
+Bias?}\label{how-to-resolve-endogeneity-bias}
+
+\begin{itemize}
+\tightlist
+\item
+  Temporarily abstract away from entry and exit.
+\item
+  The data is balanced.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Panel data.
+\item
+  First-order condition for inputs.
+\item
+  Instrumental variable.
+\item
+  Olley-Pakes approach and its followers/critics.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Griliches1998} is a good survey of the history up to
+  Olley-Pakes approach.
+\item
+  \citet{Ackerberg2015} also offer a good survey and clarify problems
+  and implicit assumptions in Olley-Pakes approach.
+\end{itemize}
+
+\subsection{Panel Data}\label{panel-data}
+
+\begin{itemize}
+\tightlist
+\item
+  Assume that \(\epsilon_{jt} = \mu_j + \eta_{jt}\), where \(\eta_{jt}\)
+  is uncorrelated with input choices up to period \(t\):
+
+  \begin{equation}
+  y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \mu_j + \eta_{jt}.
+  \end{equation}
+\item
+  Then, by differentiating period \(t\) and \(t - 1\) equations, we get:
+
+  \begin{equation}
+  y_{jt} - y_{j, t - 1}= \beta_l (l_{jt} - l_{j, t - 1}) + \beta_k (k_{jt} - k_{j, t - 1}) + (\eta_{jt} - \eta_{j, t - 1}).
+  \end{equation}
+\item
+  Then, because \(\eta_{jt} - \eta_{j, t - 1}\) is uncorrelated either
+  with \(l_{jt} - l_{j, t - 1}\) or \(k_{jt} - k_{j, t - 1}\), we can
+  identify the parameter.
+\item
+  Problem:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Restrictive heterogeneity.
+  \item
+    When there are measurement errors, fixed-effect estimator can
+    generate higher biases than OLS estimator, because measurement
+    errors more likely to survive first-difference and
+    within-transformation.
+  \end{itemize}
+\end{itemize}
+
+\subsection{First-Order Condition for
+Inputs}\label{first-order-condition-for-inputs}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the first-order condition for inputs as the moment condition
+  \citep{McElroy1987}.
+\item
+  Closely related to the cost function estimation literature.
+\item
+  Need to specify the factor market structure and the nature of the
+  optimization problem for a firm.
+\item
+  Recently being center of attention again as one of the solutions to
+  the ``collinearity problem'' discussed below.
+\end{itemize}
+
+\subsection{Instrumental Variable}\label{productioniv}
+
+\begin{itemize}
+\item
+  Borrow the idea from the first-order condition approach that the input
+  choices are affected by some exogenous variables.
+\item
+  If we have instrumental variables that affect inputs but are
+  uncorrelated with errors \(\epsilon_{jt}\), then we can identify the
+  parameter by an instrumental variable method.
+\item
+  One candidate for the instrumental variables: \textbf{input prices}.
+\item
+  Input price affect input decision.
+\item
+  Input price is not correlated with \(\epsilon_{jt}\) if the factor
+  product market is competitive and \(\epsilon_{jt}\) is an
+  idiosyncratic shock to a firm.
+\item
+  Problems:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Input prices often lack cross-sectional variation.
+  \item
+    Cross-sectional variation is often due to unobserved input quality.
+  \end{itemize}
+\item
+  Another candidate for the instrumental variables: \textbf{lagged
+  inputs}.
+\item
+  If \(\epsilon_{jt}\) does not have auto-correlation, lagged inputs are
+  not correlated with the current shock.
+\item
+  If there are adjustment costs for inputs, then lagged inputs are
+  correlated with the current inputs.
+\item
+  Problem:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If \(\epsilon_{jt}\) has auto-correlation, all lagged inputs are
+    correlated with the errors: For example, if \(\epsilon_{jt}\) is
+    AR(1),
+    \(\epsilon_{jt} = \alpha \epsilon_{j, t - 1} + \nu_{j, t - 1} = \cdots \alpha^l \epsilon_{j, t - l} + \nu_{j, t - 1} + \cdots, \alpha^{l - 1} \nu_{j, t - l}\)
+    for any \(l\).
+  \end{itemize}
+\end{itemize}
+
+\subsection{Olley-Pakes Approach}\label{olley-pakes-approach}
+
+\begin{itemize}
+\tightlist
+\item
+  Exploit restrictions from the economic theory \citep{Olley1996}.
+\item
+  Write \(\epsilon_{jt} = \omega_{jt} + \eta_{jt}\), where
+  \(\omega_{jt}\) is an anticipated shock and \(\eta_{jt}\) is an
+  ex-post shock.
+\item
+  Inputs are correlated with \(\omega_{jt}\) but not with \(\eta_{jt}\)
+\item
+  The model is written as:
+
+  \begin{equation}
+  y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}.
+  \end{equation}
+\item
+  OP use economic theory to derive a valid proxy for the anticipated
+  shock \(\omega_{jt}\).
+\end{itemize}
+
+\subsection{Assumption I: Information
+Set}\label{assumption-i-information-set}
+
+\begin{itemize}
+\tightlist
+\item
+  The firm's information set at \(t\), \(I_{jt}\), includes current and
+  past productivity shocks \(\{\omega_{j\tau}\}_{\tau = 0}^t\) but does
+  not include future productivity shocks
+  \(\{\omega_{j\tau}\}_{\tau = t + 1}^{\infty}\).
+\item
+  The transitory shocks \(\eta_{jt}\) satisfy
+  \(\mathbb{E}\{\eta_{jt}|I_{jt}\} = 0\).
+\end{itemize}
+
+\subsection{Assumption II: First Order
+Markov}\label{assumption-ii-first-order-markov}
+
+\begin{itemize}
+\tightlist
+\item
+  Productivity shocks evolve according to the distribution:
+
+  \begin{equation}
+  p(\omega_{j, t + 1}|I_{jt}) = p(\omega_{j, t + 1}|\omega_{jt}), 
+  \end{equation}
+
+  and the distribution is known to firms and stochastically increasing
+  in \(\omega_{jt}\).
+\item
+  Then:
+
+  \begin{equation}
+  \omega_{jt} = \mathbb{E}\{\omega_{jt}|\omega_{j, t - 1}\} + \nu_{jt},
+  \end{equation}
+
+  and:
+
+  \begin{equation}
+  \mathbb{E}\{\nu_{jt}|I_{j, t - 1}\} = 0,
+  \end{equation}
+
+  by construction.
+\end{itemize}
+
+\subsection{Assumption III: Timing of Input
+Choices}\label{assumption-iii-timing-of-input-choices}
+
+\begin{itemize}
+\tightlist
+\item
+  Firms accumulate capital according to:
+
+  \begin{equation}
+  k_{jt} = \kappa(k_{j, t - 1}, i_{j, t - 1}),
+  \end{equation}
+
+  where investment \(i_{j, t - 1}\) is chosen in period \(t - 1\).
+\item
+  Labor input \(l_{jt}\) is non-dynamic and chosen at \(t\).
+\item
+  This assumption characterizes and distinguishes labor and capital.
+\item
+  Intuitively, it takes a full period for new capital to be ordered,
+  delivered, and installed.
+\end{itemize}
+
+\subsection{Assumption IV: Scalar
+Unobservable}\label{assumption-iv-scalar-unobservable}
+
+\begin{itemize}
+\tightlist
+\item
+  Firms' investment decisions are given by:
+
+  \begin{equation}
+  i_{jt} = f_t(k_{jt}, \omega_{jt}).
+  \end{equation}
+\item
+  This assumption places strong implicit restrictions on additional
+  firm-specific unobservables.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    No \textbf{across firm} unobserved heterogeneity in adjustment cost
+    of capital, in demand and labor market conditions, or in other parts
+    of the production function.
+  \item
+    Okay with \textbf{across time} unobserved heterogeneity.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Assumption IV: Strict
+Monotonicity}\label{assumption-iv-strict-monotonicity}
+
+\begin{itemize}
+\tightlist
+\item
+  The investment policy function \(f_t(k_{jt}, \omega_{jt})\) is
+  strictly increasing in \(\omega_{jt}\).
+\item
+  This holds if the realization of higher \(\omega_{jt}\) implies higher
+  expectation for future productivity (Assumption III) and if the
+  marginal product of capital is increasing in the expectation for
+  future productivity.
+\item
+  To verify the latter condition in a given game is often not easy.
+\end{itemize}
+
+\subsection{Two-step Approach: The First
+Step}\label{two-step-approach-the-first-step}
+
+\begin{itemize}
+\tightlist
+\item
+  Insert \(\omega_{jt} = h(k_{jt}, i_{jt})\) to the original equation to
+  get:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} &= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, i_{jt})}_{\text{unknown function of $k_{jt}$ and $i_{jt}$}} + \eta_{jt}\\
+  & \equiv \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  This is a \textbf{partially linear model}: see \citet{Ichimura2007}
+  for reference.
+\item
+  Because \(l_{jt}, k_{jt}\) and \(i_{jt}\) are uncorrelated with
+  \(\eta_{jt}\), we can identify \(\beta_l\) and \(\phi(\cdot)\) by
+  exploiting the moment condition:
+
+  \begin{equation}
+  \begin{split}
+  & \mathbb{E}\{\eta_{jt}|l_{jt}, k_{jt}, i_{jt}\} = 0\\
+  & \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_l l_{jt} - \phi(k_{jt}, i_{jt}) |l_{jt}, k_{jt}, i_{jt}\} = 0.
+  \end{split}
+  \end{equation}
+
+  \textbf{if there is enough variation} in \(l_{jt}, k_{jt}\) and
+  \(i_{jt}\).
+\item
+  This ``if there is enough variation'' part is actually problematic.
+  Discuss later.
+\item
+  Let \(\beta_l^0\) and \(\phi^0\) be the identified true parameters.
+\end{itemize}
+
+\subsection{Two-step Approach: The Second
+Step}\label{two-step-approach-the-second-step}
+
+\begin{itemize}
+\tightlist
+\item
+  Note that:
+
+  \begin{equation}
+  \omega_{jt} \equiv \phi(k_{jt}, i_{jt}) - \beta_0 - \beta_k k_{jt}.
+  \end{equation}
+\item
+  Therefore, we have:
+
+  \begin{equation}
+  \begin{split}
+  &y_{jt} - \beta_l^0 l_{jt} \\
+  &= \beta_0 + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}\\
+  &= \beta_0 + \beta_k k_{jt} + g(\omega_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
+  &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  \(\nu_{jt}\) and \(\eta_{jt}\) are independent of the covariates.
+\item
+  This is a \textbf{multiple-index model} with indices
+  \(\beta_0 + \beta_1 k_{jt}\) and \(\beta_0 + \beta_1 k_{j, t - 1}\)
+  where parameters of two indices are restricted to be the same: see
+  \citet{Ichimura2007} for reference.
+\item
+  We can identify \(\beta_0, \beta_k\) and \(g\) by exploiting the
+  moment condition:
+
+  \begin{equation}
+  \begin{split}
+  & \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0\\
+  & \Leftrightarrow \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0.
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Identification of the Anticipated
+Shocks}\label{identification-of-the-anticipated-shocks}
+
+\begin{itemize}
+\tightlist
+\item
+  If \(\phi, \beta_0, \beta_k\) are identified, then \(\omega_{jt}\) is
+  also identified by:
+
+  \begin{equation}
+  \omega_{jt} \equiv \phi(k_{jt}, i_{jt}) - \beta_0 - \beta_k k_{jt}.
+  \end{equation}
+\end{itemize}
+
+\subsection{\texorpdfstring{Two-Step Estimation of
+\citet{Olley1996}.}{Two-Step Estimation of @Olley1996.}}\label{two-step-estimation-of-olley1996.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{First step}: Estimate \(\beta_L\) and \(\phi\) in :
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} = \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
+  \end{split}
+  \end{equation}
+
+  by approximating \(\phi\) with some basis functions, say, polynomials
+  or splines:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} &= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{n = 1}^N \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
+  & = \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) + \tilde{\eta}_{jt}
+  \end{split}
+  \end{equation}
+
+  where \(P \to \infty\) when the sample size goes to infinity.
+\item
+  e.g.~second-order polynomial approximation:
+
+  \begin{equation}
+  \begin{split}
+  & \phi_1(k_{jt}, i_{jt}) = k_{jt}, \phi_2(k_{jt}, i_{jt}) = i_{jt}\\
+  & \phi_3(k_{jt}, i_{jt}) = k_{jt}^2, \phi_4(k_{jt}, i_{jt}) = i_{jt}^2\\
+  & \phi_5(k_{jt}, i_{jt}) = k_{jt} i_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  Once the basis functions are fixed, estimation is the same as the
+  linear model.
+\item
+  But the inference (the computation of the standard deviation) is
+  difference, because of the approximation error.
+\item
+  See \citet{Chen2007} for reference.
+\item
+  Let \(\hat{\beta}_l\) and \(\hat{\phi}\) be the estimates from the
+  first step.
+\item
+  \textbf{Second step}: Estimate \(\beta_0\), \(\beta_k\), and \(g\) in:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} - \hat{\beta}_l l_{jt}& = \beta_0 + \beta_k k_{jt} + g[\hat{\phi}(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt}\\
+  &+ [\beta_l - \hat{\beta}_l] l_{jt}\\
+  &+ \left\{g[\phi(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] - g[\hat{\phi}(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\right\}\\
+  & = \beta_0 + \beta_k k_{jt} + g[\hat{\phi}(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \tilde{\eta}_{jt}
+  \end{split}
+  \end{equation}
+
+  by approximating \(g\) by some basis functions, say, polynomials or
+  splines.
+\end{itemize}
+
+\subsection{From An Economic Models to An Econometric
+Model}\label{from-an-economic-models-to-an-econometric-model}
+
+\begin{itemize}
+\tightlist
+\item
+  Starting from economic model with some unobserved heterogeneity, we
+  reach some reduced-form model.
+\item
+  If the resulting model belongs to a class of econometric models whose
+  identification and estimation are established, we can simply apply the
+  existing methods.
+\end{itemize}
+
+\subsection{How to Resolve Selection
+Bias}\label{how-to-resolve-selection-bias}
+
+\begin{itemize}
+\tightlist
+\item
+  Use propensity score to correct selection bias: \citet{Ahn1993}.
+\item
+  At the beginning of period \(t\), after observing \(\omega_{jt}\),
+  firm \(j\) decides whether to continue the business
+  (\(\chi_{jt} = 1\)) or exit (\(\chi_{jt} = 0)\).
+\item
+  Assume that the difference between continuation and exit values is
+  strictly increasing in \(\omega_{jt}\).
+\item
+  Then, there is a threshold \(\underline{\omega}(k_{jt})\) such that:
+
+  \begin{equation}
+  \chi_{jt} = 
+  \begin{cases}
+  1 &\text{   if   } \omega_{jt} \ge \underline{\omega}(k_{jt})\\
+  0 &\text{   otherwise.}
+  \end{cases}
+  \end{equation}
+\item
+  We can only observe firms that satisfy \(\chi_{jt} = 1\).
+\end{itemize}
+
+\subsection{Correction in the First
+Step}\label{correction-in-the-first-step}
+
+\begin{itemize}
+\tightlist
+\item
+  In the first step, we need no correction because:
+
+  \begin{equation}
+  \begin{split}
+  &\mathbb{E}\{y_{jt}|l_{jt}, k_{jt}, i_{jt}, \chi_{jt} = 1 \}\\
+  &=\beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \mathbb{E}\{\eta_{jt}|\chi_{jt} = 1\}\\
+  &= \beta_l l_{jt} + \phi(k_{jt}, i_{jt}).
+  \end{split}
+  \end{equation}
+\item
+  Ex-post shock \(\eta_{jt}\) is independent of continuation/exit
+  decision. Therefore, we can identify \(\beta_l\) and \(\phi(\cdot)\)
+  as in the previous case.
+\end{itemize}
+
+\subsection{Correction in the Second Step I: The Source of
+Bias}\label{correction-in-the-second-step-i-the-source-of-bias}
+
+\begin{itemize}
+\tightlist
+\item
+  One the other hand, we need correction in the second step, because:
+
+  \begin{equation}
+  \begin{split}
+  &\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+  &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{jt}, i_{jt}) - (\beta_0 + \beta_k k_{jt})]\\
+  & + \mathbb{E}\{\nu_{jt} + \eta_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\}\\
+  &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\\
+  & + \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}.
+  \end{split}
+  \end{equation}
+
+  and
+
+  \begin{equation}
+  \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
+  \end{equation}
+
+  since anticipated shock matters continuation/exit decision in period
+  \(t\).
+\end{itemize}
+
+\subsection{Correction in the Second Step II: Conditional Exit
+Probability}\label{correction-in-the-second-step-ii-conditional-exit-probability}
+
+\begin{itemize}
+\tightlist
+\item
+  Let's see that the conditional expectation:
+
+  \begin{equation}
+  \begin{split}
+  &\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \}\\
+  &=\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
+  &=\int_{\underline{\omega}(k_{jt})} \omega_{jt} \frac{p(\omega_{jt}|\omega_{j, t - 1})}{\int_{\underline{\omega}(k_{jt})} p(\omega|\omega_{j, t - 1}) d\omega } d \omega_{jt}\\
+  &\equiv \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt})),
+  \end{split}
+  \end{equation}
+
+  is a function of \(\omega_{j, t - 1}\) and
+  \(\underline{\omega}(k_{jt})\).
+\end{itemize}
+
+\subsection{Correction in the Second Step III: Invertibility in
+Threshold}\label{correction-in-the-second-step-iii-invertibility-in-threshold}
+
+\begin{itemize}
+\tightlist
+\item
+  The propensity of continuation conditional on observed information up
+  to period \(t - 1\):
+
+  \begin{equation}
+  \begin{split}
+  P_{jt} &\equiv \mathbb{P}\{\chi_{jt} = 1|\mathcal{I}_{j, t - 1}\}\\
+  &= \mathbb{P}\{\omega_{jt} \ge \underline{\omega}(k_{jt}) |\mathcal{I}_{j, t - 1}\}\\
+  &= \mathbb{P}\{g(\omega_{j, t - 1}) + \nu_{jt} \ge \underline{\omega}[(1 - \delta) k_{j, t - 1} + i_{j, t - 1}]|\mathcal{I}_{j, t - 1} \}\\
+  &= \mathbb{P}\{ \chi_{jt} = 1| i_{j, t - 1}, k_{j, t - 1}\}.
+  \end{split}
+  \end{equation}
+\item
+  \(\rightarrow\) It suffices to condition on
+  \(i_{j, t - 1}, k_{j, t - 1}\).
+\item
+  We also have:
+
+  \begin{equation}
+  P_{jt} = \mathbb{P}\{\chi_{jt} = 1| \omega_{j, t - 1}, \underline{\omega}(k_{jt})\},
+  \end{equation}
+
+  and it is invertible in \(\underline{\omega}(k_{jt})\), that is,
+
+  \begin{equation}
+  \underline{\omega}(k_{jt}) \equiv \psi(P_{jt}, \omega_{j, t - 1}).
+  \end{equation}
+\end{itemize}
+
+\subsection{Correction in the Second Step IV: Controlling the
+Threshold}\label{correction-in-the-second-step-iv-controlling-the-threshold}
+
+\begin{itemize}
+\tightlist
+\item
+  Now, he have:
+
+  \begin{equation}
+  \begin{split}
+  &\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+  &= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}\\
+  &= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt}))\\
+  &= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \psi(P_{jt}, \omega_{j, t - 1}))\\
+  &\equiv \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}(\omega_{j, t - 1}, P_{jt})\\
+  &= \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1}), P_{jt}].
+  \end{split}
+  \end{equation}
+\item
+  At the end, the only difference is to include \(P_{jt}\) as a
+  covariate.
+\item
+  \(P_{jt}\) is a \textbf{known} function of \(i_{j, t - 1}\) and
+  \(k_{j, t - 1}\).
+\item
+  Even if we condition on \(P_{jt} = p\), there are still many
+  combinations of \(i_{j, t - 1}\) and \(k_{j, t - 1}\) that gives
+  \(P_{jt} = p\).
+\item
+  With this remaining variation, we can identify \(\beta_0\),
+  \(\beta_k\), and \(\tilde{\tilde{g}}\) by the same argument as the
+  case without selection, for each \(P_{jt} = p\).
+\end{itemize}
+
+\subsection{\texorpdfstring{Three Step Estimation of
+\citet{Olley1996}}{Three Step Estimation of @Olley1996}}\label{three-step-estimation-of-olley1996}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Zero step}: Estimate the propensity score:
+
+  \begin{equation}
+  P_{jt} = 1\{\chi_{jt} = 1| i_{j, t - 1}, k_{j, t - 1}\},
+  \end{equation}
+
+  by a kernel estimator.
+\item
+  Insert the resulting estimates \(\widehat{P}_{jt}\) into the first and
+  second steps.
+\end{itemize}
+
+\subsection{Zero Investment Problem}\label{zero-investment-problem}
+
+\begin{itemize}
+\tightlist
+\item
+  One of the key assumptions in OP method was invertibility between
+  anticipated shock and investment:
+
+  \begin{equation}
+  \omega_{jt} = i^{-1}(k_{jt}, i_{jt}) \equiv h(k_{jt}, i_{jt}).
+  \end{equation}
+\item
+  However, in micro data, zero investment is a rule rather than
+  exceptions.
+\item
+  Then, the invertibility does not hold globally: there are some region
+  of the anticipated shock in which the investment takes value zero.
+\end{itemize}
+
+\subsection{Tackle Zero Investment Problem I: Discard Some
+Data}\label{tackle-zero-investment-problem-i-discard-some-data}
+
+\begin{itemize}
+\tightlist
+\item
+  Discard a data \((j, t)\) such that \(i_{j, t - 1} = 0\).
+\item
+  Use a data \((j, t)\) such that \(i_{j, t - 1} > 0\).
+\item
+  Then, invertibility recovers on this selected sample.
+\item
+  This \textbf{does not} cause bias in the estimator because
+  \(\nu_{jt}\) in :
+
+  \begin{equation}
+  \beta_0 + \beta_l k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt},
+  \end{equation}
+
+  is independent of the event up to \(t - 1\), including
+  \(i_{j, t - 1}\).
+\item
+  However, this \textbf{does} cause information loss. The loss is high
+  if the proportion of the sample such that \(i_{j, t - 1} = 0\) is
+  high.
+\end{itemize}
+
+\subsection{Tackle Zero Investment Problem II: Use Another
+Proxy}\label{tackle-zero-investment-problem-ii-use-another-proxy}
+
+\begin{itemize}
+\tightlist
+\item
+  Investment is just a possible proxy for the anticipated shock.
+\item
+  Intermediate inputs can be used as proxies as well
+  \citep{Levinsohn2003}.
+\item
+  The problem is that these intermediate inputs are included in the
+  gross production function, whereas investment is excluded.
+\item
+  Let \(m_{jt}\) be the log material input, and assume that the
+  production function takes the form of:
+
+  \begin{equation}
+  y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \beta_m m_{jt} + \omega_{jt} + \eta_{jt}.
+  \end{equation}
+\item
+  In addition, assume that the \textbf{optimal policy function} for
+  \(m_{jt}\) is strictly monotonic in the ex-ante shock, and hence is
+  invertible:
+
+  \begin{equation}
+  m_{jt} = m(k_{jt}, \omega_{jt}) \Leftrightarrow \omega_{jt} = m^{-1}(m_{jt}, k_{jt}) \equiv h(m_{jt}, k_{jt}). \label{eq:material}
+  \end{equation}
+\item
+  \textbf{First step}:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \beta_m m_{jt} + h(m_{jt}, k_{jt}) + \eta_{jt}\\
+  &= \beta_l l_{jt} + \phi(m_{jt}, k_{jt}) + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  We can identify \(\beta_l\) and \(\phi\) by exploiting the moment
+  condition:
+
+  \begin{equation}
+  \begin{split}
+  & \mathbb{E}\{\eta_{jt}|l_{jt}, m_{jt}, k_{jt}, i_{jt}\} = 0\\
+  & \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \phi(m_{jt}, k_{jt}) |l_{jt}, m_{jt}, k_{jt}\} = 0,
+  \end{split}
+  \end{equation}
+
+  if \textbf{there is enough variation} in \(l_{jt}, m_{jt}, k_{jt}\).
+\item
+  \textbf{Second step}:
+
+  \begin{equation}
+  \begin{split}
+  &y_{jt} - \beta_l^0 l_{jt}\\
+  & = \beta_k k_{jt} + \beta_m m_{jt} + g[\phi^0(m_{j, t - 1}, k_{j, t - 1}) - \beta_k k_{j, t - 1} - \beta_m m_{j, t - 1}]\\
+  & + \nu_{jt} + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  We can identify \(\beta_k\), \(\beta_m\), and \(g\) by exploiting the
+  moment condition:
+
+  \begin{equation}
+  \begin{split}
+  \mathbb{E}\{\nu_{jt} + \eta_{jt} | k_{jt}, m_{j, t - 1}, k_{j,t - 1}\} = 0.
+  \end{split}
+  \end{equation}
+\item
+  Because \(m_{jt}\) is correlated with \(\nu_{jt}\), the moment should
+  not condition on \(m_{jt}\).
+\item
+  The identification of \(\beta_{m}\) comes from
+  \(\beta_m m_{j, t - 1}\).
+\end{itemize}
+
+\subsection{\texorpdfstring{One-step Estimation of \citet{Olley1996} and
+\citet{Levinsohn2003}}{One-step Estimation of @Olley1996 and @Levinsohn2003}}\label{one-step-estimation-of-olley1996-and-levinsohn2003}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{Levinsohn2003} can be estimated in the similar two-step method.
+\item
+  We can jointly estimate the parameters in first and second steps to
+  improve the efficiency \citep{Wooldridge2009}.
+\item
+  We estimate under the assumptions of \citet{Olley1996}:
+
+  \begin{equation}
+  y_{jt} = \beta_0 + \beta_1 l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}.
+  \end{equation}
+\item
+  The first step exploits the following moment:
+
+  \begin{equation}
+  \mathbb{E}\{\eta_{jt}|l_{jt}, k_{jt}, i_{jt}\} = 0,
+  \end{equation}
+
+  that is:
+
+  \begin{equation}
+  \mathbb{E}\{y_{jt} - \beta_1 l_{jt} - \beta_0 - \beta_k k_{jt} - \omega(k_{jt}, i_{jt})|l_{jt}, k_{jt}, i_{jt}\} = 0. \label{eq:opfirst}
+  \end{equation}
+\item
+  We can reinforce the moment condition as:
+
+  \begin{equation}
+  \mathbb{E}\{\eta_{jt}|l_{jt}, k_{jt}, i_{jt}, \cdots, l_{j1}, k_{j1}, i_{j1}\} = 0
+  \end{equation}
+
+  if we assume that lagged inputs are correlated with the current inputs
+  and \(\eta_{jt}\) is independent.
+\item
+  The second step exploits the following moment:
+
+  \begin{equation}
+  \mathbb{E}\{\nu_{jt}|k_{jt}, i_{j, t - 1}, l_{j, t - 1}\} = 0,
+  \end{equation}
+
+  that is:
+
+  \begin{equation}
+  \mathbb{E}\{y_{jt} - \beta_0 - \beta_1 l_{jt} - \beta_k k_{jt} - g[\omega(k_{j,t - 1}, i_{j, t - 1})]|k_{jt}, i_{j, t - 1}, l_{j, t - 1}\} = 0. \label{eq:opsecond}
+  \end{equation}
+\item
+  We can reinforce the moment condition as:
+
+  \begin{equation}
+  \mathbb{E}\{\nu_{jt}|k_{jt}, i_{j, t - 1}, l_{j, t - 1}, \cdots, k_{j1}, i_{j1}, l_{j1}\} = 0,
+  \end{equation}
+
+  if we assume that lagged input are correlated with the current inputs
+  and \(\nu_{jt} + \eta_{jt}\) are independent.
+\item
+  We can construct a GMM estimator based on equations \eqref{eq:opfirst}
+  and \eqref{eq:opsecond}.
+\item
+  The one-step estimator can be more efficient but can be
+  computationally heavier than the two-step estimator.
+\end{itemize}
+
+\subsection{Scalar Unobservable Problem: Finite-order Markov
+Process}\label{scalar-unobservable-problem-finite-order-markov-process}
+
+\begin{itemize}
+\tightlist
+\item
+  Borrow the idea of using the first-order condition to resolve the
+  collinearity problem \citep{Gandhi2017a}.
+\item
+  We have assumed that anticipated shocks follow a first-order Markov
+  process:
+
+  \begin{equation}
+  \omega_{jt} = g(\omega_{j, t - 1}) + \nu_{jt}.
+  \end{equation}
+\item
+  However, it may be true that it has more than one lags, for example:
+
+  \begin{equation}
+  \omega_{jt} = g(\omega_{j, t - 1}, \omega_{j, t - 2}) + \nu_{jt}.
+  \end{equation}
+\item
+  Then, we need proxies as many as the number of unobservables:
+
+  \begin{equation}
+  \begin{pmatrix}
+  i_{jt} \\ m_{jt} 
+  \end{pmatrix}
+  = \Gamma(k_{jt}, \omega_{jt}, \omega_{j, t - 1}),
+  \end{equation}
+
+  such that the policy function for the proxies is a bijection in
+  \((\omega_{jt}, \omega_{j, t - 1})\).
+\item
+  Then, we can have:
+
+  \begin{equation}
+  \omega_{jt} = \Gamma_1^{-1}(k_{jt}, i_{jt}, m_{jt}).
+  \end{equation}
+\item
+  The reminder goes as in the standard OP method.
+\end{itemize}
+
+\subsection{Scalar Unobservable Problem: Demand and Productivity
+Shocks}\label{scalar-unobservable-problem-demand-and-productivity-shocks}
+
+\begin{itemize}
+\tightlist
+\item
+  There may be a demand shock \(\mu_{jt}\) that also follows first-order
+  Markov process.
+\item
+  Then, the policy function depend both on \(\mu_{jt}\) and
+  \(\omega_{jt}\).
+\item
+  We again need proxies as many as the number of unobservable.
+\item
+  Suppose that we can observe the price of the firm \(p_{jt}\).
+\item
+  Inverting the policy function:
+
+  \begin{equation}
+  \begin{pmatrix}
+  i_{jt}\\ p_{jt}
+  \end{pmatrix}
+  = \Gamma(k_{jt}, \omega_{jt}, \mu_{jt}).
+  \end{equation}
+
+  yields:
+
+  \begin{equation}
+  \omega_{jt} = \Gamma_1^{- 1}(k_{jt}, i_{jt}, p_{jt}).
+  \end{equation}
+\item
+  If \(\omega_{jt}\) only depends on \(\omega_{j, t - 1}\) but not on
+  \(\mu_{j, t - 1}\), then the second step of the modified OP method is
+  to estimate:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} - \hat{\beta}_l l_{jt} 
+  &= \beta_0 + \beta_k k_{jt}\\
+  & + g(\omega_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
+  &= \beta_0 + \beta_k k_{jt}\\
+  & + g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}) + \nu_{jt} + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  It goes as in the standard OP method.
+\item
+  If \(\omega_{jt}\) depends both on \(\omega_{j, t - 1}\) and
+  \(\mu_{j, t - 1}\), the second step regression equation will be:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} - \hat{\beta}_l l_{jt} 
+  &= \beta_0 + \beta_k k_{jt}\\
+  & + g(\omega_{j, t - 1}, \mu_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
+  &= \beta_0 + \beta_k k_{jt}\\
+  & + g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}, \mu_{j, t - 1}) + \nu_{jt} + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  We still have to control \(\mu_{j, t - 1}\) in the second step.
+\item
+  Invert the policy function for \(\mu_{j, t - 1}\) to get:
+
+  \begin{equation}
+  \mu_{j, t - 1} = \Gamma_2^{- 1}(k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1}),
+  \end{equation}
+
+  and plug it into the second step regression equation to get:
+
+  \begin{equation}
+  \begin{split}
+  &y_{jt} - \hat{\beta}_l l_{jt}\\
+  &= \beta_0 + \beta_k k_{jt}\\
+  &+g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}, \Gamma_2^{- 1}(k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})) + \nu_{jt} + \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  The parameters \(\beta_0\) and \(\beta_k\) \textbf{cannot} be
+  identified only with this observation, because \(\Gamma_2^{-1}\) is
+  \textbf{unknown non-parametric} function: it can mean any function of
+  \((k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})\).
+\item
+  To estimate such a model, we jointly estimate the demand function
+  along with the production function.
+\item
+  At this point, we do not investigate it further because we have not
+  yet learned how to estimate the demand function.
+\item
+  For now just keep in mind that:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    There has to be as many proxies as the dimension of the unobservable
+    state variables.
+  \item
+    It is okay that the unobservable state variable includes a demand
+    shock.
+  \item
+    It can be problematic when the unobservable demand shock affect the
+    evolution of the anticipated productivity shock.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Collinearity Problem}\label{collinearity-problem}
+
+\begin{itemize}
+\tightlist
+\item
+  The collinearity problem is formally pointed out by
+  \citet{Ackerberg2015}.
+\item
+  This paper is finally published in 2015, but has been circulated since
+  2005.
+\item
+  We assumed that \(k_{jt}\) and \(\omega_{jt}\) are state variables.
+\item
+  Then the policy function for labor input should take the form of:
+
+  \begin{equation}
+  l_{jt} = l(k_{jt}, \omega_{jt}).
+  \end{equation}
+\item
+  However, because \(\omega_{jt} = h(i_{jt}, k_{jt})\), we have:
+
+  \begin{equation}
+  l_{jt} = l[k_{jt}, h(i_{jt}, k_{jt})] = \tilde{l}(i_{jt}, k_{jt}).
+  \end{equation}
+\item
+  Therefore, in the first stage, we encounter a multicollinearity
+  problem:
+
+  \begin{equation}
+  \begin{split}
+  y_{jt} &= \beta_0 + \beta_l \tilde{l}(i_{jt}, k_{jt}) + \phi(i_{jt}, k_{jt}) + \eta_{jt}\\
+  &\equiv \tilde{\phi}(i_{jt}, k_{jt}).
+  \end{split}
+  \end{equation}
+\item
+  Thus, \(\beta_l\) cannot be identified in the first step.
+\item
+  The second step becomes:
+
+  \begin{equation}
+  y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\tilde{\phi}(i_{j, t - 1}, k_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{jt}] + \nu_{jt} + \eta_{jt}
+  \end{equation}
+\item
+  Because \(l_{jt}\) is correlated with \(\nu_{jt}\), moment can only
+  condition on \(l_{j, t - 1}\).
+\item
+  However, conditioning on \(k_{j, t - 1}\) and \(i_{j, t - 1}\), again
+  there is no remaining variation in \(l_{j, t - 1}\).
+\item
+  Therefore, \(\beta_l\) cannot be identified either in the second step.
+\item
+  \textbf{\(\beta_l\) cannot be identified!}
+\end{itemize}
+
+\subsection{Tackle Collinearity Problem: Peculiar
+Assumptions}\label{tackle-collinearity-problem-peculiar-assumptions}
+
+\begin{itemize}
+\tightlist
+\item
+  To make Olley-Pakes/Levinsohn-Petrin approach workable, we need
+  peculiar data generating process for \(l_{jt}\).
+\item
+  Consider Levinsohn-Petrin framework.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  There is an optimization error in \(l_{jt}\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If it is not i.i.d over time, it becomes a state variable and enters
+    to the policy for \(m_{jt}\), violating the scalar unobserved
+    heterogeneity assumption of \(m_{jt}\).
+  \item
+    If there is an optimization error for \(m_{jt}\), this again
+    violates the scalar unobserved heterogeneity assumption.
+  \end{itemize}
+\item
+  \(k_{jt}\) is realized, \(\omega_{jt}\) is observed, \(m_{jt}\) and
+  \(i_{jt}\) are determined, a new i.i.d. unexpected shock is observed,
+  \(l_{jt}\) is determined, and \(\eta_{jt}\) is observed.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If it is not i.i.d over time, it becomes a state variable and enters
+    to the policy for \(m_{jt}\), violating the scalar unobserved
+    heterogeneity assumption.
+  \end{itemize}
+\item
+  \(k_{jt}\) is realized, an unexpected shock is observed, \(l_{jt}\) is
+  determined, \(\omega_{jt}\) is observed, \(m_{jt}\) and \(i_{jt}\) are
+  determined, and \(\eta_{jt}\) is observed (\citet{Ackerberg2016}
+  recommends this assumption).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In this case, the unexpected shock can be serially correlated,
+    because it suffices to know \(k_{jt}\), \(i_{jt}\), \(l_{jt}\) to
+    decide \(m_{jt}\). It does not have to predict the future unexpected
+    shock based on the realization of the current shock because
+    \(m_{jt}\) is a static decision.
+  \item
+    This changes the optimal policy function of \(m_{jt}\)
+    \eqref{eq:material} to:
+
+    \begin{equation}
+    m_{jt} = m(k_{jt}, \omega_{jt}, l_{jt}).
+    \end{equation}
+  \item
+    The first step:
+
+    \begin{equation}
+    \begin{split}
+    y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + h(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}\\
+    &= \psi(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}.\\
+    \Rightarrow & \mathbb{E}\{y_{jt} - \psi(k_{jt}, m_{jt}, l_{jt})|k_{jt}, m_{jt}, l_{jt}\} = 0.
+    \end{split}
+    \end{equation}
+  \item
+    The second step:
+
+    \begin{equation}
+    \begin{split}
+    y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}] + \nu_{jt} + \eta_{jt}\\
+    \Rightarrow & \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \beta_k k_{jt} - g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}]|k_{j, t - 1}, i_{j, t - 1}, l_{j, t - 1}, m_{j, t - 1}\}
+    \end{split}
+    \end{equation}
+  \item
+    \(m_{jt}\) has to be excluded from the production function, i.e., it
+    has to be a value-added production function. Otherwise,
+    \(\beta_m m_{jt}\) and \(\beta_m m_{j, t - 1}\) appear in the second
+    step. Because \(m_{jt}\) is correlated with \(\nu_{jt}\), the only
+    hope is to vary \(m_{j, t - 1}\). But there is no additional
+    variation in \(m_{j, t - 1}\) conditional on \(k_{j, t - 1}\),
+    \(i_{j, t - 1}\), and \(l_{j, t - 1}\).
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Tackle Collinearity Problem: Share
+Regression}\label{tackle-collinearity-problem-share-regression}
+
+\begin{itemize}
+\item
+  How to avoid the peculiar assumptions on shocks and timing of
+  decisions?
+\item
+  How to identify gross production function avoiding the third
+  assumption by \citet{Ackerberg2015}?
+\item
+  Return to the old literature using the first-order condition.
+\item
+  Let \(w_t\) be wage and \(p_t\) be the product price.
+\item
+  Assume that the factor market is competitive.
+\item
+  Then, the first-order condition for profit maximization with respect
+  to \(L_{jt}\) is:
+
+  \begin{equation}
+  \begin{split}
+  &P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}} = w_t\\
+  &\Leftrightarrow \frac{P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}}}{F(L_{jt}, K_{jt}) } = \frac{w_t}{F(L_{jt}, K_{jt}) }\\
+  &\Leftrightarrow \frac{F_L(L_{jt}, K_{jt}) L_{jt}}{F(L_{jt}, K_{jt})  e^{\eta_{jt}} } = \frac{w_t L_{jt}}{P_t \underbrace{F(L_{jt}, K_{jt}) e^{\omega_{jt}} e^{\eta_{jt}}}_{Y_{jt}} },
+  \end{split}
+  \end{equation}
+
+  where the right hand side is expenditure share to the labor, which is
+  observed.
+\item
+  Furthermore, on the left hand side, we only have \(\eta_{jt}\), which
+  is independent of inputs.
+\item
+  Let \(s_{jt}\) be the log of expenditure share to the labor, and take
+  a log of the previous equation gives:
+
+  \begin{equation}
+  \begin{split}
+  s_{jt} &= \log [F_L(L_{jt}, K_{jt}) L_{jt} \mathbb{E} e^{\eta_{jt}} / F(L_{jt}, K_{jt})] - \eta_{jt}\\
+  & = \log(\beta_l) + \ln \mathbb{E} e^{\eta_{jt}} - \eta_{jt}.
+  \end{split}
+  \end{equation}
+\item
+  Remember that the coefficient in the Cobb-Douglas function is equal to
+  the expenditure share.
+\item
+  In general, share regression provides additional variation to identify
+  the elasticity of anticipated production with respect to the labor.
+  Then we can follow the standard OP method to recover other parameters.
+\end{itemize}
+
+\section{Cost Function Estimation}\label{cost-function-estimation}
+
+\subsection{Cost Function: Duality}\label{cost-function-duality}
+
+\begin{itemize}
+\item
+  Given a function \(y = F(x)\) such that:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Add factor market structure.
+  \item
+    Add cost minimization.
+  \end{itemize}
+\item
+  \(\rightarrow\) There exists a unique \textbf{cost function}
+  \(c = C(y, p)\):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Positivity}: positive for positive input prices and a
+    positive.
+  \item
+    \textbf{Homogeneity}: homogeneous of degree one in the input prices.
+  \item
+    \textbf{Monotonicity}: increasing in the input prices and in the
+    level of output.
+  \item
+    \textbf{Concavity}: concave in the input prices.
+  \end{itemize}
+\item
+  Given a function \(c = C(y, p)\) such that:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Positivity}: positive for positive input prices and a
+    positive.
+  \item
+    \textbf{Homogeneity}: homogeneous of degree one in the input prices.
+  \item
+    \textbf{Monotonicity}: increasing in the input prices and in the
+    level of output.
+  \item
+    \textbf{Concavity}: concave in the input prices.
+  \end{itemize}
+\item
+  \(\rightarrow\) There exists a unique production function \(F(x)\)
+  that yields \(C(y, p)\) as a solution to the cost minimization
+  problem:
+
+  \begin{equation}
+  C(y, p) = \min_{x} p'x \text{   s.t.   } F(x) \ge y.
+  \end{equation}
+\item
+  If the latter condition holds, the function \(C\) is said to be
+  \textbf{integrable}.
+\item
+  It is rare that you can find a closed-form cost function of a
+  production function.
+\item
+  It makes sense to start from cost function.
+\item
+  The duality ensures that there is a one-to-one mapping between a class
+  of cost function and a class of production function.
+\item
+  If you accept competitive factor markets and cost minimization,
+  identifying a cost function is equivalent to identifying a production
+  function.
+\item
+  We used this idea in the last slides to identify the parameters
+  regarding static decision variables.
+\item
+  See \citet{Jorgenson1986} for the literature in this topic up to the
+  mid 80s.
+\end{itemize}
+
+\subsection{Translog Cost Function}\label{translog-cost-function}
+
+\begin{itemize}
+\tightlist
+\item
+  One of the popular specifications:
+
+  \begin{equation}
+  \begin{split}
+  \ln c &= \alpha_0 + \alpha_p' \ln p + \alpha_y \ln y + \frac{1}{2} \ln p' B_{pp} \ln p\\
+  & + \ln p' \beta_{py} \ln y + \frac{1}{2}\beta_{yy}(\ln y)^2.
+  \end{split}
+  \end{equation}
+\item
+  It assumes that the first and second order elasticities are constant.
+\item
+  A second-order (log) Taylor approximation of a general cost function.
+\end{itemize}
+
+\subsection{Translog Cost Function:
+Integrability}\label{translog-cost-function-integrability}
+
+\begin{itemize}
+\tightlist
+\item
+  Translog cost function is known to be integrable if the following
+  conditions hold:
+\item
+  \textbf{Homogeneity}: the cost shares and the cost flexibility are
+  homogeneity of degree zero: \(B_{pp}1 = 0\), \(\beta_{py}'1 = 0\).
+\item
+  \textbf{Cost exhaustion}: the sum of cost shares is equal to unity:
+  \(\alpha_p'1 = 1\), \(B_{pp}'1 = 0\), \(\beta_{py}'1 = 0\).
+\item
+  \textbf{Symmetry}: the matrix of share elasticities, biases of scale,
+  and the cost flexibility elasticity is symmetric:
+
+  \begin{equation}
+  \begin{pmatrix}
+  B_{pp} & \beta_{py}\\
+  \beta_{py}' & \beta_{yy}
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+  B_{pp} & \beta_{py}\\
+  \beta_{py}' & \beta_{yy}
+  \end{pmatrix}'.
+  \end{equation}
+\item
+  \textbf{Monotonicity}: The matrix of share elasticities
+  \(B_{pp} + vv' - diag(v)\) is positive semi-definite.
+\end{itemize}
+
+\subsection{Two Approaches}\label{two-approaches}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Cost data approach.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Use accounting cost data.
+  \item
+    It does not depend on behavioral assumption.
+  \item
+    One can impose restrictions of assuming cost minimization.
+  \item
+    The accounting cost data may not represent economic cost.
+  \end{itemize}
+\item
+  Revealed preference approach.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Assume decision problem for firms.
+  \item
+    Assume profit maximization.
+  \item
+    Reveal the costs from firm's equilibrium strategy.
+  \item
+    It depends on structural assumptions.
+  \item
+    It reveals the cost as perceived by firms.
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Cost Data Approach}\label{cost-data-approach}
+
+\begin{itemize}
+\tightlist
+\item
+  Estimating a cost function using cost data from accounting data.
+\item
+  \citet{McElroy1987} is one of the most flexible and robust frameworks.
+\item
+  The approach is somewhat getting less popular in IO researchers.
+\item
+  Recently, the approach is not popular among IO researchers.
+\item
+  I \textit{conjecture} one of the reasons for this is that IO
+  researchers believe cost data taken from accounting information does
+  not capture all the costs firms face.
+\item
+  However, it is good to know the classical literature because it
+  sometimes gives a new insight.
+\item
+  cf. \citet{Byrne2015} : Propose a novel method to combine accounting
+  cost data to estimate demand and cost function jointly without using
+  instrumental variable approach.
+\end{itemize}
+
+\subsection{Revealed Preference
+Approach}\label{revealed-preference-approach}
+
+\begin{itemize}
+\tightlist
+\item
+  Another approach is to \textbf{reveal} the marginal cost from firm's
+  price/quantity setting behavior assuming it is maximizing profit.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    A parameter affects economic agent's action.
+  \item
+    Therefore, economic agent's action \textbf{reveals} the information
+    about the parameter.
+  \item
+    See \citet{Bresnahan1981} and \citet{Bresnahan1989} for reference.
+  \end{itemize}
+\item
+  We have shown that the assumption on the factor market and cost
+  function minimization gives restriction on the cost parameters.
+\item
+  We may further assume the product market structure and profit
+  maximization to identify cost parameters.
+\item
+  Example: In a competitive market, the equilibrium price is equal to
+  the marginal cost. Therefore, the marginal cost is identified from
+  prices.
+\item
+  What if the competition is imperfect?
+\end{itemize}
+
+\subsection{Single-product Monopolist}\label{single-product-monopolist}
+
+\begin{itemize}
+\item
+  This approach requires researcher to specify the decision problem of a
+  firm.
+\item
+  Assume that the firm is a single-product monopolist.
+\item
+  Let \(D(p)\) be the demand function.
+\item
+  Let \(C(q)\) be the cost function.
+\item
+  Temporarily, assume that we \textbf{know} the demand function.
+\item
+  We learn how to estimate demand functions in coming weeks.
+\item
+  The only unknown parameter is the cost function.
+\item
+  The monopolist solves:
+
+  \begin{equation}
+  \max_{p} D(p)p - C(D(p)).
+  \end{equation}
+\item
+  The first-order condition w.r.t. \(p\) for profit maximization is:
+
+  \begin{equation}
+  \begin{split}
+  &D(p) + pD'(p) - C'(D(p)) D'(p) = 0.\\
+  &\Leftrightarrow C'(D(p)) = \underbrace{\frac{D(p) + pD'(p)}{D'(p)}}_{\text{$p$ is observed and $D(p)$ is known.}}
+  \end{split}
+  \end{equation}
+\item
+  This identifies the marginal cost
+  \textit{at the equilibrium quantity}.
+\item
+  To trace out the entire marginal cost function, you need a demand
+  shifter \(Z\) that changes the equilibrium: \(D(p, Z)\).
+
+  \begin{equation}
+  C'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)}
+  \end{equation}
+\item
+  This identifies the marginal cost function
+  \textit{at the equilibrium quantity when $Z = z$}.
+\item
+  If the equilibrium quantities cover the domain of the marginal cost
+  function when the demand shifter \(Z\) moves around, then it
+  identifies the entire marginal cost function.
+\end{itemize}
+
+\subsection{Unobserved Heterogeneity in the Cost
+Function}\label{unobserved-heterogeneity-in-the-cost-function}
+
+\begin{itemize}
+\item
+  Previously we did not consider any unobserved heterogeneity in the
+  cost function.
+\item
+  Now suppose that the cost function is given by:
+
+  \begin{equation}
+  C(q) = \tilde{C}(q) + q \epsilon + \mu,
+  \end{equation}
+
+  and \(\epsilon\) and \(\mu\) are not observed.
+\item
+  Moreover, because it includes anticipated shocks, it is likely to be
+  correlated with input decisions and hence the output.
+\item
+  The first-order condition w.r.t. \(p\) for profit maximization is:
+
+  \begin{equation}
+  \begin{split}
+  &D(p, z) + pD'(p, z) - [\tilde{C}'(D(p, z)) + \epsilon]D'(p, z) = 0.\\
+  &\Leftrightarrow \tilde{C}'(D(p, z))  = \frac{D(p, z) + pD'(p, z)}{D'(p,z)} - \epsilon.
+  \end{split}
+  \end{equation}
+\item
+  Take the expectation conditional on \(Z = z\):
+
+  \begin{equation}
+  \tilde{C}'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)} - \mathbb{E}\{\epsilon|Z = z\}.
+  \end{equation}
+\item
+  If \(Z\) and \(\epsilon\) is independent, then the last term becomes
+  zero and we can follow the same argument as before to trace out the
+  marginal cost function.
+\end{itemize}
+
+\subsection{Multi-product Monopolist
+Case}\label{multi-product-monopolist-case}
+
+\begin{itemize}
+\item
+  Demand for good \(j\) is \(D_j(p)\) given a price vector \(p\).
+\item
+  Cost for producing a vector of good \(q\) is \(C(q)\).
+\item
+  Demand function is \textbf{known} but cost function is not known.
+\item
+  The monopolist solves:
+
+  \begin{equation}
+  \max_{p} \sum_{j = 1}^J p_j D_j(p) - C(D_1(p), \cdots, D_J(p)).
+  \end{equation}
+\item
+  The first-order condition w.r.t. \(p_i\) for profit maximization is:
+
+  \begin{equation}
+  \begin{split}
+  &D_i(p) + p_i \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_i} = \sum_{j = 1}^J \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_i}.\\
+  &= 
+  \begin{pmatrix}
+  \frac{\partial D_1(p)}{\partial p_i} & \cdots & \frac{\partial D_J(p)}{\partial p_i}
+  \end{pmatrix}
+  \begin{pmatrix}
+  \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
+  \vdots\\
+  \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
+  \end{pmatrix}
+  \end{split}
+  \end{equation}
+\item
+  Summing up, the first-order condition w.r.t. \(p\) is summarized as:
+
+  \begin{equation}
+  \begin{split}
+  &\begin{pmatrix}
+   D_1(p) + p_1 \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_1}\\
+   \vdots\\
+   D_J(p) + p_J \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_J}
+  \end{pmatrix} 
+  =
+  \begin{pmatrix}
+  \frac{\partial D_1(p)}{\partial p_1} & \cdots & \frac{\partial D_J(p)}{\partial p_1}\\
+  \vdots\\
+  \frac{\partial D_1(p)}{\partial p_J} & \cdots & \frac{\partial D_J(p)}{\partial p_J}
+  \end{pmatrix}
+  \begin{pmatrix}
+  \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
+  \vdots\\
+  \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
+  \end{pmatrix}\\
+  &\Leftrightarrow
+  \begin{pmatrix}
+  \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
+  \vdots\\
+  \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
+  \end{pmatrix} = 
+  \underbrace{\begin{pmatrix}
+  \frac{\partial D_1(p)}{\partial p_1} & \cdots & \frac{\partial D_J(p)}{\partial p_1}\\
+  \vdots\\
+  \frac{\partial D_1(p)}{\partial p_J} & \cdots & \frac{\partial D_J(p)}{\partial p_J}
+  \end{pmatrix}^{-1}  
+  \begin{pmatrix}
+   D_1(p) + p_1 \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_1}\\
+   \vdots\\
+   D_J(p) + p_J \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_J}
+  \end{pmatrix}.}_{\text{$p$ is observed and $D(p)$s are known.}}
+  \end{split}
+  \end{equation}
+\item
+  Hence, the cost function is identified.
+\item
+  Including unobserved heterogeneity in the cost function causes the
+  same problem as in the previous case.
+\end{itemize}
+
+\subsection{Oligopoly}\label{oligopoly}
+
+\begin{itemize}
+\item
+  There are firm \(j = 1, \cdots, J\) and they sell product
+  \(j = 1, \cdots, J\), that is, firm = product (for simplicity).
+\item
+  Consider a price setting game. When the price vector is \(p\), demand
+  for product \(j\) is given by \(D_j(p)\).
+\item
+  The cost function for firm \(j\) is \(C_j(q_j)\).
+\item
+  Given other firms' price \(p_{-j}\), firm \(j\) solves:
+
+  \begin{equation}
+  \max_{p_j} D_j(p) p_j - C_j(D_j(p)).
+  \end{equation}
+\item
+  The first-order condition w.r.t. \(p_j\) for profit maximization is:
+
+  \begin{equation}
+  \begin{split}
+  &D_j(p) + \frac{\partial D_j(p)}{\partial p_j} p_j = \frac{\partial C_j(D_j(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_j}.\\
+  &\frac{\partial C_j(D_j(p))}{\partial q_j} = \underbrace{\frac{\partial D_j(p)}{\partial p_j}^{-1}[D_j(p) + \frac{\partial D_j(p)}{\partial p_j} p_j ]}_{\text{$p$ is observed and $D_j(p)$ is known}}.
+  \end{split}
+  \end{equation}
+\item
+  In Nash equilibrium, these equations jointly hold for all firms
+  \(j = 1, \cdots, J\).{]}
+\item
+  Including unobserved heterogeneity in the cost function causes the
+  same problem as in the previous case.
+\end{itemize}
+
+\bibliography{library.bib,packages.bib}
+
+
+\end{document}
