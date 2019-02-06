@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-02-06}
+    \date{Last updated: 2019-02-07}
 
 \usepackage{booktabs}
 
@@ -1162,7 +1162,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2
+## [1] 5
 \end{verbatim}
 
 \begin{Shaded}
@@ -1172,7 +1172,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 7
+## [1] 2
 \end{verbatim}
 
 \begin{Shaded}
@@ -1182,7 +1182,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 42
+## [1] 48
 \end{verbatim}
 
 \begin{Shaded}
@@ -1192,7 +1192,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 29
+## [1] 32
 \end{verbatim}
 
 \begin{itemize}
@@ -3281,6 +3281,277 @@ Case}\label{multi-product-monopolist-case}
   Including unobserved heterogeneity in the cost function causes the
   same problem as in the previous case.
 \end{itemize}
+
+\chapter{Assignment 1: Basic Programming in R}\label{assignment1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(magrittr)}
+\KeywordTok{library}\NormalTok{(foreach)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(latex2exp)}
+\end{Highlighting}
+\end{Shaded}
+
+Report the following results in html format using R markdown. In other
+words, replicate this document. The deadline is the start time of
+February 18 class.
+
+\section{Simulate data}\label{simulate-data}
+
+Consider to simulate data from the following model and estimate the
+parameters from the simulated data.
+
+\[
+y_{ij} = 1\{j = \text{argmax}_{k = 1, 2} \beta x_k + \epsilon_{ik} \},
+\] where \(\epsilon_{ik}\) follows i.i.d. type-I extreme value
+distribution, \(\beta = 0.2\), \(x_1 = 0\) and \(x_2 = 1\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  To simulate data, first make a data frame as follows:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\DecValTok{1000}\NormalTok{, }\DataTypeTok{k =} \DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as.tibble}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{ifelse}\NormalTok{(k }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{arrange}\NormalTok{(i, k)}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2,000 x 3
+##        i     k     x
+##    <int> <int> <dbl>
+##  1     1     1     0
+##  2     1     2     1
+##  3     2     1     0
+##  4     2     2     1
+##  5     3     1     0
+##  6     3     2     1
+##  7     4     1     0
+##  8     4     2     1
+##  9     5     1     0
+## 10     5     2     1
+## # ... with 1,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Second, draw type-I extreme value random variables. Set the seed at 1.
+  You can use \texttt{evd} package to draw the variables. You should get
+  exactly the same realization if the seed is correctly set.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{e =}\NormalTok{ evd}\OperatorTok{::}\KeywordTok{rgev}\NormalTok{(}\KeywordTok{dim}\NormalTok{(df)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2,000 x 4
+##        i     k     x       e
+##    <int> <int> <dbl>   <dbl>
+##  1     1     1     0  0.281 
+##  2     1     2     1 -0.167 
+##  3     2     1     0  1.93  
+##  4     2     2     1  1.97  
+##  5     3     1     0  0.830 
+##  6     3     2     1 -1.06  
+##  7     4     1     0 -0.207 
+##  8     4     2     1  0.617 
+##  9     5     1     0  0.0444
+## 10     5     2     1  1.92  
+## # ... with 1,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Third, compute the latent value of each option to obtain the following
+  data frame:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta <-}\StringTok{ }\FloatTok{0.2}
+\NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{latent =}\NormalTok{ beta }\OperatorTok{*}\StringTok{ }\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{e)}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2,000 x 5
+##        i     k     x       e  latent
+##    <int> <int> <dbl>   <dbl>   <dbl>
+##  1     1     1     0  0.281   0.281 
+##  2     1     2     1 -0.167   0.0331
+##  3     2     1     0  1.93    1.93  
+##  4     2     2     1  1.97    2.17  
+##  5     3     1     0  0.830   0.830 
+##  6     3     2     1 -1.06   -0.863 
+##  7     4     1     0 -0.207  -0.207 
+##  8     4     2     1  0.617   0.817 
+##  9     5     1     0  0.0444  0.0444
+## 10     5     2     1  1.92    2.12  
+## # ... with 1,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Finally, compute \(y\) by comparing the latent values of \(k = 1, 2\)
+  for each \(i\) to obtain the following result:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(i) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{ifelse}\NormalTok{(latent }\OperatorTok{==}\StringTok{ }\KeywordTok{max}\NormalTok{(latent), }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{()}
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2,000 x 6
+##        i     k     x       e  latent     y
+##    <int> <int> <dbl>   <dbl>   <dbl> <dbl>
+##  1     1     1     0  0.281   0.281      1
+##  2     1     2     1 -0.167   0.0331     0
+##  3     2     1     0  1.93    1.93       0
+##  4     2     2     1  1.97    2.17       1
+##  5     3     1     0  0.830   0.830      1
+##  6     3     2     1 -1.06   -0.863      0
+##  7     4     1     0 -0.207  -0.207      0
+##  8     4     2     1  0.617   0.817      1
+##  9     5     1     0  0.0444  0.0444     0
+## 10     5     2     1  1.92    2.12       1
+## # ... with 1,990 more rows
+\end{verbatim}
+
+\section{Estimate the parameter}\label{estimate-the-parameter}
+
+Now you generated simulated data. Suppose you observe \(x_k\) and
+\(y_{ik}\) for each \(i\) and \(k\) and estimate \(\beta\) by a maximum
+likelihood estimator. The likelihood for \(i\) to choose \(k\)
+(\(y_{ik} = 1\)) can be shown to be: \[
+p_{ik}(\beta) = \frac{\exp(\beta x_k)}{\exp(\beta x_1) + \exp(\beta x_2)}.
+\]
+
+Then, the likelihood of observing \(\{y_{ik}\}_{i, k}\) is: \[
+L(\beta) = \prod_{i = 1}^{1000} p_{i1}(\beta)^{y_{i1}} [1 - p_{i1}(\beta)]^{1 - y_{i1}},
+\] and the log likelihood is: \[
+l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 - p_{i1}(\beta)\}.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Write a function to compute the livelihood for a given \(\beta\) and
+  data and name the function \texttt{loglikelihood}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{loglikelihood <-}\StringTok{ }
+\StringTok{  }\ControlFlowTok{function}\NormalTok{(b, df) \{}
+\NormalTok{  l <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(i) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{p =} \KeywordTok{exp}\NormalTok{(b}\OperatorTok{*}\NormalTok{x)}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(}\KeywordTok{exp}\NormalTok{(b}\OperatorTok{*}\NormalTok{x))) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(y }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{  l <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(}\KeywordTok{log}\NormalTok{(l}\OperatorTok{$}\NormalTok{p))}
+  \KeywordTok{return}\NormalTok{(l)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Compute the value of log likelihood for \(\beta = 0, 0.1, \cdots, 1\)
+  and plot the result using \texttt{ggplot2} packages. You can use
+  \texttt{latex2exp} package to use LaTeX math symbol in the label:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b_seq <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\NormalTok{output <-}\StringTok{ }
+\StringTok{  }\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{b =}\NormalTok{ b_seq,}
+           \DataTypeTok{.combine =} \StringTok{"rbind"}\NormalTok{) }\OperatorTok{%do%}\StringTok{ }\NormalTok{\{}
+\NormalTok{  l <-}\StringTok{ }\KeywordTok{loglikelihood}\NormalTok{(b, df)}
+  \KeywordTok{return}\NormalTok{(l)}
+\NormalTok{\}}
+\NormalTok{output <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ b_seq, }\DataTypeTok{y =}\NormalTok{ output)}
+\KeywordTok{ggplot}\NormalTok{(output, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{TeX}\NormalTok{(}\StringTok{"$}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{beta$"}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Loglikelihood"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Find and report \(\beta\) that maximizes the log likelihood for the
+  simulated data. You can use \texttt{optim} function to achieve this.
+  You will use \texttt{Brent} method and set the lower bound at -1 and
+  upper bound at 1 for the parameter search.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{result <-}\StringTok{ }\KeywordTok{optim}\NormalTok{(}\DataTypeTok{par =}\NormalTok{ beta,}
+                \DataTypeTok{fn =}\NormalTok{ loglikelihood,}
+                \DataTypeTok{df =}\NormalTok{ df,}
+                \DataTypeTok{method =} \StringTok{"Brent"}\NormalTok{,}
+                \DataTypeTok{lower =} \OperatorTok{-}\DecValTok{1}\NormalTok{,}
+                \DataTypeTok{upper =} \DecValTok{1}\NormalTok{,}
+                \DataTypeTok{control =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{fnscale =} \OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{))}
+\NormalTok{result}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $par
+## [1] 0.2371046
+## 
+## $value
+## [1] -0.6861689
+## 
+## $counts
+## function gradient 
+##       NA       NA 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL
+\end{verbatim}
 
 \bibliography{library.bib,packages.bib}
 
