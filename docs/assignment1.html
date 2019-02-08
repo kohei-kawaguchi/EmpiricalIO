@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="references.html">
-
+<link rel="prev" href="production.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -190,11 +190,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.10</b> Oligopoly</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="4" data-path="assignment1.html"><a href="assignment1.html"><i class="fa fa-check"></i><b>4</b> Assignment 1: Basic Programming in R</a><ul>
 <li class="chapter" data-level="4.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>4.1</b> Simulate data</a></li>
 <li class="chapter" data-level="4.2" data-path="assignment1.html"><a href="assignment1.html#estimate-the-parameter"><i class="fa fa-check"></i><b>4.2</b> Estimate the parameter</a></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -217,7 +217,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="assignment1" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Assignment 1: Basic Programming in R</h1>
-<p>Report the following results in html format using R markdown. In other words, replicate this document. The deadline is the start time of February 18 class.</p>
+<p>The deadline is the <strong>start time of February 18 class</strong>.</p>
+<p>Report the following results in html format using R markdown. In other words, replicate this document. You write functions in a separate R file and put in <code>R</code> folder in the project folder. Build the project as a package and load it from the R markdown file. The execution code sholuld be written in R markdown file.</p>
+<p>You submit:</p>
+<ul>
+<li>R file containing functions.</li>
+<li>R markdown file containing your answers and executing codes.</li>
+<li>HTML report generated from the R markdown.</li>
+</ul>
 <div id="simulate-data" class="section level2">
 <h2><span class="header-section-number">4.1</span> Simulate data</h2>
 <p>Consider to simulate data from the following model and estimate the parameters from the simulated data.</p>
@@ -304,7 +311,7 @@ L(\beta) = \prod_{i = 1}^{1000} p_{i1}(\beta)^{y_{i1}} [1 - p_{i1}(\beta)]^{1 - 
 l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 - p_{i1}(\beta)\}.
 \]</span></p>
 <ol style="list-style-type: decimal">
-<li><p>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood</code>.</p></li>
+<li><p>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood_A1</code>.</p></li>
 <li><p>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label: <img src="lecture_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p></li>
 <li><p>Find and report <span class="math inline">\(\beta\)</span> that maximizes the log likelihood for the simulated data. You can use <code>optim</code> function to achieve this. You will use <code>Brent</code> method and set the lower bound at -1 and upper bound at 1 for the parameter search.</p></li>
 </ol>
@@ -324,104 +331,6 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 ## $message
 ## NULL</code></pre>
 
-<div id="refs" class="references">
-<div>
-<p>Ackerberg, D. A. (2016). <em>Timing Assumptions and E¢ ciency: Empirical Evidence in a Production Function Context</em>.</p>
-</div>
-<div>
-<p>Ackerberg, D. A., Caves, K., &amp; Frazer, G. (2015). Identification Properties of Recent Production Function Estimators. <em>Econometrica</em>, <em>83</em>(6), 2411–2451.</p>
-</div>
-<div>
-<p>Ahn, H., &amp; Powell, J. L. (1993). Semiparametric estimation of censored selection models with a nonparametric selection mechanism. <em>Journal of Econometrics</em>, <em>58</em>(1-2), 3–29.</p>
-</div>
-<div>
-<p>Bloom, N., &amp; Van Reenen, J. (2007). Measuring and Explaining Management Practices Across Firms and Countries. <em>The Quarterly Journal of Economics</em>, <em>122</em>(4), 1351–1408.</p>
-</div>
-<div>
-<p>Braguinsky, S., Ohyama, A., Okazaki, T., &amp; Syverson, C. (2015). Acquisitions, Productivity, and Profitability: Evidence from the Japanese Cotton Spinning Industry. <em>American Economic Review</em>, <em>105</em>(7), 2086–2119.</p>
-</div>
-<div>
-<p>Bresnahan, T. F. (1981). Departures from marginal-cost pricing in the American automobile industry: Estimates for 1977–1978. <em>Journal of Econometrics</em>, <em>17</em>(2), 201–227.</p>
-</div>
-<div>
-<p>Bresnahan, T. F. (1989). Chapter 17 Empirical studies of industries with market power. In <em>Handbook of industrial organization</em> (Vol. 2, pp. 1011–1057). Elsevier.</p>
-</div>
-<div>
-<p>Byrne, D. P., Imai, S., Jain, N., Sarafidis, V., &amp; Hirukawa, M. (2015). <em>Identification and Estimation of Differentiated Products Models using Market Size and Cost Data</em>.</p>
-</div>
-<div>
-<p>Chen, X. (2007). Chapter 76 Large Sample Sieve Estimation of Semi-Nonparametric Models. <em>Handbook of Econometrics</em>, <em>6</em>, 5549–5632.</p>
-</div>
-<div>
-<p>Christensen, C. M. (1997). <em>The innovator’s dilemma : when new technologies cause great firms to fail</em> (p. 253). New York: HarperBusiness.</p>
-</div>
-<div>
-<p>Cunha, F., Heckman, J. J., &amp; Schennach, S. M. (2010). Estimating the Technology of Cognitive and Noncognitive Skill Formation. <em>Econometrica</em>, <em>78</em>(3), 883–931.</p>
-</div>
-<div>
-<p>De Loecker, J. (2011). Product Differentiation, Multiproduct Firms, and Estimating the Impact of Trade Liberalization on Productivity. <em>Econometrica</em>, <em>79</em>(5), 1407–1451.</p>
-</div>
-<div>
-<p>Doraszelski, U., &amp; Jaumandreu, J. (2013). R&amp;D and Productivity: Estimating Endogenous Productivity. <em>The Review of Economic Studies</em>, <em>80</em>(4), 1338–1383.</p>
-</div>
-<div>
-<p>Gandhi, A., Navarro, S., Rivers, D., Ackerberg, D., Blundell, R., Carranza, J. E., … Vuong, Q. (2017). <em>On the Identification of Gross Output Production Functions</em>.</p>
-</div>
-<div>
-<p>Gennaioli, N., La Porta, R., Lopez-de-Silanes, F., &amp; Shleifer, A. (2013). Human Capital and Regional Development. <em>The Quarterly Journal of Economics</em>, <em>128</em>(1), 105–164.</p>
-</div>
-<div>
-<p>Griliches, Z., &amp; Mairesse, J. (1998). Production Functions: The Search for Identification. In S. Strom (Ed.), <em>Econometrics and economic theory in the twentieth century: The ragnar frisch centennial symposium</em>. Cambridge, MA: National Bureau of Economic Research; Cambridge University Press.</p>
-</div>
-<div>
-<p>Haskel, J. E., Pereira, S. C., &amp; Slaughter, M. J. (2007). Does Inward Foreign Direct Investment Boost the Productivity of Domestic Firms? <em>Review of Economics and Statistics</em>, <em>89</em>(3), 482–496.</p>
-</div>
-<div>
-<p>Hsiao, C. (1983). Chapter 4 Identification. <em>Handbook of Econometrics</em>, <em>1</em>, 223–283.</p>
-</div>
-<div>
-<p>Hsieh, C.-T., &amp; Klenow, P. J. (2009). Misallocation and Manufacturing TFP in China and India. <em>Quarterly Journal of Economics</em>, <em>124</em>(4), 1403–1448.</p>
-</div>
-<div>
-<p>Ichimura, H., &amp; Todd, P. E. (2007). Chapter 74 Implementing Nonparametric and Semiparametric Estimators. <em>Handbook of Econometrics</em>, <em>6</em>, 5369–5468.</p>
-</div>
-<div>
-<p>Igami, M. (2017). Estimating the Innovator’s Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981–1998. <em>Journal of Political Economy</em>, <em>125</em>(3), 798–847.</p>
-</div>
-<div>
-<p>Jorgenson, D. W. (1986). Chapter 31 Econometric methods for modeling producer behavior. In <em>Handbook of econometrics</em> (Vol. 3, pp. 1841–1915). Elsevier.</p>
-</div>
-<div>
-<p>Levinsohn, J., &amp; Petrin, A. (2003). Estimating Production Functions Using Inputs to Control for Unobservables. <em>Review of Economic Studies</em>, <em>70</em>(2), 317–341.</p>
-</div>
-<div>
-<p>Manski, C. F. (1994). Chapter 43 Analog estimation of econometric models. <em>Handbook of Econometrics</em>, <em>4</em>, 2559–2582.</p>
-</div>
-<div>
-<p>Marschak, J., &amp; Andrews, W. H. (1944). <em>Random Simultaneous Equations and the Theory of Production Author</em> (No. 4) (Vol. 12, pp. 143–205).</p>
-</div>
-<div>
-<p>Maskin, E., &amp; Tirole, J. (1988). <em>A Theory of Dynamic Oligopoly, I: Overview and Quantity Competition with Large Fixed Costs</em> (No. 3) (Vol. 56, p. 549).</p>
-</div>
-<div>
-<p>Matzkin, R. L. (1994). Chapter 42 Restrictions of economic theory in nonparametric methods. <em>Handbook of Econometrics</em>, <em>4</em>, 2523–2558.</p>
-</div>
-<div>
-<p>Matzkin, R. L. (2007). Chapter 73 Nonparametric identification. <em>Handbook of Econometrics</em>, <em>6</em>, 5307–5368.</p>
-</div>
-<div>
-<p>McElroy, M. B. (1987). Additive General Error Models for Production, Cost, and Derived Demand or Share Systems. <em>Journal of Political Economy</em>, <em>95</em>(4), 737–757.</p>
-</div>
-<div>
-<p>Olley, G. S., &amp; Pakes, A. (1996). <em>The Dynamics of Productivity in the Telecommunications Equipment Industry</em> (No. 6) (Vol. 64, pp. 1263–1297).</p>
-</div>
-<div>
-<p>Syverson, C. (2011). What Determines Productivity? <em>Journal of Economic Literature</em>, <em>49</em>(2), 326–365.</p>
-</div>
-<div>
-<p>Wooldridge, J. M. (2009). On estimating firm-level production functions using proxy variables to control for unobservables. <em>Economics Letters</em>, <em>104</em>, 112–114.</p>
-</div>
-</div>
 </div>
 </div>
             </section>
@@ -429,8 +338,8 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
           </div>
         </div>
       </div>
-<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="production.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
