@@ -1,0 +1,1015 @@
+# Production and Cost Function Estimation {#production}
+
+## Motivations
+
+- Estimating __production and cost functions__ of producers is the cornerstone of economic analysis.
+- Estimating the functions includes to separate the contribution of observed inputs and the other factors, which is often referred to as the __productivity__.
+- "What determines productivity?" [@Syverson2011]-type research questions naturally follow.
+- The methods covered in this chapter are widely used across different fields.
+- Some of them are variants from the standard methods.
+
+### IO
+
+- @Olley1996: 
+    - How much did the deregulation in the U.S. telecommunication industry, in particular the divestiture of AT\&T in 1984, spurred the productivity growth of the incumbent, facilitated entries, and increased the aggregate productivity?
+    - To do so, the authors estimate the plant-level production functions and productivity in the telecommunication industry.
+- @Doraszelski2013a:
+    - What is the role of R\&D in determining the differences in productivity across firms and the evolution of firm-level productivity over time?
+    - To do so, the authors estimate the firm-level production functions and productivity of Spanish manufacturing firms during 1990s in which the transition probability of a productivity is a function of the R\&D activities.
+
+### Development
+
+- @Hsieh2009:
+    - How large is the misallocation of inputs across manufacturing firms in China and India compared to the U.S? How will the aggregate productivity of China and India change if the degree of misallocation is reduced to the U.S. level?
+    - To do so, the authors measure the revenue productivity of firms, which should be the same across firms within an industry if there were no distortion, and the measurement of the revenue productivity requires to estimate the production function.
+    
+- @Gennaioli2013:
+    - What are the determinants of regional growth? Do geographic, institutional, cultural, and human capital factors explain the difference across regions?
+    - To do so, the authors construct the data set that covers 74\% of the world's surface and 97\% of its GDP and estimate the production function in which the above mentioned factors could affect the productivity.
+
+
+### Trade
+
+- @Haskel2007:
+    - Are there spillovers from FDI to domestic firms?
+    - To do so, the authors estimate the plant-level production function of the U.K. manufacturing firms during 1973 and 1992 and study how the foreign presence in the U.K. affected the productivity.
+
+- @Loecker2011:
+    - Does the removal of trade barriers induces efficiency gain for producers?
+    - To do so, the author estimate the production functions of Belgian textile industry during 1994-2002 in which the degree of trade protection can affect the productivity level.
+
+
+
+### Management
+
+- @Bloom2007:
+    - How do management practices affect the firm productivity?
+    - To do so, the authors first estimate the production function and productivity of manufacturing firms in developed countries, and then study how the independently measured management practices of the firms affect the estimated productivity.
+
+- @Braguinsky2015:
+    - How do changes in ownership affect the productivity and profitability of firms?
+    - To do so, the authors estimate the production function for various outputs including the physical output, return on capital and labor, and the utilization rate, price level, using the cotton spinners data in Japan during 1896 and 1920.
+
+### Education
+
+- @Cunha2010:
+    - How do childhood and schooling interventions "produce" the cognitive and non-cognitive skills of children?
+    - To do so, the authors estimate the mapping from childhood and schooling interventions to children's cognitive and non-cognitive skills, the "production function" of childhood environment and education.
+
+
+## Analyzing Producer Behaviors
+
+- There are several levels of parameters that govern the behavior of firms:
+
+- __Production function__
+
+    - Add factor market structure.
+    - Add cost minimization.
+
+- $\rightarrow$ __Cost function__
+
+    - Add product market structure.
+    - Add profit maximization.
+
+- $\rightarrow$ __Supply function (Pricing function)__
+    
+    - Combine cost and supply (pricing) functions.
+
+- $\rightarrow$ __Profit function__
+
+
+- Which parameter to identify?
+- Primitive enough to be invariant to relevant policy changes.
+    - e.g. If you conduct a policy experiment that changes the factor market structure, identifying cost functions is not enough.
+- As reduced-form as possible among such specifications.
+    - A reduced-form parameter usually can be rationalized by a class of underlying structural parameters and institutional assumptions. Thus, the analysis becomes robust to some misspecifications.
+    - e.g. A non-parametric function $C(q, w)$ can represent a cost function of a producer who is not necessarily minimizing the cost. If we derive a cost function from a production function and a factor market structure, then the cost function cannot represent such a non-optimization behavior.
+
+## Production Function Estimation
+
+<!-- ### Output, Input, and Value-Added -->
+
+<!-- - The __output__ is the quantity of a good produced and the __input__ is the quantity of a good consumed. -->
+<!-- - If a good is defined, defining the output and input is straightforward. -->
+<!-- - However, it is often the case that several goods are mixed up in the observation: -->
+<!--     - 7 of 3cm iron nail and 10 of 7cm iron nail $\to$ 17 iron nails. -->
+<!--     - 8 of 3cm iron nail made by Tom who has 10 years experience and 14 of 3cm iron nail made by Bob who started the job yesterday $\to$ 22 iron nails. -->
+<!--     - 2 of Hair cut service by Alice who is in a mood and 3 not in a mood $\to$ 5 hair cut services. -->
+<!-- - Distinguishing several goods is especially hard in the service sector. -->
+<!--     - The output of a doctor. -->
+<!--     - The output of a banker. -->
+<!--     - The output of a supermarket. -->
+<!--     - The output of google. -->
+<!-- - We sometimes divide the revenue by the price and claim it as the quantity. -->
+<!-- - When doing so, we implicitly assume: -->
+<!--     - There is a class of goods that differs by one-dimensional quality. -->
+<!--     - The quality is proportional to the price. -->
+<!-- - The __value-added__ is the value added by labor and capital. -->
+<!-- - For this to be well-defined, the production function satisfy some form of separability between labor and capital and other inputs. -->
+<!-- - In the following, we assume that the output, input, and value-added are well-defined and well-measured.  -->
+
+
+### Cobb-Douglas Specification as a Benchmark
+- Most of the following argument carries over to a general model.
+- For firm $j = 1, \cdots, J$ and time $t = 1, \cdots, T$, we observe output $Y_{jt}$, labor $L_{jt}$, and capital $K_{jt}$.
+- We consider an asymptotic of $J \to \infty$ for a fixed $T$.
+- Assume Cobb-Douglas production function:
+\begin{equation}
+Y_{jt} = A_{jt}  L_{jt}^{\beta_l} K_{jt}^{\beta_k},
+\end{equation}
+where $A_{jt}$ is firm $j$ and time $t$ specific unobserved heterogeneity in the model.
+- Taking the logarithm gives:
+\begin{equation}
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \epsilon_{jt},
+\end{equation}
+where lowercase symbols represent natural logs of variables and $\ln(A_{jt}) = \beta_0 + \epsilon_{jt}$.
+- This can be regarded as a first-order log-linear approximation of a production function.
+- Linear regression model! May OLS work?
+
+
+### Potential Bias I: Endogeneity
+
+- $\epsilon_{jt}$ contains everything that cannot be explained by the observed inputs: better capital may be employed, a worker may have obtained better skills, etc.
+- When the manager of a firm makes an input choice, she should have some information about the realization of $\epsilon_{jt}$.
+- Thus, the input choice can be correlated with $\epsilon_{jt}$; for example under static optimization of $L_{jt}$ given $K_{jt}$:
+\begin{equation}
+L_{jt} = \Bigg[\frac{p_{jt}}{w_{jt}} \beta_l \exp^{\beta_0 + \epsilon_{jt}} K_{jt}^{\beta_k}\Bigg]^{\frac{1}{1 - \beta_l}}.
+\end{equation}
+- In this case, OLS estimator for $\beta_l$ is \textit{positively} biased, because when $\epsilon_{jt}$ is high, $l_{jt}$ is high and thus the increase in output caused by $\epsilon_{jt}$ is captured as if caused by the increase in labor input.
+- The endogeneity problem was already recognized by @Marschak1944.
+
+### Potential Bias II: Selection
+
+- Firms freely enter and exit market. 
+- Therefore, a firm that had low $\epsilon_{jt}$ is likely to exit.
+- However, if firms have high capital $K_{jt}$, it can stay in the market even if the realization of $\epsilon_{jt}$ is very low.
+- Therefore, conditional on being in the market, there is a \textit{negative} correlation between the capital $K_{jt}$ and $\epsilon_{jt}$.
+- This problem occurs even if the choice of $K_{jt}$ itself is not a function of $\epsilon_{jt}$.
+
+### How to Resolve Endogeneity Bias?
+
+- Temporarily abstract away from entry and exit.
+- The data is balanced.
+
+1. Panel data.
+1. First-order condition for inputs.
+1. Instrumental variable.
+1. Olley-Pakes approach and its followers/critics.
+
+- @Griliches1998 is a good survey of the history up to Olley-Pakes approach.
+- @Ackerberg2015 also offer a good survey and clarify problems and implicit assumptions in Olley-Pakes approach.
+
+### Panel Data
+
+- Assume that $\epsilon_{jt} = \mu_j + \eta_{jt}$, where $\eta_{jt}$ is uncorrelated with input choices up to period $t$:
+\begin{equation}
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \mu_j + \eta_{jt}.
+\end{equation}
+- Then, by differentiating period $t$ and $t - 1$ equations, we get:
+\begin{equation}
+y_{jt} - y_{j, t - 1}= \beta_l (l_{jt} - l_{j, t - 1}) + \beta_k (k_{jt} - k_{j, t - 1}) + (\eta_{jt} - \eta_{j, t - 1}).
+\end{equation}
+- Then, because $\eta_{jt} - \eta_{j, t - 1}$ is uncorrelated either with $l_{jt} - l_{j, t - 1}$ or $k_{jt} - k_{j, t - 1}$, we can identify the parameter.
+- Problem:
+    - Restrictive heterogeneity.
+    - When there are measurement errors, fixed-effect estimator can generate higher biases than OLS estimator, because measurement errors more likely to survive first-difference and within-transformation.
+
+### First-Order Condition for Inputs
+
+- Use the first-order condition for inputs as the moment condition [@McElroy1987].
+- Closely related to the cost function estimation literature.
+- Need to specify the factor market structure and the nature of the optimization problem for a firm.
+- Recently being center of attention again as one of the solutions to the "collinearity problem" discussed below.
+
+### Instrumental Variable {#productioniv}
+
+- Borrow the idea from the first-order condition approach that the input choices are affected by some exogenous variables.
+- If we have instrumental variables that affect inputs but are uncorrelated with errors $\epsilon_{jt}$, then we can identify the parameter by an instrumental variable method.
+
+- One candidate for the instrumental variables: __input prices__.
+- Input price affect input decision.
+- Input price is not correlated with $\epsilon_{jt}$ if the factor product market is competitive and $\epsilon_{jt}$ is an idiosyncratic shock to a firm.
+- Problems:
+    - Input prices often lack cross-sectional variation.
+    - Cross-sectional variation is often due to unobserved input quality.
+
+- Another candidate for the instrumental variables: __lagged inputs__.
+- If $\epsilon_{jt}$ does not have auto-correlation, lagged inputs are not correlated with the current shock.
+- If there are adjustment costs for inputs, then lagged inputs are correlated with the current inputs.
+- Problem:
+    - If $\epsilon_{jt}$ has auto-correlation, all lagged inputs are correlated with the errors: For example, if $\epsilon_{jt}$ is AR(1), $\epsilon_{jt} = \alpha \epsilon_{j, t - 1} + \nu_{j, t - 1} = \cdots \alpha^l \epsilon_{j, t - l} + \nu_{j, t - 1} + \cdots, \alpha^{l - 1} \nu_{j, t - l}$ for any $l$.
+
+
+
+### Olley-Pakes Approach
+
+- Exploit restrictions from the economic theory [@Olley1996].
+- Write $\epsilon_{jt} = \omega_{jt} + \eta_{jt}$, where $\omega_{jt}$ is an anticipated shock and $\eta_{jt}$ is an ex-post shock.
+- Inputs are correlated with $\omega_{jt}$ but not with $\eta_{jt}$
+- The model is written as:
+\begin{equation}
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}.
+\end{equation}
+- OP use economic theory to derive a valid proxy for the anticipated shock $\omega_{jt}$.
+
+### Assumption I: Information Set
+
+- The firm's information set at $t$, $I_{jt}$, includes current and past productivity shocks $\{\omega_{j\tau}\}_{\tau = 0}^t$ but does not include future productivity shocks $\{\omega_{j\tau}\}_{\tau = t + 1}^{\infty}$.
+- The transitory shocks $\eta_{jt}$ satisfy $\mathbb{E}\{\eta_{jt}|I_{jt}\} = 0$.
+
+
+### Assumption II: First Order Markov
+
+- Productivity shocks evolve according to the distribution:
+\begin{equation}
+p(\omega_{j, t + 1}|I_{jt}) = p(\omega_{j, t + 1}|\omega_{jt}), 
+\end{equation}
+and the distribution is known to firms and stochastically increasing in $\omega_{jt}$.
+- Then:
+\begin{equation}
+\omega_{jt} = \mathbb{E}\{\omega_{jt}|\omega_{j, t - 1}\} + \nu_{jt},
+\end{equation}
+and:
+\begin{equation}
+\mathbb{E}\{\nu_{jt}|I_{j, t - 1}\} = 0,
+\end{equation}
+by construction.
+
+### Assumption III: Timing of Input Choices
+
+- Firms accumulate capital according to:
+\begin{equation}
+k_{jt} = \kappa(k_{j, t - 1}, i_{j, t - 1}),
+\end{equation}
+where investment $i_{j, t - 1}$ is chosen in period $t - 1$.
+- Labor input $l_{jt}$ is non-dynamic and chosen at $t$.
+- This assumption characterizes and distinguishes labor and capital.
+- Intuitively, it takes a full period for new capital to be ordered, delivered, and installed.
+
+### Assumption IV: Scalar Unobservable
+
+- Firms' investment decisions are given by:
+\begin{equation}
+i_{jt} = f_t(k_{jt}, \omega_{jt}).
+\end{equation}
+- This assumption places strong implicit restrictions on additional firm-specific unobservables.
+    - No __across firm__ unobserved heterogeneity in adjustment cost of capital, in demand and labor market conditions, or in other parts of the production function.
+    - Okay with __across time__ unobserved heterogeneity.
+
+### Assumption IV: Strict Monotonicity
+
+- The investment policy function $f_t(k_{jt}, \omega_{jt})$ is strictly increasing in $\omega_{jt}$.
+- This holds if the realization of higher $\omega_{jt}$ implies higher expectation for future productivity (Assumption III) and if the marginal product of capital is increasing in the expectation for future productivity.
+- To verify the latter condition in a given game is often not easy.
+ 
+
+### Two-step Approach: The First Step
+
+- Insert $\omega_{jt} = h(k_{jt}, i_{jt})$ to the original equation to get:
+\begin{equation}
+\begin{split}
+y_{jt} &= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, i_{jt})}_{\text{unknown function of $k_{jt}$ and $i_{jt}$}} + \eta_{jt}\\
+& \equiv \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
+\end{split}
+\end{equation}
+- This is a __partially linear model__: see @Ichimura2007 for reference.
+- Because $l_{jt}, k_{jt}$ and $i_{jt}$ are uncorrelated with $\eta_{jt}$, we can identify $\beta_l$ and $\phi(\cdot)$ by exploiting the moment condition:
+\begin{equation}
+\begin{split}
+& \mathbb{E}\{\eta_{jt}|l_{jt}, k_{jt}, i_{jt}\} = 0\\
+& \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_l l_{jt} - \phi(k_{jt}, i_{jt}) |l_{jt}, k_{jt}, i_{jt}\} = 0.
+\end{split}
+\end{equation}
+__if there is enough variation__ in $l_{jt}, k_{jt}$ and $i_{jt}$.
+- This "if there is enough variation" part is actually problematic. Discuss later.
+- Let $\beta_l^0$ and $\phi^0$ be the identified true parameters.
+ 
+
+
+
+### Two-step Approach: The Second Step
+
+- Note that:
+\begin{equation}
+\omega_{jt} \equiv \phi(k_{jt}, i_{jt}) - \beta_0 - \beta_k k_{jt}.
+\end{equation}
+- Therefore, we have:
+\begin{equation}
+\begin{split}
+&y_{jt} - \beta_l^0 l_{jt} \\
+&= \beta_0 + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}\\
+&= \beta_0 + \beta_k k_{jt} + g(\omega_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
+&= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt}.
+\end{split}
+\end{equation}
+- $\nu_{jt}$ and $\eta_{jt}$ are independent of the covariates.
+- This is a __multiple-index model__ with indices $\beta_0 + \beta_1 k_{jt}$ and $\beta_0 + \beta_1 k_{j, t - 1}$ where parameters of two indices are restricted to be the same: see @Ichimura2007 for reference.
+- We can identify $\beta_0, \beta_k$ and $g$ by exploiting the moment condition:
+\begin{equation}
+\begin{split}
+& \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0\\
+& \Leftrightarrow \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0.
+\end{split}
+\end{equation}
+
+### Identification of the Anticipated Shocks
+
+- If $\phi, \beta_0, \beta_k$ are identified, then $\omega_{jt}$ is also identified by:
+\begin{equation}
+\omega_{jt} \equiv \phi(k_{jt}, i_{jt}) - \beta_0 - \beta_k k_{jt}.
+\end{equation}
+
+### Two-Step Estimation of @Olley1996.
+
+- __First step__: Estimate $\beta_L$ and $\phi$ in :
+\begin{equation}
+\begin{split}
+y_{jt} = \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
+\end{split}
+\end{equation}
+by approximating $\phi$ with some basis functions, say, polynomials or splines:
+\begin{equation}
+\begin{split}
+y_{jt} &= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{n = 1}^N \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
+& = \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) + \tilde{\eta}_{jt}
+\end{split}
+\end{equation}
+where $P \to \infty$ when the sample size goes to infinity.
+- e.g. second-order polynomial approximation:
+\begin{equation}
+\begin{split}
+& \phi_1(k_{jt}, i_{jt}) = k_{jt}, \phi_2(k_{jt}, i_{jt}) = i_{jt}\\
+& \phi_3(k_{jt}, i_{jt}) = k_{jt}^2, \phi_4(k_{jt}, i_{jt}) = i_{jt}^2\\
+& \phi_5(k_{jt}, i_{jt}) = k_{jt} i_{jt}.
+\end{split}
+\end{equation}
+- Once the basis functions are fixed, estimation is the same as the linear model.
+- But the inference (the computation of the standard deviation) is difference, because of the approximation error.
+- See @Chen2007 for reference.
+- Let $\hat{\beta}_l$ and $\hat{\phi}$ be the estimates from the first step.
+- __Second step__: Estimate $\beta_0$, $\beta_k$, and $g$ in:
+\begin{equation}
+\begin{split}
+y_{jt} - \hat{\beta}_l l_{jt}& = \beta_0 + \beta_k k_{jt} + g[\hat{\phi}(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt}\\
+&+ [\beta_l - \hat{\beta}_l] l_{jt}\\
+&+ \left\{g[\phi(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] - g[\hat{\phi}(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\right\}\\
+& = \beta_0 + \beta_k k_{jt} + g[\hat{\phi}(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \tilde{\eta}_{jt}
+\end{split}
+\end{equation}
+by approximating $g$ by some basis functions, say, polynomials or splines.
+
+### From An Economic Models to An Econometric Model
+
+- Starting from economic model with some unobserved heterogeneity, we reach some reduced-form model. 
+- If the resulting model belongs to a class of econometric models whose identification and estimation are established, we can simply apply the existing methods.
+ 
+
+### How to Resolve Selection Bias
+
+- Use propensity score to correct selection bias: @Ahn1993.
+- At the beginning of period $t$, after observing $\omega_{jt}$, firm $j$ decides whether to continue the business ($\chi_{jt} = 1$) or exit ($\chi_{jt} = 0)$.
+- Assume that the difference between continuation and exit values is strictly increasing in $\omega_{jt}$.
+- Then, there is a threshold $\underline{\omega}(k_{jt})$ such that:
+\begin{equation}
+\chi_{jt} = 
+\begin{cases}
+1 &\text{   if   } \omega_{jt} \ge \underline{\omega}(k_{jt})\\
+0 &\text{   otherwise.}
+\end{cases}
+\end{equation}
+- We can only observe firms that satisfy $\chi_{jt} = 1$.
+
+### Correction in the First Step
+
+- In the first step, we need no correction because:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{y_{jt}|l_{jt}, k_{jt}, i_{jt}, \chi_{jt} = 1 \}\\
+&=\beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \mathbb{E}\{\eta_{jt}|\chi_{jt} = 1\}\\
+&= \beta_l l_{jt} + \phi(k_{jt}, i_{jt}).
+\end{split}
+\end{equation}
+- Ex-post shock $\eta_{jt}$ is independent of continuation/exit decision.
+Therefore, we can identify $\beta_l$ and $\phi(\cdot)$ as in the previous case.
+
+
+### Correction in the Second Step I: The Source of Bias
+
+- One the other hand, we need correction in the second step, because:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+&= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{jt}, i_{jt}) - (\beta_0 + \beta_k k_{jt})]\\
+& + \mathbb{E}\{\nu_{jt} + \eta_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\}\\
+&= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\\
+& + \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}.
+\end{split}
+\end{equation}
+and
+\begin{equation}
+\mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
+\end{equation}
+since anticipated shock matters continuation/exit decision in period $t$.
+ 
+
+
+
+### Correction in the Second Step II: Conditional Exit Probability
+
+- Let's see that the conditional expectation:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \}\\
+&=\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
+&=\int_{\underline{\omega}(k_{jt})} \omega_{jt} \frac{p(\omega_{jt}|\omega_{j, t - 1})}{\int_{\underline{\omega}(k_{jt})} p(\omega|\omega_{j, t - 1}) d\omega } d \omega_{jt}\\
+&\equiv \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt})),
+\end{split}
+\end{equation}
+is a function of $\omega_{j, t - 1}$ and $\underline{\omega}(k_{jt})$.
+ 
+
+
+
+### Correction in the Second Step III: Invertibility in Threshold
+
+- The propensity of continuation conditional on observed information up to period $t - 1$:
+\begin{equation}
+\begin{split}
+P_{jt} &\equiv \mathbb{P}\{\chi_{jt} = 1|\mathcal{I}_{j, t - 1}\}\\
+&= \mathbb{P}\{\omega_{jt} \ge \underline{\omega}(k_{jt}) |\mathcal{I}_{j, t - 1}\}\\
+&= \mathbb{P}\{g(\omega_{j, t - 1}) + \nu_{jt} \ge \underline{\omega}[(1 - \delta) k_{j, t - 1} + i_{j, t - 1}]|\mathcal{I}_{j, t - 1} \}\\
+&= \mathbb{P}\{ \chi_{jt} = 1| i_{j, t - 1}, k_{j, t - 1}\}.
+\end{split}
+\end{equation}
+- $\rightarrow$ It suffices to condition on $i_{j, t - 1}, k_{j, t - 1}$.
+- We also have:
+\begin{equation}
+P_{jt} = \mathbb{P}\{\chi_{jt} = 1| \omega_{j, t - 1}, \underline{\omega}(k_{jt})\},
+\end{equation}
+and it is invertible in $\underline{\omega}(k_{jt})$, that is,
+\begin{equation}
+\underline{\omega}(k_{jt}) \equiv \psi(P_{jt}, \omega_{j, t - 1}).
+\end{equation}
+ 
+
+
+
+### Correction in the Second Step IV: Controlling the Threshold
+
+- Now, he have:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+&= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}\\
+&= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt}))\\
+&= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \psi(P_{jt}, \omega_{j, t - 1}))\\
+&\equiv \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}(\omega_{j, t - 1}, P_{jt})\\
+&= \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1}), P_{jt}].
+\end{split}
+\end{equation}
+- At the end, the only difference is to include $P_{jt}$ as a covariate.
+- $P_{jt}$ is a __known__ function of $i_{j, t - 1}$ and $k_{j, t - 1}$. 
+- Even if we condition on $P_{jt} = p$, there are still many combinations of $i_{j, t - 1}$ and $k_{j, t - 1}$ that gives $P_{jt} = p$.
+- With this remaining variation, we can identify $\beta_0$, $\beta_k$, and $\tilde{\tilde{g}}$ by the same argument as the case without selection, for each $P_{jt} = p$.
+
+### Three Step Estimation of @Olley1996
+
+- __Zero step__: Estimate the propensity score:
+\begin{equation}
+P_{jt} = 1\{\chi_{jt} = 1| i_{j, t - 1}, k_{j, t - 1}\},
+\end{equation}
+by a kernel estimator.
+- Insert the resulting estimates $\widehat{P}_{jt}$ into the first and second steps.
+
+### Zero Investment Problem
+
+- One of the key assumptions in OP method was invertibility between anticipated shock and investment:
+\begin{equation}
+\omega_{jt} = i^{-1}(k_{jt}, i_{jt}) \equiv h(k_{jt}, i_{jt}).
+\end{equation}
+- However, in micro data, zero investment is a rule rather than exceptions.
+- Then, the invertibility does not hold globally: there are some region of the anticipated shock in which the investment takes value zero. 
+ 
+
+### Tackle Zero Investment Problem I: Discard Some Data
+
+- Discard a data $(j, t)$ such that $i_{j, t - 1} = 0$.
+- Use a data $(j, t)$ such that $i_{j, t - 1} > 0$.
+- Then, invertibility recovers on this selected sample.
+- This \textbf{does not} cause bias in the estimator because $\nu_{jt}$ in :
+\begin{equation}
+\beta_0 + \beta_l k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt},
+\end{equation}
+is independent of the event up to $t - 1$, including $i_{j, t - 1}$. 
+- However, this \textbf{does} cause information loss. The loss is high if the proportion of the sample such that $i_{j, t - 1} = 0$ is high.
+ 
+
+
+
+### Tackle Zero Investment Problem II: Use Another Proxy
+
+- Investment is just a possible proxy for the anticipated shock.
+- Intermediate inputs can be used as proxies as well [@Levinsohn2003].
+- The problem is that these intermediate inputs are included in the gross production function, whereas investment is excluded.
+- Let $m_{jt}$ be the log material input, and assume that the production function takes the form of:
+\begin{equation}
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \beta_m m_{jt} + \omega_{jt} + \eta_{jt}.
+\end{equation}
+- In addition, assume that the __optimal policy function__ for $m_{jt}$ is strictly monotonic in the ex-ante shock, and hence is invertible:
+\begin{equation}
+m_{jt} = m(k_{jt}, \omega_{jt}) \Leftrightarrow \omega_{jt} = m^{-1}(m_{jt}, k_{jt}) \equiv h(m_{jt}, k_{jt}). (\#eq:material)
+\end{equation}
+
+- __First step__:
+\begin{equation}
+\begin{split}
+y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \beta_m m_{jt} + h(m_{jt}, k_{jt}) + \eta_{jt}\\
+&= \beta_l l_{jt} + \phi(m_{jt}, k_{jt}) + \eta_{jt}.
+\end{split}
+\end{equation}
+- We can identify $\beta_l$ and $\phi$ by exploiting the moment condition:
+\begin{equation}
+\begin{split}
+& \mathbb{E}\{\eta_{jt}|l_{jt}, m_{jt}, k_{jt}, i_{jt}\} = 0\\
+& \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \phi(m_{jt}, k_{jt}) |l_{jt}, m_{jt}, k_{jt}\} = 0,
+\end{split}
+\end{equation}
+if __there is enough variation__ in $l_{jt}, m_{jt}, k_{jt}$.
+- __Second step__:
+\begin{equation}
+\begin{split}
+&y_{jt} - \beta_l^0 l_{jt}\\
+& = \beta_k k_{jt} + \beta_m m_{jt} + g[\phi^0(m_{j, t - 1}, k_{j, t - 1}) - \beta_k k_{j, t - 1} - \beta_m m_{j, t - 1}]\\
+& + \nu_{jt} + \eta_{jt}.
+\end{split}
+\end{equation}
+- We can identify $\beta_k$, $\beta_m$, and $g$ by exploiting the moment condition:
+\begin{equation}
+\begin{split}
+\mathbb{E}\{\nu_{jt} + \eta_{jt} | k_{jt}, m_{j, t - 1}, k_{j,t - 1}\} = 0.
+\end{split}
+\end{equation}
+- Because $m_{jt}$ is correlated with $\nu_{jt}$, the moment should not condition on $m_{jt}$.
+- The identification of $\beta_{m}$ comes from $\beta_m m_{j, t - 1}$.
+    
+### One-step Estimation of @Olley1996 and @Levinsohn2003
+
+- @Levinsohn2003 can be estimated in the similar two-step method.
+- We can jointly estimate the parameters in first and second steps to improve the efficiency [@Wooldridge2009].
+- We estimate under the assumptions of @Olley1996:
+\begin{equation}
+y_{jt} = \beta_0 + \beta_1 l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}.
+\end{equation}
+- The first step exploits the following moment:
+\begin{equation}
+\mathbb{E}\{\eta_{jt}|l_{jt}, k_{jt}, i_{jt}\} = 0,
+\end{equation}
+that is:
+\begin{equation}
+\mathbb{E}\{y_{jt} - \beta_1 l_{jt} - \beta_0 - \beta_k k_{jt} - \omega(k_{jt}, i_{jt})|l_{jt}, k_{jt}, i_{jt}\} = 0. (\#eq:opfirst)
+\end{equation}
+
+- We can reinforce the moment condition as:
+\begin{equation}
+\mathbb{E}\{\eta_{jt}|l_{jt}, k_{jt}, i_{jt}, \cdots, l_{j1}, k_{j1}, i_{j1}\} = 0
+\end{equation}
+if we assume that lagged inputs are correlated with the current inputs and $\eta_{jt}$ is independent.
+- The second step exploits the following moment:
+\begin{equation}
+\mathbb{E}\{\nu_{jt}|k_{jt}, i_{j, t - 1}, l_{j, t - 1}\} = 0,
+\end{equation}
+that is:
+\begin{equation}
+\mathbb{E}\{y_{jt} - \beta_0 - \beta_1 l_{jt} - \beta_k k_{jt} - g[\omega(k_{j,t - 1}, i_{j, t - 1})]|k_{jt}, i_{j, t - 1}, l_{j, t - 1}\} = 0. (\#eq:opsecond)
+\end{equation}
+- We can reinforce the moment condition as:
+\begin{equation}
+\mathbb{E}\{\nu_{jt}|k_{jt}, i_{j, t - 1}, l_{j, t - 1}, \cdots, k_{j1}, i_{j1}, l_{j1}\} = 0,
+\end{equation}
+if we assume that lagged input are correlated with the current inputs and $\nu_{jt} + \eta_{jt}$ are independent.
+- We can construct a GMM estimator based on equations \@ref(eq:opfirst) and \@ref(eq:opsecond).
+- The one-step estimator can be more efficient but can be computationally heavier than the two-step estimator.
+
+### Scalar Unobservable Problem: Finite-order Markov Process 
+
+- Borrow the idea of using the first-order condition to resolve the collinearity problem [@Gandhi2017a].
+- We have assumed that anticipated shocks follow a first-order Markov process:
+\begin{equation}
+\omega_{jt} = g(\omega_{j, t - 1}) + \nu_{jt}.
+\end{equation}
+- However, it may be true that it has more than one lags, for example:
+\begin{equation}
+\omega_{jt} = g(\omega_{j, t - 1}, \omega_{j, t - 2}) + \nu_{jt}.
+\end{equation}
+
+- Then, we need proxies as many as the number of unobservables:
+\begin{equation}
+\begin{pmatrix}
+i_{jt} \\ m_{jt} 
+\end{pmatrix}
+= \Gamma(k_{jt}, \omega_{jt}, \omega_{j, t - 1}),
+\end{equation}
+such that the policy function for the proxies is a bijection in $(\omega_{jt}, \omega_{j, t - 1})$.
+- Then, we can have:
+\begin{equation}
+\omega_{jt} = \Gamma_1^{-1}(k_{jt}, i_{jt}, m_{jt}).
+\end{equation}
+- The reminder goes as in the standard OP method.
+
+
+### Scalar Unobservable Problem: Demand and Productivity Shocks 
+
+- There may be a demand shock $\mu_{jt}$ that also follows first-order Markov process.
+- Then, the policy function depend both on $\mu_{jt}$ and $\omega_{jt}$.
+- We again need proxies as many as the number of unobservable.
+- Suppose that we can observe the price of the firm $p_{jt}$.
+- Inverting the policy function:
+\begin{equation}
+\begin{pmatrix}
+i_{jt}\\ p_{jt}
+\end{pmatrix}
+= \Gamma(k_{jt}, \omega_{jt}, \mu_{jt}).
+\end{equation}
+yields:
+\begin{equation}
+\omega_{jt} = \Gamma_1^{- 1}(k_{jt}, i_{jt}, p_{jt}).
+\end{equation}
+- If $\omega_{jt}$ only depends on $\omega_{j, t - 1}$ but not on $\mu_{j, t - 1}$, then the second step of the modified OP method is to estimate:
+\begin{equation}
+\begin{split}
+y_{jt} - \hat{\beta}_l l_{jt} 
+&= \beta_0 + \beta_k k_{jt}\\
+& + g(\omega_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
+&= \beta_0 + \beta_k k_{jt}\\
+& + g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}) + \nu_{jt} + \eta_{jt}.
+\end{split}
+\end{equation}
+- It goes as in the standard OP method.
+- If $\omega_{jt}$ depends both on $\omega_{j, t - 1}$ and $\mu_{j, t - 1}$, the second step regression equation will be:
+\begin{equation}
+\begin{split}
+y_{jt} - \hat{\beta}_l l_{jt} 
+&= \beta_0 + \beta_k k_{jt}\\
+& + g(\omega_{j, t - 1}, \mu_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
+&= \beta_0 + \beta_k k_{jt}\\
+& + g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}, \mu_{j, t - 1}) + \nu_{jt} + \eta_{jt}.
+\end{split}
+\end{equation}
+- We still have to control $\mu_{j, t - 1}$ in the second step.
+- Invert the policy function for $\mu_{j, t - 1}$ to get:
+\begin{equation}
+\mu_{j, t - 1} = \Gamma_2^{- 1}(k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1}),
+\end{equation}
+and plug it into the second step regression equation to get:
+\begin{equation}
+\begin{split}
+&y_{jt} - \hat{\beta}_l l_{jt}\\
+&= \beta_0 + \beta_k k_{jt}\\
+&+g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}, \Gamma_2^{- 1}(k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})) + \nu_{jt} + \eta_{jt}.
+\end{split}
+\end{equation}
+- The parameters $\beta_0$ and $\beta_k$ \textbf{cannot} be identified only with this observation, because $\Gamma_2^{-1}$ is \textbf{unknown non-parametric} function: it can mean any function of $(k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})$.
+- To estimate such a model, we jointly estimate the demand function along with the production function.
+- At this point, we do not investigate it further because we have not yet learned how to estimate the demand function.
+- For now just keep in mind that:
+    - There has to be as many proxies as the dimension of the unobservable state variables.
+    - It is okay that the unobservable state variable includes a demand shock.
+    - It can be problematic when the unobservable demand shock affect the evolution of the anticipated productivity shock. 
+
+
+### Collinearity Problem
+
+- The collinearity problem is formally pointed out by @Ackerberg2015.
+- This paper is finally published in 2015, but has been circulated since 2005.
+- We assumed that $k_{jt}$ and $\omega_{jt}$ are state variables.
+- Then the policy function for labor input should take the form of:
+\begin{equation}
+l_{jt} = l(k_{jt}, \omega_{jt}).
+\end{equation}
+- However, because $\omega_{jt} = h(i_{jt}, k_{jt})$, we have:
+\begin{equation}
+l_{jt} = l[k_{jt}, h(i_{jt}, k_{jt})] = \tilde{l}(i_{jt}, k_{jt}).
+\end{equation}
+- Therefore, in the first stage, we encounter a multicollinearity problem:
+\begin{equation}
+\begin{split}
+y_{jt} &= \beta_0 + \beta_l \tilde{l}(i_{jt}, k_{jt}) + \phi(i_{jt}, k_{jt}) + \eta_{jt}\\
+&\equiv \tilde{\phi}(i_{jt}, k_{jt}).
+\end{split}
+\end{equation}
+- Thus, $\beta_l$ cannot be identified in the first step.
+- The second step becomes:
+\begin{equation}
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\tilde{\phi}(i_{j, t - 1}, k_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{jt}] + \nu_{jt} + \eta_{jt}
+\end{equation}
+- Because $l_{jt}$ is correlated with $\nu_{jt}$, moment can only condition on $l_{j, t - 1}$.
+- However, conditioning on $k_{j, t - 1}$ and $i_{j, t - 1}$, again there is no remaining variation in $l_{j, t - 1}$.
+- Therefore, $\beta_l$ cannot be identified either in the second step.
+- __$\beta_l$ cannot be identified!__
+
+### Tackle Collinearity Problem: Peculiar Assumptions
+
+- To make Olley-Pakes/Levinsohn-Petrin approach workable, we need peculiar data generating process for $l_{jt}$.
+- Consider Levinsohn-Petrin framework.
+1. There is an optimization error in $l_{jt}$.
+    - If it is not i.i.d over time, it becomes a state variable and enters to the policy for $m_{jt}$, violating the scalar unobserved heterogeneity assumption of $m_{jt}$.
+    - If there is an optimization error for $m_{jt}$, this again violates the scalar unobserved heterogeneity assumption.
+1. $k_{jt}$ is realized, $\omega_{jt}$ is observed,  $m_{jt}$ and $i_{jt}$ are determined, a new i.i.d. unexpected shock is observed, $l_{jt}$ is determined, and $\eta_{jt}$ is observed.
+    - If it is not i.i.d over time, it becomes a state variable and enters to the policy for $m_{jt}$, violating the scalar unobserved heterogeneity assumption.
+1. $k_{jt}$ is realized, an unexpected shock is observed,  $l_{jt}$ is determined, $\omega_{jt}$ is observed, $m_{jt}$ and $i_{jt}$ are determined, and $\eta_{jt}$ is observed (@Ackerberg2016 recommends this assumption).
+    - In this case, the unexpected shock can be serially correlated, because it suffices to know $k_{jt}$, $i_{jt}$, $l_{jt}$ to decide $m_{jt}$. It does not have to predict the future unexpected shock based on the realization of the current shock because $m_{jt}$ is a static decision.
+    - This changes the optimal policy function of $m_{jt}$ \@ref(eq:material) to:
+    \begin{equation}
+    m_{jt} = m(k_{jt}, \omega_{jt}, l_{jt}).
+    \end{equation}
+    - The first step:
+    \begin{equation}
+    \begin{split}
+    y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + h(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}\\
+    &= \psi(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}.\\
+    \Rightarrow & \mathbb{E}\{y_{jt} - \psi(k_{jt}, m_{jt}, l_{jt})|k_{jt}, m_{jt}, l_{jt}\} = 0.
+    \end{split}
+    \end{equation}
+    - The second step:
+    \begin{equation}
+    \begin{split}
+    y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}] + \nu_{jt} + \eta_{jt}\\
+    \Rightarrow & \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \beta_k k_{jt} - g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}]|k_{j, t - 1}, i_{j, t - 1}, l_{j, t - 1}, m_{j, t - 1}\}
+    \end{split}
+    \end{equation}
+    - $m_{jt}$ has to be excluded from the production function, i.e., it has to be a value-added production function. Otherwise, $\beta_m m_{jt}$ and $\beta_m m_{j, t - 1}$ appear in the second step. Because $m_{jt}$ is correlated with $\nu_{jt}$, the only hope is to vary $m_{j, t - 1}$. But there is no additional variation in $m_{j, t - 1}$ conditional on $k_{j, t - 1}$, $i_{j, t - 1}$, and $l_{j, t - 1}$.
+    
+
+### Tackle Collinearity Problem: Share Regression
+
+- How to avoid the peculiar assumptions on shocks and timing of decisions?
+- How to identify gross production function avoiding the third assumption by @Ackerberg2015?
+- Return to the old literature using the first-order condition.
+- Let $w_t$ be wage and $p_t$ be the product price.
+- Assume that the factor market is competitive.
+- Then, the first-order condition for profit maximization with respect to $L_{jt}$ is:
+\begin{equation}
+\begin{split}
+&P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}} = w_t\\
+&\Leftrightarrow \frac{P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}}}{F(L_{jt}, K_{jt}) } = \frac{w_t}{F(L_{jt}, K_{jt}) }\\
+&\Leftrightarrow \frac{F_L(L_{jt}, K_{jt}) L_{jt}}{F(L_{jt}, K_{jt})  e^{\eta_{jt}} } = \frac{w_t L_{jt}}{P_t \underbrace{F(L_{jt}, K_{jt}) e^{\omega_{jt}} e^{\eta_{jt}}}_{Y_{jt}} },
+\end{split}
+\end{equation}
+where the right hand side is expenditure share to the labor, which is observed.
+- Furthermore, on the left hand side, we only have $\eta_{jt}$, which is independent of inputs.
+
+- Let $s_{jt}$ be the log of expenditure share to the labor, and take a log of the previous equation gives:
+\begin{equation}
+\begin{split}
+s_{jt} &= \log [F_L(L_{jt}, K_{jt}) L_{jt} \mathbb{E} e^{\eta_{jt}} / F(L_{jt}, K_{jt})] - \eta_{jt}\\
+& = \log(\beta_l) + \ln \mathbb{E} e^{\eta_{jt}} - \eta_{jt}.
+\end{split}
+\end{equation}
+- Remember that the coefficient in the Cobb-Douglas function is equal to the expenditure share.
+- In general, share regression provides additional variation to identify the elasticity of anticipated production with respect to the labor.
+Then we can follow the standard OP method to recover other parameters.
+
+## Cost Function Estimation
+
+### Cost Function: Duality 
+
+- Given a function $y = F(x)$ such that:
+    -  Add factor market structure.
+    -  Add cost minimization.
+- $\rightarrow$ There exists a unique __cost function__ $c = C(y, p)$:
+    - __Positivity__: positive for positive input prices and a positive.
+    - __Homogeneity__: homogeneous of degree one in the input prices.
+    - __Monotonicity__: increasing in the input prices and in the level of output.
+    - __Concavity__: concave in the input prices.
+
+- Given a function $c = C(y, p)$ such that:
+    - __Positivity__: positive for positive input prices and a positive.
+    - __Homogeneity__: homogeneous of degree one in the input prices.
+    - __Monotonicity__: increasing in the input prices and in the level of output.
+    - __Concavity__: concave in the input prices.
+- $\rightarrow$ There exists a unique production function $F(x)$ that yields $C(y, p)$ as a solution to the cost minimization problem:
+\begin{equation}
+C(y, p) = \min_{x} p'x \text{   s.t.   } F(x) \ge y.
+\end{equation}
+- If the latter condition holds, the function $C$ is said to be __integrable__.
+
+- It is rare that you can find a closed-form cost function of a production function.
+- It makes sense to start from cost function.
+- The duality ensures that there is a one-to-one mapping between a class of cost function and a class of production function.
+- If you accept competitive factor markets and cost minimization, identifying a cost function is equivalent to identifying a production function. 
+- We used this idea in the last slides to identify the parameters regarding static decision variables.
+- See @Jorgenson1986 for the literature in this topic up to the mid 80s.
+
+### Translog Cost Function
+
+- One of the popular specifications:
+\begin{equation}
+\begin{split}
+\ln c &= \alpha_0 + \alpha_p' \ln p + \alpha_y \ln y + \frac{1}{2} \ln p' B_{pp} \ln p\\
+& + \ln p' \beta_{py} \ln y + \frac{1}{2}\beta_{yy}(\ln y)^2.
+\end{split}
+\end{equation}
+- It assumes that the first and second order elasticities are constant.
+- A second-order (log) Taylor approximation of a general cost function.
+ 
+
+### Translog Cost Function: Integrability
+
+- Translog cost function is known to be integrable if the following conditions hold:
+- __Homogeneity__: the cost shares and the cost flexibility are homogeneity of degree zero: $B_{pp}1 = 0$, $\beta_{py}'1 = 0$.
+- __Cost exhaustion__: the sum of cost shares is equal to unity: $\alpha_p'1 = 1$, $B_{pp}'1 = 0$, $\beta_{py}'1 = 0$.
+- __Symmetry__: the matrix of share elasticities, biases of scale, and the cost flexibility elasticity is symmetric:
+\begin{equation}
+\begin{pmatrix}
+B_{pp} & \beta_{py}\\
+\beta_{py}' & \beta_{yy}
+\end{pmatrix}
+=
+\begin{pmatrix}
+B_{pp} & \beta_{py}\\
+\beta_{py}' & \beta_{yy}
+\end{pmatrix}'.
+\end{equation}
+- __Monotonicity__: The matrix of share elasticities $B_{pp} + vv' - diag(v)$ is positive semi-definite.
+
+### Two Approaches
+
+1. Cost data approach.
+    - Use accounting cost data.
+    - It does not depend on behavioral assumption.
+    - One can impose restrictions of assuming cost minimization.
+    - The accounting cost data may not represent economic cost.
+
+1. Revealed preference approach.
+    - Assume decision problem for firms.
+    - Assume profit maximization.
+    - Reveal the costs from firm's equilibrium strategy.
+    - It depends on structural assumptions.
+    - It reveals the cost as perceived by firms.
+ 
+### Cost Data Approach
+
+- Estimating a cost function using cost data from accounting data.
+- @McElroy1987 is one of the most flexible and robust frameworks.
+- The approach is somewhat getting less popular in IO researchers.
+- Recently, the approach is not popular among IO researchers.
+- I \textit{conjecture} one of the reasons for this is that IO researchers believe cost data taken from accounting information does not capture all the costs firms face.
+- However, it is good to know the classical literature because it sometimes gives a new insight.
+- cf. @Byrne2015 : Propose a novel method to combine accounting cost data to estimate demand and cost function jointly without using instrumental variable approach.
+
+
+### Revealed Preference Approach
+
+- Another approach is to __reveal__ the marginal cost from firm's price/quantity setting behavior assuming it is maximizing profit.
+    - A parameter affects economic agent's action.
+    - Therefore, economic agent's action __reveals__ the information about the parameter.
+    - See @Bresnahan1981 and @Bresnahan1989 for reference.
+- We have shown that the assumption on the factor market and cost function minimization gives restriction on the cost parameters.
+- We may further assume the product market structure and profit maximization to identify cost parameters.
+- Example: In a competitive market, the equilibrium price is equal to the marginal cost. Therefore, the marginal cost is identified from prices.
+- What if the competition is imperfect?
+
+
+### Single-product Monopolist
+
+- This approach requires researcher to specify the decision problem of a firm.
+- Assume that the firm is a single-product monopolist.
+- Let $D(p)$ be the demand function.
+- Let $C(q)$ be the cost function.
+- Temporarily, assume that we __know__ the demand function.
+- We learn how to estimate demand functions in coming weeks.
+- The only unknown parameter is the cost function.
+
+- The monopolist solves:
+\begin{equation}
+\max_{p} D(p)p - C(D(p)).
+\end{equation}
+- The first-order condition w.r.t. $p$ for profit maximization is:
+\begin{equation}
+\begin{split}
+&D(p) + pD'(p) - C'(D(p)) D'(p) = 0.\\
+&\Leftrightarrow C'(D(p)) = \underbrace{\frac{D(p) + pD'(p)}{D'(p)}}_{\text{$p$ is observed and $D(p)$ is known.}}
+\end{split}
+\end{equation}
+- This identifies the marginal cost \textit{at the equilibrium quantity}.
+ 
+
+- To trace out the entire marginal cost function, you need a demand shifter $Z$ that changes the equilibrium: $D(p, Z)$.
+\begin{equation}
+C'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)}
+\end{equation}
+- This identifies the marginal cost function \textit{at the equilibrium quantity when $Z = z$}.
+- If the equilibrium quantities cover the domain of the marginal cost function when the demand shifter $Z$ moves around, then it identifies the entire marginal cost function.
+
+
+### Unobserved Heterogeneity in the Cost Function
+
+- Previously we did not consider any unobserved heterogeneity in the cost function.
+- Now suppose that the cost function is given by:
+\begin{equation}
+C(q) = \tilde{C}(q) + q \epsilon + \mu,
+\end{equation}
+and $\epsilon$ and $\mu$ are not observed.
+- Moreover, because it includes anticipated shocks, it is likely to be correlated with input decisions and hence the output.
+ 
+- The first-order condition w.r.t. $p$ for profit maximization is:
+\begin{equation}
+\begin{split}
+&D(p, z) + pD'(p, z) - [\tilde{C}'(D(p, z)) + \epsilon]D'(p, z) = 0.\\
+&\Leftrightarrow \tilde{C}'(D(p, z))  = \frac{D(p, z) + pD'(p, z)}{D'(p,z)} - \epsilon.
+\end{split}
+\end{equation}
+- Take the expectation conditional on $Z = z$: 
+\begin{equation}
+\tilde{C}'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)} - \mathbb{E}\{\epsilon|Z = z\}.
+\end{equation}
+- If $Z$ and $\epsilon$ is independent, then the last term becomes zero and we can follow the same argument as before to trace out the marginal cost function.
+
+
+### Multi-product Monopolist Case
+
+- Demand for good $j$ is $D_j(p)$ given a price vector $p$.
+- Cost for producing a vector of good $q$ is $C(q)$.
+- Demand function is \textbf{known} but cost function is not known. 
+
+- The monopolist solves:
+\begin{equation}
+\max_{p} \sum_{j = 1}^J p_j D_j(p) - C(D_1(p), \cdots, D_J(p)).
+\end{equation}
+- The first-order condition w.r.t. $p_i$ for profit maximization is:
+\begin{equation}
+\begin{split}
+&D_i(p) + p_i \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_i} = \sum_{j = 1}^J \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_i}.\\
+&= 
+\begin{pmatrix}
+\frac{\partial D_1(p)}{\partial p_i} & \cdots & \frac{\partial D_J(p)}{\partial p_i}
+\end{pmatrix}
+\begin{pmatrix}
+\frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
+\vdots\\
+\frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
+\end{pmatrix}
+\end{split}
+\end{equation}
+ 
+- Summing up, the first-order condition w.r.t. $p$ is summarized as:
+\begin{equation}
+\begin{split}
+&\begin{pmatrix}
+ D_1(p) + p_1 \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_1}\\
+ \vdots\\
+ D_J(p) + p_J \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_J}
+\end{pmatrix} 
+=
+\begin{pmatrix}
+\frac{\partial D_1(p)}{\partial p_1} & \cdots & \frac{\partial D_J(p)}{\partial p_1}\\
+\vdots\\
+\frac{\partial D_1(p)}{\partial p_J} & \cdots & \frac{\partial D_J(p)}{\partial p_J}
+\end{pmatrix}
+\begin{pmatrix}
+\frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
+\vdots\\
+\frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
+\end{pmatrix}\\
+&\Leftrightarrow
+\begin{pmatrix}
+\frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
+\vdots\\
+\frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
+\end{pmatrix} = 
+\underbrace{\begin{pmatrix}
+\frac{\partial D_1(p)}{\partial p_1} & \cdots & \frac{\partial D_J(p)}{\partial p_1}\\
+\vdots\\
+\frac{\partial D_1(p)}{\partial p_J} & \cdots & \frac{\partial D_J(p)}{\partial p_J}
+\end{pmatrix}^{-1}  
+\begin{pmatrix}
+ D_1(p) + p_1 \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_1}\\
+ \vdots\\
+ D_J(p) + p_J \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_J}
+\end{pmatrix}.}_{\text{$p$ is observed and $D(p)$s are known.}}
+\end{split}
+\end{equation} 
+- Hence, the cost function is identified.
+- Including unobserved heterogeneity in the cost function causes the same problem as in the previous case.
+ 
+### Oligopoly
+
+- There are firm $j = 1, \cdots, J$ and they sell product $j = 1, \cdots, J$, that is, firm = product (for simplicity). 
+- Consider a price setting game. When the price vector is $p$, demand for product $j$ is given by $D_j(p)$.
+- The cost function for firm $j$ is $C_j(q_j)$.
+
+- Given other firms' price $p_{-j}$, firm $j$ solves:
+\begin{equation}
+\max_{p_j} D_j(p) p_j - C_j(D_j(p)).
+\end{equation}
+- The first-order condition w.r.t. $p_j$ for profit maximization is:
+\begin{equation}
+\begin{split}
+&D_j(p) + \frac{\partial D_j(p)}{\partial p_j} p_j = \frac{\partial C_j(D_j(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_j}.\\
+&\frac{\partial C_j(D_j(p))}{\partial q_j} = \underbrace{\frac{\partial D_j(p)}{\partial p_j}^{-1}[D_j(p) + \frac{\partial D_j(p)}{\partial p_j} p_j ]}_{\text{$p$ is observed and $D_j(p)$ is known}}.
+\end{split}
+\end{equation}
+- In Nash equilibrium, these equations jointly hold for all firms $j = 1, \cdots, J$.]
+- Including unobserved heterogeneity in the cost function causes the same problem as in the previous case.
+ 
+ 

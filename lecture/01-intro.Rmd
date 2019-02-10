@@ -1,0 +1,351 @@
+# Introduction {#intro}
+
+## Structural Estimation and Counterfactual Analysis
+
+### Example
+
+- @Igami2017 "Estimating the Innovator's Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981-1998".
+
+- __Question__: 
+- Does "Innovator's Dilemma" [@Christensen1997] or the delay of innovation among incumbents exist? 
+- Christensen argued that old winners tend to lag behind entrants even when introducing a new technology is not too difficult, with a case study of the HDD industry.
+    - Apple's smartphone vs. Nokia's feature phones.
+    - Amazon vs. Borders.
+    - Kodak's digital camera.
+- If it exists, what is the reason for that?
+- How do we empirically answer this question?
+
+```{r, echo = FALSE, fig.cap = 'Figure 1 of Igam (2017)', out.width='80%', fig.asp = .75, fig.align = 'center'}
+knitr::include_graphics("figuretable/Igam2017Fig1.png")
+```
+
+
+- __Hypotheses__:
+- Identify potentially competing hypotheses to explain the phenomenon.
+    1. Cannibalization: Because of cannibalization, the benefits of introducing a new product are smaller for incumbents than for entrants.
+    1. Different costs: The incumbents may have higher costs for innovation due to the organizational inertia, but at the same time they may have some cost advantage due to accumulated R\&D and better financial access.
+    1. Preemption: The incumbents have additional incentive for innovation to preempt potential rivals.
+    1. Institutional environment: The impacts of the three components differ across different institutional contexts such as the rules governing patents and market size.
+- Casual empiricists pick up their favorite factors to make up a story.
+- Serious empiricists should try to separate the contributions of each factor from data.
+- To do so, the author develops an economic model that explicitly incorporates the above mentioned factors, while keeping the model parameters flexible enough to let the data tell the sign and size of the effects of each factor on innovation.
+
+- __Economic model__:
+
+- The time is discrete with finite horizon $t = 1, \cdots, T$.
+- In each year, there is a finite number of firms indexed by $i$.
+- Each firm is in one of the technological states:
+\begin{equation}
+s_{it} \in \{\text{old only, both, new only, potential entrant}\},
+\end{equation}
+where the first two states are for incumbents (stick to the old technology or start using the new technology) and the last two states are for actual and potential entrants (enter with the new technology or stay outside the market).
+- In each year:
+    - Pre-innovation incumbent ($s_{it} =$ old): exit or innovate by paying a sunk cost $\kappa^{inc}$ (to be $s_{i, t + 1} =$ both).
+    - Post-innovation incumbent ($s_{it} =$ both): exit or stay to be both.
+    - Potential entrant ($s_{it} =$ potential entrant): give up entry or enter with the new technology by paying a sunk cost $\kappa^{net}$ (to be $s_{i, t + 1} =$ new).
+    - Actual entrant ($s_{it} =$ new): exit or stay to be new.
+- Given the industry state $s_t = \{s_{it}\}_i$, the product market competition opens and the profit of firm $i$, $\pi_t(s_{it}, s_{-it})$, is realized for each active firm.
+- As the product market competition closes:
+    - Pre-innovation incumbents draw private cost shocks and make decisions: $a_t^{pre}$.
+    - Observing this, post-innovation incumbents draw private cost shocks and make decisions: $a_t^{post}$.
+    - Observing this, actual entrants draw private cost shocks and make decisions: $a_t^{act}$.
+    - Observing this, potential entrants draw private cost shocks and make decisions: $a_t^{pot}$.
+- This is a dynamic game. The equilibrium is defined by the concept of __Markov-perfecet equilibrium__ [@Maskin1988].
+- The representation of the competing theories in the model:
+    - The existence of cannibalization is represented by the assumption that an incumbent maximizes the joint profits of old and new technology products. 
+    - The size of cannibalization is captured by the shape of profit function.
+    - The difference in the cost of innovation is captured by the difference in the sunk costs of innovation.
+    - The preemptive incentive for incumbents are embodied in the dynamic optimization problem for each incumbent.
+
+- __Econometric model__:
+
+- The author then turns the economic model into an econometric model.
+- This amounts to specify which part of the economic model is observed/known and which part is unobserved/unknown.
+- The author collects the data set of the HDD industry during 1977-99. 
+- Based on the data, the author specify the identities of active firms and their products and the technologies embodied in the products in each year to code their __state variables__.
+- Moreover, by tracking the change in the state, the author code their __action variables__.
+- Thus, the state and action variables, $s_t$ and $a_t$. These are the __observables__.
+- The author does not observe:
+    - Profit function $\pi_t(\cdot)$.
+    - Sunk cost of innovation for pre-innovation incumbents $\kappa^{inc}$.
+    - Sunk cost of entry for potential entrants $\kappa^{net}$.
+    - Private cost shocks.
+- These are the __unobservables__.
+- Among the unobservables, the profit function and sunk costs are the __parameter of interets__ and the private cost shocks are __nuissance parameters__ in the sense only the knowledge about the distribution of the latter is demanded. 
+
+- __Identification__:
+
+- Can we infer the unobservables from the observables and the restrictions on the distribution of observable by the economic theory?
+- The profit function is identified from estimating the demand function for each firm's product, and estimating the cost function for each firm from using their price setting behavior.
+- The sunk costs of innovation are identified from the conditional probability of innovation across various states. If the cost is low, the probability should be high.
+
+- __Estimation__:
+
+- The identification established that in principle we can uncover the parameters of interests from observables under the restrictions of economic theory.
+- Finally, we apply a statistical method to the econometric model and infer the parameters of interest.
+
+- __Counterfactual analysis__:
+
+- If we can uncover the parameters of interest, we can conduct __comparative statics__: study the change in the endogenous variables when the exogenous variables including the model parameters are set different. In the current framework, this exercise is often called the __counterfactual analysis__.
+
+- What if there was no cannibalization?: 
+    - An incumbents separately maximizes the profit from old technology and new technology instead of jointly maximizing the profits. Solve the model under this new assumption everything else being equal.
+    - Free of cannibalization concerns, 8.95 incumbents start producing new HDDs in the first 10 years, compared with 6.30 in the baseline.
+    - The cumulative numbers of innovators among incumbents and entrants differ only by 2.8 compared with 6.45 in the baseline.
+    - Thus cannibalization can explain a significant part of the incumbent-entrant innovation gap.
+- What if there was no preemption?:
+    - A potential entrant ignores the incumbents' innovations upon making entry decisions.
+    - Without the preemptive motives, only 6.02 incumbents would innovate in the first 10 7ears, compared with 6.30 in the baseline.
+    - The cumulative incumbent-entrant innovation gap widen to 8.91 compared with 6.45 in the baseline.
+- The sunk cost of entry is smaller for incumbents than for entrants in the baseline.
+
+- __Interpretations and policy/managerial implication__: 
+- Despite the cost advantage and the preemptive motives, the speed of innovation is slower among incumbents due to the strong cannibalization effect.
+- Incumbents that attempt to avoid the "innovator's dilemma" should separate the decision makings between old and new sections inside the organization so that it can avoid the concern for cannibalization.
+
+### Recap
+
+- The structural approach in empirical industrial organization consists of the following components:
+1. Research question.
+1. Competing hypotheses.
+1. Economic model.
+1. Econometric model
+1. Identification.
+1. Data collection.
+1. Data cleaning.
+1. Estimation.
+1. Counterfactual analysis.
+1. Coding.
+1. Interpretations and policy/managerial implications.
+
+- The goal of this course is to be familiar with the standard methodology to complete this process.
+- The methodology covered in this class is mostly developed to analyze the standard framework to dynamic or oligopoly competition. 
+- The policy implications are centered around competition policies.
+- But the basic idea can be extend to different class of situations such as auction, matching, voting, contract, marketing, and so on.
+- Note that the depth of the research question and the relevance of the policy/managerial implications are the most important part of the research.
+- Focusing on the methodology in this class is to minimize the time to allocate to less important issues and maximize the attention and time to the most valuable part in the future research.
+- Given a research question, what kind of data is necessary to answer the question? 
+- Given data, what kind of research questions can you address? Which question can be credibly answered? Which question can be an over-stretch?
+- Given a research question and data, what is the best way to answer the question? What type of problem can you avoid using the method? What is the limitation of your approach? How will you defend the possible referee comments? 
+- Given a result, what kinds of interpretation can you credibly derive? What kinds of interpretation can be contested by potential opponents? What kinds of contribution can you claim?
+- To address these issues is __necessary__ to publish a paper and it is __necessary__ to be familiar with the methodology to do so.
+
+### Historical Remark
+
+- The words __reduced-form__ and __structural-form__ date back to the literature of estimation of simultaneous equations in macroeconomics [@Hsiao1983].
+- Let $y$ be the vector of observed endogenous variables, $x$ be the vector of observed exogenous variables, and $\epsilon$ be  the vector of unobserved exogenous variables.
+- The equilibrium condition for $y$ on $x$ and $\epsilon$ is often written as:
+\begin{equation}
+Ay + Bx = \epsilon. (\#eq:structuralform)
+\end{equation}
+- These equations __implicitly__ determine the vector of endogenous variables $y$ .
+- If $A$ is invertible, we can solve the equations for $y$ to obtain:
+\begin{equation}
+y = - A^{-1} B x + A^{-1} \epsilon. (\#eq:reducedform)
+\end{equation}
+- These equations __explicitly__ determine the vector of endogenous variables $y$.
+- Equation \@ref(eq:structuralform) is the __structural-form__ and \@ref(eq:reducedform) is the __reduced-form__.
+- If $y$ and $x$ are observed and $x$ is of full column rank, then $A^{-1}B$ and $A^{-1}$ will be estimated by regression for \@ref(eq:reducedform). But this does not mean that $A$ and $B$ are separately estimated.
+- This was the traditional identification problems.
+- Thus, reduced-form does not mean either of:
+    - Regression analysis;
+    - Statistical analysis free from economic assumptions.
+- Recent development in this line of literature of identification is found in @Matzkin2007.
+- In econometrics, the idea of imposing restrictions from economic theories seems to have been formalized by the work of @Manski1994a and @Matzkin1994b.
+
+## Setting Up The Environment
+
+- Assume that R, RStudio and LaTex are all installed in the local computer.
+
+
+### RStudio Project
+
+- The assignments should be conducted inside a project folder for this course.
+- `File > New Project...> New Directory > New Directory > R Package using RcppEigen`.
+- Name the directory `ECON6120I` and place in your favorite location.
+- You can open this project from the upper right menu of RStudio or by double clicking the `ECON6120I.Rproj` file in the `ECON6120I` directory.
+- This navigates you to the root directory of the project.
+- In the root directory, make folders named:
+    - `assignment`.
+    - `input`.
+    - `output`.
+    - `figuretable`.
+- We will store R functions in `R` folder, C/C++ functions in `src` folder, and data in `input` folder, data generated from the code in `output`, and figures and tables in `figurtable` folder.
+- Open `src/Makevars` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11 -O3`
+- Open `src/Makevars.win` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11`
+
+### Basic Programming in R
+
+- `File > New File > R Script` to open `Untitled` file.
+- `Ctrl (Cmd) + S` to save it with `test.R` in `assignment` folder.
+- In the console, type and push enter:
+```{r}
+1 + 1
+```
+```{r}
+100:130
+```
+- This is the interactive way of using R functionalities.
+- In `test.R`, write:
+```{r, eval = FALSE}
+1 + 1
+```
+- Then, save the file and push `Run`.
+- Alternatively, place the mouse over the `1 + 1` line in `test.R` file.
+- Then, `Ctrl (Cmd) + Enter` to run the line.
+- In this way, we can write procedures in the file and send to the console to run.
+
+- There are functions to conduct basic calculations:
+```{r}
+1 + 2
+```
+
+```{r}
+2 * 3
+```
+```{r}
+4 - 1
+```
+```{r}
+6 / 2
+```
+```{r}
+2^3
+```
+
+
+- We can define objects and assign values to them.
+```{r}
+a <- 1
+a
+a + 2
+```
+- In addition to scalar object, we can define a vector by:
+```{r}
+2:10
+3:20
+c(2, 3, 5, 9, 10)
+seq(1, 10, 2)
+```
+- `seq` is a function with initial value, end values, and the increment value.
+- By typing `seq` in the `help`, we can read the manual page of the function.
+- `seq {base}` means that this function is named `seq` and is contained in the library called `base`.
+- Some libraries are automatically called when the R is launched, but some are not.
+- Some libraries are even not installed.
+- We can install a library from a repository called `CRAN`.
+```{r, eval = FALSE}
+install.packages("ggplot2")
+```
+- To use the package, we have to load by:
+```{r}
+library(ggplot2)
+```
+- Use `qplot` function in `ggplot2` library to draw a scatter plot.
+```{r}
+x <- c(-1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.7, 1)
+y <- x^3
+qplot(x, y)
+```
+- Instead of loading a package by `library`, you can directly call it as:
+```{r}
+ggplot2::qplot(x, y)
+```
+
+
+- We can write own functions.
+```{r}
+roll <- function(n) {
+  die <- 1:6
+  dice <- sample(die, size = n, replace = TRUE)
+  y <- sum(dice)
+  return(y)
+}
+roll(1)
+roll(2)
+roll(10)
+roll(10)
+```
+- We can `set.seed` to obtain the same realization of random variables.
+```{r}
+set.seed(1)
+roll(10)
+set.seed(1)
+roll(10)
+```
+
+- When a variable used in a function is not given as its argument, the function calls the variable in the global environment:
+```{r}
+y <- 1
+plus_1 <- function(x) {
+  return(x + y)
+}
+plus_1(1)
+plus_1(2)
+```
+- However, you should NOT do this. All variables used in a function should be given as its arguments:
+```{r}
+y <- 1
+plus_2 <- function(x, y) {
+  return(x + y)
+}
+plus_2(2, 3)
+plus_2(2, 4)
+```
+
+- The best practice is to use `findGlobals` function in `codetools` to check global variables in a funciton:
+```{r}
+library(codetools)
+findGlobals(plus_1)
+findGlobals(plus_2)
+```
+- This function returns the list of global variables used in a function. If this returns a global variable other than the system global gariables, you should include it as the argument of the function.
+
+- You can write the functions in the files with executing codes.
+- But I recommend you to separate files for writing functions and executing codes.
+- `File > New File > R Rcript` and name it as `functions.R` and save to `R` folder.
+- Cut the function you wrote and paste it in `functions.R`.
+- There are two ways of calling a function in `functions.R` from `test.R`.
+- One way is to use `source` function.
+```{r, eval = FALSE}
+source("R/functions.R")
+```
+- When this line is read, the codes in the file are executed.
+- The other way is to bundle functions as a package and load it.
+- Choose `Build > Clean and Rebuild`.
+- This compiles files in `src` folder and bundle functions in `R` folder and build a package named `ECON6120I`.
+- Now, the functions in `R` folder and `src` folder can be used by loading the package by:
+```{r, eval = FALSE}
+library(ECON6120I)
+```
+- Best practice:
+    1. Write functions in the scratch file.
+    1. As the functions are tested, move them to `R/functions.R`.
+    1. Clean and rebuild and load them as a package.
+
+
+### Reproducible Reports using Rmarkdown
+
+- Reporting in empirical studies involves:
+1. Writing texts;
+1. Writing formulas;
+1. Writing and implementing programs;
+1. Demonstrating the results with figures and tables.
+
+- Moreover, this has to be done in a __reproducible__ manner: Whoever can reproduce the output from the scratch.
+- "Whoever" includes yourself in the future. Because the revision process of structural papers is usually lengthy, you often have to remember the content few weeks or few months later. It is inefficient if you cannot recall what you have done.
+
+- We use `Rmarkdown` to achieve this goal.
+- This assumes that you have LaTex installed.
+- Install package `Rmarkdown`:
+```{r, eval = FALSE}
+install.packages("rmarkdown")
+```
+- `File > New File > R Markdown... > HTML` with title `Test`.
+- Save it in `assignment` folder with name `test.Rmd`.
+- From `Knit` tab, choose `Knit to HTML`.
+- This outputs the content to html file.
+- You can also choose `Knit to PDF` from `Knit` tab to obtain output in pdf file.
+- Reports should be knit to pdf to submit.
+- But you can use html output while writing a report because html is lighter to compile.
+- Refer to the [help page](https://rmarkdown.rstudio.com/lesson-1.html) for further information.
+

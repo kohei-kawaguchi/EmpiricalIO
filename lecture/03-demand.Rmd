@@ -1,0 +1,1220 @@
+# Demand Function Estimation {#demand}
+
+## Continuous Function Approach
+
+### Utility Function Estimation
+
+- We cannot observe the output of utility function, _utility_, while we could observe the output of production function, _production_.
+- We can at most identify a demand function, the relationship between choice sets and demand or other related functions such as an expenditure function. 
+- Under the assumption that the observed demand function is a solution to a utility maximization problem, we may be able to recover some information of the underlying utility function.
+
+
+
+
+### Starting from a Utility Function: Difficulty
+
+- It is rather a special case that we can derive a closed form solution to a utility maximization problem.
+- It is often the case that we can only have first-order conditions:
+\begin{equation}
+\frac{\partial U(q)}{\partial q_i} = \lambda p_i, i = 1, \cdots, J.
+\end{equation}
+- We can use the first-order conditions as moment conditions for identification.
+- The derivation of a demand function from the identified utility function in general require a numerical simulation, which can be bothering.
+
+
+
+
+### Duality between Utility and Expenditure Functions
+
+- As well as the duality between production and cost functions, we have the same duality theorem for utility and expenditure functions.
+- There is a one-to-one mapping between a class of utility functions and a class of expenditure functions.
+- \textit{Therefore, it is okay to start from an expenditure function}.
+- It is rare that we can recover the utility function associated with an expenditure function in a closed form. But it is not often required for analysis.
+- \textit{In addition, by Shepard's lemma, the derivative of the expenditure function with respect to the price is a (Hicksian) demand function.}
+
+
+
+
+### Starting from an Expenditure Function
+
+- Let $p$ be the price vector and $u$ be the target utility level.
+- Let $u(q)$ be a utility function.
+- An expenditure function associated with the utility function is defined by:
+\begin{equation}
+e(u, p) = \min_{q} p'q, u(q) \ge u.
+\end{equation}
+- Let $x$ be the total expenditure such that:
+\begin{equation}
+x = e(u, p).
+\end{equation}
+- We can start from specifying this function.
+
+
+
+
+### Deriving Other Functions
+
+- It is easy to derive other functions from an expenditure function.
+
+
+- \textbf{Indirect utility function}: invert the expenditure function to get:
+\begin{equation}
+u = e^{-1}(p, x) \equiv v(p, x).
+\end{equation}
+- \textbf{Hicksian demand function}: apply Shepard's lemma: 
+\begin{equation}
+q_i = \frac{\partial e(u, p)}{\partial p_i} \equiv h_i(u, p).
+\end{equation}
+- \textbf{Marshallian demand function}: insert Hicksian demand function to the expenditure function:
+\begin{equation}
+q_i = h_i(v(p, x), p) \equiv d_i(p, x).
+\end{equation}
+
+
+
+
+### Starting from an Indirect Utility Function
+
+- It is almost equivalent to start from an indirect utility function.
+- An indirect utility function with the utility function is defined by:
+\begin{equation}
+v(p, x) \equiv \max_{q} u(q), p'q \le x.
+\end{equation}
+- We can derive Marshallian demand function by Roy's identity:
+\begin{equation}
+q_i = \frac{- \partial v(p, x)/\partial p_i}{\partial v(p, x)/\partial x} \equiv d_i(p, x).
+\end{equation}
+
+
+
+
+### Expenditure Share Equation
+
+- Let's start from an expenditure function $e(p, x)$. 
+- By Shepard's lemma, we have:
+\begin{equation}
+\frac{\partial \ln e(u, p)}{\partial \ln p_i} = \frac{\partial e(u, p)}{\partial p_i} \frac{p_i}{e(u, p)} = \frac{p_i q_i}{x} \equiv w_i.
+\end{equation}
+- We call this an expenditure share equation.
+
+
+
+
+### Almost Ideal Demand System (AIDS)
+
+- Deaton and Muellbauer (1980). 
+- Consider an expenditure function that satisfies the following conditions:
+
+- It allows aggregation (this is no longer that important).
+- It gives an arbitrary first-order approximation to any demand system.
+- It can satisfy the restrictions of utility maximization.
+- It can be used to test the restrictions of utility maximization.
+
+
+
+
+
+### PIGLOG Class
+
+- PIGLOG (price-independent generalized logarithmic) class (Muellbauar 1976).
+\begin{equation}
+\ln e(u, p) = (1 - u) \ln a(p) + u\ln b(p),
+\end{equation}
+where $a(p)$ and $b(p)$ are arbitrary linear homogeneous concave functions. 
+- Consider households that differ in total income.
+- PIGLOC ensures that the aggregate demand can be written in the same form where the total income is replaced with the sum of household total income.
+
+
+
+
+### Specify the Detail 
+
+- It gives an arbitrary first-order approximation to any demand system.
+- $\to$ The derivatives should be given free parameters.
+- In AIDS, we take:
+\begin{equation}
+\begin{split}
+\ln a(p) &\equiv a_0 + \sum_{k} \alpha_k \ln p_k + \frac{1}{2}\sum_{k} \sum_{j} \gamma_{kj}^* \ln p_k \ln p_j\\
+\ln b(p) &\equiv \ln a(p) + \beta_0  \prod_{k} p_k^{\beta_k}.
+\end{split}
+\end{equation}
+
+
+
+
+### Derive the Share Equation I
+
+- By Roy's identify, we can derive the associated share equation:
+\begin{equation}
+w_i \equiv \frac{\partial \ln e(u, p)}{\partial \ln p_i} = \alpha_i + \sum_{j} \gamma_{ij} + \beta_i u \beta_0 \prod_{k} p_k^{\beta_k},
+\end{equation}
+where
+\begin{equation}
+\gamma_{ij} = \frac{1}{2}(\gamma_{ij}^* + \gamma_{ji}^*).
+\end{equation}
+
+
+
+
+### Derive the Share Equation II
+
+- Insert indirect utility function $u = v(p, x)$ to this to get:
+\begin{equation}
+w_i = \alpha_i + \sum_{j} \gamma_{ij} \ln p_j + \beta_i \ln \frac{x}{P},
+\end{equation} 
+where
+\begin{equation}
+\ln P \equiv  \alpha_0 + \sum_{k} \alpha_k \ln p_k + \frac{1}{2} \sum_{j} \sum_{k} \gamma_{kj} \ln p_k \ln p_j.
+\end{equation}
+- $P$ is a price index associated with the given preference.
+- In Stone (1953), it becomes $\ln P = \sum_{j} w_j \ln p_j$. It was used as an approximation.
+
+
+
+
+### Specify the Detail II
+
+- It can satisfy the restrictions of utility maximization.
+- It can be used to test the restrictions of utility maximization.
+- $\sum_{j} w_j = 1$:
+\begin{equation}
+\sum_{j} \alpha_j = 1, \sum_{j} \gamma_{jk} = 0, \sum_{j} \beta_j = 0.
+\end{equation}
+- $e(u, p)$ is linear homogeneous in $p$:
+\begin{equation}
+\sum_{j} \gamma_{ij} = 0.
+\end{equation}
+- Symmetry:
+\begin{equation}
+\gamma_{ij} = \gamma_{ji}.
+\end{equation}
+
+
+
+
+### Estimation
+
+- \textit{If we use aggregate data}, the error term is correlated with the price vector.
+- Therefore, we need at least as many instrumental variables as the dimension of the price vector.
+
+- In 80s, people was not careful enough about this problem.
+
+- With valid instrumental variables, we can estimate the model with GMM.
+- The number of elasticity parameters $\gamma_{ij}$ grow at the order of $J^2$ with the number of consumption goods $J$.
+
+
+
+
+
+### From Product Space Approach to Characteristics Space Approach
+
+- The framework up to here is called \textbf{product space approach} because the utility has been defined over a product space.
+- When there are $J$ goods, there are $J^2$ parameters for prices.
+
+- One way to resolve this issue is to introduce a priori knowledge about the preference.
+- For example, introduce a priori segmentation with separability.
+
+- It is hard to evaluate the effect of introducing new product.
+
+- Again, we have to a priori decide which segment/product is similar to the new product.
+
+- This leads us to the \textbf{characteristics space approach}.
+
+
+
+### From Continuous Choice Approach to Discrete Choice Approach
+
+- In the standard consumption problem, a consumer is supposed to choose a consumption bundle given a price vector.
+- A consumption bundle in a period, in reality, is generated from a complicated shopping behaviors during the period.
+- The most primitive decision problem is a \textbf{which to buy} problem: 
+
+- Coca Cola and Pepsi Cola are on the shelf. The consumer buys either of them or buys nothing.
+
+- The consumption bundle of a period is obtained by integrating these primitive choices across shopping occasions.
+- This leads us to the \textbf{discrete choice approach}.
+
+
+
+
+
+## Discrete Choice Approach
+
+### Discrete Choice Approach
+
+- Let $u(x, z_i)$ be the utility of a consumer over $J + 1$ dimensional consumption bundle $x$ characterized by consumer characteristics $z_i$.
+- The consumer solves:
+\begin{equation}
+V(p, y_i; z_i) = \max_{x \in X}u(x, z_i), \text{   s.t.   } p'x \le y_i.
+\end{equation}
+- Alternative $0$ is an \textbf{outside good}.
+- Normalize $p_0 = 1$.
+- We call alternatives $j = 1, \cdots, J$ \textbf{inside goods}.
+- The choice space is restricted on:
+\begin{equation}
+\begin{split}
+X = \{x:& x_0 \in [0, M], x_j \in \{0, 1\}, j = 1, \cdots, J,\\
+& x_j x_k = 0, \forall j \neq k, j, k > 0, M < \infty\}.
+\end{split}
+\end{equation}
+
+
+
+
+### Discrete Choice Approach
+
+- The budget constraint reduces to:
+\begin{equation}
+\begin{cases}
+x_0 + p_j x_j = y &\text{   if   } x_j = 1, j > 0\\
+x_0 = y &\text{   otherwise}.
+\end{cases}
+\end{equation}
+- Hence, 
+\begin{equation}
+x_0 = y - \sum_{j = 1}^J p_j x_j.
+\end{equation}
+
+
+
+
+### Discrete Choice Approach
+
+- The utility maximization problem can be written as:
+\begin{equation}
+V(p, y_i; z_i) = \max_{j = 0, 1, \cdots, j}  v_j(p, y_i; z_i),
+\end{equation}
+where
+\begin{equation}
+\begin{split}
+&v_j(p, y_i; z_i)\\
+& =
+\begin{cases}
+u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0; z_i) &\text{   if  }j > 0,\\
+u(y_i, 0, \cdots, 0; z_i) &\text{   if   }j = 0,
+\end{cases}
+\end{split}
+\end{equation}
+is called the \textbf{choice-specific indirect utility}.
+
+
+
+
+### Characteristics Space Approach
+
+- Preference is defined over the characteristics of alternatives, $w_j$:
+
+- Car: vehicle, engine power, model-year, car maker, etc.
+- PC: CPU power, number of cores, memory, HDD volume, etc.
+
+- The choice-specific indirect utility is a function of the characteristics of the alternative:
+\begin{equation}
+\begin{split}
+v_j(p, y_i; z_i) &=u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0; z_i)\\
+&= u^*(y_i - p_j, w_j; z_i)\\
+&\equiv v(p, w_j, y_i; z_i).
+\end{split}
+\end{equation}
+
+
+
+
+### Characteristics Space Approach
+
+- Characteristics space approach resolves the problem of product space approach:
+- The number of parameters depend on the possible dimensions of characteristics that consumers will take care, which do not grow as rapidly as the product space approach when the number of products increases.
+- The preference over a new product can be evaluated as long as the characteristics of the new products fall in the domain with a known preference.
+
+
+
+
+### Weak Separability and Income Effect
+
+- We usually focus on a particular product category such as cars, PCs, cereals, detergents, and so on.
+- Assume that the preference is separable between the category in question and other categories.
+- Then, call the category in question inside goods.
+- The outside good captures the income effect of the choice in this category.
+
+
+
+
+### Weak Separability and Income Effect 
+
+- Thus, how the preference for the outside good is modeled determines how the individual income affects the choice.
+\begin{equation}
+\begin{split}
+&u^*(y_i - p_j, w_j; z_i) = u^{**}(w_j; z_i) + \alpha(y_i - p_j).\\
+&u^*(y_i - p_j, w_j; z_i) = u^{**}(w_j; z_i) + \alpha \ln (y_i - p_j).
+\end{split}
+\end{equation}
+- In the first example, the income level does not affect the choice because the term $\alpha y_i$ is common and constant across choices (there is no income effect).
+- We often do not observe income of a consumer, $y_i$. 
+
+
+
+
+### Utility Function Normalization
+
+ - The \textbf{location} of utility function is often normalized by setting:
+\begin{equation}
+u(y^*, 0, \cdots, 0; z^*) = 0,
+\end{equation}
+for certain choice of $(y^*, z^*)$.
+- We will also introduce a normalization for the \textbf{scale} of utility function later.
+ 
+
+
+
+### Aggregation of the Individual Demand
+
+- Let $x(p, w, y_i; z_i) = \{x_j(p, w_j, y_i; z_i)\}_{j = 0, \cdots, J}$ be the demand function of consumer $i$, that is:
+\begin{equation}
+x_j(p, w_j, y_i; z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j}  v(p, w_j, y_i; z_i).
+\end{equation}
+- Let $f(y, z)$ be the joint distribution of the income and parameters.
+- The aggregate demand for good $j$ is:
+\begin{equation}
+D_j(p, w_j; f) \equiv N \int  x_j(p, w_j, y; z) f(y, z) dy dz,
+\end{equation}
+where $N$ is the population.
+
+
+
+
+### Horizontal Product Differentiation
+
+- We can proceed the analysis by specifying  $v(p, w_j, y_i; z_i)$.
+- There are two convenience stores $j = 1, 2$ on a street $[0, 1]$.
+- Let $z_i = L_i$, the location of consumer $i$ and $w_j = L_j$, the location of the choice on a street $[0, 1]$ with $L_1 < L_2$.
+- A consumer has a preference such that:
+\begin{equation}
+v_{ij} \equiv v(p, w_j, y_i; z_i) \equiv s - t |L_i - L_j| - p_j,
+\end{equation}
+where $d(\cdot, \cdot)$ is a Euclid distance.
+- This is an example of \textbf{horizontal product differentiation}, i.e., consumers do not agree on the ranking of the choices.
+
+
+
+
+### Horizontal Product Differentiation
+
+- Suppose that the prices are low enough that entire consumers on the street are willing to buy either from the stores.
+- Consumer $i$ buys from store $1$ if and only if:
+\begin{equation}
+\begin{split}
+&v(p, w_1, y_i; z_i) \ge v(p, w_2, y_i; z_i)\\
+&\Leftrightarrow s - t |L_i - L_1| - p_1 \ge s - t |L_i - L_2|- p_2\\
+&\Leftrightarrow L_i \le \frac{p_2 - p_1}{2 t} + \frac{L_1 + L_2}{2} \equiv \overline{L}_1(p_1, p_2).
+\end{split}
+\end{equation}
+- Let $f(L_i)$ be $U[0, 1]$. Then, the aggregate demand for store 1 is:
+\begin{equation}
+\begin{split}
+D_1(p, L_1, L_2) = N \int_{0}^{\overline{L}_1(p_1, p_2)} d L_i = N\overline{L}_1(p_1, p_2).
+\end{split}
+\end{equation}
+
+
+
+
+### Vertical Product Differentiation
+
+- There are $J$ goods and consumer $i$ has a utility such as:
+\begin{equation}
+v_{ij} \equiv v(p, w_j, y_i; z_i) = z_i w_j - p_j,
+\end{equation}
+where $w_j$ is a quality of product $j$ and $z_i$ is the consumer's willingness to pay for the quality with $w_j < w_{j + 1}$.
+- Consumers' problem is:
+\begin{equation}
+\max\{0, z_i w_1 - p_1, \cdots, z_i w_J - p_J \}.
+\end{equation}
+- This is an example of \textbf{vertical product differentiation}, i.e., consumers agree on the ranking of the choices.
+
+
+
+
+### Vertical Product Differentiation
+
+- Consumer $i$ prefers good $j + 1$ to good $j$ if and only if:
+\begin{equation}
+\begin{split}
+&v(p, w_{j + 1}, y_i; z_i) \ge v(p, w_j, y_i; z_i)\\
+&\Leftrightarrow z_i w_{j + 1} - p_{j + 1} \ge z_i w_j - p_j\\
+&\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{w_{j + 1} - w_j} \equiv \Delta_j.
+\end{split}
+\end{equation}
+- So consumer $i$ purchases good $j$ if and only if $z_i \in [\Delta_{j - 1}, \Delta_j)$ and buys nothing if:
+\begin{equation}
+z_i \le \Delta_0 \equiv \min\{p_1/w_1, \cdots p_J/w_J\}.
+\end{equation}
+- Letting $F(z)$ be the distribution function of $z$, the aggregate demand for good $j$ is:
+\begin{equation}
+D_j(p, w, z) = N[F(\Delta_{j}) - F(\Delta_{j - 1})].
+\end{equation}
+
+
+
+
+### Econometric Models
+
+- So far there was no econometrics.
+- Next we define what are observable and unobservable, and what are known and unknown.
+- Then consider how to identify and estimate the model.
+
+
+
+
+### Multinomial Logit Model: Preference Shock
+
+- Suppose that there is some unobservable component in consumer characteristics. 
+- In reality, consumers choice change somewhat randomly.
+- Let's capture such a \textbf{preference shock} by consider the following model:
+\begin{equation}
+v(p, w_j, y_i; z_i) \equiv v(p, w_j, y_i) + \epsilon_{ij},
+\end{equation}
+where I assumed that there is no other $z_i$ for exposition simplicity, with some random vector:
+\begin{equation}
+\epsilon_i \equiv (\epsilon_{i0}, \cdots, \epsilon_{iJ})' \sim G.
+\end{equation}
+- At this point, $G$ can be any distribution and the shocks can be dependent across $j$ within $i$.
+
+
+
+
+### Multinomial Logit Model: Distributional Assumption 
+
+- Now assume the followings:
+
+- $\epsilon_{ij}$ are independent across $j$: $G(\epsilon_i) = \prod_{j = 0, \cdots, J} G_j(\epsilon_{ij})$.
+- $\epsilon_{ij}$ are identical across $j$: $G_j(\epsilon_{ij}) = \overline{G}(\epsilon_{ij})$.
+- $\overline{G}$ is a type-I extreme value.
+
+- $\rightarrow$ The density $g(\epsilon_{ij}) = \exp[-\exp(-\epsilon_{ij}) - \epsilon_{ij}]$.
+
+
+- This is called the (homoskedastic) \textbf{multinomial logit model}.
+- Setting the variance of $\epsilon_{ij}$ at 1 for some $j$ is a \textbf{scale normalization}. There is no obvious ``unit'' in preference.
+
+
+
+
+### Multinomial Logit Model: Choice Probability
+
+- The \textbf{choice probability} of consumer $i$ of good $j$ is:
+\begin{equation}
+\begin{split}
+s_{j}(p, w, y_i) & \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p, w_k, y_i) + \epsilon_{ik}  \}\\
+&=\mathbb{P}\{v(p, w_j, y_i) -  v(p, w_k, y_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
+& = \text{...after some algebra...}\\
+&= \frac{\exp[v(p, w_j, y_i) ]}{\sum_{k = 0}^J \exp[v(p, w_k, y_i)] }.
+\end{split}
+\end{equation}
+- For example, if:
+\begin{equation}
+v(p, w_k, y_i) = \beta'w_k - \alpha \ln(y_i - p_k),
+\end{equation}
+then, we have:
+\begin{equation}
+s_{j}(p, w, y_i) = \frac{\exp[\beta'w_j - \alpha \ln(y_i - p_j) ]}{\sum_{k = 0}^J \exp[\beta'w_k - \alpha \ln (y_i - p_k) ]}.
+\end{equation}
+
+
+
+
+### Multinomial Logit Model: Inclusive Value
+
+- The expected utility for consumer $i$ before the preference shocks are drawn under multinomial logit model is given by:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{\max_{j = 0, \cdots, J} v(p, w_j, y_i) + \epsilon_{ij}\} \\
+&= \text{   ...after some algebra...}\\
+&= \ln \Bigg\{\sum_{j = 0}^J \exp[v(p, w_j, y_i)] \Bigg\} + constant.
+\end{split} 
+\end{equation} 
+- This is sometimes called the \textbf{inclusive value} of the choice set.
+
+
+
+
+### Maximum Likelihood Estimation of Multinomial Logit Model
+
+- Suppose we observe a sequence of income $y_i$, choice $x_{i}$, product characteristics $w_j$ and price $p_j$.
+- $x_i = (x_{i0}, \cdots, x_{iJ})'$ and $x_{ij} = 1$ if $j$ is chosen and $0$ otherwise.
+- The parameter of interest is the mean indirect utility function $v$.
+- Then the log likelihood of $\{x_i\}_{i = 1}^N$ conditional on $\{y_i\}_{i = 1}^N$ and $\{w_j,p_j\}_{j = 1}^J$ is:
+\begin{equation}
+\begin{split}
+l(v; x, y, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w_j, y_i)|p, w_j, y_i \}\\
+& = \sum_{i = 1}^N \log \Bigg\{ \prod_{j = 0}^{J} s_{j}(p, w, y_i)^{x_{ij}} \Bigg\}.
+\end{split}
+\end{equation}
+
+
+
+
+
+### Nonlinear Least Square Estimation of Multinomial Logit Model
+
+- The multinomial logit model can be estimated by nonlinear least square method as well.
+- This is particularly important when we only have an aggregate data instead of choice data.
+- Note that:
+\begin{equation}
+\begin{split}
+\ln s_{j}(p, w, y_i)  &= \ln \Bigg\{ \frac{\exp[v(p, w_j, y_i) ]}{\sum_{k = 0}^J \exp[v(p, w_k, y_i)] }  \Bigg\}\\
+&= v(p, w_j, y_i) - \ln\Bigg\{ \sum_{k = 0}^J \exp[v(p, w_k, y_i)]  \Bigg\}.
+\end{split}
+\end{equation}
+
+
+
+
+### Nonlinear Least Square Estimation of Multinomial Logit Model
+
+- Moreover, because of the location normalization of the utility function,
+\begin{equation}
+s_{0}(p, w, y_i) = \frac{1}{\sum_{k = 0}^J \exp[v(p, w_k, y_i)] }.
+\end{equation}
+- Hence,
+\begin{equation}
+\ln s_{j}(p, w, y_i) - \ln s_{0}(p, w, y_i) = v(p, w_j, y_i).
+\end{equation}
+
+
+
+
+### Nonlinear Least Square Estimation of Multinomial Logit Model 
+
+- Suppose that conditional on $y_i$, the observed choice probabilities are $s_{j}(y_i)$.
+- In practice, it will be estimated on a discretized income $\{y_1, \cdots, y_M\}$.
+- Then, we can estimate the parameter by NLLS such that:
+\begin{equation}
+\min \sum_{m = 1}^M \sum_{j = 1}^J \{\ln[s_{j}(y_m)/s_{0}(y_m)] - v(p, w_j, y_m)\}^2.
+\end{equation} 
+- If $v$ is linear in parameter, it is the OLS.
+
+
+
+
+### Nonlinear Least Square Estimation of Multinomial Logit Model
+
+- Suppose that there are $t = 1, \cdots, T$ markets.
+- The average income level is $y_t$ in market $t$.
+- The average price level is $p_i$ in market $t$.
+- It is often assumed that the market share of good $j$ in market $t$ is given by:
+\begin{equation}
+s_{j}(y_t) = \frac{\exp[v(p_t, w_j, y_t) ]}{\sum_{k = 0}^J \exp[v(p_t, w_k, y_t)] },
+\end{equation}
+and the parameter is estimated by:
+\begin{equation}
+\min \sum_{t = 1}^T \sum_{j = 1}^J \{\ln[s_{jt}/s_{0t}] - v(p_t, w_j, y_t)\}^2,
+\end{equation}
+where $s_{jt}$ is the observed choice share of product $j$ in market $t$. 
+
+
+
+
+### IIA Problem
+
+- Multinomial logit problem is intuitive and easy to implement.
+- However, there are several problems in the model.
+- The most important problem is the \textbf{independence of irrelevant alternatives (IIA)} problem. 
+- Notice that:
+\begin{equation}
+\frac{s_{j}(p, w, y_i)}{s_{k}(p, w, y_i)} = \frac{\exp[v(p, w_j, y_i)]}{\exp[v(p, w_k, y_i)]}.
+\end{equation}
+- \textit{The ratio of choice probabilities between two alternatives depend only on the mean indirect utility of these two alternatives and independent of irrelevant alternatives}.
+
+
+
+
+### Blue Bus and Red Bus Problem
+
+- Why is this problematic?
+- Suppose that you can go to a town by bus or by train.
+- Half of commuters use a bus and the other half use a train. 
+- The existing bus was blue. Now, the county introduced a red bus, which is identical to the existing blue bus.
+- No one take care of the color of bus. So the mean indirect utility of blue bus and red bus are equal.
+- What is the new share across blue bus, red bus, and train?
+- IIA $\to$ share of blue bus = share of train.
+- Buses are identical $\to$ share of blue bus = share of red bus.
+- Therefore, shares have to be 1/3, respectively.
+- But shouldn't it be that train keeps half share and bus have half share in total?
+
+
+
+
+### Restrictive Price Elasticity
+
+- IIA property restrict price elasticities in an unfavorable manner.
+- This is a serious problem because the main purpose for us to estimate demand functions is to identify the price elasticity.
+- Let $v(p, w_j, y_i) = \beta'w_j - \alpha p_j$. Then, we have:
+\begin{equation}
+e_{jk} =
+\begin{cases}
+-\alpha p_{j} (1 - s_{j}(p, w, y_i)) &\text{   if   } k = j\\
+\alpha p_{k} s_{k}(p, w, y_i) &\text{   if   } k \neq j.
+\end{cases}
+\end{equation}
+- The price elasticity is completely determined by the existing choice probabilities of the relevant alternatives.
+
+
+
+
+### Restrictive Price Elasticity
+
+- Suppose that there are coca cola, pepsi cola, and a coffee.
+- The shares were 1/2, 1/6, 1/3, respectively.
+- Suppose that the price of coca cola increased.
+- We expect that they instead purchase pepsi cola because pepsi cola is more similar to coca cola than coffee.
+- However, according to the previous result, twice more consumers substitute to coffee rather than to pepsi cola.
+
+
+
+
+### Monotonic Inclusive Value
+
+- Suppose that there is a good whose mean indirect utility is $v$.
+- The inclusive value for this choice set is $\ln[1 + \exp(v)]$.
+- Suppose that we put $J$ same goods on the shelf and consumer can choose any of them.
+- The inclusive value is $\ln[1 + J \exp(v)]$.
+- We just added the same goods. But the expected utility of consumer increases monotonically in the number of alternatives.
+ 
+
+
+
+### The Source of the Problem
+
+- All of these problems are the different side of the same coin. 
+- \textit{The source of the problem is that there is no correlation in the preference shock across products}.
+- When the preference shock to coca cola is high, the preference shock to pepsi cola should be high, while the preference shock to coffee should be relatively independent.
+- Because the expected value of the maximum of the preference shocks increases according to the number of alternatives, the inclusive value becomes increasing in the number of alternatives. 
+- However, the preference shocks should be the same for the same good. Then, the the expected value of the maximum of the preference shock does not increase even if we add the same products on the shelf.
+
+
+
+
+### To Resolve the Problem
+
+- Therefore, the preference shock should be such that: preference shocks between two alternative should be more correlated when they are closer in the characteristics space.
+- So we have to allow the covariance matrix of the preference shock to be free parameters.
+- If we allow flexible covariance matrix, the curse of dimensionality in the number of alternatives returns: The dimensionality of the covariance matrix is $J^2$.
+- Another way is to remove $\epsilon_{ij}$: it is called a \textbf{pure characteristics model}.
+
+
+
+
+### Mixed Logit Model (Random-coefficient Model)
+
+- Let $v(p, w_j, y_i) = \beta'w_j - \alpha  p_j$.
+- But now, suppose that $\beta$ and $\alpha$ can be different across consumers. So, $v(p, w_j, y_i) = \beta_i'w_j - \alpha_i p_j$.
+- The density of consumer characteristics is:
+\begin{equation}
+f(\beta_i, \alpha_i, y_i, \epsilon_i) = f(\beta_i, \alpha_i|y_i)f(y_i)f(\epsilon_i).
+\end{equation}
+where $f(\epsilon_i)$ is i.i.d. Type-I extreme value.
+- $f(\beta_i, \alpha_i|y_i)$ is often independent normal distribution.
+- Then, the choice probability of good $j$ by consumer $i$ is:
+\begin{equation}
+s_{j}(p, w, y_i) = \int_{\beta_i, \alpha_i} \frac{\exp[\beta_i'w_j - \alpha_i p_j ]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]} f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i.
+\end{equation}
+
+
+
+
+### Mixed Logit Model (Random-coefficient Model) 
+
+- Now the preference is correlated as we desired.
+- For example, suppose it is a choice over cars, and $w_{j1}$ is the engine power.
+- Suppose $\beta_{i1}$, the coefficient for $w_{j1}$ was high. Then, it means that the consumer likes a car with high engine power.
+- The preference of this consumer is, therefore, also higher for other cars with high $w_{ji}$.
+- There is no IIA:
+\begin{equation}
+\frac{s_{j}(p, w, y_i)}{s_{l}(p, w, y_i)} = \frac{\int_{\beta_i, \alpha_i} \frac{\exp[\beta_i'w_j - \alpha_i p_j]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]} f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i}{\int_{\beta_i, \alpha_i} \frac{\exp[\beta_i'w_l - \alpha_i p_l]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]} f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i}.
+\end{equation}
+
+
+
+
+### Mixed Logit Moel: Price Elasticities
+
+- The price elasticities of the choice probabilities is:
+\begin{equation}
+e_{jk} = 
+\begin{cases}
+-\frac{p_j}{s_j} \int \alpha_i s_{ij}(1 - s_{ij})f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i &\text{   if   } j = k\\
+\frac{p_k}{s_j} \int \alpha_i s_{ij} s_{ik} f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i &\text{   otherwise},
+\end{cases} 
+\end{equation} 
+where
+\begin{equation}
+s_{ij} = \frac{\exp[\beta_i'w_j - \alpha_i p_j ]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]}.
+\end{equation}
+
+
+
+
+### Mixed Logit Model: Including Consumer Characteristics
+
+- The distribution of the random-coefficient can be conditional on observable consumer characteristics. 
+- Let $z_i$ be a vector of observable consumer characteristics such as the family size, father's age, mother's age, ethnicity, and so on.
+\begin{equation}
+s_{j}(p, w, y_i, z_i) = \int_{\beta_i, \alpha_i} \frac{\exp[\beta_i'w_j - \alpha_i p_j ]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]} f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i.
+\end{equation}
+- The distribution of $\beta_i$ is often assumed to be:
+\begin{equation}
+\begin{split}
+&\beta_i = \Pi_0 z_i + \nu_i, \nu_i \sim N(0, \sigma_\nu^2).\\
+&\Rightarrow \beta_i'w_j = z_i' \Pi_0' w_j + \nu_i' w_j.
+\end{split}
+\end{equation}
+- Thus, observable consumer characteristics enter the mean indirect utility as interaction terms to observable product characteristics.
+
+
+
+
+
+### Simulated Maximum Likelihood Estimation of the Mixed Logit Model (Random-coefficient Model) 
+
+- The choice probability of the mixed logit model is an integration of the multinomial logit choice probability.
+- This is not derived analytically in general.
+- We use simulation to evaluate the choice probability:
+
+- Draw $R$ values of $\beta$ and $\alpha$, $\{\beta^r, \alpha^r \}_{r = 1}^R$.
+- Compute the multinomial choice probabilities associated with $(\beta^r, \alpha^r)$ for each $r = 1, \cdots, R$.
+- Approximate the choice probability with the mean of the simulated multinomial choice share:
+\begin{equation}
+s_{j}(p, w, y_i) \approx \hat{s}_{j}(p, w, y_i) \equiv \frac{1}{R} \sum_{r = 1}^R  \frac{\exp[\beta^{r\prime} w_j - \alpha^r p_j ]}{\sum_{k = 0}^J \exp[\beta^{r\prime}w_k - \alpha^r p_k]}.
+\end{equation}
+
+
+
+
+
+### Simulated Maximum Likelihood Estimation of the Mixed Logit Model (Random-coefficient Model)
+
+- Suppose we observe a sequence of income $y_i$, choice $x_i$, product characteristics $w_j$ and price $p_j$.
+- $x_i = (x_{i0}, \cdots, x_{iJ})'$ and $x_{ij} = 1$ if $j$ is chosen and $0$ otherwise. 
+- The simulated log likelihood of $\{x_i\}_{i = 1}^N$ conditional on $\{w_j, p_j\}_{j = 1}^J$ is:
+\begin{equation}
+\begin{split}
+l(v; x, y, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w_j, y_i)|p, w_j, y_i \}\\
+& \approx \sum_{i = 1}^N \log \Bigg\{ \prod_{j = 0}^{J} \hat{s}_{j}(p, w, y_i)^{x_{ij}} \Bigg\}.
+\end{split}
+\end{equation}
+
+
+
+
+### Simulated Non-linear Least Square Estimation of the Mixed Logit Model (Random-coefficient model)
+
+- Suppose that there are $t = 1, \cdots, T$ markets.
+- The average income level is $y_t$ in market $t$.
+- The average price level is $p_i$ in market $t$.
+- We can simulate the choice share of product $j$ in market $t$ by $\hat{s}_{j}(p_t, w, y_t)$.
+- Then we can estimate the parameter by:
+\begin{equation}
+\min \sum_{t = 1}^T \sum_{j = 1}^J \{s_{jt} - \hat{s}_{j}(p_t, w, y_t)\}^2,
+\end{equation}
+where $s_{jt}$ is the observed choice share of product $j$ in market $t$.
+
+
+
+
+### Nested Logit Model: A Special Case of Mixed Logit Model
+
+- Let $w_{j1}, \cdots, w_{jG}$ be the indicator of product category, i.e., $w_{jg}$ takes value 1 if good $j$ belong to category $g$ and 0 otherwise.
+
+- e.g., car category = \{Sports, Luxury, Large, Midsize, Small\}.
+
+- We have:
+\begin{equation}
+\begin{split}
+v(p, w_j, y_i; z_i) &= \beta'w_j - \alpha \ln(y_i - p_j)\\
+& + \underbrace{\sum_{g = 1}^G \zeta_{jg} w_{jg}}_{\text{this creates correlation within category}} + \epsilon_{ij}.
+\end{split}
+\end{equation}
+
+
+
+
+### Nested Logit Model
+
+- Let 
+\begin{equation}
+\varepsilon_{ij} \equiv \sum_{g = 1}^G \zeta_{jg} w_{jg} + \epsilon_{ij}.
+\end{equation}
+- Under certain distributional assumption on $\zeta_{jg}$ and $\epsilon_{ij}$, the term $\varepsilon_{ij}$ have a cumulative distribution:
+\begin{equation}
+F(\varepsilon_i) = \exp\Bigg\{- \sum_{g = 1}^G \Bigg(\sum_{j \in \text{   category   } g} \exp[-\varepsilon_{ij}/\lambda_g] \Bigg)^{\lambda_g}  \Bigg\}.
+\end{equation}
+
+
+
+
+### Nested Logit Model
+
+- Under this distributional assumption, the choice probability is:
+\begin{equation}
+\begin{split}
+s_{j}(p, w, y_i) = \frac{\exp[v(p, w_j, y_i)/\lambda_g] \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, w_k, y_i)/\lambda_g]\Bigg)^{\lambda_g - 1}}{\sum_{g = 1}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, w_k, y_i)/\lambda_g]\Bigg)^{\lambda_g}},
+\end{split}
+\end{equation}
+if good $j$ belongs to category $g$.
+- The higher $\lambda_g \in [0, 1]$ implies lower correlation within category $g$.
+- $\lambda_g = 1$ for all $g$ coincides with the multinomial logit model.
+
+
+
+
+
+### Discrete Choice Model with Endogenous Variables
+
+- We have assumed that good $j$ is characterized by a vector $w_j$.
+- Can econometrician observe all the relevant characteristics for goods in the choice set?
+- Maybe no. For example, econometrician may not observe brand values that are created by advertisement and recognized by consumers.
+- Moreover, such unobserved product characteristics are likely to be correlated with the price.
+- This causes an endogeneity problem.
+
+
+
+
+### Market-level Data
+
+- We consider a situation where there are $t = 1, \cdots, T$ market, and product characteristics $\{w_j\}_{j = 1}^J$, average price vector of each market $\{p_{t}\}_{t = 1}^{T}$, and the choice probabilities of each market $\{s_t\}_{t = 1}^T$, and the average income of each market $\{y_t\}_{t = 1}^T$ are observed.
+- We revisit choice-level data case later.
+
+
+
+
+### Unobserved Fixed Effects in Multinomial Logit Model
+
+- Suppose that the indirect utility function of good $j$ for consumer $i$ in market $t$ is:
+\begin{equation}
+\beta' w_j  - \alpha p_{jt} - \xi_{jt} + \epsilon_{ik},
+\end{equation}
+where $\epsilon_{ik}$ is i.i.d. Type-I extreme value.
+- $\xi_{jt}$ is unobserved fixed effect of product $j$ in market $t$, which can be correlated with $p_{jt}$.
+- The choice probability of good $j$ for this consumer and hence the choice share in this market is:
+\begin{equation}
+s_j(p_t, w, \xi_t) = \frac{\exp(\beta' w_j - \alpha p_{jt} + \xi_{jt})}{1 + \sum_{k = 1}^J\exp(\beta' w_k - \alpha p_{kt} +  \xi_{kt} ) }.
+\end{equation}
+- How to deal with the endogeneity?
+
+
+
+
+### Unobserved Fixed Effects in Multinomial Logit Model
+
+- Suppose that we have a vector of instrumental variables $z_{jt}$ such that:
+\begin{equation}
+\mathbb{E}\{\xi_{jt}|z_{jt}\} = 0.
+\end{equation}
+- Remember that in the IV estimator for a liner model, we write:
+\begin{equation}
+\epsilon_{jt} = y_{jt} - \beta'x_{jt},
+\end{equation}
+and exploit a moment condition such as:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{\epsilon_{jt}|z_{jt}\} = 0,\\
+&\Rightarrow \mathbb{E}\{ \epsilon_{jt} z_{jt}\} = 0,\\
+&\Leftrightarrow \mathbb{E}\{(y_{jt} - \beta'x_{jt}) z_{jt} \} = 0
+\end{split}
+\end{equation}
+- To use the moment condition above, we have to write $\xi_{jt}$ as a function of parameters of interest.
+
+
+
+
+### Unobserved Fixed Effects in Multinomial Logit Model
+
+- This is straightforward in multinomial logit models.
+- Remember that we have:
+\begin{equation}
+\begin{split}
+&\ln [s_j(p_t, w, \xi_t) / s_0(p_t, w, \xi_t)] = \beta' w_j - \alpha p_{jt} + \xi_{jt}\\
+&\Leftrightarrow \xi_{jt} = \ln [s_j(p_t, w, \xi_t) / s_0(p_t, w, \xi_t)] - [\beta' w_j - \alpha p_{jt}].
+\end{split}
+\end{equation}
+- Therefore, the moment condition can be written as:
+\begin{equation}
+\begin{split}
+&\mathbb{E}\{\xi_{jt}|z_{jt}\} = 0,\\
+&\Rightarrow \mathbb{E}\{\xi_{jt} z_{jt}\} = 0,\\
+&\Leftrightarrow \mathbb{E}\{(\ln [s_{jt} / s_{0t}] - [\beta' w_j - \alpha p_{jt}]) z_{jt}  \} = 0,
+\end{split}
+\end{equation}
+where $s_{jt}$ is the observed choice share of product $j$ in market $t$.
+
+
+### Unobserved Fixed Effects in Multinomial Logit Model
+
+- If you can assume $\xi_{jt} = \xi_j$, then
+\begin{equation}
+ln [s_j(p_t, w, \xi_t) / s_0(p_t, w, \xi_t)] = \beta' w_j - \alpha p_{jt} + \xi_{j}.
+\end{equation} 
+- This is nothing but a linear regression of $ln [s_j(p_t, w, \xi_t) / s_0(p_t, w, \xi_t)]$ on $w_j$ and $p_{jt}$ with product-specific unobserved fixed effect.
+- This can be estimated by a within-market estimator.
+- This is a good starting point.
+
+
+
+
+### Unobserved Fixed Effects in Mixed-logit Model
+
+- Suppose that the indirect utility function of good $j$ for consumer $i$ in market $t$ is:
+\begin{equation}
+\beta_i' w_j  - \alpha_i p_{jt} - \xi_{jt} + \epsilon_{ik},
+\end{equation}
+where $\epsilon_{ik}$ is i.i.d. Type-I extreme value.
+- $\xi_{jt}$ is unobserved fixed effect of product $j$ in market $t$, which can be correlated with $p_{jt}$.
+- The random-coefficient $\beta_{il}$ and $\alpha_i$ are drawn from:
+\begin{equation}
+\begin{split}
+&\beta_{il} = \beta_l + \sigma_{\beta l} \nu_{il}, l = 1, \cdots, L,\\
+&\alpha_i = \alpha + \sigma_{\alpha} \nu_{i},
+\end{split}
+\end{equation}
+where $\nu_{il}$ and $\nu_i$ are i.i.d. standard normal distribution.
+- Then the indirect utility of good $j$ for consumer $i$ in market $t$ is written as:
+\begin{equation}
+\underbrace{\sum_{l = 1}^L \beta_{l} w_{jl} - \alpha p_{jt} + \xi_{jt}}_{\text{product and market specific}} + \underbrace{\sum_{l = 1}^L \sigma_{\beta k} \nu_{il} w_{jl} - \sigma_{\alpha} \nu_i p_{jt}}_{\text{individual heterogeneity matters}}.
+\end{equation}
+
+
+
+
+### Unobserved Fixed Effects in Mixed-logit Model
+
+- The choice share of good $j$ in market $t$ is:
+\begin{equation}
+s_{j}(p_t, w, \xi_t) = \int \frac{\exp\Bigg(\sum_{l = 1}^L \beta_{l} w_{jl} - \alpha p_{jt} + \xi_{jt} + \sum_{l = 1}^L \sigma_{\beta k} \nu_{il} w_{jl} - \sigma_{\alpha} \nu_i p_{jt} \Bigg)}{1 + \sum_{k = 1}^J \exp\Bigg(\sum_{l = 1}^L \beta_{l} w_{kl} - \alpha p_{kt} + \xi_{kt} + \sum_{l = 1}^L \sigma_{\beta k} \nu_{il} w_{kl} - \sigma_{\alpha} \nu_i p_{kt} \Bigg)} f(\nu) d\nu.
+\end{equation}
+- How can we represent $\xi_{jt}$ as a function of parameters of interest to exploit the moment condition?
+- Let $\theta_1 = \{\{\beta_l\}_{l = 1}^L, \alpha\}$ and $\theta_2 = \{\{\sigma_{\beta l}\}_{l = 1}^L, \sigma_{\alpha}\}$.
+- The parameters of interest are $\theta = \{\theta_1, \theta_2\}$.
+- I will call $\theta_1$ linear parameters and $\theta_2$ non-linear parameters for reasons I explain later.
+- Let $s_{j}(p_t, w, \xi_t; \theta)$ denote the choice probability implied by parameters $\theta$ to make the dependence explicit.
+
+
+
+
+### Representing $\xi_{jt}$ as a Function of Parameters of Interest
+
+- The following equality implicitly determines $\xi_{jt}$ as a function of parameters of interest:
+\begin{equation}
+s_{jt} = s_{j}(p_t, w, \xi_t; \theta),
+\end{equation}
+where $s_{jt}$ is the observed choice share of good $j$ in market $t$. 
+- Let $\xi_{jt}(\theta)$ is the solution to the equation above given parameter $\theta$.
+- Does this solution exist?
+- Is it unique?
+- Is there efficient method to find the solution?
+
+
+
+
+### Solving for $\xi_{jt}(\theta)$
+
+- Now, let $\delta_{jt}$ be the product and market specific terms in the indirect utility:
+\begin{equation}
+\delta_{jt} \equiv \sum_{l = 1}^L \beta_{l} w_{jl} - \alpha p_{jt} + \xi_{jt}.
+\end{equation}
+- I call it the average utility of the product in the market.
+- Then, the choice share of product $j$ in market $t$ is written as:
+\begin{equation}
+\begin{split}
+&\sigma_{jt}(\delta_t, \theta_2) \\
+&\equiv \int \frac{\exp\Bigg(\delta_{jt} + \sum_{l = 1}^L \sigma_{\beta k} \nu_{il} w_{jl} - \sigma_{\alpha} \nu_i p_{jt} \Bigg)}{1 + \sum_{k = 1}^J \exp\Bigg(\delta_{kt} + \sum_{l = 1}^L \sigma_{\beta k} \nu_{il} w_{kl} - \sigma_{\alpha} \nu_i p_{kt} \Bigg)} f(\nu) d\nu,
+\end{split}
+\end{equation}
+for $j = 1, \cdots, J, t = 1, \cdots, T$.
+
+
+
+
+### Solving for $\xi_{jt}(\theta)$
+
+- Now, fix $\theta_2$ and define an operator $T$ such that:
+\begin{equation}
+T_t(\delta_t) = \delta_t + \ln \underbrace{s_{jt}}_{\text{data}} - \ln \underbrace{\sigma_{jt}(\delta_t, \theta_2)}_{\text{model}}.
+\end{equation} 
+- Let $\delta_t^{(0)} = (\delta_{1t}^{(0)}, \cdots, \delta_{Jt}^{(0)})'$ be an arbitrary starting vector of average utility of products in a market.
+- Using the operator above, we update $\delta_{t}^{(r)}$ by:
+\begin{equation}
+\delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{jt} - \ln \sigma_{jt}(\delta_t^{(r)}, \theta_2),
+\end{equation}
+for $r = 0, 1, \cdots$.
+
+
+
+
+### Solving for $\xi_{jt}(\theta)$
+
+- Berry, Levinsohn and Pakes (1995) proved that $T_t$ as specified above is a \textbf{contraction mapping with modulus less than one}.
+- This means that i) $T_t$ has a unique fixed point and ii) for arbitrary $\delta_t^{(r)}$, $\lim_{r \to \infty} T_t^r(\delta_t^{(0)})$ is the unique fixed point.
+- The fixed point of $T_t$ is $\delta_t^*$ such that $\delta_t^* = T_t(\delta_t^*)$, i.e.,
+\begin{equation}
+\begin{split}
+&\delta_t^* = \delta_t^* + \ln s_{jt} - \ln \sigma_{jt}(\delta_t^*, \theta_2),\\
+&\Leftrightarrow s_{jt} = \sigma_{jt}(\delta_t^*, \theta_2).
+\end{split}
+\end{equation}
+- So, the fixed point $\delta_t^*$ is the average utility that solves the equality given non-linear parameter $\theta_2$.
+- Moreover, the solution is unique.
+- Moreover, it can be found by iterating the operator.
+- Let $\delta_t(\theta_2)$ be the solution to this equation that are computed by iteratively applying the operator.
+
+
+
+
+### Solving for $\xi_{jt}(\theta)$
+
+- We defined the average utility as:
+\begin{equation}
+\delta_t = \sum_{l = 1}^L \beta_{l} w_{jl} - \alpha p_{jt} + \xi_{jt}.
+\end{equation}
+- Hence,
+\begin{equation}
+\xi_{jt}(\theta) = \delta_t(\theta_2) - \Bigg[\sum_{l = 1}^L \beta_{l} w_{jl} - \alpha p_{jt} \Bigg],
+\end{equation}
+solves the equality:
+\begin{equation}
+s_{jt} = s_{j}(p_t, w, \xi_t; \theta).
+\end{equation}
+
+
+
+
+### Solving for $\xi_{jt}(\theta)$
+
+- In summary, $\xi_{jt}$ that solves the equality exists and unique, and can be computed by:
+
+- Fix $\theta = \{\theta_1, \theta_2\}$.
+- Fix arbitrary starting value $\delta_t^{(0)}$ for $t = 1, \cdots, T$.
+- Let $\delta_t(\theta_2)$ be the limit of $T_t^r(\delta_t^{(0)})$ for $r = 0, 1, \cdots$ for each $t = 1, \cdots, T$.
+
+- Stop the iteration if $|\delta_t(\theta_2)^{(r + 1)} - \delta_t(\theta_2)^{(r)}|$ is below a threshold.
+
+- Let $\xi_{jt}(\theta)$ be such that:
+\begin{equation}
+\xi_{jt}(\theta) = \delta_t(\theta_2) - \Bigg[\sum_{l = 1}^L \beta_{l} w_{jl} - \alpha p_{jt} \Bigg].
+\end{equation}
+
+- We run this algorithm every time we evaluate the moment condition.
+
+
+
+
+### Estimating Parameters
+
+- Find $\theta$ that solves:
+\begin{equation}
+\min_{\theta} \xi(\theta)' Z W^{-1} Z' \xi(\theta),
+\end{equation}
+where $W$ is some weight matrix,
+\begin{equation}
+\xi(\theta) = 
+\begin{pmatrix}
+\xi_1(\theta)\\
+\vdots\\
+\xi_T(\theta)
+\end{pmatrix},
+Z = 
+\begin{pmatrix}
+z_{11}' \\
+\vdots \\
+z_{J1}' \\
+\vdots \\
+z_{1T}' \\
+\vdots \\
+z_{JT}' \\
+\end{pmatrix}.
+\end{equation}
+- There are $J \to \infty$ and $T \to \infty$ asymptotics. Either is fine to consistently estimate the parameters.
+
+
+
+
+### Estimating Parameters
+
+- The first-order condition for $\theta_1$ is:
+\begin{equation}
+\theta_1 = (X_1'Z W^{-1} Z'X_1)^{-1} X_1' Z W^{-1} Z' \delta(\theta_2),
+\end{equation} 
+where
+\begin{equation}
+X_1 = 
+\begin{pmatrix}
+\tilde{X}_1 & - p_1\\
+\vdots & \vdots \\
+\tilde{X}_1 & - p_T
+\end{pmatrix},
+\tilde{X}_1 =
+\begin{pmatrix}
+w_{11} & \cdots & w_{1L}\\
+\vdots & & \vdots\\
+w_{J1} & \cdots & w_{JL}
+\end{pmatrix},
+\delta(\theta_2) =
+\begin{pmatrix}
+\delta_1(\theta_2)\\
+\vdots\\
+\delta_T(\theta_2)
+\end{pmatrix}
+\end{equation}.
+- So, finding optimal $\theta_1$ given $\theta_2$ is easy.
+- We search over $\theta_2$ and find optimal $\theta_1$ for $\theta_2$ from the first-order condition above.
+
+
+
+
+### Instrumental Variables
+
+- Hausman-type IV: 
+
+- Assume that demand shocks independent across markets, while the cost shocks are correlated.
+- Then, the prices of goods in other markets $p_{j, -t}$ will be valid instruments for the price of goods in a given market, $p_{jt}$. 
+
+- BLP-type IV:
+
+- In oligopoly, the price of a good in a market depends on the market structure, i.e., what kind of products are available in the market.
+- For example, if there are similar products in the market, the price will tend to be lower.
+- Then, the product characteristics of other products in the market , will be valid instrument for the price of goods in a given market, $p_{jt}$.
+- If there are multi-product firms, whether the other good is owned by the same company will also affect the price.
+
+
+
+
+
+### Optimal BLP-type IV
+
+- When $\mathbb{E}\{\xi_{jt}|z_{t}\} = 0$ holds, then for any function $H$, we have:
+\begin{equation}
+\mathbb{E}\{\xi_{jt} H(z_{t}) \} = \mathbb{E}\{\mathbb{E}\{\xi_{jt}|z_{jt}\}H(z_{t})\} = 0.
+\end{equation}
+- The choice of $H$ matters the efficiency.
+- $H$ should be something that makes it harder to satisfy the condition when the parameter to evaluate is away from the true parameter.
+- Let $d_{jk} = d(w_j, w_k)$ be some distance between product characteristics.
+- It is known that the optimal IV $H$ for $p_{jt}$ is a function of the distribution of $\{d_{jk}\}_{k \neq j, k\text{   is available in market   }t}$,  $F_j(d)$.
+- We can compute empirical distribution of $F_j(d)$ in a market, $\hat{F}_j(d)$.
+- We can use some moments of $\hat{F}_j(d)$ as IV for $p_{jt}$.
+
+
+
+
+### Control Function Approach
+
+- The equilibrium price vector in a market is determined by product characteristics, and productivity and demand conditions.
+- It will depends on the unobserved product characteristics $\xi_{jt}$.
+- Suppose that the equilibrium price vector in a market is determined by:
+\begin{equation}
+p_{t} = P(w, z_t, \xi_t),
+\end{equation}
+where $z_t$ is a vector of variables that affect the price but are excluded from the indirect utility function.
+- If we can estimate it and it is invertible in $\xi_t$, then, we can have a proxy for $\xi_t$ such as:
+\begin{equation}
+\hat{\xi}_t = \hat{P}^{-1}(w, z_t).
+\end{equation}
+- If we insert this into the previous models, $\xi_{jt}$ is no longer \textbf{unobserved} product characteristics.
+- This approach is similar to Olley and Pakes method for production function estimation.
+

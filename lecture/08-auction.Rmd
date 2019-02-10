@@ -1,0 +1,595 @@
+# Auction {#auction}
+
+## Auction
+
+### Auction
+
+- It is important to understand how price is formed.
+- It is widely used both for public and private sectors.
+- The sellers should know:
+
+- Which auction format to use?
+- Whether to restrict participation?
+- Whether to charge entry fees?
+
+- Some of them can be answered theoretically.
+- Some of them need empirical assessment.
+
+
+
+
+### Auction Formats
+
+- Single item auction formats:
+
+- English auction: Bidders call out successively higher prices until one bidder remains.
+- Vickrey or 2nd price auction: Bidders submit sealed bids; high bidder wins and pays second highest bid.
+- Dutch or descending price auction: Prices falls until one bidder presses button and bidder gets the object at the current price.
+- First price auction: Bidders submit sealed bids; high bidder wins and pays his bid.
+
+
+
+
+### Auction Formats
+
+- Multi item auction formats:
+
+- Discriminatory auction: A seller has an supply of items. Buyers submit downward sloping demand schedules ($p, q$ combinations). Equilibrium supply is where aggregate demand equals supply. Buyers pay their bid for sold items.
+- Uniform price: A seller has an supply of items. Buyers submit downward demand schedules ($p, q$ combinations). Equilibrium supply is where aggregate demand equals supply. Buyers pay the equilibrium price.
+- Simultaneous ascending price auction: Each bidder demands one unit. Bids are raised in multiple rounds. In each round, bidders specify which object that they are bidding for, and may switch from bidding for one object to bidding for another object. Auction closes when no further bids are raised.
+
+
+
+
+### Informational Environment
+
+- Private values:
+
+- Each bidder $i$ values the item at a known value $v_i$. Other bidders do not know $v_i$ but know that $v_i$ is drawn from some known probability distribution.
+- It is an independent and private values if the $v_i$s are independent across bidders.
+- c.g. construction work.
+
+- Common values:
+
+- Same values for all bidders. However, each bidder only knows a private signal of true value. 
+- The signals are often assumed to be independent conditional on the common value.
+- c.g. oil field extraction.
+
+- Affiliated values:
+
+- Mixture between private and common values.
+
+
+
+
+### Reserve Price
+
+- The seller can set the reserve price $R$.
+- Bidders can get the object only if the winning bid is no less than the reserve price.
+
+
+
+### Second Price Auction
+
+- Rule: highest bidders wins and pays the second highest bid.
+- $N$ bidders.
+- Consider independent and private value $v_i \in [0, V]$.
+- Let $b_i$ be the bid of bidder $i$.
+- Let $b_{(k)}$ be the $k$th highest bid.
+- Payoff:
+\begin{equation}
+\begin{cases}
+v_i - b_{(2)} &\text{   if  wins}\\
+0 &\text{   otherwise.}
+\end{cases}
+\end{equation}
+
+
+
+### Second Price Auction
+
+- Result: It is a dominant strategy equilibrium that every bidder bids their true value: $b_i^* = v_i, i = 1, \cdots, N$.
+- Proof:
+
+- $v < R$: Paying more than $v \ge R$ can result in negative payoff. Paying less than $R$ gives zero payoff. So $b^* = v$ is optimal.
+- $v \ge R$: Under $b^* = v$, if win, he gets $v - b_{(2)} \ge 0$. Consider deviation.
+
+- $b_i > v$: for $b_{(2)} \le v$, pays $b_{(2)}$ and gets the same payoff while for $b_i > b_{(2)} > v$ makes a loss. No incentive to deviate.
+- $b_i < v$: for $b_{(2)} < b_i$, pays $b_{(2)}$ and gets the same payoff while for $b_i \le b_{(2)} < v$, looses the auction and gets zero. No incentive to deviate.
+
+
+
+
+
+### Second Price Auction
+
+- The second price auction is efficient: the bidder that values the item most gets the object.
+- Expected revenue for the seller (when $R = 0$): the expected second highest valuation.
+- Other equilibrium?: $b_1 = V, b_i = 0, i \neq 1$.
+
+
+
+### First Price Auction
+
+- Temporarily abstract away from the reserve price.
+- $N$ bidders.
+- Consider independent and private value $v_i \in [0, 1]$.
+- $v_i$ is drawn from known distribution whose density is $f$ and distribution is $F$.
+- Payoff:
+\begin{equation}
+\begin{cases}
+v_i - b_i &\text{   if  wins}\\
+0 &\text{   otherwise.}
+\end{cases}
+\end{equation}
+- Expected payoff is:
+\begin{equation}
+U_i(v_i, b_i) = [v_i - b_u] \mathbb{P}\{b_i > b_j, j \neq i\}.
+\end{equation}
+- We assume that the belief about $b_j, j \neq i$ is consistent with the equilibrium strategy. 
+
+
+
+### First Price Auction
+
+- Strategy is a mapping from values to bids: $b_i: [0, 1] \to \mathbb{R}$.
+- We focus on symmetric equilibrium: $b_i(\cdot) = b(\cdot), i = 1, \cdots, N$.
+- We assume that the equilibrium symmetric strategy $b(\cdot)$ is differentiable and strictly increasing, and verity it later.
+
+
+
+### First Price Auction
+
+- The winning probability:
+
+\begin{equation}
+\begin{split}
+\mathbb{P}\{b_i > b_j, j \neq i\} & \underbrace{=}_{\text{consistency}} \mathbb{P}\{b_i > b(v_j), j \neq i\}\\
+&\underbrace{=}_{\text{strictly increasing}}\mathbb{P}\{b^{-1}(b_i) > v_j, j \neq i\}\\
+&\underbrace{=}_{\text{independence}}\mathbb{P}\{b^{-1}(b_i) > v_1\}\cdots\mathbb{P}\{b^{-1}(b_i) > v_N\}\\
+&= F(b^{-1}(b_i))\cdots F(b^{-1}(b_i))\\
+&= F(b^{-1}(b_i))^{N - 1}.
+\end{split}
+\end{equation}
+- The expected payoff conditional on $v_i$ is thus:
+\begin{equation}
+U_i(v_i, b_i) = [v_i - b_i] F(b^{-1}(b_i))^{N - 1}.
+\end{equation}
+
+
+
+### First Price Auction
+
+- In a symmetric equilibrium, the following conditions have to hold:
+
+\begin{equation}
+\begin{split}
+&b_i = b(v_i)\\
+&\frac{\partial U_i(b_i, v_i)}{\partial b_i} = 0.
+\end{split}
+\end{equation}
+- Then,
+
+\begin{equation}
+\begin{split}
+F(b^{-1}(b_i))^{N - 1} &= F(b^{-1}(b(v_i)))^{N - 1}\\
+&= F(v_i)^{N - 1}.
+\end{split}
+\end{equation}
+- Thus, the expected payoff conditional on $v$ given symmetric strategy $b(\cdot)$ is:
+\begin{equation}
+U_i(v, b(v)) = [v - b(v)]F(v)^{N - 1}.
+\end{equation}
+
+
+
+### First Price Auction
+
+- By definition:
+\begin{equation}
+U_i(v, b(v)) = \int_0^v \frac{d U_i(x, b(x))}{\partial x} dx,
+\end{equation}
+where at the equilibrium:
+
+\begin{equation}
+\begin{split}
+\frac{d U_i(x, b(x))}{d x} &= \frac{\partial U_i(x, b(x))}{\partial x} + \underbrace{\frac{\partial U_i(x, b(x))}{\partial b_i}}_{= 0: optimality} \frac{\partial b(x)}{\partial x}\\
+&=\frac{\partial U_i(x, b(x))}{\partial x} \\
+&=F(x)^{N - 1}.
+\end{split}
+\end{equation}
+- Hence,
+
+\begin{equation}
+\begin{split}
+&[v - b(v)] F(v)^{N - 1} = \int_0^v F(x)^{N - 1} dx\\
+&\Leftrightarrow b(v) = v - \frac{\int_0^v F(x)^{N - 1} dx}{F(v)^{N - 1}}.
+\end{split}
+\end{equation}
+- It is actually differentiable and strictly increasing in $v$ (check it).
+
+
+
+### First Price Auction
+
+- When there is a reserve price $R$, let $R = b(r)$.
+- Then, when $v \le r$, the bidder does not get anything.
+- Therefore, we have:
+
+\begin{equation}
+\begin{split}
+U_i(v, b(v)) &=U_i(v, b(v)) - U_i(r, b(r)) \\
+&= \int_r^v \frac{d U_i(x, b(x))}{\partial x} dx\\
+&= \int_r^v F(x)^{N - 1} dx.
+\end{split}
+\end{equation}
+- Therefore,
+\begin{equation}
+\begin{split}
+&[v - b(v)] F(v)^{N - 1} = \int_r^v F(x)^{N - 1} dx\\
+&\Leftrightarrow b(v) = v - \frac{\int_r^v F(x)^{N - 1} dx}{F(v)^{N - 1}}.
+\end{split}
+\end{equation}
+
+
+
+### Estimation of Auction
+
+- Model primitives:
+
+- The distribution of the value $F$.
+- The potential number of bidders $N$ especially if the participation is endogenous.
+
+- The estimation results can be used to consider the optimal auction format, optimal reserve price, and so on.
+
+
+
+### Estimation of Second Price Auction
+
+- Data: $\{\{b_i^t\}_{i = 1}^N\}_{t = 1}^T$ bids of $N$ bidders in $T$ auctions.
+- $T$ auctions sell the identical object, fixed number of bidders participate, and observations are independent.
+- Assume that $b_i = v_i, i = 1, \cdots, N$ in the equilibrium. 
+- It is straightforward to estimate $F$ by:
+
+\begin{equation}
+\begin{split}
+\hat{F}(v) = \frac{1}{N T} \sum_{i = 1}^N \sum_{t = 1}^T 1\{b_i^t \le v\}.
+\end{split}
+\end{equation}
+
+
+
+### Estimation of Second Price Auction
+
+- Data: $\{w^t\}_{t = 1}^T$ winning bids of $T$ auctions.
+- $T$ auctions sell the identical object, fixed number of bidders participate, and observations are independent.
+- Assume that $b_i = v_i, i = 1, \cdots, N$ in the equilibrium.
+- We can estimate the distribution of winning bids:
+\begin{equation}
+\hat{F}_w(w) = \frac{1}{T} \sum_{t = 1}^T 1\{w^t \le w\}. 
+\end{equation}
+- Note that the distribution of winning bids are:
+
+\begin{equation}
+\begin{split}
+F_w(w) &= \mathbb{P}\{b_{(2)} \le w\}\\
+&=\mathbb{P}\{v_{(2)} \le w\}\\
+&= N(N - 1) \int_{0}^{w} F(x)^{N - 2} (1 - F(x)) f(x) dx\\
+&= N(N - 1) \int_{0}^{F(w)} u^{N - 2}(1 - u) du \\
+&\equiv \varphi(F(w), N)
+\end{split}
+\end{equation} 
+- Because $\varphi$ is strictly increasing in $F(w)$, we can estimate $F$ by:
+\begin{equation}
+\hat{F}(w) = \varphi^{-1}(\hat{F}_w(w), N).
+\end{equation}
+
+
+
+### Estimation of First Price Auction
+
+- Data: $\{\{b_i^t\}_{i = 1}^N\}_{t = 1}^T$ bids of $N$ bidders in $T$ auctions.
+- $T$ auctions sell the identical object, fixed number of bidders participate, and observations are independent.
+- First consider identification.
+- Then Consider direct and indirect inference approaches.
+
+
+
+### Estimation of First Price Auction: Identification
+
+- Let $H(b)$ be the distribution of symmetric equilibrium bids.
+- Then the expected payoff to a bidder conditional on $v$ can be written as:
+\begin{equation}
+\max_{b} (v - b) H(b)^{N - 1}.
+\end{equation}
+- The first-order condition w.r.t. $b$ gives:
+
+\begin{equation}
+\begin{split}
+&- H(b)^{N - 1} + (v - b)(N - 1) H(b)^{N - 2} h(b) = 0\\
+&\Leftrightarrow v = b + \frac{H(b)}{(N - 1)h(b)}.
+\end{split}
+\end{equation}
+- This is the inverse function of the symmetric equilibrium bidding strategy $b^{-1}(\cdot)$.
+
+
+
+### Estimation of First Price Auction: Identification
+
+- We can identify $H(b)$ and $h(b)$ directly from the data.
+- For $b_i^t$, we can compute:
+\begin{equation}
+ v_i^t = b_i^t + \frac{H(b_i^t)}{(N - 1)h(b_i^t)}.
+\end{equation}
+- Because the right hand side is the inverse function of strictly increasing function, it has to be also strictly increasing, i.e. $H(b)/h(b)$ has to be strictly increasing in $b$. Otherwise, the data is inconsistent with the model.
+- If this holds, then the data is consistent with the model and the distribution of the value is identified by the distribution of $v_i^t$ that is constructed from the distribution of bids.
+ 
+
+
+### Estimation of First Price Auction: Direct Inference Approach
+
+- Suppose that the distribution $F$ is known up to finite-dimensional parameter $\theta$, $F(\cdot; \theta)$.
+- Let $b(\cdot; \theta)$ be the associated symmetric equilibrium bidding strategy.
+- The distribution of bids is related to the distribution of the value with:
+
+\begin{equation}
+\begin{split}
+H(x) &= \mathbb{P}\{b(v; \theta) \le  x\}\\
+&= \mathbb{P}\{v \le b^{-1}(x; \theta)\}\\
+&=F(b^{-1}(x; \theta)).
+\end{split}
+\end{equation}
+- Hence, the density is:
+\begin{equation}
+h(x) = f(b^{-1}(x; \theta)) \frac{\partial b^{-1}(x; \theta)}{\partial b}.
+\end{equation}
+
+
+
+### Estimation of First Price Auction: Direct Inference Approach
+
+- Therefore, the likelihood function for the data $\{\{b_i^t\}_{i = 1}^N\}_{t = 1}^T$ is:
+
+\begin{equation}
+\begin{split}
+L(\theta) &= \prod_{i = 1}^N \prod_{t = 1}^T h(b_i^t) \\
+&= \prod_{i = 1}^N \prod_{t = 1}^T f(b^{-1}(b_i^t; \theta)) \frac{\partial b^{-1}(b_i^t; \theta)}{\partial b}.
+\end{split}
+\end{equation}
+- Find $\theta$ that maximizes the likelihood.
+- It is computationally intensive especially if one allows heterogeneity in $F$ across bidders.
+
+
+
+### Estimation of First Price Auction: Indirect Inference Approach
+
+- It uses the identification argument:
+
+\begin{equation}
+\begin{split}
+&\hat{h}(b) = \frac{1}{NT h} \sum_{i = 1}^N \sum_{t = 1}^T K\Bigg(\frac{b_i^t - b}{h}\Bigg) \Rightarrow \hat{H}(b).
+\end{split}
+\end{equation}
+- Estimate $F$ by:
+\begin{equation}
+\hat[F](v) = \frac{1}{NT} \sum_{i = 1}^N \sum_{t = 1}^T 1\Bigg\{b_i^t + \frac{\hat{H}(b_i^t)}{(N - 1)\hat{h}(b_i^t)} \le v  \Bigg\}.
+\end{equation}
+- This approach extends nicely to:
+
+- Asymmetric bidders.
+- Common values.
+- Other auction rules.
+
+
+
+
+### Risk Aversion
+
+- If bidders are risk averse, then the model cannot be identified.
+- Intuitively, the bids depend both on the uncertainty about the others value and the risk averseness.
+- The bid distribution only cannot separately identify them.
+- Let $v$ be the evaluation in money.
+- Let $U$ be the utility over the money.
+- Then the expected payoff is:
+\begin{equation}
+U(v - b)H(b)^{N - 1}.
+\end{equation}
+- The first-order condition is:
+\begin{equation}
+\begin{split}
+&- U'(v - b) H(b)^{N - 1} + U(v - b)(N - 1)H(b)^{N - 2} h(b) = 0\\
+&\Leftrightarrow v = b + \lambda^{-1}\Bigg(\frac{H(b)}{(N - 1)h(b)} \Bigg),
+\end{split}
+\end{equation}
+where $\lambda = U/U'$.
+
+
+### Ascending Auctions with Private Values
+
+- In the simultaneous second price auction, you can observe the bids of the entire bidders.
+- In the ascending auction, the auction stops when only one bidder remained.
+- Therefore, you can observe only the distribution of 2nd to the lowest bids.
+
+
+
+### Ascending Auctions with Private Values
+
+- When $n$ samples are drawn from a distribution $F$, it can be shown that the distribution of $i$th statistics $F^{(i:n)}$ is:
+\begin{equation}
+F^{(i:n)} = \frac{n!}{(n - i)! (i - 1)!} \int_{0}^{F(s)} t^{i - 1} (1 - t)^{n - i} dt, \forall s,
+\end{equation}
+and the right-hand side function is strictly increasing in $F(s)$.
+- You can identify $F$ from $F^{i:n}$.
+- Because the bid is equal to the value in the ascending auction, you can identify the distribution of the values.
+
+
+
+### General Framework
+
+- The utility bidder $i \in \{1, \cdots, n\}$ is $U_i$, and $U = (U_1, \cdots, U_n)$.
+- The private information (type) of bidder $i$ is $X_i$, and $X = (X_1, \cdots, X_n)$.
+- The type is informative about the utility of bidder $i$ in the sense:
+\begin{equation}
+\mathbb{E}\{U_i|X_i = x_i, X_{-i} = x_{-i}\}
+\end{equation}
+is strictly increasing in $x_i$ for all realizations of $x_{-i}$.
+- Normalization:
+\begin{equation}
+\mathbb{E}\{U_i|X_i = x_i\} = x_i.
+\end{equation}
+
+
+
+### General Framework: A Restriction on the Information
+
+- The structural parameters is $F_{X, U}$.
+- Bidders have \textbf{private values} if 
+\begin{equation}
+\mathbb{E}\{U_i|X_1 = x_1, \cdots, X_n = x_n\} = \mathbb{E}\{U_i|X_i = i\}
+\end{equation}
+for all $x_{-i}$ for all $i$.
+- In the private values models, bidders do not have private information about the valuations of their opponents.
+
+
+
+### General Framework: A Restriction on the Information
+
+- Bidders have \textbf{common values} if
+\begin{equation}
+\mathbb{E}\{U_i|X_1 = x_1, \cdots, X_n ~ x_n\}
+\end{equation}
+is strictly increasing in $x_j$ for any $i, j$ at any $x_j$.
+- In the common values models, the signals of the other bidders are informative for a bidder.
+
+
+
+### General Framework: A Restriction on the Values
+
+- The previous assumption was for the signals $X$.
+- The values $U$ may be \textbf{independent} or dependent.
+- The special case of dependence (including independence): \textbf{affiliation}.
+- $U$ with joint density $f_U$ is affiliated if for all $u$ and $u'$,
+\begin{equation}
+f_U(u \vee u') f_(u \wedge u') \ge f_U(u) f_U(u).
+\end{equation}
+
+
+
+### Independent Private Values Models
+
+- So far we have in the \textbf{Independent Private Values (IPV)} models.
+
+- The utilities are independent.
+- The signals are not informative about others' values.
+
+- Moreover, the signal was equal to the value.
+- Furthermore, the distribution was assumed to be symmetric across bidders.
+- Introducing some dependence into the values or information, or allowing asymmetry into the distribution makes the problems complicated both in theory and in econometrics.
+
+
+
+### The Mineral Rights Model
+
+- The value of a project (a mineral right project) is the same across bidders: $U_i = U_0, \forall i$.
+- The signal $X_i$ is:
+\begin{equation}
+X_i = U_0 + A_i,
+\end{equation}
+where $A$ are mutually independent conditional on $U_0$.
+
+
+
+### The Mineral Rights Model: First-price Auction
+
+- The first-order condition is the same after replacing $v$ with $x$:
+\begin{equation}
+X_i = U_0 + A_i = b_i + \frac{H(b_i)}{(N - 1)h(b_i)}.
+\end{equation}
+- From this, one can identify the distribution of $X_i$.
+- A deconvolution method allows to identify the distribution of $U_0$ and the conditional distribution of $A_i$.
+- The deconvolution \textbf{does not} work if $U_i \neq U_0$ for some $i$.
+
+
+
+### Dynamic Auctions
+
+- The state variable of a bidder may depend on the behavior and the outcome of the previous auctions.
+- The cost to construct a road depend on the remaining capacity of a firm, and the remaining capacity of a firm depends on how many projects the firm have won recently.
+- After the Great Recession, the government significantly increased the expenditure to a public good such as highway, but this may have significantly increased the construction cost by screwing the capacities of the construction companies.
+
+
+
+### Dynamic Auctions: Capacity Constraints
+
+- $c_{i, t}$: bidder $i$'s publicly observed remaining capacity in period $t$.
+- $F_U(\cdot|c_{i, t})$: The distribution of bidder $i$'s valuation in period $t$.
+- The transition of the capacity:
+\begin{equation}
+c_{i, t + 1} = \omega_i(c_t, k),
+\end{equation}
+where $k$ is the identify of the winning bidder in period $t$.
+- A Markov bidding strategy $b(u_{i, t}, c_t)$.
+
+
+
+### Dynamic Auctions: Value Function
+
+- The value function of bidder $i$ when the value is $u_i$ and the vector of capacities is $c$:
+\begin{equation}
+\begin{split}
+&W_i(u_i, c) = \max_{b_i} \Bigg\{(u_i - b_i) \mathbb{P}\{b_i = \max_j b_j\} \\
+&+ \delta \sum_{j = 1}^N \mathbb{P}\{j\text{   wins   }|b_i, c\} \int_{u_i'} W_i(u_i', \omega(c, j)) f_{U_i}(u_i'|\omega_i(c, j)) du_i'
+\Bigg\}\end{split}
+\end{equation}
+
+
+
+### Dynamic Auctions: Ex-ante Value Function
+
+- The ex-ante value function of bidder $i$ when the vector of capacity is $c$:
+\begin{equation}
+V_i(c) = \int W_i(u_i, c) f_{U_i}(u_i|c) d u_i.
+\end{equation}
+
+
+
+### Dynamic Auctions: Probability of Winning
+
+- The probability of winning for bidder $i$ when bids $b_i$:
+\begin{equation}
+\prod_{j \neq i} F_{B_j}(b_i|c) \equiv F_{M_i}(b_i|c).
+\end{equation}
+- The probability of winning for bidder $j \neq i$ when $i$'s bid is $b_i$.
+\begin{equation}
+\int_{b_i} \prod_{k \neq i, j} F_{B_k}(b_j|c) f_{B_j} (b_j|c) db_j.
+\end{equation} 
+
+
+
+### Dynamic Auctions: First-order Condition
+
+- The value function:
+\begin{equation}
+\begin{split}
+&W_i(u_i, c) = \max_{b_i} \Bigg\{(u_i - b_i)F_{M_i}(b_i|c) + \delta V_i(\omega(c, i)) \\
+&+ \delta \sum_{j \neq i} \int_{b_i} \prod_{k \neq i, j} F_{B_k}(b_j|c) f_{B_j} (b_j|c) db_j [V_i(\omega(c, j)) - V_i(\omega(c, i))] \}.
+\end{split}
+\end{equation}
+- The first-order condition:
+\begin{equation}
+u_i = b_i + \frac{F_{M_i}(b_i|c)}{f_{M_i}(b_i|c)} + \delta \sum_{j \neq i} \frac{F_{M_i}(b_i|c)}{f_{M_i}(b_i|c)} \frac{f_{B_j}(b_i|c)}{F_{B_j}(b_i|c)}[V_i(\omega(c, j)) - V_i(\omega(c, i))].
+\end{equation}
+- The ex-ante value function $V_i$ can be computed from the observed choice probabilities.
+
+
+
+### Bid Distribution with Capacity Constraints
+\begin{figure}
+\includegraphics[width = \textwidth]{figuretable/dynamicbid.png}
+\end{figure}
+
+
+### Cost Distribution with Capacity Constraints
+\begin{figure}
+\includegraphics[width = \textwidth]{figuretable/dynamiccost.png}
+\end{figure}
