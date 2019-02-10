@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-02-08}
+    \date{Last updated: 2019-02-10}
 
 \usepackage{booktabs}
 
@@ -1141,7 +1141,17 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1.pdf} -
+Instead of loading a package by \texttt{library}, you can directly call
+it as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{qplot}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -1162,7 +1172,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5
+## [1] 6
 \end{verbatim}
 
 \begin{Shaded}
@@ -1172,7 +1182,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2
+## [1] 9
 \end{verbatim}
 
 \begin{Shaded}
@@ -1182,7 +1192,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 48
+## [1] 46
 \end{verbatim}
 
 \begin{Shaded}
@@ -1192,7 +1202,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 32
+## [1] 31
 \end{verbatim}
 
 \begin{itemize}
@@ -1226,6 +1236,99 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 
 \begin{itemize}
 \tightlist
+\item
+  When a variable used in a function is not given as its argument, the
+  function calls the variable in the global environment:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\NormalTok{plus_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \KeywordTok{return}\NormalTok{(x }\OperatorTok{+}\StringTok{ }\NormalTok{y)}
+\NormalTok{\}}
+\KeywordTok{plus_1}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plus_1}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  However, you should NOT do this. All variables used in a function
+  should be given as its arguments:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\DecValTok{1}
+\NormalTok{plus_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, y) \{}
+  \KeywordTok{return}\NormalTok{(x }\OperatorTok{+}\StringTok{ }\NormalTok{y)}
+\NormalTok{\}}
+\KeywordTok{plus_2}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plus_2}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The best practice is to use \texttt{findGlobals} function in
+  \texttt{codetools} to check global variables in a funciton:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(codetools)}
+\KeywordTok{findGlobals}\NormalTok{(plus_}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "{"      "+"      "return" "y"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{findGlobals}\NormalTok{(plus_}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "{"      "+"      "return"
+\end{verbatim}
+
+\begin{itemize}
+\item
+  This function returns the list of global variables used in a function.
+  If this returns a global variable other than the system global
+  gariables, you should include it as the argument of the function.
 \item
   You can write the functions in the files with executing codes.
 \item
@@ -3441,7 +3544,13 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
   Compute the value of log likelihood for \(\beta = 0, 0.1, \cdots, 1\)
   and plot the result using \texttt{ggplot2} packages. You can use
   \texttt{latex2exp} package to use LaTeX math symbol in the label:
-  \includegraphics{lecture_files/figure-latex/unnamed-chunk-27-1.pdf}
+\end{enumerate}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-31-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   Find and report \(\beta\) that maximizes the log likelihood for the
   simulated data. You can use \texttt{optim} function to achieve this.
@@ -3465,6 +3574,575 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 ## 
 ## $message
 ## NULL
+\end{verbatim}
+
+\chapter{Assignment 2: Production Function
+Estimation}\label{assignment2}
+
+The deadline is the \textbf{start time of February 25 class}.
+
+Report the following results in html format using R markdown. In other
+words, replicate this document. You write functions in a separate R file
+and put in \texttt{R} folder in the project folder. Build the project as
+a package and load it from the R markdown file. The execution code
+sholuld be written in R markdown file.
+
+\section{Simulate data}\label{simulate-data-1}
+
+Consider the following production and investment process for
+\(j = 1, \cdots, 1000\) firms across \(t = 1, \cdots, 10\) periods.
+
+The log production function is of the form: \[
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt},
+\] where \(\omega_{jt}\) is an anticipated shock and \(\eta_{jt}\) is an
+ex post shock.
+
+The anticipated shocks evolve as: \[
+\omega_{jt} = \alpha \omega_{j, t - 1} + \nu_{jt},
+\] where \(\nu_{jt}\) is an i.i.d. normal random variable with mean 0
+and standard deviation \(\sigma_\nu\). The ex post shock is an i.i.d.
+normal random variable with mean 0 and standard deviation
+\(\sigma_{\eta}\).
+
+The product price the same across firms and normalized at 1. The price
+is normalized at 1. The wage \(w_t\) is an i.i.d. exponential of normal
+random variable with mean 0 and standard deviation \(\sigma_{w}\).
+
+Finally, the capital accumulate according to: \[
+K_{j, t + 1} = (1 - \delta) K_{jt} + I_{jt}.
+\]
+
+We set the parameters as follows:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+parameter & variable & value\tabularnewline
+\midrule
+\endhead
+\(\beta_0\) & \texttt{beta\_0} & 1\tabularnewline
+\(\beta_l\) & \texttt{beta\_l} & 0.2\tabularnewline
+\(\beta_k\) & \texttt{beta\_k} & 0.7\tabularnewline
+\(\alpha\) & \texttt{alpha} & 0.7\tabularnewline
+\(\sigma_{\eta}\) & \texttt{sigma\_eta} & 0.2\tabularnewline
+\(\sigma_{\nu}\) & \texttt{sigma\_nu} & 0.5\tabularnewline
+\(\sigma_{w}\) & \texttt{sigma\_w} & 0.1\tabularnewline
+\(\delta\) & \texttt{delta} & 0.05\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Define the parameter variables as above.
+\item
+  Write a function that returns the log output given \(l_{jt}\),
+  \(k_{jt}\), \(\omega_{jt}\), and \(l_{jt}\) under the given parameter
+  values according to the above production function and name it
+  \texttt{log\_production}.
+\end{enumerate}
+
+Suppose that the labor is determined after \(\omega_{jt}\) is observed,
+but before \(\eta_{jt}\) is observed, given the log capital level
+\(k_{jt}\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Derive the optimal log labor as a function of \(\omega_{jt}\),
+  \(\eta_{jt}\), \(k_{jt}\), and \(w_t\). Write a function to return the
+  optimal log labor given the variables and parameters and name it
+  \texttt{log\_labor\_choice}.
+\end{enumerate}
+
+As discussed in the class, if there is no additional variation in labor,
+the coefficient on the labor \(\beta_l\) is not identified. Thus, if we
+generate labor choice from the previous function, \(\beta_l\) will not
+be identified from the simulated data. To see this, we write a modified
+version of the previous function in which \(\omega_{jt}\) is replaced
+with \(\omega_{jt} + \iota_{jt}\), where \(\iota_{jt}\) is an
+optimization error that follows an i.i.d. normal distribution with mean
+0 and standard deviation 0.05. That is, the manager of the firm
+perceives as if the shock is \(\omega_{jt} + \iota_{jt}\), even though
+the true shock is \(\omega_{jt}\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Modify the previous function by including \(\iota_{jt}\) as an
+  additional input and name it \texttt{log\_labor\_choice\_error}.
+\end{enumerate}
+
+Consider an investment process such that: \[
+I_{jt} = (\delta + \gamma w_{jt}) K_{jt},
+\] where \(I_{jt}\) and \(K_{jt}\) are investment and capital in level.
+Set \(\gamma = 0.1\), i.e., the investment is strictly increasing in
+\(\omega_{jt}\). The investment function should be derived by solving
+the dynamic problem of a firm. But here, we just specify it in a
+reduced-form.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Define variable \(\gamma\) and assign it the value. Write a function
+  that returns the investment given \(K_{jt}\), \(\omega_{jt}\), and
+  parameter values, according to the previous equation, and name it
+  \texttt{investment\_choice}.
+\end{enumerate}
+
+Simulate the data first using the labor choice without optimization
+error and second using the labor choice with optimization error. To do
+so, we specify the initial values for the state variables \(k_{jt}\) and
+\(\omega_{jt}\) as follows.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Draw \(k_{j0}\) from an i.i.d. normal distribution with mean 1 and
+  standard deviation 0.5. Draw \(\omega_{j0}\) from its stationary
+  distribution (check the stationary distribution of AR(1) process).
+  Draw a wage. Before simulating the rest of the data, set the seed at
+  1.
+\end{enumerate}
+
+\begin{verbatim}
+## # A tibble: 1,000 x 5
+##        j     t     k   omega  wage
+##    <int> <dbl> <dbl>   <dbl> <dbl>
+##  1     1     1 1.09   0.779  0.591
+##  2     2     1 0.582 -0.610  0.591
+##  3     3     1 1.80   0.148  0.591
+##  4     4     1 1.16   0.0486 0.591
+##  5     5     1 0.590 -1.16   0.591
+##  6     6     1 1.24   0.568  0.591
+##  7     7     1 1.37  -1.34   0.591
+##  8     8     1 1.29  -0.873  0.591
+##  9     9     1 0.847  0.699  0.591
+## 10    10     1 1.76  -0.379  0.591
+## # ... with 990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Compute the labor and investment choice of period 1. For labor choice,
+  compute both types of labor choices.
+\end{enumerate}
+
+\begin{verbatim}
+## # A tibble: 1,000 x 9
+##        j     t     k   omega  wage     iota     l l_error       I
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl> <dbl>   <dbl>   <dbl>
+##  1     1     1 1.09   0.779  0.591 -0.0961  6.20    5.50   0.381 
+##  2     2     1 0.582 -0.610  0.591  0.0810  0.700   0.775 -0.0196
+##  3     3     1 1.80   0.148  0.591  0.0260  5.23    5.40   0.391 
+##  4     4     1 1.16   0.0486 0.591 -0.00279 2.65    2.65   0.176 
+##  5     5     1 0.590 -1.16   0.591  0.0348  0.352   0.368 -0.120 
+##  6     6     1 1.24   0.568  0.591  0.00268 5.44    5.46   0.370 
+##  7     7     1 1.37  -1.34   0.591 -0.0655  0.560   0.516 -0.330 
+##  8     8     1 1.29  -0.873  0.591 -0.106   0.934   0.818 -0.135 
+##  9     9     1 0.847  0.699  0.591 -0.0104  4.53    4.47   0.280 
+## 10    10     1 1.76  -0.379  0.591 -0.0156  2.61    2.56   0.0702
+## # ... with 990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Draw ex post shock and compute the output according to the production
+  function for both labor without optimization error and with
+  optimization error.
+\end{enumerate}
+
+\begin{verbatim}
+## # A tibble: 1,000 x 12
+##        j     t     k   omega  wage     iota     l l_error       I     eta
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl> <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1     1 1.09   0.779  0.591 -0.0961  6.20    5.50   0.381   0.0773
+##  2     2     1 0.582 -0.610  0.591  0.0810  0.700   0.775 -0.0196  0.259 
+##  3     3     1 1.80   0.148  0.591  0.0260  5.23    5.40   0.391  -0.161 
+##  4     4     1 1.16   0.0486 0.591 -0.00279 2.65    2.65   0.176  -0.321 
+##  5     5     1 0.590 -1.16   0.591  0.0348  0.352   0.368 -0.120   0.187 
+##  6     6     1 1.24   0.568  0.591  0.00268 5.44    5.46   0.370   0.361 
+##  7     7     1 1.37  -1.34   0.591 -0.0655  0.560   0.516 -0.330  -0.0113
+##  8     8     1 1.29  -0.873  0.591 -0.106   0.934   0.818 -0.135   0.377 
+##  9     9     1 0.847  0.699  0.591 -0.0104  4.53    4.47   0.280   0.316 
+## 10    10     1 1.76  -0.379  0.591 -0.0156  2.61    2.56   0.0702  0.100 
+## # ... with 990 more rows, and 2 more variables: y <dbl>, y_error <dbl>
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Repeat this procedure for \(t = 1, \cdots 10\) by updating the capital
+  and anticipated shocks, and name the resulting data frame
+  \texttt{df\_T}.
+\end{enumerate}
+
+\begin{verbatim}
+## # A tibble: 10,000 x 13
+##        j     t     k   omega  wage     iota     l l_error       I     eta
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl> <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1     1 1.09   0.779  0.591 -0.0961  6.20    5.50   0.381   0.0773
+##  2     2     1 0.582 -0.610  0.591  0.0810  0.700   0.775 -0.0196  0.259 
+##  3     3     1 1.80   0.148  0.591  0.0260  5.23    5.40   0.391  -0.161 
+##  4     4     1 1.16   0.0486 0.591 -0.00279 2.65    2.65   0.176  -0.321 
+##  5     5     1 0.590 -1.16   0.591  0.0348  0.352   0.368 -0.120   0.187 
+##  6     6     1 1.24   0.568  0.591  0.00268 5.44    5.46   0.370   0.361 
+##  7     7     1 1.37  -1.34   0.591 -0.0655  0.560   0.516 -0.330  -0.0113
+##  8     8     1 1.29  -0.873  0.591 -0.106   0.934   0.818 -0.135   0.377 
+##  9     9     1 0.847  0.699  0.591 -0.0104  4.53    4.47   0.280   0.316 
+## 10    10     1 1.76  -0.379  0.591 -0.0156  2.61    2.56   0.0702  0.100 
+## # ... with 9,990 more rows, and 3 more variables: y <dbl>, y_error <dbl>,
+## #   nu <dbl>
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Check the simulated data by making summary table.
+\end{enumerate}
+
+\begin{tabular}{l|r|r|r|r|r}
+\hline
+  & N & Mean & Sd & Min & Max\\
+\hline
+j & 10000 & 500.5000000 & 288.6894251 & 1.0000000 & 1000.0000000\\
+\hline
+t & 10000 & 5.5000000 & 2.8724249 & 1.0000000 & 10.0000000\\
+\hline
+k & 10000 & 0.9809540 & 0.5827349 & -1.2846624 & 3.4715184\\
+\hline
+omega & 10000 & -0.0042518 & 0.6947047 & -2.4722527 & 2.5482112\\
+\hline
+wage & 10000 & 1.2999738 & 1.0034241 & 0.2412463 & 2.9228370\\
+\hline
+iota & 10000 & -0.0000634 & 0.0502874 & -0.1841453 & 0.1715419\\
+\hline
+l & 10000 & 3.9635027 & 8.0655395 & 0.0095922 & 139.0681340\\
+\hline
+l\_error & 10000 & 3.9729395 & 8.1144243 & 0.0095479 & 151.8869846\\
+\hline
+I & 10000 & 0.1801717 & 0.3180590 & -1.3075169 & 5.9394281\\
+\hline
+eta & 10000 & 0.0012772 & 0.1999334 & -0.7650371 & 0.7455922\\
+\hline
+y & 10000 & 2.4763938 & 2.1954979 & -1.6282224 & 32.1811842\\
+\hline
+y\_error & 10000 & 2.4782811 & 2.2032667 & -1.6281667 & 34.5350569\\
+\hline
+nu & 10000 & -0.0013588 & 0.4990855 & -2.1513907 & 1.8253882\\
+\hline
+\end{tabular}
+
+\section{Estimate the parameters}\label{estimate-the-parameters}
+
+For now, use the labor choice with optimization error.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  First, simply regress \(y_{jt}\) on \(l_{jt}\) and \(k_{jt}\) using
+  the least square method. This is likely to give an upwardly biased
+  estimates on \(\beta_l\) and \(\beta_k\). Why is it?
+\end{enumerate}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y_error ~ l_error + k, data = df_T)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.8221 -0.4208  0.0063  0.4281  2.2634 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 0.793901   0.012732   62.35   <2e-16 ***
+## l_error     0.236968   0.000845  280.44   <2e-16 ***
+## k           0.757343   0.011766   64.37   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.65 on 9997 degrees of freedom
+## Multiple R-squared:  0.913,  Adjusted R-squared:  0.913 
+## F-statistic: 5.244e+04 on 2 and 9997 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Second, take within-transformation on \(y_{jt}\), \(l_{jt}\), and
+  \(k_{jt}\) and let \(\Delta y_{jt}\), \(\Delta l_{jt}\), and
+  \(\Delta k_{jt}\) denote them. Then, regress \(\Delta y_{jt}\) on
+  \(\Delta l_{jt}\), and \(\Delta k_{jt}\) by the least squares method.
+\end{enumerate}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dy_error ~ -1 + dl_error + dk, data = df_T_within)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.45979 -0.34453 -0.00146  0.34631  1.98491 
+## 
+## Coefficients:
+##           Estimate Std. Error t value Pr(>|t|)    
+## dl_error 0.2256116  0.0007631 295.667   <2e-16 ***
+## dk       0.0168781  0.0348015   0.485    0.628    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.5264 on 9998 degrees of freedom
+## Multiple R-squared:  0.8974, Adjusted R-squared:  0.8974 
+## F-statistic: 4.373e+04 on 2 and 9998 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Next, we attempt to estimate the parameters using Olley-Pakes method.
+Estimate the first-step model of Olley-Pakes method: \[
+y_{jt} = \beta_0 + \beta_1 l_{jt} + \phi(k_{jt}, I_{jt}) + \eta_{jt},
+\] by approximating \(\phi_t\) by a kernel function.
+
+Remark that \(\phi\) in general depends on observed and unobserved state
+variables. For this reason, in theory, \(\phi\) should be estimated for
+each period. In this exercise, we assume \(\phi\) is common across
+periods because we know that there is no unobserved state variables in
+the true data generating process. Moreover, we do not include \(w_t\)
+because we know that it is i.i.d. in the true data generating process.
+Do not forget to consider them in the actual data analysis.
+
+You can use \texttt{npplreg} function of \texttt{np} package to estimate
+a partially linear model with a multivariate kernel. You first use
+\texttt{npplregbw} to obtain the optimal band width and then use
+\texttt{npplreg} to estimate the model under the optimal bandwidth. The
+computation of the optimal bandwidth is time consuming.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Return the summary of the first stage estimation and plot the fitted
+  values against the data points.
+\end{enumerate}
+
+\begin{verbatim}
+## 
+## Partially Linear Model
+## Regression data: 10000 training points, in 5 variable(s)
+## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
+## 
+##                     y(z)           
+## Bandwidth(s): 0.08208261 0.07116851
+## 
+##                      x(z)             
+## Bandwidth(s): 0.093082611 9.482612e-02
+##               0.008783221 2.232608e+06
+##               0.805988383 4.831148e-02
+## 
+##                   l_error         k        I
+## Coefficient(s): 0.1957426 -7.135889 8.365059
+## 
+## Kernel Regression Estimator: Local-Constant
+## Bandwidth Type: Fixed
+## 
+## Residual standard error: 0.2414186
+## R-squared: 0.9882013
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 2
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-48-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Check that \(\beta_l\) is not identified with the data without
+  optimization error. Estimate the first stage model of Olley-Pakes with
+  the labor choice without optimization error and report the result.
+\end{enumerate}
+
+\begin{verbatim}
+## 
+## Partially Linear Model
+## Regression data: 10000 training points, in 5 variable(s)
+## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
+## 
+##                    y(z)           
+## Bandwidth(s): 0.2245037 0.02527988
+## 
+##                       x(z)            
+## Bandwidth(s): 2.854165e-01 0.127411417
+##               1.107858e-02 0.472389899
+##               2.725632e+05 0.006739356
+## 
+##                         l        k         I
+## Coefficient(s): 0.1787756 1.082508 -56.73451
+## 
+## Kernel Regression Estimator: Local-Constant
+## Bandwidth Type: Fixed
+## 
+## Residual standard error: 0.3470795
+## R-squared: 0.9764468
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 2
+\end{verbatim}
+
+Then, we estimate the second stage model of Olley-Pakes method: \[
+y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}] + \nu_{jt} + \eta_{jt}.
+\]
+
+In this model, we do not have to non-parametetrically estimate the
+conditional expectation of \(\omega_{jt}\) on \(\omega_{j, t - 1}\),
+because we know that the anticipated shock follows an AR(1) process.
+Remark that we in general have to non-parametrically estimate it.
+
+The model is non-linear in parameters, because of the term
+\(\alpha \beta_0\) and \(\alpha \beta_k\). We estimate \(\alpha\),
+\(\beta_0\), and \(\beta_k\) by a GMM estimator. The moment is: \[
+g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}]\} 
+\begin{bmatrix}
+k_{jt} \\
+k_{j, t - 1} \\
+I_{j, t - 1}
+\end{bmatrix}.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Using the estimates in the first step, compute: \[
+  y_{jt} - \hat{\beta_l} l_{jt},
+  \] and: \[
+  \hat{\phi}(k_{j, t - 1}, I_{j, t - 1}),
+  \] for each \(j\) and \(t\) and save it as a data frame names
+  \texttt{df\_T\_1st}.
+\end{enumerate}
+
+\begin{verbatim}
+## # A tibble: 10,000 x 4
+##        j     t y_error_tilde phi_t_1
+##    <int> <dbl>         <dbl>   <dbl>
+##  1     1     1          2.64  NA    
+##  2     1     2          2.22   2.62 
+##  3     1     3          3.13   2.73 
+##  4     1     4          2.50   3.21 
+##  5     1     5          3.08   2.58 
+##  6     1     6          2.16   3.17 
+##  7     1     7          1.30   2.54 
+##  8     1     8          1.17   1.40 
+##  9     1     9          1.88   0.851
+## 10     1    10          1.87   1.56 
+## # ... with 9,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Compute a function that returns the value of
+  \(g_{JT}(\alpha, \beta_0, \beta_k)\) given parameter values, data, and
+  \texttt{df\_T\_1st}, and name it \texttt{moment\_OP\_2nd}. Show the
+  values of the first five rows of the moment evaluated at the true
+  parameters.
+\end{enumerate}
+
+\begin{verbatim}
+## [1] -0.007100535 -0.006621758 -0.009029895
+\end{verbatim}
+
+Based on the moment, we can define the objective function of a
+generalized method of moments estimator with a weighting matrix \(W\)
+as: \[
+Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{JT}(\alpha, \beta_0, \beta_k).
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Write a function that returns the value of
+  \(Q_{JT}(\alpha, \beta_0, \beta_k)\) given the vector of parameter
+  values, data, and \texttt{df\_T\_1st}, and name it
+  \texttt{objective\_OP\_2nd}. Setting \(W\) at the identity matrix,
+  show the value of the objective function evaluated at the true
+  parameters.
+\end{enumerate}
+
+\begin{verbatim}
+##              [,1]
+## [1,] 0.0001758043
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Draw the graph of the objective function when one of \(\alpha\),
+  \(\beta_0\), and \(\beta_k\) are changed from 0 to 1 by 0.1 while the
+  others are set at the true value. Is the objective function minimized
+  at around the true value?
+\end{enumerate}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-55-1} \end{center}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-55-2} \end{center}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-55-3} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Find the parameters that minimize the objective function using
+  \texttt{optim}. You may use \texttt{L-BFGS-B} method to solve it.
+\end{enumerate}
+
+\begin{verbatim}
+## $par
+## [1] 0.6539508 1.0021382 0.6968459
+## 
+## $value
+## [1] 1.720679e-06
+## 
+## $counts
+## function gradient 
+##       11       11 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## [1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
 \end{verbatim}
 
 \bibliography{library.bib,packages.bib}

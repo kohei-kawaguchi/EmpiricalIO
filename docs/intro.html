@@ -194,7 +194,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>4.1</b> Simulate data</a></li>
 <li class="chapter" data-level="4.2" data-path="assignment1.html"><a href="assignment1.html#estimate-the-parameter"><i class="fa fa-check"></i><b>4.2</b> Estimate the parameter</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>5</b> References</a></li>
+<li class="chapter" data-level="5" data-path="assignment2.html"><a href="assignment2.html"><i class="fa fa-check"></i><b>5</b> Assignment 2: Production Function Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="assignment2.html"><a href="assignment2.html#simulate-data-1"><i class="fa fa-check"></i><b>5.1</b> Simulate data</a></li>
+<li class="chapter" data-level="5.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>5.2</b> Estimate the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -484,7 +488,9 @@ a</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="fl">0.8</span>, <span class="op">-</span><span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.4</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="dv">1</span>)
 y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">3</span>
 <span class="kw">qplot</span>(x, y)</code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-15-1.png" width="672" /> - Instead of loading a package by <code>library</code>, you can directly call it as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggplot2<span class="op">::</span><span class="kw">qplot</span>(x, y)</code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <ul>
 <li>We can write own functions.</li>
 </ul>
@@ -512,12 +518,43 @@ y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">3</sp
 <span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
 <pre><code>## [1] 38</code></pre>
 <ul>
+<li>When a variable used in a function is not given as its argument, the function calls the variable in the global environment:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>
+plus_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  <span class="kw">return</span>(x <span class="op">+</span><span class="st"> </span>y)
+}
+<span class="kw">plus_1</span>(<span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plus_1</span>(<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<ul>
+<li>However, you should NOT do this. All variables used in a function should be given as its arguments:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>
+plus_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
+  <span class="kw">return</span>(x <span class="op">+</span><span class="st"> </span>y)
+}
+<span class="kw">plus_2</span>(<span class="dv">2</span>, <span class="dv">3</span>)</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plus_2</span>(<span class="dv">2</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<ul>
+<li>The best practice is to use <code>findGlobals</code> function in <code>codetools</code> to check global variables in a funciton:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(codetools)
+<span class="kw">findGlobals</span>(plus_<span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] &quot;{&quot;      &quot;+&quot;      &quot;return&quot; &quot;y&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">findGlobals</span>(plus_<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] &quot;{&quot;      &quot;+&quot;      &quot;return&quot;</code></pre>
+<ul>
+<li><p>This function returns the list of global variables used in a function. If this returns a global variable other than the system global gariables, you should include it as the argument of the function.</p></li>
 <li>You can write the functions in the files with executing codes.</li>
 <li>But I recommend you to separate files for writing functions and executing codes.</li>
 <li><code>File &gt; New File &gt; R Rcript</code> and name it as <code>functions.R</code> and save to <code>R</code> folder.</li>
 <li>Cut the function you wrote and paste it in <code>functions.R</code>.</li>
 <li>There are two ways of calling a function in <code>functions.R</code> from <code>test.R</code>.</li>
-<li>One way is to use <code>source</code> function.</li>
+<li><p>One way is to use <code>source</code> function.</p></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;R/functions.R&quot;</span>)</code></pre></div>
 <ul>
