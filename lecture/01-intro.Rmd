@@ -136,16 +136,16 @@ where the first two states are for incumbents (stick to the old technology or st
 - Let $y$ be the vector of observed endogenous variables, $x$ be the vector of observed exogenous variables, and $\epsilon$ be  the vector of unobserved exogenous variables.
 - The equilibrium condition for $y$ on $x$ and $\epsilon$ is often written as:
 \begin{equation}
-Ay + Bx = \epsilon. (\#eq:structuralform)
+Ay + Bx = \Sigma \epsilon. (\#eq:structuralform)
 \end{equation}
 - These equations __implicitly__ determine the vector of endogenous variables $y$ .
 - If $A$ is invertible, we can solve the equations for $y$ to obtain:
 \begin{equation}
-y = - A^{-1} B x + A^{-1} \epsilon. (\#eq:reducedform)
+y = - A^{-1} B x + A^{-1} \Sigma \epsilon. (\#eq:reducedform)
 \end{equation}
 - These equations __explicitly__ determine the vector of endogenous variables $y$.
 - Equation \@ref(eq:structuralform) is the __structural-form__ and \@ref(eq:reducedform) is the __reduced-form__.
-- If $y$ and $x$ are observed and $x$ is of full column rank, then $A^{-1}B$ and $A^{-1}$ will be estimated by regression for \@ref(eq:reducedform). But this does not mean that $A$ and $B$ are separately estimated.
+- If $y$ and $x$ are observed and $x$ is of full column rank, then $A^{-1}B$ and $A^{-1} \Sigma A^{-1}$ will be estimated by regression for \@ref(eq:reducedform). But this does not mean that $A, B$ and $\Sigma$ are separately estimated.
 - This was the traditional identification problems.
 - Thus, reduced-form does not mean either of:
     - Regression analysis;

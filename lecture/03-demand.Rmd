@@ -13,76 +13,58 @@
 - In case of producer behavior, there was a chance to directly observe the output of the most primitive function, the production function.
 - In case of consumer behavior, we never directly observe the output of the most primitive function, the utility function.
 - We can at most identify demand functions.
-- Can we recover the utility function from the observed demand function?
-
-
+- __Revealed preference theory__: 
+    - @Samuelson1938, @Houthakker1950, @Richter1966, @Afriat1967, @Varian1982.
+    - If the demand function is derived from a preference by maximizing the preference, the demand function should satisfy some restrictions.
+    - If the assumtion is true, we can recover part of the preference from the demand function.
 
 ## Continuous Choice
 
-### Utility Function Estimation
-
-- We cannot observe the output of utility function, _utility_, while we could observe the output of production function, _production_.
-- We can at most identify a demand function, the relationship between choice sets and demand or other related functions such as an expenditure function. 
-- Under the assumption that the observed demand function is a solution to a utility maximization problem, we may be able to recover some information of the underlying utility function.
-
-
-
-
-### Starting from a Utility Function: Difficulty
-
-- It is rather a special case that we can derive a closed form solution to a utility maximization problem.
-- It is often the case that we can only have first-order conditions:
-\begin{equation}
-\frac{\partial U(q)}{\partial q_i} = \lambda p_i, i = 1, \cdots, J.
-\end{equation}
-- We can use the first-order conditions as moment conditions for identification.
-- The derivation of a demand function from the identified utility function in general require a numerical simulation, which can be bothering.
-
-
-
+- The alternative set $\mathcal{X}$ is a subset of $\mathbb{R}^J$.
+- The utility function $u$ is rational, monotone, and continuous on $\mathcal{X}$.
+- The choice sets are given by a system of __linear budget set__:
+$$
+\mathcal{B}(p, w) = \{q \in \mathcal{X}: p \cdot q \le w\}.
+$$
+- If choice sets are non-linear, the following duality approach needs to be modified.
 
 ### Duality between Utility and Expenditure Functions
 
+- It is rather a special case that we can derive a closed form solution to a utility maximization problem.
+- We can use the first-order conditions as moment conditions for identification.
+\begin{equation}
+\frac{\partial u(q)}{\partial q_i} = \lambda p_i, i = 1, \cdots, J.
+\end{equation}
+- The derivation of a demand function from the identified utility function in general require a numerical simulation, which can be bothering.
 - As well as the duality between production and cost functions, we have the same duality theorem for utility and expenditure functions.
 - There is a one-to-one mapping between a class of utility functions and a class of expenditure functions.
-- \textit{Therefore, it is okay to start from an expenditure function}.
+- Therefore, it is okay to start from an expenditure function.
 - It is rare that we can recover the utility function associated with an expenditure function in a closed form. But it is not often required for analysis.
-- \textit{In addition, by Shepard's lemma, the derivative of the expenditure function with respect to the price is a (Hicksian) demand function.}
-
-
-
-
-### Starting from an Expenditure Function
-
+- Moreover, we can easily derive other important functions from the expenditure functions.
 - Let $p$ be the price vector and $u$ be the target utility level.
 - Let $u(q)$ be a utility function.
 - An expenditure function associated with the utility function is defined by:
 \begin{equation}
-e(u, p) = \min_{q} p'q, u(q) \ge u.
+e(u, p) = \min_{q} p \cdot q, u(q) \ge u.
 \end{equation}
 - Let $x$ be the total expenditure such that:
 \begin{equation}
 x = e(u, p).
 \end{equation}
-- We can start from specifying this function.
-
-
-
+- We can start the analysis by specifying this function instead of the utility function.
 
 ### Deriving Other Functions
 
 - It is easy to derive other functions from an expenditure function.
-
-
-- \textbf{Indirect utility function}: invert the expenditure function to get:
+- __Indirect utility function__: invert the expenditure function to get:
 \begin{equation}
 u = e^{-1}(p, x) \equiv v(p, x).
 \end{equation}
-- \textbf{Hicksian demand function}: apply Shepard's lemma: 
+- __Hicksian demand function__: apply Shepard's lemma: 
 \begin{equation}
 q_i = \frac{\partial e(u, p)}{\partial p_i} \equiv h_i(u, p).
 \end{equation}
-- \textbf{Marshallian demand function}: insert Hicksian demand function to the expenditure function:
+- __Marshallian demand function__: insert Hicksian demand function to the expenditure function:
 \begin{equation}
 q_i = h_i(v(p, x), p) \equiv d_i(p, x).
 \end{equation}
@@ -102,9 +84,6 @@ v(p, x) \equiv \max_{q} u(q), p'q \le x.
 q_i = \frac{- \partial v(p, x)/\partial p_i}{\partial v(p, x)/\partial x} \equiv d_i(p, x).
 \end{equation}
 
-
-
-
 ### Expenditure Share Equation
 
 - Let's start from an expenditure function $e(p, x)$. 
@@ -113,42 +92,32 @@ q_i = \frac{- \partial v(p, x)/\partial p_i}{\partial v(p, x)/\partial x} \equiv
 \frac{\partial \ln e(u, p)}{\partial \ln p_i} = \frac{\partial e(u, p)}{\partial p_i} \frac{p_i}{e(u, p)} = \frac{p_i q_i}{x} \equiv w_i.
 \end{equation}
 - We call this an expenditure share equation.
+- The estimation is based on the share equations.
 
 
 
 
 ### Almost Ideal Demand System (AIDS)
 
-- Deaton and Muellbauer (1980). 
-- Consider an expenditure function that satisfies the following conditions:
-
-- It allows aggregation (this is no longer that important).
-- It gives an arbitrary first-order approximation to any demand system.
-- It can satisfy the restrictions of utility maximization.
-- It can be used to test the restrictions of utility maximization.
-
-
-
-
+- Based on @Deaton1980. 
+- See @AngusDeaton1980 for further reference.
+- Consider an expenditure function that satisfies the following useful conditions:
+    - It allows aggregation (this motivation is less imporatn in recent days).
+    - It gives an arbitrary first-order approximation to any demand system.
+    - It can satisfy the restrictions of utility maximization.
+    - It can be used to test the restrictions of utility maximization.
 
 ### PIGLOG Class
 
-- PIGLOG (price-independent generalized logarithmic) class (Muellbauar 1976).
+- PIGLOG (price-independent generalized logarithmic) class [@Muellbauer1976].
 \begin{equation}
 \ln e(u, p) = (1 - u) \ln a(p) + u\ln b(p),
 \end{equation}
 where $a(p)$ and $b(p)$ are arbitrary linear homogeneous concave functions. 
 - Consider households that differ in total income.
-- PIGLOC ensures that the aggregate demand can be written in the same form where the total income is replaced with the sum of household total income.
-
-
-
-
-### Specify the Detail 
-
-- It gives an arbitrary first-order approximation to any demand system.
-- $\to$ The derivatives should be given free parameters.
-- In AIDS, we take:
+- PIGLOC form ensures that the aggregate demand can be written in the same form where the total income is replaced with the sum of household total income.
+- The derivatives should be given free parameters for the model to be an arbitrary first-order approximation to any demand system.
+- In AIDS, we specify $a(p)$ and $b(p)$ as:
 \begin{equation}
 \begin{split}
 \ln a(p) &\equiv a_0 + \sum_{k} \alpha_k \ln p_k + \frac{1}{2}\sum_{k} \sum_{j} \gamma_{kj}^* \ln p_k \ln p_j\\
@@ -170,9 +139,6 @@ where
 \gamma_{ij} = \frac{1}{2}(\gamma_{ij}^* + \gamma_{ji}^*).
 \end{equation}
 
-
-
-
 ### Derive the Share Equation II
 
 - Insert indirect utility function $u = v(p, x)$ to this to get:
@@ -184,7 +150,8 @@ where
 \ln P \equiv  \alpha_0 + \sum_{k} \alpha_k \ln p_k + \frac{1}{2} \sum_{j} \sum_{k} \gamma_{kj} \ln p_k \ln p_j.
 \end{equation}
 - $P$ is a price index associated with the given preference.
-- In Stone (1953), it becomes $\ln P = \sum_{j} w_j \ln p_j$. It was used as an approximation.
+- With the specification of @RichardStone1954, it becomes $\ln P = \sum_{j} w_j \ln p_j$. 
+- It can be used as an approximation.
 
 
 
@@ -193,15 +160,15 @@ where
 
 - It can satisfy the restrictions of utility maximization.
 - It can be used to test the restrictions of utility maximization.
-- $\sum_{j} w_j = 1$:
+    - $\sum_{j} w_j = 1$:
 \begin{equation}
 \sum_{j} \alpha_j = 1, \sum_{j} \gamma_{jk} = 0, \sum_{j} \beta_j = 0.
 \end{equation}
-- $e(u, p)$ is linear homogeneous in $p$:
+    - $e(u, p)$ is linear homogeneous in $p$:
 \begin{equation}
 \sum_{j} \gamma_{ij} = 0.
 \end{equation}
-- Symmetry:
+    - Symmetry:
 \begin{equation}
 \gamma_{ij} = \gamma_{ji}.
 \end{equation}
@@ -211,48 +178,49 @@ where
 
 ### Estimation
 
-- \textit{If we use aggregate data}, the error term is correlated with the price vector.
+- We can estimate parameters based on the share equations.
+- If we use aggregate data, the aggregate error term is correlated with the price vector.
 - Therefore, we need at least as many instrumental variables as the dimension of the price vector.
-
-- In 80s, people was not careful enough about this problem.
-
 - With valid instrumental variables, we can estimate the model with GMM.
-- The number of elasticity parameters $\gamma_{ij}$ grow at the order of $J^2$ with the number of consumption goods $J$.
-
-
-
+- If we use household-level data, the household-specific errors controlling for aggregate errors will not be correlated with the price vector if the price is determined in a competitive market.
 
 
 ### From Product Space Approach to Characteristics Space Approach
 
-- The framework up to here is called \textbf{product space approach} because the utility has been defined over a product space.
+- The framework up to here is called __product space approach__ because the utility has been defined over a product space.
 - When there are $J$ goods, there are $J^2$ parameters for prices.
-
 - One way to resolve this issue is to introduce a priori knowledge about the preference.
-- For example, introduce a priori segmentation with separability.
-
+- For example, we can introduce a priori segmentation with separability.
 - It is hard to evaluate the effect of introducing new product.
-
 - Again, we have to a priori decide which segment/product is similar to the new product.
-
-- This leads us to the \textbf{characteristics space approach}.
-
-
+- This leads us to the __characteristics space approach__ [@Lancaster1966; @Muth1966]:
+    - Consumption is an activity in which goods are inputs and in which the output is  a collection of characteristics.
+    - Utility ranks collections of characteristics and only to rank collections of goods indirectly through the characteristics that they possesses.
+    - There are $k = 1, \cdots, K$ activities.
+    - The activity $y$ requires to consume $x = A y$ products.
+    - The activity $y$ generates $z = B y$ characteristics.
+    - The budget constraint is $p \cdot x \le 1$.
+    - The utility is defined over the characteristics $u(z)$.
+    - The consumer's problem is:
+    $$
+    \max_y u(z)
+    $$
+    s.t. 
+    $$
+    p \cdot x \le 1, x = Ay, z = By, x, y, z \ge 0.
+    $$
+- Then, only the dimension of characteristics matters and the value of new products can be evaluated by the contribution to the production of characteristics.
+- The early application includes @Rosen1974, @Muellbauer1974, @Gorman1980.
+- The nonparametric analysis based on the reveald preference is @Blow2008.
 
 ### From Continuous Choice Approach to Discrete Choice Approach
 
-- In the standard consumption problem, a consumer is supposed to choose a consumption bundle given a price vector.
-- A consumption bundle in a period, in reality, is generated from a complicated shopping behaviors during the period.
-- The most primitive decision problem is a \textbf{which to buy} problem: 
-
-- Coca Cola and Pepsi Cola are on the shelf. The consumer buys either of them or buys nothing.
-
-- The consumption bundle of a period is obtained by integrating these primitive choices across shopping occasions.
-- This leads us to the \textbf{discrete choice approach}.
-
-
-
-
+- The aggregate demand is a collection of choice across consumers and within consumers over time.
+- It makes sense to model individual choices and then aggregate rather than directly modeling the aggregate demand.
+- The resulting aggregate demand will satisfy restrictions that are consistent with the underlying consumer choice model.
+- If there is an interaction across choices, the aggregation is not trivial. 
+- This is especially true when aggregating choices within consumers. 
+- For now, assume that each choice is independent.
 
 ## Discrete Choice Approach
 
@@ -261,7 +229,7 @@ where
 - Let $u(x, z_i)$ be the utility of a consumer over $J + 1$ dimensional consumption bundle $x$ characterized by consumer characteristics $z_i$.
 - The consumer solves:
 \begin{equation}
-V(p, y_i; z_i) = \max_{x \in X}u(x, z_i), \text{   s.t.   } p'x \le y_i.
+V(p, y_i, z_i) = \max_{x \in X}u(x, z_i), \text{   s.t.   } p'x \le y_i.
 \end{equation}
 - Alternative $0$ is an \textbf{outside good}.
 - Normalize $p_0 = 1$.
@@ -298,16 +266,16 @@ x_0 = y - \sum_{j = 1}^J p_j x_j.
 
 - The utility maximization problem can be written as:
 \begin{equation}
-V(p, y_i; z_i) = \max_{j = 0, 1, \cdots, j}  v_j(p, y_i; z_i),
+V(p, y_i, z_i) = \max_{j = 0, 1, \cdots, j}  v_j(p, y_i, z_i),
 \end{equation}
 where
 \begin{equation}
 \begin{split}
-&v_j(p, y_i; z_i)\\
+&v_j(p, y_i, z_i)\\
 & =
 \begin{cases}
-u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0; z_i) &\text{   if  }j > 0,\\
-u(y_i, 0, \cdots, 0; z_i) &\text{   if   }j = 0,
+u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0, z_i) &\text{   if  }j > 0,\\
+u(y_i, 0, \cdots, 0, z_i) &\text{   if   }j = 0,
 \end{cases}
 \end{split}
 \end{equation}
@@ -326,22 +294,11 @@ is called the \textbf{choice-specific indirect utility}.
 - The choice-specific indirect utility is a function of the characteristics of the alternative:
 \begin{equation}
 \begin{split}
-v_j(p, y_i; z_i) &=u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0; z_i)\\
-&= u^*(y_i - p_j, w_j; z_i)\\
-&\equiv v(p, w_j, y_i; z_i).
+v_j(p, y_i, z_i) &=u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0, z_i)\\
+&= u^*(y_i - p_j, w_j, z_i)\\
+&\equiv v(p, w_j, y_i, z_i).
 \end{split}
 \end{equation}
-
-
-
-
-### Characteristics Space Approach
-
-- Characteristics space approach resolves the problem of product space approach:
-- The number of parameters depend on the possible dimensions of characteristics that consumers will take care, which do not grow as rapidly as the product space approach when the number of products increases.
-- The preference over a new product can be evaluated as long as the characteristics of the new products fall in the domain with a known preference.
-
-
 
 
 ### Weak Separability and Income Effect
@@ -354,62 +311,55 @@ v_j(p, y_i; z_i) &=u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0; z_i)
 
 
 
+
 ### Weak Separability and Income Effect 
 
 - Thus, how the preference for the outside good is modeled determines how the individual income affects the choice.
 \begin{equation}
 \begin{split}
-&u^*(y_i - p_j, w_j; z_i) = u^{**}(w_j; z_i) + \alpha(y_i - p_j).\\
-&u^*(y_i - p_j, w_j; z_i) = u^{**}(w_j; z_i) + \alpha \ln (y_i - p_j).
+&u^*(y_i - p_j, w_j, z_i) = u^{**}(w_j, z_i) + \alpha(y_i - p_j).\\
+&u^*(y_i - p_j, w_j, z_i) = u^{**}(w_j, z_i) + \alpha \ln (y_i - p_j).
 \end{split}
 \end{equation}
 - In the first example, the income level does not affect the choice because the term $\alpha y_i$ is common and constant across choices (there is no income effect).
 - We often do not observe income of a consumer, $y_i$. 
-
+- Remember that the price of a product enters because we here consider __indirect__ utility function.
 
 
 
 ### Utility Function Normalization
 
- - The \textbf{location} of utility function is often normalized by setting:
+ - The __location__ of utility function is often normalized by setting:
 \begin{equation}
-u(y^*, 0, \cdots, 0; z^*) = 0,
+u(y^*, 0, \cdots, 0, z^*) = 0,
 \end{equation}
 for certain choice of $(y^*, z^*)$.
-- We will also introduce a normalization for the \textbf{scale} of utility function later.
  
 
 
 
 ### Aggregation of the Individual Demand
 
-- Let $x(p, w, y_i; z_i) = \{x_j(p, w_j, y_i; z_i)\}_{j = 0, \cdots, J}$ be the demand function of consumer $i$, that is:
+- Let $x(p, w, y_i, z_i) = \{x_j(p, w, y_i, z_i)\}_{j = 0, \cdots, J}$ be the demand function of consumer $i$, that is:
 \begin{equation}
-x_j(p, w_j, y_i; z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j}  v(p, w_j, y_i; z_i).
+x_j(p, w, y_i, z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j}  v(p, w_j, y_i, z_i).
 \end{equation}
-- Let $f(y, z)$ be the joint distribution of the income and parameters.
+- Let $f(y, z)$ be the joint distribution of the income and other consumer characteristics.
 - The aggregate demand for good $j$ is:
 \begin{equation}
-D_j(p, w_j; f) \equiv N \int  x_j(p, w_j, y; z) f(y, z) dy dz,
+D_j(p, w_j; f) \equiv N \int  x_j(p, w_j, y, z) f(y, z) dy dz,
 \end{equation}
 where $N$ is the population.
 
-
-
-
 ### Horizontal Product Differentiation
 
-- We can proceed the analysis by specifying  $v(p, w_j, y_i; z_i)$.
+- __horizontal product differentiation__: consumers do not agree on the ranking of the choices.
 - There are two convenience stores $j = 1, 2$ on a street $[0, 1]$.
 - Let $z_i = L_i$, the location of consumer $i$ and $w_j = L_j$, the location of the choice on a street $[0, 1]$ with $L_1 < L_2$.
 - A consumer has a preference such that:
 \begin{equation}
-v_{ij} \equiv v(p, w_j, y_i; z_i) \equiv s - t |L_i - L_j| - p_j,
+v_{ij} \equiv v(p, w_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
 \end{equation}
-where $d(\cdot, \cdot)$ is a Euclid distance.
-- This is an example of \textbf{horizontal product differentiation}, i.e., consumers do not agree on the ranking of the choices.
-
-
 
 
 ### Horizontal Product Differentiation
@@ -418,7 +368,7 @@ where $d(\cdot, \cdot)$ is a Euclid distance.
 - Consumer $i$ buys from store $1$ if and only if:
 \begin{equation}
 \begin{split}
-&v(p, w_1, y_i; z_i) \ge v(p, w_2, y_i; z_i)\\
+&v(p, w_1, y_i, z_i) \ge v(p, w_2, y_i, z_i)\\
 &\Leftrightarrow s - t |L_i - L_1| - p_1 \ge s - t |L_i - L_2|- p_2\\
 &\Leftrightarrow L_i \le \frac{p_2 - p_1}{2 t} + \frac{L_1 + L_2}{2} \equiv \overline{L}_1(p_1, p_2).
 \end{split}
@@ -435,16 +385,17 @@ D_1(p, L_1, L_2) = N \int_{0}^{\overline{L}_1(p_1, p_2)} d L_i = N\overline{L}_1
 
 ### Vertical Product Differentiation
 
+- __Vertical product differentiation__: Consumers agree on the ranking of the choices. Consumers can have different willingness to pay.
+- @Bresnahan1987 analyzed automobile demand with this framework.
 - There are $J$ goods and consumer $i$ has a utility such as:
 \begin{equation}
-v_{ij} \equiv v(p, w_j, y_i; z_i) = z_i w_j - p_j,
+v_{ij} \equiv v(p, w_j, y_i, z_i) = z_i w_j - p_j,
 \end{equation}
 where $w_j$ is a quality of product $j$ and $z_i$ is the consumer's willingness to pay for the quality with $w_j < w_{j + 1}$.
 - Consumers' problem is:
 \begin{equation}
 \max\{0, z_i w_1 - p_1, \cdots, z_i w_J - p_J \}.
 \end{equation}
-- This is an example of \textbf{vertical product differentiation}, i.e., consumers agree on the ranking of the choices.
 
 
 
@@ -454,7 +405,7 @@ where $w_j$ is a quality of product $j$ and $z_i$ is the consumer's willingness 
 - Consumer $i$ prefers good $j + 1$ to good $j$ if and only if:
 \begin{equation}
 \begin{split}
-&v(p, w_{j + 1}, y_i; z_i) \ge v(p, w_j, y_i; z_i)\\
+&v(p, w_{j + 1}, y_i, z_i) \ge v(p, w_j, y_i, z_i)\\
 &\Leftrightarrow z_i w_{j + 1} - p_{j + 1} \ge z_i w_j - p_j\\
 &\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{w_{j + 1} - w_j} \equiv \Delta_j.
 \end{split}
@@ -477,24 +428,31 @@ D_j(p, w, z) = N[F(\Delta_{j}) - F(\Delta_{j - 1})].
 - Next we define what are observable and unobservable, and what are known and unknown.
 - Then consider how to identify and estimate the model.
 
-
-
-
 ### Multinomial Logit Model: Preference Shock
 
+- This originates at @Mcfadden1974.
+- See @Train2009 for reference.
 - Suppose that there is some unobservable component in consumer characteristics. 
 - In reality, consumers choice change somewhat randomly.
-- Let's capture such a \textbf{preference shock} by consider the following model:
+- Let's capture such a __preference shock__ by consider the following model:
 \begin{equation}
-v(p, w_j, y_i; z_i) \equiv v(p, w_j, y_i) + \epsilon_{ij},
+v(p, w_j, y_i, z_i) + \epsilon_{ij},
 \end{equation}
 where I assumed that there is no other $z_i$ for exposition simplicity, with some random vector:
 \begin{equation}
 \epsilon_i \equiv (\epsilon_{i0}, \cdots, \epsilon_{iJ})' \sim G.
 \end{equation}
 - At this point, $G$ can be any distribution and the shocks can be dependent across $j$ within $i$.
-
-
+- $p, w, y_i, z_i$ are __observed__ but $\epsilon_{ij}$ are __unobserved__.
+- When the realization of the preference shock is given, the consumer choice is:
+$$
+x_j(p, w_j, y_i, z_i, \epsilon_{i}) \equiv 1\{j = \text{argmax}_{k = 0, \cdots, J} v(p, w_k, y_i, z_i) + \epsilon_{ik}\}
+$$
+for $k = 0, \cdots, J$.
+- The __choice probability__ as observed by econometrician is:
+$$
+s_j(p, w_j, y_i, z_i) \equiv \int x_j(p, w_j, y_i, z_i, \epsilon_{i}) dG(\epsilon_i).
+$$
 
 
 ### Multinomial Logit Model: Distributional Assumption 
@@ -504,12 +462,9 @@ where I assumed that there is no other $z_i$ for exposition simplicity, with som
 - $\epsilon_{ij}$ are independent across $j$: $G(\epsilon_i) = \prod_{j = 0, \cdots, J} G_j(\epsilon_{ij})$.
 - $\epsilon_{ij}$ are identical across $j$: $G_j(\epsilon_{ij}) = \overline{G}(\epsilon_{ij})$.
 - $\overline{G}$ is a type-I extreme value.
-
 - $\rightarrow$ The density $g(\epsilon_{ij}) = \exp[-\exp(-\epsilon_{ij}) - \epsilon_{ij}]$.
-
-
-- This is called the (homoskedastic) \textbf{multinomial logit model}.
-- Setting the variance of $\epsilon_{ij}$ at 1 for some $j$ is a \textbf{scale normalization}. There is no obvious ``unit'' in preference.
+- This is called the (homoskedastic) __multinomial logit model__.
+- Setting the variance of $\epsilon_{ij}$ at 1 for some $j$ is a __scale__ normalization. 
 
 
 
@@ -519,20 +474,40 @@ where I assumed that there is no other $z_i$ for exposition simplicity, with som
 - The \textbf{choice probability} of consumer $i$ of good $j$ is:
 \begin{equation}
 \begin{split}
-s_{j}(p, w, y_i) & \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p, w_k, y_i) + \epsilon_{ik}  \}\\
-&=\mathbb{P}\{v(p, w_j, y_i) -  v(p, w_k, y_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
-& = \text{...after some algebra...}\\
-&= \frac{\exp[v(p, w_j, y_i) ]}{\sum_{k = 0}^J \exp[v(p, w_k, y_i)] }.
+s_{j}(p, w, y_i, z_i) & \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p, w_k, y_i, z_i) + \epsilon_{ik}  \}\\
+&=\mathbb{P}\{v(p, w_j, y_i, z_i) -  v(p, w_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
+& = \text{...after some algebra: leave as an exercise...}\\
+&= \frac{\exp[v(p, w_j, y_i, z_i) ]}{\sum_{k = 0}^J \exp[v(p, w_k, y_i, z_i)] }.
 \end{split}
 \end{equation}
 - For example, if:
 \begin{equation}
-v(p, w_k, y_i) = \beta'w_k - \alpha \ln(y_i - p_k),
+v(p, w_k, y_i) = \beta_i'w_k + \alpha_i (y_i - p_k),
 \end{equation}
-then, we have:
+
 \begin{equation}
-s_{j}(p, w, y_i) = \frac{\exp[\beta'w_j - \alpha \ln(y_i - p_j) ]}{\sum_{k = 0}^J \exp[\beta'w_k - \alpha \ln (y_i - p_k) ]}.
+\begin{pmatrix}
+\beta_i \\
+\alpha_i
+\end{pmatrix}
+= 
+\begin{pmatrix}
+\beta_0 \\
+\alpha_0
+\end{pmatrix}
++ \Gamma z_i.
 \end{equation}
+- Then, we have:
+\begin{equation}
+\begin{split}
+s_{j}(p, w, y_i) &= \frac{\exp[\beta_i'w_j + \alpha_i (y_i - p_j) ]}{\sum_{k = 0}^J \exp[\beta_i'w_k + \alpha_i (y_i - p_k) ]}\\
+&= \frac{\exp[\beta_i'w_j - \alpha_i p_j]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]}
+\end{split}
+\end{equation}
+- If we normalize the characteristics vector so that $w_0 = 0$ holds for the outside option, it becomes:
+$$
+s_{j}(p, w, y_i) = \frac{\exp[\beta_i'w_j - \alpha_i p_j]}{1 + \sum_{k = 1}^J \exp[\beta_i'w_k - \alpha_i p_k]}
+$$
 
 
 
@@ -543,28 +518,29 @@ s_{j}(p, w, y_i) = \frac{\exp[\beta'w_j - \alpha \ln(y_i - p_j) ]}{\sum_{k = 0}^
 \begin{equation}
 \begin{split}
 &\mathbb{E}\{\max_{j = 0, \cdots, J} v(p, w_j, y_i) + \epsilon_{ij}\} \\
-&= \text{   ...after some algebra...}\\
+&= \text{   ...after some algebra: leave as an exercise...}\\
 &= \ln \Bigg\{\sum_{j = 0}^J \exp[v(p, w_j, y_i)] \Bigg\} + constant.
 \end{split} 
 \end{equation} 
-- This is sometimes called the \textbf{inclusive value} of the choice set.
+- This is sometimes called the __inclusive value__ of the choice set.
 
 
 
 
 ### Maximum Likelihood Estimation of Multinomial Logit Model
 
-- Suppose we observe a sequence of income $y_i$, choice $x_{i}$, product characteristics $w_j$ and price $p_j$.
+- Suppose we observe a sequence of income $y_i$, consumer characteristics $z_i$, choice $x_{i}$, product characteristics $w_j$ and price $p_j$.
 - $x_i = (x_{i0}, \cdots, x_{iJ})'$ and $x_{ij} = 1$ if $j$ is chosen and $0$ otherwise.
 - The parameter of interest is the mean indirect utility function $v$.
-- Then the log likelihood of $\{x_i\}_{i = 1}^N$ conditional on $\{y_i\}_{i = 1}^N$ and $\{w_j,p_j\}_{j = 1}^J$ is:
+- Then the log likelihood of $\{x_i\}_{i = 1}^N$ conditional on $\{y_i, z_i\}_{i = 1}^N$ and $\{w_j,p_j\}_{j = 1}^J$ is:
 \begin{equation}
 \begin{split}
-l(v; x, y, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w_j, y_i)|p, w_j, y_i \}\\
-& = \sum_{i = 1}^N \log \Bigg\{ \prod_{j = 0}^{J} s_{j}(p, w, y_i)^{x_{ij}} \Bigg\}.
+l(v; x, y, z, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w_j, y_i, z_i)|p, w_j, y_i, z_i\}\\
+& = \sum_{i = 1}^N \log \Bigg\{ \prod_{j = 0}^{J} s_{j}(p, w, y_i, z_i)^{x_{ij}} \Bigg\}\\
+&= \sum_{i = 1}^N \sum_{j = 0}^J \log s_{j}(p, w, y_i, z_i)^{x_{ij}}.
 \end{split}
 \end{equation}
-
+- We can estimate the parameters by finding parameters that maximize the log likelihood.
 
 
 
@@ -845,7 +821,7 @@ where $s_{jt}$ is the observed choice share of product $j$ in market $t$.
 - We have:
 \begin{equation}
 \begin{split}
-v(p, w_j, y_i; z_i) &= \beta'w_j - \alpha \ln(y_i - p_j)\\
+v(p, w_j, y_i, z_i) &= \beta'w_j - \alpha \ln(y_i - p_j)\\
 & + \underbrace{\sum_{g = 1}^G \zeta_{jg} w_{jg}}_{\text{this creates correlation within category}} + \epsilon_{ij}.
 \end{split}
 \end{equation}
