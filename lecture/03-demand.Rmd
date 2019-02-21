@@ -266,12 +266,12 @@ x_0 = y - \sum_{j = 1}^J p_j x_j.
 
 - The utility maximization problem can be written as:
 \begin{equation}
-V(p, y_i, z_i) = \max_{j = 0, 1, \cdots, j}  v_j(p, y_i, z_i),
+V(p, y_i, z_i) = \max_{j = 0, 1, \cdots, j}  v_j(p_j, y_i, z_i),
 \end{equation}
 where
 \begin{equation}
 \begin{split}
-&v_j(p, y_i, z_i)\\
+&v_j(p_j, y_i, z_i)\\
 & =
 \begin{cases}
 u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0, z_i) &\text{   if  }j > 0,\\
@@ -294,9 +294,9 @@ is called the \textbf{choice-specific indirect utility}.
 - The choice-specific indirect utility is a function of the characteristics of the alternative:
 \begin{equation}
 \begin{split}
-v_j(p, y_i, z_i) &=u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0, z_i)\\
+v_j(p_j, y_i, z_i) &=u(y_i - p_j, 0, \cdots, \underbrace{1}_{x_j}, \cdots, 0, z_i)\\
 &= u^*(y_i - p_j, w_j, z_i)\\
-&\equiv v(p, w_j, y_i, z_i).
+&\equiv v(p_j, w_j, y_i, z_i).
 \end{split}
 \end{equation}
 
@@ -342,7 +342,7 @@ for certain choice of $(y^*, z^*)$.
 
 - Let $x(p, w, y_i, z_i) = \{x_j(p, w, y_i, z_i)\}_{j = 0, \cdots, J}$ be the demand function of consumer $i$, that is:
 \begin{equation}
-x_j(p, w, y_i, z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j}  v(p, w_j, y_i, z_i).
+x_j(p, w, y_i, z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j}  v(p_j, w_j, y_i, z_i).
 \end{equation}
 - Let $f(y, z)$ be the joint distribution of the income and other consumer characteristics.
 - The aggregate demand for good $j$ is:
@@ -358,7 +358,7 @@ where $N$ is the population.
 - Let $z_i = L_i$, the location of consumer $i$ and $w_j = L_j$, the location of the choice on a street $[0, 1]$ with $L_1 < L_2$.
 - A consumer has a preference such that:
 \begin{equation}
-v_{ij} \equiv v(p, w_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
+v_{ij} \equiv v(p_j, w_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
 \end{equation}
 
 
@@ -368,7 +368,7 @@ v_{ij} \equiv v(p, w_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
 - Consumer $i$ buys from store $1$ if and only if:
 \begin{equation}
 \begin{split}
-&v(p, w_1, y_i, z_i) \ge v(p, w_2, y_i, z_i)\\
+&v(p_1, w_1, y_i, z_i) \ge v(p_2, w_2, y_i, z_i)\\
 &\Leftrightarrow s - t |L_i - L_1| - p_1 \ge s - t |L_i - L_2|- p_2\\
 &\Leftrightarrow L_i \le \frac{p_2 - p_1}{2 t} + \frac{L_1 + L_2}{2} \equiv \overline{L}_1(p_1, p_2).
 \end{split}
@@ -389,7 +389,7 @@ D_1(p, L_1, L_2) = N \int_{0}^{\overline{L}_1(p_1, p_2)} d L_i = N\overline{L}_1
 - @Bresnahan1987 analyzed automobile demand with this framework.
 - There are $J$ goods and consumer $i$ has a utility such as:
 \begin{equation}
-v_{ij} \equiv v(p, w_j, y_i, z_i) = z_i w_j - p_j,
+v_{ij} \equiv v(p_j, w_j, y_i, z_i) = z_i w_j - p_j,
 \end{equation}
 where $w_j$ is a quality of product $j$ and $z_i$ is the consumer's willingness to pay for the quality with $w_j < w_{j + 1}$.
 - Consumers' problem is:
@@ -405,7 +405,7 @@ where $w_j$ is a quality of product $j$ and $z_i$ is the consumer's willingness 
 - Consumer $i$ prefers good $j + 1$ to good $j$ if and only if:
 \begin{equation}
 \begin{split}
-&v(p, w_{j + 1}, y_i, z_i) \ge v(p, w_j, y_i, z_i)\\
+&v(p_{j + 1}, w_{j + 1}, y_i, z_i) \ge v(p_j, w_j, y_i, z_i)\\
 &\Leftrightarrow z_i w_{j + 1} - p_{j + 1} \ge z_i w_j - p_j\\
 &\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{w_{j + 1} - w_j} \equiv \Delta_j.
 \end{split}
@@ -436,7 +436,7 @@ D_j(p, w, z) = N[F(\Delta_{j}) - F(\Delta_{j - 1})].
 - In reality, consumers choice change somewhat randomly.
 - Let's capture such a __preference shock__ by consider the following model:
 \begin{equation}
-v(p, w_j, y_i, z_i) + \epsilon_{ij},
+v(p_j, w_j, y_i, z_i) + \epsilon_{ij},
 \end{equation}
 where I assumed that there is no other $z_i$ for exposition simplicity, with some random vector:
 \begin{equation}
@@ -446,12 +446,12 @@ where I assumed that there is no other $z_i$ for exposition simplicity, with som
 - $p, w, y_i, z_i$ are __observed__ but $\epsilon_{ij}$ are __unobserved__.
 - When the realization of the preference shock is given, the consumer choice is:
 $$
-x_j(p, w_j, y_i, z_i, \epsilon_{i}) \equiv 1\{j = \text{argmax}_{k = 0, \cdots, J} v(p, w_k, y_i, z_i) + \epsilon_{ik}\}
+x_j(p, w, y_i, z_i, \epsilon_{i}) \equiv 1\{j = \text{argmax}_{k = 0, \cdots, J} v(p_k, w_k, y_i, z_i) + \epsilon_{ik}\}
 $$
 for $k = 0, \cdots, J$.
 - The __choice probability__ as observed by econometrician is:
 $$
-s_j(p, w_j, y_i, z_i) \equiv \int x_j(p, w_j, y_i, z_i, \epsilon_{i}) dG(\epsilon_i).
+s_j(p, w, y_i, z_i) \equiv \int x_j(p, w, y_i, z_i, \epsilon_{i}) dG(\epsilon_i).
 $$
 
 
@@ -475,14 +475,14 @@ $$
 \begin{equation}
 \begin{split}
 s_{j}(p, w, y_i, z_i) & \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p, w_k, y_i, z_i) + \epsilon_{ik}  \}\\
-&=\mathbb{P}\{v(p, w_j, y_i, z_i) -  v(p, w_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
+&=\mathbb{P}\{v(p, w_j, y_i, z_i) -  v(p_k, w_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
 & = \text{...after some algebra: leave as an exercise...}\\
-&= \frac{\exp[v(p, w_j, y_i, z_i) ]}{\sum_{k = 0}^J \exp[v(p, w_k, y_i, z_i)] }.
+&= \frac{\exp[v(p_j, w_j, y_i, z_i) ]}{\sum_{k = 0}^J \exp[v(p_k, w_k, y_i, z_i)] }.
 \end{split}
 \end{equation}
 - For example, if:
 \begin{equation}
-v(p, w_k, y_i) = \beta_i'w_k + \alpha_i (y_i - p_k),
+v(p_k, w_k, y_i, z_i) = \beta_i'w_k + \alpha_i (y_i - p_k),
 \end{equation}
 
 \begin{equation}
@@ -500,13 +500,13 @@ v(p, w_k, y_i) = \beta_i'w_k + \alpha_i (y_i - p_k),
 - Then, we have:
 \begin{equation}
 \begin{split}
-s_{j}(p, w, y_i) &= \frac{\exp[\beta_i'w_j + \alpha_i (y_i - p_j) ]}{\sum_{k = 0}^J \exp[\beta_i'w_k + \alpha_i (y_i - p_k) ]}\\
+s_{j}(p, w, y_i, z_i) &= \frac{\exp[\beta_i'w_j + \alpha_i (y_i - p_j) ]}{\sum_{k = 0}^J \exp[\beta_i'w_k + \alpha_i (y_i - p_k) ]}\\
 &= \frac{\exp[\beta_i'w_j - \alpha_i p_j]}{\sum_{k = 0}^J \exp[\beta_i'w_k - \alpha_i p_k]}
 \end{split}
 \end{equation}
 - If we normalize the characteristics vector so that $w_0 = 0$ holds for the outside option, it becomes:
 $$
-s_{j}(p, w, y_i) = \frac{\exp[\beta_i'w_j - \alpha_i p_j]}{1 + \sum_{k = 1}^J \exp[\beta_i'w_k - \alpha_i p_k]}
+s_{j}(p, w, y_i, z_i) = \frac{\exp[\beta_i'w_j - \alpha_i p_j]}{1 + \sum_{k = 1}^J \exp[\beta_i'w_k - \alpha_i p_k]}
 $$
 
 
@@ -517,14 +517,12 @@ $$
 - The expected utility for consumer $i$ before the preference shocks are drawn under multinomial logit model is given by:
 \begin{equation}
 \begin{split}
-&\mathbb{E}\{\max_{j = 0, \cdots, J} v(p, w_j, y_i) + \epsilon_{ij}\} \\
+&\mathbb{E}\{\max_{j = 0, \cdots, J} v(p_j, w_j, y_i, z_i) + \epsilon_{ij}\} \\
 &= \text{   ...after some algebra: leave as an exercise...}\\
-&= \ln \Bigg\{\sum_{j = 0}^J \exp[v(p, w_j, y_i)] \Bigg\} + constant.
+&= \ln \Bigg\{\sum_{j = 0}^J \exp[v(p_j, w_j, y_i, z_i)] \Bigg\} + constant.
 \end{split} 
 \end{equation} 
 - This is sometimes called the __inclusive value__ of the choice set.
-
-
 
 
 ### Maximum Likelihood Estimation of Multinomial Logit Model
@@ -535,7 +533,7 @@ $$
 - Then the log likelihood of $\{x_i\}_{i = 1}^N$ conditional on $\{y_i, z_i\}_{i = 1}^N$ and $\{w_j,p_j\}_{j = 1}^J$ is:
 \begin{equation}
 \begin{split}
-l(v; x, y, z, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w_j, y_i, z_i)|p, w_j, y_i, z_i\}\\
+l(v; x, y, z, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w, y_i, z_i)|p, w, y_i, z_i\}\\
 & = \sum_{i = 1}^N \log \Bigg\{ \prod_{j = 0}^{J} s_{j}(p, w, y_i, z_i)^{x_{ij}} \Bigg\}\\
 &= \sum_{i = 1}^N \sum_{j = 0}^J \log s_{j}(p, w, y_i, z_i)^{x_{ij}}.
 \end{split}
@@ -548,62 +546,43 @@ l(v; x, y, z, w) &= \sum_{i = 1}^N \ln \mathbb{P}\{x_i = x(p, w_j, y_i, z_i)|p, 
 ### Nonlinear Least Square Estimation of Multinomial Logit Model
 
 - The multinomial logit model can be estimated by nonlinear least square method as well.
-- This is particularly important when we only have an aggregate data instead of choice data.
+- Suppose that the share of product $j$ among consumers with characteristics $z$ and income $y$ was:
+\begin{equation}
+s_j(p, w, y, z).
+\end{equation}
 - Note that:
 \begin{equation}
 \begin{split}
-\ln s_{j}(p, w, y_i)  &= \ln \Bigg\{ \frac{\exp[v(p, w_j, y_i) ]}{\sum_{k = 0}^J \exp[v(p, w_k, y_i)] }  \Bigg\}\\
-&= v(p, w_j, y_i) - \ln\Bigg\{ \sum_{k = 0}^J \exp[v(p, w_k, y_i)]  \Bigg\}.
+\ln s_{j}(p, w, y, z)  &= \ln \Bigg\{ \frac{\exp[v(p_j, w_j, y, z) ]}{\sum_{k = 0}^J \exp[v(p_k, w_k, y, z)] }  \Bigg\}\\
+&= v(p_j, w_j, y, z) - \ln\Bigg\{ \sum_{k = 0}^J \exp[v(p_k, w_k, y, z)]  \Bigg\}.
 \end{split}
 \end{equation}
 
-
-
-
-### Nonlinear Least Square Estimation of Multinomial Logit Model
-
 - Moreover, because of the location normalization of the utility function,
 \begin{equation}
-s_{0}(p, w, y_i) = \frac{1}{\sum_{k = 0}^J \exp[v(p, w_k, y_i)] }.
+s_{0}(p, w, y, z) = \frac{1}{\sum_{k = 0}^J \exp[v(p_j, w_k, y, z)] }.
 \end{equation}
 - Hence,
 \begin{equation}
-\ln s_{j}(p, w, y_i) - \ln s_{0}(p, w, y_i) = v(p, w_j, y_i).
+\ln s_{j}(p, w, y, z) - \ln s_{0}(p, w, y, z) = v(p, w_j, y, z).
 \end{equation}
 
-
-
-
-### Nonlinear Least Square Estimation of Multinomial Logit Model 
-
-- Suppose that conditional on $y_i$, the observed choice probabilities are $s_{j}(y_i)$.
-- In practice, it will be estimated on a discretized income $\{y_1, \cdots, y_M\}$.
+- The left-hand variables are observed in the data.
+- Let $s_j(y, z)$ be the share of product $j$ among consumers with characteristics $z$ and income $y$ in the data.
+- This can be calculated from the consumer-level data.
+- More importantly, if there is the total sales data for each demographic, we can use this approach.
 - Then, we can estimate the parameter by NLLS such that:
 \begin{equation}
-\min \sum_{m = 1}^M \sum_{j = 1}^J \{\ln[s_{j}(y_m)/s_{0}(y_m)] - v(p, w_j, y_m)\}^2.
+\min \sum_{(y, z)} \sum_{j = 1}^J \{\ln[s_{j}(y, z)/s_{0}(y, z)] - v(p_j, w_j, y, z)\}^2.
 \end{equation} 
-- If $v$ is linear in parameter, it is the OLS.
-
-
-
-
-### Nonlinear Least Square Estimation of Multinomial Logit Model
-
-- Suppose that there are $t = 1, \cdots, T$ markets.
-- The average income level is $y_t$ in market $t$.
-- The average price level is $p_i$ in market $t$.
-- It is often assumed that the market share of good $j$ in market $t$ is given by:
+- If $v$ is linear in parameter, it is the ordinal least squares:
 \begin{equation}
-s_{j}(y_t) = \frac{\exp[v(p_t, w_j, y_t) ]}{\sum_{k = 0}^J \exp[v(p_t, w_k, y_t)] },
+v(p_j, w_j, y_m) = \beta_i' w_j - \alpha_i p_j.
 \end{equation}
-and the parameter is estimated by:
+
 \begin{equation}
-\min \sum_{t = 1}^T \sum_{j = 1}^J \{\ln[s_{jt}/s_{0t}] - v(p_t, w_j, y_t)\}^2,
+\ln[s_{j}(y, z)/s_{0}(y, z)] = \beta_i' w_j - \alpha_i p_j.
 \end{equation}
-where $s_{jt}$ is the observed choice share of product $j$ in market $t$. 
-
-
-
 
 ### IIA Problem
 
@@ -612,16 +591,13 @@ where $s_{jt}$ is the observed choice share of product $j$ in market $t$.
 - The most important problem is the \textbf{independence of irrelevant alternatives (IIA)} problem. 
 - Notice that:
 \begin{equation}
-\frac{s_{j}(p, w, y_i)}{s_{k}(p, w, y_i)} = \frac{\exp[v(p, w_j, y_i)]}{\exp[v(p, w_k, y_i)]}.
+\frac{s_j(p, w, y, z)}{s_{k}(p, w, y, z)} = \frac{\exp[v(p_j, w_j, y, z)]}{\exp[v(p_k, w_k, y, z)]}.
 \end{equation}
-- \textit{The ratio of choice probabilities between two alternatives depend only on the mean indirect utility of these two alternatives and independent of irrelevant alternatives}.
-
-
-
+- The ratio of choice probabilities between two alternatives depend only on the mean indirect utility of these two alternatives and __independent of irrelevant alternatives (IIA)__.
+- Why is this a problem?
 
 ### Blue Bus and Red Bus Problem
 
-- Why is this problematic?
 - Suppose that you can go to a town by bus or by train.
 - Half of commuters use a bus and the other half use a train. 
 - The existing bus was blue. Now, the county introduced a red bus, which is identical to the existing blue bus.
@@ -639,28 +615,20 @@ where $s_{jt}$ is the observed choice share of product $j$ in market $t$.
 
 - IIA property restrict price elasticities in an unfavorable manner.
 - This is a serious problem because the main purpose for us to estimate demand functions is to identify the price elasticity.
-- Let $v(p, w_j, y_i) = \beta'w_j - \alpha p_j$. Then, we have:
+- Let $v(p_j, w_j, y_i, z_i) = \beta_i'w_j - \alpha_i p_j$. Then, we have:
 \begin{equation}
 e_{jk} =
 \begin{cases}
--\alpha p_{j} (1 - s_{j}(p, w, y_i)) &\text{   if   } k = j\\
-\alpha p_{k} s_{k}(p, w, y_i) &\text{   if   } k \neq j.
+-\alpha p_{j} (1 - s(p_j, w_j, y_i, z_i)) &\text{   if   } k = j\\
+\alpha p_{k} s(p_k, w_k, y_i, z_i) &\text{   if   } k \neq j.
 \end{cases}
 \end{equation}
 - The price elasticity is completely determined by the existing choice probabilities of the relevant alternatives.
-
-
-
-
-### Restrictive Price Elasticity
-
 - Suppose that there are coca cola, pepsi cola, and a coffee.
 - The shares were 1/2, 1/6, 1/3, respectively.
 - Suppose that the price of coca cola increased.
 - We expect that they instead purchase pepsi cola because pepsi cola is more similar to coca cola than coffee.
 - However, according to the previous result, twice more consumers substitute to coffee rather than to pepsi cola.
-
-
 
 
 ### Monotonic Inclusive Value
@@ -672,27 +640,22 @@ e_{jk} =
 - We just added the same goods. But the expected utility of consumer increases monotonically in the number of alternatives.
  
 
-
-
 ### The Source of the Problem
 
-- All of these problems are the different side of the same coin. 
-- \textit{The source of the problem is that there is no correlation in the preference shock across products}.
+- __The source of the problem is that there is no correlation in the preference shock across products__.
 - When the preference shock to coca cola is high, the preference shock to pepsi cola should be high, while the preference shock to coffee should be relatively independent.
 - Because the expected value of the maximum of the preference shocks increases according to the number of alternatives, the inclusive value becomes increasing in the number of alternatives. 
-- However, the preference shocks should be the same for the same good. Then, the the expected value of the maximum of the preference shock does not increase even if we add the same products on the shelf.
+- However, the preference shocks should be the same for the same good. Then, the the expected value of the maximum of the preference shock should not increase even if we add the same products on the shelf.
 
 
-
-
-### To Resolve the Problem
+### Correlation in Preference Shocks
 
 - Therefore, the preference shock should be such that: preference shocks between two alternative should be more correlated when they are closer in the characteristics space.
 - So we have to allow the covariance matrix of the preference shock to be free parameters.
-- If we allow flexible covariance matrix, the curse of dimensionality in the number of alternatives returns: The dimensionality of the covariance matrix is $J^2$.
-- Another way is to remove $\epsilon_{ij}$: it is called a \textbf{pure characteristics model}.
-
-
+- If we allow flexible covariance matrix, the curse of dimensionality in the number of alternatives comes back: The dimensionality of the covariance matrix is $J^2$.
+- Another way is to remove $\epsilon_{ij}$: it is called a __pure characteristics model__ [@Berry2007].
+- But the pure characteristics model is computationally not straightfoward.
+- We explore the way of introducing mild correlation across similar products in the preference shocks.
 
 
 ### Mixed Logit Model (Random-coefficient Model)

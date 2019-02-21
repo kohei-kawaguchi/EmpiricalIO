@@ -125,10 +125,24 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-02-19}
+    \date{Last updated: 2019-02-21}
 
 \usepackage{booktabs}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -1158,7 +1172,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 6
+## [1] 5
 \end{verbatim}
 
 \begin{Shaded}
@@ -1178,7 +1192,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 46
+## [1] 27
 \end{verbatim}
 
 \begin{Shaded}
@@ -1188,7 +1202,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 31
+## [1] 41
 \end{verbatim}
 
 \begin{itemize}
@@ -3565,13 +3579,7 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 \chapter{Assignment 2: Production Function
 Estimation}\label{assignment2}
 
-The deadline is the \textbf{start time of February 25 class}.
-
-Report the following results in html format using R markdown. In other
-words, replicate this document. You write functions in a separate R file
-and put in \texttt{R} folder in the project folder. Build the project as
-a package and load it from the R markdown file. The execution code
-sholuld be written in R markdown file.
+The deadline is the \textbf{February 28 1:30pm}.
 
 \section{Simulate data}\label{simulate-data-1}
 
@@ -3591,8 +3599,7 @@ normal random variable with mean 0 and standard deviation
 \(\sigma_{\eta}\).
 
 The product price the same across firms and normalized at 1. The price
-is normalized at 1. The wage \(w_t\) is an i.i.d. exponential of normal
-random variable with mean 0 and standard deviation \(\sigma_{w}\).
+is normalized at 1. The wage \(w_t\) is constant at 0.5.
 
 Finally, the capital accumulate according to: \[
 K_{j, t + 1} = (1 - \delta) K_{jt} + I_{jt}.
@@ -3624,7 +3631,8 @@ parameter & variable & value\tabularnewline
   Write a function that returns the log output given \(l_{jt}\),
   \(k_{jt}\), \(\omega_{jt}\), and \(\eta_{jt}\) under the given
   parameter values according to the above production function and name
-  it \texttt{log\_production}.
+  it
+  \texttt{log\_production(l,\ k,\ omega,\ eta,\ beta\_0,\ beta\_l,\ beta\_k)}.
 \end{enumerate}
 
 Suppose that the labor is determined after \(\omega_{jt}\) is observed,
@@ -3637,9 +3645,9 @@ but before \(\eta_{jt}\) is observed, given the log capital level
 \tightlist
 \item
   Derive the optimal log labor as a function of \(\omega_{jt}\),
-  \(\eta_{jt}\), \(k_{jt}\), and \(w_t\). Write a function to return the
+  \(\eta_{jt}\), \(k_{jt}\), and wage. Write a function to return the
   optimal log labor given the variables and parameters and name it
-  \texttt{log\_labor\_choice}.
+  \texttt{log\_labor\_choice(k,\ wage,\ omega,\ beta\_0,\ beta\_l,\ beta\_k)}.
 \end{enumerate}
 
 As discussed in the class, if there is no additional variation in labor,
@@ -3659,7 +3667,8 @@ the true shock is \(\omega_{jt}\).
 \tightlist
 \item
   Modify the previous function by including \(\iota_{jt}\) as an
-  additional input and name it \texttt{log\_labor\_choice\_error}.
+  additional input and name it
+  \texttt{log\_labor\_choice\_error(k,\ wage,\ omega,\ beta\_0,\ beta\_l,\ beta\_k,\ iota)}.
 \end{enumerate}
 
 Consider an investment process such that: \[
@@ -3691,8 +3700,8 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 \setcounter{enumi}{5}
 \tightlist
 \item
-  Draw \(k_{j0}\) from an i.i.d. normal distribution with mean 1 and
-  standard deviation 0.5. Draw \(\omega_{j0}\) from its stationary
+  Draw \(k_{j1}\) from an i.i.d. normal distribution with mean 1 and
+  standard deviation 0.5. Draw \(\omega_{j1}\) from its stationary
   distribution (check the stationary distribution of AR(1) process).
   Draw a wage. Before simulating the rest of the data, set the seed at
   1.
@@ -3702,16 +3711,16 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 ## # A tibble: 1,000 x 5
 ##        j     t     k   omega  wage
 ##    <int> <dbl> <dbl>   <dbl> <dbl>
-##  1     1     1 1.09   0.779  0.591
-##  2     2     1 0.582 -0.610  0.591
-##  3     3     1 1.80   0.148  0.591
-##  4     4     1 1.16   0.0486 0.591
-##  5     5     1 0.590 -1.16   0.591
-##  6     6     1 1.24   0.568  0.591
-##  7     7     1 1.37  -1.34   0.591
-##  8     8     1 1.29  -0.873  0.591
-##  9     9     1 0.847  0.699  0.591
-## 10    10     1 1.76  -0.379  0.591
+##  1     1     1 0.687  0.795    0.5
+##  2     2     1 1.09   0.779    0.5
+##  3     3     1 0.582 -0.610    0.5
+##  4     4     1 1.80   0.148    0.5
+##  5     5     1 1.16   0.0486   0.5
+##  6     6     1 0.590 -1.16     0.5
+##  7     7     1 1.24   0.568    0.5
+##  8     8     1 1.37  -1.34     0.5
+##  9     9     1 1.29  -0.873    0.5
+## 10    10     1 0.847  0.699    0.5
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -3720,24 +3729,25 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 \setcounter{enumi}{6}
 \tightlist
 \item
-  Compute the labor and investment choice of period 1. For labor choice,
-  compute both types of labor choices.
+  Draw optimization error \(\iota_{jt}\) and compute the labor and
+  investment choice of period 1. For labor choice, compute both types of
+  labor choices.
 \end{enumerate}
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 9
-##        j     t     k   omega  wage     iota     l l_error       I
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl> <dbl>   <dbl>   <dbl>
-##  1     1     1 1.09   0.779  0.591 -0.0961  6.20    5.50   0.381 
-##  2     2     1 0.582 -0.610  0.591  0.0810  0.700   0.775 -0.0196
-##  3     3     1 1.80   0.148  0.591  0.0260  5.23    5.40   0.391 
-##  4     4     1 1.16   0.0486 0.591 -0.00279 2.65    2.65   0.176 
-##  5     5     1 0.590 -1.16   0.591  0.0348  0.352   0.368 -0.120 
-##  6     6     1 1.24   0.568  0.591  0.00268 5.44    5.46   0.370 
-##  7     7     1 1.37  -1.34   0.591 -0.0655  0.560   0.516 -0.330 
-##  8     8     1 1.29  -0.873  0.591 -0.106   0.934   0.818 -0.135 
-##  9     9     1 0.847  0.699  0.591 -0.0104  4.53    4.47   0.280 
-## 10    10     1 1.76  -0.379  0.591 -0.0156  2.61    2.56   0.0702
+##        j     t     k   omega  wage     iota      l  l_error       I
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>    <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280 
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -3748,23 +3758,24 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 \item
   Draw ex post shock and compute the output according to the production
   function for both labor without optimization error and with
-  optimization error.
+  optimization error. Name the output without optimization error
+  \texttt{y} and the one with optimization error \texttt{y\_error}.
 \end{enumerate}
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota     l l_error       I     eta
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl> <dbl>   <dbl>   <dbl>   <dbl>
-##  1     1     1 1.09   0.779  0.591 -0.0961  6.20    5.50   0.381   0.0773
-##  2     2     1 0.582 -0.610  0.591  0.0810  0.700   0.775 -0.0196  0.259 
-##  3     3     1 1.80   0.148  0.591  0.0260  5.23    5.40   0.391  -0.161 
-##  4     4     1 1.16   0.0486 0.591 -0.00279 2.65    2.65   0.176  -0.321 
-##  5     5     1 0.590 -1.16   0.591  0.0348  0.352   0.368 -0.120   0.187 
-##  6     6     1 1.24   0.568  0.591  0.00268 5.44    5.46   0.370   0.361 
-##  7     7     1 1.37  -1.34   0.591 -0.0655  0.560   0.516 -0.330  -0.0113
-##  8     8     1 1.29  -0.873  0.591 -0.106   0.934   0.818 -0.135   0.377 
-##  9     9     1 0.847  0.699  0.591 -0.0104  4.53    4.47   0.280   0.316 
-## 10    10     1 1.76  -0.379  0.591 -0.0156  2.61    2.56   0.0702  0.100 
+##        j     t     k   omega  wage     iota      l  l_error       I     eta
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>    <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280   0.316 
 ## # ... with 990 more rows, and 2 more variables: y <dbl>, y_error <dbl>
 \end{verbatim}
 
@@ -3780,18 +3791,18 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 
 \begin{verbatim}
 ## # A tibble: 10,000 x 13
-##        j     t     k   omega  wage     iota     l l_error       I     eta
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl> <dbl>   <dbl>   <dbl>   <dbl>
-##  1     1     1 1.09   0.779  0.591 -0.0961  6.20    5.50   0.381   0.0773
-##  2     2     1 0.582 -0.610  0.591  0.0810  0.700   0.775 -0.0196  0.259 
-##  3     3     1 1.80   0.148  0.591  0.0260  5.23    5.40   0.391  -0.161 
-##  4     4     1 1.16   0.0486 0.591 -0.00279 2.65    2.65   0.176  -0.321 
-##  5     5     1 0.590 -1.16   0.591  0.0348  0.352   0.368 -0.120   0.187 
-##  6     6     1 1.24   0.568  0.591  0.00268 5.44    5.46   0.370   0.361 
-##  7     7     1 1.37  -1.34   0.591 -0.0655  0.560   0.516 -0.330  -0.0113
-##  8     8     1 1.29  -0.873  0.591 -0.106   0.934   0.818 -0.135   0.377 
-##  9     9     1 0.847  0.699  0.591 -0.0104  4.53    4.47   0.280   0.316 
-## 10    10     1 1.76  -0.379  0.591 -0.0156  2.61    2.56   0.0702  0.100 
+##        j     t     k   omega  wage     iota      l  l_error       I     eta
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>    <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280   0.316 
 ## # ... with 9,990 more rows, and 3 more variables: y <dbl>, y_error <dbl>,
 ## #   nu <dbl>
 \end{verbatim}
@@ -3812,27 +3823,27 @@ j & 10000 & 500.5000000 & 288.6894251 & 1.0000000 & 1000.0000000\\
 \hline
 t & 10000 & 5.5000000 & 2.8724249 & 1.0000000 & 10.0000000\\
 \hline
-k & 10000 & 0.9809540 & 0.5827349 & -1.2846624 & 3.4715184\\
+k & 10000 & 0.9797900 & 0.5838949 & -1.2822534 & 3.2332312\\
 \hline
-omega & 10000 & -0.0042518 & 0.6947047 & -2.4722527 & 2.5482112\\
+omega & 10000 & -0.0055826 & 0.7025102 & -2.5894171 & 2.6281307\\
 \hline
-wage & 10000 & 1.2999738 & 1.0034241 & 0.2412463 & 2.9228370\\
+wage & 10000 & 0.5000000 & 0.0000000 & 0.5000000 & 0.5000000\\
 \hline
-iota & 10000 & -0.0000634 & 0.0502874 & -0.1841453 & 0.1715419\\
+iota & 10000 & -0.0000696 & 0.0502883 & -0.1841453 & 0.1715419\\
 \hline
-l & 10000 & 3.9635027 & 8.0655395 & 0.0095922 & 139.0681340\\
+l & 10000 & 0.9549746 & 1.0965108 & -3.3531023 & 4.9429634\\
 \hline
-l\_error & 10000 & 3.9729395 & 8.1144243 & 0.0095479 & 151.8869846\\
+l\_error & 10000 & 0.9548876 & 1.0971595 & -3.4015433 & 4.9270674\\
 \hline
-I & 10000 & 0.1801717 & 0.3180590 & -1.3075169 & 5.9394281\\
+I & 10000 & 0.1793502 & 0.3006526 & -1.2722627 & 3.2975332\\
 \hline
-eta & 10000 & 0.0012772 & 0.1999334 & -0.7650371 & 0.7455922\\
+eta & 10000 & 0.0015825 & 0.2001539 & -0.7650371 & 0.7455922\\
 \hline
-y & 10000 & 2.4763938 & 2.1954979 & -1.6282224 & 32.1811842\\
+y & 10000 & 1.8728479 & 1.1171035 & -2.4730251 & 6.1178291\\
 \hline
-y\_error & 10000 & 2.4782811 & 2.2032667 & -1.6281667 & 34.5350569\\
+y\_error & 10000 & 1.8728305 & 1.1169266 & -2.4827133 & 6.1146499\\
 \hline
-nu & 10000 & -0.0013588 & 0.4990855 & -2.1513907 & 1.8253882\\
+nu & 10000 & -0.0021155 & 0.4984324 & -2.1513907 & 1.8253882\\
 \hline
 \end{tabular}
 
@@ -3855,20 +3866,20 @@ For now, use the labor choice with optimization error.
 ## lm(formula = y_error ~ l_error + k, data = df_T)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.8221 -0.4208  0.0063  0.4281  2.2634 
+##      Min       1Q   Median       3Q      Max 
+## -0.73002 -0.14117 -0.00071  0.13743  0.87983 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 0.793901   0.012732   62.35   <2e-16 ***
-## l_error     0.236968   0.000845  280.44   <2e-16 ***
-## k           0.757343   0.011766   64.37   <2e-16 ***
+## (Intercept) 0.912490   0.004064 224.551   <2e-16 ***
+## l_error     0.997913   0.002396 416.454   <2e-16 ***
+## k           0.007599   0.004503   1.688   0.0915 .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.65 on 9997 degrees of freedom
-## Multiple R-squared:  0.913,  Adjusted R-squared:  0.913 
-## F-statistic: 5.244e+04 on 2 and 9997 DF,  p-value: < 2.2e-16
+## Residual standard error: 0.2068 on 9997 degrees of freedom
+## Multiple R-squared:  0.9657, Adjusted R-squared:  0.9657 
+## F-statistic: 1.408e+05 on 2 and 9997 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 \begin{enumerate}
@@ -3889,18 +3900,18 @@ For now, use the labor choice with optimization error.
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.45979 -0.34453 -0.00146  0.34631  1.98491 
+## -0.72450 -0.13285 -0.00244  0.12931  0.77657 
 ## 
 ## Coefficients:
-##           Estimate Std. Error t value Pr(>|t|)    
-## dl_error 0.2256116  0.0007631 295.667   <2e-16 ***
-## dk       0.0168781  0.0348015   0.485    0.628    
+##            Estimate Std. Error t value Pr(>|t|)    
+## dl_error  0.9910916  0.0029548 335.413   <2e-16 ***
+## dk       -0.0009029  0.0127539  -0.071    0.944    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.5264 on 9998 degrees of freedom
-## Multiple R-squared:  0.8974, Adjusted R-squared:  0.8974 
-## F-statistic: 4.373e+04 on 2 and 9998 DF,  p-value: < 2.2e-16
+## Residual standard error: 0.1961 on 9998 degrees of freedom
+## Multiple R-squared:  0.9184, Adjusted R-squared:  0.9184 
+## F-statistic: 5.629e+04 on 2 and 9998 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
 Next, we attempt to estimate the parameters using Olley-Pakes method.
@@ -3913,8 +3924,8 @@ variables. For this reason, in theory, \(\phi\) should be estimated for
 each period. In this exercise, we assume \(\phi\) is common across
 periods because we know that there is no unobserved state variables in
 the true data generating process. Moreover, we do not include \(w_t\)
-because we know that it is i.i.d. in the true data generating process.
-Do not forget to consider them in the actual data analysis.
+because we know that it is time -invariant. Do not forget to consider
+them in the actual data analysis.
 
 You can use \texttt{npplreg} function of \texttt{np} package to estimate
 a partially linear model with a multivariate kernel. You first use
@@ -3938,31 +3949,31 @@ computation of the optimal bandwidth is time consuming.
 ## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
 ## 
 ##                     y(z)           
-## Bandwidth(s): 0.08208261 0.07116851
+## Bandwidth(s): 0.07355059 0.01435558
 ## 
-##                      x(z)             
-## Bandwidth(s): 0.093082611 9.482612e-02
-##               0.008783221 2.232608e+06
-##               0.805988383 4.831148e-02
+##                     x(z)           
+## Bandwidth(s): 0.03908594 0.01191551
+##               0.01397428 3.74952954
+##               0.83529394 0.00398329
 ## 
-##                   l_error         k        I
-## Coefficient(s): 0.1957426 -7.135889 8.365059
+##                   l_error        k        I
+## Coefficient(s): 0.2485295 2.355522 5.345144
 ## 
 ## Kernel Regression Estimator: Local-Constant
 ## Bandwidth Type: Fixed
 ## 
-## Residual standard error: 0.2414186
-## R-squared: 0.9882013
+## Residual standard error: 0.1934585
+## R-squared: 0.970064
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 2
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-48-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
+\setcounter{enumi}{2}
 \tightlist
 \item
   Check that \(\beta_l\) is not identified with the data without
@@ -3976,22 +3987,22 @@ computation of the optimal bandwidth is time consuming.
 ## Regression data: 10000 training points, in 5 variable(s)
 ## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
 ## 
-##                    y(z)           
-## Bandwidth(s): 0.2245037 0.02527988
+##                     y(z)           
+## Bandwidth(s): 0.07347225 0.01437256
 ## 
-##                       x(z)            
-## Bandwidth(s): 2.854165e-01 0.127411417
-##               1.107858e-02 0.472389899
-##               2.725632e+05 0.006739356
+##                     x(z)            
+## Bandwidth(s): 0.02960021 0.009986945
+##               0.01397428 3.749529542
+##               0.83529394 0.003983290
 ## 
-##                         l        k         I
-## Coefficient(s): 0.1787756 1.082508 -56.73451
+##                        l        k         I
+## Coefficient(s): 1.180628 2.034182 0.7805072
 ## 
 ## Kernel Regression Estimator: Local-Constant
 ## Bandwidth Type: Fixed
 ## 
-## Residual standard error: 0.3470795
-## R-squared: 0.9764468
+## Residual standard error: 0.1932285
+## R-squared: 0.970116
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 2
@@ -4019,7 +4030,7 @@ I_{j, t - 1}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
+\setcounter{enumi}{3}
 \tightlist
 \item
   Using the estimates in the first step, compute: \[
@@ -4034,33 +4045,32 @@ I_{j, t - 1}
 ## # A tibble: 10,000 x 4
 ##        j     t y_error_tilde phi_t_1
 ##    <int> <dbl>         <dbl>   <dbl>
-##  1     1     1          2.64  NA    
-##  2     1     2          2.22   2.62 
-##  3     1     3          3.13   2.73 
-##  4     1     4          2.50   3.21 
-##  5     1     5          3.08   2.58 
-##  6     1     6          2.16   3.17 
-##  7     1     7          1.30   2.54 
-##  8     1     8          1.17   1.40 
-##  9     1     9          1.88   0.851
-## 10     1    10          1.87   1.56 
+##  1     1     1         2.34   NA    
+##  2     1     2         1.37    2.21 
+##  3     1     3         0.622   1.49 
+##  4     1     4         0.448   0.883
+##  5     1     5         0.879   0.612
+##  6     1     6         1.62    0.927
+##  7     1     7         0.559   1.40 
+##  8     1     8         0.685   0.440
+##  9     1     9         0.940   0.521
+## 10     1    10         1.49    0.838
 ## # ... with 9,990 more rows
 \end{verbatim}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{5}
+\setcounter{enumi}{2}
 \tightlist
 \item
   Compute a function that returns the value of
   \(g_{JT}(\alpha, \beta_0, \beta_k)\) given parameter values, data, and
   \texttt{df\_T\_1st}, and name it \texttt{moment\_OP\_2nd}. Show the
-  values of the first five rows of the moment evaluated at the true
-  parameters.
+  values of the moments evaluated at the true parameters.
 \end{enumerate}
 
 \begin{verbatim}
-## [1] -0.007100535 -0.006621758 -0.009029895
+## [1] -0.018151270 -0.018681148 -0.003802845
 \end{verbatim}
 
 Based on the moment, we can define the objective function of a
@@ -4071,7 +4081,7 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{6}
+\setcounter{enumi}{3}
 \tightlist
 \item
   Write a function that returns the value of
@@ -4084,12 +4094,12 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
 
 \begin{verbatim}
 ##              [,1]
-## [1,] 0.0001758043
+## [1,] 0.0006929155
 \end{verbatim}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{7}
+\setcounter{enumi}{4}
 \tightlist
 \item
   Draw the graph of the objective function when one of \(\alpha\),
@@ -4098,15 +4108,15 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
   at around the true value?
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-55-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-2} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-55-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-3} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{8}
+\setcounter{enumi}{5}
 \tightlist
 \item
   Find the parameters that minimize the objective function using
@@ -4115,14 +4125,14 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
 
 \begin{verbatim}
 ## $par
-## [1] 0.6539508 1.0021382 0.6968459
+## [1] 0.7019374 0.9770774 0.6699849
 ## 
 ## $value
-## [1] 1.720679e-06
+## [1] 1.992111e-07
 ## 
 ## $counts
 ## function gradient 
-##       11       11 
+##       10       10 
 ## 
 ## $convergence
 ## [1] 0

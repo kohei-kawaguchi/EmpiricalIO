@@ -16,7 +16,7 @@ log_labor_choice <-
          beta_l * 
          exp(k)^beta_k)^(1/(1 - beta_l))
     l <- log(L)
-    return(L)
+    return(l)
   }
 
 # static labor choice with optimization error
@@ -28,7 +28,7 @@ log_labor_choice_error <-
          beta_l * 
          exp(k)^beta_k)^(1/(1 - beta_l))
     l <- log(L)
-    return(L)
+    return(l)
   }
 # investment choice
 investment_choice <-
