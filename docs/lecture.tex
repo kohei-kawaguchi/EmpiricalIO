@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-02-21}
+    \date{Last updated: 2019-02-22}
 
 \usepackage{booktabs}
 
@@ -1172,7 +1172,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5
+## [1] 6
 \end{verbatim}
 
 \begin{Shaded}
@@ -1192,7 +1192,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 27
+## [1] 46
 \end{verbatim}
 
 \begin{Shaded}
@@ -1202,7 +1202,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 41
+## [1] 31
 \end{verbatim}
 
 \begin{itemize}
@@ -3647,7 +3647,7 @@ but before \(\eta_{jt}\) is observed, given the log capital level
   Derive the optimal log labor as a function of \(\omega_{jt}\),
   \(\eta_{jt}\), \(k_{jt}\), and wage. Write a function to return the
   optimal log labor given the variables and parameters and name it
-  \texttt{log\_labor\_choice(k,\ wage,\ omega,\ beta\_0,\ beta\_l,\ beta\_k)}.
+  \texttt{log\_labor\_choice(k,\ wage,\ omega,\ beta\_0,\ beta\_l,\ beta\_k,\ sigma\_eta)}.
 \end{enumerate}
 
 As discussed in the class, if there is no additional variation in labor,
@@ -3668,7 +3668,7 @@ the true shock is \(\omega_{jt}\).
 \item
   Modify the previous function by including \(\iota_{jt}\) as an
   additional input and name it
-  \texttt{log\_labor\_choice\_error(k,\ wage,\ omega,\ beta\_0,\ beta\_l,\ beta\_k,\ iota)}.
+  \texttt{log\_labor\_choice\_error(k,\ wage,\ omega,\ beta\_0,\ beta\_l,\ beta\_k,\ iota,\ sigma\_eta)}.
 \end{enumerate}
 
 Consider an investment process such that: \[
@@ -3687,7 +3687,7 @@ reduced-form.
   Define variable \(\gamma\) and assign it the value. Write a function
   that returns the investment given \(K_{jt}\), \(\omega_{jt}\), and
   parameter values, according to the previous equation, and name it
-  \texttt{investment\_choice}.
+  \texttt{investment\_choice(k,\ omega,\ gamma,\ delta)}.
 \end{enumerate}
 
 Simulate the data first using the labor choice without optimization
@@ -3736,18 +3736,18 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 9
-##        j     t     k   omega  wage     iota      l  l_error       I
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>    <dbl>   <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196
-##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330 
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280 
+##        j     t     k   omega  wage     iota      l l_error       I
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -3764,18 +3764,18 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota      l  l_error       I     eta
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>    <dbl>   <dbl>   <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257   0.148 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381   0.0773
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196  0.259 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391  -0.161 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176  -0.321 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120   0.187 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370   0.361 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330  -0.0113
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135   0.377 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280   0.316 
+##        j     t     k   omega  wage     iota      l l_error       I     eta
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
 ## # ... with 990 more rows, and 2 more variables: y <dbl>, y_error <dbl>
 \end{verbatim}
 
@@ -3791,18 +3791,18 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 
 \begin{verbatim}
 ## # A tibble: 10,000 x 13
-##        j     t     k   omega  wage     iota      l  l_error       I     eta
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>    <dbl>   <dbl>   <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257   0.148 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381   0.0773
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196  0.259 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391  -0.161 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176  -0.321 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120   0.187 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370   0.361 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330  -0.0113
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135   0.377 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280   0.316 
+##        j     t     k   omega  wage     iota      l l_error       I     eta
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
 ## # ... with 9,990 more rows, and 3 more variables: y <dbl>, y_error <dbl>,
 ## #   nu <dbl>
 \end{verbatim}
@@ -3831,17 +3831,17 @@ wage & 10000 & 0.5000000 & 0.0000000 & 0.5000000 & 0.5000000\\
 \hline
 iota & 10000 & -0.0000696 & 0.0502883 & -0.1841453 & 0.1715419\\
 \hline
-l & 10000 & 0.9549746 & 1.0965108 & -3.3531023 & 4.9429634\\
+l & 10000 & 0.9799746 & 1.0965108 & -3.3281023 & 4.9679634\\
 \hline
-l\_error & 10000 & 0.9548876 & 1.0971595 & -3.4015433 & 4.9270674\\
+l\_error & 10000 & 0.9798876 & 1.0971595 & -3.3765433 & 4.9520674\\
 \hline
 I & 10000 & 0.1793502 & 0.3006526 & -1.2722627 & 3.2975332\\
 \hline
 eta & 10000 & 0.0015825 & 0.2001539 & -0.7650371 & 0.7455922\\
 \hline
-y & 10000 & 1.8728479 & 1.1171035 & -2.4730251 & 6.1178291\\
+y & 10000 & 1.8778479 & 1.1171035 & -2.4680251 & 6.1228291\\
 \hline
-y\_error & 10000 & 1.8728305 & 1.1169266 & -2.4827133 & 6.1146499\\
+y\_error & 10000 & 1.8778305 & 1.1169266 & -2.4777133 & 6.1196499\\
 \hline
 nu & 10000 & -0.0021155 & 0.4984324 & -2.1513907 & 1.8253882\\
 \hline
@@ -3871,7 +3871,7 @@ For now, use the labor choice with optimization error.
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 0.912490   0.004064 224.551   <2e-16 ***
+## (Intercept) 0.892542   0.004058 219.966   <2e-16 ***
 ## l_error     0.997913   0.002396 416.454   <2e-16 ***
 ## k           0.007599   0.004503   1.688   0.0915 .  
 ## ---
@@ -3949,7 +3949,7 @@ computation of the optimal bandwidth is time consuming.
 ## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
 ## 
 ##                     y(z)           
-## Bandwidth(s): 0.07355059 0.01435558
+## Bandwidth(s): 0.07355058 0.01435558
 ## 
 ##                     x(z)           
 ## Bandwidth(s): 0.03908594 0.01191551
@@ -3988,7 +3988,7 @@ computation of the optimal bandwidth is time consuming.
 ## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
 ## 
 ##                     y(z)           
-## Bandwidth(s): 0.07347225 0.01437256
+## Bandwidth(s): 0.07347226 0.01437256
 ## 
 ##                     x(z)            
 ## Bandwidth(s): 0.02960021 0.009986945
@@ -3996,7 +3996,7 @@ computation of the optimal bandwidth is time consuming.
 ##               0.83529394 0.003983290
 ## 
 ##                        l        k         I
-## Coefficient(s): 1.180628 2.034182 0.7805072
+## Coefficient(s): 1.180628 2.034182 0.7805077
 ## 
 ## Kernel Regression Estimator: Local-Constant
 ## Bandwidth Type: Fixed
@@ -4047,14 +4047,14 @@ I_{j, t - 1}
 ##    <int> <dbl>         <dbl>   <dbl>
 ##  1     1     1         2.34   NA    
 ##  2     1     2         1.37    2.21 
-##  3     1     3         0.622   1.49 
-##  4     1     4         0.448   0.883
-##  5     1     5         0.879   0.612
-##  6     1     6         1.62    0.927
-##  7     1     7         0.559   1.40 
-##  8     1     8         0.685   0.440
-##  9     1     9         0.940   0.521
-## 10     1    10         1.49    0.838
+##  3     1     3         0.621   1.49 
+##  4     1     4         0.447   0.882
+##  5     1     5         0.878   0.611
+##  6     1     6         1.62    0.926
+##  7     1     7         0.558   1.40 
+##  8     1     8         0.684   0.439
+##  9     1     9         0.939   0.520
+## 10     1    10         1.49    0.836
 ## # ... with 9,990 more rows
 \end{verbatim}
 
@@ -4070,7 +4070,7 @@ I_{j, t - 1}
 \end{enumerate}
 
 \begin{verbatim}
-## [1] -0.018151270 -0.018681148 -0.003802845
+## [1] -0.018507303 -0.019038229 -0.003867714
 \end{verbatim}
 
 Based on the moment, we can define the objective function of a
@@ -4094,7 +4094,7 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
 
 \begin{verbatim}
 ##              [,1]
-## [1,] 0.0006929155
+## [1,] 0.0007199336
 \end{verbatim}
 
 \begin{enumerate}
@@ -4125,10 +4125,10 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
 
 \begin{verbatim}
 ## $par
-## [1] 0.7019374 0.9770774 0.6699849
+## [1] 0.7020260 0.9766308 0.6693945
 ## 
 ## $value
-## [1] 1.992111e-07
+## [1] 1.994601e-07
 ## 
 ## $counts
 ## function gradient 

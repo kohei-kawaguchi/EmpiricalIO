@@ -9,10 +9,10 @@ log_production <-
   }
 # static labor choice without optimization error
 log_labor_choice <- 
-  function(k, wage, omega, beta_0, beta_l, beta_k) {
+  function(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta) {
     L <- 
       ((1/wage) * 
-         exp(beta_0 + omega) * 
+         exp(beta_0 + omega + sigma_eta^2/2) * 
          beta_l * 
          exp(k)^beta_k)^(1/(1 - beta_l))
     l <- log(L)
@@ -21,10 +21,10 @@ log_labor_choice <-
 
 # static labor choice with optimization error
 log_labor_choice_error <- 
-  function(k, wage, omega, beta_0, beta_l, beta_k, iota) {
+  function(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta) {
     L <- 
       ((1/wage) * 
-         exp(beta_0 + omega + iota) * 
+         exp(beta_0 + omega + iota + sigma_eta^2/2) * 
          beta_l * 
          exp(k)^beta_k)^(1/(1 - beta_l))
     l <- log(L)

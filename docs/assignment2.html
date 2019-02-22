@@ -293,17 +293,17 @@ K_{j, t + 1} = (1 - \delta) K_{jt} + I_{jt}.
 </ol>
 <p>Suppose that the labor is determined after <span class="math inline">\(\omega_{jt}\)</span> is observed, but before <span class="math inline">\(\eta_{jt}\)</span> is observed, given the log capital level <span class="math inline">\(k_{jt}\)</span>.</p>
 <ol start="3" style="list-style-type: decimal">
-<li>Derive the optimal log labor as a function of <span class="math inline">\(\omega_{jt}\)</span>, <span class="math inline">\(\eta_{jt}\)</span>, <span class="math inline">\(k_{jt}\)</span>, and wage. Write a function to return the optimal log labor given the variables and parameters and name it <code>log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k)</code>.</li>
+<li>Derive the optimal log labor as a function of <span class="math inline">\(\omega_{jt}\)</span>, <span class="math inline">\(\eta_{jt}\)</span>, <span class="math inline">\(k_{jt}\)</span>, and wage. Write a function to return the optimal log labor given the variables and parameters and name it <code>log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)</code>.</li>
 </ol>
 <p>As discussed in the class, if there is no additional variation in labor, the coefficient on the labor <span class="math inline">\(\beta_l\)</span> is not identified. Thus, if we generate labor choice from the previous function, <span class="math inline">\(\beta_l\)</span> will not be identified from the simulated data. To see this, we write a modified version of the previous function in which <span class="math inline">\(\omega_{jt}\)</span> is replaced with <span class="math inline">\(\omega_{jt} + \iota_{jt}\)</span>, where <span class="math inline">\(\iota_{jt}\)</span> is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is <span class="math inline">\(\omega_{jt} + \iota_{jt}\)</span>, even though the true shock is <span class="math inline">\(\omega_{jt}\)</span>.</p>
 <ol start="4" style="list-style-type: decimal">
-<li>Modify the previous function by including <span class="math inline">\(\iota_{jt}\)</span> as an additional input and name it <code>log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota)</code>.</li>
+<li>Modify the previous function by including <span class="math inline">\(\iota_{jt}\)</span> as an additional input and name it <code>log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)</code>.</li>
 </ol>
 <p>Consider an investment process such that: <span class="math display">\[
 I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 \]</span> where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">\(K_{jt}\)</span> are investment and capital in level. Set <span class="math inline">\(\gamma = 0.1\)</span>, i.e., the investment is strictly increasing in <span class="math inline">\(\omega_{jt}\)</span>. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.</p>
 <ol start="5" style="list-style-type: decimal">
-<li>Define variable <span class="math inline">\(\gamma\)</span> and assign it the value. Write a function that returns the investment given <span class="math inline">\(K_{jt}\)</span>, <span class="math inline">\(\omega_{jt}\)</span>, and parameter values, according to the previous equation, and name it <code>investment_choice</code>.</li>
+<li>Define variable <span class="math inline">\(\gamma\)</span> and assign it the value. Write a function that returns the investment given <span class="math inline">\(K_{jt}\)</span>, <span class="math inline">\(\omega_{jt}\)</span>, and parameter values, according to the previous equation, and name it <code>investment_choice(k, omega, gamma, delta)</code>.</li>
 </ol>
 <p>Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables <span class="math inline">\(k_{jt}\)</span> and <span class="math inline">\(\omega_{jt}\)</span> as follows.</p>
 <ol start="6" style="list-style-type: decimal">
@@ -327,52 +327,52 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 <li>Draw optimization error <span class="math inline">\(\iota_{jt}\)</span> and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.</li>
 </ol>
 <pre><code>## # A tibble: 1,000 x 9
-##        j     t     k   omega  wage     iota      l  l_error       I
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196
-##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330 
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280 
+##        j     t     k   omega  wage     iota      l l_error       I
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
 ## # ... with 990 more rows</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error <code>y</code> and the one with optimization error <code>y_error</code>.</li>
 </ol>
 <pre><code>## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota      l  l_error       I     eta
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257   0.148 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381   0.0773
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196  0.259 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391  -0.161 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176  -0.321 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120   0.187 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370   0.361 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330  -0.0113
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135   0.377 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280   0.316 
+##        j     t     k   omega  wage     iota      l l_error       I     eta
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
 ## # ... with 990 more rows, and 2 more variables: y &lt;dbl&gt;, y_error &lt;dbl&gt;</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Repeat this procedure for <span class="math inline">\(t = 1, \cdots 10\)</span> by updating the capital and anticipated shocks, and name the resulting data frame <code>df_T</code>.</li>
 </ol>
 <pre><code>## # A tibble: 10,000 x 13
-##        j     t     k   omega  wage     iota      l  l_error       I     eta
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.70   1.64     0.257   0.148 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.03   1.91     0.381   0.0773
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.148 -0.0468  -0.0196  0.259 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.86   1.89     0.391  -0.161 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.18   1.18     0.176  -0.321 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.834 -0.791   -0.120   0.187 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.90   1.91     0.370   0.361 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.371 -0.453   -0.330  -0.0113
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.140  0.00772 -0.135   0.377 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.72   1.71     0.280   0.316 
+##        j     t     k   omega  wage     iota      l l_error       I     eta
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
 ## # ... with 9,990 more rows, and 3 more variables: y &lt;dbl&gt;, y_error &lt;dbl&gt;,
 ## #   nu &lt;dbl&gt;</code></pre>
 <ol start="10" style="list-style-type: decimal">
@@ -440,18 +440,18 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 <tr class="odd">
 <td>l</td>
 <td align="center">10000</td>
-<td align="center">0.9549746</td>
+<td align="center">0.9799746</td>
 <td align="center">1.0965108</td>
-<td align="center">-3.3531023</td>
-<td align="center">4.9429634</td>
+<td align="center">-3.3281023</td>
+<td align="center">4.9679634</td>
 </tr>
 <tr class="even">
 <td>l_error</td>
 <td align="center">10000</td>
-<td align="center">0.9548876</td>
+<td align="center">0.9798876</td>
 <td align="center">1.0971595</td>
-<td align="center">-3.4015433</td>
-<td align="center">4.9270674</td>
+<td align="center">-3.3765433</td>
+<td align="center">4.9520674</td>
 </tr>
 <tr class="odd">
 <td>I</td>
@@ -472,18 +472,18 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 <tr class="odd">
 <td>y</td>
 <td align="center">10000</td>
-<td align="center">1.8728479</td>
+<td align="center">1.8778479</td>
 <td align="center">1.1171035</td>
-<td align="center">-2.4730251</td>
-<td align="center">6.1178291</td>
+<td align="center">-2.4680251</td>
+<td align="center">6.1228291</td>
 </tr>
 <tr class="even">
 <td>y_error</td>
 <td align="center">10000</td>
-<td align="center">1.8728305</td>
+<td align="center">1.8778305</td>
 <td align="center">1.1169266</td>
-<td align="center">-2.4827133</td>
-<td align="center">6.1146499</td>
+<td align="center">-2.4777133</td>
+<td align="center">6.1196499</td>
 </tr>
 <tr class="odd">
 <td>nu</td>
@@ -513,7 +513,7 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 0.912490   0.004064 224.551   &lt;2e-16 ***
+## (Intercept) 0.892542   0.004058 219.966   &lt;2e-16 ***
 ## l_error     0.997913   0.002396 416.454   &lt;2e-16 ***
 ## k           0.007599   0.004503   1.688   0.0915 .  
 ## ---
@@ -557,7 +557,7 @@ y_{jt} = \beta_0 + \beta_1 l_{jt} + \phi(k_{jt}, I_{jt}) + \eta_{jt},
 ## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
 ## 
 ##                     y(z)           
-## Bandwidth(s): 0.07355059 0.01435558
+## Bandwidth(s): 0.07355058 0.01435558
 ## 
 ##                     x(z)           
 ## Bandwidth(s): 0.03908594 0.01191551
@@ -585,7 +585,7 @@ y_{jt} = \beta_0 + \beta_1 l_{jt} + \phi(k_{jt}, I_{jt}) + \eta_{jt},
 ## With 3 linear parametric regressor(s), 2 nonparametric regressor(s)
 ## 
 ##                     y(z)           
-## Bandwidth(s): 0.07347225 0.01437256
+## Bandwidth(s): 0.07347226 0.01437256
 ## 
 ##                     x(z)            
 ## Bandwidth(s): 0.02960021 0.009986945
@@ -593,7 +593,7 @@ y_{jt} = \beta_0 + \beta_1 l_{jt} + \phi(k_{jt}, I_{jt}) + \eta_{jt},
 ##               0.83529394 0.003983290
 ## 
 ##                        l        k         I
-## Coefficient(s): 1.180628 2.034182 0.7805072
+## Coefficient(s): 1.180628 2.034182 0.7805077
 ## 
 ## Kernel Regression Estimator: Local-Constant
 ## Bandwidth Type: Fixed
@@ -627,19 +627,19 @@ y_{jt} - \hat{\beta_l} l_{jt},
 ##    &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;
 ##  1     1     1         2.34   NA    
 ##  2     1     2         1.37    2.21 
-##  3     1     3         0.622   1.49 
-##  4     1     4         0.448   0.883
-##  5     1     5         0.879   0.612
-##  6     1     6         1.62    0.927
-##  7     1     7         0.559   1.40 
-##  8     1     8         0.685   0.440
-##  9     1     9         0.940   0.521
-## 10     1    10         1.49    0.838
+##  3     1     3         0.621   1.49 
+##  4     1     4         0.447   0.882
+##  5     1     5         0.878   0.611
+##  6     1     6         1.62    0.926
+##  7     1     7         0.558   1.40 
+##  8     1     8         0.684   0.439
+##  9     1     9         0.939   0.520
+## 10     1    10         1.49    0.836
 ## # ... with 9,990 more rows</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Compute a function that returns the value of <span class="math inline">\(g_{JT}(\alpha, \beta_0, \beta_k)\)</span> given parameter values, data, and <code>df_T_1st</code>, and name it <code>moment_OP_2nd</code>. Show the values of the moments evaluated at the true parameters.</li>
 </ol>
-<pre><code>## [1] -0.018151270 -0.018681148 -0.003802845</code></pre>
+<pre><code>## [1] -0.018507303 -0.019038229 -0.003867714</code></pre>
 <p>Based on the moment, we can define the objective function of a generalized method of moments estimator with a weighting matrix <span class="math inline">\(W\)</span> as: <span class="math display">\[
 Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)&#39; W g_{JT}(\alpha, \beta_0, \beta_k).
 \]</span></p>
@@ -647,16 +647,16 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)&#39; W 
 <li>Write a function that returns the value of <span class="math inline">\(Q_{JT}(\alpha, \beta_0, \beta_k)\)</span> given the vector of parameter values, data, and <code>df_T_1st</code>, and name it <code>objective_OP_2nd</code>. Setting <span class="math inline">\(W\)</span> at the identity matrix, show the value of the objective function evaluated at the true parameters.</li>
 </ol>
 <pre><code>##              [,1]
-## [1,] 0.0006929155</code></pre>
+## [1,] 0.0007199336</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Draw the graph of the objective function when one of <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value? <img src="lecture_files/figure-html/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-54-2.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-54-3.png" width="672" style="display: block; margin: auto;" /></p></li>
 <li><p>Find the parameters that minimize the objective function using <code>optim</code>. You may use <code>L-BFGS-B</code> method to solve it.</p></li>
 </ol>
 <pre><code>## $par
-## [1] 0.7019374 0.9770774 0.6699849
+## [1] 0.7020260 0.9766308 0.6693945
 ## 
 ## $value
-## [1] 1.992111e-07
+## [1] 1.994601e-07
 ## 
 ## $counts
 ## function gradient 
