@@ -129,6 +129,20 @@
 
 \usepackage{booktabs}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -3279,7 +3293,7 @@ Case}\label{multi-product-monopolist-case}
 
   \begin{equation}
   \begin{split}
-  &D_i(p) + p_i \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_i} = \sum_{j = 1}^J \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_i}.\\
+  &D_i(p) +  \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_i} = \sum_{j = 1}^J \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_i}.\\
   &= 
   \begin{pmatrix}
   \frac{\partial D_1(p)}{\partial p_i} & \cdots & \frac{\partial D_J(p)}{\partial p_i}
@@ -3297,9 +3311,9 @@ Case}\label{multi-product-monopolist-case}
   \begin{equation}
   \begin{split}
   &\begin{pmatrix}
-   D_1(p) + p_1 \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_1}\\
+   D_1(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_1}\\
    \vdots\\
-   D_J(p) + p_J \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_J}
+   D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
   \end{pmatrix} 
   =
   \begin{pmatrix}
@@ -3324,9 +3338,9 @@ Case}\label{multi-product-monopolist-case}
   \frac{\partial D_1(p)}{\partial p_J} & \cdots & \frac{\partial D_J(p)}{\partial p_J}
   \end{pmatrix}^{-1}  
   \begin{pmatrix}
-   D_1(p) + p_1 \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_1}\\
+   D_1(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_1}\\
    \vdots\\
-   D_J(p) + p_J \sum_{j = 1}^J \frac{\partial D_j(p)}{\partial p_J}
+   D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
   \end{pmatrix}.}_{\text{$p$ is observed and $D(p)$s are known.}}
   \end{split}
   \end{equation}
@@ -3557,7 +3571,7 @@ Behaviors}\label{analyzing-consumer-behaviors}
 \item
   The choice sets are given by a system of \textbf{linear budget set}:
   \[
-  \mathcal{B}(p, x) = \{q \in \mathcal{X}: p \cdot q \le w\}.
+  \mathcal{B}(p, w) = \{q \in \mathcal{X}: p \cdot q \le w\}.
   \]
 \item
   If choice sets are non-linear, the following duality approach needs to
@@ -4116,7 +4130,7 @@ Demand}\label{aggregation-of-the-individual-demand}
   The aggregate demand for good \(j\) is:
 
   \begin{equation}
-  D_j(p, x_j; f) \equiv N \int  q_j(p, x_j, y, z) f(y, z) dy dz,
+  \sigma_j(p, x) \equiv N \int  q_j(p, x, y, z) f(y, z) dy dz,
   \end{equation}
 
   where \(N\) is the population.
@@ -4133,13 +4147,13 @@ Differentiation}\label{horizontal-product-differentiation}
 \item
   There are two convenience stores \(j = 1, 2\) on a street \([0, 1]\).
 \item
-  Let \(z_i = L_i\), the location of consumer \(i\) and \(x_j = L_j\),
-  the location of the choice on a street \([0, 1]\) with \(L_1 < L_2\).
+  Let \(z_i\) be the location of consumer \(i\) and \(x_j\) be the
+  location of the choice on a street \([0, 1]\) with \(x_1 < x_2\).
 \item
   A consumer has a preference such that:
 
   \begin{equation}
-  v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
+  v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |z_i - x_j| - p_j.
   \end{equation}
 \end{itemize}
 
@@ -4157,17 +4171,17 @@ Differentiation}\label{horizontal-product-differentiation-1}
   \begin{equation}
   \begin{split}
   &v(p_1, x_1, y_i, z_i) \ge v(p_2, x_2, y_i, z_i)\\
-  &\Leftrightarrow s - t |L_i - L_1| - p_1 \ge s - t |L_i - L_2|- p_2\\
-  &\Leftrightarrow L_i \le \frac{p_2 - p_1}{2 t} + \frac{L_1 + L_2}{2} \equiv \overline{L}_1(p_1, p_2).
+  &\Leftrightarrow s - t |z_i - x_1| - p_1 \ge s - t |z_i - x_2|- p_2\\
+  &\Leftrightarrow z_i \le \frac{p_2 - p_1}{2 t} + \frac{x_1 + x_2}{2} \equiv \overline{z}_1(p_1, p_2).
   \end{split}
   \end{equation}
 \item
-  Let \(f(L_i)\) be \(U[0, 1]\). Then, the aggregate demand for store 1
+  Let \(f(z_i)\) be \(U[0, 1]\). Then, the aggregate demand for store 1
   is:
 
   \begin{equation}
   \begin{split}
-  \sigma_1(p, L_1, L_2) = N \int_{0}^{\overline{L}_1(p_1, p_2)} d L_i = N\overline{L}_1(p_1, p_2).
+  \sigma_1(p, x) = N \int_{0}^{\overline{z}_1(p_1, p_2)} d z_i = N\overline{z}_1(p_1, p_2).
   \end{split}
   \end{equation}
 \end{itemize}
@@ -4192,12 +4206,12 @@ Differentiation}\label{vertical-product-differentiation}
 
   where \(x_j\) is a quality of product \(j\) and \(z_i\) is the
   consumer's willingness to pay for the quality with
-  \(x_j < w_{j + 1}\).
+  \(x_j < x_{j + 1}\).
 \item
   Consumers' problem is:
 
   \begin{equation}
-  \max\{0, z_i x_1 - p_1, \cdots, z_i x_j - p_J \}.
+  \max\{0, z_i x_1 - p_1, \cdots, z_i x_J - p_J \}.
   \end{equation}
 \end{itemize}
 
@@ -4211,9 +4225,9 @@ Differentiation}\label{vertical-product-differentiation-1}
 
   \begin{equation}
   \begin{split}
-  &v(p_{j + 1}, w_{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
-  &\Leftrightarrow z_i w_{j + 1} - p_{j + 1} \ge z_i x_j - p_j\\
-  &\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{w_{j + 1} - x_j} \equiv \Delta_j.
+  &v(p_{j + 1}, wx{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
+  &\Leftrightarrow z_i x_{j + 1} - p_{j + 1} \ge z_i x_j - p_j\\
+  &\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{x_{j + 1} - x_j} \equiv \Delta_j.
   \end{split}
   \end{equation}
 \item
@@ -4267,8 +4281,7 @@ Shock}\label{multinomial-logit-model-preference-shock}
   v(p_j, x_j, y_i, z_i) + \epsilon_{ij},
   \end{equation}
 
-  where I assumed that there is no other \(z_i\) for exposition
-  simplicity, with some random vector:
+  with some random vector:
 
   \begin{equation}
   \epsilon_i \equiv (\epsilon_{i0}, \cdots, \epsilon_{iJ})' \sim G.
@@ -4331,8 +4344,8 @@ Probability}\label{multinomial-logit-model-choice-probability}
 
   \begin{equation}
   \begin{split}
-  \sigma_j(p, x, y_i, z_i) & \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p, x_k, y_i, z_i) + \epsilon_{ik}  \}\\
-  &=\mathbb{P}\{v(p, x_j, y_i, z_i) -  v(p_k, x_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
+  \sigma_j(p, x, y_i, z_i) & \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p_k, x_k, y_i, z_i) + \epsilon_{ik}  \}\\
+  &=\mathbb{P}\{v(p_j, x_j, y_i, z_i) -  v(p_k, x_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
   & = \text{...after some algebra: leave as an exercise...}\\
   &= \frac{\exp[v(p_j, x_j, y_i, z_i) ]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i)] }.
   \end{split}
@@ -4670,7 +4683,7 @@ Heterogeneity}\label{observed-and-unobserved-consumer-heterogeneity}
 \end{itemize}
 
 \begin{equation}
-\beta_i = 0.1 + 0.2 \cdot (\text{carbonated})_i.
+\beta_i = 0.1 + 0.2 \cdot (\text{teenager})_i.
 \end{equation}
 
 \begin{itemize}
@@ -4689,7 +4702,7 @@ Heterogeneity}\label{observed-and-unobserved-consumer-heterogeneity}
   Suppose that the mean indirect utility is:
 
   \begin{equation}
-  \beta_i = 0.1 + 0.2 \cdot (\text{carbonated})_i + \nu_i.
+  \beta_i = 0.1 + 0.2 \cdot (\text{teenager})_i + \nu_i.
   \end{equation}
 \item
   Consumers with high \(\nu_i\) values carbonated drinks more than those
@@ -4728,7 +4741,7 @@ Heterogeneity}\label{observed-and-unobserved-consumer-heterogeneity}
   conditional on \(p, x, y_i, z_i\) is:
 
   \begin{equation}
-  s_{j}(p, x, y_i, z_i) = \int_{\beta_i, \alpha_i} \frac{\exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i.
+  \sigma_{j}(p, x, y_i, z_i) = \int_{\beta_i, \alpha_i} \frac{\exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i.
   \end{equation}
 \item
   This is called the \textbf{mixed-logit model}.
@@ -4765,7 +4778,7 @@ Assumptions}\label{mixed-logit-model-parametric-assumptions}
   \begin{equation}
   \begin{split}
   &\beta_i = \beta_0 + \Gamma z_i + \Sigma \nu_i,\\
-  &\alpha_i = \alpha_0 + \pi' z_i + \Omega \upsilon_i,
+  &\alpha_i = \alpha_0 + \pi' z_i + \omega \upsilon_i,
   \end{split}
   \end{equation}
 
@@ -4876,8 +4889,8 @@ Model}\label{simulated-maximum-likelihood-estimation-of-the-mixed-logit-model-1}
 
   \begin{equation}
   \begin{split}
-  &\sum_{i = 1}^N \sum_{t = 1}^T \ln \mathbb{P}\{q_{it}\\
-  &= q(p_t, w_t, y_{it}, z_{it})|p_t, w_t, y_{it}, z_{it}\} \approx \sum_{i = 1}^N \ln \Bigg\{ \prod_{j \in \mathcal{J}_t \cup \{0\}} \hat{\sigma}_{j}(p_t, w_t, y_{it}, z_{it})^{q_{itj}} \Bigg\}.
+  &\sum_{i = 1}^N \sum_{t = 1}^T \ln \mathbb{P}\{q_{it} = q(p_t, x_t, y_{it}, z_{it})|p_t, x_t, y_{it}, z_{it}\} \\
+  &\approx \sum_{i = 1}^N \ln \Bigg\{ \prod_{j \in \mathcal{J}_t \cup \{0\}} \hat{\sigma}_{j}(p_t, x_t, y_{it}, z_{it})^{q_{itj}} \Bigg\}.
   \end{split}
   \end{equation}
 \item
@@ -4902,7 +4915,7 @@ Model}\label{simulated-non-linear-least-square-estimation-of-the-mixed-logit-mod
   Then we can estimate the parameter by:
 
   \begin{equation}
-  \min \sum_{t = 1}^T \sum_{j \in \mathcal{J}_t \cup \{0\}} \sum_{(y, z) \in \mathcal{Y} \times \mathcal{Z}} \{s_{jt}(y, z) - \hat{\sigma}_{j}(p_t, w_t, y, z)\}^2.
+  \min \sum_{t = 1}^T \sum_{j \in \mathcal{J}_t \cup \{0\}} \sum_{(y, z) \in \mathcal{Y} \times \mathcal{Z}} \{s_{jt}(y, z) - \hat{\sigma}_{j}(p_t, x_t, y, z)\}^2.
   \end{equation}
 \end{itemize}
 
@@ -4924,7 +4937,7 @@ Model}\label{nested-logit-model-a-special-case-of-mixed-logit-model}
   v(p, x_j, y_i, z_i) = \beta'x_j - \alpha_i p_j + \sum_{g = 1}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
   \end{equation}
 \item
-  If \(\zeta_{it}\) takes high value, the consumer attaches higher value
+  If \(\zeta_{ig}\) takes high value, the consumer attaches higher value
   to the category.
 \item
   When a product in category \(g\) was not available, consumers with

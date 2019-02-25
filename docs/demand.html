@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 4 Demand Function Estimation | ECON 6120I Topics in Empirical Industrial Organization</title>
+  <title>ECON 6120I Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 4 Demand Function Estimation | ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta property="og:title" content="ECON 6120I Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Demand Function Estimation | ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta name="twitter:title" content="ECON 6120I Topics in Empirical Industrial Organization" />
   
   <meta name="twitter:description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology." />
   
@@ -35,7 +35,6 @@
 <link rel="next" href="assignment1.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -374,7 +373,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>The alternative set <span class="math inline">\(\mathcal{X}\)</span> is a subset of <span class="math inline">\(\mathbb{R}^J\)</span>.</li>
 <li>The utility function <span class="math inline">\(u\)</span> is rational, monotone, and continuous on <span class="math inline">\(\mathcal{X}\)</span>.</li>
 <li>The choice sets are given by a system of <strong>linear budget set</strong>: <span class="math display">\[
-\mathcal{B}(p, x) = \{q \in \mathcal{X}: p \cdot q \le w\}.
+\mathcal{B}(p, w) = \{q \in \mathcal{X}: p \cdot q \le w\}.
 \]</span></li>
 <li>If choice sets are non-linear, the following duality approach needs to be modified.</li>
 </ul>
@@ -594,9 +593,9 @@ p \cdot x \le 1, x = Ay, z = By, x, y, z \ge 0.
 <span class="math display">\[\begin{equation}
 V(p, y_i, z_i) = \max_{q}u(q, z_i), \text{   s.t.   } p&#39;q \le y_i.
 \end{equation}\]</span></li>
-<li>Alternative <span class="math inline">\(0\)</span> is an .</li>
+<li>Alternative <span class="math inline">\(0\)</span> is an <strong>outside good</strong>.</li>
 <li>Normalize <span class="math inline">\(p_0 = 1\)</span>.</li>
-<li>We call alternatives <span class="math inline">\(j = 1, \cdots, J\)</span> .</li>
+<li>We call alternatives <span class="math inline">\(j = 1, \cdots, J\)</span> <strong>inside goods</strong>.</li>
 <li>The choice space is restricted on:
 <span class="math display">\[\begin{equation}
 \begin{split}
@@ -703,7 +702,7 @@ q_j(p, x, y_i, z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j} 
 <li>Let <span class="math inline">\(f(y, z)\)</span> be the joint distribution of the income and other consumer characteristics.</li>
 <li>The aggregate demand for good <span class="math inline">\(j\)</span> is:
 <span class="math display">\[\begin{equation}
-D_j(p, x_j; f) \equiv N \int  q_j(p, x_j, y, z) f(y, z) dy dz,
+\sigma_j(p, x) \equiv N \int  q_j(p, x, y, z) f(y, z) dy dz,
 \end{equation}\]</span>
 where <span class="math inline">\(N\)</span> is the population.</li>
 </ul>
@@ -713,10 +712,10 @@ where <span class="math inline">\(N\)</span> is the population.</li>
 <ul>
 <li><strong>horizontal product differentiation</strong>: consumers do not agree on the ranking of the choices.</li>
 <li>There are two convenience stores <span class="math inline">\(j = 1, 2\)</span> on a street <span class="math inline">\([0, 1]\)</span>.</li>
-<li>Let <span class="math inline">\(z_i = L_i\)</span>, the location of consumer <span class="math inline">\(i\)</span> and <span class="math inline">\(x_j = L_j\)</span>, the location of the choice on a street <span class="math inline">\([0, 1]\)</span> with <span class="math inline">\(L_1 &lt; L_2\)</span>.</li>
+<li>Let <span class="math inline">\(z_i\)</span> be the location of consumer <span class="math inline">\(i\)</span> and <span class="math inline">\(x_j\)</span> be the location of the choice on a street <span class="math inline">\([0, 1]\)</span> with <span class="math inline">\(x_1 &lt; x_2\)</span>.</li>
 <li>A consumer has a preference such that:
 <span class="math display">\[\begin{equation}
-v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
+v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |z_i - x_j| - p_j.
 \end{equation}\]</span></li>
 </ul>
 </div>
@@ -728,14 +727,14 @@ v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
 <span class="math display">\[\begin{equation}
 \begin{split}
 &amp;v(p_1, x_1, y_i, z_i) \ge v(p_2, x_2, y_i, z_i)\\
-&amp;\Leftrightarrow s - t |L_i - L_1| - p_1 \ge s - t |L_i - L_2|- p_2\\
-&amp;\Leftrightarrow L_i \le \frac{p_2 - p_1}{2 t} + \frac{L_1 + L_2}{2} \equiv \overline{L}_1(p_1, p_2).
+&amp;\Leftrightarrow s - t |z_i - x_1| - p_1 \ge s - t |z_i - x_2|- p_2\\
+&amp;\Leftrightarrow z_i \le \frac{p_2 - p_1}{2 t} + \frac{x_1 + x_2}{2} \equiv \overline{z}_1(p_1, p_2).
 \end{split}
 \end{equation}\]</span></li>
-<li>Let <span class="math inline">\(f(L_i)\)</span> be <span class="math inline">\(U[0, 1]\)</span>. Then, the aggregate demand for store 1 is:
+<li>Let <span class="math inline">\(f(z_i)\)</span> be <span class="math inline">\(U[0, 1]\)</span>. Then, the aggregate demand for store 1 is:
 <span class="math display">\[\begin{equation}
 \begin{split}
-\sigma_1(p, L_1, L_2) = N \int_{0}^{\overline{L}_1(p_1, p_2)} d L_i = N\overline{L}_1(p_1, p_2).
+\sigma_1(p, x) = N \int_{0}^{\overline{z}_1(p_1, p_2)} d z_i = N\overline{z}_1(p_1, p_2).
 \end{split}
 \end{equation}\]</span></li>
 </ul>
@@ -749,10 +748,10 @@ v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |L_i - L_j| - p_j.
 <span class="math display">\[\begin{equation}
 v_{ij} \equiv v(p_j, x_j, y_i, z_i) = z_i x_j - p_j,
 \end{equation}\]</span>
-where <span class="math inline">\(x_j\)</span> is a quality of product <span class="math inline">\(j\)</span> and <span class="math inline">\(z_i\)</span> is the consumer’s willingness to pay for the quality with <span class="math inline">\(x_j &lt; w_{j + 1}\)</span>.</li>
+where <span class="math inline">\(x_j\)</span> is a quality of product <span class="math inline">\(j\)</span> and <span class="math inline">\(z_i\)</span> is the consumer’s willingness to pay for the quality with <span class="math inline">\(x_j &lt; x_{j + 1}\)</span>.</li>
 <li>Consumers’ problem is:
 <span class="math display">\[\begin{equation}
-\max\{0, z_i x_1 - p_1, \cdots, z_i x_j - p_J \}.
+\max\{0, z_i x_1 - p_1, \cdots, z_i x_J - p_J \}.
 \end{equation}\]</span></li>
 </ul>
 </div>
@@ -762,9 +761,9 @@ where <span class="math inline">\(x_j\)</span> is a quality of product <span cla
 <li>Consumer <span class="math inline">\(i\)</span> prefers good <span class="math inline">\(j + 1\)</span> to good <span class="math inline">\(j\)</span> if and only if:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;v(p_{j + 1}, w_{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
-&amp;\Leftrightarrow z_i w_{j + 1} - p_{j + 1} \ge z_i x_j - p_j\\
-&amp;\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{w_{j + 1} - x_j} \equiv \Delta_j.
+&amp;v(p_{j + 1}, wx{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
+&amp;\Leftrightarrow z_i x_{j + 1} - p_{j + 1} \ge z_i x_j - p_j\\
+&amp;\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{x_{j + 1} - x_j} \equiv \Delta_j.
 \end{split}
 \end{equation}\]</span></li>
 <li>So consumer <span class="math inline">\(i\)</span> purchases good <span class="math inline">\(j\)</span> if and only if <span class="math inline">\(z_i \in [\Delta_{j - 1}, \Delta_j)\)</span> and buys nothing if:
@@ -796,7 +795,7 @@ z_i \le \Delta_0 \equiv \min\{p_1/x_1, \cdots p_J/x_j\}.
 <span class="math display">\[\begin{equation}
 v(p_j, x_j, y_i, z_i) + \epsilon_{ij},
 \end{equation}\]</span>
-where I assumed that there is no other <span class="math inline">\(z_i\)</span> for exposition simplicity, with some random vector:
+with some random vector:
 <span class="math display">\[\begin{equation}
 \epsilon_i \equiv (\epsilon_{i0}, \cdots, \epsilon_{iJ})&#39; \sim G.
 \end{equation}\]</span></li>
@@ -830,8 +829,8 @@ q_j(p, x, y_i, z_i, \epsilon_{i}) \equiv 1\{j = \text{argmax}_{k = 0, \cdots, J}
 <li>The  of consumer <span class="math inline">\(i\)</span> of good <span class="math inline">\(j\)</span> is:
 <span class="math display">\[\begin{equation}
 \begin{split}
-\sigma_j(p, x, y_i, z_i) &amp; \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p, x_k, y_i, z_i) + \epsilon_{ik}  \}\\
-&amp;=\mathbb{P}\{v(p, x_j, y_i, z_i) -  v(p_k, x_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
+\sigma_j(p, x, y_i, z_i) &amp; \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p_k, x_k, y_i, z_i) + \epsilon_{ik}  \}\\
+&amp;=\mathbb{P}\{v(p_j, x_j, y_i, z_i) -  v(p_k, x_k, y_i, z_i) \ge \epsilon_{ik} - \epsilon_{ij}, \forall k \neq j\}\\
 &amp; = \text{...after some algebra: leave as an exercise...}\\
 &amp;= \frac{\exp[v(p_j, x_j, y_i, z_i) ]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i)] }.
 \end{split}
@@ -1031,7 +1030,7 @@ v(p_j, x_j, y_i, z_i) = \beta_i (\text{carbonated})_j - \alpha_i p_j,
 \end{equation}\]</span></li>
 </ul>
 <span class="math display">\[\begin{equation}
-\beta_i = 0.1 + 0.2 \cdot (\text{carbonated})_i.
+\beta_i = 0.1 + 0.2 \cdot (\text{teenager})_i.
 \end{equation}\]</span>
 <ul>
 <li>The mean utility of a carbonated drink for a teenager is 0.3 but only 0.1 for others.</li>
@@ -1040,7 +1039,7 @@ v(p_j, x_j, y_i, z_i) = \beta_i (\text{carbonated})_j - \alpha_i p_j,
 <li>How to avoid IIA at the market-segment level?: Introduce unobserved consumer heterogeneity.</li>
 <li>Suppose that the mean indirect utility is:
 <span class="math display">\[\begin{equation}
-\beta_i = 0.1 + 0.2 \cdot (\text{carbonated})_i + \nu_i.
+\beta_i = 0.1 + 0.2 \cdot (\text{teenager})_i + \nu_i.
 \end{equation}\]</span></li>
 <li>Consumers with high <span class="math inline">\(\nu_i\)</span> values carbonated drinks more than those with low <span class="math inline">\(\nu_i\)</span> values.</li>
 <li>When coca cola was not available, consumers with high <span class="math inline">\(\nu_i\)</span> will substitute more to Pepsi cola than those with low <span class="math inline">\(\nu_i\)</span> values.</li>
@@ -1061,7 +1060,7 @@ with
 \end{equation}\]</span></li>
 <li>If <span class="math inline">\(\epsilon_{ij}\)</span> is drawn i.i.d. from type-I extreme value distribution, the choice probability of good <span class="math inline">\(j\)</span> by consumer <span class="math inline">\(i\)</span> conditional on <span class="math inline">\(p, x, y_i, z_i\)</span> is:
 <span class="math display">\[\begin{equation}
-s_{j}(p, x, y_i, z_i) = \int_{\beta_i, \alpha_i} \frac{\exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i.
+\sigma_{j}(p, x, y_i, z_i) = \int_{\beta_i, \alpha_i} \frac{\exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i.
 \end{equation}\]</span></li>
 <li>This is called the <strong>mixed-logit model</strong>.</li>
 <li>If the distribution of <span class="math inline">\(\epsilon_{ij}\)</span> is different, it is no longer mixed logit.</li>
@@ -1081,7 +1080,7 @@ v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i) = \beta_i&#39; x_j - \alpha_i p_j.
 <span class="math display">\[\begin{equation}
 \begin{split}
 &amp;\beta_i = \beta_0 + \Gamma z_i + \Sigma \nu_i,\\
-&amp;\alpha_i = \alpha_0 + \pi&#39; z_i + \Omega \upsilon_i,
+&amp;\alpha_i = \alpha_0 + \pi&#39; z_i + \omega \upsilon_i,
 \end{split}
 \end{equation}\]</span>
 where <span class="math inline">\(\nu_i\)</span> and <span class="math inline">\(\upsilon_i\)</span> are i.i.d. standard normal random vectors.</li>
@@ -1145,8 +1144,8 @@ where
 <li>The simulated conditional log likelihood is:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;\sum_{i = 1}^N \sum_{t = 1}^T \ln \mathbb{P}\{q_{it}\\
-&amp;= q(p_t, w_t, y_{it}, z_{it})|p_t, w_t, y_{it}, z_{it}\} \approx \sum_{i = 1}^N \ln \Bigg\{ \prod_{j \in \mathcal{J}_t \cup \{0\}} \hat{\sigma}_{j}(p_t, w_t, y_{it}, z_{it})^{q_{itj}} \Bigg\}.
+&amp;\sum_{i = 1}^N \sum_{t = 1}^T \ln \mathbb{P}\{q_{it} = q(p_t, x_t, y_{it}, z_{it})|p_t, x_t, y_{it}, z_{it}\} \\
+&amp;\approx \sum_{i = 1}^N \ln \Bigg\{ \prod_{j \in \mathcal{J}_t \cup \{0\}} \hat{\sigma}_{j}(p_t, x_t, y_{it}, z_{it})^{q_{itj}} \Bigg\}.
 \end{split}
 \end{equation}\]</span></li>
 <li>We find parameters that maximize the simulated conditional log likelihood.</li>
@@ -1159,7 +1158,7 @@ where
 <li>That is, we only observe the share of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span> among consumers of characteristics <span class="math inline">\(z\)</span> and income <span class="math inline">\(y\)</span>, <span class="math inline">\(s_{jt}(y, z)\)</span>.</li>
 <li>Then we can estimate the parameter by:
 <span class="math display">\[\begin{equation}
-\min \sum_{t = 1}^T \sum_{j \in \mathcal{J}_t \cup \{0\}} \sum_{(y, z) \in \mathcal{Y} \times \mathcal{Z}} \{s_{jt}(y, z) - \hat{\sigma}_{j}(p_t, w_t, y, z)\}^2.
+\min \sum_{t = 1}^T \sum_{j \in \mathcal{J}_t \cup \{0\}} \sum_{(y, z) \in \mathcal{Y} \times \mathcal{Z}} \{s_{jt}(y, z) - \hat{\sigma}_{j}(p_t, x_t, y, z)\}^2.
 \end{equation}\]</span></li>
 </ul>
 </div>
@@ -1172,7 +1171,7 @@ where
 <span class="math display">\[\begin{equation}
 v(p, x_j, y_i, z_i) = \beta&#39;x_j - \alpha_i p_j + \sum_{g = 1}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
 \end{equation}\]</span></li>
-<li>If <span class="math inline">\(\zeta_{it}\)</span> takes high value, the consumer attaches higher value to the category.</li>
+<li>If <span class="math inline">\(\zeta_{ig}\)</span> takes high value, the consumer attaches higher value to the category.</li>
 <li>When a product in category <span class="math inline">\(g\)</span> was not available, consumers with high <span class="math inline">\(\zeta_{ig}\)</span> will substitute more to the other products in the same category than consumers with low <span class="math inline">\(\zeta_{ig}\)</span>.</li>
 </ul>
 </div>
@@ -1752,7 +1751,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapaper": false,
+"instapper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1762,10 +1761,6 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
-},
-"history": {
 "link": null,
 "text": null
 },
@@ -1783,7 +1778,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

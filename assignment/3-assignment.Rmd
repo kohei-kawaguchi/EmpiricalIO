@@ -7,7 +7,7 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -16,12 +16,52 @@ library(foreach)
 library(ggplot2)
 library(doParallel)
 registerDoParallel()
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
 ## Simulate data
 
-```{r}
+We simulated data from a discrete choice model. There are $T$ markets and each market has $N$ consumers. There are $J$ products and the indirect utility of consumer $i$ in market $t$ for product $j$ is:
+$$
+u_{itj} = \beta_{it}' x_{jt} + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+$$
+where $\epsilon_{ijt}$ is an i.i.d. type-I extreme random variable.  $x_{jt}$ is $K$-dimensional observed characteristics of the product in the market. $p_{jt}$ is the retail price of the product in the market. 
+
+$\xi_{jt}$ is product-market specific fixed effect. $p_{jt}$ can be correlated with $\xi_{jt}$ but $x_{jt}$s are independnet of $\xi_{jt}$. $j = 0$ is an outside option whose indirect utility is:
+$$
+u_{it0} = \epsilon_{i0t},
+$$
+where $\epsilon_{i0t}$ is an i.i.d. type-I extreme random variable. 
+
+$\beta_{it}$ and $\alpha_{it}$ are different across consumers, and they are distributed as:
+$$
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+$$
+$$
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+$$
+where $\nu_{itk}$ for $k = 1, \cdots, K$ and $\upsilon_{it}$ are i.i.d. standard normal random variables. $\alpha_0$ is the mean of $\alpha_i$ and $\tilde{\alpha}_i$ is the deviation from the mean.
+
+Given a choice set in the market, $\mathcal{J}_t \cup \{0\}$, a consumer chooses the alternative that maximizes her utility:
+$$
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+The choice probability of product $j$ for consumer $i$ in market $t$ is:
+$$
+\sigma_{jt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+
+Suppose that we only observe the share data:
+$$
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
+$$
+along with the product-market characteristics $x_{jt}$ and the retail prices $p_{jt}$ for $j \in \mathcal{J}_t \cup \{0\}$ for $t = 1, \cdots, T$. We do not observe the choice data $q_{ijt}$ nor shocks $\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}$.
+
+In this assignment, we consider a model with $\xi_{jt} = 0$, i.e., the model without the unobserved fixed effects. However, the code to simulate data should be written for general $\xi_{jt}$, so that we can use the same code in the next assignment in which we consider a model with the unobserved fixed effects.
+
+1. Set the seed, constants, and parameters of interest as follows.
+
+```{r, echo = TRUE}
 # set the seed
 set.seed(1)
 # number of products
@@ -31,21 +71,47 @@ K <- 3
 # number of markets
 T <- 100
 # number of consumers per market
-N <- 100
+N <- 500
 # number of Monte Carlo
 L <- 100
 ```
 
-```{r}
+```{r, echo = TRUE}
 # set parameters of interests
 beta <- rnorm(K)
-sigma_beta <- abs(rnorm(K))
-mean_logalpha <- 0
-sigma_logalpha <- 1
-alpha <- - exp(mean_logalpha + sigma_logalpha^2/2)
+sigma <- abs(rnorm(K))
+mu <- 0
+omega <- 1
 ```
 
-```{r}
+2. Generate the covariates as follows.
+
+The product-market characteristics:
+$$
+x_{jt1} = 1, x_{jtk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+$$
+where $\sigma_x$ is referred to as `sd_x` in the code.
+
+The product-market-specific unobserved fixed effect:
+$$
+\xi_{jt} = 0.
+$$
+The marginal cost of product $j$ in market $t$:
+$$
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+$$
+where $\sigma_c$ is referred to as `sd_c` in the code.
+
+
+The retail price:
+$$
+p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
+$$
+where $\gamma$ is referred to as `price_xi` and $\sigma_p$ as `sd_p` in the code. This price is not the equilibrium price. We will revisit this point in a subsequent assignment.
+
+The value of the auxiliary parameters are set as follows:
+
+```{r, echo = TRUE}
 # set auxiliary parameters
 price_xi <- 0.3
 prop_jt <- 0.6
@@ -66,7 +132,6 @@ X <- rbind(
   rep(0, dim(X)[2]),
   X
 ) 
-X
 ```
 
 ```{r}
@@ -89,12 +154,19 @@ M <- rbind(
   outside
 ) %>%
   dplyr::arrange(t, j)
+```
+
+```{r, echo = TRUE}
+# product characteristics
+X
+# 
 M
 ```
 
+
 ```{r}
 # make consumer-market data
-V <- matrix(rnorm(N*T*(K + 1)), nrow = N*T) 
+V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
 colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
 V <- data.frame(
   expand.grid(i = 1:N, t = 1:T),
@@ -102,7 +174,6 @@ V <- data.frame(
 ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(v_p = - exp(v_p))
-V
 ```
 
 ```{r}
@@ -120,23 +191,25 @@ e <- evd::rgev(dim(df)[1])
 # compute indirect utility
 u <- 
   compute_indirect_utility(
-    df, beta, sigma_beta, 
-           mean_logalpha, sigma_logalpha, alpha)
+    df, beta, sigma, 
+           mu, omega)
 # compute choice
 df_choice <- 
-  compute_choice(X, M, V, e, beta, sigma_beta, 
-                 mean_logalpha, sigma_logalpha, alpha,
+  compute_choice(X, M, V, e, beta, sigma, 
+                 mu, omega, 
                  T, N, J)
 df_choice
 summary(df_choice)
 # compute share
 df_share <-
-  compute_share(X, M, V, e, beta, sigma_beta, 
-                mean_logalpha, sigma_logalpha, alpha,
+  compute_share(X, M, V, e, beta, sigma, 
+                mu, omega, 
                 T, N, J)
 df_share
 summary(df_share)
 ```
+
+## Estimate the parameters
 
 ```{r}
 # logit regression
@@ -150,10 +223,57 @@ summary(result_logit)
 
 ```{r}
 # mixed logit estimation
-e_mcmc <- evd::rgev(N*T*(J + 1))
+## draw mcmc V
+V_mcmc <- matrix(rnorm(L*T*(K + 1)), nrow = L*T) 
+colnames(V_mcmc) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V_mcmc <- data.frame(
+  expand.grid(i = 1:L, t = 1:T),
+  V_mcmc
+) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(v_p = - exp(v_p))
+V_mcmc
+## draw mcmc e
+df_mcmc <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+# draw idiosyncratic shocks
+e_mcmc <- evd::rgev(dim(df_mcmc)[1])
+head(e_mcmc)
 # compute predicted share
+df_share_mcmc <-
+  compute_share(X, M, V_mcmc, e_mcmc, beta, sigma, 
+                mu, omega, 
+                T, L, J)
+df_share_mcmc
+# set parameters
+theta <- c(beta, sigma, mu, omega)
+# NLLS objective function
+NLLS_objective <- NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc, K, T, L, J)
+NLLS_objective
+```
 
+```{r, eval = FALSE}
+# find NLLS estimator
+result_NLLS <- 
+  optim(par = theta, fn = NLLS_objective_A3,
+        method = "BFGS",
+        df_share = df_share, 
+        X = X, 
+        M = M, 
+        V_mcmc = V_mcmc, 
+        e_mcmc = e_mcmc, 
+        K = K, T = T, L = L, J = J)
+save(result_NLLS, file = "data/result_NLLS.RData")
 ```
 
 
+```{r}
+result_NLLS <- get(load(file = "data/result_NLLS.RData"))
+result_NLLS
+```
 

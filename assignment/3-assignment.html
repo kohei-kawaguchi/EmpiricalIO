@@ -193,6 +193,29 @@ $(document).ready(function () {
 
 <div id="simulate-data" class="section level2">
 <h2>Simulate data</h2>
+<p>We simulated data from a discrete choice model. There are <span class="math inline">\(T\)</span> markets and each market has <span class="math inline">\(N\)</span> consumers. There are <span class="math inline">\(J\)</span> products and the indirect utility of consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> for product <span class="math inline">\(j\)</span> is: <span class="math display">\[
+u_{itj} = \beta_{it}' x_{jt} + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+\]</span> where <span class="math inline">\(\epsilon_{ijt}\)</span> is an i.i.d. type-I extreme random variable. <span class="math inline">\(x_{jt}\)</span> is <span class="math inline">\(K\)</span>-dimensional observed characteristics of the product in the market. <span class="math inline">\(p_{jt}\)</span> is the retail price of the product in the market.</p>
+<p><span class="math inline">\(\xi_{jt}\)</span> is product-market specific fixed effect. <span class="math inline">\(p_{jt}\)</span> can be correlated with <span class="math inline">\(\xi_{jt}\)</span> but <span class="math inline">\(x_{jt}\)</span>s are independnet of <span class="math inline">\(\xi_{jt}\)</span>. <span class="math inline">\(j = 0\)</span> is an outside option whose indirect utility is: <span class="math display">\[
+u_{it0} = \epsilon_{i0t},
+\]</span> where <span class="math inline">\(\epsilon_{i0t}\)</span> is an i.i.d. type-I extreme random variable.</p>
+<p><span class="math inline">\(\beta_{it}\)</span> and <span class="math inline">\(\alpha_{it}\)</span> are different across consumers, and they are distributed as: <span class="math display">\[
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+\]</span> <span class="math display">\[
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+\]</span> where <span class="math inline">\(\nu_{itk}\)</span> for <span class="math inline">\(k = 1, \cdots, K\)</span> and <span class="math inline">\(\upsilon_{it}\)</span> are i.i.d. standard normal random variables. <span class="math inline">\(\alpha_0\)</span> is the mean of <span class="math inline">\(\alpha_i\)</span> and <span class="math inline">\(\tilde{\alpha}_i\)</span> is the deviation from the mean.</p>
+<p>Given a choice set in the market, <span class="math inline">\(\mathcal{J}_t \cup \{0\}\)</span>, a consumer chooses the alternative that maximizes her utility: <span class="math display">\[
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]</span> The choice probability of product <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is: <span class="math display">\[
+\sigma_{jt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]</span></p>
+<p>Suppose that we only observe the share data: <span class="math display">\[
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
+\]</span> along with the product-market characteristics <span class="math inline">\(x_{jt}\)</span> and the retail prices <span class="math inline">\(p_{jt}\)</span> for <span class="math inline">\(j \in \mathcal{J}_t \cup \{0\}\)</span> for <span class="math inline">\(t = 1, \cdots, T\)</span>. We do not observe the choice data <span class="math inline">\(q_{ijt}\)</span> nor shocks <span class="math inline">\(\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}\)</span>.</p>
+<p>In this assignment, we consider a model with <span class="math inline">\(\xi_{jt} = 0\)</span>, i.e., the model without the unobserved fixed effects. However, the code to simulate data should be written for general <span class="math inline">\(\xi_{jt}\)</span>, so that we can use the same code in the next assignment in which we consider a model with the unobserved fixed effects.</p>
+<ol style="list-style-type: decimal">
+<li>Set the seed, constants, and parameters of interest as follows.</li>
+</ol>
 <pre class="r"><code># set the seed
 set.seed(1)
 # number of products
@@ -202,33 +225,35 @@ K &lt;- 3
 # number of markets
 T &lt;- 100
 # number of consumers per market
-N &lt;- 100
+N &lt;- 500
 # number of Monte Carlo
 L &lt;- 100</code></pre>
 <pre class="r"><code># set parameters of interests
 beta &lt;- rnorm(K)
-sigma_beta &lt;- abs(rnorm(K))
-mean_logalpha &lt;- 0
-sigma_logalpha &lt;- 1
-alpha &lt;- - exp(mean_logalpha + sigma_logalpha^2/2)</code></pre>
+sigma &lt;- abs(rnorm(K))
+mu &lt;- 0
+omega &lt;- 1</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Generate the covariates as follows.</li>
+</ol>
+<p>The product-market characteristics: <span class="math display">\[
+x_{jt1} = 1, x_{jtk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+\]</span> where <span class="math inline">\(\sigma_x\)</span> is referred to as <code>sd_x</code> in the code.</p>
+<p>The product-market-specific unobserved fixed effect: <span class="math display">\[
+\xi_{jt} = 0.
+\]</span> The marginal cost of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span>: <span class="math display">\[
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+\]</span> where <span class="math inline">\(\sigma_c\)</span> is referred to as <code>sd_c</code> in the code.</p>
+<p>The retail price: <span class="math display">\[
+p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
+\]</span> where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_xi</code> and <span class="math inline">\(\sigma_p\)</span> as <code>sd_p</code> in the code. This price is not the equilibrium price. We will revisit this point in a subsequent assignment.</p>
+<p>The value of the auxiliary parameters are set as follows:</p>
 <pre class="r"><code># set auxiliary parameters
 price_xi &lt;- 0.3
 prop_jt &lt;- 0.6
 sd_x &lt;- 0.05
 sd_c &lt;- 0.05
 sd_p &lt;- 0.05</code></pre>
-<pre class="r"><code># make product characteristics data
-X &lt;- matrix(sd_x * rnorm(J*K), nrow = J)
-X[, 1] &lt;- 1
-colnames(X) &lt;- paste(&quot;x&quot;, 1:K, sep = &quot;_&quot;)
-X &lt;- data.frame(j = 1:J, X) %&gt;%
-  tibble::as_tibble()
-# add outside option
-X &lt;- rbind(
-  rep(0, dim(X)[2]),
-  X
-) 
-X</code></pre>
 <pre><code>## # A tibble: 11 x 4
 ##        j   x_1       x_2      x_3
 ##    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -243,26 +268,6 @@ X</code></pre>
 ##  9     8     1 -0.0995   -0.00269
 ## 10     9     1  0.0310   -0.0689 
 ## 11    10     1 -0.00281  -0.0207</code></pre>
-<pre class="r"><code># make market-product data
-M &lt;- expand.grid(j = 1:J, t = 1:T) %&gt;%
-  tibble::as_tibble() %&gt;%
-  dplyr::mutate(
-    xi = 0 * rnorm(J*T),
-    c = sd_c * exp(rnorm(J*T)),
-    p = sd_p * exp(price_xi * xi + rnorm(J*T)) + c
-  ) 
-M &lt;- M %&gt;%
-  dplyr::group_by(t) %&gt;%
-  dplyr::sample_frac(prop_jt) %&gt;%
-  dplyr::ungroup()
-# add outside option
-outside &lt;- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
-M &lt;- rbind(
-  M,
-  outside
-) %&gt;%
-  dplyr::arrange(t, j)
-M</code></pre>
 <pre><code>## # A tibble: 700 x 5
 ##        j     t    xi      c      p
 ##    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -277,97 +282,64 @@ M</code></pre>
 ##  9     1     2     0 0.105  0.144 
 ## 10     2     2     0 0.0580 0.357 
 ## # ... with 690 more rows</code></pre>
-<pre class="r"><code># make consumer-market data
-V &lt;- matrix(rnorm(N*T*(K + 1)), nrow = N*T) 
-colnames(V) &lt;- c(paste(&quot;v_x&quot;, 1:K, sep = &quot;_&quot;), &quot;v_p&quot;)
-V &lt;- data.frame(
-  expand.grid(i = 1:N, t = 1:T),
-  V
-) %&gt;%
-  tibble::as_tibble() %&gt;%
-  dplyr::mutate(v_p = - exp(v_p))
-V</code></pre>
-<pre><code>## # A tibble: 10,000 x 6
-##        i     t   v_x_1   v_x_2    v_x_3    v_p
-##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1     1     1 -0.218  -0.971   0.226   -0.742
-##  2     2     1 -0.545   0.204   0.00570 -1.60 
-##  3     3     1 -0.275  -1.64   -0.100   -0.595
-##  4     4     1  0.0276  0.419  -0.125   -0.264
-##  5     5     1  0.970  -0.831   0.717   -0.287
-##  6     6     1 -2.20   -0.0715  1.43    -0.278
-##  7     7     1  1.95    0.408   0.672   -1.74 
-##  8     8     1  0.180   0.287   0.187   -8.59 
-##  9     9     1  0.415   0.394   0.470   -1.72 
-## 10    10     1  0.647   0.701  -0.629   -2.28 
-## # ... with 9,990 more rows</code></pre>
-<pre class="r"><code># make choice data
-df &lt;- expand.grid(t = 1:T, i = 1:N, j = 0:J) %&gt;%
-  tibble::as_tibble() %&gt;%
-  dplyr::left_join(V, by = c(&quot;i&quot;, &quot;t&quot;)) %&gt;%
-  dplyr::left_join(X, by = c(&quot;j&quot;)) %&gt;%
-  dplyr::left_join(M, by = c(&quot;j&quot;, &quot;t&quot;)) %&gt;%
-  dplyr::filter(!is.na(p)) %&gt;%
-  dplyr::arrange(t, i, j)
-df</code></pre>
-<pre><code>## # A tibble: 70,000 x 13
-##        t     i     j  v_x_1  v_x_2   v_x_3    v_p   x_1      x_2      x_3
-##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1     1     0 -0.218 -0.971 0.226   -0.742     0  0        0      
-##  2     1     1     4 -0.218 -0.971 0.226   -0.742     1  0.0297   0.0209 
-##  3     1     1     6 -0.218 -0.971 0.226   -0.742     1  0.0391  -0.00514
-##  4     1     1     7 -0.218 -0.971 0.226   -0.742     1  0.00373  0.0194 
-##  5     1     1     8 -0.218 -0.971 0.226   -0.742     1 -0.0995  -0.00269
-##  6     1     1     9 -0.218 -0.971 0.226   -0.742     1  0.0310  -0.0689 
-##  7     1     1    10 -0.218 -0.971 0.226   -0.742     1 -0.00281 -0.0207 
-##  8     1     2     0 -0.545  0.204 0.00570 -1.60      0  0        0      
-##  9     1     2     4 -0.545  0.204 0.00570 -1.60      1  0.0297   0.0209 
-## 10     1     2     6 -0.545  0.204 0.00570 -1.60      1  0.0391  -0.00514
-## # ... with 69,990 more rows, and 3 more variables: xi &lt;dbl&gt;, c &lt;dbl&gt;,
+<pre><code>## # A tibble: 50,000 x 6
+##        i     t   v_x_1  v_x_2   v_x_3     v_p
+##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 -0.218   0.527 -0.616  -0.715 
+##  2     2     1 -0.545   0.887 -1.27   -0.268 
+##  3     3     1 -0.275  -1.08   0.0475 -0.664 
+##  4     4     1  0.0276  0.677  0.121  -0.568 
+##  5     5     1  0.970   0.952  1.46   -1.44  
+##  6     6     1 -2.20   -2.03   0.0692 -2.73  
+##  7     7     1  1.95   -0.211 -0.390  -0.203 
+##  8     8     1  0.180   0.656 -0.248  -0.0880
+##  9     9     1  0.415  -1.67  -0.573  -2.30  
+## 10    10     1  0.647  -0.450  0.255  -0.534 
+## # ... with 49,990 more rows</code></pre>
+<pre><code>## # A tibble: 350,000 x 13
+##        t     i     j  v_x_1 v_x_2  v_x_3    v_p   x_1      x_2      x_3
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1     1     1     0 -0.218 0.527 -0.616 -0.715     0  0        0      
+##  2     1     1     4 -0.218 0.527 -0.616 -0.715     1  0.0297   0.0209 
+##  3     1     1     6 -0.218 0.527 -0.616 -0.715     1  0.0391  -0.00514
+##  4     1     1     7 -0.218 0.527 -0.616 -0.715     1  0.00373  0.0194 
+##  5     1     1     8 -0.218 0.527 -0.616 -0.715     1 -0.0995  -0.00269
+##  6     1     1     9 -0.218 0.527 -0.616 -0.715     1  0.0310  -0.0689 
+##  7     1     1    10 -0.218 0.527 -0.616 -0.715     1 -0.00281 -0.0207 
+##  8     1     2     0 -0.545 0.887 -1.27  -0.268     0  0        0      
+##  9     1     2     4 -0.545 0.887 -1.27  -0.268     1  0.0297   0.0209 
+## 10     1     2     6 -0.545 0.887 -1.27  -0.268     1  0.0391  -0.00514
+## # ... with 349,990 more rows, and 3 more variables: xi &lt;dbl&gt;, c &lt;dbl&gt;,
 ## #   p &lt;dbl&gt;</code></pre>
-<pre class="r"><code># draw idiosyncratic shocks
-e &lt;- evd::rgev(dim(df)[1])
-# compute indirect utility
-u &lt;- 
-  compute_indirect_utility(
-    df, beta, sigma_beta, 
-           mean_logalpha, sigma_logalpha, alpha)
-# compute choice
-df_choice &lt;- 
-  compute_choice(X, M, V, e, beta, sigma_beta, 
-                 mean_logalpha, sigma_logalpha, alpha,
-                 T, N, J)
-df_choice</code></pre>
-<pre><code>## # A tibble: 70,000 x 16
-##        t     i     j  v_x_1  v_x_2   v_x_3    v_p   x_1      x_2      x_3
-##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1     1     1     0 -0.218 -0.971 0.226   -0.742     0  0        0      
-##  2     1     1     4 -0.218 -0.971 0.226   -0.742     1  0.0297   0.0209 
-##  3     1     1     6 -0.218 -0.971 0.226   -0.742     1  0.0391  -0.00514
-##  4     1     1     7 -0.218 -0.971 0.226   -0.742     1  0.00373  0.0194 
-##  5     1     1     8 -0.218 -0.971 0.226   -0.742     1 -0.0995  -0.00269
-##  6     1     1     9 -0.218 -0.971 0.226   -0.742     1  0.0310  -0.0689 
-##  7     1     1    10 -0.218 -0.971 0.226   -0.742     1 -0.00281 -0.0207 
-##  8     1     2     0 -0.545  0.204 0.00570 -1.60      0  0        0      
-##  9     1     2     4 -0.545  0.204 0.00570 -1.60      1  0.0297   0.0209 
-## 10     1     2     6 -0.545  0.204 0.00570 -1.60      1  0.0391  -0.00514
-## # ... with 69,990 more rows, and 6 more variables: xi &lt;dbl&gt;, c &lt;dbl&gt;,
+<pre><code>## # A tibble: 350,000 x 16
+##        t     i     j  v_x_1 v_x_2  v_x_3    v_p   x_1      x_2      x_3
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1     1     1     0 -0.218 0.527 -0.616 -0.715     0  0        0      
+##  2     1     1     4 -0.218 0.527 -0.616 -0.715     1  0.0297   0.0209 
+##  3     1     1     6 -0.218 0.527 -0.616 -0.715     1  0.0391  -0.00514
+##  4     1     1     7 -0.218 0.527 -0.616 -0.715     1  0.00373  0.0194 
+##  5     1     1     8 -0.218 0.527 -0.616 -0.715     1 -0.0995  -0.00269
+##  6     1     1     9 -0.218 0.527 -0.616 -0.715     1  0.0310  -0.0689 
+##  7     1     1    10 -0.218 0.527 -0.616 -0.715     1 -0.00281 -0.0207 
+##  8     1     2     0 -0.545 0.887 -1.27  -0.268     0  0        0      
+##  9     1     2     4 -0.545 0.887 -1.27  -0.268     1  0.0297   0.0209 
+## 10     1     2     6 -0.545 0.887 -1.27  -0.268     1  0.0391  -0.00514
+## # ... with 349,990 more rows, and 6 more variables: xi &lt;dbl&gt;, c &lt;dbl&gt;,
 ## #   p &lt;dbl&gt;, u &lt;dbl&gt;, e &lt;dbl&gt;, q &lt;dbl&gt;</code></pre>
-<pre class="r"><code>summary(df_choice)</code></pre>
-<pre><code>##        t                i                j              v_x_1         
-##  Min.   :  1.00   Min.   :  1.00   Min.   : 0.000   Min.   :-4.30278  
-##  1st Qu.: 25.75   1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:-0.68301  
-##  Median : 50.50   Median : 50.50   Median : 5.000   Median :-0.02462  
-##  Mean   : 50.50   Mean   : 50.50   Mean   : 4.829   Mean   :-0.01477  
-##  3rd Qu.: 75.25   3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.: 0.65128  
-##  Max.   :100.00   Max.   :100.00   Max.   :10.000   Max.   : 3.72796  
-##      v_x_2               v_x_3                v_p          
-##  Min.   :-3.682905   Min.   :-3.825186   Min.   :-45.1457  
-##  1st Qu.:-0.661366   1st Qu.:-0.683235   1st Qu.: -1.9289  
-##  Median : 0.008056   Median : 0.018161   Median : -1.0044  
-##  Mean   : 0.008228   Mean   : 0.007923   Mean   : -1.6366  
-##  3rd Qu.: 0.664477   3rd Qu.: 0.681791   3rd Qu.: -0.4941  
-##  Max.   : 3.649533   Max.   : 3.650776   Max.   : -0.0239  
+<pre><code>##        t                i               j              v_x_1          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685630  
+##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.000166  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.829   Mean   :-0.004342  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.667946  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
+##      v_x_2               v_x_3                v_p           
+##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-58.80930  
+##  1st Qu.:-0.678458   1st Qu.:-0.674724   1st Qu.: -1.95603  
+##  Median : 0.000095   Median : 0.005968   Median : -1.00217  
+##  Mean   :-0.001408   Mean   : 0.003842   Mean   : -1.64258  
+##  3rd Qu.: 0.671120   3rd Qu.: 0.678367   3rd Qu.: -0.51157  
+##  Max.   : 4.313621   Max.   : 4.244194   Max.   : -0.01473  
 ##       x_1              x_2                  x_3                  xi   
 ##  Min.   :0.0000   Min.   :-0.0994676   Min.   :-0.073538   Min.   :0  
 ##  1st Qu.:1.0000   1st Qu.:-0.0008095   1st Qu.:-0.021539   1st Qu.:0  
@@ -376,12 +348,12 @@ df_choice</code></pre>
 ##  3rd Qu.:1.0000   3rd Qu.: 0.0391068   3rd Qu.: 0.019384   3rd Qu.:0  
 ##  Max.   :1.0000   Max.   : 0.0471918   Max.   : 0.067934   Max.   :0  
 ##        c                 p                u                 e          
-##  Min.   :0.00000   Min.   :0.0000   Min.   :-7.6793   Min.   :-2.3827  
-##  1st Qu.:0.01610   1st Qu.:0.0497   1st Qu.:-1.5907   1st Qu.:-0.3247  
-##  Median :0.03946   Median :0.1076   Median :-0.3795   Median : 0.3688  
-##  Mean   :0.07295   Mean   :0.1488   Mean   :-0.6057   Mean   : 0.5820  
-##  3rd Qu.:0.08903   3rd Qu.:0.1915   3rd Qu.: 0.1510   3rd Qu.: 1.2533  
-##  Max.   :1.90378   Max.   :1.9426   Max.   : 5.2894   Max.   :12.4450  
+##  Min.   :0.00000   Min.   :0.0000   Min.   :-7.7177   Min.   :-2.6364  
+##  1st Qu.:0.01610   1st Qu.:0.0497   1st Qu.:-1.5741   1st Qu.:-0.3302  
+##  Median :0.03946   Median :0.1076   Median :-0.3460   Median : 0.3635  
+##  Mean   :0.07295   Mean   :0.1488   Mean   :-0.5909   Mean   : 0.5761  
+##  3rd Qu.:0.08903   3rd Qu.:0.1915   3rd Qu.: 0.1834   3rd Qu.: 1.2415  
+##  Max.   :1.90378   Max.   :1.9426   Max.   : 5.4354   Max.   :14.0966  
 ##        q         
 ##  Min.   :0.0000  
 ##  1st Qu.:0.0000  
@@ -389,27 +361,20 @@ df_choice</code></pre>
 ##  Mean   :0.1429  
 ##  3rd Qu.:0.0000  
 ##  Max.   :1.0000</code></pre>
-<pre class="r"><code># compute share
-df_share &lt;-
-  compute_share(X, M, V, e, beta, sigma_beta, 
-                mean_logalpha, sigma_logalpha, alpha,
-                T, N, J)
-df_share</code></pre>
 <pre><code>## # A tibble: 700 x 11
 ##        t     j   x_1      x_2      x_3    xi      c      p     q     s
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     0     0  0.       0           0 0      0         37  0.37
-##  2     1     4     1  2.97e-2  0.0209      0 0.0497 0.192      7  0.07
-##  3     1     6     1  3.91e-2 -0.00514     0 0.0660 0.135      7  0.07
-##  4     1     7     1  3.73e-3  0.0194      0 0.0188 0.0449    11  0.11
-##  5     1     8     1 -9.95e-2 -0.00269     0 0.0198 0.0275    13  0.13
-##  6     1     9     1  3.10e-2 -0.0689      0 0.341  0.356     11  0.11
-##  7     1    10     1 -2.81e-3 -0.0207      0 0.121  0.454     14  0.14
-##  8     2     0     0  0.       0           0 0      0         28  0.28
-##  9     2     1     1 -8.10e-4 -0.00779     0 0.105  0.144     13  0.13
-## 10     2     2     1  4.72e-2 -0.0735      0 0.0580 0.357      5  0.05
+##  1     1     0     0  0.       0           0 0      0        155 0.31 
+##  2     1     4     1  2.97e-2  0.0209      0 0.0497 0.192     48 0.096
+##  3     1     6     1  3.91e-2 -0.00514     0 0.0660 0.135     57 0.114
+##  4     1     7     1  3.73e-3  0.0194      0 0.0188 0.0449    81 0.162
+##  5     1     8     1 -9.95e-2 -0.00269     0 0.0198 0.0275    60 0.12 
+##  6     1     9     1  3.10e-2 -0.0689      0 0.341  0.356     56 0.112
+##  7     1    10     1 -2.81e-3 -0.0207      0 0.121  0.454     43 0.086
+##  8     2     0     0  0.       0           0 0      0        155 0.31 
+##  9     2     1     1 -8.10e-4 -0.00779     0 0.105  0.144     70 0.14 
+## 10     2     2     1  4.72e-2 -0.0735      0 0.0580 0.357     50 0.1  
 ## # ... with 690 more rows, and 1 more variable: y &lt;dbl&gt;</code></pre>
-<pre class="r"><code>summary(df_share)</code></pre>
 <pre><code>##        t                j               x_1              x_2            
 ##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-0.0994676  
 ##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.0008095  
@@ -424,42 +389,82 @@ df_share</code></pre>
 ##  Mean   :-0.008313   Mean   :0   Mean   :0.07295   Mean   :0.1488  
 ##  3rd Qu.: 0.019384   3rd Qu.:0   3rd Qu.:0.08903   3rd Qu.:0.1915  
 ##  Max.   : 0.067934   Max.   :0   Max.   :1.90378   Max.   :1.9426  
-##        q               s                y          
-##  Min.   : 2.00   Min.   :0.0200   Min.   :-2.6741  
-##  1st Qu.:10.00   1st Qu.:0.1000   1st Qu.:-1.2238  
-##  Median :12.00   Median :0.1200   Median :-0.9614  
-##  Mean   :14.29   Mean   :0.1429   Mean   :-0.8907  
-##  3rd Qu.:15.00   3rd Qu.:0.1500   3rd Qu.:-0.6275  
-##  Max.   :44.00   Max.   :0.4400   Max.   : 0.1178</code></pre>
-<pre class="r"><code># logit regression
-result_logit &lt;- lm(
-  data = df_share,
-  formula = y ~ - 1 + x_1 + x_2 + x_3 + p
-)
-summary(result_logit)</code></pre>
+##        q                s                y          
+##  Min.   : 35.00   Min.   :0.0700   Min.   :-1.5215  
+##  1st Qu.: 53.00   1st Qu.:0.1060   1st Qu.:-1.1133  
+##  Median : 58.00   Median :0.1160   Median :-0.9899  
+##  Mean   : 71.43   Mean   :0.1429   Mean   :-0.8805  
+##  3rd Qu.: 66.00   3rd Qu.:0.1320   3rd Qu.:-0.8430  
+##  Max.   :179.00   Max.   :0.3580   Max.   : 0.0000</code></pre>
+</div>
+<div id="estimate-the-parameters" class="section level2">
+<h2>Estimate the parameters</h2>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ -1 + x_1 + x_2 + x_3 + p, data = df_share)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.5264 -0.1922  0.0000  0.1759  1.1599 
+##      Min       1Q   Median       3Q      Max 
+## -0.47370 -0.07470  0.00000  0.07201  0.42953 
 ## 
 ## Coefficients:
-##     Estimate Std. Error t value Pr(&gt;|t|)    
-## x_1 -0.98672    0.01989 -49.604  &lt; 2e-16 ***
-## x_2 -0.27675    0.31087  -0.890  0.37363    
-## x_3 -0.89512    0.34277  -2.611  0.00921 ** 
-## p   -0.33309    0.08152  -4.086  4.9e-05 ***
+##      Estimate Std. Error  t value Pr(&gt;|t|)    
+## x_1 -0.978672   0.008555 -114.401  &lt; 2e-16 ***
+## x_2  0.247299   0.133693    1.850   0.0648 .  
+## x_3 -0.697286   0.147414   -4.730 2.72e-06 ***
+## p   -0.335382   0.035058   -9.566  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.3249 on 696 degrees of freedom
-## Multiple R-squared:  0.8985, Adjusted R-squared:  0.8979 
-## F-statistic:  1540 on 4 and 696 DF,  p-value: &lt; 2.2e-16</code></pre>
-<pre class="r"><code># mixed logit estimation
-e_mcmc &lt;- evd::rgev(N*T*(J + 1))
-# compute predicted share</code></pre>
+## Residual standard error: 0.1397 on 696 degrees of freedom
+## Multiple R-squared:  0.9791, Adjusted R-squared:  0.9789 
+## F-statistic:  8136 on 4 and 696 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>## # A tibble: 10,000 x 6
+##        i     t   v_x_1   v_x_2   v_x_3    v_p
+##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     1  1.80    1.52   -0.777  -0.632
+##  2     2     1  0.0181 -0.277  -1.02   -0.266
+##  3     3     1 -0.938  -0.802  -0.0921 -0.437
+##  4     4     1  1.86    0.0362  0.245  -0.466
+##  5     5     1 -1.26   -1.08   -0.926  -1.12 
+##  6     6     1 -0.640  -0.126   1.25   -1.41 
+##  7     7     1 -0.163  -1.19   -1.41   -2.12 
+##  8     8     1 -0.150  -0.683  -1.99   -4.09 
+##  9     9     1 -2.22   -0.454   0.956  -0.105
+## 10    10     1 -0.550   0.746  -0.472  -1.02 
+## # ... with 9,990 more rows</code></pre>
+<pre><code>## [1] -0.42903355  3.60644897  0.07876354  2.08100698  2.21234365  0.49981827</code></pre>
+<pre><code>## # A tibble: 700 x 11
+##        t     j   x_1      x_2      x_3    xi      c      p     q     s
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     0     0  0.       0           0 0      0         31 0.31 
+##  2     1     4     1  2.97e-2  0.0209      0 0.0497 0.192     14 0.14 
+##  3     1     6     1  3.91e-2 -0.00514     0 0.0660 0.135      6 0.06 
+##  4     1     7     1  3.73e-3  0.0194      0 0.0188 0.0449    14 0.14 
+##  5     1     8     1 -9.95e-2 -0.00269     0 0.0198 0.0275    12 0.12 
+##  6     1     9     1  3.10e-2 -0.0689      0 0.341  0.356     12 0.12 
+##  7     1    10     1 -2.81e-3 -0.0207      0 0.121  0.454     11 0.11 
+##  8     2     0     0  0.       0           0 0      0         29 0.290
+##  9     2     1     1 -8.10e-4 -0.00779     0 0.105  0.144     12 0.12 
+## 10     2     2     1  4.72e-2 -0.0735      0 0.0580 0.357      7 0.07 
+## # ... with 690 more rows, and 1 more variable: y &lt;dbl&gt;</code></pre>
+<pre><code>## [1] 0.001412229</code></pre>
+<pre><code>## $par
+## [1] -0.626568096  0.183643324 -0.835628612  1.595280802  0.329507772
+## [6]  0.820468384  0.001314286  0.998685714
+## 
+## $value
+## [1] 0.00145344
+## 
+## $counts
+## function gradient 
+##        2        2 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL</code></pre>
 </div>
 
 
