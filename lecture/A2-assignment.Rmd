@@ -321,7 +321,7 @@ ggplot(result_1st_plot, aes(x = fitted, y = actual)) +
   geom_point()
 ```
 
-3. Check that $\beta_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
+4. Check that $\beta_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
 
 ```{r, eval = FALSE}
 result_1st_unidentified_bw <-
@@ -362,7 +362,7 @@ I_{j, t - 1}
 \end{bmatrix}.
 $$
 
-4. Using the estimates in the first step, compute:
+5. Using the estimates in the first step, compute:
 $$
 y_{jt} - \hat{\beta_l} l_{jt},
 $$
@@ -390,7 +390,7 @@ df_T_1st
 ```
 
 
-3. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_T_1st`, and name it `moment_OP_2nd`. Show the values of the moments evaluated at the true parameters.
+6. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_T_1st`, and name it `moment_OP_2nd`. Show the values of the moments evaluated at the true parameters.
 ```{r}
 moment_OP_2nd <- 
   function(alpha, beta_0, beta_k, df_T, df_T_1st) {
@@ -422,7 +422,7 @@ $$
 Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{JT}(\alpha, \beta_0, \beta_k).
 $$
 
-4. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_T_1st`, and name it `objective_OP_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
+7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_T_1st`, and name it `objective_OP_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
 
 ```{r}
 objective_OP_2nd <-
@@ -440,7 +440,7 @@ theta <- c(alpha, beta_0, beta_k)
 objective_OP_2nd(theta, df_T, df_T_1st, W)
 ```
 
-5. Draw the graph of the objective function when one of $\alpha$, $\beta_0$, and $\beta_k$ are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
+8. Draw the graph of the objective function when one of $\alpha$, $\beta_0$, and $\beta_k$ are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
 ```{r}
 objective_alpha <- 
   foreach (i = seq(0, 1, 0.1),
@@ -479,7 +479,7 @@ ggplot(data = objective_plot,
   geom_point() + xlab(TeX("$\\beta_k$")) + ylab("Objective")
 ```
 
-6. Find the parameters that minimize the objective function using `optim`. You may use `L-BFGS-B` method to solve it.
+9. Find the parameters that minimize the objective function using `optim`. You may use `L-BFGS-B` method to solve it.
 ```{r}
 theta <- c(alpha, beta_0, beta_k)
 W <- diag(3)

@@ -1,0 +1,159 @@
+---
+title: 'Assignment 3: Demand Function Estimation I'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library(EmpiricalIO)
+library(magrittr)
+library(stargazer)
+library(knitr)
+library(foreach)
+library(ggplot2)
+library(doParallel)
+registerDoParallel()
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+## Simulate data
+
+```{r}
+# set the seed
+set.seed(1)
+# number of products
+J <- 10
+# dimension of product characteristics including the intercept
+K <- 3
+# number of markets
+T <- 100
+# number of consumers per market
+N <- 100
+# number of Monte Carlo
+L <- 100
+```
+
+```{r}
+# set parameters of interests
+beta <- rnorm(K)
+sigma_beta <- abs(rnorm(K))
+mean_logalpha <- 0
+sigma_logalpha <- 1
+alpha <- - exp(mean_logalpha + sigma_logalpha^2/2)
+```
+
+```{r}
+# set auxiliary parameters
+price_xi <- 0.3
+prop_jt <- 0.6
+sd_x <- 0.05
+sd_c <- 0.05
+sd_p <- 0.05
+```
+
+```{r}
+# make product characteristics data
+X <- matrix(sd_x * rnorm(J*K), nrow = J)
+X[, 1] <- 1
+colnames(X) <- paste("x", 1:K, sep = "_")
+X <- data.frame(j = 1:J, X) %>%
+  tibble::as_tibble()
+# add outside option
+X <- rbind(
+  rep(0, dim(X)[2]),
+  X
+) 
+X
+```
+
+```{r}
+# make market-product data
+M <- expand.grid(j = 1:J, t = 1:T) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(
+    xi = 0 * rnorm(J*T),
+    c = sd_c * exp(rnorm(J*T)),
+    p = sd_p * exp(price_xi * xi + rnorm(J*T)) + c
+  ) 
+M <- M %>%
+  dplyr::group_by(t) %>%
+  dplyr::sample_frac(prop_jt) %>%
+  dplyr::ungroup()
+# add outside option
+outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
+M <- rbind(
+  M,
+  outside
+) %>%
+  dplyr::arrange(t, j)
+M
+```
+
+```{r}
+# make consumer-market data
+V <- matrix(rnorm(N*T*(K + 1)), nrow = N*T) 
+colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V <- data.frame(
+  expand.grid(i = 1:N, t = 1:T),
+  V
+) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(v_p = - exp(v_p))
+V
+```
+
+```{r}
+# make choice data
+df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+df
+# draw idiosyncratic shocks
+e <- evd::rgev(dim(df)[1])
+# compute indirect utility
+u <- 
+  compute_indirect_utility(
+    df, beta, sigma_beta, 
+           mean_logalpha, sigma_logalpha, alpha)
+# compute choice
+df_choice <- 
+  compute_choice(X, M, V, e, beta, sigma_beta, 
+                 mean_logalpha, sigma_logalpha, alpha,
+                 T, N, J)
+df_choice
+summary(df_choice)
+# compute share
+df_share <-
+  compute_share(X, M, V, e, beta, sigma_beta, 
+                mean_logalpha, sigma_logalpha, alpha,
+                T, N, J)
+df_share
+summary(df_share)
+```
+
+```{r}
+# logit regression
+result_logit <- lm(
+  data = df_share,
+  formula = y ~ - 1 + x_1 + x_2 + x_3 + p
+)
+summary(result_logit)
+```
+
+
+```{r}
+# mixed logit estimation
+e_mcmc <- evd::rgev(N*T*(J + 1))
+# compute predicted share
+
+```
+
+
+
