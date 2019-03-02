@@ -1,13 +1,8 @@
----
-title: 'Assignment 3: Demand Function Estimation I'
-author: "Kohei Kawaguchi"
-date: "2019/1/29"
-output:
-  html_document: default
-  pdf_document: default
----
+# Assignment 3: Demand Function Estimation I {#assignment3}
 
-```{r setup, include = FALSE}
+The deadline is the __March 11 1:30pm__. 
+
+```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -252,6 +247,8 @@ df_share
 summary(df_share)
 ```
 
+
+
 ## Estimate the parameters
 
 1. Estimate the parameters assuming there is no consumer-level heterogeneity, i.e., by assuming:
@@ -357,6 +354,7 @@ foreach (i = 1:4) %dopar% {
 }
 ```
 
+
 In windows, you may have to explicitly pass packages, functions, and data to the worker by using `.export` and `.package` options as follows:
 ```{r, echo = TRUE}
 temp_func <- function(x) {
@@ -393,7 +391,7 @@ foreach (i = 1:4,
 The graphs with the true shocks:
 
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 label <- c(paste("\\beta_", 1:K, sep = ""), 
            paste("\\sigma_", 1:K, sep = ""),
            "\\mu",
@@ -429,7 +427,7 @@ graph_true
 
 The graphs with the Monte Carlo shocks:
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 label <- c(paste("\\beta_", 1:K, sep = ""), 
            paste("\\sigma_", 1:K, sep = ""),
            "\\mu",
@@ -465,7 +463,7 @@ graph_mcmc
 
 8. Use `optim` to find the minimizer of the objective function using `Nelder-Mead` method. You can start from the true parameter values. Compare the estimates with the true parameters.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # find NLLS estimator
 result_NLLS <- 
   optim(par = theta, fn = NLLS_objective_A3,
@@ -485,4 +483,3 @@ result_NLLS
 result <- data.frame(true = theta, estimates = result_NLLS$par)
 result
 ```
-

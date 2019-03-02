@@ -1,110 +1,153 @@
 # Merger Analysis {#merger}
 
+## Motivations
+
+- Measuring the market power of firms and predicting the possible consequence of horizontal merger cases is one of the primary goal of empirical industrial organization.
+- This is important for antitrust authority to review merger cases.
+- To do so, we integrate the product/cost function estimation and demand function estimation techniques.
+- We introduce the last piece of parameters that characterize the market competition, __conduct parameter__, and discuss its identification.
+- Then, we conduct the first kind of __counterfactual analysis__, the __merger simularion__.
+- In this exercise, we predict the market response when the ownership structure of product is changed due to a hypothetical merger.
+- Every market institution needs its own model for merger simulation:
+- @Gowrisankaran2015:
+    - In the U.S. hospitals and managed care organizations (MGO) negotiate the hospital prices and the coinsurance rates.
+    - What if hospitals are merged? How much do the hospital prices and the coinsurance rates increase?
+- @Smith2004:
+    - Sometimes the same service is sold through multiple stores such as in the supermarket industry. 
+    - How does this multi-store nature affect the merger effects?
+- @Ivaldi2005 reviews the cases in the European Commission.
 
 
-## Identification of conduct
-
+## Identification of Conduct
 
 ### Identification of Conduct
 
-
-- Consider a homogeneous good industry.
-- Under what conditions can we distinguish across Bertrand competition, Cournot competition, and collusion?
-- This argument is based on Bresnahan (1982).
-
-
+- So far we have been concerned with the two types of parameters:
+    - Production and/or cost function.
+    - Demand function.
+- To identify the marginal cost by the revealed preference approach, we have assumed that firms are engaging in a price competition.
+- The mode of competition is another parameter of interest.
+- Can we infer the mode of competition instead of assuming it?
 
 
 ### Marginal Revenue Function
 
+- To be specific, consider firms producing homogeneous product.
+- Under what conditions can we distinguish across Bertrand competition, Cournot competition, and collusion? [@Bresnahan1982a].
 - Consider the following marginal revenue function:
 \begin{equation}
-MR(Q) = \lambda Q P'(Q) + P,
+MR(Q) \equiv \lambda Q P'(Q) + P(Q),
 \end{equation}
 where $Q$ is the aggregate quantity, $P(Q)$ is the inverse demand function.
-- This nests Bertrand, Cournot, and collusion:
-- Bertrand: $\lambda = 0$.
-- Cournot: $\lambda = s_i$, the share of the firm.
-- Collusion: $\lambda = 1$.
-- The identification of conduct in this context is equivalent to the identification of $\lambda$, the \textbf{conduct parameter}.
-
-
+- This formula nests Bertrand, Cournot, and collusion:
+- Bertrand: 
+    - In Bertrand, a firm cannot change the market price.
+    - If a firm increases the production by one unit, whose revenue increases by $P(Q)$.
+    - Therefore, $\lambda = 0$.
+- Cournot: 
+    - In Cournot, the marginal revenue of firm $f$ is:
+    $$
+    q_f P'(Q) + P(Q).
+    $$
+    - Therefore, $\lambda = s_f$, the quantity share of the firm $f$.
+- Collusion: 
+    - Under collusion, firms behave like a single monopoly.
+    - Then, the marginal revenue is:
+    $$
+    QP'(Q) + P(Q).
+    $$
+    - Therefore, $\lambda = 1$.
+- The identification of the mode of competition in this context is equivalent to the identification of $\lambda$, the __conduct parameter__.
 
 ### First-Order Condition
 
-- Given the previous general marginal revenue function, the first-order condition for profit maximization is written as:
+- Let $MC(q_f)$ be the marginal cost of firm $f$.
+- Given the previous general marginal revenue function, the first-order condition for profit maximization for firm $f$ is written as:
 \begin{equation}
-\lambda Q P'(Q) + P = MC(Q),
+\lambda Q P'(Q) + P(Q) = MC(q_f).
 \end{equation}
-where $MC(Q)$ is a relevant marginal cost function.
+- The system of equations for $f = 1, \cdots, F$ determine the market equilibrium.
+
 
 
 
 ### Linear Model
 
-- Consider a linear inverse demand function:
+- To be simple, consider a linear inverse demand function:
 \begin{equation}
-P(Q_t) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q_t + \frac{\alpha_2}{\alpha_1} X_t + \frac{1}{\alpha_1}u_{1t}^D,
+P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{1}{\alpha_1}u^D,
 \end{equation}
-where $X_t$ is a vector of observed demand shifters.
+where $X_t$ is a vector of observed demand sifters.
 - Consider a linear marginal cost function:
 \begin{equation}
-MC(Q_t) = \beta_0 + \beta_1 Q_t + \beta_2 W_t + u_{2t}^S,
+MC(q_{f}) = \beta_0 + \beta_1 q_{f} + \beta_2 W + u^S,
 \end{equation}
-where $W_t$ is a vector of observed cost shifters.
+where $W$ is a vector of observed cost sifters.
+
 
 
 
 ### Pricing Equation
 
-- Inserting the inverse demand function and marginal cost function to the optimality condition yields:
+- Inserting the inverse demand function and marginal cost function to the optimality condition:
 \begin{equation}
-\frac{\lambda}{\alpha_1} Q_t + P = \beta_0 + \beta_1 Q_t + \beta_2 W_t + u_{2t}^s,
+\frac{\lambda}{\alpha_1} Q + P^S(Q) = \beta_0 + \beta_1 q_f + \beta_2 W + u^S
 \end{equation}
-which determines the pricing equation:
+- Summing them up and dividing by the number of firms $N$:
+\begin{equation}
+\frac{\lambda}{\alpha_1} Q + P^S(Q) = \beta_0 + \frac{\beta_1}{N} Q + \beta_2 W_t + u^S,
+\end{equation}
+- This determines the aggregate pricing equation:
 \begin{equation}
 \begin{split}
-P^S(Q_t) &= \beta_0 - \frac{\lambda}{\alpha_1} Q_t + \beta_1 Q_t + \beta_2 W_t + u_{2t}^S\\
-&\equiv \beta_0 + \gamma Q_t + \beta_2 W_t + u_{2t}^S.
+P^S(Q) &= \beta_0 + (\frac{\beta_1}{N} - \frac{\lambda}{\alpha_1})Q + \beta_2 W + u^S\\
+&= \beta_0 + \gamma Q + \beta_2 W + u^S.
 \end{split}
 \end{equation}
 - The key parameter is:
 \begin{equation}
-\gamma \equiv \beta_1 - \frac{\lambda}{\alpha_1}.
+\gamma \equiv \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}.
 \end{equation}
 
 
 
 ### Identification of Inverse Demand Function and Pricing Equation
 
-- We have two systems of reduced-form equations:
+- We have two systems of __reduced-form__ equations:
 \begin{equation}
 \begin{split}
-&P(Q_t) = \frac{\alpha_0}{\alpha_1} - \frac{1}{\alpha_1}Q_t + \frac{\alpha_2}{\alpha_1} X_t + \frac{1}{\alpha_1}u_{1t}^D,\\
-&P^S(Q_t) = \beta_0 + \gamma Q_t + \beta_2 W_t + u_{2t}^S.
+&P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{1}{\alpha_1}u^D,\\
+&P^S(Q) = \beta_0 + \gamma Q + \beta_2 W + u^S.
 \end{split}
 \end{equation}
-- If we had a demand shifter $X_t$, then it can be used as an instrument for $Q_t$ in the pricing equation to identify the parameters in the pricing equation.
-- If we had a cost shifter $W_t$, then it can be used as an instrument for $Q_t$ in the inverse demand function to identify the parameters in the pricing equation.
-- Thus, we can identify $(\alpha_0, \alpha_1, \alpha_2)$ and $(\beta_0, \gamma, \beta_2)$ if we have a demand shifter $X_t$ and a cost shifter $W_t$.
-- However, this is not enough to separately identify $\beta_1$ and $\lambda$ in $\gamma$.
+- If we observe a __demand shifter__ $X$, then it can be used as an instrument for $Q$ in the pricing equation to identify the parameters in the pricing equation.
+- If we observe a __cost shifter__ $W_t$, then it can be used as an instrument for $Q$ in the inverse demand function to identify the parameters in the pricing equation.
+- Thus, we can identify the __reduced-form parameters__ $(\alpha_0, \alpha_1, \alpha_2)$ and $(\beta_0, \gamma, \beta_2)$ if we observe a demand shifter $X$ and a cost shifter $W$.
+- However, this is not enough to separately identify the __structural-form parameters__ $\beta_1$ and $\lambda$ in $\gamma$.
 
 ### The Conduct Parameter is Unidentified
-```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
+- Even if the demand function and pricing equation (supply function) are identified, we still cannot identify the conduct parameter $\lambda$.
+- The price at a quantity may be high either because of the high marginal cost or because of the high markup.
+- Remember that the identification of $\gamma$ and $\alpha_1$ do not determine the value of $\lambda$ and $\beta_1$ in:
+\begin{equation}
+\gamma = \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}.
+\end{equation}
+- $\beta_1$ is the derivative of the marginal cost.
+
+```{r, echo = FALSE, fig.cap = 'Figure 6.2 of Davis (2006)', out.width='80%', fig.asp = .75, fig.align = 'center'}
 knitr::include_graphics("figuretable/demandshift.png")
 ```
-
 
 ### Identification of the Conduct Parameter: When Cost Data is Available
 
 - If there is reliable cost data, we can directly identify the marginal cost function:
 \begin{equation}
-MC(Q_t) = \beta_0 + \beta_1 Q_t + \beta_2 W_t + u_{2t}^S,
+MC(q_f) = \beta_0 + \beta_1 q_f + \beta_2 W + u^S,
 \end{equation}
 and so $\beta_1$.
 - Then, in a combination with the identification of inverse demand function and pricing equation, $\lambda$ is identified as:
 \begin{equation}
-\lambda = \alpha_1 (\beta_1 - \gamma).
+\lambda = \alpha_1 \left(\frac{\beta_1}{N} - \gamma\right).
 \end{equation}
 
 
@@ -113,58 +156,49 @@ and so $\beta_1$.
 
 - Remember the first-order condition:
 \begin{equation}
-\lambda Q P'(Q) + P^S(Q) = MC(Q),
+\lambda Q P^{D\prime}(Q) + P^S(Q) = MC(q_f),
 \end{equation}
-where we can identify $P(Q)$ and $P^S(Q)$ if we have demand and cost shifters.
-- It is clear from this expression that we need a variation in $P'(Q)$ with a fixed $Q$ and $P$ to identify $\lambda$, i.e., something that rotates the inverse demand function.
+where we can identify $P^D(Q)$ and $P^S(Q)$ if we have demand and cost shifters.
+- It is clear from this expression that we need a variation in $P^{D\prime}(Q)$ with a fixed $Q$ to identify $\lambda$, i.e., something that rotates the inverse demand function.
 - Intuition: If demand becomes more elastic, prices will decrease and quantity will increase in a market with a high degree of market power.
 
 
 
 ### Identification of the Conduct Parameter: Demand Rotater is Available
 
+- Let's formalize the idea.
 - To identify the conduct parameter, we needed a demand rotater:
 \begin{equation}
-P(Q_t) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q_t + \frac{\alpha_2}{\alpha_1} X_t + \underbrace{\frac{\alpha_3}{\alpha_1} Q_t Z_t}_{rotaters} +  \frac{1}{\alpha_1}u_{1t}^D.
+P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{\alpha_3}{\alpha_1} Q \underbrace{Z}_{\text{demand rotater}} +  \frac{1}{\alpha_1}u^D.
 \end{equation}
 - Inserting this into the first-order condition yields:
 \begin{equation}
-\frac{\lambda}{\alpha_1} Q_t (1 + \alpha_3 Z_t)+ P = \beta_0 + \beta_1 Q_t + \beta_2 W_t + u_{2t}^s,
+\frac{\lambda}{\alpha} Q_t (1 + \alpha Z_t)+ P^S(Q) = \beta_0 + \frac{\beta_1}{N} Q + \beta_2 W + u^s,
 \end{equation}
-which determines the pricing equation:
+- This determines the pricing equation:
 \begin{equation}
 \begin{split}
-P^S(Q_t) &= \beta_0 - \frac{\lambda}{\alpha_1} Q_t(1 + \alpha_3 Z_t) + \beta_1 Q_t + \beta_2 W_t + u_{2t}^S\\
-&\equiv \beta_0 + \gamma_1 Q_t + \gamma_2 Z_t Q_t + \beta_2 W_t + u_{2t}^S,
+P^S(Q) &= \beta_0 - \frac{\lambda}{\alpha_1} Q(1 + \alpha_3 Z_t) + \frac{\beta_1}{N} Q_t + \beta_2 W + u^S\\
+&\equiv \beta_0 + \gamma_1 Q + \gamma_2 Z Q + \beta_2 W + u^S,
 \end{split}
 \end{equation}
 where:
 \begin{equation}
-\gamma_1 \equiv \beta_1 - \frac{\lambda}{\alpha_1}, \gamma_2 \equiv - \frac{\lambda \alpha_3}{\alpha_1}.
+\gamma_1 \equiv \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}, \gamma_2 \equiv - \frac{\lambda \alpha_3}{\alpha_1}.
 \end{equation}
 ### Identification of the Conduct Parameters: Demand Rotater is Available
 
-- If we have cost shifters $W_t$, it can be used as instruments for $Q_t$ in the inverse demand function to identify the demand parameters $(\alpha_0, \alpha_1, \alpha_2, \alpha_3)$.
-- If we have demand shifters $X_t$, it can be used as instruments for $Q_t$ in the pricing equation to identify the supply parameters $(\beta_0, \gamma_1, \gamma_2, \beta_2)$.
-- Now we can identify $\alpha_1, \alpha_3$ and $\gamma_2$, so that the conduct parameter:
+- If we have cost shifters $W$, it can be used as instruments for $Q$ in the inverse demand function to identify the demand parameters $(\alpha_0, \alpha_1, \alpha_2, \alpha_3)$.
+- If we have demand shifters $X$, it can be used as instruments for $Q$ in the pricing equation to identify the supply parameters $(\beta_0, \gamma_1, \gamma_2, \beta_2)$.
+- Now we can identify the __reduced-form__ parameters $\alpha_1, \alpha_3$ and $\gamma_2$.
+- Then, we can not identify the conduct parameter:
 \begin{equation}
-\lambda = - \frac{\gamma_2 \alpha_1}{\alpha_3}
+\lambda = - \frac{\gamma_2 \alpha_1}{\alpha_3}.
 \end{equation}
-is also identified.
-
-
-
-### Identification of the Marginal Cost
-
-- If the inverse demand function, pricing equation, and the conduct parameter are identified, then we can identify the marginal cost function from the first-order condition: $(\beta_0, \beta_1, \beta_2)$ are identified.
-- Note that $\beta_1$ is unidentified when demand rotators are not available.
-- Kim and Knittel (2006) compare the actual cost information and the estimated cost function using the California electricity market data and find that the conduct parameter technique do a poor job.
-
-
 
 ### Identification of Conduct in Differentiated Product Market
 
-- Suppose that there are two differentiated substitutable products and companies compete in price.
+- Consider the identification of conduct when there are two differentiated substitutable products and companies compete in price [@Nevo1998].
 - Are the prices determined independently or jointly?
 - The general first-order condition is:
 \begin{equation}
@@ -179,98 +213,102 @@ where
 - $\Delta_{12} = \Delta_{21} = 1$ if price are determined jointly. 
 
 - Under what conditions can we identify $\Delta_{12}$ and $\Delta_{21}$?
+- We will have to rotate $\frac{\partial Q_1(p)}{\partial p_2}$ and $\frac{\partial Q_2 (p)}{\partial p_1}$ while keeping the other variables at the same values.
+- @Miller2017 infers $\Delta$ after the MillerCoors, a joint venture of SABMiller PLC and Molson Coors Brewing, is formed.
+    - The unobserved year-specific and region-specific cost shocks are identified from the outsiders and the unobserved product-specific cost shocks are assumed to be the same before and after the merger.
 
-## Merge Simulation
+## Merger Simulation
 
+### Unilateral and Coordinated Effects of a Horizontal Merger
+
+- There are two effects associated with a merge episode:
+1. __Unilateral effect__: 
+    - The new merged firm usually have a unilateral incentive to raise prices above their pre-merger level.
+    - This unilateral effect may lead to the other firms to have an unilateral incentive to raise price, and the reaction continues to reach the new equilibrium.
+    - The latter chain reaction is sometimes called the __multi-lateral effect__.
+    - In economic theory, it is the price change when the same mode of competition (say, the Bertrand-Nash equilibrium) is played.
+    - $\Delta$ is either 0 or 1: firms internalize the profits from owned product but do not internalize the other products.
+1. __Coordinated effect__:
+    - After the merger, the mode of competition may change. 
+    - For example, the tacit collusion becomes easier and it can happen.
+    - This effect, caused by the change in the mode of competition, is called the coordinated effect of a merger.
+    - In this case, the conduct parameters $\Delta$ may take positive values for products owned by the rival firms.
 
 ### Merger Simulation
 
 - In merger simulation, we compute the equilibrium under different ownership structure.
-- This amounts to run a counterfactual simulation changing the conduct parameter $\lambda$ or $\Delta$.
+- This amounts to run a counterfactual simulation hypothetically changing the conduct parameter $\Delta$.
+- The idea stems back to @Farrell1990, @Werden1994, @Hausman1994.
 - Before running the simulation, you have to be very careful about the model assumptions:
+    - In music industry, firms compete not in price but in advertisement.
+    - If technological diffusion is important, firms may set dynamic pricing.
+- This is the first __counterfactual analysis__ we study in this lecture.
+- The results are valid only if the modeling assumptions are correct.
 
-- In music industry, firms compete not in price but in advertisement.
-- If technological diffusion is important, firms may set dynamic pricing.
+### Quantifying the Unilateral Effect
 
-- Keep these limitations in mind, let's see an example of merger simulation in a static differentiated product market as a benchmark case.
-
-
-
-### Pre-merger Model
-
+- See @Nevo2000c and @Nevo2001.
 - There are $J$ products, $\mathcal{J} = \{1, \cdots, J\}$.
+- We can have multiple markets but we suppress the market index.
 - Firm $f$ produces a set of products which we denote $\mathcal{J}_f \subset \mathcal{J}$.
 - Let $mc_j$ be the constant marginal cost of producing good $j$.
-
 - Thus assuming a separable cost function.
-
+    - We can relax this assumption for the estimation.
+    - However, once you admit that the costs can be non-separable, you will start to wonder what happens to the cost function if two firms merged and started to produce the two products that were previously produced by separate firms. 
 - Let $D_j(p)$ be the demand for product $j$ when the price vector is $p$.
-- The problem for firm $f$ given price of other firms $p_{-f}$ is:
+- The problem for firm $f$ given the price of other firms $p_{-f}$ is:
 \begin{equation}
 \max_{p_f} \sum_{j \in \mathcal{J}_f} \Pi_j(p_f, p_{-f}) = \sum_{j \in \mathcal{J}_f} (p_j - mc_j) D_j(p_f, p_{-f}),
 \end{equation}
 where $p_f = \{p_j\}_{j \in \mathcal{J}_f}$, $p_{-f} = \{p_j\}_{j \in \mathcal{J} \setminus \mathcal{J}_f}$.
 
-
-
-### First-order Condition of Pre-merger Model
+### Pre-Merger Equilibrium
 
 - The first-order condition for firm $f$ is:
 \begin{equation}
 D_k(p) + \sum_{j \in \mathcal{J}_f} (p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
 \end{equation}
-- Let $\Delta_{jk}$ takes 1 if same firm produces $j$ and $k$ and 0 otherwise.
+- Let $\Delta_{jk}^{pre}$ takes 1 if same firm produces $j$ and $k$ and 0 otherwise before the merger.
 - The first-order condition can be written as:
 \begin{equation}
-D_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}(p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
+D_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
 \end{equation}
-- Let $\Delta$ be a $J \times J$ matrix whose $(j, k)$-element is $\Delta_{jk}$.
+- In terms of the product share:
+\begin{equation}
+s_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial s_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
+\end{equation}
+- Let $\Delta^{pre}$ be a $J \times J$ matrix whose $(j, k)$-element is $\Delta_{jk}$.
 - At the end of the day, performing a merger simulation is to recompute the equilibrium with different ownership structure encoded in $\Delta$. 
 
+### Post-Merger Equilibrium
 
+- Let $\Omega^{pre}(p)$ is a matrix whose $(j, k)$-element is:
 
+\begin{equation}
+- \frac{\partial s_{j}(p)}{\partial p_k} \Delta_{jk}^{pre}.
+\end{equation}
 
-### Merger Simulation in the Ready-to-Eat Cereal Industry
+- Then, by the first-order condition, the marginal cost should be:
+\begin{equation}
+mc = p - \Omega^{pre}(p)^{-1} s(p).
+\end{equation}
 
+- If the ownership structure $\Delta^{pre}$ is changed to $\Delta^{post}$, and $\Omega^{pre}$ changed to $\Omega^{post}$, the post-merger price is determined by solving the non-linear equation:
+\begin{equation}
+p^{post} = mc + \Omega^{post}(p^{post})^{-1}s(p^{post}).
+\end{equation}
+- The post-merger share is given by:
+\begin{equation}
+s^{post} = s(p^{post}).
+\end{equation}
 
-- Nevo (2000).
-- In 1997, the U.S. market consumed approximately 3 billion pounds of cereal, grossing roughly \$9 billion in sales.
-- Actual mergers:
+### Consumer Surplus
 
-- In 1995, Post acquired Nabisco cereal line.
-- In 1996, General Mills acquired cereal line from Ralston Purina such as Chex line and Cookie Crisp.
-
-
-
-
-### Entry of New Products
-
-- Many products enter before the two merger cases.
-- These are endogenous decisions but we abstract away from this fact.
-```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
-knitr::include_graphics("figuretable/entry.png")
-```
-
-
-### Data for Estimation
-
-- Brand, city, and quarter level data between 1988 and 1992 (pre-merger period).
-- It covers 24 brands over 45 cities.
-- The dataset covers roughly 42\% to 63\% of the city-level market share.
-- The data includes market share, prices, brand characteristics, advertising, and information on the distribution of demographics.
-
-
-
-### Demand Estimation
-
-- The author considers a mixed-logit model with unobserved product-market specific fixed effects.
-- The indirect utility for consumer $i$ to purchase product $j$ in market $t$ is:
+- Suppose that the demand function is based on the mixed-logit model such that the indirect utility is:
 \begin{equation}
 u_{ijt} = x_{jt} \beta_i + \alpha_i p_{jt} + \xi_{j} + \xi_t + \Delta \xi_{jt} + \epsilon_{ijt},
 \end{equation}
-where $\epsilon_{ijt}$ is drawn from i.i.d. Type-I extreme value distribution.
-
-- The coefficients are distributed according to:
+with $\epsilon_{ijt}$ is drawn from i.i.d. Type-I extreme value distribution and the consumer-level heterogeneity:
 
 \begin{equation}
 \begin{pmatrix}
@@ -282,85 +320,19 @@ where $\epsilon_{ijt}$ is drawn from i.i.d. Type-I extreme value distribution.
 \alpha\\
 \beta
 \end{pmatrix}
-+ \Pi D_i + \Sigma \nu_i, \nu_i \sim N(0, I_{K + 1}).
-\end{equation}
-- The author uses BLP-type instrumental variables.
-- Let $s_{jt}(p)$ be the choice share of product $j$ in market $t$.
-
-
-
-### Demand Estimation Results
-```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
-knitr::include_graphics("figuretable/estimation2.png")
-```
-
-
-### Marginal Cost Estimation
-
-- Let $\Omega_t(p)$ is a matrix whose $(j, k)$-element is:
-
-\begin{equation}
-\begin{cases}
-- \frac{\partial s_{jt}(p)}{\partial p_k} &\text{   if   } \exists f, \{j, k\} \subset \mathcal{J}_f\\
-0&\text{   otherwise.}
-\end{cases}
++ \Pi z_i + \Sigma \nu_i, \nu_i \sim N(0, I_{K + 1}).
 \end{equation}
 
-- Then, by the first-order condition, we have:
-\begin{equation}
-mc_t = p_t - \Omega_t(p_t)^{-1}s_t(p_t).
-\end{equation}
-- Because we identified demand function, we can compute $\Omega_t$ and $s_t$ in combination with the ownership structure information.
-
-
-
-### Marginal Cost Estimation Result
-```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
-knitr::include_graphics("figuretable/marginalcost.png")
-```
-
-
-### Post-merger Simulation
-
-- Let $\hat{mc}_t$ be the estimate of the marginal cost in market $t$.
-- If we change the ownership structure, we can recompute $\Omega_t(p)$ with the new ownership structure and the estimated demand function.
-- The post-merger price is given by solving:
-\begin{equation}
-p_t^{post} = \hat{mc}_t + \hat{\Omega}^{post}_t(p_t^{post})^{-1}\hat{s}_t(p_t^{post}).
-\end{equation}
-- The post-merger quantity is given by:
-\begin{equation}
-q_t^{post} = \hat{D}_t(p_t^{post}).
-\end{equation}
-
-
-
-### Post-merge Simulation Result
-```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
-knitr::include_graphics("figuretable/mergersimulation.png")
-```
-
-
-### Welfare Analysis
-
-- If we identify demand function, we can make a welfare analysis.
-- The compensating variation for consumer $i$ is shown to be:
+- Then, the compensated variation due to the price change for consumer $i$ is:
 \begin{equation}
 CV_{it} = \frac{\ln (\sum_{j = 0}^J \exp(V_{ijt}^{post}) ) - \ln (\sum_{j = 0}^J \exp(V_{ijt}^{pre})) }{\alpha_i},
 \end{equation}
 where $V_{ijt}^{post}$ and $V_{ijt}^{pre}$ are indirect utility for consumer $i$ to purchase good $j$ at the prices after and before the merger.
-- The aggregate compensating variation is:
-\begin{equation}
-\sum_{t} M_t\int CV_{it} dP_D(D) dP_\nu(\nu),
-\end{equation}
-where $M_t$ is the size of market $t$.
+- This formula holds only if the price enters linearly in the indirect utility (no income effect).
+- For general case, see @Small1981 and @Mcfadden1995.
 
 
 
-### Welfare Analysis Results 
-```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
-knitr::include_graphics("figuretable/welfare.png")
-```
 
 
 

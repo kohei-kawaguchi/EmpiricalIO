@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-02-25}
+    \date{Last updated: 2019-03-02}
 
 \usepackage{booktabs}
 
@@ -1172,7 +1172,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5
+## [1] 1
 \end{verbatim}
 
 \begin{Shaded}
@@ -1182,17 +1182,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{roll}\NormalTok{(}\DecValTok{10}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 27
+## [1] 6
 \end{verbatim}
 
 \begin{Shaded}
@@ -1203,6 +1193,16 @@ it as:
 
 \begin{verbatim}
 ## [1] 41
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{roll}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 40
 \end{verbatim}
 
 \begin{itemize}
@@ -4959,7 +4959,7 @@ Assumption}\label{nested-logit-model-distributional-assumption}
 \item
   Under certain distributional assumption on \(\zeta_{ig}\) and
   \(\epsilon_{ij}\), the term \(\varepsilon_{ij}\) have a cumulative
-  distribution {[}I forgot the reference! Let me know if you find it{]}:
+  distribution \citep{Cardell1997}:
 
   \begin{equation}
   F(\varepsilon_i) = \exp\Bigg\{- \sum_{g = 1}^G \Bigg(\sum_{j \in \text{   category   } g} \exp[-\varepsilon_{ij}/\lambda_g] \Bigg)^{\lambda_g}  \Bigg\}.
@@ -5698,6 +5698,689 @@ Parameters}\label{estimating-linear-parameters}
   \end{enumerate}
 \end{itemize}
 
+\chapter{Merger Analysis}\label{merger}
+
+\section{Motivations}\label{motivations-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Measuring the market power of firms and predicting the possible
+  consequence of horizontal merger cases is one of the primary goal of
+  empirical industrial organization.
+\item
+  This is important for antitrust authority to review merger cases.
+\item
+  To do so, we integrate the product/cost function estimation and demand
+  function estimation techniques.
+\item
+  We introduce the last piece of parameters that characterize the market
+  competition, \textbf{conduct parameter}, and discuss its
+  identification.
+\item
+  Then, we conduct the first kind of \textbf{counterfactual analysis},
+  the \textbf{merger simularion}.
+\item
+  In this exercise, we predict the market response when the ownership
+  structure of product is changed due to a hypothetical merger.
+\item
+  Every market institution needs its own model for merger simulation:
+\item
+  \citet{Gowrisankaran2015}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In the U.S. hospitals and managed care organizations (MGO) negotiate
+    the hospital prices and the coinsurance rates.
+  \item
+    What if hospitals are merged? How much do the hospital prices and
+    the coinsurance rates increase?
+  \end{itemize}
+\item
+  \citet{Smith2004}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Sometimes the same service is sold through multiple stores such as
+    in the supermarket industry.
+  \item
+    How does this multi-store nature affect the merger effects?
+  \end{itemize}
+\item
+  \citet{Ivaldi2005} reviews the cases in the European Commission.
+\end{itemize}
+
+\section{Identification of Conduct}\label{identification-of-conduct}
+
+\subsection{Identification of
+Conduct}\label{identification-of-conduct-1}
+
+\begin{itemize}
+\tightlist
+\item
+  So far we have been concerned with the two types of parameters:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Production and/or cost function.
+  \item
+    Demand function.
+  \end{itemize}
+\item
+  To identify the marginal cost by the revealed preference approach, we
+  have assumed that firms are engaging in a price competition.
+\item
+  The mode of competition is another parameter of interest.
+\item
+  Can we infer the mode of competition instead of assuming it?
+\end{itemize}
+
+\subsection{Marginal Revenue Function}\label{marginal-revenue-function}
+
+\begin{itemize}
+\tightlist
+\item
+  To be specific, consider firms producing homogeneous product.
+\item
+  Under what conditions can we distinguish across Bertrand competition,
+  Cournot competition, and collusion? \citep{Bresnahan1982a}.
+\item
+  Consider the following marginal revenue function:
+
+  \begin{equation}
+  MR(Q) \equiv \lambda Q P'(Q) + P(Q),
+  \end{equation}
+
+  where \(Q\) is the aggregate quantity, \(P(Q)\) is the inverse demand
+  function.
+\item
+  This formula nests Bertrand, Cournot, and collusion:
+\item
+  Bertrand:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In Bertrand, a firm cannot change the market price.
+  \item
+    If a firm increases the production by one unit, whose revenue
+    increases by \(P(Q)\).
+  \item
+    Therefore, \(\lambda = 0\).
+  \end{itemize}
+\item
+  Cournot:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In Cournot, the marginal revenue of firm \(f\) is: \[
+    q_f P'(Q) + P(Q).
+    \]
+  \item
+    Therefore, \(\lambda = s_f\), the quantity share of the firm \(f\).
+  \end{itemize}
+\item
+  Collusion:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Under collusion, firms behave like a single monopoly.
+  \item
+    Then, the marginal revenue is: \[
+    QP'(Q) + P(Q).
+    \]
+  \item
+    Therefore, \(\lambda = 1\).
+  \end{itemize}
+\item
+  The identification of the mode of competition in this context is
+  equivalent to the identification of \(\lambda\), the \textbf{conduct
+  parameter}.
+\end{itemize}
+
+\subsection{First-Order Condition}\label{first-order-condition}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(MC(q_f)\) be the marginal cost of firm \(f\).
+\item
+  Given the previous general marginal revenue function, the first-order
+  condition for profit maximization for firm \(f\) is written as:
+
+  \begin{equation}
+  \lambda Q P'(Q) + P(Q) = MC(q_f).
+  \end{equation}
+\item
+  The system of equations for \(f = 1, \cdots, F\) determine the market
+  equilibrium.
+\end{itemize}
+
+\subsection{Linear Model}\label{linear-model}
+
+\begin{itemize}
+\tightlist
+\item
+  To be simple, consider a linear inverse demand function:
+
+  \begin{equation}
+  P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{1}{\alpha_1}u^D,
+  \end{equation}
+
+  where \(X_t\) is a vector of observed demand sifters.
+\item
+  Consider a linear marginal cost function:
+
+  \begin{equation}
+  MC(q_{f}) = \beta_0 + \beta_1 q_{f} + \beta_2 W + u^S,
+  \end{equation}
+
+  where \(W\) is a vector of observed cost sifters.
+\end{itemize}
+
+\subsection{Pricing Equation}\label{pricing-equation}
+
+\begin{itemize}
+\tightlist
+\item
+  Inserting the inverse demand function and marginal cost function to
+  the optimality condition:
+
+  \begin{equation}
+  \frac{\lambda}{\alpha_1} Q + P^S(Q) = \beta_0 + \beta_1 q_f + \beta_2 W + u^S
+  \end{equation}
+\item
+  Summing them up and dividing by the number of firms \(N\):
+
+  \begin{equation}
+  \frac{\lambda}{\alpha_1} Q + P^S(Q) = \beta_0 + \frac{\beta_1}{N} Q + \beta_2 W_t + u^S,
+  \end{equation}
+\item
+  This determines the aggregate pricing equation:
+
+  \begin{equation}
+  \begin{split}
+  P^S(Q) &= \beta_0 + (\frac{\beta_1}{N} - \frac{\lambda}{\alpha_1})Q + \beta_2 W + u^S\\
+  &= \beta_0 + \gamma Q + \beta_2 W + u^S.
+  \end{split}
+  \end{equation}
+\item
+  The key parameter is:
+
+  \begin{equation}
+  \gamma \equiv \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}.
+  \end{equation}
+\end{itemize}
+
+\subsection{Identification of Inverse Demand Function and Pricing
+Equation}\label{identification-of-inverse-demand-function-and-pricing-equation}
+
+\begin{itemize}
+\tightlist
+\item
+  We have two systems of \textbf{reduced-form} equations:
+
+  \begin{equation}
+  \begin{split}
+  &P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{1}{\alpha_1}u^D,\\
+  &P^S(Q) = \beta_0 + \gamma Q + \beta_2 W + u^S.
+  \end{split}
+  \end{equation}
+\item
+  If we observe a \textbf{demand shifter} \(X\), then it can be used as
+  an instrument for \(Q\) in the pricing equation to identify the
+  parameters in the pricing equation.
+\item
+  If we observe a \textbf{cost shifter} \(W_t\), then it can be used as
+  an instrument for \(Q\) in the inverse demand function to identify the
+  parameters in the pricing equation.
+\item
+  Thus, we can identify the \textbf{reduced-form parameters}
+  \((\alpha_0, \alpha_1, \alpha_2)\) and \((\beta_0, \gamma, \beta_2)\)
+  if we observe a demand shifter \(X\) and a cost shifter \(W\).
+\item
+  However, this is not enough to separately identify the
+  \textbf{structural-form parameters} \(\beta_1\) and \(\lambda\) in
+  \(\gamma\).
+\end{itemize}
+
+\subsection{The Conduct Parameter is
+Unidentified}\label{the-conduct-parameter-is-unidentified}
+
+\begin{itemize}
+\tightlist
+\item
+  Even if the demand function and pricing equation (supply function) are
+  identified, we still cannot identify the conduct parameter
+  \(\lambda\).
+\item
+  The price at a quantity may be high either because of the high
+  marginal cost or because of the high markup.
+\item
+  Remember that the identification of \(\gamma\) and \(\alpha_1\) do not
+  determine the value of \(\lambda\) and \(\beta_1\) in:
+
+  \begin{equation}
+  \gamma = \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}.
+  \end{equation}
+\item
+  \(\beta_1\) is the derivative of the marginal cost.
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{figuretable/demandshift} 
+
+}
+
+\caption{Figure 6.2 of Davis (2006)}\label{fig:unnamed-chunk-25}
+\end{figure}
+
+\subsection{Identification of the Conduct Parameter: When Cost Data is
+Available}\label{identification-of-the-conduct-parameter-when-cost-data-is-available}
+
+\begin{itemize}
+\tightlist
+\item
+  If there is reliable cost data, we can directly identify the marginal
+  cost function:
+
+  \begin{equation}
+  MC(q_f) = \beta_0 + \beta_1 q_f + \beta_2 W + u^S,
+  \end{equation}
+
+  and so \(\beta_1\).
+\item
+  Then, in a combination with the identification of inverse demand
+  function and pricing equation, \(\lambda\) is identified as:
+
+  \begin{equation}
+  \lambda = \alpha_1 \left(\frac{\beta_1}{N} - \gamma\right).
+  \end{equation}
+\end{itemize}
+
+\subsection{Identification of the Conduct Parameter: When Cost Data is
+Not
+Available}\label{identification-of-the-conduct-parameter-when-cost-data-is-not-available}
+
+\begin{itemize}
+\tightlist
+\item
+  Remember the first-order condition:
+
+  \begin{equation}
+  \lambda Q P^{D\prime}(Q) + P^S(Q) = MC(q_f),
+  \end{equation}
+
+  where we can identify \(P^D(Q)\) and \(P^S(Q)\) if we have demand and
+  cost shifters.
+\item
+  It is clear from this expression that we need a variation in
+  \(P^{D\prime}(Q)\) with a fixed \(Q\) to identify \(\lambda\), i.e.,
+  something that rotates the inverse demand function.
+\item
+  Intuition: If demand becomes more elastic, prices will decrease and
+  quantity will increase in a market with a high degree of market power.
+\end{itemize}
+
+\subsection{Identification of the Conduct Parameter: Demand Rotater is
+Available}\label{identification-of-the-conduct-parameter-demand-rotater-is-available}
+
+\begin{itemize}
+\tightlist
+\item
+  Let's formalize the idea.
+\item
+  To identify the conduct parameter, we needed a demand rotater:
+
+  \begin{equation}
+  P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{\alpha_3}{\alpha_1} Q \underbrace{Z}_{\text{demand rotater}} +  \frac{1}{\alpha_1}u^D.
+  \end{equation}
+\item
+  Inserting this into the first-order condition yields:
+
+  \begin{equation}
+  \frac{\lambda}{\alpha} Q_t (1 + \alpha Z_t)+ P^S(Q) = \beta_0 + \frac{\beta_1}{N} Q + \beta_2 W + u^s,
+  \end{equation}
+\item
+  This determines the pricing equation:
+
+  \begin{equation}
+  \begin{split}
+  P^S(Q) &= \beta_0 - \frac{\lambda}{\alpha_1} Q(1 + \alpha_3 Z_t) + \frac{\beta_1}{N} Q_t + \beta_2 W + u^S\\
+  &\equiv \beta_0 + \gamma_1 Q + \gamma_2 Z Q + \beta_2 W + u^S,
+  \end{split}
+  \end{equation}
+
+  where:
+
+  \begin{equation}
+  \gamma_1 \equiv \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}, \gamma_2 \equiv - \frac{\lambda \alpha_3}{\alpha_1}.
+  \end{equation}
+
+  \subsection{Identification of the Conduct Parameters: Demand Rotater
+  is
+  Available}\label{identification-of-the-conduct-parameters-demand-rotater-is-available}
+\item
+  If we have cost shifters \(W\), it can be used as instruments for
+  \(Q\) in the inverse demand function to identify the demand parameters
+  \((\alpha_0, \alpha_1, \alpha_2, \alpha_3)\).
+\item
+  If we have demand shifters \(X\), it can be used as instruments for
+  \(Q\) in the pricing equation to identify the supply parameters
+  \((\beta_0, \gamma_1, \gamma_2, \beta_2)\).
+\item
+  Now we can identify the \textbf{reduced-form} parameters
+  \(\alpha_1, \alpha_3\) and \(\gamma_2\).
+\item
+  Then, we can not identify the conduct parameter:
+
+  \begin{equation}
+  \lambda = - \frac{\gamma_2 \alpha_1}{\alpha_3}.
+  \end{equation}
+\end{itemize}
+
+\subsection{Identification of Conduct in Differentiated Product
+Market}\label{identification-of-conduct-in-differentiated-product-market}
+
+\begin{itemize}
+\item
+  Consider the identification of conduct when there are two
+  differentiated substitutable products and companies compete in price
+  \citep{Nevo1998}.
+\item
+  Are the prices determined independently or jointly?
+\item
+  The general first-order condition is:
+
+  \begin{equation}
+  \begin{split}
+  &(p_1 - c_1) \frac{\partial Q_1(p)}{\partial p_1} + Q_1^S(p) + \Delta_{12}(p_2 - c_2) \frac{\partial Q_2 (p)}{\partial p_1} = 0\\
+  &\Delta_{21}(p_1 - c_1)\frac{\partial Q_1(p)}{\partial p_2} + Q_2^S(p) + (p_2 - c_2) \frac{\partial Q_2 (p)}{\partial p_2} = 0,
+  \end{split}
+  \end{equation}
+
+  where
+\item
+  \(\Delta_{12} = \Delta_{21} = 0\) if prices are determined
+  independently.
+\item
+  \(\Delta_{12} = \Delta_{21} = 1\) if price are determined jointly.
+\item
+  Under what conditions can we identify \(\Delta_{12}\) and
+  \(\Delta_{21}\)?
+\item
+  We will have to rotate \(\frac{\partial Q_1(p)}{\partial p_2}\) and
+  \(\frac{\partial Q_2 (p)}{\partial p_1}\) while keeping the other
+  variables at the same values.
+\item
+  \citet{Miller2017} infers \(\Delta\) after the MillerCoors, a joint
+  venture of SABMiller PLC and Molson Coors Brewing, is formed.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The unobserved year-specific and region-specific cost shocks are
+    identified from the outsiders and the unobserved product-specific
+    cost shocks are assumed to be the same before and after the merger.
+  \end{itemize}
+\end{itemize}
+
+\section{Merger Simulation}\label{merger-simulation}
+
+\subsection{Unilateral and Coordinated Effects of a Horizontal
+Merger}\label{unilateral-and-coordinated-effects-of-a-horizontal-merger}
+
+\begin{itemize}
+\tightlist
+\item
+  There are two effects associated with a merge episode:
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Unilateral effect}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The new merged firm usually have a unilateral incentive to raise
+    prices above their pre-merger level.
+  \item
+    This unilateral effect may lead to the other firms to have an
+    unilateral incentive to raise price, and the reaction continues to
+    reach the new equilibrium.
+  \item
+    The latter chain reaction is sometimes called the
+    \textbf{multi-lateral effect}.
+  \item
+    In economic theory, it is the price change when the same mode of
+    competition (say, the Bertrand-Nash equilibrium) is played.
+  \item
+    \(\Delta\) is either 0 or 1: firms internalize the profits from
+    owned product but do not internalize the other products.
+  \end{itemize}
+\item
+  \textbf{Coordinated effect}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    After the merger, the mode of competition may change.
+  \item
+    For example, the tacit collusion becomes easier and it can happen.
+  \item
+    This effect, caused by the change in the mode of competition, is
+    called the coordinated effect of a merger.
+  \item
+    In this case, the conduct parameters \(\Delta\) may take positive
+    values for products owned by the rival firms.
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Merger Simulation}\label{merger-simulation-1}
+
+\begin{itemize}
+\tightlist
+\item
+  In merger simulation, we compute the equilibrium under different
+  ownership structure.
+\item
+  This amounts to run a counterfactual simulation hypothetically
+  changing the conduct parameter \(\Delta\).
+\item
+  The idea stems back to \citet{Farrell1990}, \citet{Werden1994},
+  \citet{Hausman1994}.
+\item
+  Before running the simulation, you have to be very careful about the
+  model assumptions:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In music industry, firms compete not in price but in advertisement.
+  \item
+    If technological diffusion is important, firms may set dynamic
+    pricing.
+  \end{itemize}
+\item
+  This is the first \textbf{counterfactual analysis} we study in this
+  lecture.
+\item
+  The results are valid only if the modeling assumptions are correct.
+\end{itemize}
+
+\subsection{Quantifying the Unilateral
+Effect}\label{quantifying-the-unilateral-effect}
+
+\begin{itemize}
+\tightlist
+\item
+  See \citet{Nevo2000c} and \citet{Nevo2001}.
+\item
+  There are \(J\) products, \(\mathcal{J} = \{1, \cdots, J\}\).
+\item
+  We can have multiple markets but we suppress the market index.
+\item
+  Firm \(f\) produces a set of products which we denote
+  \(\mathcal{J}_f \subset \mathcal{J}\).
+\item
+  Let \(mc_j\) be the constant marginal cost of producing good \(j\).
+\item
+  Thus assuming a separable cost function.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We can relax this assumption for the estimation.
+  \item
+    However, once you admit that the costs can be non-separable, you
+    will start to wonder what happens to the cost function if two firms
+    merged and started to produce the two products that were previously
+    produced by separate firms.
+  \end{itemize}
+\item
+  Let \(D_j(p)\) be the demand for product \(j\) when the price vector
+  is \(p\).
+\item
+  The problem for firm \(f\) given the price of other firms \(p_{-f}\)
+  is:
+
+  \begin{equation}
+  \max_{p_f} \sum_{j \in \mathcal{J}_f} \Pi_j(p_f, p_{-f}) = \sum_{j \in \mathcal{J}_f} (p_j - mc_j) D_j(p_f, p_{-f}),
+  \end{equation}
+
+  where \(p_f = \{p_j\}_{j \in \mathcal{J}_f}\),
+  \(p_{-f} = \{p_j\}_{j \in \mathcal{J} \setminus \mathcal{J}_f}\).
+\end{itemize}
+
+\subsection{Pre-Merger Equilibrium}\label{pre-merger-equilibrium}
+
+\begin{itemize}
+\tightlist
+\item
+  The first-order condition for firm \(f\) is:
+
+  \begin{equation}
+  D_k(p) + \sum_{j \in \mathcal{J}_f} (p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
+  \end{equation}
+\item
+  Let \(\Delta_{jk}^{pre}\) takes 1 if same firm produces \(j\) and
+  \(k\) and 0 otherwise before the merger.
+\item
+  The first-order condition can be written as:
+
+  \begin{equation}
+  D_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
+  \end{equation}
+\item
+  In terms of the product share:
+
+  \begin{equation}
+  s_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial s_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
+  \end{equation}
+\item
+  Let \(\Delta^{pre}\) be a \(J \times J\) matrix whose
+  \((j, k)\)-element is \(\Delta_{jk}\).
+\item
+  At the end of the day, performing a merger simulation is to recompute
+  the equilibrium with different ownership structure encoded in
+  \(\Delta\).
+\end{itemize}
+
+\subsection{Post-Merger Equilibrium}\label{post-merger-equilibrium}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(\Omega^{pre}(p)\) is a matrix whose \((j, k)\)-element is:
+\end{itemize}
+
+\begin{equation}
+- \frac{\partial s_{j}(p)}{\partial p_k} \Delta_{jk}^{pre}.
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  Then, by the first-order condition, the marginal cost should be:
+
+  \begin{equation}
+  mc = p - \Omega^{pre}(p)^{-1} s(p).
+  \end{equation}
+\item
+  If the ownership structure \(\Delta^{pre}\) is changed to
+  \(\Delta^{post}\), and \(\Omega^{pre}\) changed to \(\Omega^{post}\),
+  the post-merger price is determined by solving the non-linear
+  equation:
+
+  \begin{equation}
+  p^{post} = mc + \Omega^{post}(p^{post})^{-1}s(p^{post}).
+  \end{equation}
+\item
+  The post-merger share is given by:
+
+  \begin{equation}
+  s^{post} = s(p^{post}).
+  \end{equation}
+\end{itemize}
+
+\subsection{Consumer Surplus}\label{consumer-surplus}
+
+\begin{itemize}
+\tightlist
+\item
+  Suppose that the demand function is based on the mixed-logit model
+  such that the indirect utility is:
+
+  \begin{equation}
+  u_{ijt} = x_{jt} \beta_i + \alpha_i p_{jt} + \xi_{j} + \xi_t + \Delta \xi_{jt} + \epsilon_{ijt},
+  \end{equation}
+
+  with \(\epsilon_{ijt}\) is drawn from i.i.d. Type-I extreme value
+  distribution and the consumer-level heterogeneity:
+\end{itemize}
+
+\begin{equation}
+\begin{pmatrix}
+\alpha_i \\
+\beta_i
+\end{pmatrix}
+= 
+\begin{pmatrix}
+\alpha\\
+\beta
+\end{pmatrix}
++ \Pi z_i + \Sigma \nu_i, \nu_i \sim N(0, I_{K + 1}).
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  Then, the compensated variation due to the price change for consumer
+  \(i\) is:
+
+  \begin{equation}
+  CV_{it} = \frac{\ln (\sum_{j = 0}^J \exp(V_{ijt}^{post}) ) - \ln (\sum_{j = 0}^J \exp(V_{ijt}^{pre})) }{\alpha_i},
+  \end{equation}
+
+  where \(V_{ijt}^{post}\) and \(V_{ijt}^{pre}\) are indirect utility
+  for consumer \(i\) to purchase good \(j\) at the prices after and
+  before the merger.
+\item
+  This formula holds only if the price enters linearly in the indirect
+  utility (no income effect).
+\item
+  For general case, see \citet{Small1981} and \citet{Mcfadden1995}.
+\end{itemize}
+
 \chapter{Assignment 1: Basic Programming in R}\label{assignment1}
 
 The deadline is the \textbf{start time of February 18 class}.
@@ -5859,7 +6542,7 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
   \texttt{latex2exp} package to use LaTeX math symbol in the label:
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-32-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6282,7 +6965,7 @@ computation of the optimal bandwidth is time consuming.
 ## No. Continuous Explanatory Vars.: 2
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-49-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6421,11 +7104,11 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
   at around the true value?
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-56-2} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-56-3} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6452,6 +7135,954 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
 ## 
 ## $message
 ## [1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
+\end{verbatim}
+
+\chapter{Assignment 3: Demand Function Estimation I}\label{assignment3}
+
+The deadline is the \textbf{March 11 1:30pm}.
+
+\section{Simulate data}\label{simulate-data-2}
+
+We simulated data from a discrete choice model. There are \(T\) markets
+and each market has \(N\) consumers. There are \(J\) products and the
+indirect utility of consumer \(i\) in market \(t\) for product \(j\) is:
+\[
+u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+\] where \(\epsilon_{ijt}\) is an i.i.d. type-I extreme random variable.
+\(x_j\) is \(K\)-dimensional observed characteristics of the product.
+\(p_{jt}\) is the retail price of the product in the market.
+
+\(\xi_{jt}\) is product-market specific fixed effect. \(p_{jt}\) can be
+correlated with \(\xi_{jt}\) but \(x_{jt}\)s are independent of
+\(\xi_{jt}\). \(j = 0\) is an outside option whose indirect utility is:
+\[
+u_{it0} = \epsilon_{i0t},
+\] where \(\epsilon_{i0t}\) is an i.i.d. type-I extreme random variable.
+
+\(\beta_{it}\) and \(\alpha_{it}\) are different across consumers, and
+they are distributed as: \[
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+\] \[
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+\] where \(\nu_{itk}\) for \(k = 1, \cdots, K\) and \(\upsilon_{it}\)
+are i.i.d. standard normal random variables. \(\alpha_0\) is the mean of
+\(\alpha_i\) and \(\tilde{\alpha}_i\) is the deviation from the mean.
+
+Given a choice set in the market, \(\mathcal{J}_t \cup \{0\}\), a
+consumer chooses the alternative that maximizes her utility: \[
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\] The choice probability of product \(j\) for consumer \(i\) in market
+\(t\) is: \[
+\sigma_{jt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]
+
+Suppose that we only observe the share data: \[
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
+\] along with the product-market characteristics \(x_{jt}\) and the
+retail prices \(p_{jt}\) for \(j \in \mathcal{J}_t \cup \{0\}\) for
+\(t = 1, \cdots, T\). We do not observe the choice data \(q_{ijt}\) nor
+shocks \(\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}\).
+
+In this assignment, we consider a model with \(\xi_{jt} = 0\), i.e., the
+model without the unobserved fixed effects. However, the code to
+simulate data should be written for general \(\xi_{jt}\), so that we can
+use the same code in the next assignment in which we consider a model
+with the unobserved fixed effects.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set the seed, constants, and parameters of interest as follows.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set the seed}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{# number of products}
+\NormalTok{J <-}\StringTok{ }\DecValTok{10}
+\CommentTok{# dimension of product characteristics including the intercept}
+\NormalTok{K <-}\StringTok{ }\DecValTok{3}
+\CommentTok{# number of markets}
+\NormalTok{T <-}\StringTok{ }\DecValTok{100}
+\CommentTok{# number of consumers per market}
+\NormalTok{N <-}\StringTok{ }\DecValTok{500}
+\CommentTok{# number of Monte Carlo}
+\NormalTok{L <-}\StringTok{ }\DecValTok{500}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set parameters of interests}
+\NormalTok{beta <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(K); }
+\NormalTok{beta[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{4}
+\NormalTok{beta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4.0000000  0.1836433 -0.8356286
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sigma <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(K)); sigma}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.5952808 0.3295078 0.8204684
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{omega <-}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+Generate the covariates as follows.
+
+The product-market characteristics: \[
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+\] where \(\sigma_x\) is referred to as \texttt{sd\_x} in the code.
+
+The product-market-specific unobserved fixed effect: \[
+\xi_{jt} = 0.
+\] The marginal cost of product \(j\) in market \(t\): \[
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+\] where \(\sigma_c\) is referred to as \texttt{sd\_c} in the code.
+
+The retail price: \[
+p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
+\] where \(\gamma\) is referred to as \texttt{price\_xi} and
+\(\sigma_p\) as \texttt{sd\_p} in the code. This price is not the
+equilibrium price. We will revisit this point in a subsequent
+assignment.
+
+The value of the auxiliary parameters are set as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set auxiliary parameters}
+\NormalTok{price_xi <-}\StringTok{ }\FloatTok{0.3}
+\NormalTok{prop_jt <-}\StringTok{ }\FloatTok{0.6}
+\NormalTok{sd_x <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{sd_c <-}\StringTok{ }\FloatTok{0.05}
+\NormalTok{sd_p <-}\StringTok{ }\FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \texttt{X} is the data frame such that a row contains the
+  characteristics vector \(x_{j}\) of a product and columns are product
+  index and observed product characteristics. The dimension of the
+  characteristics \(K\) is specified above. Add the row of the outside
+  option whose index is \(0\) and all the characteristics are zero.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 11 x 4
+##        j   x_1      x_2     x_3
+##    <dbl> <dbl>    <dbl>   <dbl>
+##  1     0     0  0        0     
+##  2     1     1 -0.00810 -0.0779
+##  3     2     1  0.472   -0.735 
+##  4     3     1  0.411   -0.239 
+##  5     4     1  0.297    0.209 
+##  6     5     1  0.459    0.679 
+##  7     6     1  0.391   -0.0514
+##  8     7     1  0.0373   0.194 
+##  9     8     1 -0.995   -0.0269
+## 10     9     1  0.310   -0.689 
+## 11    10     1 -0.0281  -0.207
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \texttt{M} is the data frame such that a row contains the price
+  \(\xi_{jt}\), marginal cost \(c_{jt}\), and price \(p_{jt}\). After
+  generating the variables, drop \texttt{1\ -\ prop\_jt} products from
+  each market using \texttt{dplyr::sample\_frac} function. The variation
+  in the available products is important for the identification of the
+  distribution of consumer-level unobserved heterogeneity. Add the row
+  of the outside option to each market whose index is \(0\) and all the
+  variables take value zero.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 700 x 5
+##        j     t    xi     c     p
+##    <dbl> <int> <dbl> <dbl> <dbl>
+##  1     0     1     0 0      0   
+##  2     4     1     0 1.000  2.05
+##  3     6     1     0 1.01   2.03
+##  4     7     1     0 0.952  1.92
+##  5     8     1     0 0.955  1.87
+##  6     9     1     0 1.10   2.04
+##  7    10     1     0 1.05   2.14
+##  8     0     2     0 0      0   
+##  9     1     2     0 1.04   2.02
+## 10     2     2     0 1.01   2.10
+## # ... with 690 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Generate the consumer-level heterogeneity. \texttt{V} is the data
+  frame such that a row contains the vector of shocks to consumer-level
+  heterogeneity, \((\nu_{i}', \upsilon_i)\). They are all i.i.d.
+  standard normal random variables.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50,000 x 6
+##        i     t   v_x_1  v_x_2   v_x_3    v_p
+##    <int> <int>   <dbl>  <dbl>   <dbl>  <dbl>
+##  1     1     1 -0.218   0.527 -0.616  -0.335
+##  2     2     1 -0.545   0.887 -1.27   -1.32 
+##  3     3     1 -0.275  -1.08   0.0475 -0.410
+##  4     4     1  0.0276  0.677  0.121  -0.566
+##  5     5     1  0.970   0.952  1.46    0.364
+##  6     6     1 -2.20   -2.03   0.0692  1.00 
+##  7     7     1  1.95   -0.211 -0.390  -1.59 
+##  8     8     1  0.180   0.656 -0.248  -2.43 
+##  9     9     1  0.415  -1.67  -0.573   0.833
+## 10    10     1  0.647  -0.450  0.255  -0.628
+## # ... with 49,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Join \texttt{X}, \texttt{M}, \texttt{V} using
+  \texttt{dplyr::left\_join} and name it \texttt{df}. \texttt{df} is the
+  data frame such that a row contains variables for a consumer about a
+  product that is available in a market.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 350,000 x 13
+##        t     i     j  v_x_1 v_x_2  v_x_3    v_p   x_1     x_2     x_3    xi
+##    <int> <int> <dbl>  <dbl> <dbl>  <dbl>  <dbl> <dbl>   <dbl>   <dbl> <dbl>
+##  1     1     1     0 -0.218 0.527 -0.616 -0.335     0  0       0          0
+##  2     1     1     4 -0.218 0.527 -0.616 -0.335     1  0.297   0.209      0
+##  3     1     1     6 -0.218 0.527 -0.616 -0.335     1  0.391  -0.0514     0
+##  4     1     1     7 -0.218 0.527 -0.616 -0.335     1  0.0373  0.194      0
+##  5     1     1     8 -0.218 0.527 -0.616 -0.335     1 -0.995  -0.0269     0
+##  6     1     1     9 -0.218 0.527 -0.616 -0.335     1  0.310  -0.689      0
+##  7     1     1    10 -0.218 0.527 -0.616 -0.335     1 -0.0281 -0.207      0
+##  8     1     2     0 -0.545 0.887 -1.27  -1.32      0  0       0          0
+##  9     1     2     4 -0.545 0.887 -1.27  -1.32      1  0.297   0.209      0
+## 10     1     2     6 -0.545 0.887 -1.27  -1.32      1  0.391  -0.0514     0
+## # ... with 349,990 more rows, and 2 more variables: c <dbl>, p <dbl>
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Draw a vector of preference shocks \texttt{e} whose length is the same
+  as the number of rows of \texttt{df}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(e)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.68217552  1.05418040  0.16787113  0.26895893 -0.68735413  0.01863627
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_indirect\_utility(df,\ beta,\ sigma,\ mu,\ omega)}
+  that returns a vector whose element is the mean indirect utility of a
+  product for a consumer in a market. The output should have the same
+  length with \(e\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute indirect utility}
+\NormalTok{u <-}\StringTok{ }
+\StringTok{  }\KeywordTok{compute_indirect_utility}\NormalTok{(}
+\NormalTok{    df, beta, sigma, }
+\NormalTok{           mu, omega)}
+\KeywordTok{head}\NormalTok{(u)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             u
+## [1,] 0.000000
+## [2,] 1.057260
+## [3,] 1.467362
+## [4,] 1.141441
+## [5,] 1.133450
+## [6,] 2.278443
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_choice(X,\ M,\ V,\ e,\ beta,\ sigma,\ mu,\ omega)}
+  that first construct \texttt{df} from \texttt{X}, \texttt{M},
+  \texttt{V}, second call \texttt{compute\_indirect\_utility} to obtain
+  the vector of mean indirect utilities \texttt{u}, third compute the
+  choice vector \texttt{q} based on the vector of mean indirect
+  utilities and \texttt{e}, and finally return the data frame to which
+  \texttt{u} and \texttt{q} are added as columns.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute choice}
+\NormalTok{df_choice <-}\StringTok{ }
+\StringTok{  }\KeywordTok{compute_choice}\NormalTok{(X, M, V, e, beta, sigma, }
+\NormalTok{                 mu, omega)}
+\NormalTok{df_choice}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 350,000 x 16
+##        t     i     j  v_x_1 v_x_2  v_x_3    v_p   x_1     x_2     x_3    xi
+##    <int> <int> <dbl>  <dbl> <dbl>  <dbl>  <dbl> <dbl>   <dbl>   <dbl> <dbl>
+##  1     1     1     0 -0.218 0.527 -0.616 -0.335     0  0       0          0
+##  2     1     1     4 -0.218 0.527 -0.616 -0.335     1  0.297   0.209      0
+##  3     1     1     6 -0.218 0.527 -0.616 -0.335     1  0.391  -0.0514     0
+##  4     1     1     7 -0.218 0.527 -0.616 -0.335     1  0.0373  0.194      0
+##  5     1     1     8 -0.218 0.527 -0.616 -0.335     1 -0.995  -0.0269     0
+##  6     1     1     9 -0.218 0.527 -0.616 -0.335     1  0.310  -0.689      0
+##  7     1     1    10 -0.218 0.527 -0.616 -0.335     1 -0.0281 -0.207      0
+##  8     1     2     0 -0.545 0.887 -1.27  -1.32      0  0       0          0
+##  9     1     2     4 -0.545 0.887 -1.27  -1.32      1  0.297   0.209      0
+## 10     1     2     6 -0.545 0.887 -1.27  -1.32      1  0.391  -0.0514     0
+## # ... with 349,990 more rows, and 5 more variables: c <dbl>, p <dbl>,
+## #   u <dbl>, e <dbl>, q <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(df_choice)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        t                i               j              v_x_1          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685630  
+##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.000166  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.829   Mean   :-0.004342  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.667946  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
+##      v_x_2               v_x_3                v_p           
+##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
+##  1st Qu.:-0.678458   1st Qu.:-0.674724   1st Qu.:-0.670276  
+##  Median : 0.000095   Median : 0.005968   Median : 0.002173  
+##  Mean   :-0.001408   Mean   : 0.003842   Mean   :-0.001432  
+##  3rd Qu.: 0.671120   3rd Qu.: 0.678367   3rd Qu.: 0.670915  
+##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300  
+##       x_1              x_2                 x_3                 xi   
+##  Min.   :0.0000   Min.   :-0.994676   Min.   :-0.73538   Min.   :0  
+##  1st Qu.:1.0000   1st Qu.:-0.008095   1st Qu.:-0.21539   1st Qu.:0  
+##  Median :1.0000   Median : 0.037283   Median :-0.05139   Median :0  
+##  Mean   :0.8571   Mean   : 0.100391   Mean   :-0.08313   Mean   :0  
+##  3rd Qu.:1.0000   3rd Qu.: 0.391068   3rd Qu.: 0.19384   3rd Qu.:0  
+##  Max.   :1.0000   Max.   : 0.471918   Max.   : 0.67934   Max.   :0  
+##        c                p               u                  e          
+##  Min.   :0.0000   Min.   :0.000   Min.   :-204.226   Min.   :-2.6364  
+##  1st Qu.:0.9449   1st Qu.:1.920   1st Qu.:  -2.010   1st Qu.:-0.3302  
+##  Median :0.9882   Median :1.991   Median :   0.000   Median : 0.3635  
+##  Mean   :0.8583   Mean   :1.719   Mean   :  -1.145   Mean   : 0.5761  
+##  3rd Qu.:1.0293   3rd Qu.:2.047   3rd Qu.:   2.162   3rd Qu.: 1.2415  
+##  Max.   :1.1996   Max.   :2.196   Max.   :  10.086   Max.   :14.0966  
+##        q         
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :0.0000  
+##  Mean   :0.1429  
+##  3rd Qu.:0.0000  
+##  Max.   :1.0000
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_share(X,\ M,\ V,\ e,\ beta,\ sigma,\ mu,\ omega)}
+  that first construct \texttt{df} from \texttt{X}, \texttt{M},
+  \texttt{V}, second call \texttt{compute\_choice} to obtain a data
+  frame with \texttt{u} and \texttt{q}, third compute the share of each
+  product at each market \texttt{s} and the log difference in the share
+  from the outside option, \(\ln(s_{jt}/s_{0t})\), denoted by
+  \texttt{y}, and finally return the data frame that is summarized at
+  the product-market level, dropped consumer-level variables, and added
+  \texttt{s} and \texttt{y}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute share}
+\NormalTok{df_share <-}
+\StringTok{  }\KeywordTok{compute_share}\NormalTok{(X, M, V, e, beta, sigma, }
+\NormalTok{                mu, omega)}
+\NormalTok{df_share}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 700 x 11
+##        t     j   x_1      x_2     x_3    xi     c     p     q     s      y
+##    <int> <dbl> <dbl>    <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
+##  1     1     0     0  0        0          0 0      0      157 0.314  0    
+##  2     1     4     1  0.297    0.209      0 1.000  2.05    40 0.08  -1.37 
+##  3     1     6     1  0.391   -0.0514     0 1.01   2.03    47 0.094 -1.21 
+##  4     1     7     1  0.0373   0.194      0 0.952  1.92    67 0.134 -0.852
+##  5     1     8     1 -0.995   -0.0269     0 0.955  1.87    55 0.11  -1.05 
+##  6     1     9     1  0.310   -0.689      0 1.10   2.04    92 0.184 -0.534
+##  7     1    10     1 -0.0281  -0.207      0 1.05   2.14    42 0.084 -1.32 
+##  8     2     0     0  0        0          0 0      0      176 0.352  0    
+##  9     2     1     1 -0.00810 -0.0779     0 1.04   2.02    61 0.122 -1.06 
+## 10     2     2     1  0.472   -0.735      0 1.01   2.10    79 0.158 -0.801
+## # ... with 690 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(df_share)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        t                j               x_1              x_2           
+##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-0.994676  
+##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.008095  
+##  Median : 50.50   Median : 5.000   Median :1.0000   Median : 0.037283  
+##  Mean   : 50.50   Mean   : 4.829   Mean   :0.8571   Mean   : 0.100391  
+##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000   3rd Qu.: 0.391068  
+##  Max.   :100.00   Max.   :10.000   Max.   :1.0000   Max.   : 0.471918  
+##       x_3                 xi          c                p        
+##  Min.   :-0.73538   Min.   :0   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.:-0.21539   1st Qu.:0   1st Qu.:0.9449   1st Qu.:1.920  
+##  Median :-0.05139   Median :0   Median :0.9882   Median :1.991  
+##  Mean   :-0.08313   Mean   :0   Mean   :0.8583   Mean   :1.719  
+##  3rd Qu.: 0.19384   3rd Qu.:0   3rd Qu.:1.0293   3rd Qu.:2.047  
+##  Max.   : 0.67934   Max.   :0   Max.   :1.1996   Max.   :2.196  
+##        q                s                y          
+##  Min.   : 21.00   Min.   :0.0420   Min.   :-2.0735  
+##  1st Qu.: 44.00   1st Qu.:0.0880   1st Qu.:-1.3041  
+##  Median : 55.00   Median :0.1100   Median :-1.0445  
+##  Mean   : 71.43   Mean   :0.1429   Mean   :-0.9370  
+##  3rd Qu.: 85.00   3rd Qu.:0.1700   3rd Qu.:-0.6405  
+##  Max.   :186.00   Max.   :0.3720   Max.   : 0.0000
+\end{verbatim}
+
+\section{Estimate the parameters}\label{estimate-the-parameters-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Estimate the parameters assuming there is no consumer-level
+  heterogeneity, i.e., by assuming: \[
+  \ln \frac{s_{jt}}{s_{0t}} = \beta' x_{jt} + \alpha p_{jt}.
+  \] This can be implemented using \texttt{lm} function. Print out the
+  estimate results.
+\end{enumerate}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ -1 + x_1 + x_2 + x_3 + p, data = df_share)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.6219 -0.1036  0.0000  0.1018  0.5508 
+## 
+## Coefficients:
+##     Estimate Std. Error t value Pr(>|t|)    
+## x_1  1.25741    0.18678   6.732  3.5e-11 ***
+## x_2  0.17042    0.01648  10.339  < 2e-16 ***
+## x_3 -0.71672    0.01818 -39.414  < 2e-16 ***
+## p   -1.21675    0.09309 -13.070  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1723 on 696 degrees of freedom
+## Multiple R-squared:  0.974,  Adjusted R-squared:  0.9738 
+## F-statistic:  6507 on 4 and 696 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+We estimate the model using simulated share.
+
+When optimizing an objective function that uses the Monte Carlo
+simulation, it is important to keep the realizations of the shocks the
+same across the evaluations of the objective function. If the
+realization of the shocks differ across the objective function
+evaluations, the optimization algorithm will not converge because it
+cannot distinguish the change in the value of the objective function due
+to the difference in the parameters and the difference in the realized
+shocks.
+
+The best practice to avoid this problem is to generate the shocks
+outside the optimization algorithm as in the current case. If the size
+of the shocks can be too large to store in the memory, the second best
+practice is to make sure to set the seed inside the optimization
+algorithm so that the realized shocks are the same across function
+evaluations.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  For this reason, we first draw Monte Carlo consumer-level
+  heterogeneity \texttt{V\_mcmc} and Monte Carlo preference shocks
+  \texttt{e\_mcmc}. The number of simulations is \texttt{L}. This does
+  not have to be the same with the actual number of consumers
+  \texttt{N}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V_mcmc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50,000 x 6
+##        i     t   v_x_1   v_x_2  v_x_3    v_p
+##    <int> <int>   <dbl>   <dbl>  <dbl>  <dbl>
+##  1     1     1  1.80   -1.42   -0.227 -0.756
+##  2     2     1  0.0181  0.163  -0.325  0.307
+##  3     3     1 -0.938  -0.797   0.216 -0.357
+##  4     4     1  1.86    0.624  -0.634  0.682
+##  5     5     1 -1.26   -1.96    1.21   1.58 
+##  6     6     1 -0.640  -1.11    0.423 -0.953
+##  7     7     1 -0.163   0.0833 -1.59  -0.694
+##  8     8     1 -0.150  -0.633   1.26  -0.353
+##  9     9     1 -2.22   -0.938  -0.551 -0.815
+## 10    10     1 -0.550  -0.256  -0.348 -0.411
+## # ... with 49,990 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(e_mcmc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1.8137665  1.7743529  1.1355103  0.0138476 -0.6363222  0.7985290
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Use \texttt{compute\_share} to check the simulated share at the true
+  parameter using the Monte Carlo shocks. Remember that the number of
+  consumers should be set at \texttt{L} instead of \texttt{N}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_share_mcmc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 700 x 11
+##        t     j   x_1      x_2     x_3    xi     c     p     q     s      y
+##    <int> <dbl> <dbl>    <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
+##  1     1     0     0  0        0          0 0      0      143 0.286  0    
+##  2     1     4     1  0.297    0.209      0 1.000  2.05    39 0.078 -1.30 
+##  3     1     6     1  0.391   -0.0514     0 1.01   2.03    63 0.126 -0.820
+##  4     1     7     1  0.0373   0.194      0 0.952  1.92    50 0.1   -1.05 
+##  5     1     8     1 -0.995   -0.0269     0 0.955  1.87    47 0.094 -1.11 
+##  6     1     9     1  0.310   -0.689      0 1.10   2.04   105 0.21  -0.309
+##  7     1    10     1 -0.0281  -0.207      0 1.05   2.14    53 0.106 -0.993
+##  8     2     0     0  0        0          0 0      0      150 0.3    0    
+##  9     2     1     1 -0.00810 -0.0779     0 1.04   2.02    44 0.088 -1.23 
+## 10     2     2     1  0.472   -0.735      0 1.01   2.10    87 0.174 -0.545
+## # ... with 690 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Vectorize the parameters to a vector \texttt{theta} because
+  \texttt{optim} requires the maximiand to be a vector.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set parameters}
+\NormalTok{theta <-}\StringTok{ }\KeywordTok{c}\NormalTok{(beta, sigma, mu, omega)}
+\NormalTok{theta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684
+## [7]  0.5000000  1.0000000
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Write a function
+  \texttt{NLLS\_objective\_A3(theta,\ df\_share,\ X,\ M,\ V\_mcmc,\ e\_mcmc)}
+  that first computes the simulated share and then compute the
+  mean-squared error between the share data.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NLLS_objective}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0004384229
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Draw a graph of the objective function that varies each parameter from
+  0.5, 0.6, \(\cdots\), 1.5 of the true value. First try with the actual
+  shocks \texttt{V} and \texttt{e} and then try with the Monte Carlo
+  shocks \texttt{V\_mcmc} and \texttt{e\_mcmc}. You will some of the
+  graph does not look good with the Monte Carlo shocks. It will cause
+  the approximation error.
+\end{enumerate}
+
+Because this takes time, you may want to parallelize the commutation
+using \texttt{\%dopar} functionality of \texttt{foreach} loop. To do so,
+first install \texttt{doParallel} package and then load it and register
+the workers as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{registerDoParallel}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+This automatically detect the number of cores available at your computer
+and registers them as the workers. Then, you only have to change
+\texttt{\%do\%} to \texttt{\%dopar} in the \texttt{foreach} loop as
+follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{) }\OperatorTok{%dopar%}\StringTok{ }\NormalTok{\{}
+  \CommentTok{# this part is parallelized}
+\NormalTok{  y <-}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{i}
+  \KeywordTok{return}\NormalTok{(y)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 6
+## 
+## [[4]]
+## [1] 8
+\end{verbatim}
+
+In windows, you may have to explicitly pass packages, functions, and
+data to the worker by using \texttt{.export} and \texttt{.package}
+options as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp_func <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  y <-}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{x}
+  \KeywordTok{return}\NormalTok{(y)}
+\NormalTok{\}}
+\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }
+         \DataTypeTok{.export =} \StringTok{"temp_func"}\NormalTok{,}
+         \DataTypeTok{.packages =} \StringTok{"magrittr"}\NormalTok{) }\OperatorTok{%dopar%}\StringTok{ }\NormalTok{\{}
+  \CommentTok{# this part is parallelized}
+\NormalTok{  y <-}\StringTok{ }\KeywordTok{temp_func}\NormalTok{(i)}
+  \KeywordTok{return}\NormalTok{(y)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 6
+## 
+## [[4]]
+## [1] 8
+\end{verbatim}
+
+If you have called a function in a package in this way
+\texttt{dplyr::mutate}, then you will not have to pass \texttt{dplyr} by
+\texttt{.packages} option. This is one of the reasons why I prefer to
+explicitly call the pacakge every time I call a function. If you have
+compiled your functions in a package, you will just have to pass the
+package as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# this function is compiled in the package EmpiricalIO}
+\CommentTok{# temp_func <- function(x) \{}
+\CommentTok{#   y <- 2 * x}
+\CommentTok{#   return(y)}
+\CommentTok{# \}}
+\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }
+         \DataTypeTok{.packages =} \KeywordTok{c}\NormalTok{(}
+           \StringTok{"EmpiricalIO"}\NormalTok{,}
+           \StringTok{"magrittr"}\NormalTok{)) }\OperatorTok{%dopar%}\StringTok{ }\NormalTok{\{}
+  \CommentTok{# this part is parallelized}
+\NormalTok{  y <-}\StringTok{ }\KeywordTok{temp_func}\NormalTok{(i)}
+  \KeywordTok{return}\NormalTok{(y)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 6
+## 
+## [[4]]
+## [1] 8
+\end{verbatim}
+
+The graphs with the true shocks:
+
+\begin{verbatim}
+## [[1]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-1} \end{center}
+
+\begin{verbatim}
+## 
+## [[2]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-2} \end{center}
+
+\begin{verbatim}
+## 
+## [[3]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-3} \end{center}
+
+\begin{verbatim}
+## 
+## [[4]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-4} \end{center}
+
+\begin{verbatim}
+## 
+## [[5]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-5} \end{center}
+
+\begin{verbatim}
+## 
+## [[6]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-6} \end{center}
+
+\begin{verbatim}
+## 
+## [[7]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-7} \end{center}
+
+\begin{verbatim}
+## 
+## [[8]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-89-8} \end{center}
+
+The graphs with the Monte Carlo shocks:
+
+\begin{verbatim}
+## [[1]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-1} \end{center}
+
+\begin{verbatim}
+## 
+## [[2]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-2} \end{center}
+
+\begin{verbatim}
+## 
+## [[3]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-3} \end{center}
+
+\begin{verbatim}
+## 
+## [[4]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-4} \end{center}
+
+\begin{verbatim}
+## 
+## [[5]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-5} \end{center}
+
+\begin{verbatim}
+## 
+## [[6]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-6} \end{center}
+
+\begin{verbatim}
+## 
+## [[7]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-7} \end{center}
+
+\begin{verbatim}
+## 
+## [[8]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-8} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Use \texttt{optim} to find the minimizer of the objective function
+  using \texttt{Nelder-Mead} method. You can start from the true
+  parameter values. Compare the estimates with the true parameters.
+\end{enumerate}
+
+\begin{verbatim}
+## $par
+## [1]  4.0927656  0.2010147 -0.8053223  1.7687700  0.4916767  0.5071025
+## [7]  0.4808094  1.0509863
+## 
+## $value
+## [1] 0.0004093943
+## 
+## $counts
+## function gradient 
+##      245       NA 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL
+\end{verbatim}
+
+\begin{verbatim}
+##         true  estimates
+## 1  4.0000000  4.0927656
+## 2  0.1836433  0.2010147
+## 3 -0.8356286 -0.8053223
+## 4  1.5952808  1.7687700
+## 5  0.3295078  0.4916767
+## 6  0.8204684  0.5071025
+## 7  0.5000000  0.4808094
+## 8  1.0000000  1.0509863
 \end{verbatim}
 
 \bibliography{library.bib,packages.bib}

@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="production.html">
+<link rel="prev" href="assignment2.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -321,416 +321,499 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<div id="structural-estimation-and-counterfactual-analysis" class="section level2">
-<h2><span class="header-section-number">2.1</span> Structural Estimation and Counterfactual Analysis</h2>
-<div id="example" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Example</h3>
-<ul>
-<li><p><span class="citation">Igami (<a href="#ref-Igami2017">2017</a>)</span> “Estimating the Innovator’s Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981-1998”.</p></li>
-<li><strong>Question</strong>:</li>
-<li>Does “Innovator’s Dilemma” <span class="citation">(Christensen, <a href="#ref-Christensen1997">1997</a>)</span> or the delay of innovation among incumbents exist?</li>
-<li>Christensen argued that old winners tend to lag behind entrants even when introducing a new technology is not too difficult, with a case study of the HDD industry.
-<ul>
-<li>Apple’s smartphone vs. Nokia’s feature phones.</li>
-<li>Amazon vs. Borders.</li>
-<li>Kodak’s digital camera.</li>
-</ul></li>
-<li>If it exists, what is the reason for that?</li>
-<li><p>How do we empirically answer this question?</p></li>
-</ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
-<img src="figuretable/Igam2017Fig1.png" alt="Figure 1 of Igam (2017)" width="80%" />
-<p class="caption">
-Figure 2.1: Figure 1 of Igam (2017)
-</p>
-</div>
-<ul>
-<li><strong>Hypotheses</strong>:</li>
-<li>Identify potentially competing hypotheses to explain the phenomenon.
+<div id="assignment3" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Assignment 3: Demand Function Estimation I</h1>
+<p>The deadline is the <strong>March 11 1:30pm</strong>.</p>
+<div id="simulate-data-2" class="section level2">
+<h2><span class="header-section-number">8.1</span> Simulate data</h2>
+<p>We simulated data from a discrete choice model. There are <span class="math inline">\(T\)</span> markets and each market has <span class="math inline">\(N\)</span> consumers. There are <span class="math inline">\(J\)</span> products and the indirect utility of consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> for product <span class="math inline">\(j\)</span> is: <span class="math display">\[
+u_{itj} = \beta_{it}&#39; x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+\]</span> where <span class="math inline">\(\epsilon_{ijt}\)</span> is an i.i.d. type-I extreme random variable. <span class="math inline">\(x_j\)</span> is <span class="math inline">\(K\)</span>-dimensional observed characteristics of the product. <span class="math inline">\(p_{jt}\)</span> is the retail price of the product in the market.</p>
+<p><span class="math inline">\(\xi_{jt}\)</span> is product-market specific fixed effect. <span class="math inline">\(p_{jt}\)</span> can be correlated with <span class="math inline">\(\xi_{jt}\)</span> but <span class="math inline">\(x_{jt}\)</span>s are independent of <span class="math inline">\(\xi_{jt}\)</span>. <span class="math inline">\(j = 0\)</span> is an outside option whose indirect utility is: <span class="math display">\[
+u_{it0} = \epsilon_{i0t},
+\]</span> where <span class="math inline">\(\epsilon_{i0t}\)</span> is an i.i.d. type-I extreme random variable.</p>
+<p><span class="math inline">\(\beta_{it}\)</span> and <span class="math inline">\(\alpha_{it}\)</span> are different across consumers, and they are distributed as: <span class="math display">\[
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+\]</span> <span class="math display">\[
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+\]</span> where <span class="math inline">\(\nu_{itk}\)</span> for <span class="math inline">\(k = 1, \cdots, K\)</span> and <span class="math inline">\(\upsilon_{it}\)</span> are i.i.d. standard normal random variables. <span class="math inline">\(\alpha_0\)</span> is the mean of <span class="math inline">\(\alpha_i\)</span> and <span class="math inline">\(\tilde{\alpha}_i\)</span> is the deviation from the mean.</p>
+<p>Given a choice set in the market, <span class="math inline">\(\mathcal{J}_t \cup \{0\}\)</span>, a consumer chooses the alternative that maximizes her utility: <span class="math display">\[
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]</span> The choice probability of product <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is: <span class="math display">\[
+\sigma_{jt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]</span></p>
+<p>Suppose that we only observe the share data: <span class="math display">\[
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
+\]</span> along with the product-market characteristics <span class="math inline">\(x_{jt}\)</span> and the retail prices <span class="math inline">\(p_{jt}\)</span> for <span class="math inline">\(j \in \mathcal{J}_t \cup \{0\}\)</span> for <span class="math inline">\(t = 1, \cdots, T\)</span>. We do not observe the choice data <span class="math inline">\(q_{ijt}\)</span> nor shocks <span class="math inline">\(\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}\)</span>.</p>
+<p>In this assignment, we consider a model with <span class="math inline">\(\xi_{jt} = 0\)</span>, i.e., the model without the unobserved fixed effects. However, the code to simulate data should be written for general <span class="math inline">\(\xi_{jt}\)</span>, so that we can use the same code in the next assignment in which we consider a model with the unobserved fixed effects.</p>
 <ol style="list-style-type: decimal">
-<li>Cannibalization: Because of cannibalization, the benefits of introducing a new product are smaller for incumbents than for entrants.</li>
-<li>Different costs: The incumbents may have higher costs for innovation due to the organizational inertia, but at the same time they may have some cost advantage due to accumulated R&amp;D and better financial access.</li>
-<li>Preemption: The incumbents have additional incentive for innovation to preempt potential rivals.</li>
-<li>Institutional environment: The impacts of the three components differ across different institutional contexts such as the rules governing patents and market size.</li>
-</ol></li>
-<li>Casual empiricists pick up their favorite factors to make up a story.</li>
-<li>Serious empiricists should try to separate the contributions of each factor from data.</li>
-<li><p>To do so, the author develops an economic model that explicitly incorporates the above mentioned factors, while keeping the model parameters flexible enough to let the data tell the sign and size of the effects of each factor on innovation.</p></li>
-<li><p><strong>Economic model</strong>:</p></li>
-<li>The time is discrete with finite horizon <span class="math inline">\(t = 1, \cdots, T\)</span>.</li>
-<li>In each year, there is a finite number of firms indexed by <span class="math inline">\(i\)</span>.</li>
-<li>Each firm is in one of the technological states:
-<span class="math display">\[\begin{equation}
-s_{it} \in \{\text{old only, both, new only, potential entrant}\},
-\end{equation}\]</span>
-where the first two states are for incumbents (stick to the old technology or start using the new technology) and the last two states are for actual and potential entrants (enter with the new technology or stay outside the market).</li>
-<li>In each year:
-<ul>
-<li>Pre-innovation incumbent (<span class="math inline">\(s_{it} =\)</span> old): exit or innovate by paying a sunk cost <span class="math inline">\(\kappa^{inc}\)</span> (to be <span class="math inline">\(s_{i, t + 1} =\)</span> both).</li>
-<li>Post-innovation incumbent (<span class="math inline">\(s_{it} =\)</span> both): exit or stay to be both.</li>
-<li>Potential entrant (<span class="math inline">\(s_{it} =\)</span> potential entrant): give up entry or enter with the new technology by paying a sunk cost <span class="math inline">\(\kappa^{net}\)</span> (to be <span class="math inline">\(s_{i, t + 1} =\)</span> new).</li>
-<li>Actual entrant (<span class="math inline">\(s_{it} =\)</span> new): exit or stay to be new.</li>
-</ul></li>
-<li>Given the industry state <span class="math inline">\(s_t = \{s_{it}\}_i\)</span>, the product market competition opens and the profit of firm <span class="math inline">\(i\)</span>, <span class="math inline">\(\pi_t(s_{it}, s_{-it})\)</span>, is realized for each active firm.</li>
-<li>As the product market competition closes:
-<ul>
-<li>Pre-innovation incumbents draw private cost shocks and make decisions: <span class="math inline">\(a_t^{pre}\)</span>.</li>
-<li>Observing this, post-innovation incumbents draw private cost shocks and make decisions: <span class="math inline">\(a_t^{post}\)</span>.</li>
-<li>Observing this, actual entrants draw private cost shocks and make decisions: <span class="math inline">\(a_t^{act}\)</span>.</li>
-<li>Observing this, potential entrants draw private cost shocks and make decisions: <span class="math inline">\(a_t^{pot}\)</span>.</li>
-</ul></li>
-<li>This is a dynamic game. The equilibrium is defined by the concept of <strong>Markov-perfect equilibrium</strong> <span class="citation">(Maskin &amp; Tirole, <a href="#ref-Maskin1988">1988</a>)</span>.</li>
-<li>The representation of the competing theories in the model:
-<ul>
-<li>The existence of cannibalization is represented by the assumption that an incumbent maximizes the joint profits of old and new technology products.</li>
-<li>The size of cannibalization is captured by the shape of profit function.</li>
-<li>The difference in the cost of innovation is captured by the difference in the sunk costs of innovation.</li>
-<li>The preemptive incentive for incumbents are embodied in the dynamic optimization problem for each incumbent.</li>
-</ul></li>
-<li><p><strong>Econometric model</strong>:</p></li>
-<li>The author then turns the economic model into an econometric model.</li>
-<li>This amounts to specify which part of the economic model is observed/known and which part is unobserved/unknown.</li>
-<li>The author collects the data set of the HDD industry during 1977-99.</li>
-<li>Based on the data, the author specify the identities of active firms and their products and the technologies embodied in the products in each year to code their <strong>state variables</strong>.</li>
-<li>Moreover, by tracking the change in the state, the author code their <strong>action variables</strong>.</li>
-<li>Thus, the state and action variables, <span class="math inline">\(s_t\)</span> and <span class="math inline">\(a_t\)</span>. These are the <strong>observables</strong>.</li>
-<li>The author does not observe:
-<ul>
-<li>Profit function <span class="math inline">\(\pi_t(\cdot)\)</span>.</li>
-<li>Sunk cost of innovation for pre-innovation incumbents <span class="math inline">\(\kappa^{inc}\)</span>.</li>
-<li>Sunk cost of entry for potential entrants <span class="math inline">\(\kappa^{net}\)</span>.</li>
-<li>Private cost shocks.</li>
-</ul></li>
-<li>These are the <strong>unobservables</strong>.</li>
-<li><p>Among the unobservables, the profit function and sunk costs are the <strong>parameter of interets</strong> and the private cost shocks are <strong>nuissance parameters</strong> in the sense only the knowledge about the distribution of the latter is demanded.</p></li>
-<li><p><strong>Identification</strong>:</p></li>
-<li>Can we infer the unobservables from the observables and the restrictions on the distribution of observable by the economic theory?</li>
-<li>The profit function is identified from estimating the demand function for each firm’s product, and estimating the cost function for each firm from using their price setting behavior.</li>
-<li><p>The sunk costs of innovation are identified from the conditional probability of innovation across various states. If the cost is low, the probability should be high.</p></li>
-<li><p><strong>Estimation</strong>:</p></li>
-<li>The identification established that in principle we can uncover the parameters of interests from observables under the restrictions of economic theory.</li>
-<li><p>Finally, we apply a statistical method to the econometric model and infer the parameters of interest.</p></li>
-<li><p><strong>Counterfactual analysis</strong>:</p></li>
-<li><p>If we can uncover the parameters of interest, we can conduct <strong>comparative statics</strong>: study the change in the endogenous variables when the exogenous variables including the model parameters are set different. In the current framework, this exercise is often called the <strong>counterfactual analysis</strong>.</p></li>
-<li>What if there was no cannibalization?:
-<ul>
-<li>An incumbents separately maximizes the profit from old technology and new technology instead of jointly maximizing the profits. Solve the model under this new assumption everything else being equal.</li>
-<li>Free of cannibalization concerns, 8.95 incumbents start producing new HDDs in the first 10 years, compared with 6.30 in the baseline.</li>
-<li>The cumulative numbers of innovators among incumbents and entrants differ only by 2.8 compared with 6.45 in the baseline.</li>
-<li>Thus cannibalization can explain a significant part of the incumbent-entrant innovation gap.</li>
-</ul></li>
-<li>What if there was no preemption?:
-<ul>
-<li>A potential entrant ignores the incumbents’ innovations upon making entry decisions.</li>
-<li>Without the preemptive motives, only 6.02 incumbents would innovate in the first 10 7ears, compared with 6.30 in the baseline.</li>
-<li>The cumulative incumbent-entrant innovation gap widen to 8.91 compared with 6.45 in the baseline.</li>
-</ul></li>
-<li><p>The sunk cost of entry is smaller for incumbents than for entrants in the baseline.</p></li>
-<li><strong>Interpretations and policy/managerial implication</strong>:</li>
-<li>Despite the cost advantage and the preemptive motives, the speed of innovation is slower among incumbents due to the strong cannibalization effect.</li>
-<li><p>Incumbents that attempt to avoid the “innovator’s dilemma” should separate the decision makings between old and new sections inside the organization so that it can avoid the concern for cannibalization.</p></li>
-</ul>
-</div>
-<div id="recap" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Recap</h3>
-<ul>
-<li>The structural approach in empirical industrial organization consists of the following components:</li>
-</ul>
-<ol style="list-style-type: decimal">
-<li>Research question.</li>
-<li>Competing hypotheses.</li>
-<li>Economic model.</li>
-<li>Econometric model</li>
-<li>Identification.</li>
-<li>Data collection.</li>
-<li>Data cleaning.</li>
-<li>Estimation.</li>
-<li>Counterfactual analysis.</li>
-<li>Coding.</li>
-<li>Interpretations and policy/managerial implications.</li>
+<li>Set the seed, constants, and parameters of interest as follows.</li>
 </ol>
-<ul>
-<li>The goal of this course is to be familiar with the standard methodology to complete this process.</li>
-<li>The methodology covered in this class is mostly developed to analyze the standard framework to dynamic or oligopoly competition.</li>
-<li>The policy implications are centered around competition policies.</li>
-<li>But the basic idea can be extend to different class of situations such as auction, matching, voting, contract, marketing, and so on.</li>
-<li>Note that the depth of the research question and the relevance of the policy/managerial implications are the most important part of the research.</li>
-<li>Focusing on the methodology in this class is to minimize the time to allocate to less important issues and maximize the attention and time to the most valuable part in the future research.</li>
-<li>Given a research question, what kind of data is necessary to answer the question?</li>
-<li>Given data, what kind of research questions can you address? Which question can be credibly answered? Which question can be an over-stretch?</li>
-<li>Given a research question and data, what is the best way to answer the question? What type of problem can you avoid using the method? What is the limitation of your approach? How will you defend the possible referee comments?</li>
-<li>Given a result, what kinds of interpretation can you credibly derive? What kinds of interpretation can be contested by potential opponents? What kinds of contribution can you claim?</li>
-<li>To address these issues is <strong>necessary</strong> to publish a paper and it is <strong>necessary</strong> to be familiar with the methodology to do so.</li>
-</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set the seed</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="co"># number of products</span>
+J &lt;-<span class="st"> </span><span class="dv">10</span>
+<span class="co"># dimension of product characteristics including the intercept</span>
+K &lt;-<span class="st"> </span><span class="dv">3</span>
+<span class="co"># number of markets</span>
+T &lt;-<span class="st"> </span><span class="dv">100</span>
+<span class="co"># number of consumers per market</span>
+N &lt;-<span class="st"> </span><span class="dv">500</span>
+<span class="co"># number of Monte Carlo</span>
+L &lt;-<span class="st"> </span><span class="dv">500</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set parameters of interests</span>
+beta &lt;-<span class="st"> </span><span class="kw">rnorm</span>(K); 
+beta[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">4</span>
+beta</code></pre></div>
+<pre><code>## [1]  4.0000000  0.1836433 -0.8356286</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sigma &lt;-<span class="st"> </span><span class="kw">abs</span>(<span class="kw">rnorm</span>(K)); sigma</code></pre></div>
+<pre><code>## [1] 1.5952808 0.3295078 0.8204684</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mu &lt;-<span class="st"> </span><span class="fl">0.5</span>
+omega &lt;-<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<p>Generate the covariates as follows.</p>
+<p>The product-market characteristics: <span class="math display">\[
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+\]</span> where <span class="math inline">\(\sigma_x\)</span> is referred to as <code>sd_x</code> in the code.</p>
+<p>The product-market-specific unobserved fixed effect: <span class="math display">\[
+\xi_{jt} = 0.
+\]</span> The marginal cost of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span>: <span class="math display">\[
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+\]</span> where <span class="math inline">\(\sigma_c\)</span> is referred to as <code>sd_c</code> in the code.</p>
+<p>The retail price: <span class="math display">\[
+p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
+\]</span> where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_xi</code> and <span class="math inline">\(\sigma_p\)</span> as <code>sd_p</code> in the code. This price is not the equilibrium price. We will revisit this point in a subsequent assignment.</p>
+<p>The value of the auxiliary parameters are set as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set auxiliary parameters</span>
+price_xi &lt;-<span class="st"> </span><span class="fl">0.3</span>
+prop_jt &lt;-<span class="st"> </span><span class="fl">0.6</span>
+sd_x &lt;-<span class="st"> </span><span class="fl">0.5</span>
+sd_c &lt;-<span class="st"> </span><span class="fl">0.05</span>
+sd_p &lt;-<span class="st"> </span><span class="fl">0.05</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><code>X</code> is the data frame such that a row contains the characteristics vector <span class="math inline">\(x_{j}\)</span> of a product and columns are product index and observed product characteristics. The dimension of the characteristics <span class="math inline">\(K\)</span> is specified above. Add the row of the outside option whose index is <span class="math inline">\(0\)</span> and all the characteristics are zero.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X</code></pre></div>
+<pre><code>## # A tibble: 11 x 4
+##        j   x_1      x_2     x_3
+##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1     0     0  0        0     
+##  2     1     1 -0.00810 -0.0779
+##  3     2     1  0.472   -0.735 
+##  4     3     1  0.411   -0.239 
+##  5     4     1  0.297    0.209 
+##  6     5     1  0.459    0.679 
+##  7     6     1  0.391   -0.0514
+##  8     7     1  0.0373   0.194 
+##  9     8     1 -0.995   -0.0269
+## 10     9     1  0.310   -0.689 
+## 11    10     1 -0.0281  -0.207</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><code>M</code> is the data frame such that a row contains the price <span class="math inline">\(\xi_{jt}\)</span>, marginal cost <span class="math inline">\(c_{jt}\)</span>, and price <span class="math inline">\(p_{jt}\)</span>. After generating the variables, drop <code>1 - prop_jt</code> products from each market using <code>dplyr::sample_frac</code> function. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is <span class="math inline">\(0\)</span> and all the variables take value zero.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">M</code></pre></div>
+<pre><code>## # A tibble: 700 x 5
+##        j     t    xi     c     p
+##    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     0     1     0 0      0   
+##  2     4     1     0 1.000  2.05
+##  3     6     1     0 1.01   2.03
+##  4     7     1     0 0.952  1.92
+##  5     8     1     0 0.955  1.87
+##  6     9     1     0 1.10   2.04
+##  7    10     1     0 1.05   2.14
+##  8     0     2     0 0      0   
+##  9     1     2     0 1.04   2.02
+## 10     2     2     0 1.01   2.10
+## # … with 690 more rows</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Generate the consumer-level heterogeneity. <code>V</code> is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, <span class="math inline">\((\nu_{i}&#39;, \upsilon_i)\)</span>. They are all i.i.d. standard normal random variables.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V</code></pre></div>
+<pre><code>## # A tibble: 50,000 x 6
+##        i     t   v_x_1  v_x_2   v_x_3    v_p
+##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     1 -0.218   0.527 -0.616  -0.335
+##  2     2     1 -0.545   0.887 -1.27   -1.32 
+##  3     3     1 -0.275  -1.08   0.0475 -0.410
+##  4     4     1  0.0276  0.677  0.121  -0.566
+##  5     5     1  0.970   0.952  1.46    0.364
+##  6     6     1 -2.20   -2.03   0.0692  1.00 
+##  7     7     1  1.95   -0.211 -0.390  -1.59 
+##  8     8     1  0.180   0.656 -0.248  -2.43 
+##  9     9     1  0.415  -1.67  -0.573   0.833
+## 10    10     1  0.647  -0.450  0.255  -0.628
+## # … with 49,990 more rows</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Join <code>X</code>, <code>M</code>, <code>V</code> using <code>dplyr::left_join</code> and name it <code>df</code>. <code>df</code> is the data frame such that a row contains variables for a consumer about a product that is available in a market.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df</code></pre></div>
+<pre><code>## # A tibble: 350,000 x 13
+##        t     i     j  v_x_1 v_x_2  v_x_3    v_p   x_1     x_2     x_3    xi
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     0 -0.218 0.527 -0.616 -0.335     0  0       0          0
+##  2     1     1     4 -0.218 0.527 -0.616 -0.335     1  0.297   0.209      0
+##  3     1     1     6 -0.218 0.527 -0.616 -0.335     1  0.391  -0.0514     0
+##  4     1     1     7 -0.218 0.527 -0.616 -0.335     1  0.0373  0.194      0
+##  5     1     1     8 -0.218 0.527 -0.616 -0.335     1 -0.995  -0.0269     0
+##  6     1     1     9 -0.218 0.527 -0.616 -0.335     1  0.310  -0.689      0
+##  7     1     1    10 -0.218 0.527 -0.616 -0.335     1 -0.0281 -0.207      0
+##  8     1     2     0 -0.545 0.887 -1.27  -1.32      0  0       0          0
+##  9     1     2     4 -0.545 0.887 -1.27  -1.32      1  0.297   0.209      0
+## 10     1     2     6 -0.545 0.887 -1.27  -1.32      1  0.391  -0.0514     0
+## # … with 349,990 more rows, and 2 more variables: c &lt;dbl&gt;, p &lt;dbl&gt;</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Draw a vector of preference shocks <code>e</code> whose length is the same as the number of rows of <code>df</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(e)</code></pre></div>
+<pre><code>## [1] -0.68217552  1.05418040  0.16787113  0.26895893 -0.68735413  0.01863627</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Write a function <code>compute_indirect_utility(df, beta, sigma, mu, omega)</code> that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with <span class="math inline">\(e\)</span>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute indirect utility</span>
+u &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">compute_indirect_utility</span>(
+    df, beta, sigma, 
+           mu, omega)
+<span class="kw">head</span>(u)</code></pre></div>
+<pre><code>##             u
+## [1,] 0.000000
+## [2,] 1.057260
+## [3,] 1.467362
+## [4,] 1.141441
+## [5,] 1.133450
+## [6,] 2.278443</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Write a function <code>compute_choice(X, M, V, e, beta, sigma, mu, omega)</code> that first construct <code>df</code> from <code>X</code>, <code>M</code>, <code>V</code>, second call <code>compute_indirect_utility</code> to obtain the vector of mean indirect utilities <code>u</code>, third compute the choice vector <code>q</code> based on the vector of mean indirect utilities and <code>e</code>, and finally return the data frame to which <code>u</code> and <code>q</code> are added as columns.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute choice</span>
+df_choice &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">compute_choice</span>(X, M, V, e, beta, sigma, 
+                 mu, omega)
+df_choice</code></pre></div>
+<pre><code>## # A tibble: 350,000 x 16
+##        t     i     j  v_x_1 v_x_2  v_x_3    v_p   x_1     x_2     x_3    xi
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     0 -0.218 0.527 -0.616 -0.335     0  0       0          0
+##  2     1     1     4 -0.218 0.527 -0.616 -0.335     1  0.297   0.209      0
+##  3     1     1     6 -0.218 0.527 -0.616 -0.335     1  0.391  -0.0514     0
+##  4     1     1     7 -0.218 0.527 -0.616 -0.335     1  0.0373  0.194      0
+##  5     1     1     8 -0.218 0.527 -0.616 -0.335     1 -0.995  -0.0269     0
+##  6     1     1     9 -0.218 0.527 -0.616 -0.335     1  0.310  -0.689      0
+##  7     1     1    10 -0.218 0.527 -0.616 -0.335     1 -0.0281 -0.207      0
+##  8     1     2     0 -0.545 0.887 -1.27  -1.32      0  0       0          0
+##  9     1     2     4 -0.545 0.887 -1.27  -1.32      1  0.297   0.209      0
+## 10     1     2     6 -0.545 0.887 -1.27  -1.32      1  0.391  -0.0514     0
+## # … with 349,990 more rows, and 5 more variables: c &lt;dbl&gt;, p &lt;dbl&gt;,
+## #   u &lt;dbl&gt;, e &lt;dbl&gt;, q &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(df_choice)</code></pre></div>
+<pre><code>##        t                i               j              v_x_1          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685630  
+##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.000166  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.829   Mean   :-0.004342  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.667946  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
+##      v_x_2               v_x_3                v_p           
+##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
+##  1st Qu.:-0.678458   1st Qu.:-0.674724   1st Qu.:-0.670276  
+##  Median : 0.000095   Median : 0.005968   Median : 0.002173  
+##  Mean   :-0.001408   Mean   : 0.003842   Mean   :-0.001432  
+##  3rd Qu.: 0.671120   3rd Qu.: 0.678367   3rd Qu.: 0.670915  
+##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300  
+##       x_1              x_2                 x_3                 xi   
+##  Min.   :0.0000   Min.   :-0.994676   Min.   :-0.73538   Min.   :0  
+##  1st Qu.:1.0000   1st Qu.:-0.008095   1st Qu.:-0.21539   1st Qu.:0  
+##  Median :1.0000   Median : 0.037283   Median :-0.05139   Median :0  
+##  Mean   :0.8571   Mean   : 0.100391   Mean   :-0.08313   Mean   :0  
+##  3rd Qu.:1.0000   3rd Qu.: 0.391068   3rd Qu.: 0.19384   3rd Qu.:0  
+##  Max.   :1.0000   Max.   : 0.471918   Max.   : 0.67934   Max.   :0  
+##        c                p               u                  e          
+##  Min.   :0.0000   Min.   :0.000   Min.   :-204.226   Min.   :-2.6364  
+##  1st Qu.:0.9449   1st Qu.:1.920   1st Qu.:  -2.010   1st Qu.:-0.3302  
+##  Median :0.9882   Median :1.991   Median :   0.000   Median : 0.3635  
+##  Mean   :0.8583   Mean   :1.719   Mean   :  -1.145   Mean   : 0.5761  
+##  3rd Qu.:1.0293   3rd Qu.:2.047   3rd Qu.:   2.162   3rd Qu.: 1.2415  
+##  Max.   :1.1996   Max.   :2.196   Max.   :  10.086   Max.   :14.0966  
+##        q         
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :0.0000  
+##  Mean   :0.1429  
+##  3rd Qu.:0.0000  
+##  Max.   :1.0000</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Write a function <code>compute_share(X, M, V, e, beta, sigma, mu, omega)</code> that first construct <code>df</code> from <code>X</code>, <code>M</code>, <code>V</code>, second call <code>compute_choice</code> to obtain a data frame with <code>u</code> and <code>q</code>, third compute the share of each product at each market <code>s</code> and the log difference in the share from the outside option, <span class="math inline">\(\ln(s_{jt}/s_{0t})\)</span>, denoted by <code>y</code>, and finally return the data frame that is summarized at the product-market level, dropped consumer-level variables, and added <code>s</code> and <code>y</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute share</span>
+df_share &lt;-
+<span class="st">  </span><span class="kw">compute_share</span>(X, M, V, e, beta, sigma, 
+                mu, omega)
+df_share</code></pre></div>
+<pre><code>## # A tibble: 700 x 11
+##        t     j   x_1      x_2     x_3    xi     c     p     q     s      y
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     0     0  0        0          0 0      0      157 0.314  0    
+##  2     1     4     1  0.297    0.209      0 1.000  2.05    40 0.08  -1.37 
+##  3     1     6     1  0.391   -0.0514     0 1.01   2.03    47 0.094 -1.21 
+##  4     1     7     1  0.0373   0.194      0 0.952  1.92    67 0.134 -0.852
+##  5     1     8     1 -0.995   -0.0269     0 0.955  1.87    55 0.11  -1.05 
+##  6     1     9     1  0.310   -0.689      0 1.10   2.04    92 0.184 -0.534
+##  7     1    10     1 -0.0281  -0.207      0 1.05   2.14    42 0.084 -1.32 
+##  8     2     0     0  0        0          0 0      0      176 0.352  0    
+##  9     2     1     1 -0.00810 -0.0779     0 1.04   2.02    61 0.122 -1.06 
+## 10     2     2     1  0.472   -0.735      0 1.01   2.10    79 0.158 -0.801
+## # … with 690 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(df_share)</code></pre></div>
+<pre><code>##        t                j               x_1              x_2           
+##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-0.994676  
+##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.008095  
+##  Median : 50.50   Median : 5.000   Median :1.0000   Median : 0.037283  
+##  Mean   : 50.50   Mean   : 4.829   Mean   :0.8571   Mean   : 0.100391  
+##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000   3rd Qu.: 0.391068  
+##  Max.   :100.00   Max.   :10.000   Max.   :1.0000   Max.   : 0.471918  
+##       x_3                 xi          c                p        
+##  Min.   :-0.73538   Min.   :0   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.:-0.21539   1st Qu.:0   1st Qu.:0.9449   1st Qu.:1.920  
+##  Median :-0.05139   Median :0   Median :0.9882   Median :1.991  
+##  Mean   :-0.08313   Mean   :0   Mean   :0.8583   Mean   :1.719  
+##  3rd Qu.: 0.19384   3rd Qu.:0   3rd Qu.:1.0293   3rd Qu.:2.047  
+##  Max.   : 0.67934   Max.   :0   Max.   :1.1996   Max.   :2.196  
+##        q                s                y          
+##  Min.   : 21.00   Min.   :0.0420   Min.   :-2.0735  
+##  1st Qu.: 44.00   1st Qu.:0.0880   1st Qu.:-1.3041  
+##  Median : 55.00   Median :0.1100   Median :-1.0445  
+##  Mean   : 71.43   Mean   :0.1429   Mean   :-0.9370  
+##  3rd Qu.: 85.00   3rd Qu.:0.1700   3rd Qu.:-0.6405  
+##  Max.   :186.00   Max.   :0.3720   Max.   : 0.0000</code></pre>
 </div>
-<div id="historical-remark" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Historical Remark</h3>
-<ul>
-<li>The words <strong>reduced-form</strong> and <strong>structural-form</strong> date back to the literature of estimation of simultaneous equations in macroeconomics <span class="citation">(Hsiao, <a href="#ref-Hsiao1983">1983</a>)</span>.</li>
-<li>Let <span class="math inline">\(y\)</span> be the vector of observed endogenous variables, <span class="math inline">\(x\)</span> be the vector of observed exogenous variables, and <span class="math inline">\(\epsilon\)</span> be the vector of unobserved exogenous variables.</li>
-<li>The equilibrium condition for <span class="math inline">\(y\)</span> on <span class="math inline">\(x\)</span> and <span class="math inline">\(\epsilon\)</span> is often written as:
-<span class="math display" id="eq:structuralform">\[\begin{equation}
-Ay + Bx = \Sigma \epsilon. \tag{2.1}
-\end{equation}\]</span></li>
-<li>These equations <strong>implicitly</strong> determine the vector of endogenous variables <span class="math inline">\(y\)</span> .</li>
-<li>If <span class="math inline">\(A\)</span> is invertible, we can solve the equations for <span class="math inline">\(y\)</span> to obtain:
-<span class="math display" id="eq:reducedform">\[\begin{equation}
-y = - A^{-1} B x + A^{-1} \Sigma \epsilon. \tag{2.2}
-\end{equation}\]</span></li>
-<li>These equations <strong>explicitly</strong> determine the vector of endogenous variables <span class="math inline">\(y\)</span>.</li>
-<li>Equation <a href="intro.html#eq:structuralform">(2.1)</a> is the <strong>structural-form</strong> and <a href="intro.html#eq:reducedform">(2.2)</a> is the <strong>reduced-form</strong>.</li>
-<li>If <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are observed and <span class="math inline">\(x\)</span> is of full column rank, then <span class="math inline">\(A^{-1}B\)</span> and <span class="math inline">\(A^{-1} \Sigma A^{-1}\)</span> will be estimated by regression for <a href="intro.html#eq:reducedform">(2.2)</a>. But this does not mean that <span class="math inline">\(A, B\)</span> and <span class="math inline">\(\Sigma\)</span> are separately estimated.</li>
-<li>This was the traditional identification problems.</li>
-<li>Thus, reduced-form does not mean either of:
-<ul>
-<li>Regression analysis;</li>
-<li>Statistical analysis free from economic assumptions.</li>
-</ul></li>
-<li>Recent development in this line of literature of identification is found in <span class="citation">Matzkin (<a href="#ref-Matzkin2007">2007</a>)</span>.</li>
-<li>In econometrics, the idea of imposing restrictions from economic theories seems to have been formalized by the work of <span class="citation">Manski (<a href="#ref-Manski1994a">1994</a>)</span> and <span class="citation">Matzkin (<a href="#ref-Matzkin1994b">1994</a>)</span>.</li>
-</ul>
-</div>
-</div>
-<div id="setting-up-the-environment" class="section level2">
-<h2><span class="header-section-number">2.2</span> Setting Up The Environment</h2>
-<ul>
-<li>Assume that R, RStudio and LaTex are all installed in the local computer.</li>
-</ul>
-<div id="rstudio-project" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> RStudio Project</h3>
-<ul>
-<li>The assignments should be conducted inside a project folder for this course.</li>
-<li><code>File &gt; New Project...&gt; New Directory &gt; New Directory &gt; R Package using RcppEigen</code>.</li>
-<li>Name the directory <code>ECON6120I</code> and place in your favorite location.</li>
-<li>You can open this project from the upper right menu of RStudio or by double clicking the <code>ECON6120I.Rproj</code> file in the <code>ECON6120I</code> directory.</li>
-<li>This navigates you to the root directory of the project.</li>
-<li>In the root directory, make folders named:
-<ul>
-<li><code>assignment</code>.</li>
-<li><code>input</code>.</li>
-<li><code>output</code>.</li>
-<li><code>figuretable</code>.</li>
-</ul></li>
-<li>We will store R functions in <code>R</code> folder, C/C++ functions in <code>src</code> folder, and data in <code>input</code> folder, data generated from the code in <code>output</code>, and figures and tables in <code>figurtable</code> folder.</li>
-<li>Open <code>src/Makevars</code> and erase the content. Then, write: <code>PKG_CPPFLAGS = -w -std=c++11 -O3</code></li>
-<li>Open <code>src/Makevars.win</code> and erase the content. Then, write: <code>PKG_CPPFLAGS = -w -std=c++11</code></li>
-</ul>
-</div>
-<div id="basic-programming-in-r" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> Basic Programming in R</h3>
-<ul>
-<li><code>File &gt; New File &gt; R Script</code> to open <code>Untitled</code> file.</li>
-<li><code>Ctrl (Cmd) + S</code> to save it with <code>test.R</code> in <code>assignment</code> folder.</li>
-<li>In the console, type and push enter:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span><span class="op">:</span><span class="dv">130</span></code></pre></div>
-<pre><code>##  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116
-## [18] 117 118 119 120 121 122 123 124 125 126 127 128 129 130</code></pre>
-<ul>
-<li>This is the interactive way of using R functionalities.</li>
-<li>In <code>test.R</code>, write:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<ul>
-<li>Then, save the file and push <code>Run</code>.</li>
-<li>Alternatively, place the mouse over the <code>1 + 1</code> line in <code>test.R</code> file.</li>
-<li>Then, <code>Ctrl (Cmd) + Enter</code> to run the line.</li>
-<li><p>In this way, we can write procedures in the file and send to the console to run.</p></li>
-<li><p>There are functions to conduct basic calculations:</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">4</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">^</span><span class="dv">3</span></code></pre></div>
-<pre><code>## [1] 8</code></pre>
-<ul>
-<li>We can define objects and assign values to them.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">1</span>
-a</code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<ul>
-<li>In addition to scalar object, we can define a vector by:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">:</span><span class="dv">10</span></code></pre></div>
-<pre><code>## [1]  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span><span class="op">:</span><span class="dv">20</span></code></pre></div>
-<pre><code>##  [1]  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1]  2  3  5  9 10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 1 3 5 7 9</code></pre>
-<ul>
-<li><code>seq</code> is a function with initial value, end values, and the increment value.</li>
-<li>By typing <code>seq</code> in the <code>help</code>, we can read the manual page of the function.</li>
-<li><code>seq {base}</code> means that this function is named <code>seq</code> and is contained in the library called <code>base</code>.</li>
-<li>Some libraries are automatically called when the R is launched, but some are not.</li>
-<li>Some libraries are even not installed.</li>
-<li>We can install a library from a repository called <code>CRAN</code>.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
-<ul>
-<li>To use the package, we have to load by:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
-<ul>
-<li>Use <code>qplot</code> function in <code>ggplot2</code> library to draw a scatter plot.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="fl">0.8</span>, <span class="op">-</span><span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.4</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="dv">1</span>)
-y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">3</span>
-<span class="kw">qplot</span>(x, y)</code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-15-1.png" width="672" /> - Instead of loading a package by <code>library</code>, you can directly call it as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggplot2<span class="op">::</span><span class="kw">qplot</span>(x, y)</code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<ul>
-<li>We can write own functions.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">roll &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
-  die &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>
-  dice &lt;-<span class="st"> </span><span class="kw">sample</span>(die, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-  y &lt;-<span class="st"> </span><span class="kw">sum</span>(dice)
+<div id="estimate-the-parameters-1" class="section level2">
+<h2><span class="header-section-number">8.2</span> Estimate the parameters</h2>
+<ol style="list-style-type: decimal">
+<li>Estimate the parameters assuming there is no consumer-level heterogeneity, i.e., by assuming: <span class="math display">\[
+\ln \frac{s_{jt}}{s_{0t}} = \beta&#39; x_{jt} + \alpha p_{jt}.
+\]</span> This can be implemented using <code>lm</code> function. Print out the estimate results.</li>
+</ol>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ -1 + x_1 + x_2 + x_3 + p, data = df_share)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.6219 -0.1036  0.0000  0.1018  0.5508 
+## 
+## Coefficients:
+##     Estimate Std. Error t value Pr(&gt;|t|)    
+## x_1  1.25741    0.18678   6.732  3.5e-11 ***
+## x_2  0.17042    0.01648  10.339  &lt; 2e-16 ***
+## x_3 -0.71672    0.01818 -39.414  &lt; 2e-16 ***
+## p   -1.21675    0.09309 -13.070  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1723 on 696 degrees of freedom
+## Multiple R-squared:  0.974,  Adjusted R-squared:  0.9738 
+## F-statistic:  6507 on 4 and 696 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We estimate the model using simulated share.</p>
+<p>When optimizing an objective function that uses the Monte Carlo simulation, it is important to keep the realizations of the shocks the same across the evaluations of the objective function. If the realization of the shocks differ across the objective function evaluations, the optimization algorithm will not converge because it cannot distinguish the change in the value of the objective function due to the difference in the parameters and the difference in the realized shocks.</p>
+<p>The best practice to avoid this problem is to generate the shocks outside the optimization algorithm as in the current case. If the size of the shocks can be too large to store in the memory, the second best practice is to make sure to set the seed inside the optimization algorithm so that the realized shocks are the same across function evaluations.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>For this reason, we first draw Monte Carlo consumer-level heterogeneity <code>V_mcmc</code> and Monte Carlo preference shocks <code>e_mcmc</code>. The number of simulations is <code>L</code>. This does not have to be the same with the actual number of consumers <code>N</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V_mcmc</code></pre></div>
+<pre><code>## # A tibble: 50,000 x 6
+##        i     t   v_x_1   v_x_2  v_x_3    v_p
+##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     1  1.80   -1.42   -0.227 -0.756
+##  2     2     1  0.0181  0.163  -0.325  0.307
+##  3     3     1 -0.938  -0.797   0.216 -0.357
+##  4     4     1  1.86    0.624  -0.634  0.682
+##  5     5     1 -1.26   -1.96    1.21   1.58 
+##  6     6     1 -0.640  -1.11    0.423 -0.953
+##  7     7     1 -0.163   0.0833 -1.59  -0.694
+##  8     8     1 -0.150  -0.633   1.26  -0.353
+##  9     9     1 -2.22   -0.938  -0.551 -0.815
+## 10    10     1 -0.550  -0.256  -0.348 -0.411
+## # … with 49,990 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(e_mcmc)</code></pre></div>
+<pre><code>## [1]  1.8137665  1.7743529  1.1355103  0.0138476 -0.6363222  0.7985290</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Use <code>compute_share</code> to check the simulated share at the true parameter using the Monte Carlo shocks. Remember that the number of consumers should be set at <code>L</code> instead of <code>N</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_share_mcmc</code></pre></div>
+<pre><code>## # A tibble: 700 x 11
+##        t     j   x_1      x_2     x_3    xi     c     p     q     s      y
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     0     0  0        0          0 0      0      143 0.286  0    
+##  2     1     4     1  0.297    0.209      0 1.000  2.05    39 0.078 -1.30 
+##  3     1     6     1  0.391   -0.0514     0 1.01   2.03    63 0.126 -0.820
+##  4     1     7     1  0.0373   0.194      0 0.952  1.92    50 0.1   -1.05 
+##  5     1     8     1 -0.995   -0.0269     0 0.955  1.87    47 0.094 -1.11 
+##  6     1     9     1  0.310   -0.689      0 1.10   2.04   105 0.21  -0.309
+##  7     1    10     1 -0.0281  -0.207      0 1.05   2.14    53 0.106 -0.993
+##  8     2     0     0  0        0          0 0      0      150 0.3    0    
+##  9     2     1     1 -0.00810 -0.0779     0 1.04   2.02    44 0.088 -1.23 
+## 10     2     2     1  0.472   -0.735      0 1.01   2.10    87 0.174 -0.545
+## # … with 690 more rows</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Vectorize the parameters to a vector <code>theta</code> because <code>optim</code> requires the maximiand to be a vector.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set parameters</span>
+theta &lt;-<span class="st"> </span><span class="kw">c</span>(beta, sigma, mu, omega)
+theta</code></pre></div>
+<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684
+## [7]  0.5000000  1.0000000</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Write a function <code>NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)</code> that first computes the simulated share and then compute the mean-squared error between the share data.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NLLS_objective</code></pre></div>
+<pre><code>## [1] 0.0004384229</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Draw a graph of the objective function that varies each parameter from 0.5, 0.6, <span class="math inline">\(\cdots\)</span>, 1.5 of the true value. First try with the actual shocks <code>V</code> and <code>e</code> and then try with the Monte Carlo shocks <code>V_mcmc</code> and <code>e_mcmc</code>. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.</li>
+</ol>
+<p>Because this takes time, you may want to parallelize the commutation using <code>%dopar</code> functionality of <code>foreach</code> loop. To do so, first install <code>doParallel</code> package and then load it and register the workers as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">registerDoParallel</span>()</code></pre></div>
+<p>This automatically detect the number of cores available at your computer and registers them as the workers. Then, you only have to change <code>%do%</code> to <code>%dopar</code> in the <code>foreach</code> loop as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) <span class="op">%dopar%</span><span class="st"> </span>{
+  <span class="co"># this part is parallelized</span>
+  y &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>i
+  <span class="kw">return</span>(y)
+}</code></pre></div>
+<pre><code>## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 6
+## 
+## [[4]]
+## [1] 8</code></pre>
+<p>In windows, you may have to explicitly pass packages, functions, and data to the worker by using <code>.export</code> and <code>.package</code> options as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">temp_func &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  y &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x
   <span class="kw">return</span>(y)
 }
-<span class="kw">roll</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">roll</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 41</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 40</code></pre>
-<ul>
-<li>We can <code>set.seed</code> to obtain the same realization of random variables.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-<span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 38</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-<span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 38</code></pre>
-<ul>
-<li>When a variable used in a function is not given as its argument, the function calls the variable in the global environment:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>
-plus_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  <span class="kw">return</span>(x <span class="op">+</span><span class="st"> </span>y)
-}
-<span class="kw">plus_1</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plus_1</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<ul>
-<li>However, you should NOT do this. All variables used in a function should be given as its arguments:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>
-plus_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
-  <span class="kw">return</span>(x <span class="op">+</span><span class="st"> </span>y)
-}
-<span class="kw">plus_2</span>(<span class="dv">2</span>, <span class="dv">3</span>)</code></pre></div>
-<pre><code>## [1] 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plus_2</span>(<span class="dv">2</span>, <span class="dv">4</span>)</code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<ul>
-<li>The best practice is to use <code>findGlobals</code> function in <code>codetools</code> to check global variables in a funciton:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(codetools)
-<span class="kw">findGlobals</span>(plus_<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] &quot;{&quot;      &quot;+&quot;      &quot;return&quot; &quot;y&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">findGlobals</span>(plus_<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] &quot;{&quot;      &quot;+&quot;      &quot;return&quot;</code></pre>
-<ul>
-<li><p>This function returns the list of global variables used in a function. If this returns a global variable other than the system global gariables, you should include it as the argument of the function.</p></li>
-<li>You can write the functions in the files with executing codes.</li>
-<li>But I recommend you to separate files for writing functions and executing codes.</li>
-<li><code>File &gt; New File &gt; R Rcript</code> and name it as <code>functions.R</code> and save to <code>R</code> folder.</li>
-<li>Cut the function you wrote and paste it in <code>functions.R</code>.</li>
-<li>There are two ways of calling a function in <code>functions.R</code> from <code>test.R</code>.</li>
-<li><p>One way is to use <code>source</code> function.</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;R/functions.R&quot;</span>)</code></pre></div>
-<ul>
-<li>When this line is read, the codes in the file are executed.</li>
-<li>The other way is to bundle functions as a package and load it.</li>
-<li>Choose <code>Build &gt; Clean and Rebuild</code>.</li>
-<li>This compiles files in <code>src</code> folder and bundle functions in <code>R</code> folder and build a package named <code>ECON6120I</code>.</li>
-<li>Now, the functions in <code>R</code> folder and <code>src</code> folder can be used by loading the package by:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ECON6120I)</code></pre></div>
-<ul>
-<li>Best practice:
-<ol style="list-style-type: decimal">
-<li>Write functions in the scratch file.</li>
-<li>As the functions are tested, move them to <code>R/functions.R</code>.</li>
-<li>Clean and rebuild and load them as a package.</li>
-</ol></li>
-</ul>
-</div>
-<div id="reproducible-reports-using-rmarkdown" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> Reproducible Reports using Rmarkdown</h3>
-<ul>
-<li>Reporting in empirical studies involves:</li>
-</ul>
-<ol style="list-style-type: decimal">
-<li>Writing texts;</li>
-<li>Writing formulas;</li>
-<li>Writing and implementing programs;</li>
-<li>Demonstrating the results with figures and tables.</li>
+<span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, 
+         <span class="dt">.export =</span> <span class="st">&quot;temp_func&quot;</span>,
+         <span class="dt">.packages =</span> <span class="st">&quot;magrittr&quot;</span>) <span class="op">%dopar%</span><span class="st"> </span>{
+  <span class="co"># this part is parallelized</span>
+  y &lt;-<span class="st"> </span><span class="kw">temp_func</span>(i)
+  <span class="kw">return</span>(y)
+}</code></pre></div>
+<pre><code>## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 6
+## 
+## [[4]]
+## [1] 8</code></pre>
+<p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the pacakge every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this function is compiled in the package EmpiricalIO</span>
+<span class="co"># temp_func &lt;- function(x) {</span>
+<span class="co">#   y &lt;- 2 * x</span>
+<span class="co">#   return(y)</span>
+<span class="co"># }</span>
+<span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, 
+         <span class="dt">.packages =</span> <span class="kw">c</span>(
+           <span class="st">&quot;EmpiricalIO&quot;</span>,
+           <span class="st">&quot;magrittr&quot;</span>)) <span class="op">%dopar%</span><span class="st"> </span>{
+  <span class="co"># this part is parallelized</span>
+  y &lt;-<span class="st"> </span><span class="kw">temp_func</span>(i)
+  <span class="kw">return</span>(y)
+}</code></pre></div>
+<pre><code>## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 6
+## 
+## [[4]]
+## [1] 8</code></pre>
+<p>The graphs with the true shocks:</p>
+<pre><code>## [[1]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[5]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[6]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[7]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[8]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-89-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The graphs with the Monte Carlo shocks:</p>
+<pre><code>## [[1]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[5]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[6]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[7]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[8]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-91-8.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="8" style="list-style-type: decimal">
+<li>Use <code>optim</code> to find the minimizer of the objective function using <code>Nelder-Mead</code> method. You can start from the true parameter values. Compare the estimates with the true parameters.</li>
 </ol>
-<ul>
-<li>Moreover, this has to be done in a <strong>reproducible</strong> manner: Whoever can reproduce the output from the scratch.</li>
-<li><p>“Whoever” includes yourself in the future. Because the revision process of structural papers is usually lengthy, you often have to remember the content few weeks or few months later. It is inefficient if you cannot recall what you have done.</p></li>
-<li>We use <code>Rmarkdown</code> to achieve this goal.</li>
-<li>This assumes that you have LaTex installed.</li>
-<li><p>Install package <code>Rmarkdown</code>:</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</code></pre></div>
-<ul>
-<li><code>File &gt; New File &gt; R Markdown... &gt; HTML</code> with title <code>Test</code>.</li>
-<li>Save it in <code>assignment</code> folder with name <code>test.Rmd</code>.</li>
-<li>From <code>Knit</code> tab, choose <code>Knit to HTML</code>.</li>
-<li>This outputs the content to html file.</li>
-<li>You can also choose <code>Knit to PDF</code> from <code>Knit</code> tab to obtain output in pdf file.</li>
-<li>Reports should be knit to pdf to submit.</li>
-<li>But you can use html output while writing a report because html is lighter to compile.</li>
-<li>Refer to the <a href="https://rmarkdown.rstudio.com/lesson-1.html">help page</a> for further information.</li>
-</ul>
+<pre><code>## $par
+## [1]  4.0927656  0.2010147 -0.8053223  1.7687700  0.4916767  0.5071025
+## [7]  0.4808094  1.0509863
+## 
+## $value
+## [1] 0.0004093943
+## 
+## $counts
+## function gradient 
+##      245       NA 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL</code></pre>
+<pre><code>##         true  estimates
+## 1  4.0000000  4.0927656
+## 2  0.1836433  0.2010147
+## 3 -0.8356286 -0.8053223
+## 4  1.5952808  1.7687700
+## 5  0.3295078  0.4916767
+## 6  0.8204684  0.5071025
+## 7  0.5000000  0.4808094
+## 8  1.0000000  1.0509863</code></pre>
 
-</div>
-</div>
-</div>
-<h3> References</h3>
-<div id="refs" class="references">
-<div id="ref-Igami2017">
-<p>Igami, M. (2017). Estimating the Innovator’s Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981–1998. <em>Journal of Political Economy</em>, <em>125</em>(3), 798–847.</p>
-</div>
-<div id="ref-Christensen1997">
-<p>Christensen, C. M. (1997). <em>The innovator’s dilemma : when new technologies cause great firms to fail</em> (p. 253). New York: HarperBusiness.</p>
-</div>
-<div id="ref-Maskin1988">
-<p>Maskin, E., &amp; Tirole, J. (1988). <em>A Theory of Dynamic Oligopoly, I: Overview and Quantity Competition with Large Fixed Costs</em> (No. 3) (Vol. 56, p. 549).</p>
-</div>
-<div id="ref-Hsiao1983">
-<p>Hsiao, C. (1983). Chapter 4 Identification. <em>Handbook of Econometrics</em>, <em>1</em>, 223–283.</p>
-</div>
-<div id="ref-Matzkin2007">
-<p>Matzkin, R. L. (2007). Chapter 73 Nonparametric identification. <em>Handbook of Econometrics</em>, <em>6</em>, 5307–5368.</p>
-</div>
-<div id="ref-Manski1994a">
-<p>Manski, C. F. (1994). Chapter 43 Analog estimation of econometric models. <em>Handbook of Econometrics</em>, <em>4</em>, 2559–2582.</p>
-</div>
-<div id="ref-Matzkin1994b">
-<p>Matzkin, R. L. (1994). Chapter 42 Restrictions of economic theory in nonparametric methods. <em>Handbook of Econometrics</em>, <em>4</em>, 2523–2558.</p>
 </div>
 </div>
             </section>
@@ -738,8 +821,8 @@ plus_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">fu
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="production.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="assignment2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
