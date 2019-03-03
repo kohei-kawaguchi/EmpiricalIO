@@ -537,7 +537,7 @@ theta</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Draw a graph of the objective function that varies each parameter from 0.5, 0.6, <span class="math inline">\(\cdots\)</span>, 1.5 of the true value. First try with the actual shocks <code>V</code> and <code>e</code> and then try with the Monte Carlo shocks <code>V_mcmc</code> and <code>e_mcmc</code>. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.</li>
 </ol>
-<p>Because this takes time, you may want to parallelize the commutation using <code>%dopar</code> functionality of <code>foreach</code> loop. To do so, first install <code>doParallel</code> package and then load it and register the workers as follows:</p>
+<p>Because this takes time, you may want to parallelize the computation using <code>%dopar</code> functionality of <code>foreach</code> loop. To do so, first install <code>doParallel</code> package and then load it and register the workers as follows:</p>
 <pre class="r"><code>registerDoParallel()</code></pre>
 <p>This automatically detect the number of cores available at your computer and registers them as the workers. Then, you only have to change <code>%do%</code> to <code>%dopar</code> in the <code>foreach</code> loop as follows:</p>
 <pre class="r"><code>foreach (i = 1:4) %dopar% {
@@ -556,7 +556,7 @@ theta</code></pre>
 ## 
 ## [[4]]
 ## [1] 8</code></pre>
-<p>In windows, you may have to explicitly pass packages, functions, and data to the worker by using <code>.export</code> and <code>.package</code> options as follows:</p>
+<p>In windows, you may have to explicitly pass packages, functions, and data to the worker by using <code>.export</code> and <code>.packages</code> options as follows:</p>
 <pre class="r"><code>temp_func &lt;- function(x) {
   y &lt;- 2 * x
   return(y)
@@ -579,7 +579,7 @@ foreach (i = 1:4,
 ## 
 ## [[4]]
 ## [1] 8</code></pre>
-<p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the pacakge every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
+<p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the package every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
 <pre class="r"><code># this function is compiled in the package EmpiricalIO
 # temp_func &lt;- function(x) {
 #   y &lt;- 2 * x

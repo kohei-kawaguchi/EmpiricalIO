@@ -323,7 +323,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="assignment3" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> Assignment 3: Demand Function Estimation I</h1>
-<p>The deadline is the <strong>March 11 1:30pm</strong>.</p>
+<p>The deadline is <strong>March 11 1:30pm</strong>.</p>
 <div id="simulate-data-2" class="section level2">
 <h2><span class="header-section-number">8.1</span> Simulate data</h2>
 <p>We simulated data from a discrete choice model. There are <span class="math inline">\(T\)</span> markets and each market has <span class="math inline">\(N\)</span> consumers. There are <span class="math inline">\(J\)</span> products and the indirect utility of consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> for product <span class="math inline">\(j\)</span> is: <span class="math display">\[
@@ -670,7 +670,7 @@ theta</code></pre></div>
 <ol start="7" style="list-style-type: decimal">
 <li>Draw a graph of the objective function that varies each parameter from 0.5, 0.6, <span class="math inline">\(\cdots\)</span>, 1.5 of the true value. First try with the actual shocks <code>V</code> and <code>e</code> and then try with the Monte Carlo shocks <code>V_mcmc</code> and <code>e_mcmc</code>. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.</li>
 </ol>
-<p>Because this takes time, you may want to parallelize the commutation using <code>%dopar</code> functionality of <code>foreach</code> loop. To do so, first install <code>doParallel</code> package and then load it and register the workers as follows:</p>
+<p>Because this takes time, you may want to parallelize the computation using <code>%dopar</code> functionality of <code>foreach</code> loop. To do so, first install <code>doParallel</code> package and then load it and register the workers as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">registerDoParallel</span>()</code></pre></div>
 <p>This automatically detect the number of cores available at your computer and registers them as the workers. Then, you only have to change <code>%do%</code> to <code>%dopar</code> in the <code>foreach</code> loop as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) <span class="op">%dopar%</span><span class="st"> </span>{
@@ -712,7 +712,7 @@ theta</code></pre></div>
 ## 
 ## [[4]]
 ## [1] 8</code></pre>
-<p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the pacakge every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
+<p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this function is compiled in the package EmpiricalIO</span>
 <span class="co"># temp_func &lt;- function(x) {</span>
 <span class="co">#   y &lt;- 2 * x</span>

@@ -341,7 +341,7 @@ NLLS_objective
 
 7. Draw a graph of the objective function that varies each parameter from 0.5, 0.6, $\cdots$, 1.5 of the true value. First try with the actual shocks `V` and `e` and then try with the Monte Carlo shocks `V_mcmc` and `e_mcmc`. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.
 
-Because this takes time, you may want to parallelize the commutation using `%dopar` functionality of `foreach` loop. To do so, first install `doParallel` package and then load it and register the workers as follows:
+Because this takes time, you may want to parallelize the computation using `%dopar` functionality of `foreach` loop. To do so, first install `doParallel` package and then load it and register the workers as follows:
 
 ```{r, echo = TRUE}
 registerDoParallel()
@@ -372,7 +372,7 @@ foreach (i = 1:4,
 }
 ```
 
-If you have called a function in a package in this way `dplyr::mutate`, then you will not have to pass `dplyr` by `.packages` option. This is one of the reasons why I prefer to explicitly call the pacakge every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:
+If you have called a function in a package in this way `dplyr::mutate`, then you will not have to pass `dplyr` by `.packages` option. This is one of the reasons why I prefer to explicitly call the package every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:
 ```{r, echo = TRUE}
 # this function is compiled in the package EmpiricalIO
 # temp_func <- function(x) {
