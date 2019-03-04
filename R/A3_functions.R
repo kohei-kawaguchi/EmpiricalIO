@@ -7,11 +7,12 @@ compute_indirect_utility <-
     p <- as.matrix(dplyr::select(df, p)) 
     v_x <- as.matrix(dplyr::select(df, dplyr::starts_with("v_x")))
     v_p <- as.matrix(dplyr::select(df, v_p))
+    xi <- as.matrix(dplyr::select(df, xi))
     # random coefficients
     beta_i <- as.matrix(rep(1, dim(v_x)[1])) %*% t(as.matrix(beta)) + v_x %*% diag(sigma) 
     alpha_i <- - exp(mu + omega * v_p)
     # conditional mean indirect utility
-    value <- as.matrix(rowSums(beta_i * X) + p * alpha_i)
+    value <- as.matrix(rowSums(beta_i * X) + p * alpha_i + xi) 
     colnames(value) <- "u"
     return(value)
   }

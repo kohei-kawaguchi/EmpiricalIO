@@ -125,24 +125,10 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-03-03}
+    \date{Last updated: 2019-03-04}
 
 \usepackage{booktabs}
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -3773,7 +3759,7 @@ I}\label{derive-the-share-equation-i}
   By Roy's identify, we can derive the associated share equation:
 
   \begin{equation}
-  w_i \equiv \frac{\partial \ln e(u, p)}{\partial \ln p_i} = \alpha_i + \sum_{j} \gamma_{ij} + \beta_i u \beta_0 \prod_{k} p_k^{\beta_k},
+  w_i \equiv \frac{\partial \ln e(u, p)}{\partial \ln p_i} = \alpha_i + \sum_{j} \gamma_{ij} \log p_j + \beta_i u \beta_0 \prod_{k} p_k^{\beta_k},
   \end{equation}
 
   where
@@ -4061,12 +4047,39 @@ Effect}\label{weak-separability-and-income-effect}
   cereals, detergents, and so on.
 \item
   Assume that the preference is separable between the category in
-  question and other categories.
+  question (\textbf{inside goods}) and other categories (\textbf{outside
+  goods}).
 \item
-  Then, call the category in question inside goods.
+  \(u(q) = u[q_I, v(q_O)]\):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(q_I\): the consumption vector of inside goods.
+  \item
+    \(q_O\): the consumption vector of outside goods.
+  \item
+    Increasing in \(v_O = v(q_O)\).
+  \end{itemize}
 \item
-  The outside good captures the income effect of the choice in this
-  category.
+  \(p = (p_I, p_O)\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(p_I\): the price vector of inside goods.
+  \item
+    \(p_O\): the price vector of outside goods.
+  \end{itemize}
+\item
+  When \(y_O\) is left for the outside goods, the conditional demand for
+  the outside goods \(q_O(y_O, p_O)\) exists.
+\item
+  Inserting this into the utility function gives:
+
+  \begin{equation}
+  u\{q_I, v[q_O(y_O, p_O)]\} \equiv \tilde{u}(q_I, y_O; p_O).
+  \end{equation}
 \end{itemize}
 
 \subsection{Weak Separability and Income
@@ -4080,8 +4093,8 @@ Effect}\label{weak-separability-and-income-effect-1}
 
   \begin{equation}
   \begin{split}
-  &u^*(y_i - p_j, x_j, z_i) = u^{**}(x_j, z_i) + \alpha(y_i - p_j).\\
-  &u^*(y_i - p_j, x_j, z_i) = u^{**}(x_j, z_i) + \alpha \ln (y_i - p_j).
+  &u(y_i - p_j, x_j, z_i) = \tilde{u}(x_j, z_i) + \alpha(y_i - p_j).\\
+  &u(y_i - p_j, x_j, z_i) = \tilde{u}(x_j, z_i) + \alpha \ln (y_i - p_j).
   \end{split}
   \end{equation}
 \item
@@ -8085,7 +8098,7 @@ The graphs with the Monte Carlo shocks:
 ## 8  1.0000000  1.0509863
 \end{verbatim}
 
-\bibliography{library.bib,packages.bib}
+\bibliography{PhDIO.bib,packages.bib}
 
 
 \end{document}

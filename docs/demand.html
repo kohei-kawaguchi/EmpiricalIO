@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ECON 6120I Topics in Empirical Industrial Organization</title>
+  <title>Chapter 4 Demand Function Estimation | ECON 6120I Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta property="og:title" content="Chapter 4 Demand Function Estimation | ECON 6120I Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta name="twitter:title" content="Chapter 4 Demand Function Estimation | ECON 6120I Topics in Empirical Industrial Organization" />
   
   <meta name="twitter:description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology." />
   
@@ -35,6 +35,7 @@
 <link rel="next" href="merger.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -515,7 +516,7 @@ where <span class="math inline">\(a(p)\)</span> and <span class="math inline">\(
 <ul>
 <li>By Roy’s identify, we can derive the associated share equation:
 <span class="math display">\[\begin{equation}
-w_i \equiv \frac{\partial \ln e(u, p)}{\partial \ln p_i} = \alpha_i + \sum_{j} \gamma_{ij} + \beta_i u \beta_0 \prod_{k} p_k^{\beta_k},
+w_i \equiv \frac{\partial \ln e(u, p)}{\partial \ln p_i} = \alpha_i + \sum_{j} \gamma_{ij} \log p_j + \beta_i u \beta_0 \prod_{k} p_k^{\beta_k},
 \end{equation}\]</span>
 where
 <span class="math display">\[\begin{equation}
@@ -690,9 +691,23 @@ v_j(p_j, y_i, z_i) &amp;=u(y_i - p_j, 0, \cdots, \underbrace{1}_{q_j}, \cdots, 0
 <h3><span class="header-section-number">4.4.5</span> Weak Separability and Income Effect</h3>
 <ul>
 <li>We usually focus on a particular product category such as cars, PCs, cereals, detergents, and so on.</li>
-<li>Assume that the preference is separable between the category in question and other categories.</li>
-<li>Then, call the category in question inside goods.</li>
-<li>The outside good captures the income effect of the choice in this category.</li>
+<li>Assume that the preference is separable between the category in question (<strong>inside goods</strong>) and other categories (<strong>outside goods</strong>).</li>
+<li><span class="math inline">\(u(q) = u[q_I, v(q_O)]\)</span>:
+<ul>
+<li><span class="math inline">\(q_I\)</span>: the consumption vector of inside goods.</li>
+<li><span class="math inline">\(q_O\)</span>: the consumption vector of outside goods.</li>
+<li>Increasing in <span class="math inline">\(v_O = v(q_O)\)</span>.</li>
+</ul></li>
+<li><span class="math inline">\(p = (p_I, p_O)\)</span>.
+<ul>
+<li><span class="math inline">\(p_I\)</span>: the price vector of inside goods.</li>
+<li><span class="math inline">\(p_O\)</span>: the price vector of outside goods.</li>
+</ul></li>
+<li>When <span class="math inline">\(y_O\)</span> is left for the outside goods, the conditional demand for the outside goods <span class="math inline">\(q_O(y_O, p_O)\)</span> exists.</li>
+<li>Inserting this into the utility function gives:
+<span class="math display">\[\begin{equation}
+u\{q_I, v[q_O(y_O, p_O)]\} \equiv \tilde{u}(q_I, y_O; p_O).
+\end{equation}\]</span></li>
 </ul>
 </div>
 <div id="weak-separability-and-income-effect-1" class="section level3">
@@ -701,8 +716,8 @@ v_j(p_j, y_i, z_i) &amp;=u(y_i - p_j, 0, \cdots, \underbrace{1}_{q_j}, \cdots, 0
 <li>Thus, how the preference for the outside good is modeled determines how the individual income affects the choice.
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;u^*(y_i - p_j, x_j, z_i) = u^{**}(x_j, z_i) + \alpha(y_i - p_j).\\
-&amp;u^*(y_i - p_j, x_j, z_i) = u^{**}(x_j, z_i) + \alpha \ln (y_i - p_j).
+&amp;u(y_i - p_j, x_j, z_i) = \tilde{u}(x_j, z_i) + \alpha(y_i - p_j).\\
+&amp;u(y_i - p_j, x_j, z_i) = \tilde{u}(x_j, z_i) + \alpha \ln (y_i - p_j).
 \end{split}
 \end{equation}\]</span></li>
 <li>In the first example, the income level does not affect the choice because the term <span class="math inline">\(\alpha y_i\)</span> is common and constant across choices (there is no income effect).</li>
@@ -1648,19 +1663,19 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <h3> References</h3>
 <div id="refs" class="references">
 <div id="ref-Nevo2000c">
-<p>Nevo, A. (2000). <em>Mergers with differentiated products: the case of the ready-to-eat cereal industry</em> (No. 3) (Vol. 31).</p>
+<p>Nevo, A. (2000). <em>Mergers with differentiated products: The case of the ready-to-eat cereal industry</em> (No. 3).</p>
 </div>
 <div id="ref-Chung2002">
 <p>Chung, W., &amp; Alcácer, J. (2002). Knowledge Seeking and Location Choice of Foreign Direct Investment in the United States. <em>Management Science</em>, <em>48</em>(12).</p>
 </div>
 <div id="ref-Rysman2004">
-<p>Rysman, M. (2004). <em>Competition Between Networks: A Study of the Market for Yellow Pages</em> (Vol. 71, pp. 483–512).</p>
+<p>Rysman, M. (2004). <em>Competition Between Networks: A Study of the Market for Yellow Pages</em> (pp. 483–512).</p>
 </div>
 <div id="ref-Gentzkow2004">
-<p>Gentzow, M. (2004). <em>Valuing new goods in a model with complementarity : Online newspapers</em> (No. 3) (Vol. 97, pp. 713–744).</p>
+<p>Gentzow, M. (2004). <em>Valuing new goods in a model with complementarity : Online newspapers</em> (No. 3) (pp. 713–744).</p>
 </div>
 <div id="ref-Bayer2007">
-<p>Bayer, P., Ferreira, F., Mcmillan, R., Altonji, J., Bajari, P., Berry, S., … Timmins, C. (2007). <em>A Unified Framework for Measuring Preferences for Schools and Neighborhoods</em> (No. 4) (Vol. 115).</p>
+<p>Bayer, P., Ferreira, F., Mcmillan, R., Altonji, J., Bajari, P., Berry, S., … Timmins, C. (2007). <em>A Unified Framework for Measuring Preferences for Schools and Neighborhoods</em> (No. 4).</p>
 </div>
 <div id="ref-Archak2011">
 <p>Archak, N., Ghose, A., &amp; Ipeirotis, P. G. (2011). Deriving the Pricing Power of Product Features by Mining Consumer Reviews. <em>Management Science</em>, <em>57</em>(8), 1485–1509.</p>
@@ -1687,7 +1702,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <p>Varian, H. R. (1982). The Nonparametric Approach to Demand Analysis. <em>Econometrica</em>, <em>50</em>(4), 945–973.</p>
 </div>
 <div id="ref-Deaton1980">
-<p>Deaton, A., &amp; Muellbauer, J. (1980). <em>An Almost Ideal Demand System</em> (No. 3) (Vol. 70, pp. 312–326).</p>
+<p>Deaton, A., &amp; Muellbauer, J. (1980). <em>An Almost Ideal Demand System</em> (No. 3) (pp. 312–326).</p>
 </div>
 <div id="ref-AngusDeaton1980">
 <p>Angus Deaton, &amp; John Muellbauer. (1980). <em>Economics and Consumer Behavior</em>. New York: Cambridge University Press.</p>
@@ -1702,7 +1717,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <p>Lancaster, K. J. (1966). A New Approach to Consumer Theory. <em>Journal of Political Economy</em>, <em>74</em>(2), 132–157.</p>
 </div>
 <div id="ref-Muth1966">
-<p>Muth, R. F. (1966). <em>Household Production and Consumer Demand Functions</em> (No. 3) (Vol. 34, pp. 699–708).</p>
+<p>Muth, R. F. (1966). <em>Household Production and Consumer Demand Functions</em> (No. 3) (pp. 699–708).</p>
 </div>
 <div id="ref-Rosen1974">
 <p>Rosen, S. (1974). Hedonic Prices and Implicit Markets: Product Differentiation in Pure Competition. <em>Journal of Political Economy</em>, <em>82</em>(1), 34–55.</p>
@@ -1711,16 +1726,16 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <p>Muellbauer, J. (1974). Household Production Theory, Quality, and the &quot;Hedonic Technique. <em>The American Economic Review</em>, <em>64</em>(6), 977–994.</p>
 </div>
 <div id="ref-Gorman1980">
-<p>Gorman, W. M. (1980). <em>A Possible Procedure for Analysing Quality Differentials in the Egg Market</em> (No. 5) (Vol. 47, pp. 843–856).</p>
+<p>Gorman, W. M. (1980). <em>A Possible Procedure for Analysing Quality Differentials in the Egg Market</em> (No. 5) (pp. 843–856).</p>
 </div>
 <div id="ref-Blow2008">
-<p>Blow, L., Browning, M., &amp; Crawford, I. (2008). <em>Revealed Preference Analysis of Characteristics Models</em> (Vol. 75, pp. 371–389).</p>
+<p>Blow, L., Browning, M., &amp; Crawford, I. (2008). <em>Revealed Preference Analysis of Characteristics Models</em> (pp. 371–389).</p>
 </div>
 <div id="ref-Bresnahan1987">
 <p>Bresnahan, T. F. (1987). The Empirical Renaissance in Industrial Economics. <em>The Journal of Industrial Economics</em>, <em>35</em>(4), 457–482.</p>
 </div>
 <div id="ref-Mcfadden1974">
-<p>Mcfadden, D. L. (1974). Conditional Logit Analysis of Qualitative Choice Behavior. In P. Zarembka (Ed.), <em>Frontiers in econometrics</em>. New York: Academic Press.</p>
+<p>Mcfadden, D. L. (1974). Conditional Logit Analysis of Qualitative Choice Behavior. In P. Zarembka (Ed.), <em>Frontiers in Econometrics</em>. New York: Academic Press.</p>
 </div>
 <div id="ref-Train2009">
 <p>Train, K. (2009). <em>Discrete Choice Methods with Simulation</em>. Cambridge: Cambridge University Press.</p>
@@ -1732,7 +1747,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <p>McFadden, D., &amp; Train, K. (2000). Mixed MNL models for discrete response. <em>Journal of Applied Econometrics</em>, <em>15</em>(5), 447–470.</p>
 </div>
 <div id="ref-Judd1998">
-<p>Judd, K. L. (1998). <em>Numerical methods in economics</em> (p. 633). MIT Press.</p>
+<p>Judd, K. L. (1998). <em>Numerical methods in economics</em>. MIT Press.</p>
 </div>
 <div id="ref-Cardell1997">
 <p>Cardell, N. S. (1997). Variance Components Structures for the Extreme-Value and Logistic Distributions with Application to Models of Heterogeneity. <em>Econometric Theory</em>, <em>13</em>, 185–213.</p>
@@ -1782,7 +1797,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1792,6 +1807,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -1809,7 +1828,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
