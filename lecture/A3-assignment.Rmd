@@ -122,8 +122,8 @@ sd_p <- 0.05
 
 ```{r}
 # make product characteristics data
-X <- matrix(sd_x * rnorm(J*K), nrow = J)
-X[, 1] <- 1
+X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
+X <- cbind(rep(1, J), X)
 colnames(X) <- paste("x", 1:K, sep = "_")
 X <- data.frame(j = 1:J, X) %>%
   tibble::as_tibble()
