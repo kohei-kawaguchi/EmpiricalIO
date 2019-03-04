@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 
 ## Simulate data
 
-We simulate data from a discrete choice model. There are $T$ markets and each market has $N$ consumers. There are $J$ products and the indirect utility of consumer $i$ in market $t$ for product $j$ is:
+We simulate data from a discrete choice model that is the same with in assignment 3 except for the existence of unobserved product-specific fixed effects. There are $T$ markets and each market has $N$ consumers. There are $J$ products and the indirect utility of consumer $i$ in market $t$ for product $j$ is:
 $$
 u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
 $$
@@ -57,7 +57,7 @@ s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
 $$
 along with the product-market characteristics $x_{jt}$ and the retail prices $p_{jt}$ for $j \in \mathcal{J}_t \cup \{0\}$ for $t = 1, \cdots, T$. We do not observe the choice data $q_{ijt}$ nor shocks $\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}$.
 
-In this assignment, we consider a model with $\xi_{jt} = 0$, i.e., the model without the unobserved fixed effects. However, the code to simulate data should be written for general $\xi_{jt}$, so that we can use the same code in the next assignment in which we consider a model with the unobserved fixed effects.
+We draw $\xi_{jt}$ from i.i.d. normal distribution with mean 0 and standard deviation $\sigma_{\xi}$.
 
 1. Set the seed, constants, and parameters of interest as follows.
 
@@ -96,8 +96,10 @@ where $\sigma_x$ is referred to as `sd_x` in the code.
 
 The product-market-specific unobserved fixed effect:
 $$
-\xi_{jt} = 0.
+\xi_{jt} \sim N(0, \sigma_\xi),
 $$
+where $\sigma_xi$ is referred to as `sd_xi` in the code.
+
 The marginal cost of product $j$ in market $t$:
 $$
 c_{jt} \sim \text{logNormal}(0, \sigma_c),
@@ -115,9 +117,10 @@ The value of the auxiliary parameters are set as follows:
 
 ```{r, echo = TRUE}
 # set auxiliary parameters
-price_xi <- 0.3
+price_xi <- 1
 prop_jt <- 0.6
 sd_x <- 0.5
+sd_xi <- 0.5
 sd_c <- 0.05
 sd_p <- 0.05
 ```
@@ -150,7 +153,7 @@ X
 M <- expand.grid(j = 1:J, t = 1:T) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
-    xi = 0 * rnorm(J*T),
+    xi = sd_xi * rnorm(J*T),
     c = exp(sd_c * rnorm(J*T)),
     p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
   ) 
@@ -253,4 +256,69 @@ summary(df_share)
 ```
 
 ## Estimate the parameters
+
+1. First draw Monte Carlo consumer-level heterogeneity `V_mcmc` and Monte Carlo preference shocks `e_mcmc`. The number of simulations is `L`. This does not have to be the same with the actual number of consumers `N`. 
+
+```{r}
+# mixed logit estimation
+## draw mcmc V
+V_mcmc <- matrix(rnorm(L*T*(K + 1)), nrow = L*T) 
+colnames(V_mcmc) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V_mcmc <- data.frame(
+  expand.grid(i = 1:L, t = 1:T),
+  V_mcmc
+) %>%
+  tibble::as_tibble() 
+```
+
+```{r, echo = TRUE}
+V_mcmc
+```
+
+```{r}
+## draw mcmc e
+df_mcmc <- expand.grid(t = 1:T, i = 1:L, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V_mcmc, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+# draw idiosyncratic shocks
+e_mcmc <- evd::rgev(dim(df_mcmc)[1])
+```
+```{r, echo = TRUE}
+head(e_mcmc)
+```
+
+2. Vectorize the parameters to a vector `theta` because `optim` requires the maximiand to be a vector.
+
+```{r, echo = TRUE}
+# set parameters
+theta <- c(beta, sigma, mu, omega)
+theta
+```
+
+3. Estimate the parameters assuming there is no product-specific unobserved fixed effects $\xi_{jt}$, i.e., using the functions in assignment 3.
+
+```{r, eval = FALSE}
+# find NLLS estimator
+result_NLLS <- 
+  optim(par = theta, fn = NLLS_objective_A3,
+        method = "Nelder-Mead",
+        df_share = df_share, 
+        X = X, 
+        M = M, 
+        V_mcmc = V_mcmc, 
+        e_mcmc = e_mcmc)
+save(result_NLLS, file = "data/A4_result_NLLS.RData")
+```
+
+
+```{r}
+result_NLLS <- get(load(file = "data/A4_result_NLLS.RData"))
+result_NLLS
+result <- data.frame(true = theta, estimates = result_NLLS$par)
+result
+```
 
