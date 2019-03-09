@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-03-04}
+    \date{Last updated: 2019-03-09}
 
 \usepackage{booktabs}
 
@@ -5103,7 +5103,7 @@ Model}\label{unobserved-fixed-effects-in-multinomial-logit-model}
 \end{itemize}
 
 \begin{equation}
-\sigma_j(p_t, w_t, \xi_t) = \frac{\exp(\beta' x_j - \alpha p_{jt} + \xi_{jt})}{1 + \sum_{k = 1}^J\exp(\beta' x_k - \alpha p_{kt} +  \xi_{kt} ) }.
+\sigma_j(p_t, x_t, \xi_t) = \frac{\exp(\beta' x_j - \alpha p_{jt} + \xi_{jt})}{1 + \sum_{k = 1}^J\exp(\beta' x_k - \alpha p_{kt} +  \xi_{kt} ) }.
 \end{equation}
 
 \begin{itemize}
@@ -5260,7 +5260,7 @@ Model}\label{unobserved-fixed-effects-in-mixed-logit-model}
 
   \begin{equation}
   \begin{split}
-  &\sigma_{j}(p_t, x_t, \xi_t, y, z; \theta)\\
+  &\sigma_{j}(p_t, x_t, \xi_t; \theta)\\
   &= \int \frac{\exp[\beta_0' x_{jt} - \alpha_0 p_{jt} + \xi_{jt} + \nu_{it}' \Sigma x_{jt} - \upsilon_{it}' \Omega p_{jt}]}{1 + \sum_{k \in \mathcal{J}_t} \exp[\exp[\beta_0' x_{kt} - \alpha_0 p_{kt} + \xi_{kt} + \nu_{it}' \Sigma x_{kt} - \upsilon_{it}' \Omega p_{kt}]]} f(\nu, \upsilon) d \nu d \upsilon.
   \end{split}
   \end{equation}
@@ -7294,7 +7294,7 @@ The value of the auxiliary parameters are set as follows:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# set auxiliary parameters}
-\NormalTok{price_xi <-}\StringTok{ }\FloatTok{0.3}
+\NormalTok{price_xi <-}\StringTok{ }\DecValTok{1}
 \NormalTok{prop_jt <-}\StringTok{ }\FloatTok{0.6}
 \NormalTok{sd_x <-}\StringTok{ }\FloatTok{0.5}
 \NormalTok{sd_c <-}\StringTok{ }\FloatTok{0.05}

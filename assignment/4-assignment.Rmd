@@ -1,5 +1,5 @@
 ---
-title: 'Assignment 3: Demand Function Estimation I'
+title: 'Assignment 4: Demand Function Estimation II'
 author: "Kohei Kawaguchi"
 date: "2019/1/29"
 output:
@@ -299,7 +299,12 @@ theta <- c(beta, sigma, mu, omega)
 theta
 ```
 
-3. Estimate the parameters assuming there is no product-specific unobserved fixed effects $\xi_{jt}$, i.e., using the functions in assignment 3.
+3. Estimate the parameters assuming there is no product-specific unobserved fixed effects $\xi_{jt}$, i.e., using the functions in assignment 3. To do so, first modify `M` to `M_no` in which `xi` is replaced with 0 and estimate the model with `M_no`. Otherwise, your `df_share` will compute the share with the true `xi`.
+
+```{r, echo = TRUE}
+M_no <- M %>%
+  dplyr::mutate(xi = 0)
+```
 
 ```{r, eval = FALSE}
 # find NLLS estimator
@@ -308,7 +313,7 @@ result_NLLS <-
         method = "Nelder-Mead",
         df_share = df_share, 
         X = X, 
-        M = M, 
+        M = M_no, 
         V_mcmc = V_mcmc, 
         e_mcmc = e_mcmc)
 save(result_NLLS, file = "data/A4_result_NLLS.RData")
@@ -321,4 +326,77 @@ result_NLLS
 result <- data.frame(true = theta, estimates = result_NLLS$par)
 result
 ```
+
+Next, we estimate the model allowing for the product-market-specific unobserved fixed effect $\xi_{jt}$ using the BLP algorithm. To do so, we slightly modify the `compute_indirect_utility`, `compute_choice`, `compute_share` functions so that they receive $\delta_{jt}$ to compute the indirect utilities, choices, and shares. Be careful that the treatment of $\alpha_i$ is slightly different from the lecture note, because we assumed that $\alpha_i$s are log-normal random variables.
+
+4. Compute and print out $\delta_{jt}$ at the true parameters, i.e.:
+$$
+\delta_{jt} = \beta_0' x_j + \alpha_0' p_{jt} + \xi_{jt}.
+$$
+```{r delta}
+XX <- as.matrix(dplyr::select(df, dplyr::starts_with("x_")))
+pp <- as.matrix(dplyr::select(df, p)) 
+alpha <- - exp(mu + omega^2/2)
+delta <- XX %*% as.matrix(beta) + pp * alpha
+colnames(delta) <- "delta"
+head(delta)
+```
+
+
+5. Write a function `compute_indirect_utility_delta(df, delta, sigma, mu, omega)` that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with $e$. Print out the output with $\delta_{jt}$ evaluated at the true parameters.
+```{r, echo = TRUE}
+# compute indirect utility from delta
+u <-
+  compute_indirect_utility_delta(df, delta, sigma,
+                                 mu, omega)
+head(u)
+```
+
+
+6. Write a function `compute_choice_delta(X, M, V, e, delta, sigma, mu, omega)` that first construct `df` from `X`, `M`, `V`, second call `compute_indirect_utility_delta` to obtain the vector of mean indirect utilities `u`, third compute the choice vector `q` based on the vector of mean indirect utilities and `e`, and finally return the data frame to which `u` and `q` are added as columns. 
+
+
+```{r, echo = TRUE}
+# compute choice
+df_choice <- 
+  compute_choice_delta(X, M, V, e, delta, sigma, mu, omega)
+df_choice
+```
+
+
+7. Write a function `compute_share_delta(X, M, V, e, delta, sigma, mu, omega)` that first construct `df` from `X`, `M`, `V`, second call `compute_choice_delta` to obtain a data frame with `u` and `q`, third compute the share of each product at each market `s` and the log difference in the share from the outside option, $\ln(s_{jt}/s_{0t})$, denoted by `y`, and finally return the data frame that is summarized at the product-market level, dropped consumer-level variables, and added `s` and `y`.
+
+```{r, echo = TRUE}
+# compute share
+df_share <-
+  compute_share_delta(X, M, V, e, delta, sigma, mu, omega) 
+df_share
+summary(df_share)
+```
+
+
+8. Extract the share data from `df_share` and name it `s`.
+
+```{r, echo = TRUE}
+s <- df_share %>%
+  dplyr::select(t, j, s)
+s
+```
+
+
+9. Write a function `solve_delta(s, X, M, V, e, delta, sigma, mu, omega)` that finds $\delta_{jt}$ that equates the actua share and the predicted share by the fixed-point algorithm. Set the stopping criterion at $\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| < 10^{-10}$. Start the algorithm with the true $\delta_{jt}$ and check if the algorithm returns (almost) the same $\delta_{jt}$.
+
+```{r, echo = TRUE}
+delta_new <-
+  solve_delta(s, X, M, V, e, delta, sigma, mu, omega)
+head(delta_new)
+summary(delta_new - delta)
+```
+
+10. Construct the excluded instrumental variable as follows.
+
+```{r}
+df
+```
+
 

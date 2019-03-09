@@ -24,8 +24,6 @@ compute_choice <-
     T <- max(M$t)
     N <- max(V$i)
     J <- max(X$j)
-    # alpha
-    alpha <- - exp(mu + omega^2/2)
     # make choice data
     df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
       tibble::as_tibble() %>%
@@ -48,6 +46,7 @@ compute_choice <-
     # return
     return(df_choice)
   }
+# compute share
 compute_share <-
   function(X, M, V, e, beta, sigma, 
            mu, omega) {
