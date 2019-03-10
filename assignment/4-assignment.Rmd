@@ -16,6 +16,7 @@ library(foreach)
 library(ggplot2)
 library(latex2exp)
 library(doParallel)
+registerDoParallel()
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
@@ -333,23 +334,29 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 $$
 \delta_{jt} = \beta_0' x_j + \alpha_0' p_{jt} + \xi_{jt}.
 $$
-```{r delta}
-XX <- as.matrix(dplyr::select(df, dplyr::starts_with("x_")))
-pp <- as.matrix(dplyr::select(df, p)) 
+```{r}
+XX <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_")))
+pp <- as.matrix(dplyr::select(df_share, p)) 
+xi <- as.matrix(dplyr::select(df_share, xi))
 alpha <- - exp(mu + omega^2/2)
-delta <- XX %*% as.matrix(beta) + pp * alpha
-colnames(delta) <- "delta"
-head(delta)
+delta <- XX %*% as.matrix(beta) + pp * alpha + xi
+delta <- dplyr::select(df_share, t, j) %>%
+  dplyr::mutate(delta = as.numeric(delta))
 ```
+```{r, echo = TRUE}
+delta
+```
+
 
 
 5. Write a function `compute_indirect_utility_delta(df, delta, sigma, mu, omega)` that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with $e$. Print out the output with $\delta_{jt}$ evaluated at the true parameters.
 ```{r, echo = TRUE}
 # compute indirect utility from delta
-u <-
+u_delta <-
   compute_indirect_utility_delta(df, delta, sigma,
                                  mu, omega)
-head(u)
+head(u_delta)
+summary(u - u_delta)
 ```
 
 
@@ -358,9 +365,11 @@ head(u)
 
 ```{r, echo = TRUE}
 # compute choice
-df_choice <- 
+df_choice_delta <- 
   compute_choice_delta(X, M, V, e, delta, sigma, mu, omega)
-df_choice
+df_choice_delta
+summary(df_choice_delta)
+summary(df_choice$q - df_choice_delta$q)
 ```
 
 
@@ -368,35 +377,199 @@ df_choice
 
 ```{r, echo = TRUE}
 # compute share
-df_share <-
+df_share_delta <-
   compute_share_delta(X, M, V, e, delta, sigma, mu, omega) 
-df_share
-summary(df_share)
+df_share_delta
+summary(df_share_delta)
+summary(df_share$s - df_share_delta$s)
 ```
 
-
-8. Extract the share data from `df_share` and name it `s`.
-
-```{r, echo = TRUE}
-s <- df_share %>%
-  dplyr::select(t, j, s)
-s
-```
-
-
-9. Write a function `solve_delta(s, X, M, V, e, delta, sigma, mu, omega)` that finds $\delta_{jt}$ that equates the actua share and the predicted share by the fixed-point algorithm. Set the stopping criterion at $\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| < 10^{-10}$. Start the algorithm with the true $\delta_{jt}$ and check if the algorithm returns (almost) the same $\delta_{jt}$.
+8. Write a function `solve_delta(df_share, X, M, V, e, delta, sigma, mu, omega)` that finds $\delta_{jt}$ that equates the actua share and the predicted share by the fixed-point algorithm with an operator:
+$$
+T(\delta_{jt}^{(r)}) = \delta_{jt}^{(r)} + \kappa \cdot \log\left(\frac{s_{jt}}{\sigma_{jt}[\delta^{(r)}]}\right),
+$$
+where $s_{jt}$ is the actual share of product $j$ in market $t$ and $\sigma_{jt}[\delta^{(r)}]$ is the predicted share of product $j$ in market $t$ given $\delta^{(r)}$. Multiplying $\kappa$ is for the numerical stability. I set the value at $\kappa = 0.1$. Adjust it if the algorithm did not work. Set the stopping criterion at $\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| < 0.01$. Start the algorithm with the true $\delta_{jt}$ and check if the algorithm returns (almost) the same $\delta_{jt}$.
 
 ```{r, echo = TRUE}
+kappa <- 0.1
 delta_new <-
-  solve_delta(s, X, M, V, e, delta, sigma, mu, omega)
+  solve_delta(df_share, X, M, V, e, delta, sigma, mu, omega, kappa)
 head(delta_new)
-summary(delta_new - delta)
+summary(delta_new$delta - delta$delta)
 ```
 
-10. Construct the excluded instrumental variable as follows.
+9. Check how long it takes to compute the limit $\delta$ under the Monte Carlo shocks starting from the true $\delta$. This is approximately the time to evaluate the objective function.
+```{r, echo = TRUE}
+system.time(
+delta_new <-
+  solve_delta(df_share, X, M, V_mcmc, e_mcmc, delta, sigma, mu, omega, kappa)
+)
+```
 
+
+10. We use the marginal cost $c_{jt}$ as the excluded instrumental variable for $p_{jt}$. Let $\Psi$ be the weighing matrix for the GMM estimator. For now, let it be the identity matrix. Write a function `compute_theta_linear(df_share, delta, Psi)` that returns the optimal linear parameters associated with the data and $\delta$:
+\begin{equation}
+\theta_1 = (X_1'W \Phi^{-1} W'X_1)^{-1} X_1' W \Phi^{-1} W' \delta,
+\end{equation} 
+where
+\begin{equation}
+X_1 = 
+\begin{pmatrix}
+x_{11}' & p_{11}\\
+\vdots & \vdots \\
+x_{J_1 1}' & p_{J_1 1}\\
+\vdots & \vdots \\
+x_{1T}' & p_{1T}\\
+\vdots & \vdots \\
+x_{J_T T} & p_{J_T T}
+\end{pmatrix},
+W = 
+\begin{pmatrix}
+x_{11}' & c_{11}\\
+\vdots & \vdots \\
+x_{J_1 1}' & c_{J_1 1}\\
+\vdots & \vdots \\
+x_{1T}' & c_{1T}\\
+\vdots & \vdots \\
+x_{J_T T} & c_{J_T T}
+\end{pmatrix},
+\delta =
+\begin{pmatrix}
+\delta_11\\
+\vdots\\
+\delta_{J_1 1}\\
+\vdots
+\delta_1T\\
+\vdots\\
+\delta_{J_T T}\\
+\end{pmatrix}
+\end{equation}.
+
+```{r, echo = TRUE}
+Psi <- diag(length(beta) + 1)
+alpha <- - exp(mu + omega^2/2)
+theta_linear <-
+  compute_theta_linear(df_share, delta, Psi) 
+cbind(theta_linear, c(beta, alpha))
+```
+
+11. Write a function `solve_xi(df_share, delta, theta_linear)` that computes the values of $\xi$ that are implied from the data, $\delta$, and the linear parameters. Check that the (almost) true values are returned when true $\delta$ and the linear parmaeters are passed to the function.
+
+```{r, echo = TRUE}
+theta_linear <- c(beta, alpha)
+xi_new <- solve_xi(df_share, delta, theta_linear)
+head(xi_new)
+summary(df_share$xi - xi_new)
+```
+
+
+11. Write a function `GMM_objective_A4(theta_nonlinear, delta, df_share, Psi, X, M, V_mcmc, e_mcmc, kappa)` that returns the value of the GMM objective function as a function of non-linear parameters `mu`, `omega`, and `sigma`:
+$$
+\min_{\theta} \xi(\theta)' W \Phi^{-1} W' \xi(\theta),
+$$
+where $\xi(\theta)$ is the values of $\xi$ that solves:
+$$
+s = \sigma(p, x, \xi),
+$$
+given parameters $\theta$.
+
+```{r, echo = TRUE}
+# non-linear parmaeters
+theta_nonlinear <- c(mu, omega, sigma)
+# compute GMM objective function
+objective <-
+  GMM_objective_A4(theta_nonlinear, delta, df_share, Psi, 
+                   X, M, V_mcmc, e_mcmc, kappa) 
+objective
+```
+
+12. Draw a graph of the objective function that varies each non-linear parameter from 0.5, 0.6, $\cdots$, 1.5 of the true value. First try with the actual shocks `V` and `e` and then try with the Monte Carlo shocks `V_mcmc` and `e_mcmc`. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.
+
+The graphs with the true shocks:
+
+```{r, eval = FALSE}
+label <- c( "\\mu",
+           "\\omega",
+           paste("\\sigma_", 1:K, sep = ""))
+label <- paste("$", label, "$", sep = "")
+graph_true <- foreach (i = 1:length(theta_nonlinear)) %do% {
+  theta_nonlinear_i <- theta_nonlinear[i]
+  theta_nonlinear_i_list <- theta_nonlinear_i * seq(0.5, 1.5, by = 0.2)
+  objective_i <- 
+    foreach (theta_nonlinear_ij = theta_nonlinear_i_list,
+             .combine = "rbind") %dopar% {
+               theta_nonlinear_j <- theta_nonlinear
+               theta_nonlinear_j[i] <- theta_nonlinear_ij
+               objective_ij <-
+                 GMM_objective_A4(theta_nonlinear_j, delta, df_share, Psi, 
+                                  X, M, V_mcmc, e_mcmc, kappa) 
+               return(objective_ij)
+             }
+  df_graph <- 
+    data.frame(x = theta_nonlinear_i_list, y = as.numeric(objective_i)) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_nonlinear_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph_true, file = "data/A4_graph_true.RData")
+```
 ```{r}
-df
+graph_true <- get(load(file = "data/A4_graph_true.RData"))
+graph_true
+```
+
+
+The graphs with the Monte Carlo shocks:
+
+```{r, eval = FALSE}
+label <- c( "\\mu",
+           "\\omega",
+           paste("\\sigma_", 1:K, sep = ""))
+label <- paste("$", label, "$", sep = "")
+graph_mcmc <- foreach (i = 1:length(theta_nonlinear)) %do% {
+  theta_nonlinear_i <- theta_nonlinear[i]
+  theta_nonlinear_i_list <- theta_nonlinear_i * seq(0.5, 1.5, by = 0.1)
+  objective_i <- 
+    foreach (theta_nonlinear_ij = theta_nonlinear_i_list,
+             .combine = "rbind") %dopar% {
+               theta_nonlinear_j <- theta_nonlinear
+               theta_nonlinear_j[i] <- theta_nonlinear_ij
+               objective_ij <-
+                 GMM_objective_A4(theta_nonlinear_j, delta, df_share, Psi, 
+                                  X, M, V_mcmc, e_mcmc, kappa) 
+               return(objective_ij)
+             }
+  df_graph <- 
+    data.frame(x = theta_nonlinear_i_list, y = as.numeric(objective_i)) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_nonlinear_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph_mcmc, file = "data/A4_graph_mcmc.RData")
+```
+```{r}
+graph_mcmc <- get(load(file = "data/A4_graph_mcmc.RData"))
+graph_mcmc
+```
+
+
+13. Find non-linear parameters that minimize the GMM objective function.
+```{r}
+result <-
+  optim(par = theta_nonlinear,
+        fn = GMM_objective_A4,
+        method = "BFGS",
+        delta = delta, 
+        df_share = df_share, 
+        Psi = Psi, 
+        X = X, M = M, 
+        V_mcmc = V_mcmc, 
+        e_mcmc = e_mcmc, 
+        kappa = kappa)
 ```
 
 

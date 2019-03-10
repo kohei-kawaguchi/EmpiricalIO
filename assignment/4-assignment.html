@@ -522,21 +522,29 @@ theta</code></pre>
 \delta_{jt} = \beta_0' x_j + \alpha_0' p_{jt} + \xi_{jt}.
 \]</span></li>
 </ol>
-<pre><code>##           delta
-## [1,]  0.0000000
-## [2,] -0.9944757
-## [3,] -4.0577438
-## [4,] -1.4757239
-## [5,] -1.9432352
-## [6,] -0.6972577</code></pre>
+<pre class="r"><code>delta</code></pre>
+<pre><code>## # A tibble: 700 x 3
+##        t     j  delta
+##    &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     0  0    
+##  2     1     1 -1.07 
+##  3     1     5 -3.38 
+##  4     1     6 -1.53 
+##  5     1     7 -1.75 
+##  6     1     8 -0.724
+##  7     1    10 -1.32 
+##  8     2     0  0    
+##  9     2     1 -1.30 
+## 10     2     2 -1.60 
+## # … with 690 more rows</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Write a function <code>compute_indirect_utility_delta(df, delta, sigma, mu, omega)</code> that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with <span class="math inline">\(e\)</span>. Print out the output with <span class="math inline">\(\delta_{jt}\)</span> evaluated at the true parameters.</li>
 </ol>
 <pre class="r"><code># compute indirect utility from delta
-u &lt;-
+u_delta &lt;-
   compute_indirect_utility_delta(df, delta, sigma,
                                  mu, omega)
-head(u)</code></pre>
+head(u_delta)</code></pre>
 <pre><code>##             u
 ## [1,] 0.000000
 ## [2,] 4.909783
@@ -544,13 +552,21 @@ head(u)</code></pre>
 ## [4,] 4.506089
 ## [5,] 4.781355
 ## [6,] 5.306545</code></pre>
+<pre class="r"><code>summary(u - u_delta)</code></pre>
+<pre><code>##        u             
+##  Min.   :-2.842e-14  
+##  1st Qu.: 0.000e+00  
+##  Median : 0.000e+00  
+##  Mean   : 1.820e-16  
+##  3rd Qu.: 6.661e-16  
+##  Max.   : 5.684e-14</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_choice_delta(X, M, V, e, delta, sigma, mu, omega)</code> that first construct <code>df</code> from <code>X</code>, <code>M</code>, <code>V</code>, second call <code>compute_indirect_utility_delta</code> to obtain the vector of mean indirect utilities <code>u</code>, third compute the choice vector <code>q</code> based on the vector of mean indirect utilities and <code>e</code>, and finally return the data frame to which <code>u</code> and <code>q</code> are added as columns.</li>
 </ol>
 <pre class="r"><code># compute choice
-df_choice &lt;- 
+df_choice_delta &lt;- 
   compute_choice_delta(X, M, V, e, delta, sigma, mu, omega)
-df_choice</code></pre>
+df_choice_delta</code></pre>
 <pre><code>## # A tibble: 350,000 x 16
 ##        t     i     j v_x_1 v_x_2  v_x_3    v_p   x_1     x_2      x_3
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
@@ -566,13 +582,52 @@ df_choice</code></pre>
 ## 10     1     2     5 0.375 0.418 -0.243 -0.899     1  0.756   0.459  
 ## # … with 349,990 more rows, and 6 more variables: xi &lt;dbl&gt;, c &lt;dbl&gt;,
 ## #   p &lt;dbl&gt;, u &lt;dbl&gt;, e &lt;dbl&gt;, q &lt;dbl&gt;</code></pre>
+<pre class="r"><code>summary(df_choice_delta)</code></pre>
+<pre><code>##        t                i               j              v_x_1          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685716  
+##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.000103  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.639   Mean   :-0.004312  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 7.000   3rd Qu.: 0.668186  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
+##      v_x_2               v_x_3                v_p           
+##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
+##  1st Qu.:-0.678436   1st Qu.:-0.674487   1st Qu.:-0.670251  
+##  Median : 0.000444   Median : 0.005891   Median : 0.002309  
+##  Mean   :-0.001340   Mean   : 0.003736   Mean   :-0.001305  
+##  3rd Qu.: 0.670840   3rd Qu.: 0.678349   3rd Qu.: 0.671041  
+##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300  
+##       x_1              x_2                x_3                xi           
+##  Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947   Min.   :-1.444460  
+##  1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:-0.253245  
+##  Median :1.0000   Median : 0.19492   Median : 0.2970   Median : 0.000000  
+##  Mean   :0.8571   Mean   : 0.06936   Mean   : 0.1186   Mean   : 0.006915  
+##  3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.4106   3rd Qu.: 0.302174  
+##  Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719   Max.   : 1.905138  
+##        c                p               u                  e          
+##  Min.   :0.0000   Min.   :0.000   Min.   :-273.177   Min.   :-2.6364  
+##  1st Qu.:0.9417   1st Qu.:1.562   1st Qu.:  -2.452   1st Qu.:-0.3302  
+##  Median :0.9887   Median :1.901   Median :   0.000   Median : 0.3634  
+##  Mean   :0.8583   Mean   :1.846   Mean   :  -1.647   Mean   : 0.5760  
+##  3rd Qu.:1.0278   3rd Qu.:2.373   3rd Qu.:   1.848   3rd Qu.: 1.2415  
+##  Max.   :1.1996   Max.   :8.211   Max.   :  10.590   Max.   :14.0966  
+##        q         
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :0.0000  
+##  Mean   :0.1429  
+##  3rd Qu.:0.0000  
+##  Max.   :1.0000</code></pre>
+<pre class="r"><code>summary(df_choice$q - df_choice_delta$q)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0       0       0       0       0       0</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_share_delta(X, M, V, e, delta, sigma, mu, omega)</code> that first construct <code>df</code> from <code>X</code>, <code>M</code>, <code>V</code>, second call <code>compute_choice_delta</code> to obtain a data frame with <code>u</code> and <code>q</code>, third compute the share of each product at each market <code>s</code> and the log difference in the share from the outside option, <span class="math inline">\(\ln(s_{jt}/s_{0t})\)</span>, denoted by <code>y</code>, and finally return the data frame that is summarized at the product-market level, dropped consumer-level variables, and added <code>s</code> and <code>y</code>.</li>
 </ol>
 <pre class="r"><code># compute share
-df_share &lt;-
+df_share_delta &lt;-
   compute_share_delta(X, M, V, e, delta, sigma, mu, omega) 
-df_share</code></pre>
+df_share_delta</code></pre>
 <pre><code>## # A tibble: 700 x 11
 ##        t     j   x_1     x_2      x_3      xi     c     p     q     s
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -587,7 +642,7 @@ df_share</code></pre>
 ##  9     2     1     1  0.244  -0.00810 -0.197  0.988  1.90    61 0.122
 ## 10     2     2     1  0.369   0.472   -0.0297 1.04   1.93    35 0.07 
 ## # … with 690 more rows, and 1 more variable: y &lt;dbl&gt;</code></pre>
-<pre class="r"><code>summary(df_share)</code></pre>
+<pre class="r"><code>summary(df_share_delta)</code></pre>
 <pre><code>##        t                j               x_1              x_2          
 ##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-1.10735  
 ##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.15269  
@@ -609,49 +664,128 @@ df_share</code></pre>
 ##  Mean   : 71.43   Mean   :0.1429   Mean   :-1.01027  
 ##  3rd Qu.: 77.00   3rd Qu.:0.1540   3rd Qu.:-0.78831  
 ##  Max.   :207.00   Max.   :0.4140   Max.   : 0.08311</code></pre>
+<pre class="r"><code>summary(df_share$s - df_share_delta$s)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0       0       0       0       0       0</code></pre>
 <ol start="8" style="list-style-type: decimal">
-<li>Extract the share data from <code>df_share</code> and name it <code>s</code>.</li>
+<li>Write a function <code>solve_delta(df_share, X, M, V, e, delta, sigma, mu, omega)</code> that finds <span class="math inline">\(\delta_{jt}\)</span> that equates the actua share and the predicted share by the fixed-point algorithm with an operator: <span class="math display">\[
+T(\delta_{jt}^{(r)}) = \delta_{jt}^{(r)} + \kappa \cdot \log\left(\frac{s_{jt}}{\sigma_{jt}[\delta^{(r)}]}\right),
+\]</span> where <span class="math inline">\(s_{jt}\)</span> is the actual share of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span> and <span class="math inline">\(\sigma_{jt}[\delta^{(r)}]\)</span> is the predicted share of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span> given <span class="math inline">\(\delta^{(r)}\)</span>. Multiplying <span class="math inline">\(\kappa\)</span> is for the numerical stability. I set the value at <span class="math inline">\(\kappa = 0.1\)</span>. Adjust it if the algorithm did not work. Set the stopping criterion at <span class="math inline">\(\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| &lt; 0.01\)</span>. Start the algorithm with the true <span class="math inline">\(\delta_{jt}\)</span> and check if the algorithm returns (almost) the same <span class="math inline">\(\delta_{jt}\)</span>.</li>
 </ol>
-<pre class="r"><code>s &lt;- df_share %&gt;%
-  dplyr::select(t, j, s)
-s</code></pre>
-<pre><code>## # A tibble: 700 x 3
-##        t     j     s
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     0 0.316
-##  2     1     1 0.104
-##  3     1     5 0.042
-##  4     1     6 0.092
-##  5     1     7 0.082
-##  6     1     8 0.272
-##  7     1    10 0.092
-##  8     2     0 0.35 
-##  9     2     1 0.122
-## 10     2     2 0.07 
-## # … with 690 more rows</code></pre>
-<ol start="9" style="list-style-type: decimal">
-<li>Write a function <code>solve_delta(s, X, M, V, e, delta, sigma, mu, omega)</code> that finds <span class="math inline">\(\delta_{jt}\)</span> that equates the actua share and the predicted share by the fixed-point algorithm. Set the stopping criterion at <span class="math inline">\(\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| &lt; 10^{-10}\)</span>. Start the algorithm with the true <span class="math inline">\(\delta_{jt}\)</span> and check if the algorithm returns (almost) the same <span class="math inline">\(\delta_{jt}\)</span>.</li>
-</ol>
-<pre class="r"><code>delta_new &lt;-
-  solve_delta(s, X, M, V, e, delta, sigma, mu, omega)
+<pre class="r"><code>kappa &lt;- 0.1
+delta_new &lt;-
+  solve_delta(df_share, X, M, V, e, delta, sigma, mu, omega, kappa)
 head(delta_new)</code></pre>
-<pre><code>##           delta
-## [1,]  0.0000000
-## [2,] -0.9944757
-## [3,] -4.0577438
-## [4,] -1.4757239
-## [5,] -1.9432352
-## [6,] -0.6972577</code></pre>
-<pre class="r"><code>summary(delta_new - delta)</code></pre>
-<pre><code>##      delta           
-##  Min.   :-3.553e-15  
-##  1st Qu.: 0.000e+00  
-##  Median : 0.000e+00  
-##  Mean   : 2.763e-18  
-##  3rd Qu.: 0.000e+00  
-##  Max.   : 3.553e-15</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##       t     j  delta
+##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1     1     0  0    
+## 2     1     1 -1.07 
+## 3     1     5 -3.38 
+## 4     1     6 -1.53 
+## 5     1     7 -1.75 
+## 6     1     8 -0.724</code></pre>
+<pre class="r"><code>summary(delta_new$delta - delta$delta)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0       0       0       0       0       0</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Check how long it takes to compute the limit <span class="math inline">\(\delta\)</span> under the Monte Carlo shocks starting from the true <span class="math inline">\(\delta\)</span>. This is approximately the time to evaluate the objective function.</li>
+</ol>
+<pre class="r"><code>system.time(
+delta_new &lt;-
+  solve_delta(df_share, X, M, V_mcmc, e_mcmc, delta, sigma, mu, omega, kappa)
+)</code></pre>
+<pre><code>##    user  system elapsed 
+##  58.411   7.004  66.552</code></pre>
 <ol start="10" style="list-style-type: decimal">
-<li></li>
+<li>We use the marginal cost <span class="math inline">\(c_{jt}\)</span> as the excluded instrumental variable for <span class="math inline">\(p_{jt}\)</span>. Let <span class="math inline">\(\Psi\)</span> be the weighing matrix for the GMM estimator. For now, let it be the identity matrix. Write a function <code>compute_theta_linear(df_share, delta, Psi)</code> that returns the optimal linear parameters associated with the data and <span class="math inline">\(\delta\)</span>:
+<span class="math display">\[\begin{equation}
+\theta_1 = (X_1'W \Phi^{-1} W'X_1)^{-1} X_1' W \Phi^{-1} W' \delta,
+\end{equation}\]</span>
+where
+<span class="math display">\[\begin{equation}
+X_1 = 
+\begin{pmatrix}
+x_{11}' &amp; p_{11}\\
+\vdots &amp; \vdots \\
+x_{J_1 1}' &amp; p_{J_1 1}\\
+\vdots &amp; \vdots \\
+x_{1T}' &amp; p_{1T}\\
+\vdots &amp; \vdots \\
+x_{J_T T} &amp; p_{J_T T}
+\end{pmatrix},
+W = 
+\begin{pmatrix}
+x_{11}' &amp; c_{11}\\
+\vdots &amp; \vdots \\
+x_{J_1 1}' &amp; c_{J_1 1}\\
+\vdots &amp; \vdots \\
+x_{1T}' &amp; c_{1T}\\
+\vdots &amp; \vdots \\
+x_{J_T T} &amp; c_{J_T T}
+\end{pmatrix},
+\delta =
+\begin{pmatrix}
+\delta_11\\
+\vdots\\
+\delta_{J_1 1}\\
+\vdots
+\delta_1T\\
+\vdots\\
+\delta_{J_T T}\\
+\end{pmatrix}
+\end{equation}\]</span>
+.</li>
+</ol>
+<pre class="r"><code>Psi &lt;- diag(length(beta) + 1)
+alpha &lt;- - exp(mu + omega^2/2)
+theta_linear &lt;-
+  compute_theta_linear(df_share, delta, Psi) 
+cbind(theta_linear, c(beta, alpha))</code></pre>
+<pre><code>##           [,1]       [,2]
+## x_1  3.7976579  4.0000000
+## x_2  0.1380063  0.1836433
+## x_3 -0.7298608 -0.8356286
+## p   -2.6256367 -2.7182818</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Write a function <code>solve_xi(df_share, delta, theta_linear)</code> that computes the values of <span class="math inline">\(\xi\)</span> that are implied from the data, <span class="math inline">\(\delta\)</span>, and the linear parameters. Check that the (almost) true values are returned when true <span class="math inline">\(\delta\)</span> and the linear parmaeters are passed to the function.</li>
+</ol>
+<pre class="r"><code>theta_linear &lt;- c(beta, alpha)
+xi_new &lt;- solve_xi(df_share, delta, theta_linear)
+head(xi_new)</code></pre>
+<pre><code>##               xi
+## [1,]  0.00000000
+## [2,] -0.07789775
+## [3,]  0.67933978
+## [4,] -0.05139386
+## [5,]  0.19383581
+## [6,] -0.02690252</code></pre>
+<pre class="r"><code>summary(df_share$xi - xi_new)</code></pre>
+<pre><code>##        xi            
+##  Min.   :-4.441e-16  
+##  1st Qu.:-5.551e-17  
+##  Median : 0.000e+00  
+##  Mean   :-8.794e-18  
+##  3rd Qu.: 4.163e-17  
+##  Max.   : 4.441e-16</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Write a function <code>GMM_objective_A4(theta_nonlinear, delta, df_share, Psi, X, M, V_mcmc, e_mcmc, kappa)</code> that returns the value of the GMM objective function as a function of non-linear parameters <code>mu</code>, <code>omega</code>, and <code>sigma</code>: <span class="math display">\[
+\min_{\theta} \xi(\theta)' W \Phi^{-1} W' \xi(\theta),
+\]</span> where <span class="math inline">\(\xi(\theta)\)</span> is the values of <span class="math inline">\(\xi\)</span> that solves: <span class="math display">\[
+s = \sigma(p, x, \xi),
+\]</span> given parameters <span class="math inline">\(\theta\)</span>.</li>
+</ol>
+<pre class="r"><code># non-linear parmaeters
+theta_nonlinear &lt;- c(mu, omega, sigma)
+# compute GMM objective function
+objective &lt;-
+  GMM_objective_A4(theta_nonlinear, delta, df_share, Psi, 
+                   X, M, V_mcmc, e_mcmc, kappa) 
+objective</code></pre>
+<pre><code>##              xi
+## xi 7.966674e-19</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>Find non-linear parameters that minimize the GMM objective function.</li>
 </ol>
 </div>
 

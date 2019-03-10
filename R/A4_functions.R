@@ -7,12 +7,16 @@ compute_indirect_utility_delta <-
     p <- as.matrix(dplyr::select(df, p)) 
     v_x <- as.matrix(dplyr::select(df, dplyr::starts_with("v_x")))
     v_p <- as.matrix(dplyr::select(df, v_p))
-    xi <- as.matrix(dplyr::select(df, xi))
+    # expand delta
+    delta_ijt <- df %>%
+      dplyr::left_join(delta, by = c("t", "j")) %>%
+      dplyr::select(delta) %>%
+      as.matrix()
     # random coefficients
     beta_i <- v_x %*% diag(sigma) 
     alpha_i <- - exp(mu + omega * v_p) - (- exp(mu + omega^2/2))
     # conditional mean indirect utility
-    value <- as.matrix(delta + rowSums(beta_i * X) + p * alpha_i + xi) 
+    value <- as.matrix(delta_ijt + rowSums(beta_i * X) + p * alpha_i) 
     colnames(value) <- "u"
     return(value)
   }
@@ -80,20 +84,78 @@ compute_share_delta <-
 
 # solve delta by the fixed-point algorithm
 solve_delta <-
-  function(s, X, M, V, e, delta, sigma, mu, omega) {
+  function(df_share, X, M, V, e, delta, sigma, mu, omega, kappa) {
     # initial distance
     distance <- 10000
     # fixed-point algorithm
-    while (distance > 1e-10) {
+    delta_old <- delta
+    while (distance > 0.01) {
       # save the old delta
-      delta_old <- delta
+      delta_old$delta <- delta$delta
       # compute the share with the old delta
-      df_share <- 
+      df_share_predicted <- 
         compute_share_delta(X, M, V, e, delta_old, sigma, mu, omega)  
+      df_share_predicted <- 
+        ifelse(df_share_predicted$s == 0, 1e-3, df_share_predicted$s)
       # update the delta
-      delta <- delta_old + log(s$s) - log(df_share$s)
+      delta$delta <- delta_old$delta + 
+        (log(df_share$s) - log(df_share_predicted)) * kappa
       # update the distance
-      distance <- max(abs(delta - delta_old))
+      distance <- max(abs(delta$delta - delta_old$delta))
     }
     return(delta)
+  }
+
+# compute the optimal linear parameters
+compute_theta_linear <-
+  function(df_share, delta, Psi) {
+    # extract matrices
+    X1 <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), p))
+    W <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), c))
+    # compute the optimal linear parameters
+    theta_linear_1 <-
+      crossprod(X1, W) %*% 
+      solve(Psi, crossprod(W, X1))
+    theta_linear_2 <-
+      crossprod(X1, W) %*% 
+      solve(Psi, crossprod(W, as.matrix(delta$delta)))
+    theta_linear <- solve(theta_linear_1, theta_linear_2)
+    return(theta_linear)
+  }
+
+# solve xi associated with delta and linear parameters
+solve_xi <-
+  function(df_share, delta, theta_linear) {
+    # extract matrices
+    X1 <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), p))
+    # compute xi
+    xi <- delta$delta - X1 %*% theta_linear
+    # return
+    colnames(xi) <- "xi"
+    return(xi)
+  }
+
+# compute GMM objective function
+GMM_objective_A4 <-
+  function(theta_nonlinear, delta, df_share, Psi, 
+           X, M, V_mcmc, e_mcmc, kappa) {
+    # exctract parameters
+    mu <- theta_nonlinear[1]
+    omega <- theta_nonlinear[2]
+    sigma <- theta_nonlinear[3:length(theta_nonlinear)]
+    # extract matrix
+    W <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), c))
+    # compute the delta that equates the actual and predicted shares
+    delta <- 
+      solve_delta(df_share, X, M, V_mcmc, e_mcmc, 
+                  delta, sigma, mu, omega, kappa)
+    # compute the optimal linear parameters
+    theta_linear <-
+      compute_theta_linear(df_share, delta, Psi) 
+    # compute associated xi
+    xi <- solve_xi(df_share, delta, theta_linear)
+    # compute objective
+    objective <- crossprod(xi, W) %*% solve(Psi, crossprod(W, xi))
+    # return
+    return(objective)
   }
