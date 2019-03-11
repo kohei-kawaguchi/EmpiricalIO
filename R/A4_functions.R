@@ -1,3 +1,64 @@
+# compute choice
+compute_choice_smooth <-
+  function(X, M, V, beta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # make choice data
+    df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+      tibble::as_tibble() %>%
+      dplyr::left_join(V, by = c("i", "t")) %>%
+      dplyr::left_join(X, by = c("j")) %>%
+      dplyr::left_join(M, by = c("j", "t")) %>%
+      dplyr::filter(!is.na(p)) %>%
+      dplyr::arrange(t, i, j)
+    # compute indirect utility
+    u <- compute_indirect_utility(df, beta, sigma, 
+                                  mu, omega)
+    # add u 
+    df_choice <- data.frame(df, u) %>%
+      tibble::as_tibble()
+    # make choice
+    df_choice <- df_choice %>%
+      dplyr::group_by(t, i) %>%
+      dplyr::mutate(q = exp(u)/sum(exp(u))) %>%
+      dplyr::ungroup()
+    # return
+    return(df_choice)
+  }
+# compute share
+compute_share_smooth <-
+  function(X, M, V, beta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # compute choice
+    df_choice <- 
+      compute_choice_smooth(X, M, V, beta, sigma, 
+                     mu, omega)
+    # make share data
+    df_share <- df_choice %>%
+      dplyr::select(-dplyr::starts_with("v_"), -u, -i) %>%
+      dplyr::group_by(t, j) %>%
+      dplyr::mutate(q = sum(q)) %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(t, j, .keep_all = TRUE) %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(s = q/sum(q)) %>%
+      dplyr::ungroup()
+    # log share difference
+    df_share <- df_share %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(y = log(s/sum(s * (j == 0)))) %>%
+      dplyr::ungroup()
+    return(df_share)
+  }
+
+
 # compute indirect utility from delta
 compute_indirect_utility_delta <- 
   function(df, delta, sigma, 
@@ -22,8 +83,8 @@ compute_indirect_utility_delta <-
   }
 
 # compute choice from delta
-compute_choice_delta <-
-  function(X, M, V, e, delta, sigma, 
+compute_choice_smooth_delta <-
+  function(X, M, V, delta, sigma, 
            mu, omega) {
     # constants
     T <- max(M$t)
@@ -40,21 +101,21 @@ compute_choice_delta <-
     # compute indirect utility
     u <- compute_indirect_utility_delta(df, delta, sigma, 
                                         mu, omega)
-    # add u and e
-    df_choice <- data.frame(df, u, e) %>%
+    # add u 
+    df_choice <- data.frame(df, u) %>%
       tibble::as_tibble()
     # make choice
     df_choice <- df_choice %>%
       dplyr::group_by(t, i) %>%
-      dplyr::mutate(q = ifelse(u + e == max(u + e), 1, 0)) %>%
+      dplyr::mutate(q = exp(u)/sum(exp(u))) %>%
       dplyr::ungroup()
     # return
     return(df_choice)
   }
 
 # compute share from delta
-compute_share_delta <-
-  function(X, M, V, e, delta, sigma, 
+compute_share_smooth_delta <-
+  function(X, M, V, delta, sigma, 
            mu, omega) {
     # constants
     T <- max(M$t)
@@ -62,11 +123,11 @@ compute_share_delta <-
     J <- max(X$j)
     # compute choice
     df_choice <- 
-      compute_choice_delta(X, M, V, e, delta, sigma, 
-                           mu, omega)
+      compute_choice_smooth_delta(X, M, V, delta, sigma, 
+                                  mu, omega)
     # make share data
     df_share <- df_choice %>%
-      dplyr::select(-dplyr::starts_with("v_"), -u, -e, -i) %>%
+      dplyr::select(-dplyr::starts_with("v_"), -u, -i) %>%
       dplyr::group_by(t, j) %>%
       dplyr::mutate(q = sum(q)) %>%
       dplyr::ungroup() %>%
@@ -84,24 +145,25 @@ compute_share_delta <-
 
 # solve delta by the fixed-point algorithm
 solve_delta <-
-  function(df_share, X, M, V, e, delta, sigma, mu, omega, kappa) {
+  function(df_share, X, M, V, delta, sigma, mu, omega, kappa, lambda) {
     # initial distance
     distance <- 10000
     # fixed-point algorithm
     delta_old <- delta
-    while (distance > 0.01) {
+    while (distance > lambda) {
       # save the old delta
       delta_old$delta <- delta$delta
       # compute the share with the old delta
       df_share_predicted <- 
-        compute_share_delta(X, M, V, e, delta_old, sigma, mu, omega)  
-      df_share_predicted <- 
-        ifelse(df_share_predicted$s == 0, 1e-3, df_share_predicted$s)
+        compute_share_smooth_delta(X, M, V, delta_old, sigma, mu, omega)  
       # update the delta
       delta$delta <- delta_old$delta + 
-        (log(df_share$s) - log(df_share_predicted)) * kappa
+        (log(df_share$s) - log(df_share_predicted$s)) * kappa
+      delta <- delta %>%
+        dplyr::mutate(delta = ifelse(j == 0, 0, delta))
       # update the distance
       distance <- max(abs(delta$delta - delta_old$delta))
+      print(distance)
     }
     return(delta)
   }
@@ -110,15 +172,25 @@ solve_delta <-
 compute_theta_linear <-
   function(df_share, delta, Psi) {
     # extract matrices
-    X1 <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), p))
-    W <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), c))
+    X <- df_share %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_")) %>%
+      as.matrix()
+    W <- df_share %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_"), c) %>%
+      as.matrix()
+    delta_m <- delta %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(delta) %>%
+      as.matrix()
     # compute the optimal linear parameters
     theta_linear_1 <-
-      crossprod(X1, W) %*% 
-      solve(Psi, crossprod(W, X1))
+      crossprod(X, W) %*% 
+      solve(Psi, crossprod(W, X))
     theta_linear_2 <-
-      crossprod(X1, W) %*% 
-      solve(Psi, crossprod(W, as.matrix(delta$delta)))
+      crossprod(X, W) %*% 
+      solve(Psi, crossprod(W, delta_m))
     theta_linear <- solve(theta_linear_1, theta_linear_2)
     return(theta_linear)
   }
@@ -127,28 +199,38 @@ compute_theta_linear <-
 solve_xi <-
   function(df_share, delta, theta_linear) {
     # extract matrices
-    X1 <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), p))
+    X1 <- df_share %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_"), p) %>%
+      as.matrix()
+    delta_m <- delta %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(delta) %>%
+      as.matrix()
     # compute xi
-    xi <- delta$delta - X1 %*% theta_linear
-    # return
+    xi <- delta_m - X1 %*% theta_linear
     colnames(xi) <- "xi"
+    # return
     return(xi)
   }
 
 # compute GMM objective function
 GMM_objective_A4 <-
   function(theta_nonlinear, delta, df_share, Psi, 
-           X, M, V_mcmc, e_mcmc, kappa) {
+           X, M, V_mcmc, kappa, lambda) {
     # exctract parameters
     mu <- theta_nonlinear[1]
     omega <- theta_nonlinear[2]
     sigma <- theta_nonlinear[3:length(theta_nonlinear)]
     # extract matrix
-    W <- as.matrix(dplyr::select(df_share, dplyr::starts_with("x_"), c))
+    W <- df_share %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_"), c) %>%
+      as.matrix()
     # compute the delta that equates the actual and predicted shares
     delta <- 
-      solve_delta(df_share, X, M, V_mcmc, e_mcmc, 
-                  delta, sigma, mu, omega, kappa)
+      solve_delta(df_share, X, M, V_mcmc,  
+                  delta, sigma, mu, omega, kappa, lambda)
     # compute the optimal linear parameters
     theta_linear <-
       compute_theta_linear(df_share, delta, Psi) 
