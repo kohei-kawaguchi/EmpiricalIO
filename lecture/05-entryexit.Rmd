@@ -189,6 +189,7 @@ $$
 - The second equation is without loss of generality because $y_{jm}$ is a binary variable.
 - The competitive effect of firm $j$ on $i$ and the effect o firm $i$ on $j$ are asymmetric.
 - The parameters of interest are $v_{0i}, v_{0j}, v_{1i}, v_{1j}$ and the joint distribution of $f_{im}, f_{jm}$ conditional on $x_{im}$ and $x_{jm}$.
+- Firms __observe__ both $f_{im}, f_{jm}$ when they make decisions, but econometrician does not.
 
 ### Sampling Assumption and Observations
 
@@ -483,3 +484,74 @@ $$
 - We can estimate the parameters with the GMM method using the above modified moment conditions.
 - Inference based on the moment inequalities are found in @andrews_inference_2010.
 - @ciliberto_market_2009 study the entry exit of airlines when there are heterogeneous competitive effects using the above approach.
+
+## Incompelete-Information Heterogenous Oligopoly Entry
+
+### Bivariate Case
+
+- There are two potential entrants.
+- Let the profit of firm $i$ in market $m$ be:
+$$
+\begin{split}
+\pi_{im}(x_{im}, y_{jm}, f_{im}) & \equiv v(y_{jm}, x_{im}) - f_{im}\\
+&=v_{0i}(x_{im}) + y_{jm} v_{1i}(x_{im}) - f_{im}.
+\end{split}
+$$
+- $y_{im}$ and $y_{jm}$ are the indicators of entry of firm $i$ and $j$ in market $m$.
+- $x_{im}$ and $x_{jm}$ are firm $i$ and $j$'s characteristics in market $m$.
+- $f_{im}$ and $f_{jm}$ are the fixed costs of firm $i$ and $j$ in market $m$.
+- The second equation is without loss of generality because $y_{jm}$ is a binary variable.
+- The competitive effect of firm $j$ on $i$ and the effect o firm $i$ on $j$ are asymmetric.
+- The parameters of interest are $v_{0i}, v_{0j}, v_{1i}, v_{1j}$ and the joint distribution of $f_{im}, f_{jm}$ conditional on $x_{im}$ and $x_{jm}$.
+- Firm $i$ __observe__ both $f_{im}$ but __not__ $f_{jm}$ when it makes decision.
+- Firm $j$ __observe__ both $f_{jm}$ but __not__ $f_{im}$ when it makes decision.
+- Econometrican does not observe either of them.
+- The joint distribution of $f_{im}, f_{jm}$ is $F$ (independent of $x$).
+
+### The Equilibrium Strategy and Belief
+
+- The equilibrium strategy becomes a step function that decreases in a threshold:
+$$
+y_{im} = 1\{f_{im} \le t_{im}\}.
+$$
+$$
+y_{jm} = 1\{f_{jm} \le t_{jm}\}.
+$$
+- Suppose that firm $i$ believes that $f_{jm}$ has a distribution of $G_{jm}^{im}$ and firm $j$ believes that $f_{im}$ has a distribution of $G_{im}^{jm}$.
+- Usually, we assume a common and objective prior: $G_{jm}^{im}(\epsilon_{jm}) = F(\epsilon_{jm}|\epsilon_{im})$ and $G_{im}^{jm}(\epsilon_{im}) = F(\epsilon_{im}|\epsilon_{jm})$.
+- When firm $j$ follows strategy $t_{jm}$, the expected payoff for firm $i$ to enter is:
+$$
+[v_{0i}(x_{im}) - f_{im}][1 - G_{jm}^{im}(t_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im} - f_{im})] G_{jm}^{im}(t_{jm}).
+$$
+- Thus, the threshold $t_{im}$ is determined by:
+$$
+[v_{0i}(x_{im}) - t_{im}][1 - G_{jm}^{im}(t_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im} - t_{im})] G_{jm}^{im}(t_{jm}) = 0.
+$$
+- In the same way, the threshold $t_{jm}$ is determined by:
+$$
+[v_{0j}(x_{jm}) - t_{jm}][1 - G_{im}^{jm}(t_{im})] + [v_{0j}(x_{jm}) + v_{1j}(x_{jm} - t_{jm})] G_{im}^{jm}(t_{im}) = 0.
+$$
+- This system of equations can have multiple solution.
+
+### Equilibrium Selection and Likelihood
+
+- If we specify the equilibrium selection rule $\mathbb{P}(t_{im}, t_{jm}|x_{im}, x_{jm}, f_{im}, f_{jm})$, then we can specify the likelihood of observing $(0, 0)$, $(0, 1)$, $(1, 0)$, and $(1, 1)$.
+- If we do not, we will only have bounds on the likelihood of observing $(0, 0)$, $(0, 1)$, $(1, 0)$, and $(1, 1)$.
+- Another way is to assume that __the same equilibrium $t_{im}^*(x_{im}, x_{jm}), t_{jm}^*(x_{im}, x_{jm})$ holds across markets__.
+- Then, the across market relative frequency of entries conditional on $x_{im}, x_{jm}$ gives the estimates of the entry probabilities:
+$$
+\widehat{G}_{im}(x_{im}, x_{jm}) \approx G_{im}^{jm}[t_{im}(x_{im}, x_{jm})],
+$$
+$$
+\widehat{G}_{jm}(x_{im}, x_{jm}) \approx G_{jm}^{im}[t_{jm}^*(x_{im}, x_{jm})],
+$$
+for each $x_{im}, x_{jm}$.
+- The estimated distribution has to solve:
+$$
+\widehat{G}_{im}(x_{im}, x_{jm}) = \mathbb{P}\{[v_{0i}(x_{im}) - f_{im}][1 - \widehat{G}_{jm}(x_{im}, x_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im} - f_{im})] \widehat{G}_{jm}(x_{im}, x_{jm}) > 0\}.
+$$
+$$
+\widehat{G}_{jm}(x_{im}, x_{jm}) = \mathbb{P}\{[v_{0j}(x_{jm}) - f_{jm}][1 - \widehat{G}_{im}(x_{im}, x_{jm})] + [v_{0j}(x_{jm}) + v_{1j}(x_{jm} - f_{jm})] \widehat{G}_{im}(x_{im}, x_{jm}) > 0\}.
+$$
+- We find parameters $v_{0i}, v_{0j}, v_{1i}, v_{1j}, F$ that solve this system of equations.
+- The "same equilibrium" assumption is hardly justified, but is often used in the empirical studies.
