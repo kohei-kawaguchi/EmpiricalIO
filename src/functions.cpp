@@ -188,11 +188,11 @@ Rcpp::List access_rcpp(
     Eigen::VectorXd a_j = A.col(j - 1);
     Rcpp::List output =
       Rcpp::List::create(
-        I = I,
-        J = J,
-        a_ij = a_ij,
-        a_i = a_i,
-        a_j = a_j
+        Rcpp::Named("I") = I,
+        Rcpp::Named("J") = J,
+        Rcpp::Named("a_ij") = a_ij,
+        Rcpp::Named("a_i") = a_i,
+        Rcpp::Named("a_j") = a_j
       );
     return(output);
   }

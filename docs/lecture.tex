@@ -10495,7 +10495,7 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3
 \item
   Cut and paste the function to \texttt{R/functions.R}.
 \item
-  Build the package and load the function from the library
+  Build the package and load the function from the library.
 \item
   Check if the function can be executed as in step 3.
 \item
@@ -10645,7 +10645,11 @@ br s -n compute_square_rcpp
     For the rest, refer to the
     \href{https://lldb.llvm.org/}{documentation of lldb}.
   \item
-    There is no such an easy way in Windows.
+    There is no such an easy way in Windows. You will have to establish
+    an environment in which you can run a cpp file with executable
+    statemtns and call the debugging functions from the file. Then, you
+    can use some debuggers such as \texttt{gdb} to debug the functions
+    inside the cpp file.
   \end{itemize}
 \item
   If you need to modify the function, first rewrite the R function and
@@ -11830,7 +11834,30 @@ Vector}\label{accessing-to-elements-of-a-matrix-and-vector}
   \texttt{main/main.R}:
 \end{itemize}
 
-\texttt{//\ src/functions.cpp\ //\ {[}{[}Rcpp::export{]}{]}\ Rcpp::List\ access\_rcpp(\ \ \ \ \ Eigen::MatrixXd\ A,\ \ \ \ \ \ int\ i,\ \ \ \ \ \ int\ j\ \ \ )\ \{\ \ \ \ \ int\ I\ =\ A.rows();\ \ \ \ \ int\ J\ =\ A.cols();\ \ \ \ \ double\ a\_ij\ =\ A(i\ -\ 1,\ j\ -\ 1);\ \ \ \ \ Eigen::VectorXd\ a\_i\ =\ A.row(i\ -\ 1);\ \ \ \ \ Eigen::VectorXd\ a\_j\ =\ A.col(j\ -\ 1);\ \ \ \ \ Rcpp::List\ output\ =\ \ \ \ \ \ \ Rcpp::List::create(\ \ \ \ \ \ \ \ \ I\ =\ I,\ \ \ \ \ \ \ \ \ J\ =\ J,\ \ \ \ \ \ \ \ \ a\_ij\ =\ a\_ij,\ \ \ \ \ \ \ \ \ a\_i\ =\ a\_i,\ \ \ \ \ \ \ \ \ a\_j\ =\ a\_j\ \ \ \ \ \ \ );\ \ \ \ \ return(output);\ \ \ \}}
+\begin{verbatim}
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List access_rcpp(
+    Eigen::MatrixXd A, 
+    int i, 
+    int j
+  ) {
+    int I = A.rows();
+    int J = A.cols();
+    double a_ij = A(i - 1, j - 1);
+    Eigen::VectorXd a_i = A.row(i - 1);
+    Eigen::VectorXd a_j = A.col(j - 1);
+    Rcpp::List output =
+      Rcpp::List::create(
+        Rcpp::Named("I") = I,
+        Rcpp::Named("J") = J,
+        Rcpp::Named("a_ij") = a_ij,
+        Rcpp::Named("a_i") = a_i,
+        Rcpp::Named("a_j") = a_j
+      );
+    return(output);
+  }
+\end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11851,19 +11878,19 @@ Vector}\label{accessing-to-elements-of-a-matrix-and-vector}
 \end{Shaded}
 
 \begin{verbatim}
-## [[1]]
+## $I
 ## [1] 4
 ## 
-## [[2]]
+## $J
 ## [1] 4
 ## 
-## [[3]]
+## $a_ij
 ## [1] 0.3295078
 ## 
-## [[4]]
+## $a_i
 ## [1] -0.6264538  0.3295078  0.5757814 -0.6212406
 ## 
-## [[5]]
+## $a_j
 ## [1]  0.3295078 -0.8204684  0.4874291  0.7383247
 \end{verbatim}
 

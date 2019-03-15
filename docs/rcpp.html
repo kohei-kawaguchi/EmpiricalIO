@@ -387,8 +387,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>In this chapter, we learn how to integrate C++ using Rcpp and RcppEigen.</li>
 <li><code>RcppEigen</code> is a package to use a linear algebra library <code>Eigen</code> with R. The original <code>Eigen</code> library and its documentation is found in <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">their website</a>.</li>
-<li>Instead of <code>RcppEigen</code>, you may want to use <code>RcppArmadillo</code>. <code>Armadillo</code> is another libear algebra library in C++.<br />
-</li>
+<li>Instead of <code>RcppEigen</code>, you may want to use <code>RcppArmadillo</code>. <code>Armadillo</code> is another libear algebra library in C++.</li>
 <li>We presume that:
 <ul>
 <li>C/C++ environment is installed to the computer.
@@ -473,7 +472,7 @@ y2 &lt;-<span class="st"> </span><span class="kw">compute_square</span>(x)
 <pre><code>## [1] 0</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Cut and paste the function to <code>R/functions.R</code>.</li>
-<li>Build the package and load the function from the library</li>
+<li>Build the package and load the function from the library.</li>
 <li>Check if the function can be executed as in step 3.</li>
 <li><p>Copy the function to <code>src/functions.cpp</code> and comment them out.</p>
 <pre><code>// src/functions.cpp
@@ -541,7 +540,7 @@ run -f main/main.R</code></pre></li>
 br s -n compute_square_rcpp</code></pre>
 and then continue the process by typing <code>c</code> in the terminal.</li>
 <li>For the rest, refer to the <a href="https://lldb.llvm.org/">documentation of lldb</a>.</li>
-<li><p>There is no such an easy way in Windows.</p></li>
+<li><p>There is no such an easy way in Windows. You will have to establish an environment in which you can run a cpp file with executable statemtns and call the debugging functions from the file. Then, you can use some debuggers such as <code>gdb</code> to debug the functions inside the cpp file.</p></li>
 </ul></li>
 <li>If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never start the debugging from C++ functions.</li>
 </ol>
@@ -1249,25 +1248,46 @@ output &lt;-<span class="st"> </span><span class="kw">access</span>(A, <span cla
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call in <code>main/main.R</code>:</li>
 </ul>
-<p><code>// src/functions.cpp // [[Rcpp::export]] Rcpp::List access_rcpp(     Eigen::MatrixXd A,      int i,      int j   ) {     int I = A.rows();     int J = A.cols();     double a_ij = A(i - 1, j - 1);     Eigen::VectorXd a_i = A.row(i - 1);     Eigen::VectorXd a_j = A.col(j - 1);     Rcpp::List output =       Rcpp::List::create(         I = I,         J = J,         a_ij = a_ij,         a_i = a_i,         a_j = a_j       );     return(output);   }</code></p>
+<pre><code>// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List access_rcpp(
+    Eigen::MatrixXd A, 
+    int i, 
+    int j
+  ) {
+    int I = A.rows();
+    int J = A.cols();
+    double a_ij = A(i - 1, j - 1);
+    Eigen::VectorXd a_i = A.row(i - 1);
+    Eigen::VectorXd a_j = A.col(j - 1);
+    Rcpp::List output =
+      Rcpp::List::create(
+        Rcpp::Named(&quot;I&quot;) = I,
+        Rcpp::Named(&quot;J&quot;) = J,
+        Rcpp::Named(&quot;a_ij&quot;) = a_ij,
+        Rcpp::Named(&quot;a_i&quot;) = a_i,
+        Rcpp::Named(&quot;a_j&quot;) = a_j
+      );
+    return(output);
+  }</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
 output_rcpp &lt;-<span class="st"> </span><span class="kw">access_rcpp</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)
 <span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(output) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(output_rcpp)))</code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output_rcpp </code></pre></div>
-<pre><code>## [[1]]
+<pre><code>## $I
 ## [1] 4
 ## 
-## [[2]]
+## $J
 ## [1] 4
 ## 
-## [[3]]
+## $a_ij
 ## [1] 0.3295078
 ## 
-## [[4]]
+## $a_i
 ## [1] -0.6264538  0.3295078  0.5757814 -0.6212406
 ## 
-## [[5]]
+## $a_j
 ## [1]  0.3295078 -0.8204684  0.4874291  0.7383247</code></pre>
 
 </div>

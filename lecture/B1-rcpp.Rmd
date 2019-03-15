@@ -74,7 +74,7 @@ y2 <- compute_square(x)
 max(abs(y1 - y2))
 ```
 4. Cut and paste the function to `R/functions.R`.
-5. Build the package and load the function from the library
+5. Build the package and load the function from the library.
 6. Check if the function can be executed as in step 3.
 7. Copy the function to `src/functions.cpp` and comment them out.
 ```
@@ -146,7 +146,7 @@ max(abs(y2 - y3))
     ```
     and then continue the process by typing `c` in the terminal.
     - For the rest, refer to the [documentation of lldb](https://lldb.llvm.org/).
-    - There is no such an easy way in Windows.
+    - There is no such an easy way in Windows. You will have to establish an environment in which you can run a cpp file with executable statemtns and call the debugging functions from the file. Then, you can use some debuggers such as `gdb` to debug the functions inside the cpp file.
     
 13. If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never start the debugging from C++ functions.
 
@@ -714,14 +714,15 @@ Rcpp::List access_rcpp(
     Eigen::VectorXd a_j = A.col(j - 1);
     Rcpp::List output =
       Rcpp::List::create(
-        I = I,
-        J = J,
-        a_ij = a_ij,
-        a_i = a_i,
-        a_j = a_j
+        Rcpp::Named("I") = I,
+        Rcpp::Named("J") = J,
+        Rcpp::Named("a_ij") = a_ij,
+        Rcpp::Named("a_i") = a_i,
+        Rcpp::Named("a_j") = a_j
       );
     return(output);
-  }```
+  }
+```
 
 ```{r, echo = TRUE}
 # main/main.R

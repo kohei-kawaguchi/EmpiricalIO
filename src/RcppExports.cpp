@@ -6,6 +6,246 @@
 
 using namespace Rcpp;
 
+// compute_square_rcpp
+Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x);
+RcppExport SEXP _EmpiricalIO_compute_square_rcpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_square_rcpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_numeric_vector_to_rcpp
+Rcpp::NumericVector pass_numeric_vector_to_rcpp(Rcpp::NumericVector x);
+RcppExport SEXP _EmpiricalIO_pass_numeric_vector_to_rcpp(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_numeric_vector_to_rcpp(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_numeric_matrix_to_rcpp
+Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y);
+RcppExport SEXP _EmpiricalIO_pass_numeric_matrix_to_rcpp(SEXP YSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type Y(YSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_numeric_matrix_to_rcpp(Y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_integer_vector_to_rcpp
+Rcpp::IntegerVector pass_integer_vector_to_rcpp(Rcpp::IntegerVector z);
+RcppExport SEXP _EmpiricalIO_pass_integer_vector_to_rcpp(SEXP zSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type z(zSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_integer_vector_to_rcpp(z));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_integer_matrix_to_rcpp
+Rcpp::IntegerMatrix pass_integer_matrix_to_rcpp(Rcpp::IntegerMatrix W);
+RcppExport SEXP _EmpiricalIO_pass_integer_matrix_to_rcpp(SEXP WSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type W(WSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_integer_matrix_to_rcpp(W));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_list_to_rcpp
+Rcpp::List pass_list_to_rcpp(Rcpp::List L);
+RcppExport SEXP _EmpiricalIO_pass_list_to_rcpp(SEXP LSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type L(LSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_list_to_rcpp(L));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_data_frame_to_rcpp
+Rcpp::List pass_data_frame_to_rcpp(Rcpp::DataFrame D);
+RcppExport SEXP _EmpiricalIO_pass_data_frame_to_rcpp(SEXP DSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type D(DSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_data_frame_to_rcpp(D));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_numeric_vector_to_eigen
+Eigen::VectorXd pass_numeric_vector_to_eigen(Eigen::VectorXd x);
+RcppExport SEXP _EmpiricalIO_pass_numeric_vector_to_eigen(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_numeric_vector_to_eigen(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_numeric_matrix_to_eigen
+Eigen::MatrixXd pass_numeric_matrix_to_eigen(Eigen::MatrixXd Y);
+RcppExport SEXP _EmpiricalIO_pass_numeric_matrix_to_eigen(SEXP YSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type Y(YSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_numeric_matrix_to_eigen(Y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_integer_vector_to_eigen
+Eigen::VectorXi pass_integer_vector_to_eigen(Eigen::VectorXi z);
+RcppExport SEXP _EmpiricalIO_pass_integer_vector_to_eigen(SEXP zSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type z(zSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_integer_vector_to_eigen(z));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_integer_matrix_to_eigen
+Eigen::MatrixXi pass_integer_matrix_to_eigen(Eigen::MatrixXi W);
+RcppExport SEXP _EmpiricalIO_pass_integer_matrix_to_eigen(SEXP WSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXi >::type W(WSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_integer_matrix_to_eigen(W));
+    return rcpp_result_gen;
+END_RCPP
+}
+// map_numeric_vector_to_eigen
+Eigen::VectorXd map_numeric_vector_to_eigen(Eigen::Map<Eigen::VectorXd> x);
+RcppExport SEXP _EmpiricalIO_map_numeric_vector_to_eigen(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(map_numeric_vector_to_eigen(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// map_numeric_matrix_to_eigen
+Eigen::MatrixXd map_numeric_matrix_to_eigen(Eigen::Map<Eigen::MatrixXd> Y);
+RcppExport SEXP _EmpiricalIO_map_numeric_matrix_to_eigen(SEXP YSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type Y(YSEXP);
+    rcpp_result_gen = Rcpp::wrap(map_numeric_matrix_to_eigen(Y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_list_to_eigen
+Rcpp::List pass_list_to_eigen(Rcpp::List L);
+RcppExport SEXP _EmpiricalIO_pass_list_to_eigen(SEXP LSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type L(LSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_list_to_eigen(L));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pass_named_list_to_eigen
+Rcpp::List pass_named_list_to_eigen(Rcpp::List L);
+RcppExport SEXP _EmpiricalIO_pass_named_list_to_eigen(SEXP LSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type L(LSEXP);
+    rcpp_result_gen = Rcpp::wrap(pass_named_list_to_eigen(L));
+    return rcpp_result_gen;
+END_RCPP
+}
+// extract_column_from_data_frame
+Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D);
+RcppExport SEXP _EmpiricalIO_extract_column_from_data_frame(SEXP DSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type D(DSEXP);
+    rcpp_result_gen = Rcpp::wrap(extract_column_from_data_frame(D));
+    return rcpp_result_gen;
+END_RCPP
+}
+// matrix_vector_arithmetic_rcpp
+Rcpp::List matrix_vector_arithmetic_rcpp(Eigen::MatrixXd A, Eigen::MatrixXd B, Eigen::VectorXd v, double c);
+RcppExport SEXP _EmpiricalIO_matrix_vector_arithmetic_rcpp(SEXP ASEXP, SEXP BSEXP, SEXP vSEXP, SEXP cSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type A(ASEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type B(BSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type v(vSEXP);
+    Rcpp::traits::input_parameter< double >::type c(cSEXP);
+    rcpp_result_gen = Rcpp::wrap(matrix_vector_arithmetic_rcpp(A, B, v, c));
+    return rcpp_result_gen;
+END_RCPP
+}
+// coefficientwise_operation_rcpp
+Rcpp::List coefficientwise_operation_rcpp(Eigen::MatrixXd A, Eigen::MatrixXd B, int r);
+RcppExport SEXP _EmpiricalIO_coefficientwise_operation_rcpp(SEXP ASEXP, SEXP BSEXP, SEXP rSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type A(ASEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type B(BSEXP);
+    Rcpp::traits::input_parameter< int >::type r(rSEXP);
+    rcpp_result_gen = Rcpp::wrap(coefficientwise_operation_rcpp(A, B, r));
+    return rcpp_result_gen;
+END_RCPP
+}
+// solve_least_squares_svd
+Eigen::MatrixXd solve_least_squares_svd(Eigen::MatrixXd A, Eigen::MatrixXd B);
+RcppExport SEXP _EmpiricalIO_solve_least_squares_svd(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type A(ASEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(solve_least_squares_svd(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// solve_least_squares_qr
+Eigen::MatrixXd solve_least_squares_qr(Eigen::MatrixXd A, Eigen::MatrixXd B);
+RcppExport SEXP _EmpiricalIO_solve_least_squares_qr(SEXP ASEXP, SEXP BSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type A(ASEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type B(BSEXP);
+    rcpp_result_gen = Rcpp::wrap(solve_least_squares_qr(A, B));
+    return rcpp_result_gen;
+END_RCPP
+}
+// access_rcpp
+Rcpp::List access_rcpp(Eigen::MatrixXd A, int i, int j);
+RcppExport SEXP _EmpiricalIO_access_rcpp(SEXP ASEXP, SEXP iSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type A(ASEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(access_rcpp(A, i, j));
+    return rcpp_result_gen;
+END_RCPP
+}
 // rcppeigen_hello_world
 Eigen::MatrixXd rcppeigen_hello_world();
 RcppExport SEXP _EmpiricalIO_rcppeigen_hello_world() {
@@ -51,6 +291,27 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_EmpiricalIO_compute_square_rcpp", (DL_FUNC) &_EmpiricalIO_compute_square_rcpp, 1},
+    {"_EmpiricalIO_pass_numeric_vector_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_numeric_vector_to_rcpp, 1},
+    {"_EmpiricalIO_pass_numeric_matrix_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_numeric_matrix_to_rcpp, 1},
+    {"_EmpiricalIO_pass_integer_vector_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_integer_vector_to_rcpp, 1},
+    {"_EmpiricalIO_pass_integer_matrix_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_integer_matrix_to_rcpp, 1},
+    {"_EmpiricalIO_pass_list_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_list_to_rcpp, 1},
+    {"_EmpiricalIO_pass_data_frame_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_data_frame_to_rcpp, 1},
+    {"_EmpiricalIO_pass_numeric_vector_to_eigen", (DL_FUNC) &_EmpiricalIO_pass_numeric_vector_to_eigen, 1},
+    {"_EmpiricalIO_pass_numeric_matrix_to_eigen", (DL_FUNC) &_EmpiricalIO_pass_numeric_matrix_to_eigen, 1},
+    {"_EmpiricalIO_pass_integer_vector_to_eigen", (DL_FUNC) &_EmpiricalIO_pass_integer_vector_to_eigen, 1},
+    {"_EmpiricalIO_pass_integer_matrix_to_eigen", (DL_FUNC) &_EmpiricalIO_pass_integer_matrix_to_eigen, 1},
+    {"_EmpiricalIO_map_numeric_vector_to_eigen", (DL_FUNC) &_EmpiricalIO_map_numeric_vector_to_eigen, 1},
+    {"_EmpiricalIO_map_numeric_matrix_to_eigen", (DL_FUNC) &_EmpiricalIO_map_numeric_matrix_to_eigen, 1},
+    {"_EmpiricalIO_pass_list_to_eigen", (DL_FUNC) &_EmpiricalIO_pass_list_to_eigen, 1},
+    {"_EmpiricalIO_pass_named_list_to_eigen", (DL_FUNC) &_EmpiricalIO_pass_named_list_to_eigen, 1},
+    {"_EmpiricalIO_extract_column_from_data_frame", (DL_FUNC) &_EmpiricalIO_extract_column_from_data_frame, 1},
+    {"_EmpiricalIO_matrix_vector_arithmetic_rcpp", (DL_FUNC) &_EmpiricalIO_matrix_vector_arithmetic_rcpp, 4},
+    {"_EmpiricalIO_coefficientwise_operation_rcpp", (DL_FUNC) &_EmpiricalIO_coefficientwise_operation_rcpp, 3},
+    {"_EmpiricalIO_solve_least_squares_svd", (DL_FUNC) &_EmpiricalIO_solve_least_squares_svd, 2},
+    {"_EmpiricalIO_solve_least_squares_qr", (DL_FUNC) &_EmpiricalIO_solve_least_squares_qr, 2},
+    {"_EmpiricalIO_access_rcpp", (DL_FUNC) &_EmpiricalIO_access_rcpp, 3},
     {"_EmpiricalIO_rcppeigen_hello_world", (DL_FUNC) &_EmpiricalIO_rcppeigen_hello_world, 0},
     {"_EmpiricalIO_rcppeigen_outerproduct", (DL_FUNC) &_EmpiricalIO_rcppeigen_outerproduct, 1},
     {"_EmpiricalIO_rcppeigen_innerproduct", (DL_FUNC) &_EmpiricalIO_rcppeigen_innerproduct, 1},
