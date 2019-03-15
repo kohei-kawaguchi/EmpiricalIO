@@ -4,7 +4,7 @@
 
 - In this chapter, we learn how to integrate C++ using Rcpp and RcppEigen.
 - `RcppEigen` is a package to use a linear algebra library `Eigen` with R. The original `Eigen` library and its documentation is found in [their website](http://eigen.tuxfamily.org/index.php?title=Main_Page).
-- Instead of `RcppEigen`, you may want to use `RcppArmadillo`. `Armadillo` is another libear algebra library in C++.  
+- Instead of `RcppEigen`, you may want to use `RcppArmadillo`. `Armadillo` is another libear algebra library in C++. 
 - We presume that:
     - C/C++ environment is installed to the computer.
         - For OSX, you can install [Apple Developer Tools](https://developer.apple.com/xcode/).
@@ -47,7 +47,7 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3
 
 ## Workflow
 
-- To minimize the likelihood of bugs and the time to edit and debug the code, I recommend to follw the workflow in this section.
+- To minimize the likelihood of bugs and the time to edit and debug the code, I recommend you to follw the following workflow.
 - This workflow is based on my experience. If you find better workflow, you can overwrite by your own way.
 1. Write a procedure in `main/main.R`.
 ```{r, echo = TRUE}
@@ -88,7 +88,7 @@ max(abs(y1 - y2))
 ```
 8. Write function in C++ by translating the copied and pasted R code.
     - The function name should be consistent with the function name in R. I often put `_rcpp` to the end of the name.
-    - Put `[[Rcpp::export]]` above the name of the function if you want to call this function directly from R.
+    - Put `// [[Rcpp::export]]` above the name of the function if you want to call this function directly from R. Otherwise, the wrapper function to call from R is not created.
     - The class of the inputs and output should be consistent with `Rcpp` objects. This will be explained later.
     
 ```
@@ -148,7 +148,7 @@ max(abs(y2 - y3))
     - For the rest, refer to the [documentation of lldb](https://lldb.llvm.org/).
     - There is no such an easy way in Windows.
     
-13. If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never rewrite from C++ functions.
+13. If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never start the debugging from C++ functions.
 
 ## Passing R Objects as Rcpp Objects   
         

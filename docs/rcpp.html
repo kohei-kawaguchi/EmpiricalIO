@@ -445,7 +445,7 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3</code></pre>
 <div id="workflow" class="section level2">
 <h2><span class="header-section-number">11.2</span> Workflow</h2>
 <ul>
-<li>To minimize the likelihood of bugs and the time to edit and debug the code, I recommend to follw the workflow in this section.</li>
+<li>To minimize the likelihood of bugs and the time to edit and debug the code, I recommend you to follw the following workflow.</li>
 <li>This workflow is based on my experience. If you find better workflow, you can overwrite by your own way.</li>
 </ul>
 <ol style="list-style-type: decimal">
@@ -486,7 +486,7 @@ y2 &lt;-<span class="st"> </span><span class="kw">compute_square</span>(x)
 <li>Write function in C++ by translating the copied and pasted R code.
 <ul>
 <li>The function name should be consistent with the function name in R. I often put <code>_rcpp</code> to the end of the name.</li>
-<li>Put <code>[[Rcpp::export]]</code> above the name of the function if you want to call this function directly from R.</li>
+<li>Put <code>// [[Rcpp::export]]</code> above the name of the function if you want to call this function directly from R. Otherwise, the wrapper function to call from R is not created.</li>
 <li>The class of the inputs and output should be consistent with <code>Rcpp</code> objects. This will be explained later.</li>
 </ul></li>
 </ol>
@@ -543,7 +543,7 @@ and then continue the process by typing <code>c</code> in the terminal.</li>
 <li>For the rest, refer to the <a href="https://lldb.llvm.org/">documentation of lldb</a>.</li>
 <li><p>There is no such an easy way in Windows.</p></li>
 </ul></li>
-<li>If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never rewrite from C++ functions.</li>
+<li>If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never start the debugging from C++ functions.</li>
 </ol>
 </div>
 <div id="passing-r-objects-as-rcpp-objects" class="section level2">

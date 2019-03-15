@@ -10303,7 +10303,7 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and
 \item
   Instead of \texttt{RcppEigen}, you may want to use
   \texttt{RcppArmadillo}. \texttt{Armadillo} is another libear algebra
-  library in C++.\\
+  library in C++.
 \item
   We presume that:
 
@@ -10427,7 +10427,7 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3
 \tightlist
 \item
   To minimize the likelihood of bugs and the time to edit and debug the
-  code, I recommend to follw the workflow in this section.
+  code, I recommend you to follw the following workflow.
 \item
   This workflow is based on my experience. If you find better workflow,
   you can overwrite by your own way.
@@ -10519,8 +10519,9 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3
     The function name should be consistent with the function name in R.
     I often put \texttt{\_rcpp} to the end of the name.
   \item
-    Put \texttt{{[}{[}Rcpp::export{]}{]}} above the name of the function
-    if you want to call this function directly from R.
+    Put \texttt{//\ {[}{[}Rcpp::export{]}{]}} above the name of the
+    function if you want to call this function directly from R.
+    Otherwise, the wrapper function to call from R is not created.
   \item
     The class of the inputs and output should be consistent with
     \texttt{Rcpp} objects. This will be explained later.
@@ -10648,8 +10649,8 @@ br s -n compute_square_rcpp
   \end{itemize}
 \item
   If you need to modify the function, first rewrite the R function and
-  then follow the same step to rewrite the C++ function. Never rewrite
-  from C++ functions.
+  then follow the same step to rewrite the C++ function. Never start the
+  debugging from C++ functions.
 \end{enumerate}
 
 \section{Passing R Objects as Rcpp
