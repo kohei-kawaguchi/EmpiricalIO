@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 5 Merger Analysis | ECON 6120I Topics in Empirical Industrial Organization</title>
+  <title>Chapter 11 Integrating with C++ using Rcpp and RcppEigen | ECON 6120I Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 5 Merger Analysis | ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta property="og:title" content="Chapter 11 Integrating with C++ using Rcpp and RcppEigen | ECON 6120I Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Merger Analysis | ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta name="twitter:title" content="Chapter 11 Integrating with C++ using Rcpp and RcppEigen | ECON 6120I Topics in Empirical Industrial Organization" />
   
   <meta name="twitter:description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="demand.html">
-<link rel="next" href="entryexit.html">
+<link rel="prev" href="assignment4.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -376,445 +376,506 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="merger" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Merger Analysis</h1>
-<div id="motivations-2" class="section level2">
-<h2><span class="header-section-number">5.1</span> Motivations</h2>
+<div id="rcpp" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Integrating with C++ using Rcpp and RcppEigen</h1>
+<div id="prerequisite" class="section level2">
+<h2><span class="header-section-number">11.1</span> Prerequisite</h2>
 <ul>
-<li>Measuring the market power of firms and predicting the possible consequence of horizontal merger cases is one of the primary goal of empirical industrial organization.</li>
-<li>This is important for antitrust authority to review merger cases.</li>
-<li>To do so, we integrate the product/cost function estimation and demand function estimation techniques.</li>
-<li>We introduce the last piece of parameters that characterize the market competition, <strong>conduct parameter</strong>, and discuss its identification.</li>
-<li>Then, we conduct the first kind of <strong>counterfactual analysis</strong>, the <strong>merger simularion</strong>.</li>
-<li>In this exercise, we predict the market response when the ownership structure of product is changed due to a hypothetical merger.</li>
-<li>Every market institution needs its own model for merger simulation:</li>
-<li><span class="citation">Gowrisankaran, Nevo, &amp; Town (<a href="#ref-Gowrisankaran2015">2015</a>)</span>:
+<li>In this chapter, we learn how to integrate C++ using Rcpp and RcppEigen.</li>
+<li><code>RcppEigen</code> is a package to use a linear algebra library <code>Eigen</code> with R. The original <code>Eigen</code> library and its documentation is found in <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">their website</a>.</li>
+<li>Instead of <code>RcppEigen</code>, you may want to use <code>RcppArmadillo</code>. <code>Armadillo</code> is another libear algebra library in C++.<br />
+</li>
+<li>We presume that:
 <ul>
-<li>In the U.S. hospitals and managed care organizations (MGO) negotiate the hospital prices and the coinsurance rates.</li>
-<li>What if hospitals are merged? How much do the hospital prices and the coinsurance rates increase?</li>
+<li>C/C++ environment is installed to the computer.
+<ul>
+<li>For OSX, you can install <a href="https://developer.apple.com/xcode/">Apple Developer Tools</a>.</li>
+<li>For Windows, you can try <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>.</li>
 </ul></li>
-<li><span class="citation">Smith (<a href="#ref-Smith2004">2004</a>)</span>:
-<ul>
-<li>Sometimes the same service is sold through multiple stores such as in the supermarket industry.</li>
-<li>How does this multi-store nature affect the merger effects?</li>
+<li><code>Rcpp</code> and <code>RcppEigen</code> are installed.</li>
+<li>The project is created in RStudio from <code>File &gt; New Project &gt; New Directory &gt; R Package using RcppEigen</code>. In the following, I use the project name <code>EmpiricalIO</code> but the name can be as you like.</li>
 </ul></li>
-<li><span class="citation">Ivaldi &amp; Verboven (<a href="#ref-Ivaldi2005">2005</a>)</span> reviews the cases in the European Commission.</li>
-</ul>
-</div>
-<div id="identification-of-conduct" class="section level2">
-<h2><span class="header-section-number">5.2</span> Identification of Conduct</h2>
-<div id="identification-of-conduct-1" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Identification of Conduct</h3>
+<li>We presume the you have the following folder and file structure from the root directory:
 <ul>
-<li>So far we have been concerned with the two types of parameters:
+<li><code>main</code>.
 <ul>
-<li>Production and/or cost function.</li>
-<li>Demand function.</li>
+<li><code>main.R</code>: all executable statements are written in this file.</li>
 </ul></li>
-<li>To identify the marginal cost by the revealed preference approach, we have assumed that firms are engaging in a price competition.</li>
-<li>The mode of competition is another parameter of interest.</li>
-<li>Can we infer the mode of competition instead of assuming it?</li>
-</ul>
-</div>
-<div id="marginal-revenue-function" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Marginal Revenue Function</h3>
+<li><code>R</code>.
 <ul>
-<li>To be specific, consider firms producing homogeneous product.</li>
-<li>Under what conditions can we distinguish across Bertrand competition, Cournot competition, and collusion? <span class="citation">(Timothy F. Bresnahan, <a href="#ref-Bresnahan1982a">1982</a>)</span>.</li>
-<li>Consider the following marginal revenue function:
-<span class="math display">\[\begin{equation}
-MR(Q) \equiv \lambda Q P&#39;(Q) + P(Q),
-\end{equation}\]</span>
-where <span class="math inline">\(Q\)</span> is the aggregate quantity, <span class="math inline">\(P(Q)\)</span> is the inverse demand function.</li>
-<li>This formula nests Bertrand, Cournot, and collusion:</li>
-<li>Bertrand:
-<ul>
-<li>In Bertrand, a firm cannot change the market price.</li>
-<li>If a firm increases the production by one unit, whose revenue increases by <span class="math inline">\(P(Q)\)</span>.</li>
-<li>Therefore, <span class="math inline">\(\lambda = 0\)</span>.</li>
+<li><code>functions.R</code>: all function definitions in R are written in this file.</li>
 </ul></li>
-<li>Cournot:
+<li><code>src</code>.
 <ul>
-<li>In Cournot, the marginal revenue of firm <span class="math inline">\(f\)</span> is: <span class="math display">\[
-q_f P&#39;(Q) + P(Q).
-\]</span></li>
-<li>Therefore, <span class="math inline">\(\lambda = s_f\)</span>, the quantity share of the firm <span class="math inline">\(f\)</span>.</li>
+<li><code>functions.cpp</code>: all function definitions in C++ are written in this file.
+<ul>
+<li><p>It includes:</p>
+<pre><code>&quot;src/functions.cpp&quot;
+-------------------
+#include &lt;Rcpp.h&gt;
+#include &lt;RcppEigen.h&gt;</code></pre></li>
 </ul></li>
-<li>Collusion:
-<ul>
-<li>Under collusion, firms behave like a single monopoly.</li>
-<li>Then, the marginal revenue is: <span class="math display">\[
-QP&#39;(Q) + P(Q).
-\]</span></li>
-<li>Therefore, <span class="math inline">\(\lambda = 1\)</span>.</li>
+<li>Inside <code>functions.cpp</code>, avoid using name spaces.</li>
+<li><code>Makevars</code>: compilation flags for osx/Linux should be written here.</li>
+<li><code>Makevars.win</code>: compilation flags for Windows should be written here.</li>
 </ul></li>
-<li>The identification of the mode of competition in this context is equivalent to the identification of <span class="math inline">\(\lambda\)</span>, the <strong>conduct parameter</strong>.</li>
-</ul>
-</div>
-<div id="first-order-condition" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> First-Order Condition</h3>
+<li><code>inst</code>.
 <ul>
-<li>Let <span class="math inline">\(MC(q_f)\)</span> be the marginal cost of firm <span class="math inline">\(f\)</span>.</li>
-<li>Given the previous general marginal revenue function, the first-order condition for profit maximization for firm <span class="math inline">\(f\)</span> is written as:
-<span class="math display">\[\begin{equation}
-\lambda Q P&#39;(Q) + P(Q) = MC(q_f).
-\end{equation}\]</span></li>
-<li>The system of equations for <span class="math inline">\(f = 1, \cdots, F\)</span> determine the market equilibrium.</li>
-</ul>
-</div>
-<div id="linear-model" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> Linear Model</h3>
+<li><code>include</code>: header files for external libraries in C/C++ are stored here.</li>
+</ul></li>
+</ul></li>
+<li><p><code>Makevars/Makevars.win</code> should be:</p>
+<pre><code>Makevars
+--------
+PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3</code></pre>
+<pre><code>Makevars.win
+------------
+PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3</code></pre>
 <ul>
-<li>To be simple, consider a linear inverse demand function:
-<span class="math display">\[\begin{equation}
-P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{1}{\alpha_1}u^D,
-\end{equation}\]</span>
-where <span class="math inline">\(X_t\)</span> is a vector of observed demand sifters.</li>
-<li>Consider a linear marginal cost function:
-<span class="math display">\[\begin{equation}
-MC(q_{f}) = \beta_0 + \beta_1 q_{f} + \beta_2 W + u^S,
-\end{equation}\]</span>
-where <span class="math inline">\(W\)</span> is a vector of observed cost sifters.</li>
-</ul>
-</div>
-<div id="pricing-equation" class="section level3">
-<h3><span class="header-section-number">5.2.5</span> Pricing Equation</h3>
-<ul>
-<li>Inserting the inverse demand function and marginal cost function to the optimality condition:
-<span class="math display">\[\begin{equation}
-\frac{\lambda}{\alpha_1} Q + P^S(Q) = \beta_0 + \beta_1 q_f + \beta_2 W + u^S
-\end{equation}\]</span></li>
-<li>Summing them up and dividing by the number of firms <span class="math inline">\(N\)</span>:
-<span class="math display">\[\begin{equation}
-\frac{\lambda}{\alpha_1} Q + P^S(Q) = \beta_0 + \frac{\beta_1}{N} Q + \beta_2 W_t + u^S,
-\end{equation}\]</span></li>
-<li>This determines the aggregate pricing equation:
-<span class="math display">\[\begin{equation}
-\begin{split}
-P^S(Q) &amp;= \beta_0 + (\frac{\beta_1}{N} - \frac{\lambda}{\alpha_1})Q + \beta_2 W + u^S\\
-&amp;= \beta_0 + \gamma Q + \beta_2 W + u^S.
-\end{split}
-\end{equation}\]</span></li>
-<li>The key parameter is:
-<span class="math display">\[\begin{equation}
-\gamma \equiv \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}.
-\end{equation}\]</span></li>
-</ul>
-</div>
-<div id="identification-of-inverse-demand-function-and-pricing-equation" class="section level3">
-<h3><span class="header-section-number">5.2.6</span> Identification of Inverse Demand Function and Pricing Equation</h3>
-<ul>
-<li>We have two systems of <strong>reduced-form</strong> equations:
-<span class="math display">\[\begin{equation}
-\begin{split}
-&amp;P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{1}{\alpha_1}u^D,\\
-&amp;P^S(Q) = \beta_0 + \gamma Q + \beta_2 W + u^S.
-\end{split}
-\end{equation}\]</span></li>
-<li>If we observe a <strong>demand shifter</strong> <span class="math inline">\(X\)</span>, then it can be used as an instrument for <span class="math inline">\(Q\)</span> in the pricing equation to identify the parameters in the pricing equation.</li>
-<li>If we observe a <strong>cost shifter</strong> <span class="math inline">\(W_t\)</span>, then it can be used as an instrument for <span class="math inline">\(Q\)</span> in the inverse demand function to identify the parameters in the pricing equation.</li>
-<li>Thus, we can identify the <strong>reduced-form parameters</strong> <span class="math inline">\((\alpha_0, \alpha_1, \alpha_2)\)</span> and <span class="math inline">\((\beta_0, \gamma, \beta_2)\)</span> if we observe a demand shifter <span class="math inline">\(X\)</span> and a cost shifter <span class="math inline">\(W\)</span>.</li>
-<li>However, this is not enough to separately identify the <strong>structural-form parameters</strong> <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\lambda\)</span> in <span class="math inline">\(\gamma\)</span>.</li>
-</ul>
-</div>
-<div id="the-conduct-parameter-is-unidentified" class="section level3">
-<h3><span class="header-section-number">5.2.7</span> The Conduct Parameter is Unidentified</h3>
-<ul>
-<li>Even if the demand function and pricing equation (supply function) are identified, we still cannot identify the conduct parameter <span class="math inline">\(\lambda\)</span>.</li>
-<li>The price at a quantity may be high either because of the high marginal cost or because of the high markup.</li>
-<li>Remember that the identification of <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\alpha_1\)</span> do not determine the value of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\beta_1\)</span> in:
-<span class="math display">\[\begin{equation}
-\gamma = \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}.
-\end{equation}\]</span></li>
-<li><span class="math inline">\(\beta_1\)</span> is the derivative of the marginal cost.</li>
-</ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
-<img src="figuretable/demandshift.png" alt="Figure 6.2 of Davis (2006)" width="80%" />
-<p class="caption">
-Figure 5.1: Figure 6.2 of Davis (2006)
-</p>
-</div>
-</div>
-<div id="identification-of-the-conduct-parameter-when-cost-data-is-available" class="section level3">
-<h3><span class="header-section-number">5.2.8</span> Identification of the Conduct Parameter: When Cost Data is Available</h3>
-<ul>
-<li>If there is reliable cost data, we can directly identify the marginal cost function:
-<span class="math display">\[\begin{equation}
-MC(q_f) = \beta_0 + \beta_1 q_f + \beta_2 W + u^S,
-\end{equation}\]</span>
-and so <span class="math inline">\(\beta_1\)</span>.</li>
-<li>Then, in a combination with the identification of inverse demand function and pricing equation, <span class="math inline">\(\lambda\)</span> is identified as:
-<span class="math display">\[\begin{equation}
-\lambda = \alpha_1 \left(\frac{\beta_1}{N} - \gamma\right).
-\end{equation}\]</span></li>
-</ul>
-</div>
-<div id="identification-of-the-conduct-parameter-when-cost-data-is-not-available" class="section level3">
-<h3><span class="header-section-number">5.2.9</span> Identification of the Conduct Parameter: When Cost Data is Not Available</h3>
-<ul>
-<li>Remember the first-order condition:
-<span class="math display">\[\begin{equation}
-\lambda Q P^{D\prime}(Q) + P^S(Q) = MC(q_f),
-\end{equation}\]</span>
-where we can identify <span class="math inline">\(P^D(Q)\)</span> and <span class="math inline">\(P^S(Q)\)</span> if we have demand and cost shifters.</li>
-<li>It is clear from this expression that we need a variation in <span class="math inline">\(P^{D\prime}(Q)\)</span> with a fixed <span class="math inline">\(Q\)</span> to identify <span class="math inline">\(\lambda\)</span>, i.e., something that rotates the inverse demand function.</li>
-<li>Intuition: If demand becomes more elastic, prices will decrease and quantity will increase in a market with a high degree of market power.</li>
-</ul>
-</div>
-<div id="identification-of-the-conduct-parameter-demand-rotater-is-available" class="section level3">
-<h3><span class="header-section-number">5.2.10</span> Identification of the Conduct Parameter: Demand Rotater is Available</h3>
-<ul>
-<li>Let’s formalize the idea.</li>
-<li>To identify the conduct parameter, we needed a demand rotater:
-<span class="math display">\[\begin{equation}
-P^D(Q) = \frac{\alpha_0}{\alpha_1} + \frac{1}{\alpha_1}Q + \frac{\alpha_2}{\alpha_1} X + \frac{\alpha_3}{\alpha_1} Q \underbrace{Z}_{\text{demand rotater}} +  \frac{1}{\alpha_1}u^D.
-\end{equation}\]</span></li>
-<li>Inserting this into the first-order condition yields:
-<span class="math display">\[\begin{equation}
-\frac{\lambda}{\alpha} Q_t (1 + \alpha Z_t)+ P^S(Q) = \beta_0 + \frac{\beta_1}{N} Q + \beta_2 W + u^s,
-\end{equation}\]</span></li>
-<li>This determines the pricing equation:
-<span class="math display">\[\begin{equation}
-\begin{split}
-P^S(Q) &amp;= \beta_0 - \frac{\lambda}{\alpha_1} Q(1 + \alpha_3 Z_t) + \frac{\beta_1}{N} Q_t + \beta_2 W + u^S\\
-&amp;\equiv \beta_0 + \gamma_1 Q + \gamma_2 Z Q + \beta_2 W + u^S,
-\end{split}
-\end{equation}\]</span>
-where:
-<span class="math display">\[\begin{equation}
-\gamma_1 \equiv \frac{\beta_1}{N} - \frac{\lambda}{\alpha_1}, \gamma_2 \equiv - \frac{\lambda \alpha_3}{\alpha_1}.
-\end{equation}\]</span>
-<h3 id="identification-of-the-conduct-parameters-demand-rotater-is-available"><span class="header-section-number">5.2.10</span> Identification of the Conduct Parameters: Demand Rotater is Available</h3></li>
-<li>If we have cost shifters <span class="math inline">\(W\)</span>, it can be used as instruments for <span class="math inline">\(Q\)</span> in the inverse demand function to identify the demand parameters <span class="math inline">\((\alpha_0, \alpha_1, \alpha_2, \alpha_3)\)</span>.</li>
-<li>If we have demand shifters <span class="math inline">\(X\)</span>, it can be used as instruments for <span class="math inline">\(Q\)</span> in the pricing equation to identify the supply parameters <span class="math inline">\((\beta_0, \gamma_1, \gamma_2, \beta_2)\)</span>.</li>
-<li>Now we can identify the <strong>reduced-form</strong> parameters <span class="math inline">\(\alpha_1, \alpha_3\)</span> and <span class="math inline">\(\gamma_2\)</span>.</li>
-<li>Then, we can not identify the conduct parameter:
-<span class="math display">\[\begin{equation}
-\lambda = - \frac{\gamma_2 \alpha_1}{\alpha_3}.
-\end{equation}\]</span></li>
-</ul>
-</div>
-<div id="identification-of-conduct-in-differentiated-product-market" class="section level3">
-<h3><span class="header-section-number">5.2.11</span> Identification of Conduct in Differentiated Product Market</h3>
-<ul>
-<li>Consider the identification of conduct when there are two differentiated substitutable products and companies compete in price <span class="citation">(Nevo, <a href="#ref-Nevo1998">1998</a>)</span>.</li>
-<li>Are the prices determined independently or jointly?</li>
-<li>The general first-order condition is:
-<span class="math display">\[\begin{equation}
-\begin{split}
-&amp;(p_1 - c_1) \frac{\partial Q_1(p)}{\partial p_1} + Q_1^S(p) + \Delta_{12}(p_2 - c_2) \frac{\partial Q_2 (p)}{\partial p_1} = 0\\
-&amp;\Delta_{21}(p_1 - c_1)\frac{\partial Q_1(p)}{\partial p_2} + Q_2^S(p) + (p_2 - c_2) \frac{\partial Q_2 (p)}{\partial p_2} = 0,
-\end{split}
-\end{equation}\]</span>
-<p>where</p></li>
-<li><span class="math inline">\(\Delta_{12} = \Delta_{21} = 0\)</span> if prices are determined independently.</li>
-<li><p><span class="math inline">\(\Delta_{12} = \Delta_{21} = 1\)</span> if price are determined jointly.</p></li>
-<li>Under what conditions can we identify <span class="math inline">\(\Delta_{12}\)</span> and <span class="math inline">\(\Delta_{21}\)</span>?</li>
-<li>We will have to rotate <span class="math inline">\(\frac{\partial Q_1(p)}{\partial p_2}\)</span> and <span class="math inline">\(\frac{\partial Q_2 (p)}{\partial p_1}\)</span> while keeping the other variables at the same values.</li>
-<li><span class="citation">Miller &amp; Weinberg (<a href="#ref-Miller2017">2017</a>)</span> infers <span class="math inline">\(\Delta\)</span> after the MillerCoors, a joint venture of SABMiller PLC and Molson Coors Brewing, is formed.
-<ul>
-<li>The unobserved year-specific and region-specific cost shocks are identified from the outsiders and the unobserved product-specific cost shocks are assumed to be the same before and after the merger.</li>
+<li><code>-w</code> is for supprssing some warnings in <code>Eigen</code>. If you want to keep warnings shown, this can be removed.</li>
+<li><code>-std=c++11</code> is for using the latest functionalities of C++ (optional).</li>
+<li><code>-I../inst/include/</code> is for setting the header path to <code>../inst/include/</code> (optional).</li>
 </ul></li>
 </ul>
 </div>
-</div>
-<div id="merger-simulation" class="section level2">
-<h2><span class="header-section-number">5.3</span> Merger Simulation</h2>
-<div id="unilateral-and-coordinated-effects-of-a-horizontal-merger" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Unilateral and Coordinated Effects of a Horizontal Merger</h3>
+<div id="workflow" class="section level2">
+<h2><span class="header-section-number">11.2</span> Workflow</h2>
 <ul>
-<li>There are two effects associated with a merge episode:</li>
+<li>To minimize the likelihood of bugs and the time to edit and debug the code, I recommend to follw the workflow in this section.</li>
+<li>This workflow is based on my experience. If you find better workflow, you can overwrite by your own way.</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li><strong>Unilateral effect</strong>:
+<li>Write a procedure in <code>main/main.R</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
+x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>
+y1 &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Rewrite the procedure to a function in <code>main/main.R</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
+<span class="co"># compute coefficient-wise square</span>
+compute_square &lt;-
+<span class="st">  </span><span class="cf">function</span>(x) {
+    y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span>
+    <span class="kw">return</span>(y)
+  }</code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Execute the function in <code>main/main.R</code> and check that the output is the same with the output of the original</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
+y2 &lt;-<span class="st"> </span><span class="kw">compute_square</span>(x)
+<span class="kw">max</span>(<span class="kw">abs</span>(y1 <span class="op">-</span><span class="st"> </span>y2))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Cut and paste the function to <code>R/functions.R</code>.</li>
+<li>Build the package and load the function from the library</li>
+<li>Check if the function can be executed as in step 3.</li>
+<li><p>Copy the function to <code>src/functions.cpp</code> and comment them out.</p>
+<pre><code>// src/functions.cpp
+// # compute coefficient-wise square
+// compute_square &lt;-
+//   function(x) {
+//     y &lt;- x^2
+//     return(y)
+//   }</code></pre></li>
+<li>Write function in C++ by translating the copied and pasted R code.
 <ul>
-<li>The new merged firm usually have a unilateral incentive to raise prices above their pre-merger level.</li>
-<li>This unilateral effect may lead to the other firms to have an unilateral incentive to raise price, and the reaction continues to reach the new equilibrium.</li>
-<li>The latter chain reaction is sometimes called the <strong>multi-lateral effect</strong>.</li>
-<li>In economic theory, it is the price change when the same mode of competition (say, the Bertrand-Nash equilibrium) is played.</li>
-<li><span class="math inline">\(\Delta\)</span> is either 0 or 1: firms internalize the profits from owned product but do not internalize the other products.</li>
-</ul></li>
-<li><strong>Coordinated effect</strong>:
-<ul>
-<li>After the merger, the mode of competition may change.</li>
-<li>For example, the tacit collusion becomes easier and it can happen.</li>
-<li>This effect, caused by the change in the mode of competition, is called the coordinated effect of a merger.</li>
-<li>In this case, the conduct parameters <span class="math inline">\(\Delta\)</span> may take positive values for products owned by the rival firms.</li>
+<li>The function name should be consistent with the function name in R. I often put <code>_rcpp</code> to the end of the name.</li>
+<li>Put <code>[[Rcpp::export]]</code> above the name of the function if you want to call this function directly from R.</li>
+<li>The class of the inputs and output should be consistent with <code>Rcpp</code> objects. This will be explained later.</li>
 </ul></li>
 </ol>
-</div>
-<div id="merger-simulation-1" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> Merger Simulation</h3>
+<pre><code>// src/functions.cpp
+// # compute coefficient-wise square
+// compute_square &lt;-
+// [[Rcpp::export]]
+Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
+  //   function(x) {
+  Eigen::VectorXd y = x.array().square();
+  //     y &lt;- x^2
+  //     return(y)
+  //   }
+  return(y);
+}</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Check if clean and rebuild work.
 <ul>
-<li>In merger simulation, we compute the equilibrium under different ownership structure.</li>
-<li>This amounts to run a counterfactual simulation hypothetically changing the conduct parameter <span class="math inline">\(\Delta\)</span>.</li>
-<li>The idea stems back to <span class="citation">Farrell &amp; Shapiro (<a href="#ref-Farrell1990">1990</a>)</span>, <span class="citation">Werden &amp; Frobe (<a href="#ref-Werden1994">1993</a>)</span>, <span class="citation">Hausman et al. (<a href="#ref-Hausman1994">1994</a>)</span>.</li>
-<li>Before running the simulation, you have to be very careful about the model assumptions:
-<ul>
-<li>In music industry, firms compete not in price but in advertisement.</li>
-<li>If technological diffusion is important, firms may set dynamic pricing.</li>
+<li>If there is a compilation error happens, debug until the compilation succeeds.</li>
+<li>Sometimes, deleting <code>R/RcppExports.R</code> and <code>R/RcppExports.cpp</code> may be need when re-compile the functions.</li>
 </ul></li>
-<li>This is the first <strong>counterfactual analysis</strong> we study in this lecture.</li>
-<li>The results are valid only if the modeling assumptions are correct.</li>
-</ul>
-</div>
-<div id="quantifying-the-unilateral-effect" class="section level3">
-<h3><span class="header-section-number">5.3.3</span> Quantifying the Unilateral Effect</h3>
+<li>Clean up the code by eliminating the copied and pasted R code.</li>
+</ol>
+<pre><code>// src/functions.cpp
+// compute coefficient-wise square
+// [[Rcpp::export]]
+Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
+  Eigen::VectorXd y = x.array().square();
+  return(y);
+}</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Now by calling the library, you should be able to use the function written in C++ in R. Check if it returns a valid value and the then if the output is the same as the output of the R function.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
+y3 &lt;-<span class="st"> </span><span class="kw">compute_square_rcpp</span>(x)
+<span class="kw">max</span>(<span class="kw">abs</span>(y2 <span class="op">-</span><span class="st"> </span>y3))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>If there is a run-time bug in the C++ function, you may have to use some debugger for C++ to debug the function.
 <ul>
-<li>See <span class="citation">Nevo (<a href="#ref-Nevo2000c">2000</a>)</span> and <span class="citation">Nevo (<a href="#ref-Nevo2001">2001</a>)</span>.</li>
-<li>There are <span class="math inline">\(J\)</span> products, <span class="math inline">\(\mathcal{J} = \{1, \cdots, J\}\)</span>.</li>
-<li>We can have multiple markets but we suppress the market index.</li>
-<li>Firm <span class="math inline">\(f\)</span> produces a set of products which we denote <span class="math inline">\(\mathcal{J}_f \subset \mathcal{J}\)</span>.</li>
-<li>Let <span class="math inline">\(mc_j\)</span> be the constant marginal cost of producing good <span class="math inline">\(j\)</span>.</li>
-<li>Thus assuming a separable cost function.
-<ul>
-<li>We can relax this assumption for the estimation.</li>
-<li>However, once you admit that the costs can be non-separable, you will start to wonder what happens to the cost function if two firms merged and started to produce the two products that were previously produced by separate firms.</li>
+<li>In osx, you can debug the C++ function called from R function in the following way.</li>
+<li><p>Open the terminal and run R with the debugger <code>lldb</code> by typing the following command in the terminal:</p>
+<pre><code># terminal
+R -d lldb</code></pre></li>
+<li><p>Run <code>main/main.R</code> by typing the following command in the terminal:</p>
+<pre><code># terminal
+run -f main/main.R</code></pre></li>
+<li>This should execute the R source code.</li>
+<li>After <code>library(EmpiricalIO)</code> is read, stop the process by <code>Ctrl + C</code> before the function in question is called. If there is no time gap between them, set <code>Sys.sleep()</code> in R to buy some time.</li>
+<li><p>As you stop the process, set the break point at the function in question by typing in the terminal as:</p>
+<pre><code># terminal
+br s -n compute_square_rcpp</code></pre>
+and then continue the process by typing <code>c</code> in the terminal.</li>
+<li>For the rest, refer to the <a href="https://lldb.llvm.org/">documentation of lldb</a>.</li>
+<li><p>There is no such an easy way in Windows.</p></li>
 </ul></li>
-<li>Let <span class="math inline">\(D_j(p)\)</span> be the demand for product <span class="math inline">\(j\)</span> when the price vector is <span class="math inline">\(p\)</span>.</li>
-<li>The problem for firm <span class="math inline">\(f\)</span> given the price of other firms <span class="math inline">\(p_{-f}\)</span> is:
-<span class="math display">\[\begin{equation}
-\max_{p_f} \sum_{j \in \mathcal{J}_f} \Pi_j(p_f, p_{-f}) = \sum_{j \in \mathcal{J}_f} (p_j - mc_j) D_j(p_f, p_{-f}),
-\end{equation}\]</span>
-where <span class="math inline">\(p_f = \{p_j\}_{j \in \mathcal{J}_f}\)</span>, <span class="math inline">\(p_{-f} = \{p_j\}_{j \in \mathcal{J} \setminus \mathcal{J}_f}\)</span>.</li>
+<li>If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never rewrite from C++ functions.</li>
+</ol>
+</div>
+<div id="passing-r-objects-as-rcpp-objects" class="section level2">
+<h2><span class="header-section-number">11.3</span> Passing R Objects as Rcpp Objects</h2>
+<ul>
+<li>R class corresponds to the following Rcpp class:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">R</th>
+<th align="left">Rcpp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>logical</code></td>
+<td align="left"><code>Logical</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>integer</code></td>
+<td align="left"><code>Integer</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>numeric</code></td>
+<td align="left"><code>Numeric</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>complex</code></td>
+<td align="left"><code>Complex</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>character</code></td>
+<td align="left"><code>String</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>Date</code></td>
+<td align="left"><code>Date</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>POSIXct</code></td>
+<td align="left"><code>Datetime</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>R data structure corresponds to the following Rcpp data structure:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">R</th>
+<th align="left">Rcpp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>vector</code></td>
+<td align="left"><code>Vector</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>matrix</code></td>
+<td align="left"><code>Matrix</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>data.frame</code></td>
+<td align="left"><code>DataFrame</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>list</code></td>
+<td align="left"><code>List</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>For example, a numeric vector in R is passed to <code>Rcpp::NumericVector</code> in Rcpp, an integer matrix is to <code>Rcpp::IntegerMatrix</code>, and so on.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
+<span class="co"># numeric vector </span>
+x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)
+x</code></pre></div>
+<pre><code>## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numeric matrix</span>
+Y &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)
+Y</code></pre></div>
+<pre><code>##            [,1]      [,2]        [,3]       [,4]       [,5]
+## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
+## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339</code></pre>
+<ul>
+<li>Let’s write a C++ function just receives a numeric vector and returns the numeric vector, and receives a numeric matrix and returns the numeric matrix.</li>
+</ul>
+<pre><code>// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::NumericVector pass_numeric_vector_to_rcpp(Rcpp::NumericVector x) {
+  return(x);
+}
+// [[Rcpp::export]]
+Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
+  return(Y);
+}</code></pre>
+<ul>
+<li>Check if you can pass R objects and get the right result:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_rcpp &lt;-<span class="st"> </span><span class="kw">pass_numeric_vector_to_rcpp</span>(x)
+<span class="kw">max</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x_rcpp))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y_rcpp &lt;-<span class="st"> </span><span class="kw">pass_numeric_matrix_to_rcpp</span>(Y)
+<span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_rcpp))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ul>
+<li><strong>Exercise</strong>: Write functions <code>pass_integer_vector_to_rcpp</code>, <code>pass_integer_matrix_to_rcpp</code>, <code>pass_list_to_rcpp</code>, <code>pass_data_frame_to_rcpp</code> that receive an integer vector, list, and data frame and just return themselves.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.r</span>
+<span class="co"># integer vector</span>
+z &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
+z</code></pre></div>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># integer matrix</span>
+W &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)
+W</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    1
+## [2,]    1    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># list</span>
+L &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">z =</span> z)
+L</code></pre></div>
+<pre><code>## $x
+## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## 
+## $y
+## [1] 1
+## 
+## $z
+## [1] 1 2 3 4 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data frame</span>
+D &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1 =</span> <span class="kw">rnorm</span>(<span class="dv">5</span>), <span class="dt">x2 =</span> <span class="kw">rnorm</span>(<span class="dv">5</span>))
+D</code></pre></div>
+<pre><code>##            x1          x2
+## 1 -0.86280066 -1.03184291
+## 2 -1.15758053  0.77688232
+## 3 -0.89268670  0.21788910
+## 4  0.04043654  1.33717072
+## 5  2.25861844 -0.07430342</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z_rcpp &lt;-<span class="st"> </span><span class="kw">pass_integer_vector_to_rcpp</span>(z)
+<span class="kw">max</span>(<span class="kw">abs</span>(z <span class="op">-</span><span class="st"> </span>z_rcpp))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">W_rcpp &lt;-<span class="st"> </span><span class="kw">pass_integer_matrix_to_rcpp</span>(W)
+<span class="kw">max</span>(<span class="kw">abs</span>(W <span class="op">-</span><span class="st"> </span>W_rcpp))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L_rcpp &lt;-<span class="st"> </span><span class="kw">pass_list_to_rcpp</span>(L)
+<span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(L) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(L_rcpp)))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">D_rcpp &lt;-<span class="st"> </span><span class="kw">pass_data_frame_to_rcpp</span>(D)
+<span class="kw">max</span>(<span class="kw">abs</span>(D <span class="op">-</span><span class="st"> </span>D_rcpp))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="passing-r-objects-as-eigen-objects" class="section level2">
+<h2><span class="header-section-number">11.4</span> Passing R Objects as Eigen Objects</h2>
+<ul>
+<li>R data structure corresponds to the following Eigen data structure:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left">R</th>
+<th align="left">Eigen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>vector</code></td>
+<td align="left"><code>Eigen::VectorX</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>matrix</code></td>
+<td align="left"><code>Eigen::MatrixX</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>If you pass an <code>integer</code> vector and matrix, the corresponding Eigen objects are <code>Eigen::VectorXi</code> and <code>Eigen::MatrixXi</code>.</li>
+<li>If you pass an <code>numeric</code> vector and matrix, the corresponding Eigen objects are <code>Eigen::VectorXd</code> and <code>Eigen::MatrixXd</code>.</li>
+<li>The class of the output can be Eigen class. If you return <code>Eigen::VectorXd</code>, <code>Eigen::MatrixXd</code>, then they are automatically converted to the corresponding R objects.</li>
+<li>Check if you can pass <code>x</code>, <code>Y</code>, and <code>z</code> as follows:</li>
+</ul>
+<pre><code>// src/functions.cpp
+// [[Rcpp::export]]
+Eigen::VectorXd pass_numeric_vector_to_eigen(Eigen::VectorXd x) {
+  return(x);
+}
+// [[Rcpp::export]]
+Eigen::MatrixXd pass_numeric_matrix_to_eigen(Eigen::MatrixXd Y) {
+  return(Y);
+}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.r</span>
+x_eigen &lt;-<span class="st"> </span><span class="kw">pass_numeric_vector_to_eigen</span>(x)
+<span class="kw">max</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x_eigen))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y_eigen &lt;-<span class="st"> </span><span class="kw">pass_numeric_matrix_to_eigen</span>(Y)
+<span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_eigen))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ul>
+<li><strong>Exercise</strong>: Write functions <code>pass_integer_vector_to_rcpp</code> and <code>pass_integer_matrix_to_rcpp</code> that receive an integer vector and integer matrix and just return themselves.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.r</span>
+z_eigen &lt;-<span class="st"> </span><span class="kw">pass_integer_vector_to_eigen</span>(z)
+<span class="kw">max</span>(<span class="kw">abs</span>(z <span class="op">-</span><span class="st"> </span>z_eigen))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">W_eigen &lt;-<span class="st"> </span><span class="kw">pass_integer_matrix_to_eigen</span>(W)
+<span class="kw">max</span>(<span class="kw">abs</span>(W <span class="op">-</span><span class="st"> </span>W_eigen))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ul>
+<li>If you pass a vector and matrix by <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code>, the objects are <strong>copied</strong> to the new objects. This means that the new memory is allocated. If you are going to modify the passed object inside the C++ function, the objects have to be copied. Otherwise, you can just map the objects in the following way so that the new memory is not allocated, whereas you cannot modify the objects in the C++ function.</li>
+</ul>
+<pre><code>// src/functions.cpp
+// [[Rcpp::export]]
+Eigen::VectorXd map_numeric_vector_to_eigen(Eigen::Map&lt;Eigen::VectorXd&gt; x) {
+  return(x);
+}
+// [[Rcpp::export]]
+Eigen::MatrixXd map_numeric_matrix_to_eigen(Eigen::Map&lt;Eigen::MatrixXd&gt; Y) {
+  return(Y);
+}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.r</span>
+x_eigen_map &lt;-<span class="st"> </span><span class="kw">map_numeric_vector_to_eigen</span>(x)
+<span class="kw">max</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x_eigen_map))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y_eigen_map &lt;-<span class="st"> </span><span class="kw">map_numeric_matrix_to_eigen</span>(Y)
+<span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_eigen_map))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ul>
+<li><p>I recommend to directly pass R vectors and matrices to <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> rather than to <code>Vector</code> and <code>Matrix</code> in Rcpp, because <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> have more rich methods for linear algebra.</p></li>
+<li><p>R list cannot be directly translated to Eigen objects, but the list of vectors and matrices, and the list of list of R objects can be passed to Eigen in the following way.</p></li>
+</ul>
+<pre><code>// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List pass_list_to_eigen(Rcpp::List L) {
+  // double vector
+  Eigen::VectorXd x(Rcpp::as&lt;Eigen::VectorXd&gt;(L.at(0)));
+  // double matrix
+  Eigen::MatrixXd Y(Rcpp::as&lt;Eigen::MatrixXd&gt;(L.at(1)));
+  // integer vector
+  Eigen::VectorXi z(Rcpp::as&lt;Eigen::VectorXi&gt;(L.at(2)));
+  // integer matrix
+  Eigen::MatrixXi W(Rcpp::as&lt;Eigen::MatrixXi&gt;(L.at(3)));
+  // return
+  Rcpp::List output = Rcpp::List::create(x, Y, z, W);
+  return(output);
+}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.r</span>
+list_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">list</span>()
+list_<span class="dv">1</span>[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>x
+list_<span class="dv">1</span>[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>Y
+list_<span class="dv">1</span>[[<span class="dv">3</span>]] &lt;-<span class="st"> </span>z
+list_<span class="dv">1</span>[[<span class="dv">4</span>]] &lt;-<span class="st"> </span>W
+list_<span class="dv">1</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## 
+## [[2]]
+##            [,1]      [,2]        [,3]       [,4]       [,5]
+## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
+## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339
+## 
+## [[3]]
+## [1] 1 2 3 4 5
+## 
+## [[4]]
+##      [,1] [,2]
+## [1,]    1    1
+## [2,]    1    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list_1_eigen &lt;-<span class="st"> </span><span class="kw">pass_list_to_eigen</span>(list_<span class="dv">1</span>)
+<span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(list_<span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(list_1_eigen)))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ul>
+<li>You can also pass a list with named arguments and return a named list as follows:</li>
+</ul>
+<pre><code>// src/funtions.cpp
+// [[Rcpp::export]]
+Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
+  // double vector
+  Eigen::VectorXd x(Rcpp::as&lt;Eigen::VectorXd&gt;(L[&quot;x&quot;]));
+  // double matrix
+  Eigen::MatrixXd Y(Rcpp::as&lt;Eigen::MatrixXd&gt;(L[&quot;Y&quot;]));
+  // integer vector
+  Eigen::VectorXi z(Rcpp::as&lt;Eigen::VectorXi&gt;(L[&quot;z&quot;]));
+  // integer matrix
+  Eigen::MatrixXi W(Rcpp::as&lt;Eigen::MatrixXi&gt;(L[&quot;W&quot;]));
+  // return
+  Rcpp::List output = Rcpp::List::create(
+    Rcpp::Named(&quot;x&quot;) = x, 
+    Rcpp::Named(&quot;Y&quot;) = Y, 
+    Rcpp::Named(&quot;z&quot;) = z, 
+    Rcpp::Named(&quot;W&quot;) = W);
+  return(output);
+}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.r</span>
+list_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">list</span>()
+list_<span class="dv">2</span><span class="op">$</span>x &lt;-<span class="st"> </span>x
+list_<span class="dv">2</span><span class="op">$</span>Y &lt;-<span class="st"> </span>Y
+list_<span class="dv">2</span><span class="op">$</span>z &lt;-<span class="st"> </span>z
+list_<span class="dv">2</span><span class="op">$</span>W &lt;-<span class="st"> </span>W
+list_<span class="dv">2</span></code></pre></div>
+<pre><code>## $x
+## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## 
+## $Y
+##            [,1]      [,2]        [,3]       [,4]       [,5]
+## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
+## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339
+## 
+## $z
+## [1] 1 2 3 4 5
+## 
+## $W
+##      [,1] [,2]
+## [1,]    1    1
+## [2,]    1    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list_2_eigen &lt;-<span class="st"> </span><span class="kw">pass_named_list_to_eigen</span>(list_<span class="dv">2</span>)
+<span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(list_<span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(list_2_eigen)))</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<ul>
+<li>This allows us to pass whatever objects in R to a C++ function.</li>
+<li>If you are planning to translate R functions to C/C++, from the beginning, you should write the R functions in the way inputs and outpus can be passed to C/C++ as above.</li>
 </ul>
 </div>
-<div id="pre-merger-equilibrium" class="section level3">
-<h3><span class="header-section-number">5.3.4</span> Pre-Merger Equilibrium</h3>
+<div id="passing-r-objects-in-other-objects-in-cc" class="section level2">
+<h2><span class="header-section-number">11.5</span> Passing R Objects in Other Objects in C/C++</h2>
 <ul>
-<li>The first-order condition for firm <span class="math inline">\(f\)</span> is:
-<span class="math display">\[\begin{equation}
-D_k(p) + \sum_{j \in \mathcal{J}_f} (p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
-\end{equation}\]</span></li>
-<li>Let <span class="math inline">\(\Delta_{jk}^{pre}\)</span> takes 1 if same firm produces <span class="math inline">\(j\)</span> and <span class="math inline">\(k\)</span> and 0 otherwise before the merger.</li>
-<li>The first-order condition can be written as:
-<span class="math display">\[\begin{equation}
-D_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial D_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
-\end{equation}\]</span></li>
-<li>In terms of the product share:
-<span class="math display">\[\begin{equation}
-s_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial s_j(p)}{\partial p_k} = 0, \forall k \in \mathcal{J}_f.
-\end{equation}\]</span></li>
-<li>Let <span class="math inline">\(\Delta^{pre}\)</span> be a <span class="math inline">\(J \times J\)</span> matrix whose <span class="math inline">\((j, k)\)</span>-element is <span class="math inline">\(\Delta_{jk}\)</span>.</li>
-<li>At the end of the day, performing a merger simulation is to recompute the equilibrium with different ownership structure encoded in <span class="math inline">\(\Delta\)</span>.</li>
+<li><code>integer</code> and <code>numeric</code> scalars in R can be simply passed to <code>int</code> and <code>double</code> in C/C++.</li>
+<li>Vectors in R can be passed to <code>std::vector&lt;int&gt;</code> or <code>std::vector&lt;double&gt;</code> objects. This may be helpful if you want to use the methods for <code>std::vector</code>.</li>
 </ul>
 </div>
-<div id="post-merger-equilibrium" class="section level3">
-<h3><span class="header-section-number">5.3.5</span> Post-Merger Equilibrium</h3>
-<ul>
-<li>Let <span class="math inline">\(\Omega^{pre}(p)\)</span> is a matrix whose <span class="math inline">\((j, k)\)</span>-element is:</li>
-</ul>
-<span class="math display">\[\begin{equation}
-- \frac{\partial s_{j}(p)}{\partial p_k} \Delta_{jk}^{pre}.
-\end{equation}\]</span>
-<ul>
-<li>Then, by the first-order condition, the marginal cost should be:
-<span class="math display">\[\begin{equation}
-mc = p - \Omega^{pre}(p)^{-1} s(p).
-\end{equation}\]</span></li>
-<li>If the ownership structure <span class="math inline">\(\Delta^{pre}\)</span> is changed to <span class="math inline">\(\Delta^{post}\)</span>, and <span class="math inline">\(\Omega^{pre}\)</span> changed to <span class="math inline">\(\Omega^{post}\)</span>, the post-merger price is determined by solving the non-linear equation:
-<span class="math display">\[\begin{equation}
-p^{post} = mc + \Omega^{post}(p^{post})^{-1}s(p^{post}).
-\end{equation}\]</span></li>
-<li>The post-merger share is given by:
-<span class="math display">\[\begin{equation}
-s^{post} = s(p^{post}).
-\end{equation}\]</span></li>
-</ul>
-</div>
-<div id="consumer-surplus" class="section level3">
-<h3><span class="header-section-number">5.3.6</span> Consumer Surplus</h3>
-<ul>
-<li>Suppose that the demand function is based on the mixed-logit model such that the indirect utility is:
-<span class="math display">\[\begin{equation}
-u_{ijt} = x_{jt} \beta_i + \alpha_i p_{jt} + \xi_{j} + \xi_t + \Delta \xi_{jt} + \epsilon_{ijt},
-\end{equation}\]</span>
-with <span class="math inline">\(\epsilon_{ijt}\)</span> is drawn from i.i.d. Type-I extreme value distribution and the consumer-level heterogeneity:</li>
-</ul>
-<span class="math display">\[\begin{equation}
-\begin{pmatrix}
-\alpha_i \\
-\beta_i
-\end{pmatrix}
-= 
-\begin{pmatrix}
-\alpha\\
-\beta
-\end{pmatrix}
-+ \Pi z_i + \Sigma \nu_i, \nu_i \sim N(0, I_{K + 1}).
-\end{equation}\]</span>
-<ul>
-<li>Then, the compensated variation due to the price change for consumer <span class="math inline">\(i\)</span> is:
-<span class="math display">\[\begin{equation}
-CV_{it} = \frac{\ln (\sum_{j = 0}^J \exp(V_{ijt}^{post}) ) - \ln (\sum_{j = 0}^J \exp(V_{ijt}^{pre})) }{\alpha_i},
-\end{equation}\]</span>
-where <span class="math inline">\(V_{ijt}^{post}\)</span> and <span class="math inline">\(V_{ijt}^{pre}\)</span> are indirect utility for consumer <span class="math inline">\(i\)</span> to purchase good <span class="math inline">\(j\)</span> at the prices after and before the merger.</li>
-<li>This formula holds only if the price enters linearly in the indirect utility (no income effect).</li>
-<li>For general case, see <span class="citation">Small &amp; Rosen (<a href="#ref-Small1981">1981</a>)</span> and <span class="citation">D. Mcfadden et al. (<a href="#ref-Mcfadden1995">1995</a>)</span>.</li>
-</ul>
-</div>
-<div id="quantifying-the-coordinated-effect" class="section level3">
-<h3><span class="header-section-number">5.3.7</span> Quantifying the Coordinated Effect</h3>
-<ul>
-<li>The repeated-game theory suggests that a collusion is sustainable if and only if it it incentive compatible: the collusion profit is no less than the deviation profit for each member of the collusion.</li>
-<li>The theory provides a check list that affects the incentive compatibility such as the market share, cost asymmetry, and demand dynamics.</li>
-<li>But it is often hard to judge the coordinated effects from these qualitative information, because mergers simultaneously change many factors and the factors may encourage or hinder collusion.</li>
-<li><span class="citation">Miller &amp; Weinberg (<a href="#ref-Miller2017">2017</a>)</span> <strong>retrospectively</strong> studies the coordinated effect of a merger.</li>
-<li>Is <strong>prospective</strong> analysis of coordinated effects possible as well as the analysis of unilateral effects?</li>
-<li>If we can identify the demand and cost functions, we can calculate the collusion profits and deviation profits.</li>
-<li>If we specify the collusion strategy, we can write down the incentive compatibility.</li>
-<li>We can check how the incentive compatibility change when a hypothetical merger happens.</li>
-<li>The problem is the identification of conduct: to identify the cost function, we need to know the conduct.</li>
-<li>Thus, the stated strategy will work only if we have a data during which we are sure that there was no collusion, or there was a particular type of collusion.</li>
-<li><span class="citation">Igami et al. (<a href="#ref-Igami2018">2018</a>)</span> use the detailed information of vitamin C cartel case and apply this approach.</li>
-</ul>
+<div id="manipulating-objects-in-a-c-function" class="section level2">
+<h2><span class="header-section-number">11.6</span> Manipulating Objects in a C++ Function</h2>
 
-</div>
-</div>
-</div>
-<h3> References</h3>
-<div id="refs" class="references">
-<div id="ref-Gowrisankaran2015">
-<p>Gowrisankaran, G., Nevo, A., &amp; Town, R. (2015). Mergers When Prices Are Negotiated: Evidence from the Hospital Industry. <em>American Economic Review</em>, <em>105</em>(1), 172–203.</p>
-</div>
-<div id="ref-Smith2004">
-<p>Smith, H. (2004). Supermarket Choice and Supermarket Competition in Market Equilibrium. <em>Review of Economic Studies</em>, <em>71</em>(1), 235–263.</p>
-</div>
-<div id="ref-Ivaldi2005">
-<p>Ivaldi, M., &amp; Verboven, F. (2005). Quantifying the effects from horizontal mergers in European competition policy. <em>International Journal of Industrial Organization</em>, <em>23</em>(9-10), 669–691.</p>
-</div>
-<div id="ref-Bresnahan1982a">
-<p>Bresnahan, T. F. (1982). The oligopoly solution concept is identified. <em>Economics Letters</em>, <em>10</em>(1-2), 87–92.</p>
-</div>
-<div id="ref-Nevo1998">
-<p>Nevo, A. (1998). Identification of the Oligopoly Solution Concept in a Differentiated-Products Industry. <em>Economics Letters</em>, <em>59</em>(3), 391–395.</p>
-</div>
-<div id="ref-Miller2017">
-<p>Miller, N. H., &amp; Weinberg, M. C. (2017). Understanding the Price Effects of the MillerCoors Joint Venture. <em>Econometrica</em>, <em>85</em>(6), 1763–1791.</p>
-</div>
-<div id="ref-Farrell1990">
-<p>Farrell, J., &amp; Shapiro, C. (1990). American Economic Association Horizontal Mergers: An Equilibrium Analysis. <em>Source: The American Economic Review</em>, <em>80</em>(1), 107–126.</p>
-</div>
-<div id="ref-Werden1994">
-<p>Werden, G., &amp; Frobe, L. (1993). The Effects of Mergers in Differentiated Products Industries : Logit Demand and Merger Policy. <em>Journal of Law, Economics, and Organization</em>, <em>10</em>, 407–426.</p>
-</div>
-<div id="ref-Hausman1994">
-<p>Hausman, Leonard, &amp; Zona. (1994). Competitive Analysis with Differenciated Products. <em>Annales d’Économie et de Statistique</em>, (34), 159–180.</p>
-</div>
-<div id="ref-Nevo2000c">
-<p>Nevo, A. (2000). <em>Mergers with differentiated products: The case of the ready-to-eat cereal industry</em> (No. 3).</p>
-</div>
-<div id="ref-Nevo2001">
-<p>Nevo, A. (2001). Measuring Market Power in the Ready-to-Eat Cereal Industry. <em>Econometrica</em>, <em>69</em>(2), 307–342.</p>
-</div>
-<div id="ref-Small1981">
-<p>Small, K. A., &amp; Rosen, H. S. (1981). Applied Welfare Economics with Discrete Choice Models. <em>Econometrica</em>, <em>49</em>(1), 105–130.</p>
-</div>
-<div id="ref-Mcfadden1995">
-<p>Mcfadden, D., Geweke, J., Hajivassiliou, V., Johnson, R., Lancaster, T., Rossi, P., … Waters, S. (1995). <em>Computing Willingness-to-pay in Random Utility Models</em>.</p>
-</div>
-<div id="ref-Igami2018">
-<p>Igami, M., Sugaya, T., Thank, W., Harrington, J., Asker, J., Porter, R., … Kaplow, L. (2018). <em>Measuring the Incentive to Collude: The Vitamin Cartels, 1990-1999</em>.</p>
 </div>
 </div>
             </section>
@@ -822,8 +883,8 @@ where <span class="math inline">\(V_{ijt}^{post}\)</span> and <span class="math 
           </div>
         </div>
       </div>
-<a href="demand.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="entryexit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="assignment4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

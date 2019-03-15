@@ -1,0 +1,384 @@
+# Integrating with C++ using Rcpp and RcppEigen {#rcpp}
+
+## Prerequisite
+
+- In this chapter, we learn how to integrate C++ using Rcpp and RcppEigen.
+- `RcppEigen` is a package to use a linear algebra library `Eigen` with R. The original `Eigen` library and its documentation is found in [their website](http://eigen.tuxfamily.org/index.php?title=Main_Page).
+- Instead of `RcppEigen`, you may want to use `RcppArmadillo`. `Armadillo` is another libear algebra library in C++.  
+- We presume that:
+    - C/C++ environment is installed to the computer.
+        - For OSX, you can install [Apple Developer Tools](https://developer.apple.com/xcode/).
+        - For Windows, you can try [Rtools](https://cran.r-project.org/bin/windows/Rtools/).
+    - `Rcpp` and `RcppEigen` are installed.
+    - The project is created in RStudio from `File > New Project > New Directory > R Package using RcppEigen`. In the following, I use the project name `EmpiricalIO` but the name can be as you like.
+- We presume the you have the following folder and file structure from the root directory:
+    - `main`.
+        - `main.R`: all executable statements are written in this file.
+    - `R`.
+        - `functions.R`: all function definitions in R are written in this file.
+    - `src`.
+        - `functions.cpp`: all function definitions in C++ are written in this file.
+            - It includes:
+```
+"src/functions.cpp"
+-------------------
+#include <Rcpp.h>
+#include <RcppEigen.h>
+```
+           - Inside `functions.cpp`, avoid using name spaces.
+        - `Makevars`: compilation flags for osx/Linux should be written here.
+        - `Makevars.win`: compilation flags for Windows should be written here.
+    - `inst`.
+        - `include`: header files for external libraries in C/C++ are stored here.
+- `Makevars/Makevars.win` should be:
+```
+Makevars
+--------
+PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3
+```
+```
+Makevars.win
+------------
+PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3
+```
+    - `-w` is for supprssing some warnings in `Eigen`. If you want to keep warnings shown, this can be removed.
+    - `-std=c++11` is for using the latest functionalities of C++ (optional).
+    - `-I../inst/include/` is for setting the header path to `../inst/include/` (optional).
+
+## Workflow
+
+- To minimize the likelihood of bugs and the time to edit and debug the code, I recommend to follw the workflow in this section.
+- This workflow is based on my experience. If you find better workflow, you can overwrite by your own way.
+1. Write a procedure in `main/main.R`.
+```{r, echo = TRUE}
+# main/main.R
+x <- 1:4
+y1 <- x^2
+```
+
+2. Rewrite the procedure to a function in `main/main.R`.
+```{r, echo = TRUE}
+# main/main.R
+# compute coefficient-wise square
+compute_square <-
+  function(x) {
+    y <- x^2
+    return(y)
+  }
+```
+
+3. Execute the function in `main/main.R` and check that the output is the same with the output of the original 
+```{r, echo = TRUE}
+# main/main.R
+y2 <- compute_square(x)
+max(abs(y1 - y2))
+```
+4. Cut and paste the function to `R/functions.R`.
+5. Build the package and load the function from the library
+6. Check if the function can be executed as in step 3.
+7. Copy the function to `src/functions.cpp` and comment them out.
+```
+// src/functions.cpp
+// # compute coefficient-wise square
+// compute_square <-
+//   function(x) {
+//     y <- x^2
+//     return(y)
+//   }
+```
+8. Write function in C++ by translating the copied and pasted R code.
+    - The function name should be consistent with the function name in R. I often put `_rcpp` to the end of the name.
+    - Put `[[Rcpp::export]]` above the name of the function if you want to call this function directly from R.
+    - The class of the inputs and output should be consistent with `Rcpp` objects. This will be explained later.
+    
+```
+// src/functions.cpp
+// # compute coefficient-wise square
+// compute_square <-
+// [[Rcpp::export]]
+Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
+  //   function(x) {
+  Eigen::VectorXd y = x.array().square();
+  //     y <- x^2
+  //     return(y)
+  //   }
+  return(y);
+}
+```
+9. Check if clean and rebuild work. 
+    - If there is a compilation error happens, debug until the compilation succeeds.
+    - Sometimes, deleting `R/RcppExports.R` and `R/RcppExports.cpp` may be need when re-compile the functions.
+10. Clean up the code by eliminating the copied and pasted R code.
+
+```
+// src/functions.cpp
+// compute coefficient-wise square
+// [[Rcpp::export]]
+Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
+  Eigen::VectorXd y = x.array().square();
+  return(y);
+}
+```
+11. Now by calling the library, you should be able to use the function written in C++ in R. Check if it returns a valid value and the then if the output is the same as the output of the R function.
+```{r, echo = TRUE}
+# main/main.R
+y3 <- compute_square_rcpp(x)
+max(abs(y2 - y3))
+```
+12. If there is a run-time bug in the C++ function, you may have to use some debugger for C++ to debug the function.
+    - In osx, you can debug the C++ function called from R function in the following way.
+    - Open the terminal and run R with the debugger `lldb` by typing the following command in the terminal:
+    ```
+    # terminal
+    R -d lldb
+    ```
+    - Run `main/main.R` by typing the following command in the terminal:
+    ```
+    # terminal
+    run -f main/main.R
+    ```
+    - This should execute the R source code.
+    - After `library(EmpiricalIO)` is read, stop the process by `Ctrl + C` before the function in question is called. If there is no time gap between them, set `Sys.sleep()` in R to buy some time.
+    - As you stop the process, set the break point at the function in question by typing in the terminal as:
+    ```
+    # terminal
+    br s -n compute_square_rcpp
+    ```
+    and then continue the process by typing `c` in the terminal.
+    - For the rest, refer to the [documentation of lldb](https://lldb.llvm.org/).
+    - There is no such an easy way in Windows.
+    
+13. If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never rewrite from C++ functions.
+
+## Passing R Objects as Rcpp Objects   
+        
+- R class corresponds to the following Rcpp class:
+
+| R | Rcpp |
+|:--|:-----|
+|`logical`|`Logical`|
+|`integer`|`Integer`|
+|`numeric`|`Numeric`|
+|`complex`|`Complex`|
+|`character`|`String`|
+|`Date`|`Date`|
+|`POSIXct`|`Datetime`|
+
+- R data structure corresponds to the following Rcpp data structure:
+
+| R | Rcpp |
+|:--|:-----|
+|`vector`| `Vector`|
+|`matrix`| `Matrix`|
+|`data.frame`| `DataFrame`|
+|`list`| `List`|
+
+- For example, a numeric vector in R is passed to `Rcpp::NumericVector` in Rcpp, an integer matrix is to `Rcpp::IntegerMatrix`, and so on.
+```{r, echo = TRUE}
+# main/main.R
+# numeric vector 
+x <- rnorm(5)
+x
+# numeric matrix
+Y <- matrix(rnorm(2*5), nrow = 2)
+Y
+```
+- Let's write a C++ function just receives a numeric vector and returns the numeric vector, and receives a numeric matrix and returns the numeric matrix.
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::NumericVector pass_numeric_vector_to_rcpp(Rcpp::NumericVector x) {
+  return(x);
+}
+// [[Rcpp::export]]
+Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
+  return(Y);
+}
+```
+- Check if you can pass R objects and get the right result:
+```{r, echo = TRUE}
+x_rcpp <- pass_numeric_vector_to_rcpp(x)
+max(abs(x - x_rcpp))
+
+Y_rcpp <- pass_numeric_matrix_to_rcpp(Y)
+max(abs(Y - Y_rcpp))
+```
+
+- __Exercise__: Write functions `pass_integer_vector_to_rcpp`, `pass_integer_matrix_to_rcpp`, `pass_list_to_rcpp`, `pass_data_frame_to_rcpp` that receive an integer vector, list, and data frame and just return themselves.
+```{r, echo = TRUE}
+# main/main.r
+# integer vector
+z <- 1:5
+z
+# integer matrix
+W <- matrix(rep(1, 4), nrow = 2)
+W
+# list
+L <- list(x = x, y = y, z = z)
+L
+# data frame
+D <- data.frame(x1 = rnorm(5), x2 = rnorm(5))
+D
+
+z_rcpp <- pass_integer_vector_to_rcpp(z)
+max(abs(z - z_rcpp))
+
+W_rcpp <- pass_integer_matrix_to_rcpp(W)
+max(abs(W - W_rcpp))
+
+L_rcpp <- pass_list_to_rcpp(L)
+max(abs(unlist(L) - unlist(L_rcpp)))
+
+D_rcpp <- pass_data_frame_to_rcpp(D)
+max(abs(D - D_rcpp))
+```
+
+## Passing R Objects as Eigen Objects
+
+- R data structure corresponds to the following Eigen data structure:
+
+| R | Eigen |
+|:--|:------|
+|`vector` | `Eigen::VectorX`|
+|`matrix` | `Eigen::MatrixX`|
+
+- If you pass an `integer` vector and matrix, the corresponding Eigen objects are `Eigen::VectorXi` and `Eigen::MatrixXi`.
+- If you pass an `numeric` vector and matrix, the corresponding Eigen objects are `Eigen::VectorXd` and `Eigen::MatrixXd`.
+- The class of the output can be Eigen class. If you return `Eigen::VectorXd`, `Eigen::MatrixXd`, then they are automatically converted to the corresponding R objects.
+- Check if you can pass `x`, `Y`, and `z` as follows:
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Eigen::VectorXd pass_numeric_vector_to_eigen(Eigen::VectorXd x) {
+  return(x);
+}
+// [[Rcpp::export]]
+Eigen::MatrixXd pass_numeric_matrix_to_eigen(Eigen::MatrixXd Y) {
+  return(Y);
+}
+```
+
+```{r, echo = TRUE}
+# main/main.r
+x_eigen <- pass_numeric_vector_to_eigen(x)
+max(abs(x - x_eigen))
+Y_eigen <- pass_numeric_matrix_to_eigen(Y)
+max(abs(Y - Y_eigen))
+```
+
+- __Exercise__: Write functions `pass_integer_vector_to_rcpp` and `pass_integer_matrix_to_rcpp` that receive an integer vector and integer matrix and just return themselves.
+
+```{r, echo = TRUE}
+# main/main.r
+z_eigen <- pass_integer_vector_to_eigen(z)
+max(abs(z - z_eigen))
+W_eigen <- pass_integer_matrix_to_eigen(W)
+max(abs(W - W_eigen))
+```
+
+- If you pass a vector and matrix by `Eigen::VectorX` and `Eigen::MatrixX`, the objects are __copied__ to the new objects. This means that the new memory is allocated. If you are going to modify the passed object inside the C++ function, the objects have to be copied. Otherwise, you can just map the objects in the following way so that the new memory is not allocated, whereas you cannot modify the objects in the C++ function. 
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Eigen::VectorXd map_numeric_vector_to_eigen(Eigen::Map<Eigen::VectorXd> x) {
+  return(x);
+}
+// [[Rcpp::export]]
+Eigen::MatrixXd map_numeric_matrix_to_eigen(Eigen::Map<Eigen::MatrixXd> Y) {
+  return(Y);
+}
+```
+
+```{r, echo = TRUE}
+# main/main.r
+x_eigen_map <- map_numeric_vector_to_eigen(x)
+max(abs(x - x_eigen_map))
+Y_eigen_map <- map_numeric_matrix_to_eigen(Y)
+max(abs(Y - Y_eigen_map))
+```
+
+- I recommend to directly pass R vectors and matrices to `Eigen::VectorX` and `Eigen::MatrixX` rather than to `Vector` and `Matrix` in Rcpp, because `Eigen::VectorX` and `Eigen::MatrixX` have more rich methods for linear algebra.
+
+- R list cannot be directly translated to Eigen objects, but the list of vectors and matrices, and the list of list of R objects can be passed to Eigen in the following way.
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List pass_list_to_eigen(Rcpp::List L) {
+  // double vector
+  Eigen::VectorXd x(Rcpp::as<Eigen::VectorXd>(L.at(0)));
+  // double matrix
+  Eigen::MatrixXd Y(Rcpp::as<Eigen::MatrixXd>(L.at(1)));
+  // integer vector
+  Eigen::VectorXi z(Rcpp::as<Eigen::VectorXi>(L.at(2)));
+  // integer matrix
+  Eigen::MatrixXi W(Rcpp::as<Eigen::MatrixXi>(L.at(3)));
+  // return
+  Rcpp::List output = Rcpp::List::create(x, Y, z, W);
+  return(output);
+}
+```
+
+```{r, echo = TRUE}
+# main/main.r
+list_1 <- list()
+list_1[[1]] <- x
+list_1[[2]] <- Y
+list_1[[3]] <- z
+list_1[[4]] <- W
+list_1
+
+list_1_eigen <- pass_list_to_eigen(list_1)
+max(abs(unlist(list_1) - unlist(list_1_eigen)))
+```
+
+- You can also pass a list with named arguments and return a named list as follows:
+
+```
+// src/funtions.cpp
+// [[Rcpp::export]]
+Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
+  // double vector
+  Eigen::VectorXd x(Rcpp::as<Eigen::VectorXd>(L["x"]));
+  // double matrix
+  Eigen::MatrixXd Y(Rcpp::as<Eigen::MatrixXd>(L["Y"]));
+  // integer vector
+  Eigen::VectorXi z(Rcpp::as<Eigen::VectorXi>(L["z"]));
+  // integer matrix
+  Eigen::MatrixXi W(Rcpp::as<Eigen::MatrixXi>(L["W"]));
+  // return
+  Rcpp::List output = Rcpp::List::create(
+    Rcpp::Named("x") = x, 
+    Rcpp::Named("Y") = Y, 
+    Rcpp::Named("z") = z, 
+    Rcpp::Named("W") = W);
+  return(output);
+}
+```
+
+```{r, echo = TRUE}
+# main/main.r
+list_2 <- list()
+list_2$x <- x
+list_2$Y <- Y
+list_2$z <- z
+list_2$W <- W
+list_2
+
+list_2_eigen <- pass_named_list_to_eigen(list_2)
+max(abs(unlist(list_2) - unlist(list_2_eigen)))
+```
+
+- This allows us to pass whatever objects in R to a C++ function.
+- If you are planning to translate R functions to C/C++, from the beginning, you should write the R functions in the way inputs and outpus can be passed to C/C++ as above.
+
+## Passing R Objects in Other Objects in C/C++
+
+- `integer` and `numeric` scalars in R can be simply passed to `int` and `double` in C/C++.
+- Vectors in R can be passed to `std::vector<int>` or `std::vector<double>` objects. This may be helpful if you want to use the methods for `std::vector`.
+
+## Manipulating Objects in a C++ Function
+

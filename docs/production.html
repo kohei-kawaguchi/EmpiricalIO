@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ECON 6120I Topics in Empirical Industrial Organization</title>
+  <title>Chapter 3 Production and Cost Function Estimation | ECON 6120I Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta property="og:title" content="Chapter 3 Production and Cost Function Estimation | ECON 6120I Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta name="twitter:title" content="Chapter 3 Production and Cost Function Estimation | ECON 6120I Topics in Empirical Industrial Organization" />
   
   <meta name="twitter:description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology." />
   
@@ -35,6 +35,7 @@
 <link rel="next" href="demand.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -342,7 +343,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.1" data-path="assignment3.html"><a href="assignment3.html#simulate-data-2"><i class="fa fa-check"></i><b>9.1</b> Simulate data</a></li>
 <li class="chapter" data-level="9.2" data-path="assignment3.html"><a href="assignment3.html#estimate-the-parameters-1"><i class="fa fa-check"></i><b>9.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>10</b> References</a></li>
+<li class="chapter" data-level="10" data-path="assignment4.html"><a href="assignment4.html"><i class="fa fa-check"></i><b>10</b> Assignment 4: Demand Function Estimation II</a><ul>
+<li class="chapter" data-level="10.1" data-path="assignment4.html"><a href="assignment4.html#simulate-data-3"><i class="fa fa-check"></i><b>10.1</b> Simulate data</a></li>
+<li class="chapter" data-level="10.2" data-path="assignment4.html"><a href="assignment4.html#estimate-the-parameters-2"><i class="fa fa-check"></i><b>10.2</b> Estimate the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>11</b> Integrating with C++ using Rcpp and RcppEigen</a><ul>
+<li class="chapter" data-level="11.1" data-path="rcpp.html"><a href="rcpp.html#prerequisite"><i class="fa fa-check"></i><b>11.1</b> Prerequisite</a></li>
+<li class="chapter" data-level="11.2" data-path="rcpp.html"><a href="rcpp.html#workflow"><i class="fa fa-check"></i><b>11.2</b> Workflow</a></li>
+<li class="chapter" data-level="11.3" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-rcpp-objects"><i class="fa fa-check"></i><b>11.3</b> Passing R Objects as Rcpp Objects</a></li>
+<li class="chapter" data-level="11.4" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-eigen-objects"><i class="fa fa-check"></i><b>11.4</b> Passing R Objects as Eigen Objects</a></li>
+<li class="chapter" data-level="11.5" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-in-other-objects-in-cc"><i class="fa fa-check"></i><b>11.5</b> Passing R Objects in Other Objects in C/C++</a></li>
+<li class="chapter" data-level="11.6" data-path="rcpp.html"><a href="rcpp.html#manipulating-objects-in-a-c-function"><i class="fa fa-check"></i><b>11.6</b> Manipulating Objects in a C++ Function</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>12</b> References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -1580,7 +1593,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1590,6 +1603,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -1607,7 +1624,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
