@@ -517,7 +517,7 @@ Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
   return(y);
 }</code></pre>
 <ol start="11" style="list-style-type: decimal">
-<li>Now by calling the library, you should be able to use the function written in C++ in R. Check if it returns a valid value and the then if the output is the same as the output of the R function.</li>
+<li>Now by calling the library, you should be able to use the function written in C++ in R. Check if it returns a valid value and if the output is the same as the output of the R function.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># main/main.R</span>
 y3 &lt;-<span class="st"> </span><span class="kw">compute_square_rcpp</span>(x)
@@ -632,7 +632,7 @@ Y</code></pre></div>
 ## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
 ## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339</code></pre>
 <ul>
-<li>Let’s write a C++ function just receives a numeric vector and returns the numeric vector, and receives a numeric matrix and returns the numeric matrix.</li>
+<li>Let’s write a C++ function that just receives a numeric vector and returns the numeric vector, and receives a numeric matrix and returns the numeric matrix.</li>
 </ul>
 <pre><code>// src/functions.cpp
 // [[Rcpp::export]]
@@ -774,7 +774,7 @@ x_eigen_map &lt;-<span class="st"> </span><span class="kw">map_numeric_vector_to
 <span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_eigen_map))</code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
-<li><p>I recommend to directly pass R vectors and matrices to <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> rather than to <code>Vector</code> and <code>Matrix</code> in Rcpp, because <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> have more rich methods for linear algebra.</p></li>
+<li><p>I recommend to directly pass R vectors and matrices to <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> rather than to <code>Vector</code> and <code>Matrix</code> in Rcpp, because <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> have richer methods for linear algebra.</p></li>
 <li><p>R list cannot be directly translated to Eigen objects, but the list of vectors and matrices, and the list of list of R objects can be passed to Eigen in the following way.</p></li>
 </ul>
 <pre><code>// src/functions.cpp
