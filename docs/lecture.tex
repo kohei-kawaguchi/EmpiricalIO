@@ -129,6 +129,20 @@
 
 \usepackage{booktabs}
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -1158,7 +1172,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 6
+## [1] 4
 \end{verbatim}
 
 \begin{Shaded}
@@ -1178,7 +1192,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 40
+## [1] 42
 \end{verbatim}
 
 \begin{Shaded}
@@ -1188,7 +1202,7 @@ it as:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 44
+## [1] 39
 \end{verbatim}
 
 \begin{itemize}
@@ -11178,6 +11192,35 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 \begin{itemize}
 \tightlist
 \item
+  You can also access to the column of \texttt{Rcpp::DataFrame} in the
+  similar way.
+\end{itemize}
+
+\begin{verbatim}
+// src/functions.cpp
+// [[Rcpp::export]]
+Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
+  // pass column x1 of D to Eigen::VectorXd named x1
+  Eigen::VectorXd x1(Rcpp::as<Eigen::VectorXd>(D["x1"]));
+  return(x1);
+}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\NormalTok{x1 <-}\StringTok{ }\KeywordTok{extract_column_from_data_frame}\NormalTok{(D)}
+\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(D}\OperatorTok{$}\NormalTok{x1 }\OperatorTok{-}\StringTok{ }\NormalTok{x1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
   This allows us to pass whatever objects in R to a C++ function.
 \item
   If you are planning to translate R functions to C/C++, from the
@@ -11202,6 +11245,626 @@ C/C++}\label{passing-r-objects-in-other-objects-in-cc}
 
 \section{Manipulating Objects in a C++
 Function}\label{manipulating-objects-in-a-c-function}
+
+\begin{itemize}
+\tightlist
+\item
+  As mentioned above, the best practice is to pass vectors and matrices
+  to \texttt{Eigen::VectorXd}/\texttt{Eigen::VectorXi} and
+  \texttt{Eigen::MatrixXd}/\texttt{Eigen::MatrixXi} rather than
+  \texttt{Rcpp::NumericVector}/\texttt{Rcpp::IntegerVector} and
+  \texttt{Rcpp::NumericMatrix}/\texttt{Rcpp::IntegerMatrix}.
+\item
+  The other objects will be passed as \texttt{Rcpp::DataFrame} or
+  \texttt{Rcpp::List} and at the end converted to
+  \texttt{Eigen::VectorXd}/\texttt{Eigen::VectorXi} and
+  \texttt{Eigen::MatrixXd}/\texttt{Eigen::MatrixXi} usin
+  \texttt{Rcpp::as} as explained above.
+\item
+  The rest of manipulation will be done using the methods in Eigen. Here
+  I introduce basic operations. For the detail, refer to the
+  \href{https://eigen.tuxfamily.org/dox/GettingStarted.html}{online
+  document of Eigen}.
+\end{itemize}
+
+\subsection{Matrix and Vector
+Arithmetic}\label{matrix-and-vector-arithmetic}
+
+\begin{itemize}
+\tightlist
+\item
+  Addition and subtraction:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Binary operator \(+\) as in \texttt{a\ +\ b}.
+  \item
+    Binary operator \(-\) as in \texttt{a\ -\ b}.
+  \item
+    Unary operator \(-\) as in \texttt{-\ a}.
+  \end{itemize}
+\item
+  Scalar multiplication and division:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Binary operator \(\times\) as in \texttt{matrix\ *\ scalar}.
+  \item
+    Binary operator \(\times\) as in \texttt{scalar\ *\ matrix}.
+  \item
+    Binary operator \(/\) as in \texttt{matrix\ /\ scalar}.
+  \end{itemize}
+\item
+  Transposition:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Transposition as in \texttt{matrix.transpose()}.
+  \end{itemize}
+\item
+  Matrix-matrix and matrix-vector multiplication:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This part is different from R.
+  \item
+    Matrix multiplication is as in \texttt{A\ *\ B}.
+  \item
+    Coefficientwise multiplication is explained later but is as in
+    \texttt{A.array()\ *\ B.array()}.
+  \end{itemize}
+\item
+  Following the best practice, first write R function for these
+  operations in \texttt{R/functions.R} and run in \texttt{main/main.R}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# R/functions.R}
+\CommentTok{# matrix and vector arithmetic}
+\NormalTok{matrix_vector_arithmetic <-}
+\StringTok{  }\ControlFlowTok{function}\NormalTok{(A, B, v, c) \{}
+    \CommentTok{# addition and subtraction}
+\NormalTok{    X1 <-}\StringTok{ }\NormalTok{A }\OperatorTok{+}\StringTok{ }\NormalTok{B}
+\NormalTok{    X2 <-}\StringTok{ }\NormalTok{A }\OperatorTok{-}\StringTok{ }\NormalTok{B}
+\NormalTok{    X3 <-}\StringTok{ }\OperatorTok{-}\NormalTok{A}
+    \CommentTok{# scalar multiplication and division}
+\NormalTok{    X4 <-}\StringTok{ }\NormalTok{A }\OperatorTok{*}\StringTok{ }\NormalTok{c}
+\NormalTok{    X5 <-}\StringTok{ }\NormalTok{c }\OperatorTok{*}\StringTok{ }\NormalTok{A}
+\NormalTok{    X6 <-}\StringTok{ }\NormalTok{A }\OperatorTok{/}\StringTok{ }\NormalTok{c}
+    \CommentTok{# transpose}
+\NormalTok{    X7 <-}\StringTok{ }\KeywordTok{t}\NormalTok{(A)}
+    \CommentTok{# matrix-matrix and matrix-vector multiplication}
+\NormalTok{    X8 <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\KeywordTok{t}\NormalTok{(B)}
+\NormalTok{    X9 <-}\StringTok{ }\NormalTok{A }\OperatorTok{%*%}\StringTok{ }\NormalTok{v}
+    \CommentTok{# return}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{X1 =}\NormalTok{ X1,}
+                \DataTypeTok{X2 =}\NormalTok{ X2,}
+                \DataTypeTok{X3 =}\NormalTok{ X3,}
+                \DataTypeTok{X4 =}\NormalTok{ X4,}
+                \DataTypeTok{X5 =}\NormalTok{ X5,}
+                \DataTypeTok{X6 =}\NormalTok{ X6,}
+                \DataTypeTok{X7 =}\NormalTok{ X7,}
+                \DataTypeTok{X8 =}\NormalTok{ X8,}
+                \DataTypeTok{X9 =}\NormalTok{ X9))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{# addition subtraction}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\DecValTok{4}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\NormalTok{B <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\DecValTok{4}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\NormalTok{c <-}\StringTok{ }\DecValTok{3}
+\NormalTok{v <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{4}\NormalTok{)}
+\NormalTok{output <-}\StringTok{ }\KeywordTok{matrix_vector_arithmetic}\NormalTok{(A, B, v, c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  Next, write these operations in C++ function:
+
+\begin{verbatim}
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List matrix_vector_arithmetic_rcpp(
+Eigen::MatrixXd A, Eigen::MatrixXd B, 
+Eigen::VectorXd v, double c) {
+  // addition and subtraction
+  Eigen::MatrixXd X1 = A + B;
+  Eigen::MatrixXd X2 = A - B;
+  Eigen::MatrixXd X3 = - A;
+  // scalar multiplication and division
+  Eigen::MatrixXd X4 = A * c;
+  Eigen::MatrixXd X5 = c * A;
+  Eigen::MatrixXd X6 = A / c;
+  // transpose
+  Eigen::MatrixXd X7 = A.transpose();
+  // matrix-matrix and matrix-vector multiplication
+  Eigen::MatrixXd X8 = A * B.transpose();
+  Eigen::VectorXd X9 = A * v;
+  // return 
+  Rcpp::List output = 
+Rcpp::List::create(
+  Rcpp::Named("X1") = X1,
+  Rcpp::Named("X2") = X2,
+  Rcpp::Named("X3") = X3,
+  Rcpp::Named("X4") = X4,
+  Rcpp::Named("X5") = X5,
+  Rcpp::Named("X6") = X6,
+  Rcpp::Named("X7") = X7,
+  Rcpp::Named("X8") = X8,
+  Rcpp::Named("X9") = X9);
+  return(output);
+}
+\end{verbatim}
+\item
+  Then, we can check if this yields (almost) the same result with the R
+  function:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\NormalTok{output_rcpp <-}\StringTok{ }\KeywordTok{matrix_vector_arithmetic_rcpp}\NormalTok{(A, B, v, c)}
+\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(output) }\OperatorTok{-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(output_rcpp)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.551115e-17
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The output looks like:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\NormalTok{output_rcpp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $X1
+##             [,1]      [,2]       [,3]      [,4]
+## [1,] -0.05067246 0.6761526 -0.2917328 1.6123600
+## [2,] -0.12174506 1.9851240 -3.0351683 0.6933911
+## 
+## $X2
+##            [,1]      [,2]      [,3]       [,4]
+## [1,] -1.2022352 -2.347410 0.9507484 -0.6375019
+## [2,]  0.4890317  1.205438 1.3942315  0.7832583
+## 
+## $X3
+##            [,1]       [,2]       [,3]       [,4]
+## [1,]  0.6264538  0.8356286 -0.3295078 -0.4874291
+## [2,] -0.1836433 -1.5952808  0.8204684 -0.7383247
+## 
+## $X4
+##           [,1]      [,2]       [,3]     [,4]
+## [1,] -1.879361 -2.506886  0.9885233 1.462287
+## [2,]  0.550930  4.785842 -2.4614052 2.214974
+## 
+## $X5
+##           [,1]      [,2]       [,3]     [,4]
+## [1,] -1.879361 -2.506886  0.9885233 1.462287
+## [2,]  0.550930  4.785842 -2.4614052 2.214974
+## 
+## $X6
+##             [,1]       [,2]       [,3]      [,4]
+## [1,] -0.20881794 -0.2785429  0.1098359 0.1624764
+## [2,]  0.06121444  0.5317603 -0.2734895 0.2461082
+## 
+## $X7
+##            [,1]       [,2]
+## [1,] -0.6264538  0.1836433
+## [2,] -0.8356286  1.5952808
+## [3,]  0.3295078 -0.8204684
+## [4,]  0.4874291  0.7383247
+## 
+## $X8
+##           [,1]       [,2]
+## [1,] -1.280368 -0.8861152
+## [2,]  3.857726  2.3497425
+## 
+## $X9
+## [1] -0.2184706  1.2674165
+\end{verbatim}
+
+\subsection{The Array Class and Coefficient-wise
+Operations}\label{the-array-class-and-coefficient-wise-operations}
+
+\begin{itemize}
+\item
+  When you want to have coefficient-wise operations, you first use
+  \texttt{.array()} method to convert the object to an array and then
+  apply methods for arrays.
+\item
+  The resulting array can be assigned to a matrix object implicitly or
+  explicitly by using \texttt{.matrix()} method.
+\item
+  Coefficient-wise multiplication:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{A\ *\ B} in R is \texttt{A.array()\ *\ B.\ array()} in
+    Eigen.
+  \end{itemize}
+\item
+  Other coefficient-wise math functions:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Absolute value: \texttt{A.array().abs()}.
+  \item
+    Exponential: \texttt{A.array().exp()}.
+  \item
+    Logarithm: \texttt{A.array().log()}.
+  \item
+    Power: \texttt{A.array().power(r)}.
+  \item
+    For the other methods, refer to the
+    \href{https://eigen.tuxfamily.org/dox/group__CoeffwiseMathFunctions.html}{online
+    document}.
+  \end{itemize}
+\item
+  Write functions in R in \texttt{R/functions.R} and run in
+  \texttt{main/main.R}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# R/functions.R}
+\NormalTok{coefficientwise_operation <-}
+\StringTok{  }\ControlFlowTok{function}\NormalTok{(A, B, r) \{}
+    \CommentTok{# coefficient-wise multiplication}
+\NormalTok{    X1 <-}\StringTok{ }\NormalTok{A }\OperatorTok{*}\StringTok{ }\NormalTok{B}
+    \CommentTok{# other coefficient-wise math functions}
+\NormalTok{    X2 <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(A)}
+\NormalTok{    X3 <-}\StringTok{ }\KeywordTok{exp}\NormalTok{(A)}
+\NormalTok{    X4 <-}\StringTok{ }\KeywordTok{log}\NormalTok{(}\KeywordTok{abs}\NormalTok{(A))}
+\NormalTok{    X5 <-}\StringTok{ }\NormalTok{A}\OperatorTok{^}\NormalTok{r}
+    \CommentTok{# return}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{list}\NormalTok{(}
+      \DataTypeTok{X1 =}\NormalTok{ X1,}
+      \DataTypeTok{X2 =}\NormalTok{ X2,}
+      \DataTypeTok{X3 =}\NormalTok{ X3,}
+      \DataTypeTok{X4 =}\NormalTok{ X4,}
+      \DataTypeTok{X5 =}\NormalTok{ X5}
+\NormalTok{    ))}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\CommentTok{# coefficient-wise operations}
+\NormalTok{r <-}\StringTok{ }\DecValTok{2}
+\NormalTok{output <-}\StringTok{ }\KeywordTok{coefficientwise_operation}\NormalTok{(A, B, r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Write C++ function in \texttt{src/functions.cpp} and call from
+  \texttt{main/main.R}:
+\end{itemize}
+
+\begin{verbatim}
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List coefficientwise_operation_rcpp(
+  Eigen::MatrixXd A,
+  Eigen::MatrixXd B,
+  int r
+) {
+  // coefficient-wise multiplication
+  Eigen::MatrixXd X1 = A.array() * B.array();
+  // other coefficient-wise math functions
+  Eigen::MatrixXd X2 = A.array().abs();
+  Eigen::MatrixXd X3 = A.array().exp();
+  Eigen::MatrixXd X4 = A.array().abs().log();
+  Eigen::MatrixXd X5 = A.array().pow(r);
+  // return
+  Rcpp::List output =
+    Rcpp::List::create(
+      Rcpp::Named("X1") = X1,
+      Rcpp::Named("X2") = X2,
+      Rcpp::Named("X3") = X3,
+      Rcpp::Named("X4") = X4,
+      Rcpp::Named("X5") = X5
+    );
+  return(output);
+}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output_rcpp <-}\StringTok{ }\KeywordTok{coefficientwise_operation_rcpp}\NormalTok{(A, B, r)}
+\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(output) }\OperatorTok{-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(output_rcpp)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.220446e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output_rcpp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $X1
+##             [,1]       [,2]       [,3]        [,4]
+## [1,] -0.36070042 -1.2632876 -0.2047036  0.54832401
+## [2,] -0.05608254  0.6219094  1.8170912 -0.03317559
+## 
+## $X2
+##           [,1]      [,2]      [,3]      [,4]
+## [1,] 0.6264538 0.8356286 0.3295078 0.4874291
+## [2,] 0.1836433 1.5952808 0.8204684 0.7383247
+## 
+## $X3
+##           [,1]      [,2]      [,3]     [,4]
+## [1,] 0.5344838 0.4336018 1.3902836 1.628125
+## [2,] 1.2015872 4.9297132 0.4402254 2.092427
+## 
+## $X4
+##            [,1]       [,2]       [,3]       [,4]
+## [1,] -0.4676802 -0.1795710 -1.1101553 -0.7186105
+## [2,] -1.6947599  0.4670498 -0.1978799 -0.3033716
+## 
+## $X5
+##            [,1]      [,2]      [,3]      [,4]
+## [1,] 0.39244438 0.6982752 0.1085754 0.2375871
+## [2,] 0.03372487 2.5449208 0.6731684 0.5451234
+\end{verbatim}
+
+\subsection{Solving Linear Least Squares
+Systems}\label{solving-linear-least-squares-systems}
+
+\begin{itemize}
+\tightlist
+\item
+  It is often required to solve a linear least squares system
+  \(A \cdot x = b\).
+\item
+  Solving using SVD decomposition:
+\end{itemize}
+
+\begin{verbatim}
+A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(b)
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Solving using QR decomposition:
+\end{itemize}
+
+\begin{verbatim}
+A.colPivHouseholderQr().solve(b)
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Write R function in \texttt{R/functions.R} and run in
+  \texttt{main/main.R}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# R/functions.R}
+\NormalTok{solve_least_squares <-}
+\StringTok{  }\ControlFlowTok{function}\NormalTok{(A, B) \{}
+\NormalTok{    x <-}\StringTok{ }\KeywordTok{solve}\NormalTok{(A, B)}
+    \KeywordTok{return}\NormalTok{(x)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4} \OperatorTok{*}\StringTok{ }\DecValTok{4}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{4}\NormalTok{)}
+\NormalTok{B <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{4} \OperatorTok{*}\StringTok{ }\DecValTok{4}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{4}\NormalTok{)}
+\NormalTok{output <-}\StringTok{ }\KeywordTok{solve_least_squares}\NormalTok{(A, B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Write C++ function in \texttt{src/functions.cpp} and call in
+  \texttt{main/main.R}:
+\end{itemize}
+
+\begin{verbatim}
+// src/functions.cpp
+// solve least squares using SVD decomposition
+// [[Rcpp::export]]
+Eigen::MatrixXd solve_least_squares_svd(
+  Eigen::MatrixXd A,
+  Eigen::MatrixXd B
+) {
+  Eigen::MatrixXd x = A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(B);
+  return(x);
+}
+// solve least squares using QR decomposition
+// [[Rcpp::export]]
+Eigen::MatrixXd solve_least_squares_qr(
+    Eigen::MatrixXd A,
+    Eigen::MatrixXd B
+) {
+  Eigen::MatrixXd x = A.colPivHouseholderQr().solve(B);
+  return(x);
+}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\NormalTok{output_svd <-}\StringTok{ }\KeywordTok{solve_least_squares_svd}\NormalTok{(A, B)}
+\NormalTok{output_qr <-}\StringTok{ }\KeywordTok{solve_least_squares_qr}\NormalTok{(A, B)}
+\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(output }\OperatorTok{-}\StringTok{ }\NormalTok{output_svd))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8.881784e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(output }\OperatorTok{-}\StringTok{ }\NormalTok{output_qr))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.554312e-15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output_svd}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]       [,2]       [,3]       [,4]
+## [1,]  0.65530863 -1.2441297 -1.0799835  0.5926519
+## [2,] -1.34801870  0.1453720  0.7313845 -2.2353988
+## [3,]  1.38750763 -0.3405502 -0.7649107  1.5987206
+## [4,] -0.06376266 -0.4632165 -0.2296862  0.4681169
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output_qr}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]       [,2]       [,3]       [,4]
+## [1,]  0.65530863 -1.2441297 -1.0799835  0.5926519
+## [2,] -1.34801870  0.1453720  0.7313845 -2.2353988
+## [3,]  1.38750763 -0.3405502 -0.7649107  1.5987206
+## [4,] -0.06376266 -0.4632165 -0.2296862  0.4681169
+\end{verbatim}
+
+\subsection{Accessing to Elements of a Matrix and
+Vector}\label{accessing-to-elements-of-a-matrix-and-vector}
+
+\begin{itemize}
+\item
+  You can access to the size information and elements of a matrix and
+  vector as follows:
+\item
+  Sizes: \texttt{A.rows()} for row numbers and \texttt{A.cols()} for
+  column numbers.
+\item
+  Element: \texttt{A(i,\ j)} for (\(i + 1\), \(j + 1\))-th element.
+\item
+  Rows and columns: \texttt{A.row(i)} for \(i + 1\)-th row and
+  \texttt{A.col(j)} for \(j + 1\)-th column.
+\item
+  Write R function in \texttt{R/functions.R} and run in
+  \texttt{main/main.R}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# R/functions.R}
+\NormalTok{access <-}\StringTok{ }
+\StringTok{  }\ControlFlowTok{function}\NormalTok{(A, i, j) \{}
+\NormalTok{    I <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(A)}
+\NormalTok{    J <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(A)}
+\NormalTok{    a_ij <-}\StringTok{ }\NormalTok{A[i, j]}
+\NormalTok{    a_i <-}\StringTok{ }\NormalTok{A[i, ]}
+\NormalTok{    a_j <-}\StringTok{ }\NormalTok{A[, j]}
+    \KeywordTok{return}\NormalTok{(}
+      \KeywordTok{list}\NormalTok{(}
+        \DataTypeTok{I =}\NormalTok{ I,}
+        \DataTypeTok{J =}\NormalTok{ J,}
+        \DataTypeTok{a_ij =}\NormalTok{ a_ij,}
+        \DataTypeTok{a_i =}\NormalTok{ a_i,}
+        \DataTypeTok{a_j =}\NormalTok{ a_j}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\NormalTok{output <-}\StringTok{ }\KeywordTok{access}\NormalTok{(A, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Write C++ function in \texttt{src/functions.cpp} and call in
+  \texttt{main/main.R}:
+\end{itemize}
+
+\texttt{//\ src/functions.cpp\ //\ {[}{[}Rcpp::export{]}{]}\ Rcpp::List\ access\_rcpp(\ \ \ \ \ Eigen::MatrixXd\ A,\ \ \ \ \ \ int\ i,\ \ \ \ \ \ int\ j\ \ \ )\ \{\ \ \ \ \ int\ I\ =\ A.rows();\ \ \ \ \ int\ J\ =\ A.cols();\ \ \ \ \ double\ a\_ij\ =\ A(i\ -\ 1,\ j\ -\ 1);\ \ \ \ \ Eigen::VectorXd\ a\_i\ =\ A.row(i\ -\ 1);\ \ \ \ \ Eigen::VectorXd\ a\_j\ =\ A.col(j\ -\ 1);\ \ \ \ \ Rcpp::List\ output\ =\ \ \ \ \ \ \ Rcpp::List::create(\ \ \ \ \ \ \ \ \ I\ =\ I,\ \ \ \ \ \ \ \ \ J\ =\ J,\ \ \ \ \ \ \ \ \ a\_ij\ =\ a\_ij,\ \ \ \ \ \ \ \ \ a\_i\ =\ a\_i,\ \ \ \ \ \ \ \ \ a\_j\ =\ a\_j\ \ \ \ \ \ \ );\ \ \ \ \ return(output);\ \ \ \}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# main/main.R}
+\NormalTok{output_rcpp <-}\StringTok{ }\KeywordTok{access_rcpp}\NormalTok{(A, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(output) }\OperatorTok{-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(output_rcpp)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{output_rcpp }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 4
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 0.3295078
+## 
+## [[4]]
+## [1] -0.6264538  0.3295078  0.5757814 -0.6212406
+## 
+## [[5]]
+## [1]  0.3295078 -0.8204684  0.4874291  0.7383247
+\end{verbatim}
 
 \bibliography{PhDIO.bib,packages.bib}
 

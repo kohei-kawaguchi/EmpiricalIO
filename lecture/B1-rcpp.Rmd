@@ -372,6 +372,24 @@ list_2_eigen <- pass_named_list_to_eigen(list_2)
 max(abs(unlist(list_2) - unlist(list_2_eigen)))
 ```
 
+- You can also access to the column of `Rcpp::DataFrame` in the similar way.
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
+  // pass column x1 of D to Eigen::VectorXd named x1
+  Eigen::VectorXd x1(Rcpp::as<Eigen::VectorXd>(D["x1"]));
+  return(x1);
+}
+```
+
+```{r, echo = TRUE}
+# main/main.R
+x1 <- extract_column_from_data_frame(D)
+max(abs(D$x1 - x1))
+```
+
 - This allows us to pass whatever objects in R to a C++ function.
 - If you are planning to translate R functions to C/C++, from the beginning, you should write the R functions in the way inputs and outpus can be passed to C/C++ as above.
 
@@ -381,4 +399,334 @@ max(abs(unlist(list_2) - unlist(list_2_eigen)))
 - Vectors in R can be passed to `std::vector<int>` or `std::vector<double>` objects. This may be helpful if you want to use the methods for `std::vector`.
 
 ## Manipulating Objects in a C++ Function
+
+- As mentioned above, the best practice is to pass vectors and matrices to `Eigen::VectorXd`/`Eigen::VectorXi` and `Eigen::MatrixXd`/`Eigen::MatrixXi` rather than `Rcpp::NumericVector`/`Rcpp::IntegerVector` and `Rcpp::NumericMatrix`/`Rcpp::IntegerMatrix`.
+- The other objects will be passed as `Rcpp::DataFrame` or `Rcpp::List` and at the end converted to `Eigen::VectorXd`/`Eigen::VectorXi` and `Eigen::MatrixXd`/`Eigen::MatrixXi` usin `Rcpp::as` as explained above.
+- The rest of manipulation will be done using the methods in Eigen. Here I introduce basic operations. For the detail, refer to the [online document of Eigen](https://eigen.tuxfamily.org/dox/GettingStarted.html).
+
+### Matrix and Vector Arithmetic
+
+- Addition and subtraction: 
+    - Binary operator $+$ as in `a + b`.
+    - Binary operator $-$ as in `a - b`.
+    - Unary operator $-$ as in `- a`.
+
+- Scalar multiplication and division:
+    - Binary operator $\times$ as in `matrix * scalar`.
+    - Binary operator $\times$ as in `scalar * matrix`.
+    - Binary operator $/$ as in `matrix / scalar`.
+
+- Transposition:
+    - Transposition as in `matrix.transpose()`.
+    
+- Matrix-matrix and matrix-vector multiplication:
+    - This part is different from R.
+    - Matrix multiplication is as in `A * B`.
+    - Coefficientwise multiplication is explained later but is as in `A.array() * B.array()`.
+    
+- Following the best practice, first write R function for these operations in `R/functions.R` and run in `main/main.R`:
+```{r, echo = TRUE}
+# R/functions.R
+# matrix and vector arithmetic
+matrix_vector_arithmetic <-
+  function(A, B, v, c) {
+    # addition and subtraction
+    X1 <- A + B
+    X2 <- A - B
+    X3 <- -A
+    # scalar multiplication and division
+    X4 <- A * c
+    X5 <- c * A
+    X6 <- A / c
+    # transpose
+    X7 <- t(A)
+    # matrix-matrix and matrix-vector multiplication
+    X8 <- A %*% t(B)
+    X9 <- A %*% v
+    # return
+    return(list(X1 = X1,
+                X2 = X2,
+                X3 = X3,
+                X4 = X4,
+                X5 = X5,
+                X6 = X6,
+                X7 = X7,
+                X8 = X8,
+                X9 = X9))
+  }
+
+```
+```{r, echo = TRUE}
+# main/main.R
+set.seed(1)
+# addition subtraction
+A <- matrix(rnorm(2*4), nrow = 2)
+B <- matrix(rnorm(2*4), nrow = 2)
+c <- 3
+v <- matrix(rnorm(4), nrow = 4)
+output <- matrix_vector_arithmetic(A, B, v, c)
+```
+
+- Next, write these operations in C++ function:
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List matrix_vector_arithmetic_rcpp(
+    Eigen::MatrixXd A, Eigen::MatrixXd B, 
+    Eigen::VectorXd v, double c) {
+  // addition and subtraction
+  Eigen::MatrixXd X1 = A + B;
+  Eigen::MatrixXd X2 = A - B;
+  Eigen::MatrixXd X3 = - A;
+  // scalar multiplication and division
+  Eigen::MatrixXd X4 = A * c;
+  Eigen::MatrixXd X5 = c * A;
+  Eigen::MatrixXd X6 = A / c;
+  // transpose
+  Eigen::MatrixXd X7 = A.transpose();
+  // matrix-matrix and matrix-vector multiplication
+  Eigen::MatrixXd X8 = A * B.transpose();
+  Eigen::VectorXd X9 = A * v;
+  // return 
+  Rcpp::List output = 
+    Rcpp::List::create(
+      Rcpp::Named("X1") = X1,
+      Rcpp::Named("X2") = X2,
+      Rcpp::Named("X3") = X3,
+      Rcpp::Named("X4") = X4,
+      Rcpp::Named("X5") = X5,
+      Rcpp::Named("X6") = X6,
+      Rcpp::Named("X7") = X7,
+      Rcpp::Named("X8") = X8,
+      Rcpp::Named("X9") = X9);
+  return(output);
+}
+```
+- Then, we can check if this yields (almost) the same result with the R function:
+```{r, echo = TRUE}
+# main/main.R
+output_rcpp <- matrix_vector_arithmetic_rcpp(A, B, v, c)
+max(abs(unlist(output) - unlist(output_rcpp)))
+```
+- The output looks like:
+```{r, echo = TRUE}
+# main/main.R
+output_rcpp
+```
+
+
+### The Array Class and Coefficient-wise Operations
+
+- When you want to have coefficient-wise operations, you first use `.array()` method to convert the object to an array and then apply methods for arrays.
+- The resulting array can be assigned to a matrix object implicitly or explicitly by using `.matrix()` method.
+
+- Coefficient-wise multiplication:
+    - `A * B` in R is `A.array() * B. array()` in Eigen.
+
+- Other coefficient-wise math functions:
+    - Absolute value: `A.array().abs()`.
+    - Exponential: `A.array().exp()`.
+    - Logarithm: `A.array().log()`.
+    - Power: `A.array().power(r)`.
+    - For the other methods, refer to the [online document](https://eigen.tuxfamily.org/dox/group__CoeffwiseMathFunctions.html).
+
+- Write functions in R in `R/functions.R` and run in `main/main.R`:
+
+```{r, echo = TRUE}
+# R/functions.R
+coefficientwise_operation <-
+  function(A, B, r) {
+    # coefficient-wise multiplication
+    X1 <- A * B
+    # other coefficient-wise math functions
+    X2 <- abs(A)
+    X3 <- exp(A)
+    X4 <- log(abs(A))
+    X5 <- A^r
+    # return
+    return(list(
+      X1 = X1,
+      X2 = X2,
+      X3 = X3,
+      X4 = X4,
+      X5 = X5
+    ))
+  }
+```
+```{r, echo = TRUE}
+# main/main.R
+# coefficient-wise operations
+r <- 2
+output <- coefficientwise_operation(A, B, r)
+```
+
+- Write C++ function in `src/functions.cpp` and call from `main/main.R`:
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List coefficientwise_operation_rcpp(
+  Eigen::MatrixXd A,
+  Eigen::MatrixXd B,
+  int r
+) {
+  // coefficient-wise multiplication
+  Eigen::MatrixXd X1 = A.array() * B.array();
+  // other coefficient-wise math functions
+  Eigen::MatrixXd X2 = A.array().abs();
+  Eigen::MatrixXd X3 = A.array().exp();
+  Eigen::MatrixXd X4 = A.array().abs().log();
+  Eigen::MatrixXd X5 = A.array().pow(r);
+  // return
+  Rcpp::List output =
+    Rcpp::List::create(
+      Rcpp::Named("X1") = X1,
+      Rcpp::Named("X2") = X2,
+      Rcpp::Named("X3") = X3,
+      Rcpp::Named("X4") = X4,
+      Rcpp::Named("X5") = X5
+    );
+  return(output);
+}
+```
+
+```{r, echo = TRUE}
+output_rcpp <- coefficientwise_operation_rcpp(A, B, r)
+max(abs(unlist(output) - unlist(output_rcpp)))
+output_rcpp
+```
+
+### Solving Linear Least Squares Systems
+
+- It is often required to solve a linear least squares system $A \cdot x = b$.
+- Solving using SVD decomposition:
+
+```
+A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(b)
+```
+
+- Solving using QR decomposition:
+
+```
+A.colPivHouseholderQr().solve(b)
+```
+
+- Write R function in `R/functions.R` and run in `main/main.R`:
+
+```{r, echo = TRUE}
+# R/functions.R
+solve_least_squares <-
+  function(A, B) {
+    x <- solve(A, B)
+    return(x)
+  }
+```
+```{r, echo = TRUE}
+# main/main.R
+set.seed(1)
+A <- matrix(rnorm(4 * 4), nrow = 4)
+B <- matrix(rnorm(4 * 4), nrow = 4)
+output <- solve_least_squares(A, B)
+```
+
+- Write C++ function in `src/functions.cpp` and call in `main/main.R`:
+
+```
+// src/functions.cpp
+// solve least squares using SVD decomposition
+// [[Rcpp::export]]
+Eigen::MatrixXd solve_least_squares_svd(
+  Eigen::MatrixXd A,
+  Eigen::MatrixXd B
+) {
+  Eigen::MatrixXd x = A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(B);
+  return(x);
+}
+// solve least squares using QR decomposition
+// [[Rcpp::export]]
+Eigen::MatrixXd solve_least_squares_qr(
+    Eigen::MatrixXd A,
+    Eigen::MatrixXd B
+) {
+  Eigen::MatrixXd x = A.colPivHouseholderQr().solve(B);
+  return(x);
+}
+```
+
+```{r, echo = TRUE}
+# main/main.R
+output_svd <- solve_least_squares_svd(A, B)
+output_qr <- solve_least_squares_qr(A, B)
+max(abs(output - output_svd))
+max(abs(output - output_qr))
+output_svd
+output_qr
+```
+
+### Accessing to Elements of a Matrix and Vector
+
+- You can access to the size information and elements of a matrix and vector as follows:
+- Sizes: `A.rows()` for row numbers and `A.cols()` for column numbers.
+- Element: `A(i, j)` for ($i + 1$, $j + 1$)-th element.
+- Rows and columns: `A.row(i)` for $i + 1$-th row and `A.col(j)` for $j + 1$-th column.
+
+- Write R function in `R/functions.R` and run in `main/main.R`:
+
+```{r, echo = TRUE}
+# R/functions.R
+access <- 
+  function(A, i, j) {
+    I <- nrow(A)
+    J <- ncol(A)
+    a_ij <- A[i, j]
+    a_i <- A[i, ]
+    a_j <- A[, j]
+    return(
+      list(
+        I = I,
+        J = J,
+        a_ij = a_ij,
+        a_i = a_i,
+        a_j = a_j
+      )
+    )
+  }
+```
+```{r, echo = TRUE}
+# main/main.R
+output <- access(A, 1, 2)
+```
+
+- Write C++ function in `src/functions.cpp` and call in `main/main.R`:
+
+```
+// src/functions.cpp
+// [[Rcpp::export]]
+Rcpp::List access_rcpp(
+    Eigen::MatrixXd A, 
+    int i, 
+    int j
+  ) {
+    int I = A.rows();
+    int J = A.cols();
+    double a_ij = A(i - 1, j - 1);
+    Eigen::VectorXd a_i = A.row(i - 1);
+    Eigen::VectorXd a_j = A.col(j - 1);
+    Rcpp::List output =
+      Rcpp::List::create(
+        I = I,
+        J = J,
+        a_ij = a_ij,
+        a_i = a_i,
+        a_j = a_j
+      );
+    return(output);
+  }```
+
+```{r, echo = TRUE}
+# main/main.R
+output_rcpp <- access_rcpp(A, 1, 2)
+max(abs(unlist(output) - unlist(output_rcpp)))
+output_rcpp 
+```
 

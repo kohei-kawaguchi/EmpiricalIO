@@ -61,6 +61,30 @@ pass_named_list_to_eigen <- function(L) {
     .Call('_EmpiricalIO_pass_named_list_to_eigen', PACKAGE = 'EmpiricalIO', L)
 }
 
+extract_column_from_data_frame <- function(D) {
+    .Call('_EmpiricalIO_extract_column_from_data_frame', PACKAGE = 'EmpiricalIO', D)
+}
+
+matrix_vector_arithmetic_rcpp <- function(A, B, v, c) {
+    .Call('_EmpiricalIO_matrix_vector_arithmetic_rcpp', PACKAGE = 'EmpiricalIO', A, B, v, c)
+}
+
+coefficientwise_operation_rcpp <- function(A, B, r) {
+    .Call('_EmpiricalIO_coefficientwise_operation_rcpp', PACKAGE = 'EmpiricalIO', A, B, r)
+}
+
+solve_least_squares_svd <- function(A, B) {
+    .Call('_EmpiricalIO_solve_least_squares_svd', PACKAGE = 'EmpiricalIO', A, B)
+}
+
+solve_least_squares_qr <- function(A, B) {
+    .Call('_EmpiricalIO_solve_least_squares_qr', PACKAGE = 'EmpiricalIO', A, B)
+}
+
+access_rcpp <- function(A, i, j) {
+    .Call('_EmpiricalIO_access_rcpp', PACKAGE = 'EmpiricalIO', A, i, j)
+}
+
 rcppeigen_hello_world <- function() {
     .Call('_EmpiricalIO_rcppeigen_hello_world', PACKAGE = 'EmpiricalIO')
 }

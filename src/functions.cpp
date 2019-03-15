@@ -89,3 +89,110 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
     Rcpp::Named("W") = W);
   return(output);
 }
+// [[Rcpp::export]]
+Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
+  // pass column x1 of D to Eigen::VectorXd named x1
+  Eigen::VectorXd x1(Rcpp::as<Eigen::VectorXd>(D["x1"]));
+  return(x1);
+}
+
+// [[Rcpp::export]]
+Rcpp::List matrix_vector_arithmetic_rcpp(
+    Eigen::MatrixXd A, Eigen::MatrixXd B, 
+    Eigen::VectorXd v, double c) {
+  // addition and subtraction
+  Eigen::MatrixXd X1 = A + B;
+  Eigen::MatrixXd X2 = A - B;
+  Eigen::MatrixXd X3 = - A;
+  // scalar multiplication and division
+  Eigen::MatrixXd X4 = A * c;
+  Eigen::MatrixXd X5 = c * A;
+  Eigen::MatrixXd X6 = A / c;
+  // transpose
+  Eigen::MatrixXd X7 = A.transpose();
+  // matrix-matrix and matrix-vector multiplication
+  Eigen::MatrixXd X8 = A * B.transpose();
+  Eigen::VectorXd X9 = A * v;
+  // return 
+  Rcpp::List output = 
+    Rcpp::List::create(
+      Rcpp::Named("X1") = X1,
+      Rcpp::Named("X2") = X2,
+      Rcpp::Named("X3") = X3,
+      Rcpp::Named("X4") = X4,
+      Rcpp::Named("X5") = X5,
+      Rcpp::Named("X6") = X6,
+      Rcpp::Named("X7") = X7,
+      Rcpp::Named("X8") = X8,
+      Rcpp::Named("X9") = X9);
+  return(output);
+}
+
+// coefficientwise operations
+// [[Rcpp::export]]
+Rcpp::List coefficientwise_operation_rcpp(
+  Eigen::MatrixXd A,
+  Eigen::MatrixXd B,
+  int r
+) {
+  // coefficient-wise multiplication
+  Eigen::MatrixXd X1 = A.array() * B.array();
+  // other coefficient-wise math functions
+  Eigen::MatrixXd X2 = A.array().abs();
+  Eigen::MatrixXd X3 = A.array().exp();
+  Eigen::MatrixXd X4 = A.array().abs().log();
+  Eigen::MatrixXd X5 = A.array().pow(r);
+  // return
+  Rcpp::List output =
+    Rcpp::List::create(
+      Rcpp::Named("X1") = X1,
+      Rcpp::Named("X2") = X2,
+      Rcpp::Named("X3") = X3,
+      Rcpp::Named("X4") = X4,
+      Rcpp::Named("X5") = X5
+    );
+  return(output);
+}
+
+// solve least squares using SVD decomposition
+// [[Rcpp::export]]
+Eigen::MatrixXd solve_least_squares_svd(
+  Eigen::MatrixXd A,
+  Eigen::MatrixXd B
+) {
+  Eigen::MatrixXd x = A.bdcSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(B);
+  return(x);
+}
+
+// solve least squares using QR decomposition
+// [[Rcpp::export]]
+Eigen::MatrixXd solve_least_squares_qr(
+    Eigen::MatrixXd A,
+    Eigen::MatrixXd B
+) {
+  Eigen::MatrixXd x = A.colPivHouseholderQr().solve(B);
+  return(x);
+}
+
+// accessing to size information and elements of a matrix and vector
+// [[Rcpp::export]]
+Rcpp::List access_rcpp(
+    Eigen::MatrixXd A, 
+    int i, 
+    int j
+  ) {
+    int I = A.rows();
+    int J = A.cols();
+    double a_ij = A(i - 1, j - 1);
+    Eigen::VectorXd a_i = A.row(i - 1);
+    Eigen::VectorXd a_j = A.col(j - 1);
+    Rcpp::List output =
+      Rcpp::List::create(
+        I = I,
+        J = J,
+        a_ij = a_ij,
+        a_i = a_i,
+        a_j = a_j
+      );
+    return(output);
+  }
