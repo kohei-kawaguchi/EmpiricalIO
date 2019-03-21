@@ -3,6 +3,15 @@
 
 // compute coefficient-wise square
 // [[Rcpp::export]]
+Eigen::VectorXd compute_square_rcpp2(
+  Eigen::VectorXd x
+) {
+  Eigen::VectorXd y = x.array().square();
+  return(y);
+}
+
+// compute coefficient-wise square
+// [[Rcpp::export]]
 Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
   Eigen::VectorXd y = x.array().square();
   return(y);

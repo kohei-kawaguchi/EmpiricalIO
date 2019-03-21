@@ -6,6 +6,17 @@
 
 using namespace Rcpp;
 
+// compute_square_rcpp2
+Eigen::VectorXd compute_square_rcpp2(Eigen::VectorXd x);
+RcppExport SEXP _EmpiricalIO_compute_square_rcpp2(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_square_rcpp2(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compute_square_rcpp
 Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x);
 RcppExport SEXP _EmpiricalIO_compute_square_rcpp(SEXP xSEXP) {
@@ -291,6 +302,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_EmpiricalIO_compute_square_rcpp2", (DL_FUNC) &_EmpiricalIO_compute_square_rcpp2, 1},
     {"_EmpiricalIO_compute_square_rcpp", (DL_FUNC) &_EmpiricalIO_compute_square_rcpp, 1},
     {"_EmpiricalIO_pass_numeric_vector_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_numeric_vector_to_rcpp, 1},
     {"_EmpiricalIO_pass_numeric_matrix_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_numeric_matrix_to_rcpp, 1},
