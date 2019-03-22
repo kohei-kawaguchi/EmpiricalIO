@@ -109,7 +109,7 @@
 \usepackage{titling}
 
 % Create subtitle command for use in maketitle
-\newcommand{\subtitle}[1]{
+\providecommand{\subtitle}[1]{
   \posttitle{
     \begin{center}\large#1\end{center}
     }
@@ -125,24 +125,10 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-03-16}
+    \date{Last updated: 2019-03-22}
 
 \usepackage{booktabs}
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}{Lemma}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\newtheorem{corollary}{Corollary}[chapter]
-\newtheorem{proposition}{Proposition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{exercise}{Exercise}[chapter]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem*{solution}{Solution}
 \begin{document}
 \maketitle
 
@@ -7397,6 +7383,1079 @@ Likelihood}\label{equilibrium-selection-and-likelihood}
   used in the empirical studies.
 \end{itemize}
 
+\chapter{Dynamic Decision Model}\label{dynamics}
+
+\section{Motivations}\label{motivations-4}
+
+\begin{itemize}
+\tightlist
+\item
+  The model is \textbf{dynamic} if there is an \textbf{endogenous state
+  variable}, a state variable that is affected by an action of a player
+  in the past.
+\item
+  There are many cases where the decision makers have to take into
+  account the dynamic effects of their actions.
+\item
+  \textbf{Payoff linkages}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Storable good: Next week's demand for a detergent depends on how
+    many bottles consumers purchase and consume this week. The latter
+    depends on this week's price and the price schedule of the
+    detergent. The stock of the detergent consumers hold is an
+    endogenous state variable.
+  \item
+    Learning by doing: The productivity of a firm next year can be
+    higher if the firm produced more this year because the firm can
+    learn from the experience. The cummulative production level is an
+    endogenous state variable.
+  \end{itemize}
+\item
+  \textbf{Information linkages}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Uncertainty about the quality: If a consumer is uncertain about the
+    quality of a product but can learn from experiencing the product,
+    next seaons's demand for the product depends on how many consumers
+    purchace and experience the product this season. The latter depends
+    on this season's price and the price schedule of the product.
+  \end{itemize}
+\item
+  \textbf{Strategic linkages}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Tacit collusion: If a firm deviates from the collusive price, the
+    price war will start. Then, the history of the prices is the
+    endogenous state variable.
+  \end{itemize}
+\end{itemize}
+
+\section{Single-Agent Model}\label{single-agent-model}
+
+\subsection{Setting}\label{setting}
+
+\begin{itemize}
+\tightlist
+\item
+  This model originates at \citet{rust_optimal_1987}, while the setting
+  and the notation follows \citet{pesendorfer_asymptotic_2008}.
+\item
+  We start from a simple set-up:
+\item
+  Single agent.
+\item
+  Infinite-horizon discrete time.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Time is \(t = 1, 2, \cdots, \infty\).
+  \end{itemize}
+\item
+  Finitely many choices.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    There are \(K + 1\) actions \(A = \{0, 1, \cdots, K\}\).
+  \end{itemize}
+\item
+  Finite state space.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    There are \(L\) states \(S = \{1, \cdots, L\}\).
+  \end{itemize}
+\item
+  Markovian state transition.
+\end{itemize}
+
+\subsection{Timing of the Model}\label{timing-of-the-model}
+
+\begin{itemize}
+\tightlist
+\item
+  At period \(t\):
+\item
+  State \(s_t \in S\) is publicly observed.
+\item
+  Choice-specific profitability shocks
+  \(\epsilon_t \in \mathbb{R}^{K + 1}\) are realized according to
+  \(F(\cdot|s_t)\) and privately observed.
+\item
+  Choice \(a_t \in A\) is made.
+\item
+  State evolves according to a transition probability:
+
+  \begin{equation}
+  g(a, s, s') \equiv \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
+  \end{equation}
+\item
+  Thus, the transition law only depends on today's state and action, but
+  not on the past history.
+\end{itemize}
+
+\begin{equation}
+G \equiv 
+\begin{pmatrix}
+g(0, 1, 1) & \cdots & g(0, 1, L)\\
+\vdots & & \vdots \\
+g(0, L, 1) & \cdots & g(0, L, L)\\
+& \vdots & \\
+g(K, 1, 1) & \cdots & g(K, 1, L)\\
+\vdots & & \vdots \\
+g(K, L, 1) & \cdots & g(K, L, L)\\
+\end{pmatrix}.
+\end{equation}
+
+\subsection{Period Payoff}\label{period-payoff}
+
+\begin{itemize}
+\tightlist
+\item
+  When the state is \(s_t\), action is \(a_t\), and the profitability
+  shocks are \(\epsilon_t\), the period payoff is:
+
+  \begin{equation}
+  \pi(a_t, s_t) + \sum_{k = 1}^K \epsilon_{tk} 1\{a_t = k\},
+  \end{equation}
+\item
+  \(\pi(a_t, s_t)\) is the mean \textbf{choice-specific period payoff}.
+\item
+  \(\epsilon_t\) is assuemd to be i.i.d. across times and is drawn from
+  \(F\).
+\item
+  Let: \[
+  \epsilon_{t a_t} \equiv \sum_{k = 1}^K \epsilon_{tk} 1\{a_t = k\},
+  \] be the choice-specific profitability shock.
+\item
+  Let \(\Pi\) summarize the choice-specific period payoffs at each
+  state:
+
+  \begin{equation}
+  \Pi =
+  \begin{pmatrix}
+  \pi(0, 1)\\
+  \vdots \\
+  \pi(0, L)\\
+  \vdots \\
+  \pi(K, 1)\\
+  \vdots \\
+  \pi(K, L)\\
+  \end{pmatrix}.
+  \end{equation}
+\item
+  The \textbf{payoff} is the discounted sum of future payoffs with
+  discount factor \(\beta < 1\).
+\item
+  \(\Pi\) is one of the parameters of interest.
+\end{itemize}
+
+\subsection{Markovian Framework}\label{markovian-framework}
+
+\begin{itemize}
+\tightlist
+\item
+  The strategy is in general a mapping from the \textbf{entire} history
+  to the action set.
+\item
+  We restrict the set of possible strategies to \textbf{Markovian
+  strategies} \(a(\epsilon_t, s_t)\) that only depends on the latest
+  realization of states \(\epsilon_t, s_t\), i.e., the behavior does not
+  depend on the past states, conditional on today's states.
+\item
+  The Markovian strategy is introduced by \citet{maskin_theory_1988-1}.
+  But their model is slightly different from the current mode. They
+  considered an oligopoly model in which only one firm can move at one
+  time and his/her action depends only on the rival's latest move. The
+  current single-agent model can be regarded as a version of
+  \citet{maskin_theory_1988-1}'s model such that the rival is replaced
+  with the nature.
+\end{itemize}
+
+\subsection{Belief}\label{belief}
+
+\begin{itemize}
+\tightlist
+\item
+  When a play makes a decision, s/he should have some belief about the
+  future \(\epsilon_t, s_t\), and \(a_t\).
+\item
+  We usually assume the \textbf{rational expectation}: the play knows
+  the equilibrium distribution of these future variables and use it as
+  his/her belief.
+\item
+  The distribution of \(\epsilon_t\) and \(s_t\) is believed to follow
+  \(F\) and \(G\).
+\item
+  Let \(\sigma(a|s)\) be the player's belief about the possibility of
+  taking \(a\) when the realized state is \(s\), which may or may not
+  coincide with the equilibrium probability.
+\item
+  Let \(\sigma\) stack them up as:
+
+  \begin{equation}
+  \sigma = 
+  \begin{pmatrix}
+  \sigma(0|1)\\
+  \vdots\\
+  \sigma(0|L)\\
+  \vdots\\ 
+  \sigma(K|1)\\
+  \vdots\\ 
+  \sigma(K|L)
+  \end{pmatrix}.
+  \end{equation}
+\end{itemize}
+
+\subsection{Decision Problem}\label{decision-problem}
+
+\begin{itemize}
+\tightlist
+\item
+  The agent chooses strategy \(a(\cdot, \cdot)\) such that:
+
+  \begin{equation}
+  \begin{split}
+  \max_{a(\cdot, \cdot)} & \pi[a(\epsilon_0, s_0), s_0] + \epsilon_{0 a(\epsilon_0, s_0)}\\
+  &+ \mathbb{E}\Bigg\{ \sum_{t = 1}^\infty \beta^t \Bigg[\pi(a_t, s_t) + \epsilon_{t a(\epsilon_t, s_t)}\Bigg]\Bigg|s_0, a(\epsilon_0, s_0)\Bigg\}
+  \end{split}
+  \end{equation}
+\item
+  The expectation is taken with respect to his/her belief.
+\end{itemize}
+
+\subsection{Value Function and Ex-ante Value
+Function}\label{value-function-and-ex-ante-value-function}
+
+\begin{itemize}
+\tightlist
+\item
+  When the belief about the future behavior is \(\sigma\), then the
+  value function associated with the belief is defined as:
+
+  \begin{equation}
+  \begin{split}
+  &V(\sigma, s_0, \epsilon_0)\\
+  &= \sum_{a \in A} \sigma(a|s_0) \Bigg\{\pi(a, s_0) + \epsilon_{0a} + \mathbb{E}\Bigg[ \sum_{t = 1}^\infty \beta^t \sum_{a \in A}\sigma(a|s_t)\Bigg(\pi(a, s_t) + \epsilon_{ta}\Bigg)\Bigg|s_0, a\Bigg] \Bigg\}.
+  \end{split}
+  \end{equation}
+\item
+  It has the recursive structure as:
+
+  \begin{equation}
+  \begin{split}
+  &V(\sigma, s_0, \epsilon_0)\\
+  & = \sum_{a \in A} \sigma(a|s_0) \Bigg\{\pi(a, s_0) + \epsilon_{0a} + \beta \mathbb{E}\Bigg[V(\sigma, s_1, \epsilon_1)\Bigg|s_0, a\Bigg]\Bigg\}\\
+  & = \sum_{a \in A} \sigma(a|s_0) \Bigg\{\pi(a, s_0) + \epsilon_{0a} + \beta \sum_{s_1 \in S} V(\sigma, s_1, \epsilon_1)g(a, s_0, s_1)\Bigg\}.
+  \end{split}
+  \end{equation}
+\item
+  \(V(\sigma, s, \epsilon)\) is the value function after the
+  profitablity shock \(\epsilon\) is realized.
+\item
+  On the other hand, we define the \textbf{ex-ante value function} under
+  belief \(\sigma\) as:
+
+  \begin{equation}
+  V(\sigma, s) = \mathbb{E}\{V(\sigma, s, \epsilon)|s\}.
+  \end{equation}
+\end{itemize}
+
+\subsection{Choice-specific Value
+Function}\label{choice-specific-value-function}
+
+\begin{itemize}
+\tightlist
+\item
+  When the current state and profitability shocks are \(s\) and
+  \(\epsilon\) and the belief about the future behavior is \(\sigma\),
+  we define the \textbf{choice-specific} value function for an agent in
+  a period as follows:
+
+  \begin{equation}
+  \begin{split}
+  V(\sigma, a, s, \epsilon) &= \pi(a , s) + \epsilon_a + \beta \sum_{s' \in S} V(\sigma, s') g(a, s, s')\\
+   &= \underbrace{\pi(a , s) + \beta \sum_{s' \in S} V(\sigma, s') g(a, s, s')}_{v(\sigma, a, s)} + \epsilon_a.
+  \end{split}
+  \end{equation}
+\item
+  We call \(v(\sigma, a, s)\) be the \textbf{choice-specific} mean value
+  function with belief \(\sigma\).
+\item
+  \(V(\sigma, s, \epsilon)\), \(V(\sigma, s)\),
+  \(V(\sigma, a, s, \epsilon)\), and \(v(\sigma, a, s)\) are all
+  different, abusing the notation.
+\end{itemize}
+
+\subsection{Optimality Condition}\label{optimality-condition}
+
+\begin{itemize}
+\tightlist
+\item
+  When the state and profitability shocks are \(s\) and \(\epsilon\),
+  \(a\) is the optimal choice if and only if:
+
+  \begin{equation}
+  v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A.
+  \end{equation}
+\item
+  This condition looks similar to the optimality condition in the static
+  discrete choice model.
+\item
+  The only difference from the static discrete choice model is that the
+  mean indirect utility is the sum of the choice-specific mean profit
+  and the discounted continuation value.
+\item
+  Thus, as long as the mean choice-specific value function for given
+  parameters can be computed, the following simulation and estimation
+  procedure will be similar to the static discrete chocie model.
+\end{itemize}
+
+\subsection{Optimal Conditional Choice
+Probability}\label{optimal-conditional-choice-probability}
+
+\begin{itemize}
+\tightlist
+\item
+  From the previous optimality condition, we can define the
+  \textbf{optimal conditional choice probability} with belief \(\sigma\)
+  as:
+
+  \begin{equation}
+  \begin{split}
+  p(a|s, \sigma) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
+  &= \int \prod_{a' \neq a} 1\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}\} dF\\
+  &\equiv \Psi(\sigma, a, s).
+  \end{split}
+  \end{equation}
+\item
+  \(\Psi(\sigma, a, s)\) maps the tuple of action, state and belief to
+  the optimal conditional choice probability of the action given the
+  state and the belief.
+\end{itemize}
+
+\subsection{Optimality Condition}\label{optimality-condition-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(p\) and \(\Psi\) be:
+
+  \begin{equation}
+  p = 
+  \begin{pmatrix}
+  p(0|1)\\
+  \vdots\\
+  p(0|L)\\
+  \vdots\\
+  p(K|1)\\
+  \vdots\\
+  p(K|L)
+  \end{pmatrix},
+  \end{equation}
+\end{itemize}
+
+\begin{equation}
+\Psi(\sigma) = 
+\begin{pmatrix}
+\Psi(\sigma, 0, 1)\\
+\vdots\\
+\Psi(\sigma, 0, L)\\
+\vdots\\
+\Psi(\sigma, K, 1)\\
+\vdots\\
+\Psi(\sigma, K, L)
+\end{pmatrix}.
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  The optimality condition with respect to the conditional choice
+  probabilities given the belief is written as:
+
+  \begin{equation}
+  p = \Psi(\sigma).
+  \end{equation}
+\item
+  The rational expectation hypothesis requires that the belief about the
+  future behavior coincides with the optimal conditional choice
+  probability, i.e.:
+
+  \begin{equation}
+  p = \Psi(p).
+  \end{equation}
+\item
+  The optimal conditional choice probability under the rational
+  expectation hypothesis is characterized as a fixed point of mapping
+  \(\Psi\).
+\end{itemize}
+
+\subsection{Mapping from a Conditional Choice Probability to an Ex-ante
+Value
+Function}\label{mapping-from-a-conditional-choice-probability-to-an-ex-ante-value-function}
+
+\begin{itemize}
+\tightlist
+\item
+  Inserting \(\sigma = p\), we obtain a mapping from an optimal
+  conditional choice probability to an ex-ante value function such as:
+
+  \begin{equation}
+  \begin{split}
+  V(s) &= \mathbb{E}\{V(s, \epsilon)|s\}\\
+  &= \mathbb{E}\left[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}p(a|s_t)\left[\pi(a, s_t) + \epsilon_{ta}\right]\Bigg|s_0, a\right]\\
+  &\equiv \varphi(p, s).
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Mapping from an Ex-ante Value Function to an Optimal
+Conditional Choice
+Probability}\label{mapping-from-an-ex-ante-value-function-to-an-optimal-conditional-choice-probability}
+
+\begin{itemize}
+\tightlist
+\item
+  On the other hand, we can derive a mapping from an ex-ante value
+  function to an optimal conditional choice probability such as:
+
+  \begin{equation}
+  \begin{split}
+  p(a|s) = \mathbb{P}\Bigg\{&\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_a \ge\\
+  &\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}\\
+  &\equiv \Lambda(V, s).
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{The Optimality Conditions}\label{the-optimality-conditions}
+
+\begin{itemize}
+\tightlist
+\item
+  Composing these two mappings, we can write down the optimality
+  condition as the fixed-point for ex-ante value functions:
+
+  \begin{equation}
+  V = \varphi(p) = \varphi[\Lambda(V)] \equiv \Phi(V).
+  \end{equation}
+\item
+  Or as the fixed-point for the optimal conditional choice
+  probabilities: \[
+  p = \Lambda(V) = \Lambda[\varphi(p)] \equiv \Psi(p).
+  \]
+\end{itemize}
+
+\subsection{Fixed-point Algorithm}\label{fixed-point-algorithm}
+
+\begin{itemize}
+\tightlist
+\item
+  If \(\epsilon\) is drawn from an i.i.d. type-I extreme value
+  distribution, we can derive the mapping from the ex-ante value
+  function to the conditional choice probability in the closed form:
+
+  \begin{equation}
+  \begin{split}
+  \Lambda(V, s) &= \mathbb{P}\{\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_{a} \ge\\
+   & \pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A\}\\
+  &=\frac{\exp[\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s')]}{\sum_{a' \in A} \exp[\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s')]}.
+  \end{split}
+  \end{equation}
+\item
+  Moreover, we can also derive the mapping from the ex-ante value
+  function to the ex-ante value function as follows:
+
+  \begin{equation}
+  \begin{split}
+  \Phi(V) &= \mathbb{E}\{\max_{a \in A} \pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_{a}\} \\
+  &=\log \Bigg\{\sum_{a \in A} \exp[\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s')] \Bigg\} + \gamma,
+  \end{split}
+  \end{equation}
+
+  where \(\gamma\) is Euler's constant.
+\item
+  \(\Phi\) is shown to be a contraction mapping as long as
+  \(\beta < 1\).
+\item
+  Thus, we can solve the model by starting from an arbitrary ex-ante
+  value function \(V\) and by iterating the mapping \(\Phi\) until the
+  change in the ex-ante value functions is below a certain threshold.
+\item
+  \citet{rust_optimal_1987} gives the result for more general
+  distributional assumption for \(\epsilon\).
+\end{itemize}
+
+\section{Identification}\label{identification}
+
+\subsection{Unidentification Result}\label{unidentification-result}
+
+\begin{itemize}
+\tightlist
+\item
+  The identification of the single-agent dynamic decision model is
+  studied in \citet{magnac_identifying_2002}.
+\item
+  The model primitives are \((\Pi, F, \beta, G)\).
+\item
+  The transition probability \(G\) is directly identified from the data
+  because \(a, s, s'\) are observed by econometrician.
+\item
+  It is known that the model is in general not identified.
+\item
+  The discount factor \(\beta\) is hard to identify.
+\item
+  It determines the weights between the current and future profits.
+\item
+  Suppose that a firm makes a large investment.
+\item
+  This may be because the firm overweights the future (high \(\beta\))
+  or because the investment cost is low (\(\pi\) is such that the
+  investment cost is low).
+\item
+  We cannot distinguish between these two possibilities.
+\item
+  To identify it, you need some instruments that changes the future
+  return to the investment but does not affect today's payoff.
+\end{itemize}
+
+\subsection{\texorpdfstring{Identification when \(\beta\) and \(F\) is
+Known}{Identification when \textbackslash{}beta and F is Known}}\label{identification-when-beta-and-f-is-known}
+
+\begin{itemize}
+\tightlist
+\item
+  We often fix \(\beta\) and assume the distribution \(F\) and only
+  consider the identification of \(\Pi\).
+\item
+  Note that the optimal conditional choice probability is directly
+  identified from the data because \(s\) and \(a\) are observed.
+\item
+  Then the optimality condition under the rational expectation
+  hypothesis gives the following \(KL\) system of equations: \[
+  p = \Psi(p).
+  \]
+\item
+  On the other hand, the dimension of parameter \(\Pi\) is in general
+  \((K + 1)L\) (the mean profit at a state and an action).
+\item
+  One possible restriction is to assume that \(\pi(0, s)\) are known for
+  any \(s\). For example, assume that \(a = 0\) means that the firm is
+  inactive and so \(\pi(0, s) = 0\).
+\end{itemize}
+
+\subsection{Crucial Assumptions for the
+Argument}\label{crucial-assumptions-for-the-argument}
+
+\begin{itemize}
+\tightlist
+\item
+  The following assumptions are crucial for the above argument.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Conditional i.i.d. Unobservable}: The profit shocks that are
+  unobservable to econometrician are i.i.d. conditional on the
+  observable state.
+\item
+  \textbf{Conditional Independence of Future Observable State}:
+
+  \begin{equation}
+  \mathbb{P}\{s_{t + 1}|s_t, a_t, \epsilon_t\} = \mathbb{P}\{s_{t + 1}|s_t, a_t\}.
+  \end{equation}
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  If the first assumption is violated, the choice probability cannot be
+  written as a function only of the observable state of the period. If
+  \(\epsilon_t\) is serially correlated, to integrate over
+  \(\epsilon_{t + 1}\) we have to condition on \(\epsilon_t\). Then, we
+  may not be able to identify the optimal conditional choice probability
+  from the data/
+\item
+  If the second assumption is violated, for the same reason, we may not
+  be able to identify the state transition law.
+\item
+  \citet{kasahara_nonparametric_2009} proves the identification when the
+  first assumption is violated: there is a player-specific fixed effect
+  that has a finite-mixture structure.
+\end{itemize}
+
+\section{Estimation by Nested Fixed-point
+Algorithm}\label{estimation-by-nested-fixed-point-algorithm}
+
+\subsection{Nested Fixed-Point
+Algorithm}\label{nested-fixed-point-algorithm}
+
+\begin{itemize}
+\tightlist
+\item
+  A straightforward way of estimating the single-agent dynamic model is
+  to solve the optimal conditional choice probability by a fixed-point
+  algorithm for each parameter and evaluate the likelihood function
+  using the optimal conditional choice probability.
+\item
+  Because a fixed-point algorithm is nested in the parameter search,
+  \citet{rust_optimal_1987} named it the \textbf{nested fixed-point
+  algorithm}.
+\end{itemize}
+
+\subsection{Solving for the Ex-ante Value
+Function}\label{solving-for-the-ex-ante-value-function}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(\theta_1\) be the parameters that determine \(\Pi\),
+  \(\theta_2\) be the parameters that determine \(G\), and
+  \(\theta = (\theta_1', \theta_2')'\).
+\item
+  The ex-ante value function is a fixed point of a contraction mapping
+  \(\Phi^\theta\) such that:
+
+  \begin{equation}
+  \begin{split}
+  \Phi^\theta(p) &=\log \Bigg\{\sum_{a \in A} \exp[\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} V(s') g^{\theta_2}(a, s, s')] \Bigg\} + \gamma,
+  \end{split}
+  \end{equation}
+\item
+  Let \(V^{\theta (0)}\) be an arbitrary initial function and define
+  \(V^{\theta (r + 1)}\) by: \[
+  V^{\theta (r + 1)} = \Phi^{\theta}(V^{\theta (r)}).
+  \]
+\item
+  We iterate this until \(|V^{\theta (r + 1)} - V^{\theta (r)}|\) is
+  below a certain threshold.
+\item
+  Let \(V^{^\theta (\ast)}\) be the solution to the fixed-point
+  algorithm.
+\item
+  Then, we can derive the optimal choice probability by:
+
+  \begin{equation}
+  \begin{split}
+  p^{\theta (\ast)} = \varphi\left[V^{\theta (\ast)}\right].
+  \end{split}
+  \end{equation}
+\item
+  These are the ex-ante value function and optimal conditional choice
+  probabilities under parameters \(\theta\).
+\end{itemize}
+
+\subsection{Estimation by Nested Fixed-Point
+Algorithm}\label{estimation-by-nested-fixed-point-algorithm-1}
+
+\begin{itemize}
+\tightlist
+\item
+  The previous algorithm allows us to derive the optimal choice
+  probability given parameters.
+\item
+  Then it is straight forward to evaluate the likelihood function given
+  observations \(\{a_t, s_t\}_{t = 1}^T\) by:
+
+  \begin{equation}
+  \begin{split}
+  &L(\theta; \{a_t, s_t\}_{t = 1}^T) =\prod_{t = 1}^T \prod_{a_t = 0}^1 p^{\theta (\ast)}(a_t|s_t)^{a_t} g^{\theta_2} (s_{t + 1}|s_t, a_t).
+  \end{split}
+  \end{equation}
+
+  and so the log likelihood function is:
+
+  \begin{equation}
+  \begin{split}
+  &l(\theta; \{a_t, s_t\}_{t = 1}^T)\\
+  &=\sum_{t = 1}^T \sum_{a_t = 0}^1 a_t \log [p^{\theta (\ast)}(a_t|s_t)] + \sum_{t = 1}^T \log [g^{\theta_2} (s_{t + 1}|s_t, a_t)].
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Full and Partial
+Likelihood}\label{full-and-partial-likelihood}
+
+\begin{itemize}
+\tightlist
+\item
+  We can find \(\theta\) that maximizes the full log likelihood
+  \(l(\theta; \{a_t, s_t\}_{t = 1}^T)\) to estimate the model.
+\item
+  However, the convergence takes longer as the number of parameters are
+  larger.
+\item
+  Parameters that govern the state transition is estimated by finding
+  \(\theta_2\) that maximizes the partial likelihood:
+
+  \begin{equation}
+  \hat{\theta}_2 = \text{argmax}_{\theta_2} \sum_{t = 1}^T \log g^{\theta_2}(s_{t + 1}|s_t, a_t).
+  \end{equation}
+\item
+  Then we can estimate \(\theta_1\) by finding \(\theta_1\) that
+  maximizes the partial likelihood:
+
+  \begin{equation}
+  \hat{\theta}_1 = \text{argmax}_{\theta_1} \sum_{t = 1}^T \sum_{a_t = 0}^1 a_t \log [p^{(\theta_1, \hat{\theta}_2) (\ast)}(a_t|s_t)].
+  \end{equation}
+\item
+  This causes some efficiency loss but speeds up the computation,
+  because we can estimate \(\theta_2\) without solving the fixed-point.
+\end{itemize}
+
+\section{Estimation by Conditional Choice Probability (CCP)
+Approach}\label{estimation-by-conditional-choice-probability-ccp-approach}
+
+\subsection{CCP Approach}\label{ccp-approach}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Conditional Choice Probability (CCP)} approach suggested by
+  \citet{hotz_conditional_1993} significantly reduces the computation
+  time at the cost of some efficiency.
+\item
+  This approach can be applied to many other settings.
+\item
+  The idea is:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    We can identify the optimal conditional choice probability
+    \(p^\theta\) directly from the data. This is a reduced-form
+    parameter (cf. \(\theta\) is the structural parameters) of the
+    model.
+  \item
+    The optimality condition \(p^\theta = \Psi^\theta(p^\theta)\) can be
+    regarded as a moment condition.
+  \end{itemize}
+\item
+  In the nested fixed-point algorithm, we find \(p^\theta\) that solves
+  the optimality condition given \(\theta\) to compute the likelihood.
+\item
+  In CCP approach, we find \(\theta\) that solves the optimality
+  condition given \(p^\theta\) that is identified directly from the
+  data.
+\end{itemize}
+
+\subsection{First Step: Estimating CCP}\label{first-step-estimating-ccp}
+
+\begin{itemize}
+\tightlist
+\item
+  The first step of the CCP approach is to estimate the conditional
+  choice probability and transition probability.
+\item
+  If everything is discrete, it is nothing but the empirical
+  distribution:
+
+  \begin{equation}
+  \begin{split}
+  &\hat{p}(a|s) = \frac{\sum_{i = 1}^N \sum_{t = 1}^T 1\{a_{it} = a, s_{it} = s\}}{\sum_{i = 1}^N \sum_{t = 1} 1\{s_{it} = s\}},\\
+  &\hat{g}(s'|s, a) = \frac{\sum_{i = 1}^N \sum_{t = 1}^T 1\{s_{i, t + 1} = s', s_{it} = s, a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1} 1\{s_{it} = s, a_{it} = a\}}.
+  \end{split}
+  \end{equation}
+\item
+  We can of course use a parametric model.
+\item
+  For example, we may estimate the conditional choice probability with a
+  multinomial logit models:
+
+  \begin{equation}
+  \begin{split}
+  &\hat{p}(a|s) = \frac{\exp[\hat{\beta} a + \hat{\gamma} s)]}{\sum_{a' \in A} \exp[\hat{\beta} a' + \hat{\gamma} s)]}.
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{First Step: Estimating
+CCP}\label{first-step-estimating-ccp-1}
+
+\begin{itemize}
+\tightlist
+\item
+  What is the estimated CCP \(\hat{p}\)?
+\item
+  This is the optimal conditional choice probability \textbf{at a
+  particular equilibrium} under a true parmaeter.
+\item
+  If parameter changes, then the equilibrium changes. Then, the
+  conditional choice probability also changes.
+\item
+  The reduced-form parameter \(\hat{p}\) embodies the information about
+  behaviors under the actual equilibrium but does not tell anything
+  about behaviors under hypothetical equilibria.
+\item
+  Therefore, \(\hat{p}\) is not sufficient to make counterfactual
+  prediction.
+\end{itemize}
+
+\subsection{Second Step: Estimating Structural
+Parameters}\label{second-step-estimating-structural-parameters}
+
+\begin{itemize}
+\tightlist
+\item
+  Among structural parameters \(\theta\), parameters in the transition
+  probability \(\theta_2\) is already identified from the data in the
+  first step.
+\item
+  How do we identify \(\theta_1\), parameters in the profit function
+  \(\pi\)?
+\item
+  If we fix \(\theta_1\), in theory, we can compute:
+
+  \begin{equation}
+  \begin{split}
+  \hat{V}^{(\theta_1, \hat{\theta}_2)}(s) = \varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p}, s) = \mathbb{E}\Bigg[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}\hat{p}(a|s_t)\Bigg(\pi^{\theta_1}(a, s_t) + \epsilon_{ta}\Bigg)\Bigg|s\Bigg],\\
+  \end{split}
+  \end{equation}
+
+  although the expectation may not have a closed form solution.
+\end{itemize}
+
+\subsection{Second Step: Estimating Structural
+Parameters}\label{second-step-estimating-structural-parameters-1}
+
+\begin{itemize}
+\tightlist
+\item
+  In addition, if we fix \(\theta_1\), in theory, we can compute:
+
+  \begin{equation}
+  \begin{split}
+  &\Lambda^{(\theta_1, \hat{\theta}_2)}(\hat{V}^{(\theta_1, \hat{\theta}_2)}, a, s)\\
+  &\equiv \mathbb{P}\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a\\
+  &\ge \pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}
+  \end{split}
+  \end{equation}
+\item
+  Combining these two mappings, we can compute:
+
+  \begin{equation}
+  \Psi^{(\theta_1, \hat{\theta_2})}(\hat{p}) = \Lambda^{(\theta_1, \hat{\theta}_2)}[\varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p})].
+  \end{equation}
+\item
+  Then, we can find \(\theta_1\) that minimizes the distance between
+  \(\hat{p}\) and \(\Psi^{(\theta_1, \hat{\theta_2})}(\hat{p})\) to find
+  \(\theta_1\) that is consistent with the observed conditional choice
+  probabilities.
+\end{itemize}
+
+\subsection{Type-I Extreme Value
+Distribution}\label{type-i-extreme-value-distribution}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\Lambda\) and \(\varphi\) do no have closed form expressions in
+  general.
+\item
+  Exception is the case where the profitability shocks \(\epsilon_{ta}\)
+  is drawn from i.i.d. type-I extreme value distribution.
+\item
+  First, we know that \(\Lambda\) can be written as:
+
+  \begin{equation}
+  \begin{split}
+  &\Lambda^{(\theta_1, \hat{\theta}_2)}(\hat{V}^{(\theta_1, \hat{\theta}_2)}, a, s)\\
+  &\equiv \mathbb{P}\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a \ge\\
+  &\pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}\\
+  &=\frac{\exp\Big[\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S}\hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s')\Big]}{\sum_{a' = 0}^K \exp\Big[\pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') \Big]}.
+  \end{split}
+  \end{equation}
+\item
+  Second, we can show that \(\varphi\) has a closed form solution:
+
+  \begin{equation}
+  \begin{split}
+  &\varphi^{(\theta_1, \hat{\theta}_2)}(p, s)\\
+  &\equiv \mathbb{E}\{V(s, \epsilon)|s\}\\
+  &= \mathbb{E}\Bigg[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}\hat{p}(a|s_t)\Bigg(\pi^{\theta_1}(a, s_t) + \epsilon_{ta}\Bigg)\Bigg|s\Bigg]\\
+  &=\mathbb{E}\Bigg[\sum_{a \in A}\hat{p}(a|s)\Bigg(\pi^{\theta_1}(a, s) + \epsilon_{a} + \beta \sum_{s' \in S} \mathbb{E}\{\hat{V}^{(\theta_1, \hat{\theta}_2)}(s, \epsilon)|s'\} g^{\hat{\theta}_2}(a, s, s')  \Bigg)\Bigg|s\Bigg]\\
+  &=\mathbb{E}\Bigg[\sum_{a \in A}\hat{p}(a|s)\Bigg(\pi^{\theta_1}(a, s) + \epsilon_{a} + \beta \sum_{s' \in S} \varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p}, s') g^{\hat{\theta}_2}(a, s, s')  \Bigg)\Bigg|s\Bigg]\\
+  &=\sum_{a \in A}\hat{p}(a|s)\Bigg(\pi^{\theta_1}(a, s) + \mathbb{E}[\epsilon_{a}|s, a] + \beta \sum_{s' \in S} \varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p}, s') g^{\hat{\theta}_2}(a, s, s')  \Bigg)
+  \end{split}
+  \end{equation}
+\item
+  We need closed form expression of \(\mathbb{E}[\epsilon_{a}|s, a]\):
+  the expected value of choice\(-a\) specific profitability shock
+  \textbf{conditional on that state is \(s\) and \(a\) is optimal}
+  (\(\neq\) unconditional mean of \(\epsilon_a\)).
+\end{itemize}
+
+\subsection{Type-I Extreme Value
+Distribution}\label{type-i-extreme-value-distribution-1}
+
+\begin{itemize}
+\tightlist
+\item
+  If \(\epsilon_a\) is drawn from i.i.d. type-I extreme value
+  distribution, tt can be shown that:
+
+  \begin{equation}
+  \begin{split}
+  \mathbb{E}[\epsilon_{a}|s, a] &= \hat{p}(a|s)^{-1} \int \epsilon_a 1\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a \ge\\
+  &\pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}dF(e)\\
+  &= \gamma - \ln \hat{p}(a|s),
+  \end{split}
+  \end{equation}
+
+  where \(\gamma\) is Euler's constant:
+
+  \begin{equation}
+  \gamma \equiv \lim_{n \to \infty} \Bigg(\sum_{k = 1}^n \frac{1}{k} - \ln(n) \Bigg) \approx 0.57721...
+  \end{equation}
+\end{itemize}
+
+\subsection{Type-I Extreme Value
+Distribution}\label{type-i-extreme-value-distribution-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Inserting this into the previous expression, we get:
+
+  \begin{equation}
+  \begin{split}
+  \varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p}, s) = \sum_{a \in A}\hat{p}(a|s)\Bigg(\pi^{\theta_1}(a, s) + \gamma - \ln \hat{p}(a|s) + \beta \sum_{s' \in S} \varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p}, s') g^{\hat{\theta}_2}(a, s, s')  \Bigg).
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Type-I Extreme Value
+Distribution}\label{type-i-extreme-value-distribution-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Write the continuation value in a matrix form:
+
+  \begin{equation}
+  \begin{split}
+  & \sum_{s' \in S} \varphi^{(\theta_1, \hat{\theta}_2)}(p, s') g^{\hat{\theta}_2}(a, s, s')\\
+  & = [g^{\hat{\theta}_2}(a, s, 1), \cdots, g^{\hat{\theta}_2}(a, s, L)] 
+  \underbrace{\begin{bmatrix}
+  \varphi^{(\theta_1, \hat{\theta}_2)}(p, 1)\\
+  \vdots\\
+  \varphi^{(\theta_1, \hat{\theta}_2)}(p, L).
+  \end{bmatrix}}_{\equiv \varphi^{(\theta_1, \hat{\theta}_2)}(p)}
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Type-I Extreme Value
+Distribution}\label{type-i-extreme-value-distribution-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Write the ex-ante value function in a matrix form:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+&\varphi^{(\theta_1, \hat{\theta}_2)}(p, s)\\
+&=\underbrace{[p(0|s), \cdots, p(K|s)]}_{\equiv p(s)'} \\
+&\times\begin{bmatrix}
+\underbrace{\begin{bmatrix}
+\pi^{\theta_1}(0, s)\\
+\vdots\\
+\pi^{\theta_1}(K, s)
+\end{bmatrix}}_{\equiv \pi^{\theta_1}(s)}
++ \gamma
+-
+\underbrace{\begin{bmatrix}
+\ln p(0|s)\\
+\vdots\\
+\ln p(K|s)
+\end{bmatrix}}_{\equiv \ln p(s)}
++\beta
+\underbrace{\begin{bmatrix}
+g^{\hat{\theta}_2}(0, s, 1), \cdots, g^{\hat{\theta}_2}(0, s, L)\\
+\vdots\\
+g^{\hat{\theta}_2}(K, s, 1), \cdots, g^{\hat{\theta}_2}(K, s, L)
+\end{bmatrix}}_{\equiv G^{\hat{\theta}_2}(s)}
+\varphi^{(\theta_1, \hat{\theta}_2)}(p)
+\end{bmatrix}\\
+&=p(s)'[\pi^{\theta_1}(s) + \gamma - \ln p(s)] + \beta p(s)' G^{\hat{\theta}_2}(s)  \varphi^{(\theta_1, \hat{\theta}_2)}(p)
+\end{split}
+\end{equation}
+
+\subsection{Type-I Extreme Value
+Distribution}\label{type-i-extreme-value-distribution-5}
+
+\begin{itemize}
+\tightlist
+\item
+  Stacking up for \(s\), we get:
+
+  \begin{equation}
+  \begin{split}
+  &\varphi^{(\theta_1, \hat{\theta}_2)}(p) =
+  \begin{bmatrix}
+  p(1)'[\pi^{\theta_1}(1) + \gamma - \ln p(1)]\\
+  \vdots\\
+  p(L)'[\pi^{\theta_1}(L) + \gamma - \ln p(L)]
+  \end{bmatrix}
+  +\beta
+  \begin{bmatrix}
+  p(1)' G^{\hat{\theta}_2}(1)\\
+  \vdots\\
+  p(L)' G^{\hat{\theta}_2}(L)
+  \end{bmatrix}
+  \varphi^{(\theta_1, \hat{\theta}_2)}(p)\\
+  &\Leftrightarrow\\
+  &\varphi^{(\theta_1, \hat{\theta}_2)}(p) = 
+  \begin{bmatrix}
+  I -
+  \beta
+  \begin{bmatrix}
+  p(1)' G^{\hat{\theta}_2}(1)\\
+  \vdots\\
+  p(L)' G^{\hat{\theta}_2}(L)
+  \end{bmatrix}
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+  p(1)'[\pi^{\theta_1}(1) + \gamma - \ln p(1)]\\
+  \vdots\\
+  p(L)'[\pi^{\theta_1}(L) + \gamma - \ln p(L)]
+  \end{bmatrix}.
+  \end{split}
+  \end{equation}
+\item
+  Note that you can get this expression even if the profitability shocks
+  are not type-I extreme value, although you need numerical integration
+  for \(\mathbb{E}\{\epsilon_a|s, a\}\) instead of the analytical
+  solution \(\gamma - \ln p(a|s)\).
+\end{itemize}
+
+\subsection{General Distribution}\label{general-distribution}
+
+\begin{itemize}
+\tightlist
+\item
+  If the profitability shock \(\epsilon_a\) is not an i.i.d. type-I
+  extreme value random variable, you may need to compute
+  \(\mathbb{E}\{\epsilon_a|s, a\}\) and
+  \(\Lambda^{(\theta_1, \hat{\theta}_2)}(V)\) numerically.
+\item
+  This may or may not feasible.
+\end{itemize}
+
 \chapter{Assignment 1: Basic Programming in R}\label{assignment1}
 
 The deadline is \textbf{February 18 1:30pm}.
@@ -10762,6 +11821,7 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# main/main.r}
 \NormalTok{x_rcpp <-}\StringTok{ }\KeywordTok{pass_numeric_vector_to_rcpp}\NormalTok{(x)}
 \KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{x_rcpp))}
 \end{Highlighting}

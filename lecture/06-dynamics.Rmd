@@ -165,7 +165,7 @@ V(\sigma, a, s, \epsilon) &= \pi(a , s) + \epsilon_a + \beta \sum_{s' \in S} V(\
 
 - When the state and profitability shocks are $s$ and $\epsilon$, $a$ is the optimal choice if and only if:
 \begin{equation}
-v(\sigma, a, s) + \epsilon^{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A.
+v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A.
 \end{equation}
 - This condition looks similar to the optimality condition in the static discrete choice model.
 - The only difference from the static discrete choice model is that the mean indirect utility is the sum of the choice-specific mean profit and the discounted continuation value.
@@ -178,8 +178,8 @@ v(\sigma, a, s) + \epsilon^{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' 
 - From the previous optimality condition, we can define the __optimal conditional choice probability__ with belief $\sigma$ as:
 \begin{equation}
 \begin{split}
-p(a|s, \sigma) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon^{a} \ge v(\sigma, a', s) + \epsilon^{a'}, \forall a' \in A\}\\
-&= \int \prod_{a' \neq a} 1\{v(\sigma, a, s) + \epsilon^{a} \ge v(\sigma, a', s) + \epsilon^{a'}\} dF\\
+p(a|s, \sigma) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
+&= \int \prod_{a' \neq a} 1\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}\} dF\\
 &\equiv \Psi(\sigma, a, s).
 \end{split}
 \end{equation}
@@ -233,7 +233,7 @@ p = \Psi(p).
 \begin{equation}
 \begin{split}
 V(s) &= \mathbb{E}\{V(s, \epsilon)|s\}\\
-&= \mathbb{E}\left[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}p(a|s_t)\left[\pi(a, s_t) + \epsilon_{ta}\right]\Bigg|s^0, a\right]\\
+&= \mathbb{E}\left[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}p(a|s_t)\left[\pi(a, s_t) + \epsilon_{ta}\right]\Bigg|s_0, a\right]\\
 &\equiv \varphi(p, s).
 \end{split}
 \end{equation}
@@ -494,7 +494,7 @@ although the expectation may not have a closed form solution.
 
 
 ### Type-I Extreme Value Distribution
-- If $\epsilon^a$ is drawn from i.i.d. type-I extreme value distribution, tt can be shown that:
+- If $\epsilon_a$ is drawn from i.i.d. type-I extreme value distribution, tt can be shown that:
 \begin{equation}
 \begin{split}
 \mathbb{E}[\epsilon_{a}|s, a] &= \hat{p}(a|s)^{-1} \int \epsilon_a 1\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a \ge\\
@@ -608,12 +608,12 @@ p(L)'[\pi^{\theta_1}(L) + \gamma - \ln p(L)]
 \end{bmatrix}.
 \end{split}
 \end{equation}
-- Note that you can get this expression even if the profitability shocks are not type-I extreme value, although you need numerical integration for $\mathbb{E}\{\epsilon^a|s, a\}$ instead of the analytical solution $\gamma - \ln p(a|s)$.
+- Note that you can get this expression even if the profitability shocks are not type-I extreme value, although you need numerical integration for $\mathbb{E}\{\epsilon_a|s, a\}$ instead of the analytical solution $\gamma - \ln p(a|s)$.
 
 
 
 ### General Distribution
 
-- If the profitability shock $\epsilon^a$ is not an i.i.d. type-I extreme value random variable, you may need to compute $\mathbb{E}\{\epsilon^a|s, a\}$ and $\Lambda^{(\theta_1, \hat{\theta}_2)}(V)$ numerically.
+- If the profitability shock $\epsilon_a$ is not an i.i.d. type-I extreme value random variable, you may need to compute $\mathbb{E}\{\epsilon_a|s, a\}$ and $\Lambda^{(\theta_1, \hat{\theta}_2)}(V)$ numerically.
 - This may or may not feasible.
 
