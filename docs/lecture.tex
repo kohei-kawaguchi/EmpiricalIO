@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-03-22}
+    \date{Last updated: 2019-03-23}
 
 \usepackage{booktabs}
 
@@ -11345,6 +11345,691 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and
 ## [5,] 0.8204684 0.8757237
 \end{verbatim}
 
+\chapter{Assignment 5: Merger Simulation}\label{assignment5}
+
+The deadline is \textbf{April 1 1:30pm}.
+
+\section{Simulate data}\label{simulate-data-4}
+
+We simulate data from a discrete choice model that is the same with in
+assignment 4 \textbf{except for that the price is derived from the Nash
+equlibrium}. There are \(T\) markets and each market has \(N\)
+consumers. There are \(J\) products and the indirect utility of consumer
+\(i\) in market \(t\) for product \(j\) is: \[
+u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+\] where \(\epsilon_{ijt}\) is an i.i.d. type-I extreme random variable.
+\(x_j\) is \(K\)-dimensional observed characteristics of the product.
+\(p_{jt}\) is the retail price of the product in the market.
+
+\(\xi_{jt}\) is product-market specific fixed effect. \(p_{jt}\) can be
+correlated with \(\xi_{jt}\) but \(x_{jt}\)s are independent of
+\(\xi_{jt}\). \(j = 0\) is an outside option whose indirect utility is:
+\[
+u_{it0} = \epsilon_{i0t},
+\] where \(\epsilon_{i0t}\) is an i.i.d. type-I extreme random variable.
+
+\(\beta_{it}\) and \(\alpha_{it}\) are different across consumers, and
+they are distributed as: \[
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+\] \[
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+\] where \(\nu_{itk}\) for \(k = 1, \cdots, K\) and \(\upsilon_{it}\)
+are i.i.d. standard normal random variables. \(\alpha_0\) is the mean of
+\(\alpha_i\) and \(\tilde{\alpha}_i\) is the deviation from the mean.
+
+Given a choice set in the market, \(\mathcal{J}_t \cup \{0\}\), a
+consumer chooses the alternative that maximizes her utility: \[
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\] The choice probability of product \(j\) for consumer \(i\) in market
+\(t\) is: \[
+\sigma_{ijt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]
+
+Suppose that we only observe the (smooth) share data: \[
+s_{jt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \sigma_{ijt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \frac{\exp(u_{ijt})}{1 + \sum_{k \in \mathcal{J}_t \cup \{0\}} \exp(u_{ikt})}. 
+\] along with the product-market characteristics \(x_{jt}\) and the
+retail prices \(p_{jt}\) for \(j \in \mathcal{J}_t \cup \{0\}\) for
+\(t = 1, \cdots, T\). We do not observe the choice data \(q_{ijt}\) nor
+shocks \(\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}\).
+
+We draw \(\xi_{jt}\) from i.i.d. normal distribution with mean 0 and
+standard deviation \(\sigma_{\xi}\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set the seed, constants, and parameters of interest as follows.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set the seed}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{# number of products}
+\NormalTok{J <-}\StringTok{ }\DecValTok{10}
+\CommentTok{# dimension of product characteristics including the intercept}
+\NormalTok{K <-}\StringTok{ }\DecValTok{3}
+\CommentTok{# number of markets}
+\NormalTok{T <-}\StringTok{ }\DecValTok{100}
+\CommentTok{# number of consumers per market}
+\NormalTok{N <-}\StringTok{ }\DecValTok{500}
+\CommentTok{# number of Monte Carlo}
+\NormalTok{L <-}\StringTok{ }\DecValTok{500}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set parameters of interests}
+\NormalTok{beta <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(K); }
+\NormalTok{beta[}\DecValTok{1}\NormalTok{] <-}\StringTok{ }\DecValTok{4}
+\NormalTok{beta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4.0000000  0.1836433 -0.8356286
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sigma <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(K)); sigma}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.5952808 0.3295078 0.8204684
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{omega <-}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+Generate the covariates as follows.
+
+The product-market characteristics: \[
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+\] where \(\sigma_x\) is referred to as \texttt{sd\_x} in the code.
+
+The product-market-specific unobserved fixed effect: \[
+\xi_{jt} \sim N(0, \sigma_\xi),
+\] where \(\sigma_xi\) is referred to as \texttt{sd\_xi} in the code.
+
+The marginal cost of product \(j\) in market \(t\): \[
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+\] where \(\sigma_c\) is referred to as \texttt{sd\_c} in the code.
+
+The price is determined by a Nash equilibrium. Let \(\Delta_t\) be the
+\(J_t \times J_t\) ownership matrix in which the \((j, k)\)-th element
+\(\delta_{tjk}\) is equal to 1 if product \(j\) and \(k\) are owned by
+the same firm and 0 otherwise. Assume that \(\delta_{tjk} = 1\) if and
+only if \(j = k\) for all \(t = 1, \cdots, T\), i.e., each firm owns
+only one product. Next, define \(\Omega_t\) be \(J_t \times J_t\) matrix
+such that whose \((j, k)\)-the element
+\(\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t)\) is: \[
+\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t) = - \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} \delta_{tjk}.
+\] Then, the equilibrium price vector \(p_t\) is determined by solving
+the following equilibrium condition: \[
+p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
+\]
+
+The value of the auxiliary parameters are set as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set auxiliary parameters}
+\NormalTok{price_xi <-}\StringTok{ }\DecValTok{1}
+\NormalTok{sd_x <-}\StringTok{ }\DecValTok{2}
+\NormalTok{sd_xi <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{sd_c <-}\StringTok{ }\FloatTok{0.05}
+\NormalTok{sd_p <-}\StringTok{ }\FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \texttt{X} is the data frame such that a row contains the
+  characteristics vector \(x_{j}\) of a product and columns are product
+  index and observed product characteristics. The dimension of the
+  characteristics \(K\) is specified above. Add the row of the outside
+  option whose index is \(0\) and all the characteristics are zero.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 11 x 4
+##        j   x_1     x_2     x_3
+##    <dbl> <dbl>   <dbl>   <dbl>
+##  1     0     0  0       0     
+##  2     1     1  0.975  -0.0324
+##  3     2     1  1.48    1.89  
+##  4     3     1  1.15    1.64  
+##  5     4     1 -0.611   1.19  
+##  6     5     1  3.02    1.84  
+##  7     6     1  0.780   1.56  
+##  8     7     1 -1.24    0.149 
+##  9     8     1 -4.43   -3.98  
+## 10     9     1  2.25    1.24  
+## 11    10     1 -0.0899 -0.112
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \texttt{M} is the data frame such that a row contains the price
+  \(\xi_{jt}\), marginal cost \(c_{jt}\), and price \(p_{jt}\). For now,
+  set \(p_{jt} = 0\) and fill the equilibrium price later. After
+  generating the variables, drop some products in each market. In order
+  to change the number of available products in each market, for each
+  market, first draw \(J_t\) from a discrete uniform distribution
+  between \(1\) and \(J\). Then, drop products from each market using
+  \texttt{dplyr::sample\_frac} function with the realized number of
+  available products. The variation in the available products is
+  important for the identification of the distribution of consumer-level
+  unobserved heterogeneity. Add the row of the outside option to each
+  market whose index is \(0\) and all the variables take value zero.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 689 x 5
+##        j     t      xi     c     p
+##    <dbl> <int>   <dbl> <dbl> <dbl>
+##  1     0     1  0      0         0
+##  2     1     1 -0.0779 0.951     0
+##  3     2     1 -0.735  1.04      0
+##  4     7     1  0.194  0.961     0
+##  5    10     1 -0.207  1.02      0
+##  6     0     2  0      0         0
+##  7     8     2  0.278  0.955     0
+##  8     0     3  0      0         0
+##  9     3     3 -0.0562 1.02      0
+## 10     0     4  0      0         0
+## # ... with 679 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Generate the consumer-level heterogeneity. \texttt{V} is the data
+  frame such that a row contains the vector of shocks to consumer-level
+  heterogeneity, \((\nu_{i}', \upsilon_i)\). They are all i.i.d.
+  standard normal random variables.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50,000 x 6
+##        i     t   v_x_1    v_x_2  v_x_3      v_p
+##    <int> <int>   <dbl>    <dbl>  <dbl>    <dbl>
+##  1     1     1  0.559  -0.362   -0.707  0.594  
+##  2     2     1 -1.00   -0.306    0.324 -0.368  
+##  3     3     1  0.900   0.464    0.253 -0.994  
+##  4     4     1  0.152  -0.640   -0.622 -0.290  
+##  5     5     1 -0.301  -2.18     0.151  0.475  
+##  6     6     1  0.0512 -1.05     0.430  0.159  
+##  7     7     1  0.292   0.00469  1.29   0.761  
+##  8     8     1  0.245  -0.330   -0.420 -0.00911
+##  9     9     1  0.0827 -0.00644 -1.59  -1.02   
+## 10    10     1 -0.0404 -0.0764   0.259 -0.911  
+## # ... with 49,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  We use
+  \texttt{compute\_indirect\_utility(df,\ beta,\ sigma,\ mu,\ omega)},
+  \texttt{compute\_choice\_smooth(X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)},
+  and
+  \texttt{compute\_share\_smooth(X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)}
+  to compute \(s_t(p_t, x_t, \xi_t)\). On top of this, we need a
+  function
+  \texttt{compute\_derivative\_share\_smooth(X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)}
+  that approximate:
+\end{enumerate}
+
+\[
+\frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
+\begin{cases}
+\frac{1}{N} \sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)[1 - s_{jt}(p_t, x_t, \xi_t)] &\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)s_{kt}(p_t, x_t, \xi_t)] &\text{   if   } j \neq k.
+\end{cases}
+\]
+
+The returned object should be a list across markets and each element of
+the list should be \(J_t \times J_t\) matrix whose \((j, k)\)-th element
+is \(\partial s_{jt}/\partial p_{it}\) (do not include the outside
+option). The computation will be looped across markets. I recommend to
+use a parallel computing for this loop.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{derivative_share_smooth <-}
+\StringTok{  }\KeywordTok{compute_derivative_share_smooth}\NormalTok{(X, M, V, beta, sigma, mu, omega)}
+\NormalTok{derivative_share_smooth[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]        [,2]        [,3]        [,4]
+## [1,] -0.55323517  0.07416782  0.22222078  0.24032215
+## [2,]  0.07416782 -0.17952618  0.05347946  0.04757626
+## [3,]  0.22222078  0.05347946 -0.47677137  0.18862102
+## [4,]  0.24032215  0.04757626  0.18862102 -0.48803506
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{derivative_share_smooth[[T]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]        [,2]        [,3]        [,4]        [,5]
+## [1,] -0.07358769  0.01724997  0.01539716  0.00728682  0.01037598
+## [2,]  0.01724997 -0.18464980  0.03941164  0.02590020  0.05210013
+## [3,]  0.01539716  0.03941164 -0.14947032  0.01760727  0.02950338
+## [4,]  0.00728682  0.02590020  0.01760727 -0.11933630  0.04443484
+## [5,]  0.01037598  0.05210013  0.02950338  0.04443484 -0.18480392
+## [6,]  0.02286198  0.04875629  0.04659132  0.02338740  0.04568463
+##             [,6]
+## [1,]  0.02286198
+## [2,]  0.04875629
+## [3,]  0.04659132
+## [4,]  0.02338740
+## [5,]  0.04568463
+## [6,] -0.18893897
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Make a list \texttt{Delta} such that each element of the list is
+  \(J_t \times J_t\) matrix \(\Delta_t\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Delta[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Delta[[T]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    0    0    0    0    0
+## [2,]    0    1    0    0    0    0
+## [3,]    0    0    1    0    0    0
+## [4,]    0    0    0    1    0    0
+## [5,]    0    0    0    0    1    0
+## [6,]    0    0    0    0    0    1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Write a function
+  \texttt{update\_price(logp,\ X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega,\ Delta)}
+  that receives a price vector \(p_t^{(r)}\) and returns
+  \(p_t^{(r + 1)}\) by: \[
+  p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
+  \] The returned object should be a vector whose row represents the
+  condition for an inside product of each market. To impose
+  non-negativity constraint on the price vector, we pass log price and
+  exponentiate inside the function. Iterate this untill
+  \(\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| < \lambda\), for example
+  with \(\lambda = 10^{-6}\). This iteration may or may not converge.
+  The convergence depends on the parameters and the realization of the
+  shocks. If the algorithm does not converge, first check the code.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set the threshold}
+\NormalTok{lambda <-}\StringTok{ }\FloatTok{1e-6}
+\CommentTok{# set the initial price}
+\NormalTok{p <-}\StringTok{ }\NormalTok{M[M}\OperatorTok{$}\NormalTok{j }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{, }\StringTok{"p"}\NormalTok{]}
+\NormalTok{logp <-}\StringTok{ }\KeywordTok{log}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{dim}\NormalTok{(p)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{p_new <-}\StringTok{ }\KeywordTok{update_price}\NormalTok{(logp, X, M, V, beta, sigma, mu, omega, Delta)}
+\CommentTok{# iterate}
+\NormalTok{distance <-}\StringTok{ }\DecValTok{10000}
+\ControlFlowTok{while}\NormalTok{ (distance }\OperatorTok{>}\StringTok{ }\NormalTok{lambda) \{}
+\NormalTok{  p_old <-}\StringTok{ }\NormalTok{p_new}
+\NormalTok{  p_new <-}\StringTok{ }\KeywordTok{update_price}\NormalTok{(}\KeywordTok{log}\NormalTok{(p_old), X, M, V, beta, sigma, mu, omega, Delta)}
+\NormalTok{  distance <-}\StringTok{ }\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(p_new }\OperatorTok{-}\StringTok{ }\NormalTok{p_old))}
+  \KeywordTok{print}\NormalTok{(distance)}
+\NormalTok{\}}
+\CommentTok{# save}
+\NormalTok{p_actual <-}\StringTok{ }\NormalTok{p_new}
+\KeywordTok{save}\NormalTok{(p_actual, }\DataTypeTok{file =} \StringTok{"data/A5_price_actual.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Estimate the parameters}\label{estimate-the-parameters-3}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Write a function \texttt{estimate\_marginal\_cost()} that estimate
+  \(c_t\) by the equilibrium condition as: \[
+  c_t = p_t - \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)
+  \]
+\end{enumerate}
+
+Of course, in reality, we first draw Monte Carlo shocks to approximate
+the share, estimate the demand parameters, and use these shocks and
+estimates to estimate the marginal costs. In this assignment, we check
+the if the estimated marginal costs coincide with the true marginal
+costs to confirm that the codes are correctly written.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load}
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/A5_price_actual.RData"}\NormalTok{)}
+\CommentTok{# take the logarithm}
+\NormalTok{logp <-}\StringTok{ }\KeywordTok{log}\NormalTok{(p_actual)}
+\CommentTok{# estimate the marginal cost}
+\NormalTok{marginal_cost_estimate <-}\StringTok{ }\KeywordTok{estimate_marginal_cost}\NormalTok{(logp, X, M, V, beta, sigma, mu, omega, Delta)}
+\NormalTok{marginal_cost_actual <-}\StringTok{ }\NormalTok{M[M}\OperatorTok{$}\NormalTok{j }\OperatorTok{>}\StringTok{ }\DecValTok{0}\NormalTok{, ]}\OperatorTok{$}\NormalTok{c}
+\CommentTok{# plot the estimate vs actual marginal costs}
+\NormalTok{marginal_cost_df <-}
+\StringTok{  }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ marginal_cost_actual,}
+             \DataTypeTok{estimate =}\NormalTok{ marginal_cost_estimate)}
+\KeywordTok{ggplot}\NormalTok{(marginal_cost_df, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ estimate, }\DataTypeTok{y =}\NormalTok{ actual)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-151-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  (Optional) Translate \texttt{compute\_indirect\_utility},
+  \texttt{compute\_choice\_smooth},
+  \texttt{compute\_derivative\_share\_smooth}, \texttt{update\_price}
+  into C++ using Rcpp and Eigen. Check that the outputs coincide at the
+  machine precision level. I give you extra 2 points for this task on
+  top of the usual 10 points for this assignment.
+\end{enumerate}
+
+\section{Conduct counterfactual
+simulation}\label{conduct-counterfactual-simulation}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Suppose that the firm of product 1 owner purchase the firms that own
+  product 2 and 3. Let \texttt{Delta\_counterfactual} be the relevant
+  ownership matrix. Make \texttt{Delta\_counterfactual}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Delta_counterfactual[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    1    0    0
+## [2,]    1    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Delta_counterfactual[[T]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    0    0    0    0    0
+## [2,]    0    1    0    0    0    0
+## [3,]    0    0    1    0    0    0
+## [4,]    0    0    0    1    0    0
+## [5,]    0    0    0    0    1    0
+## [6,]    0    0    0    0    0    1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Compute the counterfactual price using the iteration with
+  \texttt{update\_price}. You can start the iteration from the
+  equilibrium price. Show the average percentage change in the price for
+  each product. In theory, the price of any product should not drop. But
+  some prices can slightly drop because of the numerical errors.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logp <-}\StringTok{ }\KeywordTok{log}\NormalTok{(p_actual)}
+\NormalTok{p_new <-}\StringTok{ }\KeywordTok{update_price}\NormalTok{(logp, X, M, V, beta, sigma, mu, omega, Delta_counterfactual)}
+\NormalTok{distance <-}\StringTok{ }\DecValTok{10000}
+\ControlFlowTok{while}\NormalTok{ (distance }\OperatorTok{>}\StringTok{ }\NormalTok{lambda) \{}
+\NormalTok{  p_old <-}\StringTok{ }\NormalTok{p_new}
+\NormalTok{  p_new <-}\StringTok{ }\KeywordTok{update_price}\NormalTok{(}\KeywordTok{log}\NormalTok{(p_old), X, M, V, beta, sigma, mu, omega, Delta_counterfactual)}
+\NormalTok{  distance <-}\StringTok{ }\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(p_new }\OperatorTok{-}\StringTok{ }\NormalTok{p_old))}
+  \KeywordTok{print}\NormalTok{(distance)}
+\NormalTok{\}}
+\NormalTok{p_counterfactual <-}\StringTok{ }\NormalTok{p_new}
+\KeywordTok{save}\NormalTok{(p_counterfactual, }\DataTypeTok{file =} \StringTok{"data/A5_price_counterfactual.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r}
+\hline
+j & p\_change\\
+\hline
+1 & 0.0714188\\
+\hline
+2 & 0.1408300\\
+\hline
+3 & 0.1568128\\
+\hline
+4 & -0.0016428\\
+\hline
+5 & 0.0053848\\
+\hline
+6 & -0.0004226\\
+\hline
+7 & 0.0020979\\
+\hline
+8 & -0.0033997\\
+\hline
+9 & 0.0003623\\
+\hline
+10 & 0.0006657\\
+\hline
+\end{tabular}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_producer\_surplus(p,\ marginal\_cost,\ X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)}
+  that returns the producer surplus for each product in each market.
+  Compute the actual and counterfactual producer surplus under the
+  estimated marginal costs. Show the average percentage change in the
+  producer surplus for each product.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute actual producer surplus}
+\NormalTok{producer_surplus_actual <-}
+\StringTok{  }\KeywordTok{compute_producer_surplus}\NormalTok{(p_actual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)}
+\KeywordTok{summary}\NormalTok{(producer_surplus_actual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        s           
+##  Min.   :0.008895  
+##  1st Qu.:0.038264  
+##  Median :0.068219  
+##  Mean   :0.163312  
+##  3rd Qu.:0.135748  
+##  Max.   :1.678255
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute counterfactual producer surplus}
+\NormalTok{producer_surplus_counterfactual <-}
+\StringTok{  }\KeywordTok{compute_producer_surplus}\NormalTok{(p_counterfactual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)}
+\KeywordTok{summary}\NormalTok{(producer_surplus_counterfactual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        s           
+##  Min.   :0.009512  
+##  1st Qu.:0.040473  
+##  Median :0.071149  
+##  Mean   :0.167135  
+##  3rd Qu.:0.140125  
+##  Max.   :1.678255
+\end{verbatim}
+
+\begin{tabular}{r|r}
+\hline
+j & producer\_surplus\_change\\
+\hline
+1 & 0.0347098\\
+\hline
+2 & 0.0118844\\
+\hline
+3 & 0.0058072\\
+\hline
+4 & 0.0557049\\
+\hline
+5 & 0.0686250\\
+\hline
+6 & 0.0756544\\
+\hline
+7 & 0.0418440\\
+\hline
+8 & 0.0073660\\
+\hline
+9 & 0.0530648\\
+\hline
+10 & 0.0389568\\
+\hline
+\end{tabular}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_consumer\_surplus(p,\ X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)}
+  that returns the consumer surplus for each consumer in each market.
+  Compute the actual and counterfactual consumer surplus under the
+  estimated marginal costs. Show the percentage change in the total
+  consumer surplus.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute actual consumer surplus}
+\NormalTok{consumer_surplus_actual <-}\StringTok{ }
+\StringTok{  }\KeywordTok{compute_consumer_surplus}\NormalTok{(p_actual, X, M, V, beta, sigma, mu, omega)}
+\KeywordTok{summary}\NormalTok{(consumer_surplus_actual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  -81.021   -6.934   -2.412    7.984    9.370 1473.085
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute counterfactual consumer surplus}
+\NormalTok{consumer_surplus_counterfactual <-}\StringTok{ }
+\StringTok{  }\KeywordTok{compute_consumer_surplus}\NormalTok{(p_counterfactual, X, M, V, beta, sigma, mu, omega)}
+\KeywordTok{summary}\NormalTok{(consumer_surplus_counterfactual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##  -81.573   -7.522   -2.760    7.532    8.897 1472.575
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumer_surplus_change <-}\StringTok{ }
+\StringTok{  }\NormalTok{(}\KeywordTok{sum}\NormalTok{(consumer_surplus_counterfactual) }\OperatorTok{-}\StringTok{ }
+\StringTok{     }\KeywordTok{sum}\NormalTok{(consumer_surplus_actual)) }\OperatorTok{/}
+\StringTok{  }\KeywordTok{sum}\NormalTok{(consumer_surplus_actual)}
+\NormalTok{consumer_surplus_change}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.05658779
+\end{verbatim}
+
 \chapter{Integrating with C++ using Rcpp and RcppEigen}\label{rcpp}
 
 \section{Prerequisite}\label{prerequisite}
@@ -11776,7 +12461,7 @@ R & Rcpp\tabularnewline
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## [1] -1.47333937 -0.46008664 -1.68877135  0.02821127 -0.24460643
 \end{verbatim}
 
 \begin{Shaded}
@@ -11788,9 +12473,9 @@ R & Rcpp\tabularnewline
 \end{Shaded}
 
 \begin{verbatim}
-##            [,1]      [,2]        [,3]       [,4]       [,5]
-## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
-## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339
+##           [,1]      [,2]       [,3]      [,4]        [,5]
+## [1,] -1.069181 2.0000495 -0.6051149 0.6539103  0.06625095
+## [2,] -1.675026 0.0086362  1.1638739 1.9162913 -1.22437208
 \end{verbatim}
 
 \begin{itemize}
@@ -11890,7 +12575,7 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 
 \begin{verbatim}
 ## $x
-## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## [1] -1.47333937 -0.46008664 -1.68877135  0.02821127 -0.24460643
 ## 
 ## $y
 ## [1] 1
@@ -11908,12 +12593,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 \end{Shaded}
 
 \begin{verbatim}
-##            x1          x2
-## 1 -0.86280066 -1.03184291
-## 2 -1.15758053  0.77688232
-## 3 -0.89268670  0.21788910
-## 4  0.04043654  1.33717072
-## 5  2.25861844 -0.07430342
+##           x1         x2
+## 1 -0.8820088 -0.6831293
+## 2 -1.5748321  0.1316401
+## 3  0.2474319  0.3762030
+## 4  1.1563445  1.2740152
+## 5  0.9506635  0.3092848
 \end{verbatim}
 
 \begin{Shaded}
@@ -12157,12 +12842,12 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## [1] -1.47333937 -0.46008664 -1.68877135  0.02821127 -0.24460643
 ## 
 ## [[2]]
-##            [,1]      [,2]        [,3]       [,4]       [,5]
-## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
-## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339
+##           [,1]      [,2]       [,3]      [,4]        [,5]
+## [1,] -1.069181 2.0000495 -0.6051149 0.6539103  0.06625095
+## [2,] -1.675026 0.0086362  1.1638739 1.9162913 -1.22437208
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -12227,12 +12912,12 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## $x
-## [1] -0.9159760  0.2750165 -1.4173615  1.5778831 -2.1781476
+## [1] -1.47333937 -0.46008664 -1.68877135  0.02821127 -0.24460643
 ## 
 ## $Y
-##            [,1]      [,2]        [,3]       [,4]       [,5]
-## [1,] -1.0509051 0.9240679  0.01461874 -0.1573930 -0.1157289
-## [2,] -0.4767702 0.4508252 -0.25871885 -0.4637887  0.8536339
+##           [,1]      [,2]       [,3]      [,4]        [,5]
+## [1,] -1.069181 2.0000495 -0.6051149 0.6539103  0.06625095
+## [2,] -1.675026 0.0086362  1.1638739 1.9162913 -1.22437208
 ## 
 ## $z
 ## [1] 1 2 3 4 5

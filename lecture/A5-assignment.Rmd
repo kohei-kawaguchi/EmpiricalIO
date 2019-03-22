@@ -1,0 +1,437 @@
+# Assignment 5: Merger Simulation {#assignment5}
+
+```{r, include = FALSE}
+library(EmpiricalIO)
+library(magrittr)
+library(stargazer)
+library(knitr)
+library(foreach)
+library(ggplot2)
+library(latex2exp)
+library(codetools)
+library(doParallel)
+registerDoParallel()
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+```
+
+The deadline is __April 1 1:30pm__.
+
+## Simulate data
+
+We simulate data from a discrete choice model that is the same with in assignment 4 __except for that the price is derived from the Nash equlibrium__. There are $T$ markets and each market has $N$ consumers. There are $J$ products and the indirect utility of consumer $i$ in market $t$ for product $j$ is:
+$$
+u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+$$
+where $\epsilon_{ijt}$ is an i.i.d. type-I extreme random variable.  $x_j$ is $K$-dimensional observed characteristics of the product. $p_{jt}$ is the retail price of the product in the market. 
+
+$\xi_{jt}$ is product-market specific fixed effect. $p_{jt}$ can be correlated with $\xi_{jt}$ but $x_{jt}$s are independent of $\xi_{jt}$. $j = 0$ is an outside option whose indirect utility is:
+$$
+u_{it0} = \epsilon_{i0t},
+$$
+where $\epsilon_{i0t}$ is an i.i.d. type-I extreme random variable. 
+
+$\beta_{it}$ and $\alpha_{it}$ are different across consumers, and they are distributed as:
+$$
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+$$
+$$
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+$$
+where $\nu_{itk}$ for $k = 1, \cdots, K$ and $\upsilon_{it}$ are i.i.d. standard normal random variables. $\alpha_0$ is the mean of $\alpha_i$ and $\tilde{\alpha}_i$ is the deviation from the mean.
+
+Given a choice set in the market, $\mathcal{J}_t \cup \{0\}$, a consumer chooses the alternative that maximizes her utility:
+$$
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+The choice probability of product $j$ for consumer $i$ in market $t$ is:
+$$
+\sigma_{ijt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+
+Suppose that we only observe the (smooth) share data:
+$$
+s_{jt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \sigma_{ijt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \frac{\exp(u_{ijt})}{1 + \sum_{k \in \mathcal{J}_t \cup \{0\}} \exp(u_{ikt})}. 
+$$
+along with the product-market characteristics $x_{jt}$ and the retail prices $p_{jt}$ for $j \in \mathcal{J}_t \cup \{0\}$ for $t = 1, \cdots, T$. We do not observe the choice data $q_{ijt}$ nor shocks $\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}$.
+
+We draw $\xi_{jt}$ from i.i.d. normal distribution with mean 0 and standard deviation $\sigma_{\xi}$.
+
+1. Set the seed, constants, and parameters of interest as follows.
+
+```{r, echo = TRUE}
+# set the seed
+set.seed(1)
+# number of products
+J <- 10
+# dimension of product characteristics including the intercept
+K <- 3
+# number of markets
+T <- 100
+# number of consumers per market
+N <- 500
+# number of Monte Carlo
+L <- 500
+```
+
+```{r, echo = TRUE}
+# set parameters of interests
+beta <- rnorm(K); 
+beta[1] <- 4
+beta
+sigma <- abs(rnorm(K)); sigma
+mu <- 0.5
+omega <- 1
+```
+
+Generate the covariates as follows.
+
+The product-market characteristics:
+$$
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+$$
+where $\sigma_x$ is referred to as `sd_x` in the code.
+
+The product-market-specific unobserved fixed effect:
+$$
+\xi_{jt} \sim N(0, \sigma_\xi),
+$$
+where $\sigma_xi$ is referred to as `sd_xi` in the code.
+
+The marginal cost of product $j$ in market $t$:
+$$
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+$$
+where $\sigma_c$ is referred to as `sd_c` in the code.
+
+The price is determined by a Nash equilibrium. Let $\Delta_t$ be the $J_t \times J_t$ ownership matrix in which the $(j, k)$-th element  $\delta_{tjk}$ is equal to 1 if product $j$ and $k$ are owned by the same firm and 0 otherwise. Assume that $\delta_{tjk} = 1$ if and only if $j = k$ for all $t = 1, \cdots, T$, i.e., each firm owns only one product. Next, define $\Omega_t$ be $J_t \times J_t$ matrix such that whose $(j, k)$-the element $\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t)$ is:
+$$
+\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t) = - \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} \delta_{tjk}.
+$$
+Then, the equilibrium price vector $p_t$ is determined by solving the following equilibrium condition:
+$$
+p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
+$$
+
+The value of the auxiliary parameters are set as follows:
+
+```{r, echo = TRUE}
+# set auxiliary parameters
+price_xi <- 1
+sd_x <- 2
+sd_xi <- 0.5
+sd_c <- 0.05
+sd_p <- 0.05
+```
+
+2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
+
+
+```{r}
+# make product characteristics data
+X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
+X <- cbind(rep(1, J), X)
+colnames(X) <- paste("x", 1:K, sep = "_")
+X <- data.frame(j = 1:J, X) %>%
+  tibble::as_tibble()
+# add outside option
+X <- rbind(
+  rep(0, dim(X)[2]),
+  X
+) 
+```
+
+```{r, echo = TRUE}
+X
+```
+
+3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. For now, set $p_{jt} = 0$ and fill the equilibrium price later. After generating the variables, drop some products in each market. In order to change the number of available products in each market, for each market, first draw $J_t$ from a discrete uniform distribution between $1$ and $J$. Then, drop products from each market using `dplyr::sample_frac` function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
+
+```{r}
+# make market-product data
+M <- expand.grid(j = 1:J, t = 1:T) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(
+    xi = sd_xi * rnorm(J*T),
+    c = exp(sd_c * rnorm(J*T)),
+    p = 0
+  ) 
+M <- M %>%
+  dplyr::group_by(t) %>%
+  dplyr::sample_frac(size = purrr::rdunif(1, J)/J) %>%
+  dplyr::ungroup()
+# add outside option
+outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
+M <- rbind(
+  M,
+  outside
+) %>%
+  dplyr::arrange(t, j)
+```
+
+```{r, echo = TRUE}
+M
+```
+
+4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
+
+```{r}
+# make consumer-market data
+V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
+colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V <- data.frame(
+  expand.grid(i = 1:N, t = 1:T),
+  V
+) %>%
+  tibble::as_tibble()
+```
+
+```{r, echo = TRUE}
+V
+```
+
+5. We use `compute_indirect_utility(df, beta, sigma, mu, omega)`, `compute_choice_smooth(X, M, V, beta, sigma, mu, omega)`, and `compute_share_smooth(X, M, V, beta, sigma, mu, omega)` to compute $s_t(p_t, x_t, \xi_t)$. On top of this, we need a function `compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)` that approximate:
+
+$$
+\frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
+\begin{cases}
+\frac{1}{N} \sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)[1 - s_{jt}(p_t, x_t, \xi_t)] &\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)s_{kt}(p_t, x_t, \xi_t)] &\text{   if   } j \neq k.
+\end{cases}
+$$
+
+The returned object should be a list across markets and each element of the list should be $J_t \times J_t$ matrix whose $(j, k)$-th element is $\partial s_{jt}/\partial p_{it}$ (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.
+
+```{r, echo = TRUE}
+derivative_share_smooth <-
+  compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+derivative_share_smooth[[1]]
+derivative_share_smooth[[T]]
+```
+
+6. Make a list `Delta` such that each element of the list is $J_t \times J_t$ matrix $\Delta_t$.
+```{r}
+Delta <- 
+  foreach (tt = 1:T) %do% {
+    J_t <- M %>%
+      dplyr::filter(t == tt) %>%
+      dplyr::filter(j > 0) 
+    J_t <- dim(J_t)[1]
+    Delta_t <- diag(rep(1, J_t))
+    return(Delta_t)
+  }
+```
+
+```{r, echo = TRUE}
+Delta[[1]]
+Delta[[T]]
+```
+
+7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
+$$
+p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
+$$
+The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector, we pass log price and exponentiate inside the function. Iterate this untill $\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| < \lambda$, for example with $\lambda = 10^{-6}$. This iteration may or may not converge. The convergence depends on the parameters and the realization of the shocks. If the algorithm does not converge, first check the code. 
+
+```{r, echo = TRUE, eval = FALSE}
+# set the threshold
+lambda <- 1e-6
+# set the initial price
+p <- M[M$j > 0, "p"]
+logp <- log(rep(1, dim(p)[1]))
+p_new <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)
+# iterate
+distance <- 10000
+while (distance > lambda) {
+  p_old <- p_new
+  p_new <- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta)
+  distance <- max(abs(p_new - p_old))
+  print(distance)
+}
+# save
+p_actual <- p_new
+save(p_actual, file = "data/A5_price_actual.RData")
+```
+
+
+<!-- 10. Write a function `compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta)` that computes: -->
+<!-- $$ -->
+<!-- p_t - [c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)]. -->
+<!-- $$ -->
+<!-- mainly as a function of $p_t$. The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector in the following optimization problem, we pass log price and exponentiate inside the function. -->
+
+<!-- ```{r, echo = TRUE} -->
+<!-- equilibrium_condition <- compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta) -->
+<!-- head(equilibrium_condition) -->
+<!-- summary(equilibrium_condition) -->
+<!-- ``` -->
+
+<!-- 11. Write a function `compute_equilibrium_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that find a price vector that makes the `compute_equilibrium_condition` zero. To solve a system of non-linear equations, you can call `nleqslv::nleqslv` inside `compute_equilibrium_price`. If `update_price` converged, use the limit as the initial price vector. Even if `update_price` did not converge, use a price vcector after several iterations for the initial price vector. -->
+
+<!-- ```{r, echo = TRUE} -->
+<!-- load(file = "data/A4_price_iteration.RData") -->
+<!-- p_equilibrium_2 <- compute_equilibrium_price(log(p_new), X, M, V, beta, sigma, mu, omega, Delta) -->
+<!-- save(p_equilibrium_2, file = "data/A5_price_nleqslv.RData") -->
+<!-- ``` -->
+
+## Estimate the parameters
+
+1. Write a function `estimate_marginal_cost()` that estimate $c_t$ by the equilibrium condition as:
+$$
+c_t = p_t - \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)
+$$
+
+Of course, in reality, we first draw Monte Carlo shocks to approximate the share, estimate the demand parameters, and use these shocks and estimates to estimate the marginal costs. In this assignment, we check the if the estimated marginal costs coincide with the true marginal costs to confirm that the codes are correctly written.
+
+
+```{r, echo = TRUE}
+# load
+load(file = "data/A5_price_actual.RData")
+# take the logarithm
+logp <- log(p_actual)
+# estimate the marginal cost
+marginal_cost_estimate <- estimate_marginal_cost(logp, X, M, V, beta, sigma, mu, omega, Delta)
+marginal_cost_actual <- M[M$j > 0, ]$c
+# plot the estimate vs actual marginal costs
+marginal_cost_df <-
+  data.frame(actual = marginal_cost_actual,
+             estimate = marginal_cost_estimate)
+ggplot(marginal_cost_df, aes(x = estimate, y = actual)) +
+  geom_point()
+```
+
+2. (Optional) Translate `compute_indirect_utility`, `compute_choice_smooth`, `compute_derivative_share_smooth`, `update_price` into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment.
+
+## Conduct counterfactual simulation
+
+1. Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let `Delta_counterfactual` be the relevant ownership matrix. Make `Delta_counterfactual`.
+
+```{r}
+Delta_counterfactual <-
+  foreach (tt = 1:T) %dopar% {
+    # product indice
+    J_t <- M %>%
+      dplyr::filter(t == tt, j > 0)
+    J_t <- J_t$j
+    # baseline ownership
+    Delta_counterfactual_t <- diag(rep(1, length(J_t)))
+    # merged product indice
+    merged <- which(J_t %in% c(1, 2, 3))
+    # change ownership
+    if (length(merged) > 1) {
+      merged <- gtools::permutations(
+        n = length(merged), 
+        v = merged, 
+        r = 2)
+      Delta_counterfactual_t[merged] <- 1
+    }
+    # return
+    return(Delta_counterfactual_t)
+  }
+```
+
+```{r, echo = TRUE}
+Delta_counterfactual[[1]]
+Delta_counterfactual[[T]]
+```
+
+2. Compute the counterfactual price using the iteration with `update_price`. You can start the iteration from the equilibrium price. Show the average percentage change in the price for each product. In theory, the price of any product should not drop. But some prices can slightly drop because of the numerical errors.
+
+```{r, echo = TRUE, eval = FALSE}
+logp <- log(p_actual)
+p_new <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
+distance <- 10000
+while (distance > lambda) {
+  p_old <- p_new
+  p_new <- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
+  distance <- max(abs(p_new - p_old))
+  print(distance)
+}
+p_counterfactual <- p_new
+save(p_counterfactual, file = "data/A5_price_counterfactual.RData")
+```
+
+```{r}
+# load
+load(file = "data/A5_price_counterfactual.RData")
+# make new data frame
+M_counterfactual <- M 
+M_counterfactual[, "p_actual"] <- 0
+M_counterfactual[M_counterfactual$j > 0, "p_actual"] <- p_actual
+M_counterfactual[, "p_counterfactual"] <- 0
+M_counterfactual[M_counterfactual$j > 0, "p_counterfactual"] <- p_counterfactual
+p_change <- M_counterfactual %>%
+  dplyr::filter(j > 0) %>%
+  dplyr::mutate(p_change = (p_counterfactual - p_actual) / p_actual) %>%
+  dplyr::group_by(j) %>%
+  dplyr::summarise(p_change = mean(p_change)) %>%
+  dplyr::ungroup()
+```
+```{r, results = "asis"}
+kable(p_change)
+```
+
+3. Write a function `compute_producer_surplus(p, marginal_cost, X, M, V, beta, sigma, mu, omega)` that returns the producer surplus for each product in each market. Compute the actual and counterfactual producer surplus under the estimated marginal costs. Show the average percentage change in the producer surplus for each product.
+
+```{r, echo = TRUE}
+# compute actual producer surplus
+producer_surplus_actual <-
+  compute_producer_surplus(p_actual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)
+summary(producer_surplus_actual)
+# compute counterfactual producer surplus
+producer_surplus_counterfactual <-
+  compute_producer_surplus(p_counterfactual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)
+summary(producer_surplus_counterfactual)
+```
+```{r}
+M_counterfactual[, "producer_surplus_actual"] <- 0
+M_counterfactual[M_counterfactual$j > 0, "producer_surplus_actual"] <- 
+  producer_surplus_actual
+M_counterfactual[, "producer_surplus_counterfactual"] <- 0
+M_counterfactual[M_counterfactual$j > 0, "producer_surplus_counterfactual"] <- 
+  producer_surplus_counterfactual
+producer_surplus_change <- M_counterfactual %>%
+  dplyr::filter(j > 0) %>%
+  dplyr::mutate(producer_surplus_change = 
+                  (producer_surplus_counterfactual - producer_surplus_actual) /
+                  producer_surplus_actual) %>%
+  dplyr::group_by(j) %>%
+  dplyr::summarise(producer_surplus_change = mean(producer_surplus_change)) %>%
+  dplyr::ungroup()
+```
+```{r, results = "asis"}
+kable(producer_surplus_change)
+```
+
+4. Write a function `compute_consumer_surplus(p, X, M, V, beta, sigma, mu, omega)` that returns the consumer surplus for each consumer in each market. Compute the actual and counterfactual consumer surplus under the estimated marginal costs. Show the percentage change in the total consumer surplus.
+
+```{r, echo = TRUE}
+# compute actual consumer surplus
+consumer_surplus_actual <- 
+  compute_consumer_surplus(p_actual, X, M, V, beta, sigma, mu, omega)
+summary(consumer_surplus_actual)
+# compute counterfactual consumer surplus
+consumer_surplus_counterfactual <- 
+  compute_consumer_surplus(p_counterfactual, X, M, V, beta, sigma, mu, omega)
+summary(consumer_surplus_counterfactual)
+```
+
+```{r, echo = TRUE}
+consumer_surplus_change <- 
+  (sum(consumer_surplus_counterfactual) - 
+     sum(consumer_surplus_actual)) /
+  sum(consumer_surplus_actual)
+consumer_surplus_change
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
