@@ -324,8 +324,8 @@ sd_p &lt;- 0.05</code></pre>
 <p><span class="math display">\[
 \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
 \begin{cases}
-\frac{1}{N} \sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)[1 - s_{jt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j = k\\
-- \frac{1}{N}\sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)s_{kt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j \neq k.
+\frac{1}{N} \sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)[1 - \sigma_{ijt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)\sigma_{ikt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j \neq k.
 \end{cases}
 \]</span></p>
 <p>The returned object should be a list across markets and each element of the list should be <span class="math inline">\(J_t \times J_t\)</span> matrix whose <span class="math inline">\((j, k)\)</span>-th element is <span class="math inline">\(\partial s_{jt}/\partial p_{it}\)</span> (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.</p>
@@ -372,7 +372,7 @@ derivative_share_smooth[[1]]</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)</code> that receives a price vector <span class="math inline">\(p_t^{(r)}\)</span> and returns <span class="math inline">\(p_t^{(r + 1)}\)</span> by: <span class="math display">\[
 p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
-\]</span> The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector, we pass log price and exponentiate inside the function. Iterate this untill <span class="math inline">\(\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| &lt; \lambda\)</span>, for example with <span class="math inline">\(\lambda = 10^{-6}\)</span>. This iteration may or may not converge. The convergence depends on the parameters and the realization of the shocks. If the algorithm does not converge, first check the code.</li>
+\]</span> The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector, we pass log price and exponentiate inside the function. Iterate this until <span class="math inline">\(\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| &lt; \lambda\)</span>, for example with <span class="math inline">\(\lambda = 10^{-6}\)</span>. This iteration may or may not converge. The convergence depends on the parameters and the realization of the shocks. If the algorithm does not converge, first check the code.</li>
 </ol>
 <pre class="r"><code># set the threshold
 lambda &lt;- 1e-6
@@ -387,90 +387,8 @@ while (distance &gt; lambda) {
   p_new &lt;- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta)
   distance &lt;- max(abs(p_new - p_old))
   print(distance)
-}</code></pre>
-<pre><code>## [1] 1.683805
-## [1] 1.055594
-## [1] 0.9578697
-## [1] 0.6303337
-## [1] 0.6058834
-## [1] 0.7346027
-## [1] 0.9801327
-## [1] 1.263599
-## [1] 0.7097062
-## [1] 0.2780246
-## [1] 0.1694882
-## [1] 0.08928959
-## [1] 0.05142777
-## [1] 0.04043507
-## [1] 0.0399871
-## [1] 0.0395096
-## [1] 0.0389104
-## [1] 0.0381119
-## [1] 0.03911002
-## [1] 0.04123341
-## [1] 0.04364538
-## [1] 0.04627273
-## [1] 0.04899987
-## [1] 0.05165676
-## [1] 0.05401294
-## [1] 0.05578469
-## [1] 0.05666341
-## [1] 0.05636839
-## [1] 0.05471604
-## [1] 0.05168331
-## [1] 0.04743613
-## [1] 0.04230359
-## [1] 0.03670462
-## [1] 0.03105713
-## [1] 0.02570414
-## [1] 0.02087672
-## [1] 0.0166928
-## [1] 0.01317887
-## [1] 0.01029959
-## [1] 0.007985249
-## [1] 0.006152437
-## [1] 0.004717466
-## [1] 0.00360377
-## [1] 0.002745174
-## [1] 0.002086603
-## [1] 0.001583406
-## [1] 0.001200051
-## [1] 0.0009086433
-## [1] 0.0006875022
-## [1] 0.0005198974
-## [1] 0.0003929903
-## [1] 0.0002969686
-## [1] 0.000228611
-## [1] 0.0001896157
-## [1] 0.000157256
-## [1] 0.0001304079
-## [1] 0.000108136
-## [1] 8.966269e-05
-## [1] 7.434167e-05
-## [1] 6.163617e-05
-## [1] 5.110044e-05
-## [1] 4.236447e-05
-## [1] 3.512119e-05
-## [1] 2.911578e-05
-## [1] 2.413686e-05
-## [1] 2.000911e-05
-## [1] 1.658708e-05
-## [1] 1.375018e-05
-## [1] 1.139839e-05
-## [1] 9.448785e-06
-## [1] 7.832606e-06
-## [1] 6.492842e-06
-## [1] 5.382225e-06
-## [1] 4.461569e-06
-## [1] 3.698387e-06
-## [1] 3.065746e-06
-## [1] 2.54132e-06
-## [1] 2.106599e-06
-## [1] 1.74624e-06
-## [1] 1.447524e-06
-## [1] 1.199906e-06
-## [1] 9.946451e-07</code></pre>
-<pre class="r"><code># save
+}
+# save
 p_actual &lt;- p_new
 save(p_actual, file = &quot;data/A5_price_actual.RData&quot;)</code></pre>
 <!-- 10. Write a function `compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta)` that computes: -->
@@ -546,183 +464,8 @@ while (distance &gt; lambda) {
   p_new &lt;- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
   distance &lt;- max(abs(p_new - p_old))
   print(distance)
-}</code></pre>
-<pre><code>## [1] 0.8956289
-## [1] 0.3532223
-## [1] 0.1030665
-## [1] 0.04484674
-## [1] 0.02509084
-## [1] 0.01513088
-## [1] 0.01346342
-## [1] 0.01204417
-## [1] 0.01082855
-## [1] 0.009780035
-## [1] 0.00886933
-## [1] 0.008073094
-## [1] 0.007372688
-## [1] 0.006753133
-## [1] 0.006202301
-## [1] 0.00571029
-## [1] 0.005268952
-## [1] 0.00487153
-## [1] 0.004512378
-## [1] 0.00418675
-## [1] 0.003890627
-## [1] 0.003620588
-## [1] 0.003373704
-## [1] 0.003147453
-## [1] 0.002939656
-## [1] 0.002748417
-## [1] 0.002572083
-## [1] 0.002409205
-## [1] 0.002258509
-## [1] 0.002118871
-## [1] 0.001989293
-## [1] 0.00186889
-## [1] 0.001756873
-## [1] 0.001652535
-## [1] 0.001555244
-## [1] 0.00146443
-## [1] 0.00137958
-## [1] 0.00130023
-## [1] 0.001225962
-## [1] 0.001156394
-## [1] 0.00109118
-## [1] 0.001030003
-## [1] 0.0009725766
-## [1] 0.0009186361
-## [1] 0.0008679401
-## [1] 0.000820267
-## [1] 0.000775413
-## [1] 0.0007331905
-## [1] 0.0006934266
-## [1] 0.0006559615
-## [1] 0.0006206477
-## [1] 0.0005873485
-## [1] 0.0005559373
-## [1] 0.0005262967
-## [1] 0.0004983177
-## [1] 0.0004718987
-## [1] 0.0004469453
-## [1] 0.0004233698
-## [1] 0.0004010899
-## [1] 0.0003800294
-## [1] 0.0003601166
-## [1] 0.0003412849
-## [1] 0.0003234717
-## [1] 0.0003066185
-## [1] 0.0002906705
-## [1] 0.0002755764
-## [1] 0.0002612881
-## [1] 0.0002477603
-## [1] 0.0002349505
-## [1] 0.0002228189
-## [1] 0.000211328
-## [1] 0.0002004426
-## [1] 0.0001901293
-## [1] 0.0001803571
-## [1] 0.0001710965
-## [1] 0.0001623198
-## [1] 0.0001540008
-## [1] 0.000146115
-## [1] 0.000138639
-## [1] 0.0001315511
-## [1] 0.0001248305
-## [1] 0.0001184577
-## [1] 0.0001124143
-## [1] 0.0001066827
-## [1] 0.0001012467
-## [1] 9.609054e-05
-## [1] 9.119962e-05
-## [1] 8.656001e-05
-## [1] 8.215858e-05
-## [1] 7.798287e-05
-## [1] 7.402112e-05
-## [1] 7.02622e-05
-## [1] 6.669557e-05
-## [1] 6.331126e-05
-## [1] 6.009981e-05
-## [1] 5.70523e-05
-## [1] 5.416024e-05
-## [1] 5.141561e-05
-## [1] 4.881083e-05
-## [1] 4.633868e-05
-## [1] 4.399235e-05
-## [1] 4.176538e-05
-## [1] 3.965164e-05
-## [1] 3.764532e-05
-## [1] 3.574092e-05
-## [1] 3.393322e-05
-## [1] 3.221728e-05
-## [1] 3.05884e-05
-## [1] 2.904215e-05
-## [1] 2.757429e-05
-## [1] 2.618085e-05
-## [1] 2.485801e-05
-## [1] 2.360219e-05
-## [1] 2.240997e-05
-## [1] 2.127811e-05
-## [1] 2.020355e-05
-## [1] 1.918337e-05
-## [1] 1.821481e-05
-## [1] 1.729525e-05
-## [1] 1.64222e-05
-## [1] 1.559329e-05
-## [1] 1.480629e-05
-## [1] 1.405907e-05
-## [1] 1.334962e-05
-## [1] 1.267602e-05
-## [1] 1.203645e-05
-## [1] 1.14292e-05
-## [1] 1.085261e-05
-## [1] 1.030515e-05
-## [1] 9.785339e-06
-## [1] 9.291772e-06
-## [1] 8.823125e-06
-## [1] 8.378137e-06
-## [1] 7.955612e-06
-## [1] 7.554413e-06
-## [1] 7.173463e-06
-## [1] 6.811738e-06
-## [1] 6.468266e-06
-## [1] 6.142125e-06
-## [1] 5.832439e-06
-## [1] 5.538378e-06
-## [1] 5.259151e-06
-## [1] 4.994009e-06
-## [1] 4.742242e-06
-## [1] 4.503174e-06
-## [1] 4.276164e-06
-## [1] 4.060602e-06
-## [1] 3.855912e-06
-## [1] 3.661544e-06
-## [1] 3.476978e-06
-## [1] 3.301718e-06
-## [1] 3.135296e-06
-## [1] 2.977264e-06
-## [1] 2.827201e-06
-## [1] 2.684704e-06
-## [1] 2.549391e-06
-## [1] 2.420899e-06
-## [1] 2.298886e-06
-## [1] 2.183023e-06
-## [1] 2.073002e-06
-## [1] 1.968526e-06
-## [1] 1.869317e-06
-## [1] 1.775109e-06
-## [1] 1.685649e-06
-## [1] 1.600699e-06
-## [1] 1.52003e-06
-## [1] 1.443428e-06
-## [1] 1.370687e-06
-## [1] 1.301612e-06
-## [1] 1.236018e-06
-## [1] 1.17373e-06
-## [1] 1.114582e-06
-## [1] 1.058415e-06
-## [1] 1.005078e-06
-## [1] 9.544299e-07</code></pre>
-<pre class="r"><code>p_counterfactual &lt;- p_new
+}
+p_counterfactual &lt;- p_new
 save(p_counterfactual, file = &quot;data/A5_price_counterfactual.RData&quot;)</code></pre>
 <table>
 <thead>

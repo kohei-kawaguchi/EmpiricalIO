@@ -701,7 +701,7 @@ V(s) &amp;= \mathbb{E}\{V(s, \epsilon)|s\}\\
 \begin{split}
 p(a|s) = \mathbb{P}\Bigg\{&amp;\pi(a , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a, s, s&#39;) + \epsilon_a \ge\\
 &amp;\pi(a&#39; , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a&#39;, s, s&#39;) + \epsilon_{a&#39;}, \forall a&#39; \in A \Bigg\}\\
-&amp;\equiv \Lambda(V, s).
+&amp;\equiv \Lambda(V, a, s).
 \end{split}
 \end{equation}\]</span></li>
 </ul>
@@ -724,7 +724,7 @@ p = \Lambda(V) = \Lambda[\varphi(p)] \equiv \Psi(p).
 <li>If <span class="math inline">\(\epsilon\)</span> is drawn from an i.i.d. type-I extreme value distribution, we can derive the mapping from the ex-ante value function to the conditional choice probability in the closed form:
 <span class="math display">\[\begin{equation}
 \begin{split}
-\Lambda(V, s) &amp;= \mathbb{P}\{\pi(a , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a, s, s&#39;) + \epsilon_{a} \ge\\
+\Lambda(V, a, s) &amp;= \mathbb{P}\{\pi(a , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a, s, s&#39;) + \epsilon_{a} \ge\\
  &amp; \pi(a&#39; , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a&#39;, s, s&#39;) + \epsilon_{a&#39;}, \forall a&#39; \in A\}\\
 &amp;=\frac{\exp[\pi(a , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a, s, s&#39;)]}{\sum_{a&#39; \in A} \exp[\pi(a&#39; , s) + \beta \sum_{s&#39; \in S} V(s&#39;) g(a&#39;, s, s&#39;)]}.
 \end{split}
@@ -751,6 +751,7 @@ where <span class="math inline">\(\gamma\)</span> is Euler’s constant.</li>
 <li>The identification of the single-agent dynamic decision model is studied in <span class="citation">Magnac &amp; Thesmar (<a href="#ref-magnac_identifying_2002">2002</a>)</span>.</li>
 <li>The model primitives are <span class="math inline">\((\Pi, F, \beta, G)\)</span>.</li>
 <li>The transition probability <span class="math inline">\(G\)</span> is directly identified from the data because <span class="math inline">\(a, s, s&#39;\)</span> are observed by econometrician.</li>
+<li>In the same manner, we can directly identify the optimal conditional choice probability <span class="math inline">\(p\)</span> because <span class="math inline">\(a\)</span> and <span class="math inline">\(s\)</span> are observed by econometrician.</li>
 <li>It is known that the model is in general not identified.</li>
 <li>The discount factor <span class="math inline">\(\beta\)</span> is hard to identify.</li>
 <li>It determines the weights between the current and future profits.</li>
@@ -818,7 +819,7 @@ V^{\theta (r + 1)} = \Phi^{\theta}(V^{\theta (r)}).
 <li>Then, we can derive the optimal choice probability by:
 <span class="math display">\[\begin{equation}
 \begin{split}
-p^{\theta (\ast)} = \varphi\left[V^{\theta (\ast)}\right].
+p^{\theta (\ast)} = \Lambda\left[V^{\theta (\ast)}\right].
 \end{split}
 \end{equation}\]</span></li>
 <li>These are the ex-ante value function and optimal conditional choice probabilities under parameters <span class="math inline">\(\theta\)</span>.</li>

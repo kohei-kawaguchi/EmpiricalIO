@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-03-23}
+    \date{Last updated: 2019-03-25}
 
 \usepackage{booktabs}
 
@@ -7833,7 +7833,7 @@ Probability}\label{mapping-from-an-ex-ante-value-function-to-an-optimal-conditio
   \begin{split}
   p(a|s) = \mathbb{P}\Bigg\{&\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_a \ge\\
   &\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}\\
-  &\equiv \Lambda(V, s).
+  &\equiv \Lambda(V, a, s).
   \end{split}
   \end{equation}
 \end{itemize}
@@ -7867,7 +7867,7 @@ Probability}\label{mapping-from-an-ex-ante-value-function-to-an-optimal-conditio
 
   \begin{equation}
   \begin{split}
-  \Lambda(V, s) &= \mathbb{P}\{\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_{a} \ge\\
+  \Lambda(V, a, s) &= \mathbb{P}\{\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_{a} \ge\\
    & \pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A\}\\
   &=\frac{\exp[\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s')]}{\sum_{a' \in A} \exp[\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s')]}.
   \end{split}
@@ -7910,6 +7910,10 @@ Probability}\label{mapping-from-an-ex-ante-value-function-to-an-optimal-conditio
 \item
   The transition probability \(G\) is directly identified from the data
   because \(a, s, s'\) are observed by econometrician.
+\item
+  In the same manner, we can directly identify the optimal conditional
+  choice probability \(p\) because \(a\) and \(s\) are observed by
+  econometrician.
 \item
   It is known that the model is in general not identified.
 \item
@@ -8049,7 +8053,7 @@ Function}\label{solving-for-the-ex-ante-value-function}
 
   \begin{equation}
   \begin{split}
-  p^{\theta (\ast)} = \varphi\left[V^{\theta (\ast)}\right].
+  p^{\theta (\ast)} = \Lambda\left[V^{\theta (\ast)}\right].
   \end{split}
   \end{equation}
 \item
@@ -11620,8 +11624,8 @@ The value of the auxiliary parameters are set as follows:
 \[
 \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
 \begin{cases}
-\frac{1}{N} \sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)[1 - s_{jt}(p_t, x_t, \xi_t)] &\text{   if   } j = k\\
-- \frac{1}{N}\sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)s_{kt}(p_t, x_t, \xi_t)] &\text{   if   } j \neq k.
+\frac{1}{N} \sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)[1 - \sigma_{ijt}(p_t, x_t, \xi_t)] &\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)\sigma_{kt}(p_t, x_t, \xi_t)] &\text{   if   } j \neq k.
 \end{cases}
 \]
 

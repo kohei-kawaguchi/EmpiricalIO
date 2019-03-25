@@ -245,7 +245,7 @@ V(s) &= \mathbb{E}\{V(s, \epsilon)|s\}\\
 \begin{split}
 p(a|s) = \mathbb{P}\Bigg\{&\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_a \ge\\
 &\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}\\
-&\equiv \Lambda(V, s).
+&\equiv \Lambda(V, a, s).
 \end{split}
 \end{equation}
 
@@ -270,7 +270,7 @@ $$
 - If $\epsilon$ is drawn from an i.i.d. type-I extreme value distribution, we can derive the mapping from the ex-ante value function to the conditional choice probability in the closed form:
 \begin{equation}
 \begin{split}
-\Lambda(V, s) &= \mathbb{P}\{\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_{a} \ge\\
+\Lambda(V, a, s) &= \mathbb{P}\{\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_{a} \ge\\
  & \pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A\}\\
 &=\frac{\exp[\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s')]}{\sum_{a' \in A} \exp[\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s')]}.
 \end{split}
@@ -295,6 +295,7 @@ where $\gamma$ is Euler's constant.
 - The identification of the single-agent dynamic decision model is studied in @magnac_identifying_2002.
 - The model primitives are $(\Pi, F, \beta, G)$.
 - The transition probability $G$ is directly identified from the data because $a, s, s'$ are observed by econometrician.
+- In the same manner, we can directly identify the optimal conditional choice probability $p$ because $a$ and $s$ are observed by econometrician.
 - It is known that the model is in general not identified.
 - The discount factor $\beta$ is hard to identify. 
   - It determines the weights between the current and future profits.
@@ -352,7 +353,7 @@ $$
 - Then, we can derive the optimal choice probability by:
 \begin{equation}
 \begin{split}
-p^{\theta (\ast)} = \varphi\left[V^{\theta (\ast)}\right].
+p^{\theta (\ast)} = \Lambda\left[V^{\theta (\ast)}\right].
 \end{split}
 \end{equation}
 - These are the ex-ante value function and optimal conditional choice probabilities under parameters $\theta$.

@@ -562,8 +562,8 @@ sd_p &lt;-<span class="st"> </span><span class="fl">0.05</span></code></pre></di
 <p><span class="math display">\[
 \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
 \begin{cases}
-\frac{1}{N} \sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)[1 - s_{jt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j = k\\
-- \frac{1}{N}\sum_{i = 1}^N \alpha_i s_{jt}(p_t, x_t, \xi_t)s_{kt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j \neq k.
+\frac{1}{N} \sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)[1 - \sigma_{ijt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)\sigma_{kt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j \neq k.
 \end{cases}
 \]</span></p>
 <p>The returned object should be a list across markets and each element of the list should be <span class="math inline">\(J_t \times J_t\)</span> matrix whose <span class="math inline">\((j, k)\)</span>-th element is <span class="math inline">\(\partial s_{jt}/\partial p_{it}\)</span> (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.</p>
