@@ -1,13 +1,11 @@
 # Dynamic Game {#dynamicgame}
 
-## Dynamic Game
+## Motivations
 
-### Dynamic Game
+## Multiple-Agent Model
 
 - There are multiple players in an industry.
 - There is a strategic interaction across players.
-
-
 
 ### Setting
 - There is $i = 1, \cdots, N$ players.
@@ -21,13 +19,13 @@
 ### Timing of the Model
 
 - At period $t$:
-
-- State $s^t = (s^t_1, \cdots, s^t_N)' \in S$ is publicly observed.
-- Choice-specific profitability shocks $\epsilon^t_i \in \mathbb{R}^{K + 1}$ are drawn from $F(\cdot|s^t_i, s^t_{-i})$ i.i.d. and privately observed by player $i$ for each $i = 1, \cdots, N$.
-- Actions $a^t_i \in A_i, i = 1, \cdots, N$ are chosen simultaneously.
+- State $s_t = (s_{t1}, \cdots, s_{tN})' \in S$ is publicly observed.
+- Choice-specific profitability shocks $\epsilon_{ti} \in \mathbb{R}^{K + 1}$ are drawn from $F(\cdot|s_{ti}, _{t,-i})$ i.i.d. and privately observed by player $i$ for each $i = 1, \cdots, N$.
+- $\epsilon_{ti}$ is independent across $i$.
+- Actions $a_{ti} \in A_i, i = 1, \cdots, N$ are chosen simultaneously.
 - The state evolves according to a transition probability:
 \begin{equation}
-g(a, s, s') \equiv \mathbb{P}\{s^{t + 1} = s'|s^t = s, a^t = a\},
+g(a, s, s') \equiv \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
 \end{equation}
 
 \begin{equation}
@@ -35,9 +33,9 @@ G \equiv
 \begin{pmatrix}
 g(0, 1, 1) & \cdots & g(0, 1, m_s)\\
 \vdots & & \vdots \\
-g(0, m_s, 1) & \cdots & g(0, m_s, m_s)\\
-&\vdots& \\
 g(m_a, 1, 1) & \cdots & g(m_a, 1, m_s)\\
+&\vdots& \\
+g(0, m_s, 1) & \cdots & g(0, m_s, m_s)\\
 \vdots & & \vdots \\
 g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
 \end{pmatrix}.
@@ -48,25 +46,27 @@ g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
 
 ### Period Profit
 
-- When the state is $s^t$, action profile is $a^t$, and the profitability shocks are $\epsilon^t$, the period payoff of player $i$ is:
+- When the state is $s_t$, action profile is $a_t$, and the profitability shocks are $\epsilon_t$, the period payoff of player $i$ is:
 \begin{equation}
-\pi_i(a^t, s^t) + \sum_{k = 0}^K \epsilon_i^{tk}1\{a_i^t = k\}, i = 1, \cdots, N,
+\pi_i(a_t, s_t) + \sum_{k = 0}^K \epsilon_{tik}1\{a_{ti} = k\}, i = 1, \cdots, N,
 \end{equation}
-where $\pi_i(a^t, s^t)$ is the mean period profit of player $i$.
+where $\pi_i(a_t, s_t)$ is the mean period profit of player $i$.
+- Let:
+$$
+\epsilon_{ti a_{ti}} = \sum_{k = 0}^K \epsilon_{tik}1\{a_{ti} = k\}
+$$
+be the choice-specific profitability shock.
 
 
-
-### Period Profit
-
-- Let $\Pi_i$ be:
+- Let $\Pi_i$ summarize the choice-specific mean period payoffs at each state:
 \begin{equation}
 \Pi_i \equiv
 \begin{pmatrix}
 \pi_i(0, 1)\\
 \vdots\\
-\pi_i(0, m_s)\\
-\vdots\\
 \pi_i(m_a, 1)\\
+\vdots\\
+\pi_i(0, m_s)\\
 \vdots\\
 \pi_i(m_a, m_s)
 \end{pmatrix}.
@@ -74,15 +74,44 @@ where $\pi_i(a^t, s^t)$ is the mean period profit of player $i$.
 - The profit of player $i$ is the discounted sum of future payoffs with discount factor $\beta < 1$.
 
 
+### Belief
+
+- Let $\sigma_i(a|s)$ be the player $i$'s belief about the possibility of having action profile $a$ when the realized state is $s$, which may or may not coincide with the equilibrium probability.
+- Let $\sigma_i$ stack them up as:
+$$
+\sigma_i(s) =
+\begin{pmatrix}
+\sigma_i(0|s)\\
+\vdots\\
+\sigma_i(m_a|s),
+\end{pmatrix}
+$$
+$$
+\sigma_i =
+\begin{pmatrix}
+\sigma_i(1)\\
+\vdots \\
+\sigma_i(m_s)\\
+\end{pmatrix},
+$$
+and let $\sigma$ be:
+$$
+\sigma = 
+\begin{pmatrix}
+\sigma_1 \\
+\vdots\\
+\sigma_N
+\end{pmatrix}.
+$$
+
+
 
 ### Markov Perfect Equilibrium
 
-- We focus on pure-strategy Markov perfect equilibrium.
-- A collection $(a, \sigma) = (a_1, \cdots, a_N, \sigma_1, \cdots, \sigma_N)$ is a Markov perfect equilibrium if:
-
-- for all $i$, $a_i$ is a best response to $a_{-i}$ given the belief $\sigma_i$ at all state $s \in S$;
-- all players use Markovian strategies;
-- for all $i$, the belief $\sigma_i$ is consistent with the strategy $a$.
+- A collection $(a, \sigma) = (a_1, \cdots, a_N, \sigma_1, \cdots, \sigma_N)$ is a pure-strategy __Markov perfect equilibrium__ if:
+    - All players use Markovian strategies;
+    - For all $i$, $a_i$ is a best response to $a_{-i}$ given the belief $\sigma_i$ at all state $s \in S$;
+    - For all $i$, the belief $\sigma_i$ is consistent with the strategy $a$.
 
 
 
@@ -98,28 +127,32 @@ V_i(\sigma_i, s) &= \sum_{a \in A} \sigma_i(a|s)[\pi_i(a, s) + \beta \sum_{s' \i
 \end{split}
 \end{equation}
 
-
-
-### Ex-ante Value Function
-
-- By stacking up over the state, it summarizes to:
-
+- By stacking up over the state, we obtain a matrix representation:
 \begin{equation}
-\begin{split}
-V_i(\sigma_i) &= \sigma_i \Pi_i + D_i(\sigma_i) + \beta \sigma_i G V_i(\sigma_i)\\
-& = [I_{m_s} - \beta \sigma_i G]^{-1}[\sigma_i \Pi_i + D_i(\sigma_i)].
-\end{split}
+V_i(\sigma_i) = \Sigma_i(\sigma_i) \Pi_i + \Sigma_i(\sigma_i) E_i(\sigma_i) + \beta \Sigma_i(\sigma_i) G V_i(\sigma_i).
 \end{equation}
-
 where
-
 \begin{equation}
-\begin{split}
-D_i(\sigma_i) &= (\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|1), \cdots,\\
-& \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|m_s))'
-\end{split}
+\Sigma_i(\sigma_i) = 
+\begin{pmatrix}
+\sigma_i(1)' & & \\
+& \ddots & \\
+& & \sigma_i(m_s)'
+\end{pmatrix},
 \end{equation}
-and $m_s \times (m_a m_s)$-dimensional matrix $\sigma_i$ contains $\sigma_i(a|s)$ in row $s$, column $(a, s)$ and zeros in row $s$ and column $(a, s'), s' \neq s$.
+and
+\begin{equation}
+E_i(\sigma_i) = 
+\begin{pmatrix}
+\mathbb{E}\{\epsilon_{i0}|a_i = 0\}\\
+\vdots\\
+\mathbb{E}\{\epsilon_{iK}|a_i = K\}.
+\end{pmatrix}.
+\end{equation}
+- If $I - \beta \Sigma_i(\sigma_i)G$ is invertible, we have:
+$$
+V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}\Sigma_i(\sigma_i)[\Pi_i + E_i(\sigma_i)].
+$$
 
 
 
@@ -141,10 +174,10 @@ v_i(\sigma_i, a_i, s) &= \sum_{a_{-i} \in A_{-i}} \sigma_i(a_{-i}|s)[ \pi_i(a_i,
 
 - When the state is $s$ and profitability shock is $\epsilon_i$, $a_i$ is optimal for player $i$ under belief $\sigma_i$ if and only if:
 \begin{equation}
-v_i(\sigma_i, a_i, s) + \epsilon_i^{a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_i^{a_i'}, \forall a_i' \in A_i.
+v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}, \forall a_i' \in A_i.
 \end{equation} 
 - This condition is similar to the optimality condition in single-agent dynamic models.
-- Only difference is that the belief is now about the others' actions in addition to about the future behaviors.
+- Only difference is that the belief is now about the others' actions in addition to about own future behaviors.
 
 
 
@@ -154,46 +187,63 @@ v_i(\sigma_i, a_i, s) + \epsilon_i^{a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_
 
 \begin{equation}
 \begin{split}
-p(a_i|s, \sigma_i) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_i^{a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_i^{a_i'}, \forall a_i' \in A_i\}\\
-&=\int \prod_{a_i' \neq a_i}1\{v_i(\sigma_i, a_i, s) + \epsilon_i^{a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_i^{a_i'}\} d F\\
-&\equiv \Psi_i(a_i, s, \sigma_i).
+p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}, \forall a_i' \in A_i\}\\
+&=\int \prod_{a_i' \neq a_i}1\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}\} d F\\
+&\equiv \Psi(\sigma_i, a_i, s).
 \end{split}
 \end{equation}
-
-
-
-### Optimal Conditional Choice Probability
-
-- Letting $p$ and $\sigma$ as:
-
-\begin{equation}
-\begin{split}
-&p = (p_1', \cdots, p_N')',\\
-&p_i = (p(0|1), \cdots, p(K|1), \cdots, p(0|m_s), \cdots, p(K|m_s))',
-\end{split}
-\end{equation}
-
-\begin{equation}
-\begin{split}
-&\sigma = (\sigma_1', \cdots, \sigma_N')',\\
-&p_i = (\sigma_i(0|1), \cdots, \sigma_i(K|1), \cdots, \sigma_i(0|m_s), \cdots, \sigma_i(K|m_s))',
-\end{split}
-\end{equation}
-and stacking up the optimality condition, we obtain:
-\begin{equation}
-p = \Psi(\sigma),
-\end{equation}
-as the optimality condition of players.
-
-
 
 ### Equilibrium Condition
 
-- Under Markov perfect equilibrium, it has to hold:
+- Let:
+$$
+p(a|s) = \prod_{i = 1}^N p(a_i|s).
+$$
+and
+$$
+\Psi(\sigma, a, s) = \prod_{i = 1}^N \Psi(\sigma_i, a_i, s).
+$$
+- Stacking them up as:
+$$
+p(s) = 
+\begin{pmatrix}
+p(0|s) \\
+\vdots \\
+p(m_a|s)
+\end{pmatrix},
+$$
+$$
+p = 
+\begin{pmatrix}
+p(1)\\
+\vdots\\
+p(m_s)
+\end{pmatrix},
+$$
+
+$$
+\Psi(\sigma, s) = 
+\begin{pmatrix}
+\Psi(\sigma, 0, s) \\
+\vdots \\
+\Psi(\sigma, m_a, s) \\
+\end{pmatrix},
+$$
+$$
+\Psi(\sigma) = 
+\begin{pmatrix}
+\Psi(\sigma, 1)
+\vdots\\
+\Psi(\sigma, m_s)
+\end{pmatrix}.
+$$
+
+
+- @pesendorfer_asymptotic_2008 prove the following statement:
 \begin{equation}
 p = \Psi(p).
 \end{equation}
-- In any Markov perfect equilibrium, the optimal conditional choice probability vector $p$ satisfies the equality. 
+- In any Markov perfect equilibrium, the optimal conditional choice probability vector $p$ satisfies the above equality. 
 - Conversely, any $p$ that satisfies the equilibrium condition above can be derived as the optimal conditional choice probability of a Markov perfect equilibrium strategy profile.
 
 
@@ -201,12 +251,11 @@ p = \Psi(p).
 
 ### Equilibrium Condition
 
-- By Brouwer's fixed-point theorem, a Markov perfect equilibrium exists. But Markov perfect equilibria need not be unique.
-
-- You may not be able to derive the likelihood.
-
-- If the payoff function and transition probability is symmetric across players, then symmetric Markov perfect equilibrium exists.
-
+- @pesendorfer_asymptotic_2008 also show the following statements.
+- By Brouwer's fixed-point theorem, a Markov perfect equilibrium exists. 
+- But Markov perfect equillibria need not be unique.
+- Therefore, we may not be able to derive the likelihood.
+- If the payoff function and transition probability is symmetric across players, then __symmetric__ Markov perfect equilibrium exists.
 - This significantly reduces the dimensionality of the problem.
 
 
@@ -219,13 +268,8 @@ p = \Psi(p).
 - We often assume that the data is generated from a single path of play.
 - Under Markov perfect equilibrium assumption, this means that players make same choices over time at the same state $(s, \epsilon_i)$.
 - This assumption rules out equilibrium switches over time.
-
-
-
-### Single Path of Play
-
-- If you use cross-sectional data, you have to keep this point in your mind, because then you observe data generated from multiple paths across markets. 
-- The assumption that the same equilibrium is played across markets needs further justification.
+- If we use cross-sectional data, we have to keep this point in our mind, because then we observe data generated from multiple paths across markets. 
+- The assumption that the same equilibrium is played across markets may need further justification.
 
 
 
@@ -236,24 +280,19 @@ p = \Psi(p).
 - $\beta$ and $F$ are fixed.
 - $(\Pi_1, \cdots, \Pi_N)$ contains $m_a \times m_s \times N$ unknown parameters.
 - On the other hand, the equilibrium condition only has $K \times m_s \times N$ restrictions.
-
-
-
-### Identification
-
 - This time, the normalization $\pi_i(0, a_{-i}|s) = 0$ is not sufficient. 
 - It is often assumed that the payoff of a player $i$ is not directly influence by the state of other players:
 \begin{equation}
 \pi_i(a, s_i, s_{-i}) = \pi_i(a, s_i, s_{-i}'), \forall a \in A, s_i \in S_i, s_{-i}, s_{-i}' \in S_{-i}.
 \end{equation}
 - Under these restrictions, the number of unknown parameters is $K (K + 1)^{N - 1} \times L \times N$.
-- So, if $L \ge K + 1$, i.e., the number of states is larger than the number of actions, the order condition is satisfied.
+- So, if $L \ge K + 1$, i.e., the number of states is larger than the number of actions, at least the order condition is satisfied.
 
 
 
 ### Estimation: CCP Approach
 
-- Because dynamic games often have multiple equilibria, nested-fixed point algorithm fails to pin down the likelihood of data.
+- Because dynamic games often have multiple equillibria, nested-fixed point algorithm fails to pin down the likelihood of data.
 - Instead we use CCP approach exploiting the equilibrium condition:
 \begin{equation}
 p = \Psi^\theta(p) = \Psi^{(\theta_1, \theta_2)}(p),
@@ -271,44 +310,92 @@ where $W$ is some weighting matrix.
 ### Computing $\Psi$
 
 - Mapping from conditional choice probabilities to ex-ante value function:
+$$
+V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1}\Sigma_i(\hat{p})[\Pi_i + E_i(\hat{p})].
+$$
 
-\begin{equation}
-\begin{split}
-V_i(s) &= \varphi_i^{\theta}(p, s)\\
-&= [I_{m_s} - \beta \tilde{p} G]^{-1}[\tilde{p} \Pi_i + D_i(\tilde{p})],
-\end{split}
-\end{equation}
-where $\tilde{p}$ is an arrangement of $p$ such that:
-\begin{equation}
-\tilde{p}(a|s) \equiv \prod_{i = 1}^N p_i(a_i|s). 
-\end{equation}
-
-
-
-### Computing $\Psi$
 
 - Mapping from ex-ante value function \textit{and conditional choice probabilities} to conditional choice probability:
 \begin{equation}
-p_i(a_i|s) =  \mathbb{P}\{v_i(\tilde{p}, a_i, s) + \epsilon_i^{a_i} \ge  v_i(\tilde{p}, a_i', s) + \epsilon_i^{a_i'}, \forall a_i' \in A_i\},
+p_i(a_i|s) =  \mathbb{P}\{v_i(\tilde{p}, a_i, s) + \epsilon_{ia_i} \ge  v_i(\tilde{p}, a_i', s) + \epsilon_{ia_i'}, \forall a_i' \in A_i\},
 \end{equation}
 where
 \begin{equation}
-v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i, a_{-i}, s) + \beta \sum_{s' \in S} g(a_i, a_{-i}, s, s') V_i(\sigma_i, s')].
+v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i, a_{-i}, s) + \beta \sum_{s' \in S} g(a_i, a_{-i}, s, s') V_i(\hat{p}, s')].
+\end{equation}
+- If $\epsilon_{ia}$ follows an i.i.d. type-I extreme value distribution, both $E_i(\hat{p})$ and the second equation have closed-forms.
+
+## With Continuous Dynamic Choice
+
+### Continuous Control
+
+- So far we have assumed that players' actions are discrete.
+- However, continuous controls such as investment prevails in the real world.
+- One way to address this issues is to discretize the data and model everything in a discrete way.
+- How to model continuous controls without discretization?
+- This argument applies to the single-agent models as well.
+- Let $a_{ti} = (a_{tid}, a_{tic}) \in A_i = A_{id} \times A_{ic}$ be a generic action of player $i$ in period $t$, where $A_{id} = \{0, 1, \cdots, K\}$ and $A_{ic} \subset \mathbb{R}$.
+- Let $s_{ti} \in S_i$ be a generic state of player $i$ in period $t$, where $S_i \subset \mathbb{R}^L$.
+- Let $\epsilon_{ti} \in \mathbb{R}^M$ be profitability shocks for player $i$ in period $t$, which are independent across players.
+
+### Period Payoff
+
+- Let $\pi_i(a, s, \epsilon_{ti})$ be the period payoff of player $i$ in period $t$ including the profitability shocks when the action profile is $a$, the state is $s$, and the profitability shocks are $\epsilon_{ti}$.
+- In the discrete choice framework, we assumed additive separability:
+\begin{equation}
+\pi_i(a, s, \epsilon_{ti}) = \pi_i(a, s) + \sum_{k = 0}^K \epsilon_{tik}1\{a_{ti} = k\}.
+\end{equation}
+- For continuous control, we may want to impose a restriction that ensures the monotonicity of the policy function in the profitability shocks, for example:
+\begin{equation}
+\pi_i(a, s, \epsilon_{ti}) = \pi_i(a, s) + \sum_{k = 0}^K \epsilon_{tik} 1\{a_{tid} = k\} + \epsilon_{tic} a_{tic}.
 \end{equation}
 
 
 
-### Bajari, Benkard, and Levine (2007)
+### Policy Function Estimation with Continuous Control
 
-- There are several variants of the CCP approach.
-- The most popular variants is BBL (Bajari, Benkard, and Levine).
-- Given a strategy profile ($\leftrightarrow$ conditional choice probability), we can compute the ex-ante value function analytically or numerically.
+- Let $a_{ic}(s, \epsilon_{i}) = a_{ic}(s, \epsilon_{ic})$ be the policy function of firm $i$ and suppose that it is increasing in $\epsilon_{ic}$.
+- Moreover, assume that we know the distribution of $\epsilon_{ic}$, say, $F_{\epsilon_c}(\cdot|s)$.
+- We can identify the distribution of continuous control $a_{ic}$ conditional on $s$ directly from the data. Let $F_{a_{ic}}(a_{ic}|s)$ be the identified distribution function of $a_{ic}$ conditional on $s$.
+- Then, we can identify the policy function for the continuous control:
+\begin{equation}
+\begin{split}
+F_{a_{ic}}(a|s) &= \mathbb{P}\{a_{ic} \le a|s\}\\
+&= \mathbb{P}\{a_{ic}(s, \epsilon_{ic}) \le a\}\\
+&=\mathbb{P}\{\epsilon_{ic} \le a_{ic}^{-1}(s, a)\}\\
+&=F_c[a_{ic}^{-1}(s, a)|s]\\
+&\Leftrightarrow a = F_{a_{ic}}^{-1}\{F_c[a_{ic}^{-1}(s, a)|s]|s\},
+\end{split}
+\end{equation}
+- Inserting $a = a_{ic}(s, \epsilon_{ic})$ to obtain:
+\begin{equation}
+\begin{split}
+a_{ic}(s, \epsilon_{ic}) &= F_{a_{ic}}^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, a_{ic}(s, \epsilon_{ic}))}_{\epsilon_{ic}}|s]|s\}\\
+& = F_{a_{ic}}^{-1}[F_c^{-1}(\epsilon_{ic}|s)|s].
+\end{split}
+\end{equation}
+
+
+
+### Converting to the Standard Discrete Choice Model
+
+- Inserting the identified policy for the continuous controls, we have:
+
+\begin{equation}
+\begin{split}
+&\pi_i[a_{id}, a_{ic}(s, \epsilon_{ic}), a_{-i}, s, \epsilon_{d}] \\
+&= \pi_i[a_{id}, a_{ic}(s, \epsilon_{ic}), a_{-i}, s] +\sum_{k = 0}^K \epsilon_{ik}1\{a_{id} = k\} + \epsilon_{ic} a_{ic}(s, \epsilon_{ic})
+\end{split}
+\end{equation}
+- Then, we can consider a choice-specific mean value function w.r.t. the discrete control $a_{id}$ by integrating out $\epsilon_{ic}^t$ and others strategies and future behaviors.
+- Therefore, we can identify the optimal conditional choice probability in a reduced-form and from which we can identify the policy function for the discrete choice as well.
+- Then, we can apply the CCP approach to estimate the structural parameters.
+
+### Value Function Based CCP Approach
+
+- @bajari_estimating_2007 proposes an alternative estimation method.
+- The key is to characterize the equilibrium as follows.
 - Let $V_i^{(a_i, a_{-i})}(s)$ be the ex-ante value function associated with strategy profile $(a_i, a_{-i})$.
-
-
-
-### Bajari, Benkard, and Levine (2007)
-
 - The observed $(a_i^*, a_{-i}^*)$ is an equilibrium if:
 \begin{equation}
 V_i^{(a_i^*, a_{-i}^*)}(s) \ge V_i^{(a_i', a_{-i}^*)}(s), \forall a_i' \in A_i,
@@ -319,139 +406,50 @@ for all $s \in S, i = 1, \cdots, N$.
 Q(\theta) = \sum_{s = 1}^{m_s} \sum_{i = 1}^N \sum_{a_i'} \min\{V_i^{(a_i^*, a_{-i}^*)}(s) - V_i^{(a_i', a_{-i}^*)}(s), 0\}^2,
 \end{equation}
 which penalizes the parameter violating the inequality condition of the equilibrium.
-- There is a discretion over the choice of alternative strategies to construct the objective function.
+- There is a discretion about the choice of alternative strategies to construct the objective function.
+- Thus, the summation over continuous control does not cover the entire range.
 
 
-
-### Continuous Control
-
-- So far we have assumed that players' actions are discrete.
-- However, continuous controls such as investment prevails in the real world.
-- One way to address this issues is to discretize the data and model everything in a discrete way.
-- How to model continuous controls without discretization?
-- This argument applies to the single-agent models as well.
-
-
-
-### Continuous Control
-
-- Let $a_i^t = (a_{id}^t, a_{ic}^t) \in A_i = A_{id} \times A_{ic}$ be a generic action of player $i$ in period $t$, where $A_{id} = \{0, 1, \cdots, K\}$ and $A_{ic} \subset \mathbb{R}$.
-- Let $s_{i}^t \in S_i$ be a generic state of player $i$ in period $t$, where $S_i \subset \mathbb{R}^L$.
-- Let $\nu_{i}^t \in \mathbb{R}^M$ be profitability shocks for player $i$ in period $t$, which are independent across players.
-
-
-
-### Period Payoff
-
-- Let $\pi_i(a, s, \nu_{i}^t)$ be the period payoff of player $i$ in period $t$ including the profitability shocks when the action profile is $a$, the state is $s$, and the profitability shocks are $\nu_i^t$.
-- In the discrete choice framework, we assumed additive separability:
-\begin{equation}
-\pi_i(a, s, \nu_{i}^t) = \pi_i(a, s) + \sum_{k = 0}^K \nu_i^{kt}1\{a_i^t = k\}.
-\end{equation}
-- For continuous control, we may want to impose a restriction that ensures the monotonicity of the policy function in the profitability shocks, say:
-\begin{equation}
-\pi_i(a, s, \nu_{i}^t) = \pi_i(a, s) + \sum_{k = 0}^K \nu_{id}^{kt}1\{a_{id}^t = k\} + \nu_{ic} a_{ic}.
-\end{equation}
-
-
-
-### Policy Function Estimation with Continuous Control
-
-- Let $a_{ic}(s, \nu_{i}) = a_{ic}(s, \nu_{ic})$ be the policy function of firm $i$ and suppose that it is increasing in $\nu_{ic}$.
-- Moreover, assume that we know the distribution of $\nu_{ic}^t$, say, $F_c(\cdot|s)$.
-- We can identify the distribution of continuous control $a$ conditional on $s$ directly from the data. Let $F(a|s)$ be the identified distribution function of $a$ conditional on $s$.
-
-
-
-### Policy Function Estimation with Continuous Control
-
-- Then, we can identify the policy function because:
-
-\begin{equation}
-\begin{split}
-F(a|s) &= \mathbb{P}\{a_{ic} \le a|s\}\\
-&= \mathbb{P}\{a_{ic}(s, \nu_{ic}) \le a\}\\
-&=\mathbb{P}\{\nu_{ic} \le a_{ic}^{-1}(s, a)\}\\
-&=F_c[a_{ic}^{-1}(s, a)|s]\\
-&\Leftrightarrow a = F^{-1}\{F_c[a_{ic}^{-1}(s, a)|s]|s\}
-\end{split}
-\end{equation}
-
-and can insert $a = a_{ic}(s, \nu_{ic})$ to obtain:
-
-\begin{equation}
-\begin{split}
-a_{ic}(s, \nu_{ic}) &= F^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, a_{ic}(s, \nu_{ic}))}_{\nu_{ic}}|s]|s\}\\
-& = F^{-1}[F_c^{-1}(\nu_{ic}|s)|s].
-\end{split}
-\end{equation}
-
-
-
-### Policy Function Estimation with Continuous Control
-
-- Inserting the identified policy for the continuous controls, we have:
-
-\begin{equation}
-\begin{split}
-&\pi_i[a_{id}, a_{ic}(s, \nu_{ic}), a_{-i}, s, \nu_{d}^t] \\
-&= \pi_i[a_{id}, a_{ic}(s, \nu_{ic}), a_{-i}, s] +\sum_{k = 0}^K \nu_{id}^{kt}1\{a_{id}^t = k\} + \nu_{ic} a_{ic}(s, \nu_{ic})
-\end{split}
-\end{equation}
-- Then, we can consider a choice-specific mean value function w.r.t. the discrete control $a_{id}$ by integrating out $\nu_{ic}^t$ and others strategies and future behaviors.
-- Therefore, we can identify the optimal conditional choice probability in a reduced-form and from which we can identify the policy function for the discrete choice as well.
-- Then, we can apply the CCP approach to estimate the structural parameters.
-
-
-
-### Ex-ante Value Function Computation
-
+### Approximating the Ex-ante Value Function 
 - Once we obtain the equilibrium policy functions, then in principle, we can compute the associated ex-ante value function, $V_i^{(a_i, a_{-i})}$, in the equilibrium.
 - We often use a numerical method to compute the ex-ante value function when continuous controls are relevant.
-
-- Draw forward profitability shocks $\nu_{i}^{t(r)}$ for $t = \cdots, \tau$ for $r = 1, \cdots, R$.
-- At each period, let $a_{i}^{t(r)} = a_i(s, \nu_i^{t(r)})$ be the chosen action.
-- Draw next period states $s^{t + 1(r)}$ from $g(a^{t(r)}, s^{t(r)}, s')$.
+- Draw forward profitability shocks $\epsilon_{ti}^{(r)}$ for $t = \cdots, \tau$ for $r = 1, \cdots, R$.
+- At each period, sample $a_{tid}^{(r)}$ from the estimated conditional choice probability.
+- Also, compute $a_{tic}^{(r)} = a_{tic}(s_t^{(r)}, \epsilon_{tic}^{(r)})$ using the estimated policy function for the continuous control and let $a_{ti}^{(r)} = (a_{tid}^{(r)}, a_{tic}^{(r)})$.
+- Draw next period states $s_{t + 1}^{(r)}$ from $g(a_{t}^{(r)}, s_t^{(r)}, s')$.
 - Continue this until $t = \tau$.
 - Compute:
 \begin{equation}
-V_i^{(a_i, a_{-i})}(s) = \frac{1}{R}\sum_{r = 1}^R \sum_{t = 1}^\tau \beta^t \pi_i[a^{(r)}, s^{(r)}, \nu_i^{(r)}].
+V_i^{(a_i^*, a_{-i}^*), R\tau}(s) = \frac{1}{R}\sum_{r = 1}^R \sum_{t = 1}^\tau \beta^t \pi_i[a^{(r)}, s^{(r)}, \epsilon_i^{(r)}]
 \end{equation}
-
+to approximate $V_i^{(a_i^*, a_{-i}^*)}(s)$.
 - It is a $\tau$-period forward simulation of the ex-ante value functions.
-- We can conduct the same simulation under a policy that is different from the identified equilibrium policy functions as well to use in BBL.
+- For arbitrary $a_i^{\prime}$, we can approximate $V_i^{(a_i^{\prime}, a_{-i}^*)}(s)$ by following the same steps using the perturbed policy $a_i^{\prime}$.
 
 
+## Dynamic Oligopoly Model
 
-### Application: Ryan (2012)
+- In the application of the dynamic game estimation to the dynamic oligopoly model, we often jointly consider entry and exit decisions and investment decisions of firms.
+- The entry and exit decisions are the discrete decisions and the investment decision is the continuous controls.
+- The formal models and their characterization are found in @ericson_markov-perfect_1995 and @doraszelski_computable_2010.
+- @Igami2018', the paper referred to in the introduction, falls into this category.
 
+### @ryan_cost_2012
+- @ryan_cost_2012 is one of the earliest applications.
 - In 1990, the U.S. congress passed Amendments to the Clean Air act, adding new categories of regulated $SO_2$ and $NO_x$ emissions and requiring plants to undergo an environmental certification process.
 - How costly is this regulation to the economy?
 - The cost analysis is typically an engineering estimates of the expenditures on control and monitoring equipment necessary to bring a plant into compliance with the new regulation.
-
-
-
-### Application: Ryan (2012)
-
 - However, the regulation changes both the sunk cost of entry as well as the investment cost. If the sunk cost is higher, the less firm will be active in the market, which reinforces the market power of active firms.
 - This affects the equilibrium market structure.
 - The engineering based cost analysis misses this important welfare loss from the changes in the market structure. 
 - This paper quantifies the welfare cost based on an empirical dynamic oligopoly model.
 
-
-
-### Model
-
+### Setting
 - There are several regional cement markets in the U.S.
 - Each market is described by $\overline{N} \times 1$ state vector $s_t$, where $s_{it}$ is the capacity of the $i$th firm at time $t$, and $\overline{N}$ is an exogenously imposed maximal number of active firms.
 - $s_{it} = 0$ means the firm is inactive.
 
-
-
-### Model
-
-- Timing of the game:
-
+### Timing of the Game
 - Incumbent firms ($s_{it} > 0$) receives a private draw from the distribution of scrap values.
 - Incumbent firms decide whether to exit.
 - Potential entrants receive a private draw of both investment and entry costs, while incumbent firms receive a private draw of both investment and disinvestment costs.
@@ -477,7 +475,7 @@ where $Q_m$ is the aggregate market quantity, $P_m$ is price, $\alpha_{0m}$ is m
 
 - The cost of output, $q_i$, is given by:
 \begin{equation}
-C_i(q_i; \delta) = \delta_0 + \delta_1 q_1 + \delta_2 1\{q_i > \nu s_i\}(q_i - \nu s_i)^2,
+C_i(q_i; \delta) = \delta_0 + \delta_1 q_1 + \delta_2 1\{q_i > \epsilon s_i\}(q_i - \epsilon s_i)^2,
 \end{equation}
 where $q_i$ is the output of firm $i$, $\delta_0$ is the fixed cost of production, $\delta_1$ is the linear variable cost, and the last term is a quadratic cost that matters only when the output is sufficiently close to the capacity.
 
@@ -578,17 +576,8 @@ where each term in the blanket represents the value of exit, staying and making 
 V_i(s; \sigma_i^*(s), \sigma_{-i}^*(s), \theta, \epsilon_i) \ge V_i(s; \sigma_i'(s), \sigma_{-i}^*(s), \theta, \epsilon_i), \forall \sigma_i',
 \end{equation}
 for all $s, \epsilon_i$, and $i$.
-- Doraszelski and Satterthwaite (2010) discuss the property of MPE in a general setting.
-
-
-
-### Estimation
-
-- To apply BBL, we first have to assume that the same equilibrium is played across markets.
-
-- This assumption is not innocuous as I stated.
-- Otsu, Pesendorfer, and Takahashi (2014) suggest a test for this assumption.
-
+- To apply the CCP approach, we first have to assume that the same equilibrium is played across markets.
+- This assumption is not innocuous as we saw in the previous section.
 - It is also important to notice that we have to fix the expectation about the regulation regime by firms. 
 - We assume that firms assume that the regulatory environment is permanent.
 
@@ -611,12 +600,12 @@ for all $s, \epsilon_i$, and $i$.
 
 ### Investment Policy Function Estimation
 
-- Let $s_{it}^*$ be the target level of capacity, which is parametrized as:
+- Let $s_{it}^*$ be the target level of capacity, which is parameterize as:
 \begin{equation}
 \ln s_{it}^* = \lambda_1' bs(s_{it}) + \lambda_2' bs \Bigg(\sum_{j \neq i} s_{jt}\Bigg) + u_{it}^*,
 \end{equation}
-where $bs(\cdot)$ is finite-dimensional piecewise cubic b-splines.
-- The upper and lower bounds are parametrized as:
+where $bs(\cdot)$ is finite-dimensional piece-wise cubic b-splines.
+- The upper and lower bounds are parameterized as:
 
 \begin{equation}
 \begin{split}
@@ -629,7 +618,7 @@ where $bs(\cdot)$ is finite-dimensional piecewise cubic b-splines.
 
 ### Entry and Exit Policy Functions
 
-- The probability of entry is parametrized as:
+- The probability of entry is parameterized as:
 \begin{equation}
 \mathbb{P}\{\chi_i = 1; s_i = 0, s\} = \Phi\Bigg(\psi_1 + \psi_2\Bigg(\sum_{j \neq i}\Bigg) + \psi_3 1(t > 1990) \Bigg),
 \end{equation}

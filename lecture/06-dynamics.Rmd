@@ -45,9 +45,9 @@ G \equiv
 \begin{pmatrix}
 g(0, 1, 1) & \cdots & g(0, 1, L)\\
 \vdots & & \vdots \\
-g(0, L, 1) & \cdots & g(0, L, L)\\
-& \vdots & \\
 g(K, 1, 1) & \cdots & g(K, 1, L)\\
+& \vdots & \\
+g(0, L, 1) & \cdots & g(0, L, L)\\
 \vdots & & \vdots \\
 g(K, L, 1) & \cdots & g(K, L, L)\\
 \end{pmatrix}.
@@ -75,9 +75,9 @@ be the choice-specific profitability shock.
 \begin{pmatrix}
 \pi(0, 1)\\
 \vdots \\
-\pi(0, L)\\
-\vdots \\
 \pi(K, 1)\\
+\vdots \\
+\pi(0, L)\\
 \vdots \\
 \pi(K, L)\\
 \end{pmatrix}.
@@ -103,9 +103,9 @@ be the choice-specific profitability shock.
 \begin{pmatrix}
 \sigma(0|1)\\
 \vdots\\
-\sigma(0|L)\\
-\vdots\\ 
 \sigma(K|1)\\
+\vdots\\ 
+\sigma(0|L)\\
 \vdots\\ 
 \sigma(K|L)
 \end{pmatrix}.
@@ -178,7 +178,7 @@ v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' 
 - From the previous optimality condition, we can define the __optimal conditional choice probability__ with belief $\sigma$ as:
 \begin{equation}
 \begin{split}
-p(a|s, \sigma) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
+p(a|s) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
 &= \int \prod_{a' \neq a} 1\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}\} dF\\
 &\equiv \Psi(\sigma, a, s).
 \end{split}
@@ -195,9 +195,9 @@ p =
 \begin{pmatrix}
 p(0|1)\\
 \vdots\\
-p(0|L)\\
-\vdots\\
 p(K|1)\\
+\vdots\\
+p(0|L)\\
 \vdots\\
 p(K|L)
 \end{pmatrix},
@@ -208,9 +208,9 @@ p(K|L)
 \begin{pmatrix}
 \Psi(\sigma, 0, 1)\\
 \vdots\\
-\Psi(\sigma, 0, L)\\
-\vdots\\
 \Psi(\sigma, K, 1)\\
+\vdots\\
+\Psi(\sigma, 0, L)\\
 \vdots\\
 \Psi(\sigma, K, L)
 \end{pmatrix}.
@@ -571,10 +571,6 @@ g^{\hat{\theta}_2}(K, s, 1), \cdots, g^{\hat{\theta}_2}(K, s, L)
 \end{split}
 \end{equation}
 
-
-
-### Type-I Extreme Value Distribution
-
 - Stacking up for $s$, we get:
 \begin{equation}
 \begin{split}
@@ -611,7 +607,24 @@ p(L)'[\pi^{\theta_1}(L) + \gamma - \ln p(L)]
 \end{equation}
 - Note that you can get this expression even if the profitability shocks are not type-I extreme value, although you need numerical integration for $\mathbb{E}\{\epsilon_a|s, a\}$ instead of the analytical solution $\gamma - \ln p(a|s)$.
 
-
+- Let:
+$$
+\Sigma(p) =
+\begin{pmatrix}
+p(1)' & & \\
+ & \ddots & \\
+ & & p(L)'
+\end{pmatrix}
+$$
+and:
+$$
+E(p) = 
+\gamma - \ln p,
+$$
+we can have a matrix representation:
+$$
+\varphi^{(\theta_1, \hat{\theta}_2)}(p) = [I - \beta P(p) G]^{-1}\Sigma[\Pi + E(p)].
+$$
 
 ### General Distribution
 

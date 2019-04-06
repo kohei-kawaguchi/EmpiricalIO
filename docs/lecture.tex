@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-03-25}
+    \date{Last updated: 2019-04-06}
 
 \usepackage{booktabs}
 
@@ -7508,9 +7508,9 @@ G \equiv
 \begin{pmatrix}
 g(0, 1, 1) & \cdots & g(0, 1, L)\\
 \vdots & & \vdots \\
-g(0, L, 1) & \cdots & g(0, L, L)\\
-& \vdots & \\
 g(K, 1, 1) & \cdots & g(K, 1, L)\\
+& \vdots & \\
+g(0, L, 1) & \cdots & g(0, L, L)\\
 \vdots & & \vdots \\
 g(K, L, 1) & \cdots & g(K, L, L)\\
 \end{pmatrix}.
@@ -7545,9 +7545,9 @@ g(K, L, 1) & \cdots & g(K, L, L)\\
   \begin{pmatrix}
   \pi(0, 1)\\
   \vdots \\
-  \pi(0, L)\\
-  \vdots \\
   \pi(K, 1)\\
+  \vdots \\
+  \pi(0, L)\\
   \vdots \\
   \pi(K, L)\\
   \end{pmatrix}.
@@ -7607,9 +7607,9 @@ g(K, L, 1) & \cdots & g(K, L, L)\\
   \begin{pmatrix}
   \sigma(0|1)\\
   \vdots\\
-  \sigma(0|L)\\
-  \vdots\\ 
   \sigma(K|1)\\
+  \vdots\\ 
+  \sigma(0|L)\\
   \vdots\\ 
   \sigma(K|L)
   \end{pmatrix}.
@@ -7732,7 +7732,7 @@ Probability}\label{optimal-conditional-choice-probability}
 
   \begin{equation}
   \begin{split}
-  p(a|s, \sigma) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
+  p(a|s) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
   &= \int \prod_{a' \neq a} 1\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}\} dF\\
   &\equiv \Psi(\sigma, a, s).
   \end{split}
@@ -7755,9 +7755,9 @@ Probability}\label{optimal-conditional-choice-probability}
   \begin{pmatrix}
   p(0|1)\\
   \vdots\\
-  p(0|L)\\
-  \vdots\\
   p(K|1)\\
+  \vdots\\
+  p(0|L)\\
   \vdots\\
   p(K|L)
   \end{pmatrix},
@@ -7769,9 +7769,9 @@ Probability}\label{optimal-conditional-choice-probability}
 \begin{pmatrix}
 \Psi(\sigma, 0, 1)\\
 \vdots\\
-\Psi(\sigma, 0, L)\\
-\vdots\\
 \Psi(\sigma, K, 1)\\
+\vdots\\
+\Psi(\sigma, 0, L)\\
 \vdots\\
 \Psi(\sigma, K, L)
 \end{pmatrix}.
@@ -8399,11 +8399,7 @@ g^{\hat{\theta}_2}(K, s, 1), \cdots, g^{\hat{\theta}_2}(K, s, L)
 \end{split}
 \end{equation}
 
-\subsection{Type-I Extreme Value
-Distribution}\label{type-i-extreme-value-distribution-5}
-
 \begin{itemize}
-\tightlist
 \item
   Stacking up for \(s\), we get:
 
@@ -8445,6 +8441,20 @@ Distribution}\label{type-i-extreme-value-distribution-5}
   are not type-I extreme value, although you need numerical integration
   for \(\mathbb{E}\{\epsilon_a|s, a\}\) instead of the analytical
   solution \(\gamma - \ln p(a|s)\).
+\item
+  Let: \[
+  \Sigma(p) =
+  \begin{pmatrix}
+  p(1)' & & \\
+   & \ddots & \\
+   & & p(L)'
+  \end{pmatrix}
+  \] and: \[
+  E(p) = 
+  \gamma - \ln p,
+  \] we can have a matrix representation: \[
+  \varphi^{(\theta_1, \hat{\theta}_2)}(p) = [I - \beta P(p) G]^{-1}\Sigma[\Pi + E(p)].
+  \]
 \end{itemize}
 
 \subsection{General Distribution}\label{general-distribution}
@@ -8459,6 +8469,1119 @@ Distribution}\label{type-i-extreme-value-distribution-5}
 \item
   This may or may not feasible.
 \end{itemize}
+
+\chapter{Dynamic Game}\label{dynamicgame}
+
+\section{Motivations}\label{motivations-5}
+
+\section{Multiple-Agent Model}\label{multiple-agent-model}
+
+\begin{itemize}
+\tightlist
+\item
+  There are multiple players in an industry.
+\item
+  There is a strategic interaction across players.
+\end{itemize}
+
+\subsection{Setting}\label{setting-1}
+
+\begin{itemize}
+\tightlist
+\item
+  There is \(i = 1, \cdots, N\) players.
+\item
+  Time is discrete \(t = 1, \cdots, \infty\).
+\item
+  There are \(K + 1\) actions for each player
+  \(A_i = \{0, 1, \cdots, K\}\).
+\item
+  \(A = \prod_{i = 1}^N A_i\). \(m_a = (K + 1)^N\).
+\item
+  There are \(L\) states for each player \(S_i = \{1, \cdots, L\}\).
+\item
+  \(S = \prod_{i = 1}^N S_i\). \(m_s = L^N\).
+\end{itemize}
+
+\subsection{Timing of the Model}\label{timing-of-the-model-1}
+
+\begin{itemize}
+\tightlist
+\item
+  At period \(t\):
+\item
+  State \(s_t = (s_{t1}, \cdots, s_{tN})' \in S\) is publicly observed.
+\item
+  Choice-specific profitability shocks
+  \(\epsilon_{ti} \in \mathbb{R}^{K + 1}\) are drawn from
+  \(F(\cdot|s_{ti}, _{t,-i})\) i.i.d. and privately observed by player
+  \(i\) for each \(i = 1, \cdots, N\).
+\item
+  \(\epsilon_{ti}\) is independent across \(i\).
+\item
+  Actions \(a_{ti} \in A_i, i = 1, \cdots, N\) are chosen
+  simultaneously.
+\item
+  The state evolves according to a transition probability:
+
+  \begin{equation}
+  g(a, s, s') \equiv \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
+  \end{equation}
+\end{itemize}
+
+\begin{equation}
+G \equiv 
+\begin{pmatrix}
+g(0, 1, 1) & \cdots & g(0, 1, m_s)\\
+\vdots & & \vdots \\
+g(m_a, 1, 1) & \cdots & g(m_a, 1, m_s)\\
+&\vdots& \\
+g(0, m_s, 1) & \cdots & g(0, m_s, m_s)\\
+\vdots & & \vdots \\
+g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
+\end{pmatrix}.
+\end{equation}
+
+\subsection{Period Profit}\label{period-profit}
+
+\begin{itemize}
+\item
+  When the state is \(s_t\), action profile is \(a_t\), and the
+  profitability shocks are \(\epsilon_t\), the period payoff of player
+  \(i\) is:
+
+  \begin{equation}
+  \pi_i(a_t, s_t) + \sum_{k = 0}^K \epsilon_{tik}1\{a_{ti} = k\}, i = 1, \cdots, N,
+  \end{equation}
+
+  where \(\pi_i(a_t, s_t)\) is the mean period profit of player \(i\).
+\item
+  Let: \[
+  \epsilon_{ti a_{ti}} = \sum_{k = 0}^K \epsilon_{tik}1\{a_{ti} = k\}
+  \] be the choice-specific profitability shock.
+\item
+  Let \(\Pi_i\) summarize the choice-specific mean period payoffs at
+  each state:
+
+  \begin{equation}
+  \Pi_i \equiv
+  \begin{pmatrix}
+  \pi_i(0, 1)\\
+  \vdots\\
+  \pi_i(m_a, 1)\\
+  \vdots\\
+  \pi_i(0, m_s)\\
+  \vdots\\
+  \pi_i(m_a, m_s)
+  \end{pmatrix}.
+  \end{equation}
+\item
+  The profit of player \(i\) is the discounted sum of future payoffs
+  with discount factor \(\beta < 1\).
+\end{itemize}
+
+\subsection{Belief}\label{belief-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(\sigma_i(a|s)\) be the player \(i\)'s belief about the
+  possibility of having action profile \(a\) when the realized state is
+  \(s\), which may or may not coincide with the equilibrium probability.
+\item
+  Let \(\sigma_i\) stack them up as: \[
+  \sigma_i(s) =
+  \begin{pmatrix}
+  \sigma_i(0|s)\\
+  \vdots\\
+  \sigma_i(m_a|s),
+  \end{pmatrix}
+  \] \[
+  \sigma_i =
+  \begin{pmatrix}
+  \sigma_i(1)\\
+  \vdots \\
+  \sigma_i(m_s)\\
+  \end{pmatrix},
+  \] and let \(\sigma\) be: \[
+  \sigma = 
+  \begin{pmatrix}
+  \sigma_1 \\
+  \vdots\\
+  \sigma_N
+  \end{pmatrix}.
+  \]
+\end{itemize}
+
+\subsection{Markov Perfect
+Equilibrium}\label{markov-perfect-equilibrium}
+
+\begin{itemize}
+\tightlist
+\item
+  A collection
+  \((a, \sigma) = (a_1, \cdots, a_N, \sigma_1, \cdots, \sigma_N)\) is a
+  pure-strategy \textbf{Markov perfect equilibrium} if:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    All players use Markovian strategies;
+  \item
+    For all \(i\), \(a_i\) is a best response to \(a_{-i}\) given the
+    belief \(\sigma_i\) at all state \(s \in S\);
+  \item
+    For all \(i\), the belief \(\sigma_i\) is consistent with the
+    strategy \(a\).
+  \end{itemize}
+\end{itemize}
+
+\subsection{Ex-ante Value Function}\label{ex-ante-value-function}
+
+\begin{itemize}
+\tightlist
+\item
+  When the belief of player \(i\) about the future behavior is
+  \(\sigma_i\), then the ex-ante value function associated with this
+  belief is:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+V_i(\sigma_i, s) &= \sum_{a \in A} \sigma_i(a|s)[\pi_i(a, s) + \beta \sum_{s' \in S} g(a, s, s') V_i(\sigma_i, s')]\\
+& + \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|s).
+\end{split}
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  By stacking up over the state, we obtain a matrix representation:
+
+  \begin{equation}
+  V_i(\sigma_i) = \Sigma_i(\sigma_i) \Pi_i + \Sigma_i(\sigma_i) E_i(\sigma_i) + \beta \Sigma_i(\sigma_i) G V_i(\sigma_i).
+  \end{equation}
+
+  where
+
+  \begin{equation}
+  \Sigma_i(\sigma_i) = 
+  \begin{pmatrix}
+  \sigma_i(1)' & & \\
+  & \ddots & \\
+  & & \sigma_i(m_s)'
+  \end{pmatrix},
+  \end{equation}
+
+  and
+
+  \begin{equation}
+  E_i(\sigma_i) = 
+  \begin{pmatrix}
+  \mathbb{E}\{\epsilon_{i0}|a_i = 0\}\\
+  \vdots\\
+  \mathbb{E}\{\epsilon_{iK}|a_i = K\}.
+  \end{pmatrix}.
+  \end{equation}
+\item
+  If \(I - \beta \Sigma_i(\sigma_i)G\) is invertible, we have: \[
+  V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}\Sigma_i(\sigma_i)[\Pi_i + E_i(\sigma_i)].
+  \]
+\end{itemize}
+
+\subsection{Choice-specific Value
+Function}\label{choice-specific-value-function-1}
+
+\begin{itemize}
+\tightlist
+\item
+  When the state is \(s\) and the belief of player \(i\) is
+  \(\sigma_i\), then the mean value of choosing action \(a_i\) is:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+v_i(\sigma_i, a_i, s) &= \sum_{a_{-i} \in A_{-i}} \sigma_i(a_{-i}|s)[ \pi_i(a_i, a_{-i}, s) \\
+&+ \beta \sum_{s' \in S} g(a_i, a_{-i}, s, s') V_i(\sigma_i, s')].
+\end{split}
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  This is the choice-specific mean value function given belief
+  \(\sigma_i\).
+\end{itemize}
+
+\subsection{Optimality Condition}\label{optimality-condition-2}
+
+\begin{itemize}
+\tightlist
+\item
+  When the state is \(s\) and profitability shock is \(\epsilon_i\),
+  \(a_i\) is optimal for player \(i\) under belief \(\sigma_i\) if and
+  only if:
+
+  \begin{equation}
+  v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}, \forall a_i' \in A_i.
+  \end{equation}
+\item
+  This condition is similar to the optimality condition in single-agent
+  dynamic models.
+\item
+  Only difference is that the belief is now about the others' actions in
+  addition to about own future behaviors.
+\end{itemize}
+
+\subsection{Optimal Conditional Choice
+Probability}\label{optimal-conditional-choice-probability-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Therefore, the optimal conditional choice probability of player \(i\)
+  with belief \(\sigma_i\) is:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}, \forall a_i' \in A_i\}\\
+&=\int \prod_{a_i' \neq a_i}1\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}\} d F\\
+&\equiv \Psi(\sigma_i, a_i, s).
+\end{split}
+\end{equation}
+
+\subsection{Equilibrium Condition}\label{equilibrium-condition-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Let: \[
+  p(a|s) = \prod_{i = 1}^N p(a_i|s).
+  \] and \[
+  \Psi(\sigma, a, s) = \prod_{i = 1}^N \Psi(\sigma_i, a_i, s).
+  \]
+\item
+  Stacking them up as: \[
+  p(s) = 
+  \begin{pmatrix}
+  p(0|s) \\
+  \vdots \\
+  p(m_a|s)
+  \end{pmatrix},
+  \] \[
+  p = 
+  \begin{pmatrix}
+  p(1)\\
+  \vdots\\
+  p(m_s)
+  \end{pmatrix},
+  \]
+\end{itemize}
+
+\[
+\Psi(\sigma, s) = 
+\begin{pmatrix}
+\Psi(\sigma, 0, s) \\
+\vdots \\
+\Psi(\sigma, m_a, s) \\
+\end{pmatrix},
+\] \[
+\Psi(\sigma) = 
+\begin{pmatrix}
+\Psi(\sigma, 1)
+\vdots\\
+\Psi(\sigma, m_s)
+\end{pmatrix}.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{pesendorfer_asymptotic_2008} prove the following statement:
+
+  \begin{equation}
+  p = \Psi(p).
+  \end{equation}
+\item
+  In any Markov perfect equilibrium, the optimal conditional choice
+  probability vector \(p\) satisfies the above equality.
+\item
+  Conversely, any \(p\) that satisfies the equilibrium condition above
+  can be derived as the optimal conditional choice probability of a
+  Markov perfect equilibrium strategy profile.
+\end{itemize}
+
+\subsection{Equilibrium Condition}\label{equilibrium-condition-2}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{pesendorfer_asymptotic_2008} also show the following
+  statements.
+\item
+  By Brouwer's fixed-point theorem, a Markov perfect equilibrium exists.
+\item
+  But Markov perfect equillibria need not be unique.
+\item
+  Therefore, we may not be able to derive the likelihood.
+\item
+  If the payoff function and transition probability is symmetric across
+  players, then \textbf{symmetric} Markov perfect equilibrium exists.
+\item
+  This significantly reduces the dimensionality of the problem.
+\end{itemize}
+
+\subsection{Single Path of Play}\label{single-path-of-play}
+
+\begin{itemize}
+\tightlist
+\item
+  The estimation of dynamic games is mostly based on time series data of
+  an industry.
+\item
+  We often assume that the data is generated from a single path of play.
+\item
+  Under Markov perfect equilibrium assumption, this means that players
+  make same choices over time at the same state \((s, \epsilon_i)\).
+\item
+  This assumption rules out equilibrium switches over time.
+\item
+  If we use cross-sectional data, we have to keep this point in our
+  mind, because then we observe data generated from multiple paths
+  across markets.
+\item
+  The assumption that the same equilibrium is played across markets may
+  need further justification.
+\end{itemize}
+
+\subsection{Identification}\label{identification-1}
+
+\begin{itemize}
+\tightlist
+\item
+  The parameters of the model is
+  \((\Pi_1, \cdots, \Pi_N, F, \beta, G)\).
+\item
+  \(G\) is directly identified from data
+\item
+  \(\beta\) and \(F\) are fixed.
+\item
+  \((\Pi_1, \cdots, \Pi_N)\) contains \(m_a \times m_s \times N\)
+  unknown parameters.
+\item
+  On the other hand, the equilibrium condition only has
+  \(K \times m_s \times N\) restrictions.
+\item
+  This time, the normalization \(\pi_i(0, a_{-i}|s) = 0\) is not
+  sufficient.
+\item
+  It is often assumed that the payoff of a player \(i\) is not directly
+  influence by the state of other players:
+
+  \begin{equation}
+  \pi_i(a, s_i, s_{-i}) = \pi_i(a, s_i, s_{-i}'), \forall a \in A, s_i \in S_i, s_{-i}, s_{-i}' \in S_{-i}.
+  \end{equation}
+\item
+  Under these restrictions, the number of unknown parameters is
+  \(K (K + 1)^{N - 1} \times L \times N\).
+\item
+  So, if \(L \ge K + 1\), i.e., the number of states is larger than the
+  number of actions, at least the order condition is satisfied.
+\end{itemize}
+
+\subsection{Estimation: CCP Approach}\label{estimation-ccp-approach}
+
+\begin{itemize}
+\tightlist
+\item
+  Because dynamic games often have multiple equillibria, nested-fixed
+  point algorithm fails to pin down the likelihood of data.
+\item
+  Instead we use CCP approach exploiting the equilibrium condition:
+
+  \begin{equation}
+  p = \Psi^\theta(p) = \Psi^{(\theta_1, \theta_2)}(p),
+  \end{equation}
+
+  where \(\theta_1\) is the parameters in the mean profit function, and
+  \(\theta_2\) is the parameters in the transition law.
+\item
+  In the first step, we estimate \(\theta_2\) and \(p\) directly from
+  the data. Let \(\hat{\theta}_2\) and \(\hat{p}\) be the estimates.
+\item
+  Then, we can estimate \(\theta_1\) by solving:
+
+  \begin{equation}
+  \min_{\theta_1} [\hat{p} - \Psi^{(\theta_1, \hat{\theta}_2)}(\hat{p})]' W [\hat{p} - \Psi^{(\theta_1, \hat{\theta}_2)}(\hat{p})],
+  \end{equation}
+
+  where \(W\) is some weighting matrix.
+\end{itemize}
+
+\subsection{\texorpdfstring{Computing
+\(\Psi\)}{Computing \textbackslash{}Psi}}\label{computing-psi}
+
+\begin{itemize}
+\item
+  Mapping from conditional choice probabilities to ex-ante value
+  function: \[
+  V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1}\Sigma_i(\hat{p})[\Pi_i + E_i(\hat{p})].
+  \]
+\item
+  Mapping from ex-ante value function
+  \textit{and conditional choice probabilities} to conditional choice
+  probability:
+
+  \begin{equation}
+  p_i(a_i|s) =  \mathbb{P}\{v_i(\tilde{p}, a_i, s) + \epsilon_{ia_i} \ge  v_i(\tilde{p}, a_i', s) + \epsilon_{ia_i'}, \forall a_i' \in A_i\},
+  \end{equation}
+
+  where
+
+  \begin{equation}
+  v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i, a_{-i}, s) + \beta \sum_{s' \in S} g(a_i, a_{-i}, s, s') V_i(\hat{p}, s')].
+  \end{equation}
+\item
+  If \(\epsilon_{ia}\) follows an i.i.d. type-I extreme value
+  distribution, both \(E_i(\hat{p})\) and the second equation have
+  closed-forms.
+\end{itemize}
+
+\section{With Continuous Dynamic
+Choice}\label{with-continuous-dynamic-choice}
+
+\subsection{Continuous Control}\label{continuous-control}
+
+\begin{itemize}
+\tightlist
+\item
+  So far we have assumed that players' actions are discrete.
+\item
+  However, continuous controls such as investment prevails in the real
+  world.
+\item
+  One way to address this issues is to discretize the data and model
+  everything in a discrete way.
+\item
+  How to model continuous controls without discretization?
+\item
+  This argument applies to the single-agent models as well.
+\item
+  Let \(a_{ti} = (a_{tid}, a_{tic}) \in A_i = A_{id} \times A_{ic}\) be
+  a generic action of player \(i\) in period \(t\), where
+  \(A_{id} = \{0, 1, \cdots, K\}\) and \(A_{ic} \subset \mathbb{R}\).
+\item
+  Let \(s_{ti} \in S_i\) be a generic state of player \(i\) in period
+  \(t\), where \(S_i \subset \mathbb{R}^L\).
+\item
+  Let \(\epsilon_{ti} \in \mathbb{R}^M\) be profitability shocks for
+  player \(i\) in period \(t\), which are independent across players.
+\end{itemize}
+
+\subsection{Period Payoff}\label{period-payoff-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(\pi_i(a, s, \epsilon_{ti})\) be the period payoff of player
+  \(i\) in period \(t\) including the profitability shocks when the
+  action profile is \(a\), the state is \(s\), and the profitability
+  shocks are \(\epsilon_{ti}\).
+\item
+  In the discrete choice framework, we assumed additive separability:
+
+  \begin{equation}
+  \pi_i(a, s, \epsilon_{ti}) = \pi_i(a, s) + \sum_{k = 0}^K \epsilon_{tik}1\{a_{ti} = k\}.
+  \end{equation}
+\item
+  For continuous control, we may want to impose a restriction that
+  ensures the monotonicity of the policy function in the profitability
+  shocks, for example:
+
+  \begin{equation}
+  \pi_i(a, s, \epsilon_{ti}) = \pi_i(a, s) + \sum_{k = 0}^K \epsilon_{tik} 1\{a_{tid} = k\} + \epsilon_{tic} a_{tic}.
+  \end{equation}
+\end{itemize}
+
+\subsection{Policy Function Estimation with Continuous
+Control}\label{policy-function-estimation-with-continuous-control}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(a_{ic}(s, \epsilon_{i}) = a_{ic}(s, \epsilon_{ic})\) be the
+  policy function of firm \(i\) and suppose that it is increasing in
+  \(\epsilon_{ic}\).
+\item
+  Moreover, assume that we know the distribution of \(\epsilon_{ic}\),
+  say, \(F_{\epsilon_c}(\cdot|s)\).
+\item
+  We can identify the distribution of continuous control \(a_{ic}\)
+  conditional on \(s\) directly from the data. Let
+  \(F_{a_{ic}}(a_{ic}|s)\) be the identified distribution function of
+  \(a_{ic}\) conditional on \(s\).
+\item
+  Then, we can identify the policy function for the continuous control:
+
+  \begin{equation}
+  \begin{split}
+  F_{a_{ic}}(a|s) &= \mathbb{P}\{a_{ic} \le a|s\}\\
+  &= \mathbb{P}\{a_{ic}(s, \epsilon_{ic}) \le a\}\\
+  &=\mathbb{P}\{\epsilon_{ic} \le a_{ic}^{-1}(s, a)\}\\
+  &=F_c[a_{ic}^{-1}(s, a)|s]\\
+  &\Leftrightarrow a = F_{a_{ic}}^{-1}\{F_c[a_{ic}^{-1}(s, a)|s]|s\},
+  \end{split}
+  \end{equation}
+\item
+  Inserting \(a = a_{ic}(s, \epsilon_{ic})\) to obtain:
+
+  \begin{equation}
+  \begin{split}
+  a_{ic}(s, \epsilon_{ic}) &= F_{a_{ic}}^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, a_{ic}(s, \epsilon_{ic}))}_{\epsilon_{ic}}|s]|s\}\\
+  & = F_{a_{ic}}^{-1}[F_c^{-1}(\epsilon_{ic}|s)|s].
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Converting to the Standard Discrete Choice
+Model}\label{converting-to-the-standard-discrete-choice-model}
+
+\begin{itemize}
+\tightlist
+\item
+  Inserting the identified policy for the continuous controls, we have:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+&\pi_i[a_{id}, a_{ic}(s, \epsilon_{ic}), a_{-i}, s, \epsilon_{d}] \\
+&= \pi_i[a_{id}, a_{ic}(s, \epsilon_{ic}), a_{-i}, s] +\sum_{k = 0}^K \epsilon_{ik}1\{a_{id} = k\} + \epsilon_{ic} a_{ic}(s, \epsilon_{ic})
+\end{split}
+\end{equation}
+
+\begin{itemize}
+\tightlist
+\item
+  Then, we can consider a choice-specific mean value function w.r.t. the
+  discrete control \(a_{id}\) by integrating out \(\epsilon_{ic}^t\) and
+  others strategies and future behaviors.
+\item
+  Therefore, we can identify the optimal conditional choice probability
+  in a reduced-form and from which we can identify the policy function
+  for the discrete choice as well.
+\item
+  Then, we can apply the CCP approach to estimate the structural
+  parameters.
+\end{itemize}
+
+\subsection{Value Function Based CCP
+Approach}\label{value-function-based-ccp-approach}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{bajari_estimating_2007} proposes an alternative estimation
+  method.
+\item
+  The key is to characterize the equilibrium as follows.
+\item
+  Let \(V_i^{(a_i, a_{-i})}(s)\) be the ex-ante value function
+  associated with strategy profile \((a_i, a_{-i})\).
+\item
+  The observed \((a_i^*, a_{-i}^*)\) is an equilibrium if:
+
+  \begin{equation}
+  V_i^{(a_i^*, a_{-i}^*)}(s) \ge V_i^{(a_i', a_{-i}^*)}(s), \forall a_i' \in A_i,
+  \end{equation}
+
+  for all \(s \in S, i = 1, \cdots, N\).
+\item
+  Then, we can consider an objective function such that:
+
+  \begin{equation}
+  Q(\theta) = \sum_{s = 1}^{m_s} \sum_{i = 1}^N \sum_{a_i'} \min\{V_i^{(a_i^*, a_{-i}^*)}(s) - V_i^{(a_i', a_{-i}^*)}(s), 0\}^2,
+  \end{equation}
+
+  which penalizes the parameter violating the inequality condition of
+  the equilibrium.
+\item
+  There is a discretion about the choice of alternative strategies to
+  construct the objective function.
+\item
+  Thus, the summation over continuous control does not cover the entire
+  range.
+\end{itemize}
+
+\subsection{Approximating the Ex-ante Value
+Function}\label{approximating-the-ex-ante-value-function}
+
+\begin{itemize}
+\tightlist
+\item
+  Once we obtain the equilibrium policy functions, then in principle, we
+  can compute the associated ex-ante value function,
+  \(V_i^{(a_i, a_{-i})}\), in the equilibrium.
+\item
+  We often use a numerical method to compute the ex-ante value function
+  when continuous controls are relevant.
+\item
+  Draw forward profitability shocks \(\epsilon_{ti}^{(r)}\) for
+  \(t = \cdots, \tau\) for \(r = 1, \cdots, R\).
+\item
+  At each period, sample \(a_{tid}^{(r)}\) from the estimated
+  conditional choice probability.
+\item
+  Also, compute
+  \(a_{tic}^{(r)} = a_{tic}(s_t^{(r)}, \epsilon_{tic}^{(r)})\) using the
+  estimated policy function for the continuous control and let
+  \(a_{ti}^{(r)} = (a_{tid}^{(r)}, a_{tic}^{(r)})\).
+\item
+  Draw next period states \(s_{t + 1}^{(r)}\) from
+  \(g(a_{t}^{(r)}, s_t^{(r)}, s')\).
+\item
+  Continue this until \(t = \tau\).
+\item
+  Compute:
+
+  \begin{equation}
+  V_i^{(a_i^*, a_{-i}^*), R\tau}(s) = \frac{1}{R}\sum_{r = 1}^R \sum_{t = 1}^\tau \beta^t \pi_i[a^{(r)}, s^{(r)}, \epsilon_i^{(r)}]
+  \end{equation}
+
+  to approximate \(V_i^{(a_i^*, a_{-i}^*)}(s)\).
+\item
+  It is a \(\tau\)-period forward simulation of the ex-ante value
+  functions.
+\item
+  For arbitrary \(a_i^{\prime}\), we can approximate
+  \(V_i^{(a_i^{\prime}, a_{-i}^*)}(s)\) by following the same steps
+  using the perturbed policy \(a_i^{\prime}\).
+\end{itemize}
+
+\section{Dynamic Oligopoly Model}\label{dynamic-oligopoly-model}
+
+\begin{itemize}
+\tightlist
+\item
+  In the application of the dynamic game estimation to the dynamic
+  oligopoly model, we often jointly consider entry and exit decisions
+  and investment decisions of firms.
+\item
+  The entry and exit decisions are the discrete decisions and the
+  investment decision is the continuous controls.
+\item
+  The formal models and their characterization are found in
+  \citet{ericson_markov-perfect_1995} and
+  \citet{doraszelski_computable_2010}.
+\item
+  \citet{Igami2018}', the paper referred to in the introduction, falls
+  into this category.
+\end{itemize}
+
+\subsection{\texorpdfstring{\citet{ryan_cost_2012}}{@ryan\_cost\_2012}}\label{ryan_cost_2012}
+
+\begin{itemize}
+\tightlist
+\item
+  \citet{ryan_cost_2012} is one of the earliest applications.
+\item
+  In 1990, the U.S. congress passed Amendments to the Clean Air act,
+  adding new categories of regulated \(SO_2\) and \(NO_x\) emissions and
+  requiring plants to undergo an environmental certification process.
+\item
+  How costly is this regulation to the economy?
+\item
+  The cost analysis is typically an engineering estimates of the
+  expenditures on control and monitoring equipment necessary to bring a
+  plant into compliance with the new regulation.
+\item
+  However, the regulation changes both the sunk cost of entry as well as
+  the investment cost. If the sunk cost is higher, the less firm will be
+  active in the market, which reinforces the market power of active
+  firms.
+\item
+  This affects the equilibrium market structure.
+\item
+  The engineering based cost analysis misses this important welfare loss
+  from the changes in the market structure.
+\item
+  This paper quantifies the welfare cost based on an empirical dynamic
+  oligopoly model.
+\end{itemize}
+
+\subsection{Setting}\label{setting-2}
+
+\begin{itemize}
+\tightlist
+\item
+  There are several regional cement markets in the U.S.
+\item
+  Each market is described by \(\overline{N} \times 1\) state vector
+  \(s_t\), where \(s_{it}\) is the capacity of the \(i\)th firm at time
+  \(t\), and \(\overline{N}\) is an exogenously imposed maximal number
+  of active firms.
+\item
+  \(s_{it} = 0\) means the firm is inactive.
+\end{itemize}
+
+\subsection{Timing of the Game}\label{timing-of-the-game}
+
+\begin{itemize}
+\tightlist
+\item
+  Incumbent firms (\(s_{it} > 0\)) receives a private draw from the
+  distribution of scrap values.
+\item
+  Incumbent firms decide whether to exit.
+\item
+  Potential entrants receive a private draw of both investment and entry
+  costs, while incumbent firms receive a private draw of both investment
+  and disinvestment costs.
+\item
+  All firms simultaneously make entry and investment decisions.
+\item
+  Incumbent firms compete in the product market.
+\item
+  Firms entry, exit, and investment are realized.
+\item
+  The economy moves to the next period.
+\end{itemize}
+
+\subsection{Demand Function}\label{demand-function}
+
+\begin{itemize}
+\tightlist
+\item
+  In each market \(m\), firms face a constant elasticity of demand
+  curves:
+
+  \begin{equation}
+  \ln Q_m(\alpha) = \alpha_{0m} + \alpha_1 \ln P_m,
+  \end{equation}
+
+  where \(Q_m\) is the aggregate market quantity, \(P_m\) is price,
+  \(\alpha_{0m}\) is market-specific intercept, and \(\alpha_1\) is the
+  elasticity of demand.
+\end{itemize}
+
+\subsection{Production Cost Function}\label{production-cost-function}
+
+\begin{itemize}
+\tightlist
+\item
+  The cost of output, \(q_i\), is given by:
+
+  \begin{equation}
+  C_i(q_i; \delta) = \delta_0 + \delta_1 q_1 + \delta_2 1\{q_i > \epsilon s_i\}(q_i - \epsilon s_i)^2,
+  \end{equation}
+
+  where \(q_i\) is the output of firm \(i\), \(\delta_0\) is the fixed
+  cost of production, \(\delta_1\) is the linear variable cost, and the
+  last term is a quadratic cost that matters only when the output is
+  sufficiently close to the capacity.
+\end{itemize}
+
+\subsection{Investment Cost}\label{investment-cost}
+
+\begin{itemize}
+\tightlist
+\item
+  The cost of investment and disinvestment is:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+\Gamma(x_i; \gamma) &= 1\{x_i > 0\}(\gamma_{i1} + \gamma_2 x_i + \gamma_3 x_i^2)\\
+& + 1\{x_i < 0\}(\gamma_{i4} + \gamma_{5} x_i + \gamma_6 x_i^2),
+\end{split}
+\end{equation}
+
+where \(x_i\) is the investment of firm \(i\), and fixed investment and
+disinvestment costs \(\gamma_{i1}\) and \(\gamma_{i4}\) are drawn from
+distributions \(F_{\gamma}\) and \(G_{\gamma}\). - Let \(\mu_\gamma^+\)
+and \(\sigma_\gamma^+\) be the mean and standard deviation of
+\(F_\gamma\) and \(\mu_\gamma^-\) and \(\sigma_\gamma^-\) be the mean
+and standard deviation of \(G_\gamma\).
+
+\subsection{Entry and Exit Costs}\label{entry-and-exit-costs}
+
+\begin{itemize}
+\tightlist
+\item
+  If the firm is a new entrant, it draws entry cost \(-\kappa_i\) from
+  \(F_\kappa\).
+\item
+  IF the firm is an incumbent, it draws scrap values \(\phi_i\) from
+  \(F_\phi\).
+\item
+  Then entry and exit cost is:
+\end{itemize}
+
+\begin{equation}
+\Phi_i(a_i, \kappa_i, \phi_i) =
+\begin{cases}
+- \kappa_i &\text{   if the firm enters}\\
+\phi_i &\text{   if the firm exits}.
+\end{cases}
+\end{equation}
+
+\subsection{Period Profit Function}\label{period-profit-function}
+
+\begin{itemize}
+\tightlist
+\item
+  As a consequence, the period profit function of firm \(i\) is:
+
+  \begin{equation}
+  \pi_i(s, a; \alpha, \delta, \gamma_i, \kappa_i, \phi_i) = \tilde{\pi}_i(s; \alpha, \delta) - \Gamma(x_i; \gamma_i) + \Phi_i(a_i; \kappa_i, \phi_i).
+  \end{equation}
+\item
+  Let \(\theta\) summarize the parameter regarding the period profit.
+\end{itemize}
+
+\subsection{Transition}\label{transition}
+
+\begin{itemize}
+\tightlist
+\item
+  The transition is deterministic.
+\item
+  The investment changes the capacity \(s_i\).
+\item
+  As a firm exits, the capacity moves to 0.
+\item
+  As a firm enters, the capacity moves to the initial investment level.
+\end{itemize}
+
+\subsection{Equilibrium}\label{equilibrium}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(\epsilon_i\) represent the firm's private information about the
+  cost of entry, exit, investment, and disinvestment.
+\item
+  Each firm's Markovian strategy \(\sigma_i(s, \epsilon_i)\) is a
+  mapping from states and shocks to actions.
+\end{itemize}
+
+\subsection{Value Function for
+Incumbents}\label{value-function-for-incumbents}
+
+\begin{itemize}
+\tightlist
+\item
+  The value function for a firm with \(s_i > 0\) at the time of the exit
+  decision under strategy profile \(\sigma\) is:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+&V_i(s; \sigma(s), \theta, \epsilon_i)\\
+&=\tilde{\pi}_i(s; \theta) + \max\Bigg\{\phi_i,\\
+& \mathbb{E}_{\epsilon_i}\max_{x_i^* \ge 0}  \Bigg[ - \gamma_{i1} - \gamma_{2} x_i^* - \gamma_3 x_i^{*2} + \beta \int \mathbb{E}_{\epsilon_i} V_i(s'; \sigma(s'), \theta, \epsilon_i) dP(s_i + x^*, s'_{-i}; s, \sigma(s))\Bigg],\\
+&\max_{x_i^* < 0} \Bigg[- \gamma_{i4} - \gamma_5 x_i^* - \gamma_6 x_i^{*2} + \beta \int \mathbb{E}_{\epsilon_i} V_i(s'; \sigma(s'), \theta, \epsilon_i) dP(s_i + x^*, s'_{-i}; s, \sigma(s))  \Bigg]\Bigg\},
+\end{split}
+\end{equation}
+
+where each term in the blanket represents the value of exit, staying and
+making investment, and staying and making disinvestment. - At this
+timing the incumbent only observes \(\phi_i\), although it is a bit
+confusing because the value function is written as a function of
+\(\epsilon_i\).
+
+\subsection{Value Function for
+Entrants}\label{value-function-for-entrants}
+
+\begin{itemize}
+\tightlist
+\item
+  The value function for a firm with \(s_i = 0\) at the time of entry
+  decision under strategy profile \(\sigma\) at the time of entry and
+  investment decisions are:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+&V_i(s; \sigma(s), \theta, \epsilon_i)\\
+&=\max\Bigg\{0, \\
+&\max_{x_i^* > 0} \Bigg[ - \gamma_{1i} - \gamma_2 x_i^* - \gamma_3 x_i^2 + \beta \int \mathbb{E}_{\epsilon_i} V_i(s'; \sigma(s'), \theta, \epsilon_i) dP(s_i + x_i^*, s'_{-i}; s, \sigma(s))\Bigg] - \kappa_i\Bigg\}.
+\end{split}
+\end{equation}
+
+\subsection{Markov Perfect
+Equilibrium}\label{markov-perfect-equilibrium-1}
+
+\begin{itemize}
+\tightlist
+\item
+  The strategy profile \(\sigma^*\) is a Markov perfect equilibrium if:
+
+  \begin{equation}
+  V_i(s; \sigma_i^*(s), \sigma_{-i}^*(s), \theta, \epsilon_i) \ge V_i(s; \sigma_i'(s), \sigma_{-i}^*(s), \theta, \epsilon_i), \forall \sigma_i',
+  \end{equation}
+
+  for all \(s, \epsilon_i\), and \(i\).
+\item
+  To apply the CCP approach, we first have to assume that the same
+  equilibrium is played across markets.
+\item
+  This assumption is not innocuous as we saw in the previous section.
+\item
+  It is also important to notice that we have to fix the expectation
+  about the regulation regime by firms.
+\item
+  We assume that firms assume that the regulatory environment is
+  permanent.
+\end{itemize}
+
+\subsection{Demand and Production Cost
+Estimation}\label{demand-and-production-cost-estimation}
+
+\begin{itemize}
+\tightlist
+\item
+  To estimate the demand function, Ryan uses supply-side cost shifters
+  as the instrumental variables: coal prices, gas prices, electricity
+  rates, and wage rates.
+\item
+  Given the demand function, Ryan estimate the cost function from the
+  FOC for the quantity competition.
+\item
+  You should already know how to do this.
+\end{itemize}
+
+\subsection{Investment Policy Function
+Estimation}\label{investment-policy-function-estimation}
+
+\begin{itemize}
+\tightlist
+\item
+  With fixed costs of investment and disinvestment, investment policy
+  function follows a so-called \((s, S)\) rule, in which firms
+  investment only when the current capacity is below a certain lower
+  bound and makes disinvestment only when the current capacity is above
+  a certain upper bound.
+\item
+  The lower and upper bounds, and the adjustment level are chosen
+  optimal as a function of the state.
+\end{itemize}
+
+\subsection{Investment Policy Function
+Estimation}\label{investment-policy-function-estimation-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Let \(s_{it}^*\) be the target level of capacity, which is
+  parameterize as:
+
+  \begin{equation}
+  \ln s_{it}^* = \lambda_1' bs(s_{it}) + \lambda_2' bs \Bigg(\sum_{j \neq i} s_{jt}\Bigg) + u_{it}^*,
+  \end{equation}
+
+  where \(bs(\cdot)\) is finite-dimensional piece-wise cubic b-splines.
+\item
+  The upper and lower bounds are parameterized as:
+\end{itemize}
+
+\begin{equation}
+\begin{split}
+&\overline{s}_{it} = s_{it}^* + \exp\Bigg(\lambda_3' bs_1(s_{it}) + \lambda_4' bs_2\Bigg(\sum_{j \neq i} s_{jt} \Bigg) + \overline{u}_{it}^b \Bigg),\\
+&\underline{s}_{it} = s_{it}^* - \exp\Bigg(\lambda_3' bs_1(s_{it}) + \lambda_4' bs_2\Bigg(\sum_{j \neq i} s_{jt} \Bigg) + \underline{u}_{it}^b \Bigg).
+\end{split}
+\end{equation}
+
+\subsection{Entry and Exit Policy
+Functions}\label{entry-and-exit-policy-functions}
+
+\begin{itemize}
+\tightlist
+\item
+  The probability of entry is parameterized as:
+
+  \begin{equation}
+  \mathbb{P}\{\chi_i = 1; s_i = 0, s\} = \Phi\Bigg(\psi_1 + \psi_2\Bigg(\sum_{j \neq i}\Bigg) + \psi_3 1(t > 1990) \Bigg),
+  \end{equation}
+
+  and the probability of exit is parameterized as:
+
+  \begin{equation}
+  \mathbb{P}\{\chi_i = 0; s_i > 0, s\} = \Phi\Bigg(\psi_4 + \psi_5 s_{it} + \psi_6 \Bigg(\sum_{j \neq i}\Bigg) + \psi_7 1(t > 1990) \Bigg),
+  \end{equation}
+
+  where \(\Psi\) is the cumulative distribution function of the standard
+  normal random variable.
+\end{itemize}
+
+\subsection{BBL Estimation}\label{bbl-estimation}
+
+\begin{itemize}
+\tightlist
+\item
+  Now by comparing the value function under the identified policies with
+  value functions under alternative policies, one can estimate the
+  structural parameters.
+\item
+  Alternative policies can be obtained by perturbing the upper and lower
+  bounds and the target level of investment and the thresholds for entry
+  and exit around the equilibrium policies.
+\item
+  How much to perturb is a practical issue.
+\item
+  Then, Ryan finds structural parameters that minimizes the BBL
+  objective function.
+\end{itemize}
+
+\subsection{Structural Parameters Estimation
+Results}\label{structural-parameters-estimation-results}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{figuretable/dynamic} 
+
+}
+
+\end{figure}
+
+\subsection{Counterfactual Simulation}\label{counterfactual-simulation}
+
+\begin{itemize}
+\item
+  To asses the welfare cost of the amendment, Ryan solves the model
+  under two sets of parameters: the actual parameters and the parameters
+  before the regulation.
+\item
+  In the simulation, we can set whatever initial state.
+\item
+  Ryan consider two types of initial state:
+\item
+  No incumbent firms and 4 potential entrants.
+\item
+  Two incumbent firms and two potential entrants.
+\end{itemize}
+
+\subsection{Counterfactual Simulation
+Results}\label{counterfactual-simulation-results}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{figuretable/denovo} 
+
+}
+
+\end{figure}
+
+\subsection{Counterfactual Simulation Estimation
+Results}\label{counterfactual-simulation-estimation-results}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{figuretable/mature} 
+
+}
+
+\end{figure}
 
 \chapter{Assignment 1: Basic Programming in R}\label{assignment1}
 
@@ -8621,7 +9744,7 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
   \texttt{latex2exp} package to use LaTeX math symbol in the label:
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -8839,19 +9962,20 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota      l l_error       I     eta
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
-## # ... with 990 more rows, and 2 more variables: y <dbl>, y_error <dbl>
+##        j     t     k   omega  wage     iota      l l_error       I
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
+## # ... with 990 more rows, and 3 more variables: eta <dbl>, y <dbl>,
+## #   y_error <dbl>
 \end{verbatim}
 
 \begin{enumerate}
@@ -8866,20 +9990,20 @@ so, we specify the initial values for the state variables \(k_{jt}\) and
 
 \begin{verbatim}
 ## # A tibble: 10,000 x 13
-##        j     t     k   omega  wage     iota      l l_error       I     eta
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>   <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
-## # ... with 9,990 more rows, and 3 more variables: y <dbl>, y_error <dbl>,
-## #   nu <dbl>
+##        j     t     k   omega  wage     iota      l l_error       I
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
+## # ... with 9,990 more rows, and 4 more variables: eta <dbl>, y <dbl>,
+## #   y_error <dbl>, nu <dbl>
 \end{verbatim}
 
 \begin{enumerate}
@@ -9044,7 +10168,7 @@ computation of the optimal bandwidth is time consuming.
 ## No. Continuous Explanatory Vars.: 2
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -9183,11 +10307,11 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
   at around the true value?
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-58-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-58-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-61-2} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-58-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-61-3} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -9480,19 +10604,20 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 350,000 x 13
-##        t     i     j v_x_1 v_x_2  v_x_3    v_p   x_1     x_2      x_3    xi
-##    <int> <int> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>   <dbl>    <dbl> <dbl>
-##  1     1     1     0 1.02  0.731 -0.169 -1.40      0  0       0           0
-##  2     1     1     1 1.02  0.731 -0.169 -1.40      1  0.244  -0.00810     0
-##  3     1     1     5 1.02  0.731 -0.169 -1.40      1  0.756   0.459       0
-##  4     1     1     6 1.02  0.731 -0.169 -1.40      1  0.195   0.391       0
-##  5     1     1     7 1.02  0.731 -0.169 -1.40      1 -0.311   0.0373      0
-##  6     1     1     8 1.02  0.731 -0.169 -1.40      1 -1.11   -0.995       0
-##  7     1     1    10 1.02  0.731 -0.169 -1.40      1 -0.0225 -0.0281      0
-##  8     1     2     0 0.375 0.418 -0.243 -0.899     0  0       0           0
-##  9     1     2     1 0.375 0.418 -0.243 -0.899     1  0.244  -0.00810     0
-## 10     1     2     5 0.375 0.418 -0.243 -0.899     1  0.756   0.459       0
-## # ... with 349,990 more rows, and 2 more variables: c <dbl>, p <dbl>
+##        t     i     j v_x_1 v_x_2  v_x_3    v_p   x_1     x_2      x_3
+##    <int> <int> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>   <dbl>    <dbl>
+##  1     1     1     0 1.02  0.731 -0.169 -1.40      0  0       0      
+##  2     1     1     1 1.02  0.731 -0.169 -1.40      1  0.244  -0.00810
+##  3     1     1     5 1.02  0.731 -0.169 -1.40      1  0.756   0.459  
+##  4     1     1     6 1.02  0.731 -0.169 -1.40      1  0.195   0.391  
+##  5     1     1     7 1.02  0.731 -0.169 -1.40      1 -0.311   0.0373 
+##  6     1     1     8 1.02  0.731 -0.169 -1.40      1 -1.11   -0.995  
+##  7     1     1    10 1.02  0.731 -0.169 -1.40      1 -0.0225 -0.0281 
+##  8     1     2     0 0.375 0.418 -0.243 -0.899     0  0       0      
+##  9     1     2     1 0.375 0.418 -0.243 -0.899     1  0.244  -0.00810
+## 10     1     2     5 0.375 0.418 -0.243 -0.899     1  0.756   0.459  
+## # ... with 349,990 more rows, and 3 more variables: xi <dbl>,
+## #   c <dbl>, p <dbl>
 \end{verbatim}
 
 \begin{enumerate}
@@ -9511,7 +10636,8 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.01971328 -0.44401874  0.15952459  0.17658106 -0.55495888 -0.12854864
+## [1] -0.01971328 -0.44401874  0.15952459  0.17658106 -0.55495888
+## [6] -0.12854864
 \end{verbatim}
 
 \begin{enumerate}
@@ -9574,20 +10700,20 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 350,000 x 16
-##        t     i     j v_x_1 v_x_2  v_x_3    v_p   x_1     x_2      x_3    xi
-##    <int> <int> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>   <dbl>    <dbl> <dbl>
-##  1     1     1     0 1.02  0.731 -0.169 -1.40      0  0       0           0
-##  2     1     1     1 1.02  0.731 -0.169 -1.40      1  0.244  -0.00810     0
-##  3     1     1     5 1.02  0.731 -0.169 -1.40      1  0.756   0.459       0
-##  4     1     1     6 1.02  0.731 -0.169 -1.40      1  0.195   0.391       0
-##  5     1     1     7 1.02  0.731 -0.169 -1.40      1 -0.311   0.0373      0
-##  6     1     1     8 1.02  0.731 -0.169 -1.40      1 -1.11   -0.995       0
-##  7     1     1    10 1.02  0.731 -0.169 -1.40      1 -0.0225 -0.0281      0
-##  8     1     2     0 0.375 0.418 -0.243 -0.899     0  0       0           0
-##  9     1     2     1 0.375 0.418 -0.243 -0.899     1  0.244  -0.00810     0
-## 10     1     2     5 0.375 0.418 -0.243 -0.899     1  0.756   0.459       0
-## # ... with 349,990 more rows, and 5 more variables: c <dbl>, p <dbl>,
-## #   u <dbl>, e <dbl>, q <dbl>
+##        t     i     j v_x_1 v_x_2  v_x_3    v_p   x_1     x_2      x_3
+##    <int> <int> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl>   <dbl>    <dbl>
+##  1     1     1     0 1.02  0.731 -0.169 -1.40      0  0       0      
+##  2     1     1     1 1.02  0.731 -0.169 -1.40      1  0.244  -0.00810
+##  3     1     1     5 1.02  0.731 -0.169 -1.40      1  0.756   0.459  
+##  4     1     1     6 1.02  0.731 -0.169 -1.40      1  0.195   0.391  
+##  5     1     1     7 1.02  0.731 -0.169 -1.40      1 -0.311   0.0373 
+##  6     1     1     8 1.02  0.731 -0.169 -1.40      1 -1.11   -0.995  
+##  7     1     1    10 1.02  0.731 -0.169 -1.40      1 -0.0225 -0.0281 
+##  8     1     2     0 0.375 0.418 -0.243 -0.899     0  0       0      
+##  9     1     2     1 0.375 0.418 -0.243 -0.899     1  0.244  -0.00810
+## 10     1     2     5 0.375 0.418 -0.243 -0.899     1  0.756   0.459  
+## # ... with 349,990 more rows, and 6 more variables: xi <dbl>,
+## #   c <dbl>, p <dbl>, u <dbl>, e <dbl>, q <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -9597,41 +10723,41 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-##        t                i               j              v_x_1          
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
-##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685716  
-##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.000103  
-##  Mean   : 50.50   Mean   :250.5   Mean   : 4.639   Mean   :-0.004312  
-##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 7.000   3rd Qu.: 0.668186  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
-##      v_x_2               v_x_3                v_p           
-##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.678436   1st Qu.:-0.674487   1st Qu.:-0.670251  
-##  Median : 0.000444   Median : 0.005891   Median : 0.002309  
-##  Mean   :-0.001340   Mean   : 0.003736   Mean   :-0.001305  
-##  3rd Qu.: 0.670840   3rd Qu.: 0.678349   3rd Qu.: 0.671041  
-##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300  
-##       x_1              x_2                x_3                xi   
-##  Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947   Min.   :0  
-##  1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:0  
-##  Median :1.0000   Median : 0.19492   Median : 0.2970   Median :0  
-##  Mean   :0.8571   Mean   : 0.06936   Mean   : 0.1186   Mean   :0  
-##  3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.4106   3rd Qu.:0  
-##  Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719   Max.   :0  
-##        c                p               u                  e          
-##  Min.   :0.0000   Min.   :0.000   Min.   :-200.871   Min.   :-2.6364  
-##  1st Qu.:0.9417   1st Qu.:1.921   1st Qu.:  -2.202   1st Qu.:-0.3302  
-##  Median :0.9887   Median :1.986   Median :   0.000   Median : 0.3634  
-##  Mean   :0.8583   Mean   :1.718   Mean   :  -1.316   Mean   : 0.5760  
-##  3rd Qu.:1.0278   3rd Qu.:2.046   3rd Qu.:   1.961   3rd Qu.: 1.2415  
-##  Max.   :1.1996   Max.   :2.192   Max.   :  10.731   Max.   :14.0966  
-##        q         
-##  Min.   :0.0000  
-##  1st Qu.:0.0000  
-##  Median :0.0000  
-##  Mean   :0.1429  
-##  3rd Qu.:0.0000  
-##  Max.   :1.0000
+##        t                i               j         
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000  
+##  Median : 50.50   Median :250.5   Median : 5.000  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.639  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 7.000  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000  
+##      v_x_1               v_x_2               v_x_3          
+##  Min.   :-4.302781   Min.   :-4.542122   Min.   :-3.957618  
+##  1st Qu.:-0.685716   1st Qu.:-0.678436   1st Qu.:-0.674487  
+##  Median : 0.000103   Median : 0.000444   Median : 0.005891  
+##  Mean   :-0.004312   Mean   :-0.001340   Mean   : 0.003736  
+##  3rd Qu.: 0.668186   3rd Qu.: 0.670840   3rd Qu.: 0.678349  
+##  Max.   : 3.809895   Max.   : 4.313621   Max.   : 4.244194  
+##       v_p                 x_1              x_2          
+##  Min.   :-4.218131   Min.   :0.0000   Min.   :-1.10735  
+##  1st Qu.:-0.670251   1st Qu.:1.0000   1st Qu.:-0.15269  
+##  Median : 0.002309   Median :1.0000   Median : 0.19492  
+##  Mean   :-0.001305   Mean   :0.8571   Mean   : 0.06936  
+##  3rd Qu.: 0.671041   3rd Qu.:1.0000   3rd Qu.: 0.36916  
+##  Max.   : 4.074300   Max.   :1.0000   Max.   : 0.75589  
+##       x_3                xi          c                p        
+##  Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9417   1st Qu.:1.921  
+##  Median : 0.2970   Median :0   Median :0.9887   Median :1.986  
+##  Mean   : 0.1186   Mean   :0   Mean   :0.8583   Mean   :1.718  
+##  3rd Qu.: 0.4106   3rd Qu.:0   3rd Qu.:1.0278   3rd Qu.:2.046  
+##  Max.   : 0.4719   Max.   :0   Max.   :1.1996   Max.   :2.192  
+##        u                  e                 q         
+##  Min.   :-200.871   Min.   :-2.6364   Min.   :0.0000  
+##  1st Qu.:  -2.202   1st Qu.:-0.3302   1st Qu.:0.0000  
+##  Median :   0.000   Median : 0.3634   Median :0.0000  
+##  Mean   :  -1.316   Mean   : 0.5760   Mean   :0.1429  
+##  3rd Qu.:   1.961   3rd Qu.: 1.2415   3rd Qu.:0.0000  
+##  Max.   :  10.731   Max.   :14.0966   Max.   :1.0000
 \end{verbatim}
 
 \begin{enumerate}
@@ -9663,19 +10789,19 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 700 x 11
-##        t     j   x_1     x_2      x_3    xi     c     p     q     s      y
-##    <int> <dbl> <dbl>   <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
-##  1     1     0     0  0       0           0 0      0      153 0.306  0    
-##  2     1     1     1  0.244  -0.00810     0 0.951  1.93    49 0.098 -1.14 
-##  3     1     5     1  0.756   0.459       0 0.974  1.94    38 0.076 -1.39 
-##  4     1     6     1  0.195   0.391       0 0.980  1.96    41 0.082 -1.32 
-##  5     1     7     1 -0.311   0.0373      0 0.961  1.94    45 0.09  -1.22 
-##  6     1     8     1 -1.11   -0.995       0 0.989  1.99   131 0.262 -0.155
-##  7     1    10     1 -0.0225 -0.0281      0 1.02   2.09    43 0.086 -1.27 
-##  8     2     0     0  0       0           0 0      0      170 0.34   0    
-##  9     2     1     1  0.244  -0.00810     0 0.988  2.09    50 0.1   -1.22 
-## 10     2     2     1  0.369   0.472       0 1.04   1.96    37 0.074 -1.52 
-## # ... with 690 more rows
+##        t     j   x_1     x_2      x_3    xi     c     p     q     s
+##    <int> <dbl> <dbl>   <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1     1     0     0  0       0           0 0      0      153 0.306
+##  2     1     1     1  0.244  -0.00810     0 0.951  1.93    49 0.098
+##  3     1     5     1  0.756   0.459       0 0.974  1.94    38 0.076
+##  4     1     6     1  0.195   0.391       0 0.980  1.96    41 0.082
+##  5     1     7     1 -0.311   0.0373      0 0.961  1.94    45 0.09 
+##  6     1     8     1 -1.11   -0.995       0 0.989  1.99   131 0.262
+##  7     1    10     1 -0.0225 -0.0281      0 1.02   2.09    43 0.086
+##  8     2     0     0  0       0           0 0      0      170 0.34 
+##  9     2     1     1  0.244  -0.00810     0 0.988  2.09    50 0.1  
+## 10     2     2     1  0.369   0.472       0 1.04   1.96    37 0.074
+## # ... with 690 more rows, and 1 more variable: y <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -9685,27 +10811,27 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-##        t                j               x_1              x_2          
-##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-1.10735  
-##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.15269  
-##  Median : 50.50   Median : 5.000   Median :1.0000   Median : 0.19492  
-##  Mean   : 50.50   Mean   : 4.639   Mean   :0.8571   Mean   : 0.06936  
-##  3rd Qu.: 75.25   3rd Qu.: 7.000   3rd Qu.:1.0000   3rd Qu.: 0.36916  
-##  Max.   :100.00   Max.   :10.000   Max.   :1.0000   Max.   : 0.75589  
-##       x_3                xi          c                p        
-##  Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9417   1st Qu.:1.921  
-##  Median : 0.2970   Median :0   Median :0.9887   Median :1.986  
-##  Mean   : 0.1186   Mean   :0   Mean   :0.8583   Mean   :1.718  
-##  3rd Qu.: 0.4106   3rd Qu.:0   3rd Qu.:1.0278   3rd Qu.:2.046  
-##  Max.   : 0.4719   Max.   :0   Max.   :1.1996   Max.   :2.192  
-##        q                s                y          
-##  Min.   : 25.00   Min.   :0.0500   Min.   :-1.9459  
-##  1st Qu.: 43.00   1st Qu.:0.0860   1st Qu.:-1.3636  
-##  Median : 51.00   Median :0.1020   Median :-1.1579  
-##  Mean   : 71.43   Mean   :0.1429   Mean   :-0.9968  
-##  3rd Qu.: 73.00   3rd Qu.:0.1460   3rd Qu.:-0.8316  
-##  Max.   :191.00   Max.   :0.3820   Max.   : 0.0000
+##        t                j               x_1        
+##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000  
+##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000  
+##  Median : 50.50   Median : 5.000   Median :1.0000  
+##  Mean   : 50.50   Mean   : 4.639   Mean   :0.8571  
+##  3rd Qu.: 75.25   3rd Qu.: 7.000   3rd Qu.:1.0000  
+##  Max.   :100.00   Max.   :10.000   Max.   :1.0000  
+##       x_2                x_3                xi          c         
+##  Min.   :-1.10735   Min.   :-0.9947   Min.   :0   Min.   :0.0000  
+##  1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9417  
+##  Median : 0.19492   Median : 0.2970   Median :0   Median :0.9887  
+##  Mean   : 0.06936   Mean   : 0.1186   Mean   :0   Mean   :0.8583  
+##  3rd Qu.: 0.36916   3rd Qu.: 0.4106   3rd Qu.:0   3rd Qu.:1.0278  
+##  Max.   : 0.75589   Max.   : 0.4719   Max.   :0   Max.   :1.1996  
+##        p               q                s                y          
+##  Min.   :0.000   Min.   : 25.00   Min.   :0.0500   Min.   :-1.9459  
+##  1st Qu.:1.921   1st Qu.: 43.00   1st Qu.:0.0860   1st Qu.:-1.3636  
+##  Median :1.986   Median : 51.00   Median :0.1020   Median :-1.1579  
+##  Mean   :1.718   Mean   : 71.43   Mean   :0.1429   Mean   :-0.9968  
+##  3rd Qu.:2.046   3rd Qu.: 73.00   3rd Qu.:0.1460   3rd Qu.:-0.8316  
+##  Max.   :2.192   Max.   :191.00   Max.   :0.3820   Max.   : 0.0000
 \end{verbatim}
 
 \section{Estimate the parameters}\label{estimate-the-parameters-1}
@@ -9825,19 +10951,19 @@ evaluations.
 
 \begin{verbatim}
 ## # A tibble: 700 x 11
-##        t     j   x_1     x_2      x_3    xi     c     p     q     s      y
-##    <int> <dbl> <dbl>   <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
-##  1     1     0     0  0       0           0 0      0      153 0.306  0    
-##  2     1     1     1  0.244  -0.00810     0 0.951  1.93    59 0.118 -0.953
-##  3     1     5     1  0.756   0.459       0 0.974  1.94    46 0.092 -1.20 
-##  4     1     6     1  0.195   0.391       0 0.980  1.96    39 0.078 -1.37 
-##  5     1     7     1 -0.311   0.0373      0 0.961  1.94    51 0.102 -1.10 
-##  6     1     8     1 -1.11   -0.995       0 0.989  1.99   107 0.214 -0.358
-##  7     1    10     1 -0.0225 -0.0281      0 1.02   2.09    45 0.09  -1.22 
-##  8     2     0     0  0       0           0 0      0      164 0.328  0    
-##  9     2     1     1  0.244  -0.00810     0 0.988  2.09    51 0.102 -1.17 
-## 10     2     2     1  0.369   0.472       0 1.04   1.96    33 0.066 -1.60 
-## # ... with 690 more rows
+##        t     j   x_1     x_2      x_3    xi     c     p     q     s
+##    <int> <dbl> <dbl>   <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1     1     0     0  0       0           0 0      0      153 0.306
+##  2     1     1     1  0.244  -0.00810     0 0.951  1.93    59 0.118
+##  3     1     5     1  0.756   0.459       0 0.974  1.94    46 0.092
+##  4     1     6     1  0.195   0.391       0 0.980  1.96    39 0.078
+##  5     1     7     1 -0.311   0.0373      0 0.961  1.94    51 0.102
+##  6     1     8     1 -1.11   -0.995       0 0.989  1.99   107 0.214
+##  7     1    10     1 -0.0225 -0.0281      0 1.02   2.09    45 0.09 
+##  8     2     0     0  0       0           0 0      0      164 0.328
+##  9     2     1     1  0.244  -0.00810     0 0.988  2.09    51 0.102
+## 10     2     2     1  0.369   0.472       0 1.04   1.96    33 0.066
+## # ... with 690 more rows, and 1 more variable: y <dbl>
 \end{verbatim}
 
 \begin{enumerate}
@@ -10015,56 +11141,56 @@ The graphs with the true shocks:
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-6} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[7]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-7} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-7} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[8]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-91-8} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-94-8} \end{center}
 
 The graphs with the Monte Carlo shocks:
 
@@ -10072,56 +11198,56 @@ The graphs with the Monte Carlo shocks:
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-6} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[7]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-7} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-7} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[8]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-93-8} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-96-8} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -10434,19 +11560,20 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 373,000 x 13
-##        t     i     j  v_x_1  v_x_2  v_x_3    v_p   x_1   x_2   x_3      xi
-##    <int> <int> <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>   <dbl>
-##  1     1     1     0  1.16  -1.40  0.0786 -1.15      0 0      0     0     
-##  2     1     1     6  1.16  -1.40  0.0786 -1.15      1 0.780  1.56 -0.0514
-##  3     1     2     0 -1.05  -0.149 1.08    0.623     0 0      0     0     
-##  4     1     2     6 -1.05  -0.149 1.08    0.623     1 0.780  1.56 -0.0514
-##  5     1     3     0 -0.426 -4.21  0.625  -1.14      0 0      0     0     
-##  6     1     3     6 -0.426 -4.21  0.625  -1.14      1 0.780  1.56 -0.0514
-##  7     1     4     0 -0.235  0.463 0.470   0.241     0 0      0     0     
-##  8     1     4     6 -0.235  0.463 0.470   0.241     1 0.780  1.56 -0.0514
-##  9     1     5     0  1.19  -0.342 0.169   0.160     0 0      0     0     
-## 10     1     5     6  1.19  -0.342 0.169   0.160     1 0.780  1.56 -0.0514
-## # ... with 372,990 more rows, and 2 more variables: c <dbl>, p <dbl>
+##        t     i     j  v_x_1  v_x_2  v_x_3    v_p   x_1   x_2   x_3
+##    <int> <int> <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>
+##  1     1     1     0  1.16  -1.40  0.0786 -1.15      0 0      0   
+##  2     1     1     6  1.16  -1.40  0.0786 -1.15      1 0.780  1.56
+##  3     1     2     0 -1.05  -0.149 1.08    0.623     0 0      0   
+##  4     1     2     6 -1.05  -0.149 1.08    0.623     1 0.780  1.56
+##  5     1     3     0 -0.426 -4.21  0.625  -1.14      0 0      0   
+##  6     1     3     6 -0.426 -4.21  0.625  -1.14      1 0.780  1.56
+##  7     1     4     0 -0.235  0.463 0.470   0.241     0 0      0   
+##  8     1     4     6 -0.235  0.463 0.470   0.241     1 0.780  1.56
+##  9     1     5     0  1.19  -0.342 0.169   0.160     0 0      0   
+## 10     1     5     6  1.19  -0.342 0.169   0.160     1 0.780  1.56
+## # ... with 372,990 more rows, and 3 more variables: xi <dbl>,
+## #   c <dbl>, p <dbl>
 \end{verbatim}
 
 \begin{enumerate}
@@ -10533,34 +11660,41 @@ s_{jt} = \frac{1}{N} \sum_{i = 1}^N \frac{\exp[\beta_{it}' x_j + \alpha_{it} p_{
 \end{Shaded}
 
 \begin{verbatim}
-##        t                i               j              v_x_1          
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
-##  1st Qu.: 26.00   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685447  
-##  Median : 51.50   Median :250.5   Median : 5.000   Median :-0.000461  
-##  Mean   : 51.26   Mean   :250.5   Mean   : 4.807   Mean   :-0.005284  
-##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.665219  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
-##      v_x_2               v_x_3                v_p           
-##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.678377   1st Qu.:-0.676638   1st Qu.:-0.672011  
-##  Median : 0.001435   Median : 0.006281   Median : 0.002166  
-##  Mean   :-0.001076   Mean   : 0.003433   Mean   :-0.001402  
-##  3rd Qu.: 0.671827   3rd Qu.: 0.679273   3rd Qu.: 0.674681  
-##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300  
-##       x_1             x_2               x_3                 xi           
-##  Min.   :0.000   Min.   :-4.4294   Min.   :-3.97870   Min.   :-1.444460  
-##  1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.:-0.03238   1st Qu.:-0.286633  
-##  Median :1.000   Median : 0.7797   Median : 1.18780   Median : 0.000000  
-##  Mean   :0.866   Mean   : 0.2713   Mean   : 0.44050   Mean   : 0.009578  
-##  3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.64244   3rd Qu.: 0.317352  
-##  Max.   :1.000   Max.   : 3.0236   Max.   : 1.88767   Max.   : 1.905138  
-##        c                p               u                  q            
-##  Min.   :0.0000   Min.   :0.000   Min.   :-284.515   Min.   :0.0000000  
-##  1st Qu.:0.9425   1st Qu.:1.562   1st Qu.:  -3.157   1st Qu.:0.0009063  
-##  Median :0.9886   Median :1.902   Median :   0.000   Median :0.0225375  
-##  Mean   :0.8670   Mean   :1.871   Mean   :  -1.927   Mean   :0.1340483  
-##  3rd Qu.:1.0322   3rd Qu.:2.394   3rd Qu.:   1.623   3rd Qu.:0.1203147  
-##  Max.   :1.1996   Max.   :8.211   Max.   :  19.907   Max.   :1.0000000
+##        t                i               j         
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000  
+##  1st Qu.: 26.00   1st Qu.:125.8   1st Qu.: 2.000  
+##  Median : 51.50   Median :250.5   Median : 5.000  
+##  Mean   : 51.26   Mean   :250.5   Mean   : 4.807  
+##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 8.000  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000  
+##      v_x_1               v_x_2               v_x_3          
+##  Min.   :-4.302781   Min.   :-4.542122   Min.   :-3.957618  
+##  1st Qu.:-0.685447   1st Qu.:-0.678377   1st Qu.:-0.676638  
+##  Median :-0.000461   Median : 0.001435   Median : 0.006281  
+##  Mean   :-0.005284   Mean   :-0.001076   Mean   : 0.003433  
+##  3rd Qu.: 0.665219   3rd Qu.: 0.671827   3rd Qu.: 0.679273  
+##  Max.   : 3.809895   Max.   : 4.313621   Max.   : 4.244194  
+##       v_p                 x_1             x_2         
+##  Min.   :-4.218131   Min.   :0.000   Min.   :-4.4294  
+##  1st Qu.:-0.672011   1st Qu.:1.000   1st Qu.:-0.6108  
+##  Median : 0.002166   Median :1.000   Median : 0.7797  
+##  Mean   :-0.001402   Mean   :0.866   Mean   : 0.2713  
+##  3rd Qu.: 0.674681   3rd Qu.:1.000   3rd Qu.: 1.4766  
+##  Max.   : 4.074300   Max.   :1.000   Max.   : 3.0236  
+##       x_3                 xi                  c         
+##  Min.   :-3.97870   Min.   :-1.444460   Min.   :0.0000  
+##  1st Qu.:-0.03238   1st Qu.:-0.286633   1st Qu.:0.9425  
+##  Median : 1.18780   Median : 0.000000   Median :0.9886  
+##  Mean   : 0.44050   Mean   : 0.009578   Mean   :0.8670  
+##  3rd Qu.: 1.64244   3rd Qu.: 0.317352   3rd Qu.:1.0322  
+##  Max.   : 1.88767   Max.   : 1.905138   Max.   :1.1996  
+##        p               u                  q            
+##  Min.   :0.000   Min.   :-284.515   Min.   :0.0000000  
+##  1st Qu.:1.562   1st Qu.:  -3.157   1st Qu.:0.0009063  
+##  Median :1.902   Median :   0.000   Median :0.0225375  
+##  Mean   :1.871   Mean   :  -1.927   Mean   :0.1340483  
+##  3rd Qu.:2.394   3rd Qu.:   1.623   3rd Qu.:0.1203147  
+##  Max.   :8.211   Max.   :  19.907   Max.   :1.0000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -10590,20 +11724,27 @@ s_{jt} = \frac{1}{N} \sum_{i = 1}^N \frac{\exp[\beta_{it}' x_j + \alpha_{it} p_{
 ##  Mean   : 51.26   Mean   : 4.807   Mean   :0.866   Mean   : 0.2713  
 ##  3rd Qu.: 77.00   3rd Qu.: 8.000   3rd Qu.:1.000   3rd Qu.: 1.4766  
 ##  Max.   :100.00   Max.   :10.000   Max.   :1.000   Max.   : 3.0236  
-##       x_3                 xi                  c                p        
-##  Min.   :-3.97870   Min.   :-1.444460   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:-0.03238   1st Qu.:-0.286542   1st Qu.:0.9427   1st Qu.:1.564  
-##  Median : 1.18780   Median : 0.000000   Median :0.9886   Median :1.902  
-##  Mean   : 0.44050   Mean   : 0.009578   Mean   :0.8670   Mean   :1.871  
-##  3rd Qu.: 1.62290   3rd Qu.: 0.316516   3rd Qu.:1.0322   3rd Qu.:2.392  
-##  Max.   : 1.88767   Max.   : 1.905138   Max.   :1.1996   Max.   :8.211  
-##        q                 s                 y          
-##  Min.   :  5.912   Min.   :0.01182   Min.   :-2.9837  
-##  1st Qu.: 17.628   1st Qu.:0.03526   1st Qu.:-1.9109  
-##  Median : 28.025   Median :0.05605   Median :-1.5011  
-##  Mean   : 67.024   Mean   :0.13405   Mean   :-1.2219  
-##  3rd Qu.:100.446   3rd Qu.:0.20089   3rd Qu.:-0.5556  
-##  Max.   :337.118   Max.   :0.67424   Max.   : 1.1167
+##       x_3                 xi                  c         
+##  Min.   :-3.97870   Min.   :-1.444460   Min.   :0.0000  
+##  1st Qu.:-0.03238   1st Qu.:-0.286542   1st Qu.:0.9427  
+##  Median : 1.18780   Median : 0.000000   Median :0.9886  
+##  Mean   : 0.44050   Mean   : 0.009578   Mean   :0.8670  
+##  3rd Qu.: 1.62290   3rd Qu.: 0.316516   3rd Qu.:1.0322  
+##  Max.   : 1.88767   Max.   : 1.905138   Max.   :1.1996  
+##        p               q                 s          
+##  Min.   :0.000   Min.   :  5.912   Min.   :0.01182  
+##  1st Qu.:1.564   1st Qu.: 17.628   1st Qu.:0.03526  
+##  Median :1.902   Median : 28.025   Median :0.05605  
+##  Mean   :1.871   Mean   : 67.024   Mean   :0.13405  
+##  3rd Qu.:2.392   3rd Qu.:100.446   3rd Qu.:0.20089  
+##  Max.   :8.211   Max.   :337.118   Max.   :0.67424  
+##        y          
+##  Min.   :-2.9837  
+##  1st Qu.:-1.9109  
+##  Median :-1.5011  
+##  Mean   :-1.2219  
+##  3rd Qu.:-0.5556  
+##  Max.   : 1.1167
 \end{verbatim}
 
 Use this \texttt{df\_share\_smooth} as the data to estimate the
@@ -10847,20 +11988,20 @@ assumed that \(\alpha_i\)s are log-normal random variables.
 
 \begin{verbatim}
 ## # A tibble: 373,000 x 15
-##        t     i     j  v_x_1  v_x_2  v_x_3    v_p   x_1   x_2   x_3      xi
-##    <int> <int> <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>   <dbl>
-##  1     1     1     0  1.16  -1.40  0.0786 -1.15      0 0      0     0     
-##  2     1     1     6  1.16  -1.40  0.0786 -1.15      1 0.780  1.56 -0.0514
-##  3     1     2     0 -1.05  -0.149 1.08    0.623     0 0      0     0     
-##  4     1     2     6 -1.05  -0.149 1.08    0.623     1 0.780  1.56 -0.0514
-##  5     1     3     0 -0.426 -4.21  0.625  -1.14      0 0      0     0     
-##  6     1     3     6 -0.426 -4.21  0.625  -1.14      1 0.780  1.56 -0.0514
-##  7     1     4     0 -0.235  0.463 0.470   0.241     0 0      0     0     
-##  8     1     4     6 -0.235  0.463 0.470   0.241     1 0.780  1.56 -0.0514
-##  9     1     5     0  1.19  -0.342 0.169   0.160     0 0      0     0     
-## 10     1     5     6  1.19  -0.342 0.169   0.160     1 0.780  1.56 -0.0514
-## # ... with 372,990 more rows, and 4 more variables: c <dbl>, p <dbl>,
-## #   u <dbl>, q <dbl>
+##        t     i     j  v_x_1  v_x_2  v_x_3    v_p   x_1   x_2   x_3
+##    <int> <int> <dbl>  <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl> <dbl>
+##  1     1     1     0  1.16  -1.40  0.0786 -1.15      0 0      0   
+##  2     1     1     6  1.16  -1.40  0.0786 -1.15      1 0.780  1.56
+##  3     1     2     0 -1.05  -0.149 1.08    0.623     0 0      0   
+##  4     1     2     6 -1.05  -0.149 1.08    0.623     1 0.780  1.56
+##  5     1     3     0 -0.426 -4.21  0.625  -1.14      0 0      0   
+##  6     1     3     6 -0.426 -4.21  0.625  -1.14      1 0.780  1.56
+##  7     1     4     0 -0.235  0.463 0.470   0.241     0 0      0   
+##  8     1     4     6 -0.235  0.463 0.470   0.241     1 0.780  1.56
+##  9     1     5     0  1.19  -0.342 0.169   0.160     0 0      0   
+## 10     1     5     6  1.19  -0.342 0.169   0.160     1 0.780  1.56
+## # ... with 372,990 more rows, and 5 more variables: xi <dbl>,
+## #   c <dbl>, p <dbl>, u <dbl>, q <dbl>
 \end{verbatim}
 
 \begin{Shaded}
@@ -10870,34 +12011,41 @@ assumed that \(\alpha_i\)s are log-normal random variables.
 \end{Shaded}
 
 \begin{verbatim}
-##        t                i               j              v_x_1          
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781  
-##  1st Qu.: 26.00   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.685447  
-##  Median : 51.50   Median :250.5   Median : 5.000   Median :-0.000461  
-##  Mean   : 51.26   Mean   :250.5   Mean   : 4.807   Mean   :-0.005284  
-##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.665219  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895  
-##      v_x_2               v_x_3                v_p           
-##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.678377   1st Qu.:-0.676638   1st Qu.:-0.672011  
-##  Median : 0.001435   Median : 0.006281   Median : 0.002166  
-##  Mean   :-0.001076   Mean   : 0.003433   Mean   :-0.001402  
-##  3rd Qu.: 0.671827   3rd Qu.: 0.679273   3rd Qu.: 0.674681  
-##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300  
-##       x_1             x_2               x_3                 xi           
-##  Min.   :0.000   Min.   :-4.4294   Min.   :-3.97870   Min.   :-1.444460  
-##  1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.:-0.03238   1st Qu.:-0.286633  
-##  Median :1.000   Median : 0.7797   Median : 1.18780   Median : 0.000000  
-##  Mean   :0.866   Mean   : 0.2713   Mean   : 0.44050   Mean   : 0.009578  
-##  3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.64244   3rd Qu.: 0.317352  
-##  Max.   :1.000   Max.   : 3.0236   Max.   : 1.88767   Max.   : 1.905138  
-##        c                p               u                  q            
-##  Min.   :0.0000   Min.   :0.000   Min.   :-284.515   Min.   :0.0000000  
-##  1st Qu.:0.9425   1st Qu.:1.562   1st Qu.:  -3.157   1st Qu.:0.0009063  
-##  Median :0.9886   Median :1.902   Median :   0.000   Median :0.0225375  
-##  Mean   :0.8670   Mean   :1.871   Mean   :  -1.927   Mean   :0.1340483  
-##  3rd Qu.:1.0322   3rd Qu.:2.394   3rd Qu.:   1.623   3rd Qu.:0.1203147  
-##  Max.   :1.1996   Max.   :8.211   Max.   :  19.907   Max.   :1.0000000
+##        t                i               j         
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000  
+##  1st Qu.: 26.00   1st Qu.:125.8   1st Qu.: 2.000  
+##  Median : 51.50   Median :250.5   Median : 5.000  
+##  Mean   : 51.26   Mean   :250.5   Mean   : 4.807  
+##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 8.000  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000  
+##      v_x_1               v_x_2               v_x_3          
+##  Min.   :-4.302781   Min.   :-4.542122   Min.   :-3.957618  
+##  1st Qu.:-0.685447   1st Qu.:-0.678377   1st Qu.:-0.676638  
+##  Median :-0.000461   Median : 0.001435   Median : 0.006281  
+##  Mean   :-0.005284   Mean   :-0.001076   Mean   : 0.003433  
+##  3rd Qu.: 0.665219   3rd Qu.: 0.671827   3rd Qu.: 0.679273  
+##  Max.   : 3.809895   Max.   : 4.313621   Max.   : 4.244194  
+##       v_p                 x_1             x_2         
+##  Min.   :-4.218131   Min.   :0.000   Min.   :-4.4294  
+##  1st Qu.:-0.672011   1st Qu.:1.000   1st Qu.:-0.6108  
+##  Median : 0.002166   Median :1.000   Median : 0.7797  
+##  Mean   :-0.001402   Mean   :0.866   Mean   : 0.2713  
+##  3rd Qu.: 0.674681   3rd Qu.:1.000   3rd Qu.: 1.4766  
+##  Max.   : 4.074300   Max.   :1.000   Max.   : 3.0236  
+##       x_3                 xi                  c         
+##  Min.   :-3.97870   Min.   :-1.444460   Min.   :0.0000  
+##  1st Qu.:-0.03238   1st Qu.:-0.286633   1st Qu.:0.9425  
+##  Median : 1.18780   Median : 0.000000   Median :0.9886  
+##  Mean   : 0.44050   Mean   : 0.009578   Mean   :0.8670  
+##  3rd Qu.: 1.64244   3rd Qu.: 0.317352   3rd Qu.:1.0322  
+##  Max.   : 1.88767   Max.   : 1.905138   Max.   :1.1996  
+##        p               u                  q            
+##  Min.   :0.000   Min.   :-284.515   Min.   :0.0000000  
+##  1st Qu.:1.562   1st Qu.:  -3.157   1st Qu.:0.0009063  
+##  Median :1.902   Median :   0.000   Median :0.0225375  
+##  Mean   :1.871   Mean   :  -1.927   Mean   :0.1340483  
+##  3rd Qu.:2.394   3rd Qu.:   1.623   3rd Qu.:0.1203147  
+##  Max.   :8.211   Max.   :  19.907   Max.   :1.0000000
 \end{verbatim}
 
 \begin{Shaded}
@@ -10968,20 +12116,27 @@ assumed that \(\alpha_i\)s are log-normal random variables.
 ##  Mean   : 51.26   Mean   : 4.807   Mean   :0.866   Mean   : 0.2713  
 ##  3rd Qu.: 77.00   3rd Qu.: 8.000   3rd Qu.:1.000   3rd Qu.: 1.4766  
 ##  Max.   :100.00   Max.   :10.000   Max.   :1.000   Max.   : 3.0236  
-##       x_3                 xi                  c                p        
-##  Min.   :-3.97870   Min.   :-1.444460   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:-0.03238   1st Qu.:-0.286542   1st Qu.:0.9427   1st Qu.:1.564  
-##  Median : 1.18780   Median : 0.000000   Median :0.9886   Median :1.902  
-##  Mean   : 0.44050   Mean   : 0.009578   Mean   :0.8670   Mean   :1.871  
-##  3rd Qu.: 1.62290   3rd Qu.: 0.316516   3rd Qu.:1.0322   3rd Qu.:2.392  
-##  Max.   : 1.88767   Max.   : 1.905138   Max.   :1.1996   Max.   :8.211  
-##        q                 s                 y          
-##  Min.   :  5.912   Min.   :0.01182   Min.   :-2.9837  
-##  1st Qu.: 17.628   1st Qu.:0.03526   1st Qu.:-1.9109  
-##  Median : 28.025   Median :0.05605   Median :-1.5011  
-##  Mean   : 67.024   Mean   :0.13405   Mean   :-1.2219  
-##  3rd Qu.:100.446   3rd Qu.:0.20089   3rd Qu.:-0.5556  
-##  Max.   :337.118   Max.   :0.67424   Max.   : 1.1167
+##       x_3                 xi                  c         
+##  Min.   :-3.97870   Min.   :-1.444460   Min.   :0.0000  
+##  1st Qu.:-0.03238   1st Qu.:-0.286542   1st Qu.:0.9427  
+##  Median : 1.18780   Median : 0.000000   Median :0.9886  
+##  Mean   : 0.44050   Mean   : 0.009578   Mean   :0.8670  
+##  3rd Qu.: 1.62290   3rd Qu.: 0.316516   3rd Qu.:1.0322  
+##  Max.   : 1.88767   Max.   : 1.905138   Max.   :1.1996  
+##        p               q                 s          
+##  Min.   :0.000   Min.   :  5.912   Min.   :0.01182  
+##  1st Qu.:1.564   1st Qu.: 17.628   1st Qu.:0.03526  
+##  Median :1.902   Median : 28.025   Median :0.05605  
+##  Mean   :1.871   Mean   : 67.024   Mean   :0.13405  
+##  3rd Qu.:2.392   3rd Qu.:100.446   3rd Qu.:0.20089  
+##  Max.   :8.211   Max.   :337.118   Max.   :0.67424  
+##        y          
+##  Min.   :-2.9837  
+##  1st Qu.:-1.9109  
+##  Median :-1.5011  
+##  Mean   :-1.2219  
+##  3rd Qu.:-0.5556  
+##  Max.   : 1.1167
 \end{verbatim}
 
 \begin{Shaded}
@@ -11279,35 +12434,35 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-134-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-137-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-134-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-137-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-134-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-137-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-134-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-137-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-134-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-137-5} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -11791,7 +12946,7 @@ costs to confirm that the codes are correctly written.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-151-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-154-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
