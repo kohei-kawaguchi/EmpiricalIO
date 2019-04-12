@@ -16,7 +16,7 @@
 
 ### Setting
 
-- This model originates at @rust_optimal_1987, while the setting and the notation follows @pesendorfer_asymptotic_2008.
+- This model originates at @rustOptimalReplacementGMC1987, while the setting and the notation follows @pesendorferAsymptoticLeastSquares2008.
 - We start from a simple set-up:
 - Single agent.
 - Infinite-horizon discrete time.
@@ -89,7 +89,7 @@ be the choice-specific profitability shock.
 
 - The strategy is in general a mapping from the __entire__ history to the action set.
 - We restrict the set of possible strategies to __Markovian strategies__ $a(\epsilon_t, s_t)$ that only depends on the latest realization of states $\epsilon_t, s_t$, i.e., the behavior does not depend on the past states, conditional on today's states.
-- The Markovian strategy is introduced by @maskin_theory_1988-1. But their model is slightly different from the current mode. They considered an oligopoly model in which only one firm can move at one time and his/her action depends only on the rival's latest move. The current single-agent model can be regarded as a version of @maskin_theory_1988-1's model such that the rival is replaced with the nature.
+- The Markovian strategy is introduced by @maskinTheoryDynamicOligopoly1988. But their model is slightly different from the current mode. They considered an oligopoly model in which only one firm can move at one time and his/her action depends only on the rival's latest move. The current single-agent model can be regarded as a version of @maskinTheoryDynamicOligopoly1988's model such that the rival is replaced with the nature.
 
 ### Belief
 
@@ -285,14 +285,14 @@ $$
 where $\gamma$ is Euler's constant.
 - $\Phi$ is shown to be a contraction mapping as long as $\beta < 1$.
 - Thus, we can solve the model by starting from an arbitrary ex-ante value function $V$ and by iterating the mapping $\Phi$ until the change in the ex-ante value functions is below a certain threshold.
-- @rust_optimal_1987 gives the result for more general distributional assumption for $\epsilon$.
+- @rustOptimalReplacementGMC1987 gives the result for more general distributional assumption for $\epsilon$.
 
 
 ## Identification
 
 ### Unidentification Result
 
-- The identification of the single-agent dynamic decision model is studied in @magnac_identifying_2002.
+- The identification of the single-agent dynamic decision model is studied in @magnacIdentifyingDynamicDiscrete2002.
 - The model primitives are $(\Pi, F, \beta, G)$.
 - The transition probability $G$ is directly identified from the data because $a, s, s'$ are observed by econometrician.
 - In the same manner, we can directly identify the optimal conditional choice probability $p$ because $a$ and $s$ are observed by econometrician.
@@ -325,7 +325,7 @@ $$
 \end{equation}
 - If the first assumption is violated, the choice probability cannot be written as a function only of the observable state of the period. If $\epsilon_t$ is serially correlated, to integrate over $\epsilon_{t + 1}$ we have to condition on $\epsilon_t$. Then, we may not be able to identify the optimal conditional choice probability from the data/
 - If the second assumption is violated, for the same reason, we may not be able to identify the state transition law.
-- @kasahara_nonparametric_2009 proves the identification when the first assumption is violated: there is a player-specific fixed effect that has a finite-mixture structure.
+- @kasaharaNonparametricIdentificationFinite2009 proves the identification when the first assumption is violated: there is a player-specific fixed effect that has a finite-mixture structure.
 
 
 ## Estimation by Nested Fixed-point Algorithm
@@ -333,7 +333,7 @@ $$
 ### Nested Fixed-Point Algorithm
 
 - A straightforward way of estimating the single-agent dynamic model is to solve the optimal conditional choice probability by a fixed-point algorithm for each parameter and evaluate the likelihood function using the optimal conditional choice probability.
-- Because a fixed-point algorithm is nested in the parameter search, @rust_optimal_1987 named it the __nested fixed-point algorithm__.
+- Because a fixed-point algorithm is nested in the parameter search, @rustOptimalReplacementGMC1987 named it the __nested fixed-point algorithm__.
 
 ### Solving for the Ex-ante Value Function
 
@@ -397,7 +397,7 @@ and so the log likelihood function is:
 
 ### CCP Approach
 
-- __Conditional Choice Probability (CCP)__ approach suggested by @hotz_conditional_1993 significantly reduces the computation time at the cost of some efficiency.
+- __Conditional Choice Probability (CCP)__ approach suggested by @hotzConditionalChoiceProbabilities1993 significantly reduces the computation time at the cost of some efficiency.
 - This approach can be applied to many other settings.
 - The idea is:
     - We can identify the optimal conditional choice probability $p^\theta$ directly from the data. This is a reduced-form parameter (cf. $\theta$ is the structural parameters) of the model.

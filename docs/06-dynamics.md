@@ -345,7 +345,7 @@ where $x$ is the mean variable profit of opening the store, $e$ is the entry cos
 
 ### Bus Engine Replacement Decisions
 
-- Rust (1987) studies the bus engine replacement decision of Harold Zurcher, superintendent of maintenance at the Madison Metropolitan Bus Company.
+- @rustOptimalReplacementGMC1987 studies the bus engine replacement decision of Harold Zurcher, superintendent of maintenance at the Madison Metropolitan Bus Company.
 - Time is month $t = 1, 2, \cdots, \infty$.
 - Action $a_t \in \{0, 1\}$ represents whether to replace bus engine or not.
 - State $s_t \in \{1, 2, 3\}$ represents the mileage:

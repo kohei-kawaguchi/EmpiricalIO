@@ -1,0 +1,480 @@
+---
+title: 'Assignment 6: Entry and Exist'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include = FALSE}
+library(EmpiricalIO)
+library(magrittr)
+library(stargazer)
+library(knitr)
+library(foreach)
+library(ggplot2)
+library(latex2exp)
+library(codetools)
+library(doParallel)
+registerDoParallel()
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+## Simulate data
+
+In this assignment, we consider a Berry-type entry model. Suppose that there are $M$ markets indexed by $m = 1, \cdots, M$. In each market, there are $N_m$ potential entrants such that $N_m \le \overline{N}$. Let $x_m$ be the $K$ dimensional market attributes and $z_{im}$ be the $L$ dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is $R$.
+
+1. Set the constants as follows:
+
+```{r}
+# set the seed
+set.seed(1)
+# number of markets
+M <- 100
+# the upper bound of the number of potential entrants
+N <- 10
+# the dimension of market attributes
+K <- 2
+# the dimension of potential entrant attributes
+L <- 2
+# the number of Monte Carlo simulations
+R <- 100
+```
+
+The payoff of entrant $i$ in market $m$ is:
+$$
+\pi_{im}(y_m) = x_m'\beta - \delta \ln \left(\sum_{i = 1}^{N_m} y_{im}\right) + z_{im}'\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m},
+$$
+where $y_{im} \in \{0, 1\}$ is the indicator for entrant $i$ in market $m$ to enter the market, and $\nu_{im}$ and $\epsilon_m$ are entrant- and market-specific idiosyncratic shocks that are drawn from an i.i.d. standard normal distribution. In each market, all the attributes and idiosyncratic shocks are observed by the potential entrants. $N_m$, $x_m$, $z_{im}$, and $y_m$ are observed to econometrician but $\nu_{im}$ and $\epsilon_m$ are not.
+
+2. Set the parameters as follows:
+```{r}
+# parameters of interest
+beta <- abs(rnorm(K)); beta
+alpha <- abs(rnorm(L)); alpha
+delta <- 1; delta
+rho <- abs(rnorm(1)); rho
+# auxiliary parameters
+x_mu <- 1
+x_sd <- 3
+z_mu <- 0
+z_sd <- 4
+```
+
+
+3. Draw exogenous variables as follows:
+```{r}
+# number of potential entrants
+E <- purrr::rdunif(M, 1, N); E
+# market attributes
+X <- matrix(
+  rnorm(M * K, x_mu, x_sd),
+  nrow = M
+)
+colnames(X) <- paste("x", 1:K, sep = "_")
+X
+# entrant attributes
+Z <-
+  foreach (m = 1:M) %dopar% {
+    Z_m <- matrix(
+      rnorm(E[m] * L, z_mu, z_sd),
+      nrow = E[m]
+    )
+    colnames(Z_m) <- paste("z", 1:L, sep = "_")
+    return(Z_m)
+  }
+Z[[1]]
+# unobserved market attributes
+EP <- matrix(
+  rnorm(M),
+  nrow = M
+)
+EP
+# unobserved entrant attributes
+NU <-
+  foreach (m = 1:M) %dopar% {
+    NU_m <- matrix(
+      rnorm(E[m]),
+      nrow = E[m]
+    )
+    return(NU_m)
+  }
+NU[[1]]
+```
+
+4. Write a function `compute_payoff(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the vector of payoffs of the potential entrants when the vector of entry decisions is `y_m`.
+
+```{r}
+m <- 1
+N_m <- dim(Z[[m]])[1]
+y_m <- as.matrix(rep(1, N_m))
+y_m[length(y_m)] <- 0
+X_m <- X[m, , drop = FALSE]
+Z_m <- Z[[m]]
+EP_m <- EP[m, , drop = FALSE]
+NU_m <- NU[[m]]
+compute_payoff(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)
+```
+
+5. Assume that the order of entry is predetermined. Assume that the potential entrants sequentially decide entry according to the order of the payoff excluding the competitive effects, i.e.:
+$$
+x_m'\beta + z_{im}'\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m}.
+$$
+Write a function `compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the equilibrium vector of entry at a market.
+
+```{r}
+compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)
+```
+
+6. Next, assume $\rho = 0$. Assume that potential entrants simultaneously decide entry. Write a function `compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)` that returns the equilibrium vector of entry at a market.
+```{r}
+compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)
+```
+
+7. Write a function `compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)` compute the equilibrium entry vectors under the assumption of sequential entry. The output should be a list of entry vectors across markets. Write a function to compute the equilibrium payoffs across markets, `compute_payoff_across_markets(Y, X, Z, EP, NU, beta, alpha, delta, rho)` and check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code.
+```{r}
+Y_sequential <-
+  compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)
+Y_sequential[[1]]
+Y_sequential[[M]]
+payoff_sequential <-
+  compute_payoff_across_markets(Y_sequential, X, Z, EP, NU, beta, alpha, delta, rho)
+min(unlist(payoff_sequential))
+```
+
+8. Write a function `compute_simultaneous_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho = 0)` compute the equilibrium entry vectors under the assumption of simultaneous entry. The output should be a list of entry vectors across markets. Check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code. I also recommend to write this function with 
+
+```{r}
+# compute simultaneous entry across markets
+Y_simultaneous <-
+  compute_simultaneous_entry_across_markets(X, Z, EP, NU, beta, alpha, delta)
+Y_simultaneous[[1]]
+Y_simultaneous[[M]]
+payoff_simultaneous <-
+  compute_payoff_across_markets(Y_simultaneous, X, Z, EP, NU, beta, alpha, delta, rho = 0)
+min(unlist(payoff_simultaneous))
+```
+
+
+## Estimate the parameters
+
+We estimate the parameters by matching the actual and predicted number of entrants in each market. To do so, we simulate the model for $R$ times.
+Under the assumption of the sequential entry, we can uniquely predict the equilibrium identify of the entrants. So, we consider the following objective function:
+$$
+\frac{1}{RM}\sum_{r = 1}^R \sum_{m = 1}^M \left[\sum_{i = 1}^{N_m}|y_{im} - y_{im}^{(r)}| \right]^2,
+$$
+where $y_{im}^{(r)}$ is the entry decision in $r$-th simulation. On the other hand, under the assumption of the simultaneous entry, we can only uniquely predict the equilibrium number of the entrants. So, we consider the following objective function:
+$$
+\frac{1}{RM}\sum_{r = 1}^R \sum_{m = 1}^M \left[\sum_{i = 1}^{N_m}(y_{im} - y_{im}^{(r)}) \right]^2,
+$$
+
+1. Draw $R$ unobserved shocks:
+```{r}
+set.seed(1)
+# unobserved market attributes
+EP_mc <-
+  foreach (r = 1:R) %dopar% {
+    EP <- matrix(
+      rnorm(M),
+      nrow = M
+    )
+    return(EP)
+}
+# unobserved entrant attributes
+NU_mc <-
+  foreach (r = 1:R) %dopar% {
+  NU <-
+    foreach (m = 1:M) %do% {
+      NU_m <- matrix(
+        rnorm(E[m]),
+        nrow = E[m]
+      )
+      return(NU_m)
+    }
+  return(NU)
+}
+```
+
+2. Write a function `compute_monte_carlo_sequential_entry(X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)` that returns the Monte Carlo simulation. Then, write function `compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta)` that calls`compute_monte_carlo_sequential_entry` and returns the value of the objective function given data and parameters under the assumption of sequential entry.
+
+```{r}
+# sequential entry
+theta <- theta_sequential <-
+  c(beta, alpha, delta, rho)
+Y <- Y_sequential
+# compute monte carlo simulations 
+Y_mc <- 
+  compute_monte_carlo_sequential_entry(
+    X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)
+Y_mc[[1]][[1]]
+# compute objective function
+compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta)
+```
+
+3. Write a function `compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)` that returns the value of the objective function given data and parameters under the assumption of simultaneous entry.
+
+```{r}
+# simultaneous entry
+theta <- theta_simultaneous <-
+  c(beta, alpha, delta)
+Y <- Y_simultaneous
+# compute monte carlo simulations
+Y_mc <- compute_monte_carlo_simultaneous_entry(X, Z, EP_mc, NU_mc, beta, alpha, delta)
+Y_mc[[1]][[1]]
+# compute objective function
+compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)
+```
+
+
+4. Check the value of the objective function around the true parameter under the assumption of the sequential entry.
+
+```{r, eval = FALSE}
+# sequential entry
+theta <- theta_sequential <-
+  c(beta, alpha, delta, rho)
+Y <- Y_sequential
+model <- compute_sequential_entry_across_markets
+label <- c(paste("\\beta_", 1:K, sep = ""), 
+           paste("\\alpha_", 1:L, sep = ""),
+           "\\delta",
+           "\\rho")
+label <- paste("$", label, "$", sep = "")
+# compute the graph
+graph <- foreach (i = 1:length(theta)) %do% {
+  theta_i <- theta[i]
+  theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
+  objective_i <- 
+    foreach (j = 1:length(theta_i_list),
+             .combine = "rbind") %do% {
+               theta_ij <- theta_i_list[j]
+               theta_j <- theta
+               theta_j[i] <- theta_ij
+               objective_ij <- 
+                 compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta_j)
+               return(objective_ij)
+             }
+  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph, file = "data/A6_graph_sequential.RData")
+```
+```{r}
+load(file = "data/A6_graph_sequential.RData")
+graph
+```
+
+5. Check the value of the objective function around the true parameter under the assumption of the simultaneous entry.
+
+```{r, eval = FALSE}
+# simultaneous entry
+theta <- theta_simultaneous <-
+  c(beta, alpha, delta)
+Y <- Y_simultaneous
+model <- compute_simultaneous_entry_across_markets
+label <- c(paste("\\beta_", 1:K, sep = ""), 
+           paste("\\alpha_", 1:L, sep = ""),
+           "\\delta")
+label <- paste("$", label, "$", sep = "")
+# compute the graph
+graph <- foreach (i = 1:length(theta)) %do% {
+  theta_i <- theta[i]
+  theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
+  objective_i <- 
+    foreach (j = 1:length(theta_i_list),
+             .combine = "rbind") %do% {
+               theta_ij <- theta_i_list[j]
+               theta_j <- theta
+               theta_j[i] <- theta_ij
+               objective_ij <- 
+                 compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta_j)
+               return(objective_ij)
+             }
+  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph, file = "data/A6_graph_simultaneous.RData")
+```
+```{r}
+load(file = "data/A6_graph_simultaneous.RData")
+graph
+```
+
+6. Estimate the parameters under the assumption of the sequential entry. 
+
+```{r}
+# sequential entry
+theta <- theta_sequential <-
+  c(beta, alpha, delta, rho)
+```
+
+```{r, eval = FALSE}
+Y <- Y_sequential
+result_sequential <-
+  optim(par = theta,
+        fn = compute_objective_sequential_entry,
+        method = "Nelder-Mead",
+        Y = Y,
+        X = X,
+        Z = Z,
+        EP_mc = EP_mc,
+        NU_mc = NU_mc)
+save(result_sequential, file = "data/A6_estimate_sequential.RData")
+```
+```{r}
+load(file = "data/A6_estimate_sequential.RData")
+result_sequential
+comparison <-
+  data.frame(
+    actual = theta,
+    estimate = result_sequential$par
+  )
+comparison
+```
+
+
+7. Estimate the parameters under the assumption of the simultaneous entry. Set the lower bound for $\delta$ at 0.
+
+```{r}
+# simultaneous entry
+theta <- theta_simultaneous <-
+  c(beta, alpha, delta, rho)
+```
+
+```{r, eval = FALSE}
+Y <- Y_sequential
+result_simultaneous <-
+  optim(par = theta,
+        fn = compute_objective_simultaneous_entry,
+        method = "Nelder-Mead",
+        Y = Y,
+        X = X,
+        Z = Z,
+        EP_mc = EP_mc,
+        NU_mc = NU_mc)
+save(result_simultaneous, file = "data/A6_estimate_simultaneous.RData")
+```
+```{r}
+load(file = "data/A6_estimate_simultaneous.RData")
+result_simultaneous
+comparison <-
+  data.frame(
+    actual = theta,
+    estimate = result_simultaneous$par
+  )
+comparison
+```
+
+## Conduct counterfactual simulations
+
+1. Fix the first draw of the Monte Carlo shocks. Suppose that the competitive effect becomes mild, i.e. $\delta$ is changed to 0.5. Under these shocks, compute the equilibrium number of entrants across markets and plot the histogram with the estimated and counterfactual parameters. Conduct this analysis under the assumptions of sequential and simultaneous entry.
+
+
+```{r, echo = FALSE}
+# sequential entry
+# extract parameters
+theta <- result_sequential$par
+K <- dim(X)[2]
+L <- dim(Z[[1]])[2]
+beta <- theta[1:K]
+alpha <- theta[(K + 1):(K + L)]
+delta <- theta[K + L + 1]
+rho <- theta[K + L + 2]
+# monte carlo simulations under the actual parameters
+Y_actual <- 
+  compute_monte_carlo_sequential_entry(
+    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta, rho)
+Y_actual <- Y_actual[[1]]
+# monte carlo simulations under the counterfactual parameters
+delta_count <- 0.5
+Y_count <- 
+  compute_monte_carlo_sequential_entry(
+    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta_count, rho)
+Y_count <- Y_count[[1]]
+# histogram
+N_actual <-
+  Y_actual %>%
+  purrr::map(sum) %>%
+  purrr::reduce(rbind) %>%
+  as.integer()
+N_count <-
+  Y_count %>%
+  purrr::map(sum) %>%
+  purrr::reduce(rbind) %>%
+  as.integer()
+N_df <- data.frame(
+  m = 1:length(N_actual),
+  actual = N_actual,
+  count = N_count
+) %>%
+  reshape2::melt(id.vars = "m") %>%
+  dplyr::rename(parameters = variable) %>%
+  dplyr::group_by(parameters, value) %>%
+  dplyr::summarise(n = length(m)) %>%
+  dplyr::ungroup() %>%
+  tidyr::complete(parameters, value, fill = list(n = 0))
+ggplot(N_df, aes(x = value, y = n, colour = parameters, fill = parameters)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  ylab("count") + xlab("number of entrants") + ggtitle("Sequential entry") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+```{r, echo = FALSE}
+# simultaneous entry
+# extract parameters
+theta <- result_simultaneous$par
+K <- dim(X)[2]
+L <- dim(Z[[1]])[2]
+beta <- theta[1:K]
+alpha <- theta[(K + 1):(K + L)]
+delta <- theta[K + L + 1]
+# monte carlo simulations under the actual parameters
+Y_actual <- 
+  compute_monte_carlo_simultaneous_entry(
+    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta)
+Y_actual <- Y_actual[[1]]
+# monte carlo simulations under the counterfactual parameters
+delta_count <- 0.5
+Y_count <- 
+  compute_monte_carlo_simultaneous_entry(
+    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta_count)
+Y_count <- Y_count[[1]]
+# histogram
+N_actual <-
+  Y_actual %>%
+  purrr::map(sum) %>%
+  purrr::reduce(rbind) %>%
+  as.integer()
+N_count <-
+  Y_count %>%
+  purrr::map(sum) %>%
+  purrr::reduce(rbind) %>%
+  as.integer()
+N_df <- data.frame(
+  m = 1:length(N_actual),
+  actual = N_actual,
+  count = N_count
+) %>%
+  reshape2::melt(id.vars = "m") %>%
+  dplyr::rename(parameters = variable) %>%
+  dplyr::group_by(parameters, value) %>%
+  dplyr::summarise(n = length(m)) %>%
+  dplyr::ungroup() %>%
+  tidyr::complete(parameters, value, fill = list(n = 0))
+ggplot(N_df, aes(x = value, y = n, colour = parameters, fill = parameters)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  ylab("count") + xlab("number of entrants") + ggtitle("Simultaneous entry") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+
