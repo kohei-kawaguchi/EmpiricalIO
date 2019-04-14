@@ -4,16 +4,395 @@
 
 ### Setting
 
+- The argument of this section is based on @hendricksChapter32Empirical2007.
 - General symmetric information model [@milgromTheoryAuctionsCompetitive1982].
 - The seller has a single item.
-- There are $N$ potential risk neutral buyers/bidders.
+- There are $n$ potential risk neutral buyers/bidders.
 - Each bidder $i$ observes a real-valued private signal $X_i$.
 - There is a random variable or vector $V$ that influences the value of the object to the bidders.
-- The joint distribution of $(V, X_1, \cdots, X_N)$ is $F$.
+- The joint distribution of $(V, X_1, \cdots, X_n)$ is $F$.
 - Bidder $i$'s payoff is $U_i = u_i(V, X_i, X_{-i})$ when the bidder $i$ obtains the object being sold.
 - The seller announces a reserve price $r$.
-- The primitives of the model, the number of bidders $N$, the distribution $F$, and teh utility functions $\{u_i\}_{i = 1}^N$, are common konwledge among buyers.
+- The primitives of the model, the number of bidders $n$, the distribution $F$, and the utility functions $\{u_i\}_{i = 1}^n$, are common knowledge among buyers.
 - Assumption: $u_i$ is non-negative, continuous, increasing in each argument and symmetric in the components of $X_{-i}$.
-- Assumption: $(V, X_1, \cdots, X_N)$ are affiliated.
-    - The $n$ random variables $X = (X_1, \cdots, X_N)$ with joint density $f(x)$ are affiliated if for all $x$ and $y$, $f(x \wedge y) f(x \vee y) \ge f(x) f(y)$. If affiliated, they are non-negatively correlated.
-- $\to$ $U_1, \cdots, U_N$ are affiliated.
+- Assumption: $(V, X_1, \cdots, X_n)$ are affiliated.
+    - The $n$ random variables $X = (X_1, \cdots, X_n)$ with joint density $f(x)$ are affiliated if for all $x$ and $y$, $f(x \wedge y) f(x \vee y) \ge f(x) f(y)$. If affiliated, they are non-negatively correlated.
+- $\to$ $U_1, \cdots, U_n$ are affiliated.
+- Let $Y_1, \cdots, Y_{n - 1}$ is the ordering of the largest through the smallest signals from $X_2, \cdots, X_n$.
+- Then, $(V, X_1, Y_1, \cdots, Y_{n - 1})$ are also affiliated.
+
+### Discussion About the Asssumptions
+
+- The private information is assumed to be single-dimensional.
+    - If the private information is multi-dimensional, the identification of type requires at least as many messages.
+    - Recently, there are few empirical studies of auctions of multi-dimensional private information such as @bajariBiddingIncompleteContracts2014 and @takahashiStrategicDesignUncertain2018.
+- The distribution of the signals is assumed to be symmetric across bidders.
+    - We can introduce asymmetric signals.
+    - A bidder may have more precise signals.
+- The utility is independent of the winner's identify when a bidder is not awarded the item.
+    - If the item is the valuable asset in the oligopoly industry, the implication to the profit can be different when the close competitor is awarded the asset.
+- The number of potential bidders is assumed to be common knowledge.
+    - The participation to the auction may be endogenously determined.
+    
+### Bidding Strategy
+
+- A __bidding strategy__ for bidder $i$ is a correspondence $\beta_i: X_i \to \mathbb{R}_+$.
+- A mapping from the private signal into a non-negative real value.
+- Under the stated assumptions, there exists a Bayesian Nash equilibrium with non-decreasing bid functions [@krishnaAuctionTheory2009].
+- The following argument crucially depends on this property of the equilibrium bidding rule.
+
+
+### Special Cases
+
+- Two special cases about the payoff functions:
+- __Private value (PV)__: $u_i(v, x_i, x_{-i}) = x_i$: Bidder $i$ knows his own valuation and is only uncertain about how much others value the item.
+- __Pure common values (PCV)__: $u_i(v, x_i, x_{-i}) = v$: All buyers have the same valuation, which is unknown to them when they bid, and only learned though the private signals.
+- A remark on the private value assumption:
+    - The assumption holds in more general settings than we may think.
+    - Suppose that $u_k(v_, x_i, x_{-i})$ depends on $v, x_i, x_{-i}$.
+    - Suppose that bidder $i$ is uncertain about $V$ and the distribution of $V$ is independent of $x_i$ and $x_{-i}$.
+    - Then, $\mathbb{E}\{u_i(V, X_i, X_{-i})|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i, X_{-i})|X_i = x_i\} \equiv f(x_i)$ for some monotone increasing function $f$.
+    - This is still a private value model.
+    - If the distribution of $V$ is not independent of some $x_i$, it is no longer a private value model.
+    - The last case is referred to as the __common values (CV)__ model.
+- Two special cases about the signals:
+- __Independent signals (IPV, ICV)__: Signals $X_1, \cdots, X_n$ are independent.
+- __Affiliated signals (APV, ACV)__: Signals $X_1, \cdots, X_n$ are affiliated.
+- Example: Offshore oil and gas leases.
+    - $V$: the size of oil or gas deposits under the tract.
+    - CV: bidders are uncertain about $V$ and have different private information about the value of $V$ because of the seismic data they obtain.
+    - PV: bidders are almost certain about $V$ or have little discrepancy in private assessment of $V$. But there is a heterogeneity in the costs of exploration and drilling and this information is private.
+- In the following, we mostly consider a type of CV model such as $u_i(v, x_i, x_{-i}) = u(v, x_i)$.
+
+
+## Second-Price Auctions
+
+### The Button Auction
+
+- Let:
+$$
+w(x, y) \equiv \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
+$$
+be the expected payoff of the bidder when her signal is $x$ and the highest rival's signals is $y_1$.
+- Let $\underline{x}$ is the lower bound of the support of $X$.
+- __English auction__: 
+    - The price rises continuously.
+    - Bidders stays active as long as they keep fingers on the button.
+    - A bidder wins once all other bidders take their fingers off.
+    - The price paid by the winner is the price level when the second last bidder takes the fingers off.
+- The bidding strategy is the mapping from a price level to being active or not.
+
+### Equilibrium Bidding Strategies
+- Case 1: 
+    - A bidder cannot observe the prices at which the other bidders take fingers off.
+    - The equilibrium strategy is to take the fingers off at the threshold:
+    $$
+    \beta(x) = w(x, x).
+    $$
+    - Suppose that the other bidders follow the bidding strategy and the price level is $b$ and the auction does not yet end.
+    - Suppose that I win at this moment.
+    - This means that there is at least one other bidder that has signal $y = \beta^{-1}(b)$.
+    - Then, the payoff to me is $w(x, y) - b = w(x, y) - w(y, y)$.
+    - It is positive if and only if $x > y$, because affiliation implies that the expected payoff is increasing in the own signal.
+    - Thus, $\beta(x) = w(x, x)$ is the best response.
+- Case 2: 
+    - Active bidders observe the prices at which rivals drop out.
+    - No bidder who drops out can become active again.
+    - The bidding strategy is the mapping from the number of rivals who dropped out and the prices at which they dropped out.
+    - Let $\beta_k(x)$ be the price at which a bidder drops out when $k$ rivals dropped out at prices $b_1, \cdots, b_k$.
+    - At the equilibrium it should be:
+    $$
+    \beta_k(x) = \mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = x, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}
+    $$
+    - Suppose that the other bidders follow the bidding strategy and the price level is $b$ and $k$ bidders dropped at $b_1, \cdots, b_k$.
+    - Suppose that I win at this moment.
+    - This means there are $n - k - 1$ bidders with signals $y = \beta_k^{-1}(b)$.
+    - Then, the payoff to me is:
+    \begin{equation}
+    \begin{split}
+    &\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = \beta_k^{-1}(b), Y_{n - k} = y, \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
+    &- \mathbb{E}\{u(V, x)| X_1 = y, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}.
+    \end{split}
+    \end{equation}
+    - This is positive if and only if $x > y$, because affiliation implies that the expected payoff is increasing in the own signal.
+    - Thus, the above bidding strategy is the best response.
+
+### Reserve Price
+
+- The seller does not sell the item if the winning bid is below $r > 0$.
+- The participation threshold is:
+$$
+x^*(r) = \inf\left\{x: \mathbb{E}[w(x, Y_1)| X_1 = x, Y_1 < x] \ge r\right\}.
+$$
+- That is, a bidder participates if and only if $x \ge x^*(r)$.
+
+### Variations
+
+- If PV, i.e., $w(x, y) = x$, then, the equilibrium strategy is to participate and drop at $\beta(x) = x$ if $x \ge r$ and not to participate if $x < r$.
+- This is the unique equilibrium with weakly dominant strategies.
+- Under the common value assumption, there can be many asymmetric equillibria [@milgromRationalExpectationsInformation1981; bikhchandaniEquilibriaOpenCommon1991].
+- If bidders can call their bids, the game becomes more complicated because bidders can announce a "jump" bid at any time to signal their valuations [@averyStrategicJumpBidding1998].
+- Be aware of the complications arising in the versions of the English auction.
+
+### Estimation of a IPV Button Auction
+
+- Parameters of interest is $F$, the distribution of private signals and the payoff relevant random variable $V$.
+- The data consists of $\{w_t, n_t, r_t\}_{t = 1}^T$ if $m_t \ge 1$ for auction $t = 1, \cdots, T$:
+    - $w_t$: the winning bid;
+    - $n_t$: the number of potential bidders;
+    - $r_t$: the reserve price;
+    - $m_t$: the latent variable about the number of actual bidders.
+- This is the case only the winning bid is observed but not the other bids.
+- The winning bid is $w_t = \max\{x_{2:n_t}, r_t\}$, where $x_{2:n_t}$ is the second highest bid among $n_t$ bids.
+
+### Likelihood of IPV Button Auction
+
+- @donaldIdentificationEstimationTesting1996 estimate the model with a maximum likelihood estimator.
+- Assume that $F_X(\cdot) = F_X(\cdot; \theta)$ with a finite dimensional parameter $\theta$.
+- The likelihood is:
+    - If $m_t = 0$, the $F_X(r_t)^{n_t}$.
+    - If $m_t = 1$ then $\mathbb{P}\{m_t = 1\} = n_t F_X(r_t)^{n_t - 1} [1 - F_X(r_t)]$.
+    - If $m_t > 1$, then $h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 1} [1 - F_X(w_t)] f_X(w_t)$.
+- The likelihood function is, if the data is only about the auctions with $m_t \ge 1$:
+$$
+L = \prod_{t = 1}^T \frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}}{1 - \mathbb{P}\{m_t = 0\}}
+$$
+- The approach is still valid when the private signals are asymmetric and/or some bidders are not risk neutral, because $b(x) = x$ is still a dominant strategy.
+
+### Optimal Reserve Price
+
+- The expected revenue to the seller who values the item as $x_0$ when setting the reserve price at $r$ is:
+$$
+R = x_0 F_X(r)^n + r n F_X(r)^{n - 1}[1 - F_X(r)] + \int_r^{\overline{x}} w n(n - 1)F_X(w)^{n - 2}[1 - F_X(w)] f_X(w) dw.
+$$
+- The first-order condition is:
+$$
+r = x_0 + \frac{1 - F_X(r)}{f_X(r)}.
+$$
+- Thus, the identification of $F_X$ allows the seller to set the revenue maximizing reserve price.
+
+
+### Likelihood of IPV English Auction with Bid Data
+
+- The likelihood function is:
+$$
+L = \prod_{t = 1}^T [1 - F_X(w_t)] \left[ \prod_{i = 2}^{m_t} f_X(b_{it}) \right] F_X^{n_t - m_t}(r_t).
+$$
+- $b_{1t} \ge b_{2t} \ge \cdots \ge b_{m_t} \ge r$.
+- If $n_t$ is not observed to econometrician, the econometrician can:
+    - assume $n_t = n$ and estimate $n$ as a parameter;
+    - assume $n = \max_{t = 1, \cdots, T} \{m_t\}$;
+    - assume $n_t$ is drawn from a parametric distribution and estimate the parameters.
+    
+### Observed Heterogeneity
+
+- Let $z_{it}$ be the observed attribute of bidder $i$ in auction $t$.
+- Assume that:
+$$
+x_{it} = \alpha + \beta z_{it} + u_{it}.
+$$
+- Then:
+$$
+x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta \equiv \tilde{b}_{it}.
+$$
+- We can first regress $b_{it}$ on $z_{it}$ to estimate $\alpha$ and $\beta$ to compute $\tilde{b}_{it}$.
+- Then, the rest of the argument is the same as above by replacing $b_{it}$ with $\tilde{b}_{it}$.
+
+### Identification
+
+- @atheyIdentificationStandardAuction2002 and @atheyChapter60Nonparametric2007 synthesize and extend the identification arguments of various auction models.
+- Button auction with the symmetric IPV framework is non-parametrically identified only by the winning bid data.
+- Button auction with the asymmetric IPV framework is non-parameterically identified by the winning bid and winner's identity data.
+- The non-parametric identification can fail with a common value in general.
+- The actual English auctions can be dirty and not easy to characterize the equilibrium: they are open cry auctions that signals their values, bidders may not indicate they are inactive at every highest bid, and there may be a minimum bid increment.
+- @haileInferenceIncompleteModel2003 considers a set identification of the signal distribution:
+    1. signal is no less than the higher bid by the bidder: $x_i \ge b_i$.
+    2. signal is no greater than the winning bid plus the minimum bid increment: $x_i \le w + \Delta$.
+    - Let $F_{i:n}$ be the distribution of the $i$-th highest order statistics from $F_X$.
+    - Let $G_{i:n}$ be the empirical distribution of the $i$-th highest bids.
+    - By 1, we have $F_{i:n}(x) \ge G_{i:n}(x)$.
+    - By 2, we have $F_{2:n}(x) \ge G_{1:n}(x + \Delta)$. 
+    - These inequalities put the bounds on $F_X$.
+    
+## First-Price Auctions
+
+### First-Price Sealed Bid Auction
+
+- Each bidder independently submit a bid to the auctioneer.
+- The high bidder wins and pays his bid.
+
+
+### Equilibrium Bidding Strategies
+
+- Assume IPV.
+- Then $x^*(r) = r$.
+- Let $\beta$ be the bid function that is increasing in the signal and $\eta$ is the inverse of $\beta$.
+- Suppose that the other bidders follow strategy $\beta$.
+- The expected profit when a bidder with signal $x$ submits a bid $b$ is:
+$$
+\pi(b, x) = (x - b) F_X[\eta(b)]^{n - 1}.
+$$
+- The first-order condition is:
+$$
+(x - b) (n - 1) F_X[\eta(b)]^{n - 2} f_X[\eta(b)] \eta'(b)- F_X[\eta(b)]^{n - 1} = 0.
+$$
+- If $\beta$ is the equilibrium strategy, we have:
+$$
+[x - \beta(x)] (n - 1) F_X(x)^{n - 2} f_X(x) - \beta'(x) F_X(x)^{n - 1} = 0.
+$$
+- Let $G(x) = F_X(x)^{n - 1}$ for $x \ge r$ and $G(r) = 0$ and $g(x) = G'(x)$. 
+- Then, we have:
+$$
+[x - \beta(x)] g(x) - \beta'(x) G(x) = 0.
+$$
+- This is a linear differential equation such that:
+$$
+\beta'(x) + p(x) \beta(x) = q(x),
+$$
+with a boundary condition:
+$$
+\beta(r) = r,
+$$
+where
+$$
+p(x) = \frac{g(x)}{G(x)},
+$$
+and
+$$
+q(x) = x \frac{g(x)}{G(x)}.
+$$
+- Let $\mu(x)$ be a function such that:
+$$
+\mu(x) p(x) = \mu'(x).
+$$
+
+- Multiply $\mu(x)$ to the both sides of the first-order condition to get:
+$$
+\begin{split}
+&\mu(x) \beta'(x) + \mu(x) p(x) \beta(x) = \mu(x) q(x)\\
+&\Leftrightarrow \mu(x) \beta'(x) + \mu'(x) \beta(x) = \mu(x) q(x)\\
+&\Leftrightarrow [\mu(x) \beta(x)]' = \mu(x) q(x).
+\end{split}
+$$
+- Hence,
+$$
+\mu(x) \beta(x) = \mu(r) \beta(r) + \int_{r}^x \mu(t) q(t) dt.
+$$
+- On the other hand,
+$$
+[\ln \mu(x)]' = p(x).
+$$
+- Hence,
+$$
+\mu(x) = \mu(r) \exp\left(\int_{r}^x p(t) dt  \right) = \exp\left(\int_{r}^x p(t) dt  \right),
+$$
+by setting $\mu(r) = 1$.
+
+- Now,
+$$
+\begin{split}
+\int_{r}^x p(t) dt &= \int_{r}^x \frac{g(t)}{G(t)} dt\\
+&= [\ln G(t)]_r^x.
+\end{split}
+$$
+- Hence,
+$$
+\mu(x) = G(x).
+$$
+
+- Inserting these results gives:
+$$
+\begin{split}
+\beta(x) &= \frac{\int_r^x \mu(t) q(t) dt}{\mu(x)}\\
+&= \frac{\int_r^x G(t) t \frac{g(t)}{G(t)} dt}{G(x)}\\
+&= \frac{\int_r^x t g(t) dt}{G(x)}\\
+&= \frac{[t G(t)]_r^t - \int_{r}^x G(t) dt }{G(x)}\\
+&= x - \frac{\int_r^x G(t) dt}{G(x)}\\
+&= x - \frac{\int_r^x F_X(t)^{n - 1} dt}{F_X(x)^{n - 1}}.
+\end{split}
+$$
+- The term $- \frac{\int_r^x F_X(t)^{n - 1} dt}{F_X(x)^{n - 1}}$ is called the __markdown factor__, which is decreasing in the number of bidders $n$ and increasing in the dispersion of the value distribution.
+- The assumption of a binding reserve price ensures that there is a unique symmetric equilibrium [@atheyChapter60Nonparametric2007].
+
+### Maximum Likelihood Estimation of the IPV First-Price Auction
+
+- @donaldPiecewisePseudoMaximumLikelihood1993 proposed a maximum likelihood estimator.
+- The data consists of $\{w_t, r_t, n_t\}_{t = 1}^T$ for the sample where the number of actual bidders $m_t \ge 1$.
+- The probability of having $w_t$ is:
+$$
+\begin{split}
+h_t(w_t) &= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t'(w_t)\\
+&= \frac{n_t F_X[\eta_t(w_t)]^{n_t}}{(n_t - 1)[\eta_t(w_t) - w_t]},
+\end{split}
+$$
+where the second equation is from the first-order condition.
+
+Because the probability of $m_t \ge 1$ is $1 - F_X(r_t)^{n_t}$, the likelihood is:
+$$
+L = \prod_{t = 1}^T \frac{h_t(w_t)}{1 - F_X(r_t)^{n_t}}.
+$$
+- To apply this approach, we may need to have a closed-form for $\eta$, and this may require to assume a specific functional-form for $F_X$.
+
+### Non-Parametric Approach
+
+- @guerreOptimalNonparametricEstimation2000 proposed a non-parametric approach.
+- The data consists of $\{\{b_{it}\}_{i = 1}^{m_t}, n_t, r_t\}_{t = 1}^T$ and some observed covariates $z_{it}$ for $t$ with $m_t \ge 1$.
+- Assume $n_t = n$, or in other words, focus on the data with the same number of potential bidders and estimate separately across different $n$.
+- Let $H(b)$ be the distribution of the highest rival's bid and $h(b)$ be its density.
+- Then, the expected payoff of bidding $b$ when the signal is $x$ is:
+$$
+\pi(b, x) = (x - b) H(b).
+$$
+- The first-order condition with respect to $b$ is:
+$$
+\begin{split}
+& (x - b) h(b) - H(b) = 0\\
+&\Leftrightarrow x = b + \frac{H(b)}{h(b)}
+\end{split}
+$$
+where the right-hand side is actually $\eta(b)$, the inverse of the bidding strategy $\beta(x)$.
+- The idea is that $H(b)$ and $h(b)$ are directly identified from the data, and so, the value $\eta(b)$ can be computed for each bid.
+
+### Non-Parmaetric Approach: Estimation
+
+- Note that:
+$$
+H(b) = F_b(b)^{n - 1},
+$$
+and
+$$
+h(b) = (n - 1) f_b(b) F_b(b)^{n - 2},
+$$
+where $f_b$ and $F_b$ are the density and distribution of the bids.
+
+1. Estimate $f(b)$ non-parametrically, say, by a kernel regression:
+$$
+\hat{f}_b(b) = \frac{1}{TN h_b}\sum_{t = 1}^T \sum_{i = 1}^n K\left(\frac{b_{it} - b}{h_b}\right)
+$$
+$$
+\widehat{F}_b(b) = \frac{\#\{b_{it} = r\}}{NT} +  \int_{r}^b \hat{f}_b(t) dt.
+$$
+for $b > r$.
+2. Form the implied $x_{it}$ by:
+$$
+\hat{x}_{it} = b_{it} + \frac{\widehat{H}(b_{it})}{\hat{h}(b_{it})}.
+$$
+3. Estimate $f_X$ non-parametrically, say, by a kernel regression:
+$$
+\hat{f}_X(x) = \frac{1}{NT h_x} \sum_{t = 1}^T \sum_{i = 1}^n K\left(\frac{\hat{x}_{it} - x}{h_x}\right).
+$$
+and construct:
+$$
+\widehat{F}_X(r) = \frac{\#\{\hat{x}_{it} = r\}}{NT} + \int_r^x \hat{f}_X(t) dt.
+$$
+- For this argument to hold, it has to be that $\eta(b)$ is strictly increasing in $b$. Otherwise, for the same $b$, multiple $x$ can be associated.
+- This approach can be extended to the symmetric IPV and affiliated values.
+- @krasnokutskayaIdentificationEstimationAuction2011 considered a model with unobserved heterogeneity, in which the bidder's cost is $c_i = x_i v$ and $x_i$ is private and independent and $v$ is known among bidders but not to econometrician.
+
+
+
+
+
+
+
+

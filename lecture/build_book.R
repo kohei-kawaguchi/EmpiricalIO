@@ -8,7 +8,6 @@ setwd("lecture")
 # serve book
 bookdown::serve_book(dir = ".")
 
-
 # render html book
 bookdown::render_book("index.Rmd", "bookdown::gitbook")
 
