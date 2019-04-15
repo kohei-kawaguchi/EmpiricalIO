@@ -6,6 +6,83 @@
 
 using namespace Rcpp;
 
+// compute_indirect_utility_matrix_rcpp
+Rcpp::List compute_indirect_utility_matrix_rcpp(Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega);
+RcppExport SEXP _EmpiricalIO_compute_indirect_utility_matrix_rcpp(SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type df_list(df_listSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< double >::type omega(omegaSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_indirect_utility_matrix_rcpp(df_list, beta, sigma, mu, omega));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_choice_smooth_matrix_rcpp
+Rcpp::List compute_choice_smooth_matrix_rcpp(Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega);
+RcppExport SEXP _EmpiricalIO_compute_choice_smooth_matrix_rcpp(SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type df_list(df_listSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< double >::type omega(omegaSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_choice_smooth_matrix_rcpp(df_list, beta, sigma, mu, omega));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_share_smooth_matrix_rcpp
+Rcpp::List compute_share_smooth_matrix_rcpp(Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega);
+RcppExport SEXP _EmpiricalIO_compute_share_smooth_matrix_rcpp(SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type df_list(df_listSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< double >::type omega(omegaSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_share_smooth_matrix_rcpp(df_list, beta, sigma, mu, omega));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_derivative_share_smooth_matrix_rcpp
+Rcpp::List compute_derivative_share_smooth_matrix_rcpp(Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega);
+RcppExport SEXP _EmpiricalIO_compute_derivative_share_smooth_matrix_rcpp(SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type df_list(df_listSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< double >::type omega(omegaSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_derivative_share_smooth_matrix_rcpp(df_list, beta, sigma, mu, omega));
+    return rcpp_result_gen;
+END_RCPP
+}
+// update_price_matrix_rcpp
+Rcpp::List update_price_matrix_rcpp(Eigen::VectorXd logp, Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega, Rcpp::List Delta);
+RcppExport SEXP _EmpiricalIO_update_price_matrix_rcpp(SEXP logpSEXP, SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP, SEXP DeltaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type logp(logpSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type df_list(df_listSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< double >::type omega(omegaSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type Delta(DeltaSEXP);
+    rcpp_result_gen = Rcpp::wrap(update_price_matrix_rcpp(logp, df_list, beta, sigma, mu, omega, Delta));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compute_square_rcpp2
 Eigen::VectorXd compute_square_rcpp2(Eigen::VectorXd x);
 RcppExport SEXP _EmpiricalIO_compute_square_rcpp2(SEXP xSEXP) {
@@ -302,6 +379,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_EmpiricalIO_compute_indirect_utility_matrix_rcpp", (DL_FUNC) &_EmpiricalIO_compute_indirect_utility_matrix_rcpp, 5},
+    {"_EmpiricalIO_compute_choice_smooth_matrix_rcpp", (DL_FUNC) &_EmpiricalIO_compute_choice_smooth_matrix_rcpp, 5},
+    {"_EmpiricalIO_compute_share_smooth_matrix_rcpp", (DL_FUNC) &_EmpiricalIO_compute_share_smooth_matrix_rcpp, 5},
+    {"_EmpiricalIO_compute_derivative_share_smooth_matrix_rcpp", (DL_FUNC) &_EmpiricalIO_compute_derivative_share_smooth_matrix_rcpp, 5},
+    {"_EmpiricalIO_update_price_matrix_rcpp", (DL_FUNC) &_EmpiricalIO_update_price_matrix_rcpp, 7},
     {"_EmpiricalIO_compute_square_rcpp2", (DL_FUNC) &_EmpiricalIO_compute_square_rcpp2, 1},
     {"_EmpiricalIO_compute_square_rcpp", (DL_FUNC) &_EmpiricalIO_compute_square_rcpp, 1},
     {"_EmpiricalIO_pass_numeric_vector_to_rcpp", (DL_FUNC) &_EmpiricalIO_pass_numeric_vector_to_rcpp, 1},

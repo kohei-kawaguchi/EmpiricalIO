@@ -21,6 +21,8 @@ Rcpp::List compute_indirect_utility_matrix_rcpp(
       Eigen::MatrixXd v_x(Rcpp::as<Eigen::MatrixXd>(df_list_ti["v_x"]));
       Eigen::MatrixXd v_p(Rcpp::as<Eigen::MatrixXd>(df_list_ti["v_p"]));
       Eigen::MatrixXd xi(Rcpp::as<Eigen::MatrixXd>(df_list_ti["xi"]));
+      std::cout << XX << std::endl;
+      
       // random coefficients
       Eigen::MatrixXd beta_i = v_x * sigma.asDiagonal();
       beta_i = beta_i.rowwise() + beta.transpose();
