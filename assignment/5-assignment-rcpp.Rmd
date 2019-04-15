@@ -644,7 +644,9 @@ The returned object should be a vector whose row represents the condition for an
 # set the initial price
 p <- M[M$j > 0, "p"]
 logp <- log(rep(1, dim(p)[1]))
+system.time(
 p_1 <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)
+)
 p_2 <- update_price_matrix(logp, df_list, beta, sigma, mu, omega, Delta) 
 p_2 <- purrr::reduce(p_2, rbind)
 max(abs(p_1 - p_2))
@@ -715,7 +717,9 @@ Rcpp::List update_price_matrix_rcpp(
 
 
 ```{r}
+system.time(
 p_3 <- update_price_matrix_rcpp(logp, df_list, beta, sigma, mu, omega, Delta)
+)
 p_3 <- purrr::reduce(p_3, rbind)
 max(abs(p_2 - p_3))
 ```

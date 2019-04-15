@@ -49,9 +49,10 @@
 - __Pure common values (PCV)__: $u_i(v, x_i, x_{-i}) = v$: All buyers have the same valuation, which is unknown to them when they bid, and only learned though the private signals.
 - A remark on the private value assumption:
     - The assumption holds in more general settings than we may think.
-    - Suppose that $u_k(v_, x_i, x_{-i})$ depends on $v, x_i, x_{-i}$.
-    - Suppose that bidder $i$ is uncertain about $V$ and the distribution of $V$ is independent of $x_i$ and $x_{-i}$.
-    - Then, $\mathbb{E}\{u_i(V, X_i, X_{-i})|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i, X_{-i})|X_i = x_i\} \equiv f(x_i)$ for some monotone increasing function $f$.
+    - Suppose that $u_k(v, x_i, x_{-i})$ depends on $v, x_i, x_{-i}$.
+    - Suppose that bidder $i$ is uncertain about $V$ and the distribution of $V$ conditional on $x_i$ is independent of $x_{-i}$.
+    - Suppose that $u(v, x_i, x_{-i}) = u(x, x_i)$.
+    - Then, $\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} \equiv f(x_i)$ for some monotone increasing function $f$.
     - This is still a private value model.
     - If the distribution of $V$ is not independent of some $x_i$, it is no longer a private value model.
     - The last case is referred to as the __common values (CV)__ model.
@@ -75,7 +76,7 @@ w(x, y) \equiv \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
 $$
 be the expected payoff of the bidder when her signal is $x$ and the highest rival's signals is $y_1$.
 - Let $\underline{x}$ is the lower bound of the support of $X$.
-- __English auction__: 
+- __Button auction__: 
     - The price rises continuously.
     - Bidders stays active as long as they keep fingers on the button.
     - A bidder wins once all other bidders take their fingers off.
@@ -110,7 +111,7 @@ be the expected payoff of the bidder when her signal is $x$ and the highest riva
     - Then, the payoff to me is:
     \begin{equation}
     \begin{split}
-    &\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = \beta_k^{-1}(b), Y_{n - k} = y, \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
+    &\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
     &- \mathbb{E}\{u(V, x)| X_1 = y, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}.
     \end{split}
     \end{equation}
@@ -130,7 +131,7 @@ $$
 
 - If PV, i.e., $w(x, y) = x$, then, the equilibrium strategy is to participate and drop at $\beta(x) = x$ if $x \ge r$ and not to participate if $x < r$.
 - This is the unique equilibrium with weakly dominant strategies.
-- Under the common value assumption, there can be many asymmetric equillibria [@milgromRationalExpectationsInformation1981; bikhchandaniEquilibriaOpenCommon1991].
+- Under the common value assumption, there can be many asymmetric equillibria [@milgromRationalExpectationsInformation1981; @bikhchandaniEquilibriaOpenCommon1991].
 - If bidders can call their bids, the game becomes more complicated because bidders can announce a "jump" bid at any time to signal their valuations [@averyStrategicJumpBidding1998].
 - Be aware of the complications arising in the versions of the English auction.
 
@@ -152,7 +153,7 @@ $$
 - The likelihood is:
     - If $m_t = 0$, the $F_X(r_t)^{n_t}$.
     - If $m_t = 1$ then $\mathbb{P}\{m_t = 1\} = n_t F_X(r_t)^{n_t - 1} [1 - F_X(r_t)]$.
-    - If $m_t > 1$, then $h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 1} [1 - F_X(w_t)] f_X(w_t)$.
+    - If $m_t > 1$, then $h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 2} [1 - F_X(w_t)] f_X(w_t)$.
 - The likelihood function is, if the data is only about the auctions with $m_t \ge 1$:
 $$
 L = \prod_{t = 1}^T \frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}}{1 - \mathbb{P}\{m_t = 0\}}
@@ -210,7 +211,7 @@ $$
     2. signal is no greater than the winning bid plus the minimum bid increment: $x_i \le w + \Delta$.
     - Let $F_{i:n}$ be the distribution of the $i$-th highest order statistics from $F_X$.
     - Let $G_{i:n}$ be the empirical distribution of the $i$-th highest bids.
-    - By 1, we have $F_{i:n}(x) \ge G_{i:n}(x)$.
+    - By 1, we have $F_{i:n}(x) \le G_{i:n}(x)$.
     - By 2, we have $F_{2:n}(x) \ge G_{1:n}(x + \Delta)$. 
     - These inequalities put the bounds on $F_X$.
     
@@ -385,7 +386,7 @@ and construct:
 $$
 \widehat{F}_X(r) = \frac{\#\{\hat{x}_{it} = r\}}{NT} + \int_r^x \hat{f}_X(t) dt.
 $$
-- For this argument to hold, it has to be that $\eta(b)$ is strictly increasing in $b$. Otherwise, for the same $b$, multiple $x$ can be associated.
+- For this argument to hold, it has to be that $\eta(b)$ is strictly increasing in $b$. Otherwise, for the same $x$, multiple $b$ can be associated.
 - This approach can be extended to the symmetric IPV and affiliated values.
 - @krasnokutskayaIdentificationEstimationAuction2011 considered a model with unobserved heterogeneity, in which the bidder's cost is $c_i = x_i v$ and $x_i$ is private and independent and $v$ is known among bidders but not to econometrician.
 
