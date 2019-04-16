@@ -651,15 +651,15 @@ where
 \end{equation}\]</span>
 and
 <span class="math display">\[\begin{equation}
-E_i(\sigma_i) = 
+D_i(¥sigma_i) =
 \begin{pmatrix}
-\mathbb{E}\{\epsilon_{i0}|a_i = 0\}\\
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|1)\\
 \vdots\\
-\mathbb{E}\{\epsilon_{iK}|a_i = K\}.
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|m_s)
 \end{pmatrix}.
 \end{equation}\]</span></li>
 <li>If <span class="math inline">\(I - \beta \Sigma_i(\sigma_i)G\)</span> is invertible, we have: <span class="math display">\[
-V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}\Sigma_i(\sigma_i)[\Pi_i + E_i(\sigma_i)].
+V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}[\Sigma_i(\sigma_i)\Pi_i + D_i(\sigma_i)].
 \]</span></li>
 </ul>
 </div>
@@ -810,7 +810,7 @@ where <span class="math inline">\(W\)</span> is some weighting matrix.</li>
 <h3><span class="header-section-number">8.1.15</span> Computing <span class="math inline">\(\Psi\)</span></h3>
 <ul>
 <li><p>Mapping from conditional choice probabilities to ex-ante value function: <span class="math display">\[
-V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1}\Sigma_i(\hat{p})[\Pi_i + E_i(\hat{p})].
+V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1} [\Sigma_i(\hat{p})\Pi_i + D_i(\hat{p})].
 \]</span></p></li>
 <li>Mapping from ex-ante value function  to conditional choice probability:
 <span class="math display">\[\begin{equation}
@@ -820,7 +820,7 @@ where
 <span class="math display">\[\begin{equation}
 v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i, a_{-i}, s) + \beta \sum_{s&#39; \in S} g(a_i, a_{-i}, s, s&#39;) V_i(\hat{p}, s&#39;)].
 \end{equation}\]</span></li>
-<li><p>If <span class="math inline">\(\epsilon_{ia}\)</span> follows an i.i.d. type-I extreme value distribution, both <span class="math inline">\(E_i(\hat{p})\)</span> and the second equation have closed-forms.</p></li>
+<li><p>If <span class="math inline">\(\epsilon_{ia}\)</span> follows an i.i.d. type-I extreme value distribution, both <span class="math inline">\(D_i(\hat{p})\)</span> and the second equation have closed-forms.</p></li>
 </ul>
 </div>
 </div>

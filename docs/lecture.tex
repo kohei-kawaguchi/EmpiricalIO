@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-04-15}
+    \date{Last updated: 2019-04-16}
 
 \usepackage{booktabs}
 
@@ -8696,16 +8696,16 @@ V_i(\sigma_i, s) &= \sum_{a \in A} \sigma_i(a|s)[\pi_i(a, s) + \beta \sum_{s' \i
   and
 
   \begin{equation}
-  E_i(\sigma_i) = 
+  D_i(¥sigma_i) =
   \begin{pmatrix}
-  \mathbb{E}\{\epsilon_{i0}|a_i = 0\}\\
+  \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|1)\\
   \vdots\\
-  \mathbb{E}\{\epsilon_{iK}|a_i = K\}.
+  \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|m_s)
   \end{pmatrix}.
   \end{equation}
 \item
   If \(I - \beta \Sigma_i(\sigma_i)G\) is invertible, we have: \[
-  V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}\Sigma_i(\sigma_i)[\Pi_i + E_i(\sigma_i)].
+  V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}[\Sigma_i(\sigma_i)\Pi_i + D_i(\sigma_i)].
   \]
 \end{itemize}
 
@@ -8947,7 +8947,7 @@ p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigm
 \item
   Mapping from conditional choice probabilities to ex-ante value
   function: \[
-  V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1}\Sigma_i(\hat{p})[\Pi_i + E_i(\hat{p})].
+  V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1} [\Sigma_i(\hat{p})\Pi_i + D_i(\hat{p})].
   \]
 \item
   Mapping from ex-ante value function
@@ -8965,7 +8965,7 @@ p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigm
   \end{equation}
 \item
   If \(\epsilon_{ia}\) follows an i.i.d. type-I extreme value
-  distribution, both \(E_i(\hat{p})\) and the second equation have
+  distribution, both \(D_i(\hat{p})\) and the second equation have
   closed-forms.
 \end{itemize}
 
@@ -9758,13 +9758,16 @@ Asssumptions}\label{discussion-about-the-asssumptions}
   \item
     The assumption holds in more general settings than we may think.
   \item
-    Suppose that \(u_k(v_, x_i, x_{-i})\) depends on \(v, x_i, x_{-i}\).
+    Suppose that \(u_k(v, x_i, x_{-i})\) depends on \(v, x_i, x_{-i}\).
   \item
     Suppose that bidder \(i\) is uncertain about \(V\) and the
-    distribution of \(V\) is independent of \(x_i\) and \(x_{-i}\).
+    distribution of \(V\) conditional on \(x_i\) is independent of
+    \(x_{-i}\).
+  \item
+    Suppose that \(u(v, x_i, x_{-i}) = u(x, x_i)\).
   \item
     Then,
-    \(\mathbb{E}\{u_i(V, X_i, X_{-i})|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i, X_{-i})|X_i = x_i\} \equiv f(x_i)\)
+    \(\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} \equiv f(x_i)\)
     for some monotone increasing function \(f\).
   \item
     This is still a private value model.
@@ -9819,7 +9822,7 @@ Asssumptions}\label{discussion-about-the-asssumptions}
 \item
   Let \(\underline{x}\) is the lower bound of the support of \(X\).
 \item
-  \textbf{English auction}:
+  \textbf{Button auction}:
 
   \begin{itemize}
   \tightlist
@@ -9905,7 +9908,7 @@ Strategies}\label{equilibrium-bidding-strategies}
 
     \begin{equation}
     \begin{split}
-    &\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = \beta_k^{-1}(b), Y_{n - k} = y, \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
+    &\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
     &- \mathbb{E}\{u(V, x)| X_1 = y, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}.
     \end{split}
     \end{equation}
@@ -9944,8 +9947,8 @@ Strategies}\label{equilibrium-bidding-strategies}
   This is the unique equilibrium with weakly dominant strategies.
 \item
   Under the common value assumption, there can be many asymmetric
-  equillibria {[}\citet{milgromRationalExpectationsInformation1981};
-  bikhchandaniEquilibriaOpenCommon1991{]}.
+  equillibria
+  \citep{milgromRationalExpectationsInformation1981, bikhchandaniEquilibriaOpenCommon1991}.
 \item
   If bidders can call their bids, the game becomes more complicated
   because bidders can announce a ``jump'' bid at any time to signal
@@ -10009,7 +10012,7 @@ Auction}\label{likelihood-of-ipv-button-auction}
     \(\mathbb{P}\{m_t = 1\} = n_t F_X(r_t)^{n_t - 1} [1 - F_X(r_t)]\).
   \item
     If \(m_t > 1\), then
-    \(h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 1} [1 - F_X(w_t)] f_X(w_t)\).
+    \(h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 2} [1 - F_X(w_t)] f_X(w_t)\).
   \end{itemize}
 \item
   The likelihood function is, if the data is only about the auctions
@@ -10136,7 +10139,7 @@ Data}\label{likelihood-of-ipv-english-auction-with-bid-data}
     Let \(G_{i:n}\) be the empirical distribution of the \(i\)-th
     highest bids.
   \item
-    By 1, we have \(F_{i:n}(x) \ge G_{i:n}(x)\).
+    By 1, we have \(F_{i:n}(x) \le G_{i:n}(x)\).
   \item
     By 2, we have \(F_{2:n}(x) \ge G_{1:n}(x + \Delta)\).
   \item
@@ -10359,7 +10362,7 @@ Estimation}\label{non-parmaetric-approach-estimation}
 \tightlist
 \item
   For this argument to hold, it has to be that \(\eta(b)\) is strictly
-  increasing in \(b\). Otherwise, for the same \(b\), multiple \(x\) can
+  increasing in \(b\). Otherwise, for the same \(x\), multiple \(b\) can
   be associated.
 \item
   This approach can be extended to the symmetric IPV and affiliated
@@ -14207,10 +14210,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##            z_1       z_2
-## [1,] -6.070044  0.905191
-## [2,]  0.918557 -1.136240
-## [3,]  3.176870  1.372331
+##             z_1      z_2
+## [1,] -0.9204018 4.595223
+## [2,]  8.4486180 2.489928
+## [3,] -0.4361437 1.745893
 \end{verbatim}
 
 \begin{Shaded}
@@ -14344,10 +14347,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##             [,1]
-## [1,]  0.16823313
-## [2,]  0.09931798
-## [3,] -0.22844826
+##           [,1]
+## [1,] -1.085702
+## [2,]  1.736556
+## [3,] -1.399590
 \end{verbatim}
 
 \begin{enumerate}
@@ -14377,9 +14380,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##           [,1]
-## [1,] 0.1547417
-## [2,] 2.6728940
-## [3,] 0.0000000
+## [1,]  9.160662
+## [2,] 16.295788
+## [3,]  0.000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -14404,7 +14407,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    1
 ## [3,]    1
 \end{verbatim}
@@ -14428,7 +14431,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    1
 ## [3,]    1
 \end{verbatim}
@@ -14459,7 +14462,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    1
 ## [3,]    1
 \end{verbatim}
@@ -14473,11 +14476,11 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    0
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 ## [4,]    0
-## [5,]    0
-## [6,]    0
+## [5,]    1
+## [6,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14517,7 +14520,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    1
 ## [3,]    1
 \end{verbatim}
@@ -14531,11 +14534,11 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    0
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 ## [4,]    0
-## [5,]    0
-## [6,]    0
+## [5,]    1
+## [6,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14630,7 +14633,7 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    1
 ## [3,]    1
 \end{verbatim}
@@ -14643,7 +14646,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.324
+## [1] 0.3346
 \end{verbatim}
 
 \begin{enumerate}
@@ -14671,7 +14674,7 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    1
 ## [3,]    1
 \end{verbatim}
@@ -14684,7 +14687,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.3143
+## [1] 0.3239
 \end{verbatim}
 
 \begin{enumerate}
