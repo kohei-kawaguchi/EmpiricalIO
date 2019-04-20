@@ -563,11 +563,13 @@ z_sd &lt;-<span class="st"> </span><span class="dv">4</span></code></pre></div>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of potential entrants</span>
 E &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">rdunif</span>(M, <span class="dv">1</span>, N); E</code></pre></div>
-<pre><code>##   [1]  3  2  7  4  8  5  8 10  4  8 10  3  7  2  3  4  1  4  9  4  5  6  5
-##  [24]  2  9  7  8  2  8  5  9  7  8  6  6  8  1  5  8  7  5  9  5  3  1  1
-##  [47]  4  6  7  5 10  3  5  4  7  3  5  8  1  9  4  9  4  4  5  9  9  4  8
-##  [70] 10  5  8  4  4  8  3  8  2  3  2  3  1  7  9  8  8  5  5  9  7  7  4
-##  [93]  3 10  7  3  2  5 10  6</code></pre>
+<pre><code>##   [1]  3  2  7  4  8  5  8 10  4  8 10  3  7  2  3  4
+##  [17]  1  4  9  4  5  6  5  2  9  7  8  2  8  5  9  7
+##  [33]  8  6  6  8  1  5  8  7  5  9  5  3  1  1  4  6
+##  [49]  7  5 10  3  5  4  7  3  5  8  1  9  4  9  4  4
+##  [65]  5  9  9  4  8 10  5  8  4  4  8  3  8  2  3  2
+##  [81]  3  1  7  9  8  8  5  5  9  7  7  4  3 10  7  3
+##  [97]  2  5 10  6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># market attributes</span>
 X &lt;-<span class="st"> </span><span class="kw">matrix</span>(
   <span class="kw">rnorm</span>(M <span class="op">*</span><span class="st"> </span>K, x_mu, x_sd),
@@ -688,9 +690,9 @@ Z &lt;-
   }
 Z[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>##            z_1       z_2
-## [1,] -0.430919 -1.766792
-## [2,]  2.820040  2.056891
-## [3,] -1.174304  2.525141</code></pre>
+## [1,]  1.477313 -4.163350
+## [2,] -3.112267 -5.993149
+## [3,]  2.524655 -2.245567</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># unobserved market attributes</span>
 EP &lt;-<span class="st"> </span><span class="kw">matrix</span>(
   <span class="kw">rnorm</span>(M),
@@ -808,10 +810,10 @@ NU &lt;-
     <span class="kw">return</span>(NU_m)
   }
 NU[[<span class="dv">1</span>]]</code></pre></div>
-<pre><code>##             [,1]
-## [1,]  0.08404532
-## [2,] -0.18182031
-## [3,] -0.64754958</code></pre>
+<pre><code>##            [,1]
+## [1,]  1.1375039
+## [2,] -0.7049721
+## [3,]  0.8655986</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>compute_payoff(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code> that returns the vector of payoffs of the potential entrants when the vector of entry decisions is <code>y_m</code>.</li>
 </ol>
@@ -824,10 +826,10 @@ Z_m &lt;-<span class="st"> </span>Z[[m]]
 EP_m &lt;-<span class="st"> </span>EP[m, , drop =<span class="st"> </span><span class="ot">FALSE</span>]
 NU_m &lt;-<span class="st"> </span>NU[[m]]
 <span class="kw">compute_payoff</span>(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code></pre></div>
-<pre><code>##           [,1]
-## [1,] 0.5249074
-## [2,] 9.0903320
-## [3,] 0.0000000</code></pre>
+<pre><code>##            [,1]
+## [1,] -0.7090781
+## [2,] -9.2028831
+## [3,]  0.0000000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Assume that the order of entry is predetermined. Assume that the potential entrants sequentially decide entry according to the order of the payoff excluding the competitive effects, i.e.: <span class="math display">\[
 x_m&#39;\beta + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m}.
@@ -835,8 +837,8 @@ x_m&#39;\beta + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compute_sequential_entry</span>(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code></pre></div>
 <pre><code>##      [,1]
-## [1,]    1
-## [2,]    1
+## [1,]    0
+## [2,]    0
 ## [3,]    1</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Next, assume <span class="math inline">\(\rho = 0\)</span>. Assume that potential entrants simultaneously decide entry. Write a function <code>compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)</code> that returns the equilibrium vector of entry at a market.</li>
@@ -844,7 +846,7 @@ x_m&#39;\beta + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">compute_simultaneous_entry</span>(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)</code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
-## [2,]    1
+## [2,]    0
 ## [3,]    1</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)</code> compute the equilibrium entry vectors under the assumption of sequential entry. The output should be a list of entry vectors across markets. Write a function to compute the equilibrium payoffs across markets, <code>compute_payoff_across_markets(Y, X, Z, EP, NU, beta, alpha, delta, rho)</code> and check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code.</li>
@@ -853,17 +855,17 @@ x_m&#39;\beta + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{
 <span class="st">  </span><span class="kw">compute_sequential_entry_across_markets</span>(X, Z, EP, NU, beta, alpha, delta, rho)
 Y_sequential[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>##      [,1]
-## [1,]    1
-## [2,]    1
+## [1,]    0
+## [2,]    0
 ## [3,]    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y_sequential[[M]]</code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    1
-## [4,]    1
+## [3,]    0
+## [4,]    0
 ## [5,]    1
-## [6,]    1</code></pre>
+## [6,]    0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">payoff_sequential &lt;-
 <span class="st">  </span><span class="kw">compute_payoff_across_markets</span>(Y_sequential, X, Z, EP, NU, beta, alpha, delta, rho)
 <span class="kw">min</span>(<span class="kw">unlist</span>(payoff_sequential))</code></pre></div>
@@ -877,16 +879,16 @@ Y_simultaneous &lt;-
 Y_simultaneous[[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
-## [2,]    1
+## [2,]    0
 ## [3,]    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y_simultaneous[[M]]</code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    1
-## [4,]    1
+## [3,]    0
+## [4,]    0
 ## [5,]    1
-## [6,]    1</code></pre>
+## [6,]    0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">payoff_simultaneous &lt;-
 <span class="st">  </span><span class="kw">compute_payoff_across_markets</span>(Y_simultaneous, X, Z, EP, NU, beta, alpha, delta, <span class="dt">rho =</span> <span class="dv">0</span>)
 <span class="kw">min</span>(<span class="kw">unlist</span>(payoff_simultaneous))</code></pre></div>
@@ -938,12 +940,12 @@ Y_mc &lt;-<span class="st"> </span>
     X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)
 Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>##      [,1]
-## [1,]    1
-## [2,]    1
+## [1,]    0
+## [2,]    0
 ## [3,]    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute objective function</span>
 <span class="kw">compute_objective_sequential_entry</span>(Y, X, Z, EP_mc, NU_mc, theta)</code></pre></div>
-<pre><code>## [1] 0.2919</code></pre>
+<pre><code>## [1] 0.3385</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Write a function <code>compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)</code> that returns the value of the objective function given data and parameters under the assumption of simultaneous entry.</li>
 </ol>
@@ -956,11 +958,11 @@ Y_mc &lt;-<span class="st"> </span><span class="kw">compute_monte_carlo_simultan
 Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    1
-## [2,]    1
+## [2,]    0
 ## [3,]    1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute objective function</span>
 <span class="kw">compute_objective_simultaneous_entry</span>(Y, X, Z, EP_mc, NU_mc, theta)</code></pre></div>
-<pre><code>## [1] 0.2631</code></pre>
+<pre><code>## [1] 0.2941</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Check the value of the objective function around the true parameter under the assumption of the sequential entry.</li>
 </ol>
@@ -1085,7 +1087,8 @@ result_sequential &lt;-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A6_estimate_sequential.RData&quot;</span>)
 result_sequential</code></pre></div>
 <pre><code>## $par
-## [1] 0.71189269 0.15505175 0.86037228 1.81777944 1.17711412 0.04193266
+## [1] 0.71189269 0.15505175 0.86037228 1.81777944
+## [5] 1.17711412 0.04193266
 ## 
 ## $value
 ## [1] 0.305
@@ -1132,7 +1135,8 @@ result_simultaneous &lt;-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A6_estimate_simultaneous.RData&quot;</span>)
 result_simultaneous</code></pre></div>
 <pre><code>## $par
-## [1] 0.6781953 0.1751559 0.7923711 1.6865438 1.1773396 0.3878013
+## [1] 0.6781953 0.1751559 0.7923711 1.6865438 1.1773396
+## [6] 0.3878013
 ## 
 ## $value
 ## [1] 0.3122
