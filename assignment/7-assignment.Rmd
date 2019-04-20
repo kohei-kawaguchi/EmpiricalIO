@@ -23,3 +23,144 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 ## Simulate data
 
+Suppose that there is $N = 1$ firm and it makes decisions for $t = 1, \cdots, \infty$. We solve the model under the infinite-horizon assumption, but generate data only for $t = 1, \cdots, T$. There are $L = 5$ state $s \in  \{1, 2, 3, 4, 5\}$ states for the player. The firm can choose $K + 1 = 2$ actions $a \in \{0, 1\}$. 
+
+The mean period payoff to the firm is:
+$$
+\pi(a, s) :=  \alpha \ln s - \beta a,
+$$
+where $\alpha, \beta > 0$. The period payoff is:
+$$
+\pi(a, s) + \epsilon(a),
+$$
+and $\epsilon(a)$ is an i.i.d. type-I extreme random variable that is independent of all the other variables.
+
+At the beginning of each period, the state $s$ and choice-specific shocks $\epsilon(a), a = 0, 1$ are realized, and the the firm chooses her action. Then, the game moves to the next period. 
+
+Suppose that $s > 1$ and $s < L$. If $a = 0$, the state stays at the same state with probability $1 - \kappa$ and moves down by 1 with probability $\kappa$. If $a = 1$, the state moves up by 1 with probability $\gamma$, moves down by 1 with probability $\kappa$, and stays at the same with probability $1 - \kappa - \gamma$. 
+
+Suppose that $s = 1$. If $a = 0$, the state stays at the same state with probability 1. If $a = 1$, the state moves up by 1 with probability $\gamma$, moves down with probability $\kappa$, and stays at the same with probability $1 - \gamma$. 
+
+Suppose that $s = L$. If $a = 0$, the state stays at the same state with probability $1 - \kappa$ and moves down by 1 with probability $\kappa$. If $a = 1$, the state moves down by 1 with probability $\kappa$, and stays at the same with probability $1 - \kappa$. 
+
+The mean period profit is summarized in $\Pi$ as:
+$$
+\Pi :=
+\begin{pmatrix}
+\pi(0, 1)\\
+\vdots\\
+\pi(K, 1)\\
+\vdots \\
+\pi(0, L)\\
+\vdots\\
+\pi(K, L)\\
+\end{pmatrix}
+$$
+
+The transition law is summarized in $G$ as:
+
+$$
+g(a, s, s') := \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
+$$
+
+$$
+G := 
+\begin{pmatrix}
+g(0, 1, 1) & \cdots & g(0, 1, L)\\
+\vdots & & \vdots \\
+g(K, 1, 1) & \cdots & g(K, 1, L)\\
+& \vdots & \\
+g(0, L, 1) & \cdots & g(0, L, L)\\
+\vdots & & \vdots \\
+g(K, L, 1) & \cdots & g(K, L, L)\\
+\end{pmatrix}.
+$$
+The discount factor is denoted by $\delta$.
+
+1. Set constants and parameters as follows:
+```{r}
+# set seed
+set.seed(1)
+# set constants 
+L <- 5
+K <- 1
+T <- 100
+# set parameters
+alpha <- 0.5
+beta <- 0.1
+gamma <- 0.6
+kappa <- 0.1
+delta <- 0.95
+```
+
+2. Write function `compute_pi(alpha, beta, L, K)` that computes $\Pi$ given parameters and compute the true $\Pi$ under the true parameters.
+
+```{r}
+compute_PI <-
+  function(alpha, beta, L, K) {
+    PI <- foreach (l = 1:L,
+                   .combine = "rbind") %do% {
+      PI_l <- foreach (k = 0:K,
+                       .combine = "rbind") %do% {
+        pi_kl <- alpha * log(l) - beta * k
+        return(pi_kl)
+                       }
+      rownames(PI_l) <- paste("k", 0:K, "_l", l, sep = "")
+      return(PI_l)
+                   }
+    return(PI)
+  }
+PI <- compute_PI(alpha, beta, L, K); PI
+```
+
+3. Write function `compute_G(kappa, gamma, L, K)` that computes $G$ given parameters and compute the true $G$ under the true parameters.
+
+```{r}
+compute_G <-
+  function(kappa, gamma, L, K) {
+    G <- foreach (l = 1:L, .combine = "rbind") %do% {
+      G_l <- foreach (k = 0:K, .combine = "rbind") %do% {
+        g_kl <- matrix(rep(0, L), nrow = 1)
+        if (l > 1) {
+          g_kl[l - 1] <- kappa
+          if (l < L) {
+            g_kl[l + 1] <- gamma * k
+            g_kl[l] <- 1 - kappa - gamma * k
+          } else {
+            g_kl[l] <- 1 - kappa
+          }
+        } else {
+          g_kl[l] <- 1 - gamma * k
+          g_kl[l + 1] <- gamma * k
+        }
+        rownames(g_kl) <- paste("k", k, "_l", l, sep = "")
+        colnames(g_kl) <- paste("l", 1:L, sep = "")
+        return(g_kl)
+      }
+      return(G_l)
+    }
+    return(G)
+  }
+G <- compute_G(kappa, gamma, L, K); G
+```
+
+3. The exante-value function is written as a function of a conditional choice probability as follows:
+$$
+\varphi^{(\theta_1, \hat{\theta}_2)}(p) = [I - \beta \Sigma(p) G]^{-1}\Sigma(p)[\Pi + E(p)],
+$$
+where
+$$
+\Sigma(p) =
+\begin{pmatrix}
+p(1)' & & \\
+ & \ddots & \\
+ & & p(L)'
+\end{pmatrix}
+$$
+and:
+$$
+E(p) = 
+\gamma - \ln p,
+$$
+
+
