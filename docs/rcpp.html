@@ -761,17 +761,13 @@ and then continue the process by typing <code>c</code> in the terminal.</li>
 <span class="co"># numeric vector </span>
 x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)
 x</code></pre></div>
-<pre><code>## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388</code></pre>
+<pre><code>## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numeric matrix</span>
 Y &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)
 Y</code></pre></div>
-<pre><code>##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494</code></pre>
+<pre><code>##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494</code></pre>
 <ul>
 <li>Let’s write a C++ function that just receives a numeric vector and returns the numeric vector, and receives a numeric matrix and returns the numeric matrix.</li>
 </ul>
@@ -812,8 +808,7 @@ W</code></pre></div>
 L &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">z =</span> z)
 L</code></pre></div>
 <pre><code>## $x
-## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388
+## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388
 ## 
 ## $y
 ## [1] 1
@@ -943,16 +938,12 @@ list_<span class="dv">1</span>[[<span class="dv">3</span>]] &lt;-<span class="st
 list_<span class="dv">1</span>[[<span class="dv">4</span>]] &lt;-<span class="st"> </span>W
 list_<span class="dv">1</span></code></pre></div>
 <pre><code>## [[1]]
-## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388
+## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388
 ## 
 ## [[2]]
-##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494
+##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -994,16 +985,12 @@ list_<span class="dv">2</span><span class="op">$</span>z &lt;-<span class="st"> 
 list_<span class="dv">2</span><span class="op">$</span>W &lt;-<span class="st"> </span>W
 list_<span class="dv">2</span></code></pre></div>
 <pre><code>## $x
-## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388
+## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388
 ## 
 ## $Y
-##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494
+##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494
 ## 
 ## $z
 ## [1] 1 2 3 4 5

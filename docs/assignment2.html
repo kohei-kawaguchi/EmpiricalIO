@@ -625,58 +625,54 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 <li>Draw optimization error <span class="math inline">\(\iota_{jt}\)</span> and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.</li>
 </ol>
 <pre><code>## # A tibble: 1,000 x 9
-##        j     t     k   omega  wage     iota      l
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74 
-## # … with 990 more rows, and 2 more variables:
-## #   l_error &lt;dbl&gt;, I &lt;dbl&gt;</code></pre>
+##        j     t     k   omega  wage     iota      l l_error       I
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
+## # … with 990 more rows</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error <code>y</code> and the one with optimization error <code>y_error</code>.</li>
 </ol>
 <pre><code>## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota      l
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74 
-## # … with 990 more rows, and 5 more variables:
-## #   l_error &lt;dbl&gt;, I &lt;dbl&gt;, eta &lt;dbl&gt;, y &lt;dbl&gt;,
-## #   y_error &lt;dbl&gt;</code></pre>
+##        j     t     k   omega  wage     iota      l l_error       I     eta
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
+## # … with 990 more rows, and 2 more variables: y &lt;dbl&gt;, y_error &lt;dbl&gt;</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Repeat this procedure for <span class="math inline">\(t = 1, \cdots 10\)</span> by updating the capital and anticipated shocks, and name the resulting data frame <code>df_T</code>.</li>
 </ol>
 <pre><code>## # A tibble: 10,000 x 13
-##        j     t     k   omega  wage     iota      l
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74 
-## # … with 9,990 more rows, and 6 more variables:
-## #   l_error &lt;dbl&gt;, I &lt;dbl&gt;, eta &lt;dbl&gt;, y &lt;dbl&gt;,
-## #   y_error &lt;dbl&gt;, nu &lt;dbl&gt;</code></pre>
+##        j     t     k   omega  wage     iota      l l_error       I     eta
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316 
+## # … with 9,990 more rows, and 3 more variables: y &lt;dbl&gt;, y_error &lt;dbl&gt;,
+## #   nu &lt;dbl&gt;</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li><p>Check the simulated data by making summary table.</p>
 <table>
@@ -819,8 +815,7 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 ## l_error     0.997913   0.002396 416.454   &lt;2e-16 ***
 ## k           0.007599   0.004503   1.688   0.0915 .  
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.2068 on 9997 degrees of freedom
 ## Multiple R-squared:  0.9657, Adjusted R-squared:  0.9657 
@@ -841,8 +836,7 @@ I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
 ## dl_error  0.9910916  0.0029548 335.413   &lt;2e-16 ***
 ## dk       -0.0009029  0.0127539  -0.071    0.944    
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.1961 on 9998 degrees of freedom
 ## Multiple R-squared:  0.9184, Adjusted R-squared:  0.9184 

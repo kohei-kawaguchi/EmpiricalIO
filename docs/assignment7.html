@@ -608,7 +608,7 @@ delta &lt;-<span class="st"> </span><span class="fl">0.95</span></code></pre></d
 ## k0_l5 0.0 0.0 0.0 0.1 0.9
 ## k1_l5 0.0 0.0 0.0 0.1 0.9</code></pre>
 <p>The exante-value function is written as a function of a conditional choice probability as follows: <span class="math display">\[
-\varphi^{(\theta_1, \theta_2)}(p) := [I - \beta \Sigma(p) G]^{-1}\Sigma(p)[\Pi + E(p)],
+\varphi^{(\theta_1, \theta_2)}(p) := [I - \delta \Sigma(p) G]^{-1}\Sigma(p)[\Pi + E(p)],
 \]</span> where <span class="math inline">\(\theta_1 = (\alpha, \beta)\)</span> and <span class="math inline">\(\theta_2 = (\kappa, \gamma)\)</span> and: <span class="math display">\[
 \Sigma(p) =
 \begin{pmatrix}
@@ -770,28 +770,17 @@ check_ccp &lt;-<span class="st"> </span>check_ccp <span class="op">%&gt;%</span>
 <li>Write a function <code>estimate_G(df)</code> that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G_est &lt;-<span class="st"> </span><span class="kw">estimate_G</span>(df); G_est</code></pre></div>
-<pre><code>##               l1        l2         l3        l4
-## k0_l1 1.00000000 0.0000000 0.00000000 0.0000000
-## k1_l1 0.40134043 0.5986596 0.00000000 0.0000000
-## k0_l2 0.10073352 0.8992665 0.00000000 0.0000000
-## k1_l2 0.09259259 0.3034360 0.60397144 0.0000000
-## k0_l3 0.00000000 0.1001510 0.89984905 0.0000000
-## k1_l3 0.00000000 0.1112084 0.28458844 0.6042032
-## k0_l4 0.00000000 0.0000000 0.10265979 0.8973402
-## k1_l4 0.00000000 0.0000000 0.09232264 0.2973761
-## k0_l5 0.00000000 0.0000000 0.00000000 0.1011998
-## k1_l5 0.00000000 0.0000000 0.00000000 0.1100386
-##              l5
-## k0_l1 0.0000000
-## k1_l1 0.0000000
-## k0_l2 0.0000000
-## k1_l2 0.0000000
-## k0_l3 0.0000000
-## k1_l3 0.0000000
-## k0_l4 0.0000000
-## k1_l4 0.6103013
-## k0_l5 0.8988002
-## k1_l5 0.8899614</code></pre>
+<pre><code>##               l1        l2         l3        l4        l5
+## k0_l1 1.00000000 0.0000000 0.00000000 0.0000000 0.0000000
+## k1_l1 0.40134043 0.5986596 0.00000000 0.0000000 0.0000000
+## k0_l2 0.10073352 0.8992665 0.00000000 0.0000000 0.0000000
+## k1_l2 0.09259259 0.3034360 0.60397144 0.0000000 0.0000000
+## k0_l3 0.00000000 0.1001510 0.89984905 0.0000000 0.0000000
+## k1_l3 0.00000000 0.1112084 0.28458844 0.6042032 0.0000000
+## k0_l4 0.00000000 0.0000000 0.10265979 0.8973402 0.0000000
+## k1_l4 0.00000000 0.0000000 0.09232264 0.2973761 0.6103013
+## k0_l5 0.00000000 0.0000000 0.00000000 0.1011998 0.8988002
+## k1_l5 0.00000000 0.0000000 0.00000000 0.1100386 0.8899614</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">check_G &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">type =</span> <span class="st">&quot;true&quot;</span>, reshape2<span class="op">::</span><span class="kw">melt</span>(G))
 check_G_est &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">type =</span> <span class="st">&quot;estimate&quot;</span>, reshape2<span class="op">::</span><span class="kw">melt</span>(G_est))
 check_G &lt;-<span class="st"> </span><span class="kw">rbind</span>(check_G, check_G_est)

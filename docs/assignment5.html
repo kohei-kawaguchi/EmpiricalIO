@@ -662,20 +662,20 @@ derivative_share_smooth[[<span class="dv">1</span>]]</code></pre></div>
 ## [3,]  0.22222078  0.05347946 -0.47677137  0.18862102
 ## [4,]  0.24032215  0.04757626  0.18862102 -0.48803506</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">derivative_share_smooth[[T]]</code></pre></div>
-<pre><code>##             [,1]        [,2]        [,3]        [,4]
-## [1,] -0.07358769  0.01724997  0.01539716  0.00728682
-## [2,]  0.01724997 -0.18464980  0.03941164  0.02590020
-## [3,]  0.01539716  0.03941164 -0.14947032  0.01760727
-## [4,]  0.00728682  0.02590020  0.01760727 -0.11933630
-## [5,]  0.01037598  0.05210013  0.02950338  0.04443484
-## [6,]  0.02286198  0.04875629  0.04659132  0.02338740
-##             [,5]        [,6]
-## [1,]  0.01037598  0.02286198
-## [2,]  0.05210013  0.04875629
-## [3,]  0.02950338  0.04659132
-## [4,]  0.04443484  0.02338740
-## [5,] -0.18480392  0.04568463
-## [6,]  0.04568463 -0.18893897</code></pre>
+<pre><code>##             [,1]        [,2]        [,3]        [,4]        [,5]
+## [1,] -0.07358769  0.01724997  0.01539716  0.00728682  0.01037598
+## [2,]  0.01724997 -0.18464980  0.03941164  0.02590020  0.05210013
+## [3,]  0.01539716  0.03941164 -0.14947032  0.01760727  0.02950338
+## [4,]  0.00728682  0.02590020  0.01760727 -0.11933630  0.04443484
+## [5,]  0.01037598  0.05210013  0.02950338  0.04443484 -0.18480392
+## [6,]  0.02286198  0.04875629  0.04659132  0.02338740  0.04568463
+##             [,6]
+## [1,]  0.02286198
+## [2,]  0.04875629
+## [3,]  0.04659132
+## [4,]  0.02338740
+## [5,]  0.04568463
+## [6,] -0.18893897</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Make a list <code>Delta</code> such that each element of the list is <span class="math inline">\(J_t \times J_t\)</span> matrix <span class="math inline">\(\Delta_t\)</span>.</li>
 </ol>
@@ -923,18 +923,14 @@ producer_surplus_counterfactual &lt;-
 consumer_surplus_actual &lt;-<span class="st"> </span>
 <span class="st">  </span><span class="kw">compute_consumer_surplus</span>(p_actual, X, M, V, beta, sigma, mu, omega)
 <span class="kw">summary</span>(consumer_surplus_actual)</code></pre></div>
-<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu. 
-##   0.00000   0.02023   0.95853   4.14497   4.46279 
-##      Max. 
-## 236.27783</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   0.00000   0.02023   0.95853   4.14497   4.46279 236.27783</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute counterfactual consumer surplus</span>
 consumer_surplus_counterfactual &lt;-<span class="st"> </span>
 <span class="st">  </span><span class="kw">compute_consumer_surplus</span>(p_counterfactual, X, M, V, beta, sigma, mu, omega)
 <span class="kw">summary</span>(consumer_surplus_counterfactual)</code></pre></div>
-<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu. 
-##   0.00000   0.01637   0.91300   4.11099   4.40189 
-##      Max. 
-## 236.29217</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   0.00000   0.01637   0.91300   4.11099   4.40189 236.29217</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">consumer_surplus_change &lt;-<span class="st"> </span>
 <span class="st">  </span>(<span class="kw">sum</span>(consumer_surplus_counterfactual) <span class="op">-</span><span class="st"> </span>
 <span class="st">     </span><span class="kw">sum</span>(consumer_surplus_actual)) <span class="op">/</span>
