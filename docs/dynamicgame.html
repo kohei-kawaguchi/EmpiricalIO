@@ -49,43 +49,6 @@
 
 
 
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -278,7 +241,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.8" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-available"><i class="fa fa-check"></i><b>5.2.8</b> Identification of the Conduct Parameter: When Cost Data is Available</a></li>
 <li class="chapter" data-level="5.2.9" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-not-available"><i class="fa fa-check"></i><b>5.2.9</b> Identification of the Conduct Parameter: When Cost Data is Not Available</a></li>
 <li class="chapter" data-level="5.2.10" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.10</b> Identification of the Conduct Parameter: Demand Rotater is Available</a></li>
-<li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.11</b> Identification of Conduct in Differentiated Product Market</a></li>
+<li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameters-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.11</b> Identification of the Conduct Parameters: Demand Rotater is Available</a></li>
+<li class="chapter" data-level="5.2.12" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.12</b> Identification of Conduct in Differentiated Product Market</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="merger.html"><a href="merger.html#unilateral-and-coordinated-effects-of-a-horizontal-merger"><i class="fa fa-check"></i><b>5.3.1</b> Unilateral and Coordinated Effects of a Horizontal Merger</a></li>
@@ -552,11 +516,11 @@ g(a, s, s&#39;) \equiv \mathbb{P}\{s_{t + 1} = s&#39;|s_t = s, a_t = a\},
 <span class="math display">\[\begin{equation}
 G \equiv 
 \begin{pmatrix}
-g(0, 1, 1) &amp; \cdots &amp; g(0, 1, m_s)\\
+g(1, 1, 1) &amp; \cdots &amp; g(1, 1, m_s)\\
 \vdots &amp; &amp; \vdots \\
 g(m_a, 1, 1) &amp; \cdots &amp; g(m_a, 1, m_s)\\
 &amp;\vdots&amp; \\
-g(0, m_s, 1) &amp; \cdots &amp; g(0, m_s, m_s)\\
+g(1, m_s, 1) &amp; \cdots &amp; g(1, m_s, m_s)\\
 \vdots &amp; &amp; \vdots \\
 g(m_a, m_s, 1) &amp; \cdots &amp; g(m_a, m_s, m_s)\\
 \end{pmatrix}.
@@ -577,11 +541,11 @@ where <span class="math inline">\(\pi_i(a_t, s_t)\)</span> is the mean period pr
 <span class="math display">\[\begin{equation}
 \Pi_i \equiv
 \begin{pmatrix}
-\pi_i(0, 1)\\
+\pi_i(1, 1)\\
 \vdots\\
 \pi_i(m_a, 1)\\
 \vdots\\
-\pi_i(0, m_s)\\
+\pi_i(1, m_s)\\
 \vdots\\
 \pi_i(m_a, m_s)
 \end{pmatrix}.
@@ -596,7 +560,7 @@ where <span class="math inline">\(\pi_i(a_t, s_t)\)</span> is the mean period pr
 <li>Let <span class="math inline">\(\sigma_i\)</span> stack them up as: <span class="math display">\[
 \sigma_i(s) =
 \begin{pmatrix}
-\sigma_i(0|s)\\
+\sigma_i(1|s)\\
 \vdots\\
 \sigma_i(m_a|s),
 \end{pmatrix}
@@ -717,7 +681,7 @@ p(a|s) = \prod_{i = 1}^N p(a_i|s).
 <li>Stacking them up as: <span class="math display">\[
 p(s) = 
 \begin{pmatrix}
-p(0|s) \\
+p(1|s) \\
 \vdots \\
 p(m_a|s)
 \end{pmatrix},
@@ -733,7 +697,7 @@ p(m_s)
 <p><span class="math display">\[
 \Psi(\sigma, s) = 
 \begin{pmatrix}
-\Psi(\sigma, 0, s) \\
+\Psi(\sigma, 1, s) \\
 \vdots \\
 \Psi(\sigma, m_a, s) \\
 \end{pmatrix},
@@ -944,7 +908,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <ul>
 <li>In the application of the dynamic game estimation to the dynamic oligopoly model, we often jointly consider entry and exit decisions and investment decisions of firms.</li>
 <li>The entry and exit decisions are the discrete decisions and the investment decision is the continuous controls.</li>
-<li>The formal models and their characterization are found in <span class="citation">Ericson &amp; Pakes (<a href="#ref-ericsonMarkovPerfectIndustryDynamics1995">1995</a>)</span> and <span class="citation">Ulrich Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010">2010</a>)</span>.</li>
+<li>The formal models and their characterization are found in <span class="citation">Ericson &amp; Pakes (<a href="#ref-ericsonMarkovPerfectIndustryDynamics1995">1995</a>)</span> and <span class="citation">Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010">2010</a>)</span>.</li>
 <li><span class="citation">Igami &amp; Sugaya (<a href="#ref-Igami2018">2018</a>)</span>’, the paper referred to in the introduction, falls into this category.</li>
 </ul>
 <div id="ryancostenvironmentregulation2012" class="section level3">
