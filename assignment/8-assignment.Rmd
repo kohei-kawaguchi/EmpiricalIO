@@ -51,11 +51,11 @@ The mean period profit is summarized in $\Pi$ as:
 $$
 \Pi :=
 \begin{pmatrix}
-\pi(0, 1)\\
+\pi(1, 1)\\
 \vdots\\
 \pi(m_a, 1)\\
 \vdots \\
-\pi(0, m_s)\\
+\pi(1, m_s)\\
 \vdots\\
 \pi(m_a, m_s)\\
 \end{pmatrix}
@@ -70,11 +70,11 @@ $$
 $$
 G := 
 \begin{pmatrix}
-g(0, 1, 1) & \cdots & g(0, 1, m_s)\\
+g(1, 1, 1) & \cdots & g(1, 1, m_s)\\
 \vdots & & \vdots \\
 g(m_a, 1, 1) & \cdots & g(m_a, 1, m_s)\\
 & \vdots & \\
-g(0, m_s, 1) & \cdots & g(0, m_s, m_s)\\
+g(1, m_s, 1) & \cdots & g(1, m_s, m_s)\\
 \vdots & & \vdots \\
 g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
 \end{pmatrix}.
@@ -146,7 +146,27 @@ The exante-value function for a firm is written as a function of a conditional c
 $$
 \varphi_i^{(\theta_1, \theta_2)}(p) := [I - \delta \Sigma_i(p) G]^{-1}[\Sigma_i(p)\Pi_i + D_i(p)],
 $$
-where $\theta_1 = (\alpha, \beta, \eta)$ and $\theta_2 = (\kappa, \gamma)$ and:
+where $\theta_1 = (\alpha, \beta, \eta)$ and $\theta_2 = (\kappa, \gamma)$, $p_i(a_i|s)$ is the probability that firm $i$ choose action $a_i$ when the state profile is $s$, and:
+$$
+p(a|s) = \prod_{i = 1}^N p_i(a_i|s), 
+$$
+$$
+p(s) = 
+\begin{pmatrix}
+p(1|s) \\
+\vdots \\
+p(m_a|s)
+\end{pmatrix},
+$$
+$$
+p = 
+\begin{pmatrix}
+p(1)\\
+\vdots\\
+p(m_s)
+\end{pmatrix},
+$$
+
 $$
 \Sigma(p) =
 \begin{pmatrix}
@@ -157,11 +177,41 @@ p(1)' & & \\
 $$
 and:
 $$
-E(p) =
-\gamma - \ln p.
+\begin{equation}
+D_i(p) =
+\begin{pmatrix}
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}p_i(a_i = k|1)\\
+\vdots\\
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}p_i(a_i = k|m_s)
+\end{pmatrix}.
+\end{equation}
 $$
 
-<!-- 3. Write a function `compute_exante_value(p, PI, G, L, K, delta)` that returns the exante value function given a conditional choice probability. Don't use methods in `dplyr` and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of $E(p)$ can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in $E(p)$ does not affect the result. -->
+5. 
+
+```{r}
+p <- matrix(rep(1/(K + 1), N * m_a * m_s))
+# compute marginal conitional choice probability
+compute_marginal_p <-
+  function(p, L, K, N) {
+    p_marginal <-
+      foreach (i = 1:N) %do% {
+        
+      }
+    
+  }
+
+
+compute_D <-
+  function(p, L, K, N) {
+    # compute marginal conditional choice proabbility
+    
+    
+  }
+```
+
+
+5. Write a function `compute_exante_value_game(p, PI, G, L, K, delta)` that returns the exante value function given a conditional choice probability. Don't use methods in `dplyr` and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of $E(p)$ can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in $E(p)$ does not affect the result.
 
 <!-- ```{r} -->
 <!-- p <- matrix(rep(0.5, L * (K + 1)), ncol = 1); p -->

@@ -212,11 +212,11 @@ $(document).ready(function () {
 <p>The mean period profit is summarized in <span class="math inline">\(\Pi\)</span> as: <span class="math display">\[
 \Pi :=
 \begin{pmatrix}
-\pi(0, 1)\\
+\pi(1, 1)\\
 \vdots\\
 \pi(m_a, 1)\\
 \vdots \\
-\pi(0, m_s)\\
+\pi(1, m_s)\\
 \vdots\\
 \pi(m_a, m_s)\\
 \end{pmatrix}
@@ -228,11 +228,11 @@ g(a, s, s') := \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
 <p><span class="math display">\[
 G := 
 \begin{pmatrix}
-g(0, 1, 1) &amp; \cdots &amp; g(0, 1, m_s)\\
+g(1, 1, 1) &amp; \cdots &amp; g(1, 1, m_s)\\
 \vdots &amp; &amp; \vdots \\
 g(m_a, 1, 1) &amp; \cdots &amp; g(m_a, 1, m_s)\\
 &amp; \vdots &amp; \\
-g(0, m_s, 1) &amp; \cdots &amp; g(0, m_s, m_s)\\
+g(1, m_s, 1) &amp; \cdots &amp; g(1, m_s, m_s)\\
 \vdots &amp; &amp; \vdots \\
 g(m_a, m_s, 1) &amp; \cdots &amp; g(m_a, m_s, m_s)\\
 \end{pmatrix}.
@@ -318,7 +318,7 @@ head(PI[[N]])</code></pre>
 ## i3_k7_l27 -2.5605551
 ## i3_k8_l27 -2.5605551</code></pre>
 <ol start="4" style="list-style-type: decimal">
-<li>Write function <code>compute_G_game(kappa, gamma, L, K, N)</code> that computes <span class="math inline">\(G\)</span> given parameters. Compute the true <span class="math inline">\(G\)</span> under the true parameters. Pick up several rows and manually compute the corresponding probabilities and check if the output of the function coincide. Don’t use methods in <code>dplyr</code> and deal with matrix operations.</li>
+<li>Write function <code>compute_G_game(kappa, gamma, L, K, N)</code> that computes <span class="math inline">\(G\)</span> given parameters. Compute the true <span class="math inline">\(G\)</span> under the true parameters. Pick up several rows and manually compute the corresponding probabilities and test if the output of the function coincide. Don’t use methods in <code>dplyr</code> and deal with matrix operations.</li>
 </ol>
 <pre class="r"><code>G &lt;- compute_G_game(kappa, gamma, L, K, N)
 G[1, ]</code></pre>
@@ -358,9 +358,26 @@ G[1, ]</code></pre>
 ## 1 1 1 1</code></pre>
 <pre class="r"><code>G[m_a + 1, 1] - kappa </code></pre>
 <pre><code>## [1] 0</code></pre>
-<p>The exante-value function is written as a function of a conditional choice probability as follows: <span class="math display">\[
-\varphi^{(\theta_1, \theta_2)}(p) := [I - \delta \Sigma(p) G]^{-1}\Sigma(p)[\Pi + E(p)],
-\]</span> where <span class="math inline">\(\theta_1 = (\alpha, \beta)\)</span> and <span class="math inline">\(\theta_2 = (\kappa, \gamma)\)</span> and: <span class="math display">\[
+<p>The exante-value function for a firm is written as a function of a conditional choice probability as follows: <span class="math display">\[
+\varphi_i^{(\theta_1, \theta_2)}(p) := [I - \delta \Sigma_i(p) G]^{-1}[\Sigma_i(p)\Pi_i + D_i(p)],
+\]</span> where <span class="math inline">\(\theta_1 = (\alpha, \beta, \eta)\)</span> and <span class="math inline">\(\theta_2 = (\kappa, \gamma)\)</span>, <span class="math inline">\(p_i(a_i|s)\)</span> is the probability that firm <span class="math inline">\(i\)</span> choose action <span class="math inline">\(a_i\)</span> when the state profile is <span class="math inline">\(s\)</span>, and: <span class="math display">\[
+p(a|s) = \prod_{i = 1}^N p_i(a_i|s), 
+\]</span> <span class="math display">\[
+p(s) = 
+\begin{pmatrix}
+p(1|s) \\
+\vdots \\
+p(m_a|s)
+\end{pmatrix},
+\]</span> <span class="math display">\[
+p = 
+\begin{pmatrix}
+p(1)\\
+\vdots\\
+p(m_s)
+\end{pmatrix},
+\]</span></p>
+<p><span class="math display">\[
 \Sigma(p) =
 \begin{pmatrix}
 p(1)' &amp; &amp; \\
@@ -368,10 +385,18 @@ p(1)' &amp; &amp; \\
  &amp; &amp; p(L)'
 \end{pmatrix}
 \]</span> and: <span class="math display">\[
-E(p) =
-\gamma - \ln p.
+\begin{equation}
+D_i(p) =
+\begin{pmatrix}
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}p_i(a_i = k|1)\\
+\vdots\\
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}p_i(a_i = k|m_s)
+\end{pmatrix}.
+\end{equation}
 \]</span></p>
-<!-- 3. Write a function `compute_exante_value(p, PI, G, L, K, delta)` that returns the exante value function given a conditional choice probability. Don't use methods in `dplyr` and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of $E(p)$ can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in $E(p)$ does not affect the result. -->
+<ol start="5" style="list-style-type: decimal">
+<li>Write a function <code>compute_exante_value_game(p, PI, G, L, K, delta)</code> that returns the exante value function given a conditional choice probability. Don’t use methods in <code>dplyr</code> and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of <span class="math inline">\(E(p)\)</span> can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in <span class="math inline">\(E(p)\)</span> does not affect the result.</li>
+</ol>
 <!-- ```{r} -->
 <!-- p <- matrix(rep(0.5, L * (K + 1)), ncol = 1); p -->
 <!-- V <- compute_exante_value(p, PI, G, L, K, delta); V -->

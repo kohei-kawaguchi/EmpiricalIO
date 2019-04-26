@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-04-25}
+    \date{Last updated: 2019-04-26}
 
 \usepackage{booktabs}
 
@@ -8552,11 +8552,11 @@ g^{\hat{\theta}_2}(K, s, 1), \cdots, g^{\hat{\theta}_2}(K, s, L)
 \begin{equation}
 G \equiv 
 \begin{pmatrix}
-g(0, 1, 1) & \cdots & g(0, 1, m_s)\\
+g(1, 1, 1) & \cdots & g(1, 1, m_s)\\
 \vdots & & \vdots \\
 g(m_a, 1, 1) & \cdots & g(m_a, 1, m_s)\\
 &\vdots& \\
-g(0, m_s, 1) & \cdots & g(0, m_s, m_s)\\
+g(1, m_s, 1) & \cdots & g(1, m_s, m_s)\\
 \vdots & & \vdots \\
 g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
 \end{pmatrix}.
@@ -8586,11 +8586,11 @@ g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
   \begin{equation}
   \Pi_i \equiv
   \begin{pmatrix}
-  \pi_i(0, 1)\\
+  \pi_i(1, 1)\\
   \vdots\\
   \pi_i(m_a, 1)\\
   \vdots\\
-  \pi_i(0, m_s)\\
+  \pi_i(1, m_s)\\
   \vdots\\
   \pi_i(m_a, m_s)
   \end{pmatrix}.
@@ -8612,7 +8612,7 @@ g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
   Let \(\sigma_i\) stack them up as: \[
   \sigma_i(s) =
   \begin{pmatrix}
-  \sigma_i(0|s)\\
+  \sigma_i(1|s)\\
   \vdots\\
   \sigma_i(m_a|s),
   \end{pmatrix}
@@ -8696,7 +8696,7 @@ V_i(\sigma_i, s) &= \sum_{a \in A} \sigma_i(a|s)[\pi_i(a, s) + \beta \sum_{s' \i
   and
 
   \begin{equation}
-  D_i(¥sigma_i) =
+  D_i(\sigma_i) =
   \begin{pmatrix}
   \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|1)\\
   \vdots\\
@@ -8785,7 +8785,7 @@ p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigm
   Stacking them up as: \[
   p(s) = 
   \begin{pmatrix}
-  p(0|s) \\
+  p(1|s) \\
   \vdots \\
   p(m_a|s)
   \end{pmatrix},
@@ -8802,7 +8802,7 @@ p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigm
 \[
 \Psi(\sigma, s) = 
 \begin{pmatrix}
-\Psi(\sigma, 0, s) \\
+\Psi(\sigma, 1, s) \\
 \vdots \\
 \Psi(\sigma, m_a, s) \\
 \end{pmatrix},
@@ -14210,10 +14210,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##             z_1       z_2
-## [1,]  0.9764021  1.483854
-## [2,]  1.3589981  0.223108
-## [3,] -2.0481222 -2.549329
+##           z_1       z_2
+## [1,] 2.885819 -9.086863
+## [2,] 0.527216 -4.547151
+## [3,] 2.089197  7.090127
 \end{verbatim}
 
 \begin{Shaded}
@@ -14348,9 +14348,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##            [,1]
-## [1,] -0.5445579
-## [2,]  1.0607056
-## [3,]  0.8027336
+## [1,] -0.9166564
+## [2,]  0.7703904
+## [3,]  0.6025077
 \end{verbatim}
 
 \begin{enumerate}
@@ -14379,10 +14379,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]
-## [1,] 6.293100
-## [2,] 6.117179
-## [3,] 0.000000
+##           [,1]
+## [1,] -9.325917
+## [2,] -2.461887
+## [3,]  0.000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -14407,9 +14407,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    0
+## [1,]    0
+## [2,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -14431,9 +14431,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    0
+## [1,]    0
+## [2,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -14462,9 +14462,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    0
+## [1,]    0
+## [2,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14475,12 +14475,12 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
 ## [3,]    0
-## [4,]    0
+## [4,]    1
 ## [5,]    0
-## [6,]    1
+## [6,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14520,9 +14520,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    0
+## [1,]    0
+## [2,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14533,12 +14533,12 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
 ## [3,]    0
-## [4,]    0
+## [4,]    1
 ## [5,]    0
-## [6,]    1
+## [6,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14633,9 +14633,9 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    0
+## [1,]    0
+## [2,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14646,7 +14646,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2967
+## [1] 0.2559
 \end{verbatim}
 
 \begin{enumerate}
@@ -14674,9 +14674,9 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    0
+## [1,]    0
+## [2,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14687,7 +14687,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2742
+## [1] 0.2968
 \end{verbatim}
 
 \begin{enumerate}
