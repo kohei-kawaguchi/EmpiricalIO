@@ -92,9 +92,6 @@ T <- 100
 N <- 3
 M <- 100
 lambda <- 1e-10
-# dimension
-m_a <- (K + 1)^N
-m_s <- L^N
 # set parameters
 alpha <- 0.5
 eta <- 0.1
@@ -107,20 +104,23 @@ delta <- 0.95
 2. Write a function `compute_action_state_space(K, L, N)` that returns a matrix for action and state space. Returned objects are list of matrix `A` and `S`, where `A` is a $m_a \times N$ matrix where $(k, i)$ element refers to the action taken by firm $i$ in $k$-th action profile and `S` is a `m_s \times N` matrix where $(l, i)$ refers to the state of firm $i$ in $l$-th state profile.
 
 ```{r}
-output <- compute_action_state_space(K, L, N)
+output <- compute_action_state_space(L, K, N)
 A <- output$A
 head(A)
 tail(A)
 S <- output$S
 head(S)
 tail(S)
+# dimension
+m_a <- (K + 1)^N
+m_s <- L^N
 ```
 
 
 3. Write function `compute_PI_game(alpha, beta, eta, L, K, N)` that computes a list of $\Pi_i$ given parameters. Compute the list of true $\Pi$ under the true parameters. Don't use methods in `dplyr` and deal with matrix operations.
 
 ```{r}
-PI <- compute_PI_game(alpha, beta, eta, L, K, N)
+PI <- compute_PI_game(alpha, beta, eta, N, A, S)
 head(PI[[N]])
 tail(PI[[N]])
 ```
@@ -128,7 +128,7 @@ tail(PI[[N]])
 4. Write function `compute_G_game(kappa, gamma, L, K, N)` that computes $G$ given parameters. Compute the true $G$ under the true parameters. Pick up several rows and manually compute the corresponding probabilities and test if the output of the function coincide. Don't use methods in `dplyr` and deal with matrix operations.
 
 ```{r}
-G <- compute_G_game(kappa, gamma, L, K, N)
+G <- compute_G_game(kappa, gamma, L, K, A, S)
 G[1, ]
 G[m_a, ]
 A[m_a,]
@@ -190,22 +190,32 @@ $$
 5. 
 
 ```{r}
-p <- matrix(rep(1/(K + 1), N * m_a * m_s))
-# compute marginal conitional choice probability
-compute_marginal_p <-
-  function(p, L, K, N) {
-    p_marginal <-
-      foreach (i = 1:N) %do% {
-        
+# define a conditional choice probability for each firm
+p_marginal <- matrix(rep(1/(K + 1), (K + 1) * m_s), nrow = m_s) 
+colnames(p_marginal) <- paste("a", 0:K, sep = "")
+rownames(p_marginal) <- paste("l", 1:m_s, sep = "")
+# compute joint conitional choice probability
+compute_p_joint <-
+  function(p_marginal, A, S) {
+    m_s <- dim(S)[1]
+    p_joint <- 
+      foreach (l = 1:m_s) %do% {
+        p_marginal_l <- p_marginal[l, ]
+        p_joint_l <- matrix(p_marginal_l[A + 1], nrow = dim(A)[1])
+        p_joint_l <- t(matrix(apply(p_joint_l, 1, prod)))
       }
-    
+    return(p_joint)
   }
-
-
+p_joint <- compute_p_joint(p_marginal, A, S)
+# compute Sigma for ex-ante value function calculation
+compute_Sigma <-
+  function(p_joint) {
+    Sigma <- Matrix::bdiag(p_joint)
+    return(Sigma)
+  }
+# compute D for ex-ante value function calculation
 compute_D <-
-  function(p, L, K, N) {
-    # compute marginal conditional choice proabbility
-    
+  function(p_marginal) {
     
   }
 ```

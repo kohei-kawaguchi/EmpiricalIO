@@ -1,25 +1,24 @@
 # possible actions and states
 compute_action_state_space <-
-  function(K, L, N) {
+  function(L, K, N) {
     A_i <- seq(0, K)
     A <- rep(list(A_i), N)
-    A <- expand.grid(A)
+    A <- expand.grid(A) %>%
+      as.matrix()
     colnames(A) <- 1:N
     S_i <- seq(1, L)
     S <- rep(list(S_i), N)
-    S <- expand.grid(S)
+    S <- expand.grid(S) %>%
+      as.matrix()
     colnames(S) <- 1:N
     return(list(A = A, S = S))
   }
 
 # compute PI for a game
 compute_PI_game <-
-  function(alpha, beta, eta, L, K, N) {
+  function(alpha, beta, eta, N, A, S) {
     # action and state space
-    output <- compute_action_state_space(K, L, N)
-    A <- output$A
     m_a <- dim(A)[1]
-    S <- output$S
     m_s <- dim(S)[1]
     # average S
     S_bar <- matrix(apply(S, 1, mean))
@@ -44,14 +43,11 @@ compute_PI_game <-
 
 # compute G for game
 compute_G_game <-
-  function(kappa, gamma, L, K, N) {
+  function(kappa, gamma, L, K, A, S) {
     # individual transition probabliity
     g <- compute_G(kappa, gamma, L, K)
     # action and state space
-    output <- compute_action_state_space(K, L, N)
-    A <- output$A
     m_a <- dim(A)[1]
-    S <- output$S
     m_s <- dim(S)[1]
     # loop
     G <- foreach (l = 1:m_s, .combine = "rbind") %do% {

@@ -636,7 +636,7 @@ where <span class="math inline">\(\pi_i(a_t, s_t)\)</span> is the mean period pr
 <span class="math display">\[\begin{equation}
 \begin{split}
 V_i(\sigma_i, s) &amp;= \sum_{a \in A} \sigma_i(a|s)[\pi_i(a, s) + \beta \sum_{s&#39; \in S} g(a, s, s&#39;) V_i(\sigma_i, s&#39;)]\\
-&amp; + \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|s).
+&amp; + \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, s\}\sigma_i(a_i = k|s).
 \end{split}
 \end{equation}\]</span>
 <ul>
@@ -657,9 +657,9 @@ and
 <span class="math display">\[\begin{equation}
 D_i(\sigma_i) =
 \begin{pmatrix}
-\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|1)\\
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, 1\}\sigma_i(a_i = k|1)\\
 \vdots\\
-\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|m_s)
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, m_s\}\sigma_i(a_i = k|m_s)
 \end{pmatrix}.
 \end{equation}\]</span></li>
 <li>If <span class="math inline">\(I - \beta \Sigma_i(\sigma_i)G\)</span> is invertible, we have: <span class="math display">\[
