@@ -23,11 +23,11 @@
 - Actions $a_{ti} \in A_i, i = 1, \cdots, N$ are chosen simultaneously.
 - The state evolves according to a transition probability:
 \begin{equation}
-g(a, s, s') \equiv \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
+g(a, s, s') := \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
 \end{equation}
 
 \begin{equation}
-G \equiv 
+G := 
 \begin{pmatrix}
 g(1, 1, 1) & \cdots & g(1, 1, m_s)\\
 \vdots & & \vdots \\
@@ -58,7 +58,7 @@ be the choice-specific profitability shock.
 
 - Let $\Pi_i$ summarize the choice-specific mean period payoffs at each state:
 \begin{equation}
-\Pi_i \equiv
+\Pi_i :=
 \begin{pmatrix}
 \pi_i(1, 1)\\
 \vdots\\
@@ -121,7 +121,7 @@ $$
 \begin{equation}
 \begin{split}
 V_i(\sigma_i, s) &= \sum_{a \in A} \sigma_i(a|s)[\pi_i(a, s) + \beta \sum_{s' \in S} g(a, s, s') V_i(\sigma_i, s')]\\
-& + \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|s).
+& + \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, s\}\sigma_i(a_i = k|s).
 \end{split}
 \end{equation}
 
@@ -140,11 +140,11 @@ where
 \end{equation}
 and
 \begin{equation}
-D_i(¥sigma_i) =
+D_i(\sigma_i) =
 \begin{pmatrix}
-\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|1)\\
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, 1\}\sigma_i(a_i = k|1)\\
 \vdots\\
-\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k\}\sigma_i(a_i = k|m_s)
+\sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, m_s\}\sigma_i(a_i = k|m_s)
 \end{pmatrix}.
 \end{equation}
 - If $I - \beta \Sigma_i(\sigma_i)G$ is invertible, we have:
@@ -187,7 +187,7 @@ v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon
 \begin{split}
 p(a_i|s) &= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}, \forall a_i' \in A_i\}\\
 &=\int \prod_{a_i' \neq a_i}1\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i', s) + \epsilon_{i, a_i'}\} d F\\
-&\equiv \Psi(\sigma_i, a_i, s).
+&:= \Psi(\sigma_i, a_i, s).
 \end{split}
 \end{equation}
 
@@ -665,4 +665,5 @@ knitr::include_graphics("figuretable/denovo.png")
 ```{r, echo = FALSE, fig.cap = '', out.width='80%', fig.asp = .75, fig.align = 'center'}
 knitr::include_graphics("figuretable/mature.png")
 ```
+
 

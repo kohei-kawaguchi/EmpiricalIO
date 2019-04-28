@@ -6,9 +6,9 @@
 - There are many cases where the decision makers have to take into account the dynamic effects of their actions.
 - __Payoff linkages__:
     - Storable good: Next week's demand for a detergent depends on how many bottles consumers purchase and consume this week. The latter depends on this week's price and the price schedule of the detergent. The stock of the detergent consumers hold is an endogenous state variable.
-    - Learning by doing: The productivity of a firm next year can be higher if the firm produced more this year because the firm can learn from the experience. The cummulative production level is an endogenous state variable.
+    - Learning by doing: The productivity of a firm next year can be higher if the firm produced more this year because the firm can learn from the experience. The cumulative production level is an endogenous state variable.
 - __Information linkages__:
-    - Uncertainty about the quality: If a consumer is uncertain about the quality of a product but can learn from experiencing the product, next seaons's demand for the product depends on how many consumers purchace and experience the product this season. The latter depends on this season's price and the price schedule of the product.
+    - Uncertainty about the quality: If a consumer is uncertain about the quality of a product but can learn from experiencing the product, next season's demand for the product depends on how many consumers purchase and experience the product this season. The latter depends on this season's price and the price schedule of the product.
 - __Strategic linkages__:
     - Tacit collusion: If a firm deviates from the collusive price, the price war will start. Then, the history of the prices is the endogenous state variable.
 
@@ -36,12 +36,12 @@
 - Choice $a_t \in A$ is made.
 - State evolves according to a transition probability:
 \begin{equation}
-g(a, s, s') \equiv \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
+g(a, s, s') := \mathbb{P}\{s_{t + 1} = s'|s_t = s, a_t = a\},
 \end{equation}
 - Thus, the transition law only depends on today's state and action, but not on the past history.
 
 \begin{equation}
-G \equiv 
+G := 
 \begin{pmatrix}
 g(0, 1, 1) & \cdots & g(0, 1, L)\\
 \vdots & & \vdots \\
@@ -63,10 +63,10 @@ g(K, L, 1) & \cdots & g(K, L, L)\\
 \pi(a_t, s_t) + \sum_{k = 1}^K \epsilon_{tk} 1\{a_t = k\},
 \end{equation}
 - $\pi(a_t, s_t)$ is the mean __choice-specific period payoff__.
-- $\epsilon_t$ is assuemd to be i.i.d. across times and is drawn from $F$.
+- $\epsilon_t$ is assumed to be i.i.d. across times and is drawn from $F$.
 - Let:
 $$
-\epsilon_{t a_t} \equiv \sum_{k = 1}^K \epsilon_{tk} 1\{a_t = k\},
+\epsilon_{t a_t} := \sum_{k = 1}^K \epsilon_{tk} 1\{a_t = k\},
 $$
 be the choice-specific profitability shock.
 - Let $\Pi$ summarize the choice-specific period payoffs at each state:
@@ -169,7 +169,7 @@ v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' 
 \end{equation}
 - This condition looks similar to the optimality condition in the static discrete choice model.
 - The only difference from the static discrete choice model is that the mean indirect utility is the sum of the choice-specific mean profit and the discounted continuation value.
-- Thus, as long as the mean choice-specific value function for given parameters can be computed, the following simulation and estimation procedure will be similar to the static discrete chocie model.
+- Thus, as long as the mean choice-specific value function for given parameters can be computed, the following simulation and estimation procedure will be similar to the static discrete choice model.
 
 
 
@@ -178,9 +178,9 @@ v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' 
 - From the previous optimality condition, we can define the __optimal conditional choice probability__ with belief $\sigma$ as:
 \begin{equation}
 \begin{split}
-p(a|s) &\equiv \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
+p(a|s) &:= \mathbb{P}\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}, \forall a' \in A\}\\
 &= \int \prod_{a' \neq a} 1\{v(\sigma, a, s) + \epsilon_{a} \ge v(\sigma, a', s) + \epsilon_{a'}\} dF\\
-&\equiv \Psi(\sigma, a, s).
+&:= \Psi(\sigma, a, s).
 \end{split}
 \end{equation}
 - $\Psi(\sigma, a, s)$ maps the tuple of action, state and belief to the optimal conditional choice probability of the action given the state and the belief.
@@ -234,7 +234,7 @@ p = \Psi(p).
 \begin{split}
 V(s) &= \mathbb{E}\{V(s, \epsilon)|s\}\\
 &= \mathbb{E}\left[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}p(a|s_t)\left[\pi(a, s_t) + \epsilon_{ta}\right]\Bigg|s_0, a\right]\\
-&\equiv \varphi(p, s).
+&:= \varphi(p, s).
 \end{split}
 \end{equation}
 
@@ -245,7 +245,7 @@ V(s) &= \mathbb{E}\{V(s, \epsilon)|s\}\\
 \begin{split}
 p(a|s) = \mathbb{P}\Bigg\{&\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') + \epsilon_a \ge\\
 &\pi(a' , s) + \beta \sum_{s' \in S} V(s') g(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}\\
-&\equiv \Lambda(V, a, s).
+&:= \Lambda(V, a, s).
 \end{split}
 \end{equation}
 
@@ -255,11 +255,11 @@ p(a|s) = \mathbb{P}\Bigg\{&\pi(a , s) + \beta \sum_{s' \in S} V(s') g(a, s, s') 
 
 - Composing these two mappings, we can write down the optimality condition as the fixed-point for ex-ante value functions:
 \begin{equation}
-V = \varphi(p) = \varphi[\Lambda(V)] \equiv \Phi(V).
+V = \varphi(p) = \varphi[\Lambda(V)] := \Phi(V).
 \end{equation}
 - Or as the fixed-point for the optimal conditional choice probabilities:
 $$
-p = \Lambda(V) = \Lambda[\varphi(p)] \equiv \Psi(p).
+p = \Lambda(V) = \Lambda[\varphi(p)] := \Psi(p).
 $$
 
 
@@ -428,7 +428,7 @@ and so the log likelihood function is:
 ### First Step: Estimating CCP
 
 - What is the estimated CCP $\hat{p}$?
-- This is the optimal conditional choice probability __at a particular equilibrium__ under a true parmaeter.
+- This is the optimal conditional choice probability __at a particular equilibrium__ under a true parameter.
 - If parameter changes, then the equilibrium changes. Then, the conditional choice probability also changes.
 - The reduced-form parameter $\hat{p}$ embodies the information about behaviors under the actual equilibrium but does not tell anything about behaviors under hypothetical equilibria.
 - Therefore, $\hat{p}$ is not sufficient to make counterfactual prediction.
@@ -456,7 +456,7 @@ although the expectation may not have a closed form solution.
 \begin{equation}
 \begin{split}
 &\Lambda^{(\theta_1, \hat{\theta}_2)}(\hat{V}^{(\theta_1, \hat{\theta}_2)}, a, s)\\
-&\equiv \mathbb{P}\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a\\
+&:= \mathbb{P}\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a\\
 &\ge \pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}
 \end{split}
 \end{equation}
@@ -474,7 +474,7 @@ although the expectation may not have a closed form solution.
 \begin{equation}
 \begin{split}
 &\Lambda^{(\theta_1, \hat{\theta}_2)}(\hat{V}^{(\theta_1, \hat{\theta}_2)}, a, s)\\
-&\equiv \mathbb{P}\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a \ge\\
+&:= \mathbb{P}\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a \ge\\
 &\pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') + \epsilon_{a'}, \forall a' \in A \Bigg\}\\
 &=\frac{\exp\Big[\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S}\hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s')\Big]}{\sum_{a' = 0}^K \exp\Big[\pi^{\theta_1}(a' , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a', s, s') \Big]}.
 \end{split}
@@ -483,7 +483,7 @@ although the expectation may not have a closed form solution.
 \begin{equation}
 \begin{split}
 &\varphi^{(\theta_1, \hat{\theta}_2)}(p, s)\\
-&\equiv \mathbb{E}\{V(s, \epsilon)|s\}\\
+&:= \mathbb{E}\{V(s, \epsilon)|s\}\\
 &= \mathbb{E}\Bigg[ \sum_{t = 0}^\infty \beta^t \sum_{a \in A}\hat{p}(a|s_t)\Bigg(\pi^{\theta_1}(a, s_t) + \epsilon_{ta}\Bigg)\Bigg|s\Bigg]\\
 &=\mathbb{E}\Bigg[\sum_{a \in A}\hat{p}(a|s)\Bigg(\pi^{\theta_1}(a, s) + \epsilon_{a} + \beta \sum_{s' \in S} \mathbb{E}\{\hat{V}^{(\theta_1, \hat{\theta}_2)}(s, \epsilon)|s'\} g^{\hat{\theta}_2}(a, s, s')  \Bigg)\Bigg|s\Bigg]\\
 &=\mathbb{E}\Bigg[\sum_{a \in A}\hat{p}(a|s)\Bigg(\pi^{\theta_1}(a, s) + \epsilon_{a} + \beta \sum_{s' \in S} \varphi^{(\theta_1, \hat{\theta}_2)}(\hat{p}, s') g^{\hat{\theta}_2}(a, s, s')  \Bigg)\Bigg|s\Bigg]\\
@@ -495,7 +495,7 @@ although the expectation may not have a closed form solution.
 
 
 ### Type-I Extreme Value Distribution
-- If $\epsilon_a$ is drawn from i.i.d. type-I extreme value distribution, tt can be shown that:
+- If $\epsilon_a$ is drawn from i.i.d. type-I extreme value distribution, it can be shown that:
 \begin{equation}
 \begin{split}
 \mathbb{E}[\epsilon_{a}|s, a] &= \hat{p}(a|s)^{-1} \int \epsilon_a 1\Bigg\{\pi^{\theta_1}(a , s) + \beta \sum_{s' \in S} \hat{V}^{(\theta_1, \hat{\theta}_2)}(s') g^{\hat{\theta}_2}(a, s, s') + \epsilon_a \ge\\
@@ -505,7 +505,7 @@ although the expectation may not have a closed form solution.
 \end{equation}
 where $\gamma$ is Euler's constant:
 \begin{equation}
-\gamma \equiv \lim_{n \to \infty} \Bigg(\sum_{k = 1}^n \frac{1}{k} - \ln(n) \Bigg) \approx 0.57721...
+\gamma := \lim_{n \to \infty} \Bigg(\sum_{k = 1}^n \frac{1}{k} - \ln(n) \Bigg) \approx 0.57721...
 \end{equation}
 
 
@@ -532,7 +532,7 @@ where $\gamma$ is Euler's constant:
 \varphi^{(\theta_1, \hat{\theta}_2)}(p, 1)\\
 \vdots\\
 \varphi^{(\theta_1, \hat{\theta}_2)}(p, L).
-\end{bmatrix}}_{\equiv \varphi^{(\theta_1, \hat{\theta}_2)}(p)}
+\end{bmatrix}}_{:= \varphi^{(\theta_1, \hat{\theta}_2)}(p)}
 \end{split}
 \end{equation}
 
@@ -545,26 +545,26 @@ where $\gamma$ is Euler's constant:
 \begin{equation}
 \begin{split}
 &\varphi^{(\theta_1, \hat{\theta}_2)}(p, s)\\
-&=\underbrace{[p(0|s), \cdots, p(K|s)]}_{\equiv p(s)'} \\
+&=\underbrace{[p(0|s), \cdots, p(K|s)]}_{:= p(s)'} \\
 &\times\begin{bmatrix}
 \underbrace{\begin{bmatrix}
 \pi^{\theta_1}(0, s)\\
 \vdots\\
 \pi^{\theta_1}(K, s)
-\end{bmatrix}}_{\equiv \pi^{\theta_1}(s)}
+\end{bmatrix}}_{:= \pi^{\theta_1}(s)}
 + \gamma
 -
 \underbrace{\begin{bmatrix}
 \ln p(0|s)\\
 \vdots\\
 \ln p(K|s)
-\end{bmatrix}}_{\equiv \ln p(s)}
+\end{bmatrix}}_{:= \ln p(s)}
 +\beta
 \underbrace{\begin{bmatrix}
 g^{\hat{\theta}_2}(0, s, 1), \cdots, g^{\hat{\theta}_2}(0, s, L)\\
 \vdots\\
 g^{\hat{\theta}_2}(K, s, 1), \cdots, g^{\hat{\theta}_2}(K, s, L)
-\end{bmatrix}}_{\equiv G^{\hat{\theta}_2}(s)}
+\end{bmatrix}}_{:= G^{\hat{\theta}_2}(s)}
 \varphi^{(\theta_1, \hat{\theta}_2)}(p)
 \end{bmatrix}\\
 &=p(s)'[\pi^{\theta_1}(s) + \gamma - \ln p(s)] + \beta p(s)' G^{\hat{\theta}_2}(s)  \varphi^{(\theta_1, \hat{\theta}_2)}(p)
@@ -630,4 +630,222 @@ $$
 
 - If the profitability shock $\epsilon_a$ is not an i.i.d. type-I extreme value random variable, you may need to compute $\mathbb{E}\{\epsilon_a|s, a\}$ and $\Lambda^{(\theta_1, \hat{\theta}_2)}(V)$ numerically.
 - This may or may not feasible.
+
+## Unobserved Heterogeneity
+
+### Dynamic Decision Model with a Finite Mixture
+
+- Decision makers such as a firm, a worker, and a consumer can be different in an unobserved manner.
+- Finite mixture models is restrictive yet flexible enough modeling framework of unobserved heterogeneity.
+- @kasaharaNonparametricIdentificationFinite2009 consider a dynamic decision model with a finite mixture and provide a sufficient condition for identification.
+
+### Setting
+
+- Each period, each player makes a choice $a_t$ from a discrete and finite set $A$ conditioning on $(x_t, x_{t - 1}, a_{t - 1}) \in X \times X \times A$ (being allowed to depend on $x_{t - 1}$ and $a_{t - 1}$).
+- $x_t$ is observable individual characteristics that can change over time.
+- Each player belongs to one of $M$ types.
+- For example, parameters are different across types.
+- The probability of belonging to type $m$ is denoted by $\pi^m$ such that $\sum_{m = 1}^M \pi^m = 1$.
+- Type $m$'s conditional choice probability: $P_t^m(a_t|x_t, x_{t - 1}, a_{t - 1})$.
+- Type $m$'s initial probability of $(x_1, a_1)$: $p^{*m}(x_1, a_a)$.
+- Type $m$'s transition probability of $x_t$: $f_t^m(x_t|\{x_{\tau}, a_{\tau}\}_{\tau = 1}^{t - 1})$ (being allowed to depend on the entire history).
+
+### Observation
+
+- We have a panel data set with time-deimension equal to $T$.
+- Each player's observation $w_i = \{a_{it}, x_{it}\}_{t = 1}^T$ is drawn randomly from an $M$-term mixture distribution such as:
+$$
+\begin{split}
+P(\{a_t, x_t\}_{t = 1}^T) &= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f_t^m(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) P_t^m(a_t| x_t, \{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})\\
+&= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f_t^m(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) P_t^m(a_t| x_t, x_{t - 1}, a_{t - 1}),
+\end{split}
+$$
+where the second equality uses the Markovian assumption on the conditional choice probability.
+
+### Further Assumptions {#assumptions-finite-mixture}
+
+- We start from a model with the following simplifying assumptions, which are often imposed in an applied work.
+1. The choice probability of $a_t$ does not depend on time: $P_t^m(a_t|x_t, x_{t - 1}, a_{t - 1}) = P^m(a_t|x_t, x_{t - 1}, a_{t - 1})$. for all $t$.
+1. The choicd probability of $a_t$ does not depend on $x_{t - 1}, a_{t - 1}$: $P^m(a_t|x_t, x_{t - 1}, a_{t - 1}) = P^m(a_t|x_t)$.
+1. $f_t^{m}(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) > 0$ for all $(x_t, \{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})$ and all $m$.
+1. The transition function is common across types: $f_t^m(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) = f_t(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})$ for all $m$.
+1. The transition function does not depend on time: $f_t(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) = f(x_t|x_{t - 1}, a_{t - 1})$ for all $t$.
+- Then the probability of an observation becomes:
+$$
+P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) P^m(a_t| x_t).
+$$
+
+### Lower-dimensional Submodels
+
+- Because $f(x_t|x_{t - 1}, a_{t - 1})$ is non-parametrically identified from data, we are only concerned with identification of type probabilities and conditional choice probabilities.
+- Transform the previous equation as:
+$$
+\begin{split}
+\widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})}\\
+&= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T P^m(a_t| x_t).
+\end{split}
+$$
+- Let $\mathcal{I} := \{i_1, \cdots, i_l\} \subset \{1, \cdots, T\}$ be a subset of time indices.
+- We define a __lower-dimensional submodels__ given $\mathcal{I}$ as:
+$$
+\widetilde{P}(\{a_{i_s}, x_{i_s}\}_{i_s \in \mathcal{I}}) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{s = 2}^l P^m(a_t| x_t),
+$$
+if $1 \in \mathcal{I}$ and:
+$$
+\widetilde{P}(\{a_{i_s}, x_{i_s}\}_{i_s \in \mathcal{I}}) = \sum_{m = 1}^M\pi^m \prod_{s = 2}^l P^m(a_t| x_t),
+$$
+if $1 \not\in \mathcal{I}$.
+- Under each different value of $(x_1, \cdots, x_T)$, above equations imply different restrictions on the type probabilities and conditional choice probabilities.
+- There are the order of $|X|^T$ variations in $(x_1, \cdots, x_T)$, whereas the number of parameters $\{\pi^m, p^{*m}(a, x), P^m(a|X)\}_{m = 1}^M$ is of a order of $|X|$.
+
+### Notations
+
+- For notational simplicity, consider a case with $A = \{0, 1\}$.
+- Define, for $\xi \in X$:
+$$
+\lambda_\xi^{*m} := p^{*m}[(a_1, x_1) = (1, \xi)],
+$$
+$$
+\lambda_\xi^m := P^m(a = 1|x = \xi).
+$$
+- Let $\xi_j, j = 1, \cdots, M - 1$ be elements of $X$ and $k$ be an element of $X$.
+
+### Notations for Parameters to be Identified
+
+- Define a matrix of type-specific distribution functions and type probabilities as:
+$$
+L := 
+\begin{pmatrix}
+1 & \lambda_{\xi_1}^1 & \cdots & \lambda_{\xi_{M - 1}^1}\\
+\vdots & \vdots & \ddots & \vdots \\
+1 & \lambda_{\xi_1}^M & \cdots & \lambda_{\xi_{M - 1}^M}\\
+\end{pmatrix},
+$$
+$$
+D_k^* :=
+\begin{pmatrix}
+\lambda_k^{*1} & & \\
+& \ddots & \\
+& & \lambda_k^{*M}
+\end{pmatrix},
+$$
+and
+$$
+V :=
+\begin{pmatrix}
+\pi^1 & & \\
+& \ddots & \\
+& & \pi^M
+\end{pmatrix}.
+$$
+
+### Notations for Observables
+
+- Define for every $(x_1, x_2, x_3)$:
+$$
+F_{x_1, x_2, x_3}^* := \widetilde{P}(\{1, x_t\}_{t = 1}^3) = \sum_{m = 1}^M \pi^m \lambda_{x_1}^{*m} \lambda_{x_2}^m \lambda_{x_3}^m.
+$$
+- Define for every $(x_2, x_3)$:
+$$
+F_{x_2, x_3} := \widetilde{P}(\{1, x_t\}_{t = 2}^3) = \sum_{m = 1}^M \pi^m \lambda_{x_2}^m \lambda_{x_3}^m.
+$$
+- In the same way, define $F_{x_1, x_2}^*$ and $f_{x_1, x_3}^*$.
+- Define for every $x_1$:
+$$
+F_{x_1}^* := \widetilde{P}(\{1, x_1\}) = \sum_{m = 1}^M \pi^m \lambda_{x_1}^{*m}.
+$$
+- In the same way, define $F_{x_2}$ and $F_{x_3}$.
+- In the notations above, $F^*$ involves $(a_1, x_1)$ and $F$ does not.
+- Summing up probabilities that do not involve $x_1$ as:
+$$
+P :=
+\begin{pmatrix}
+1 & F_{\xi_1} & \cdots & F_{\xi_{M - 1}}\\
+F_{\xi_1} & F_{\xi_1, \xi_1} & \cdots & F_{\xi_1, \xi_{M - 1}}\\
+\vdots & \vdots & \ddots & \vdots\\
+F_{\xi_{M - 1}} & F_{\xi_{M - 1}, \xi_1} & \cdots & F_{\xi_{M - 1}, \xi_{M - 1}}
+\end{pmatrix}
+$$
+- Summing up probabilities that involve $x_1$ as:
+$$
+P^* :=
+\begin{pmatrix}
+k & F^*_{k, \xi_1} & \cdots & F^*_{k, \xi_{M - 1}}\\
+F^*_{k, \xi_1} & F^*_{k, \xi_1, \xi_1} & \cdots & F^*_{k, \xi_1, \xi_{M - 1}}\\
+\vdots & \vdots & \ddots & \vdots\\
+F^*_{k, \xi_{M - 1}} & F^*_{k, \xi_{M - 1}, \xi_1} & \cdots & F^*_{k, \xi_{M - 1}, \xi_{M - 1}}
+\end{pmatrix}.
+$$
+
+
+### Sufficient Condition for Identification
+
+- __Identification theorem__:
+- Suppose that assumptions in \@ref(assumptions-finite-mixture) hold.
+- $T \ge 3$.
+- There exist some $\{\xi_1, \cdots, \xi_{M - 1}\} \in X^{M - 1}$ such that $L$ is non-singular.
+- There exists $k \in X$ such that $\lambda_k^{*m} > 0$ for all $m = 1, \cdots, M$ and $\lambda_k^{*m} \neq \lambda_k^{*n}$ for any $m \neq n$.
+- Then, $\{\pi^m, \{\lambda_\xi^{*m}, \lambda_\xi^m\}_{\xi \in X}\}_{m = 1}^M$ is uniquely identified from $\{\widetilde{P}(\{a_t, x_t\}_{t = 1}^3)\}$.
+- Because the assumptions of the above theorem refer to model parameters, the authors also derive sufficient conditions based on observables.
+- __Corollary__:
+- Suppose that assumptions in \@ref(assumptions-finite-mixture) hold.
+- $T \ge 3$.
+- There exist some $\{\xi_1, \cdots, \xi_{M - 1}\} \in X^{M - 1}$ and $k \in X$ such that $P$ is of full rank and that all the eigenvalues of $P^{-1}P_k^*$ take distinct values.
+- Then, $\{\pi^m, \{\lambda_\xi^{*m}, \lambda_\xi^m\}_{\xi \in X}\}_{m = 1}^M$ is uniquely identified from $\{\widetilde{P}(\{a_t, x_t\}_{t = 1}^3)\}$.
+
+### Remarks on the Theorem
+
+- The condition says that $L$ is non-singular. 
+    - This implies that all columns in $L$ must be linearly independent.
+    - In other words, the changes in covariate $x$ must induce sufficient heterogeneous variations in the conditional choice probabilities across types.
+- The conditions says $\lambda_k^m > 0$ for all $m$.
+    - If there is some $m$ that is $\lambda_k^m = 0$ for any $k$, such type never shows up in the data.
+- The condition says $\lambda_k^m \neq \lambda_k^n$ for any $m \neq n$.
+    - This condition is satisfied if initial distribution is different across types.
+    - If this condition fails, the identification becomes severe.
+    - Actually, $T = 3$ is not enough and $T \ge 4$ becomes necessary.
+- The identification only requires one set of $M - 1$ points $\xi_1, \cdots, \xi_{M - 1}$ that satisfy the condition.
+    - Information from other points provide overidentifying restrictions.
+
+
+### Factorization Equations
+
+- Parameters $L, V, D_k^*$ and data $P, P_k^*$ are related through the following __factorization equations__ (check manually):
+$$
+P = L' V L,
+$$
+$$
+P_k^* = L'D_k^*VL.
+$$
+- Note that $(1, 1)$-th element of $P = L'VL$ is $\sum_{m = 1}^M \pi^m = 1$ and give no information.
+
+### Sketch of the Proof
+
+- Suppose that $P$ is invertible or equivalently $L$ is invertible.
+- Then, we have:
+$$
+P^{-1} = L^{-1}V^{-1} L^{'-1}.
+$$
+- Therefore, we have:
+$$
+\begin{split}
+P^{-1} P_k^* &= L^{-1}V^{-1} L^{'-1} L'D_k^*VL\\
+&= L^{-1} V^{-1} D_k^* V L\\
+&= L^{-1} D_k^* L,
+\end{split}
+$$
+where the third equality is because $V$ and $D_k^*$ are diagonal matrices.
+- This equation means that $D_k^*$ is identified as the matrix of eigenvalues of $P^{-1} P_k^*$.
+- Moreover, the columns of $L^{-1}$ are identified as the eigen vectors of $P^{-1} P_k^*$.
+- Finally, $V = L^{'-1} P L^{-1}$ is identified because the right-hand side is now known.
+
+### Constructive Estimation
+
+- According to the above identification argument, we can consider a following constructive estimation procedure.
+1. Estimate $P$ and $P_k^*$ non-parametrically.
+1. By applying an eigenvalue decomposition algorithm to $P^{-1} P_k^*$, identify $D_k^*$ and $L$.
+1. Then identify $V$.
+1. Once conditional choice probability is identified, we can use the standard estimation method based on the CCP approach to each type.
+
+
 
