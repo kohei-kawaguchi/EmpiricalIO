@@ -109,6 +109,7 @@ solve_dynamic_decision <-
 # simulate the dynamic decision model for a single player
 simulate_dynamic_decision <-
   function(p, s, PI, G, L, K, T, delta, seed) {
+    set.seed(seed)
     df <- data.frame(t = 1:T, s = rep(s, T), a = rep(0, T))
     for (t in 1:T) {
       # state
@@ -297,9 +298,15 @@ compute_CCP_objective <-
     PI <- compute_PI(alpha, beta, L, K)
     # construct G
     G <- compute_G(kappa, gamma, L, K)
-    # solve dynamic decision
-    output <- solve_dynamic_decision(PI, G, L, K, delta, lambda)
-    ccp <- output$p
+    
+    # solve relevant choice probability
+    V <- compute_exante_value(p_est, PI, G, L, K, delta)
+    ccp <- compute_ccp(V, PI, G, L, K, delta)
+    
+    # # solve dynamic decision (fixed-point)
+    # output <- solve_dynamic_decision(PI, G, L, K, delta, lambda)
+    # ccp <- output$p
+    
     # minimum distance
     distance <- (ccp - p_est)^2
     distance <- distance[grepl("k1", rownames(distance)), ]
