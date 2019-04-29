@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-04-29}
+    \date{Last updated: 2019-04-28}
 
 \usepackage{booktabs}
 
@@ -1127,14 +1127,9 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1} \end{center}
-
-\begin{itemize}
-\tightlist
-\item
-  Instead of loading a package by \texttt{library}, you can directly
-  call it as:
-\end{itemize}
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1.pdf} -
+Instead of loading a package by \texttt{library}, you can directly call
+it as:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1142,7 +1137,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -7194,20 +7189,38 @@ Profits}\label{multiple-prediction-in-bivariate-game-with-heterogenous-profits}
 \item
   If we allow for mixed-strategy equilibria, the region of
   \(f_{im}, f_{jm}\) on which there are multiple equilibria will
-  increase. \textbackslash{}begin\{figure\}
+  increase.
+
+  \begin{figure}
+  \includegraphics[width=0.8\linewidth]{figuretable/bivariateentry} \end{figure}
+\item
+  In this example, we can write the likelihood of the number of
+  equilibrium entrants:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(2\): green area.
+  \item
+    \(1\): yellow, orange, and red areas.
+  \item
+    \(0\): blue area.
+  \end{itemize}
+\item
+  However, we cannot write the likelihood of the strategy profile.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \((1, 1)\): green area.
+  \item
+    \((0, 1)\): \(\ge\) red area, \(\le\) orange and red area.
+  \item
+    \((1, 0)\): \(\ge\) yellow area, \(\le\) orange and yellow area.
+  \item
+    \((0, 0)\): blue area.
+  \end{itemize}
 \end{itemize}
-
-\{\centering \includegraphics[width=0.8\linewidth]{figuretable/bivariateentry}
-
-\}
-
-\textbackslash{}end\{figure\} - In this example, we can write the
-likelihood of the number of equilibrium entrants: - \(2\): green area. -
-\(1\): yellow, orange, and red areas. - \(0\): blue area. - However, we
-cannot write the likelihood of the strategy profile. - \((1, 1)\): green
-area. - \((0, 1)\): \(\ge\) red area, \(\le\) orange and red area. -
-\((1, 0)\): \(\ge\) yellow area, \(\le\) orange and yellow area. -
-\((0, 0)\): blue area.
 
 \subsection{Inference Based on Moment
 Inequalities}\label{inference-based-on-moment-inequalities}
@@ -8881,190 +8894,6 @@ Identification}\label{sufficient-condition-for-identification}
   standard estimation method based on the CCP approach to each type.
 \end{enumerate}
 
-\subsection{Estimation by an EM
-Algorithm}\label{estimation-by-an-em-algorithm}
-
-\begin{itemize}
-\tightlist
-\item
-  \citet{arcidiaconoConditionalChoiceProbability2011} suggest to use an
-  EM algorithm to estimate a dynamic decision model with unobserved
-  heterogeneity.
-\item
-  Return to our original notation, and suppose that state \(s_t\) is
-  partitioned into \(s_t := (x_t, w_t)\), where \(x_t\) is observed but
-  \(w_t\) is unobserved to an econometrician.
-\item
-  Suppose that the transition probability is such that: \[
-  \begin{split}
-  \mathbb{P}\{s_{t + 1}|s_t, a_t\} &= \mathbb{P}\{x_{t + 1}|x_t, w_t, a_t\} \mathbb{P}\{w_{t + 1}|w_t\} \\
-  &:= g(x_{t + 1}|x_t, w_t, a_t) h(w_{t + 1}|w_t).
-  \end{split}
-  \]
-\item
-  The initial distribution of \(w_1\) is \(h(w_1|x_1)\).
-\item
-  We \textbf{assume} that the model is identified and only consider
-  estimation.
-\item
-  For example, in the previous finite-mixture model, we considered a
-  case with \(h(w_{t + 1} = w'|w_{t} = w) = 1\{w' = w\}\) and provided a
-  sufficient condition for identification.
-\item
-  Let \(\theta_1\) be the parameters in \(\pi\) and \(\theta_2\) be the
-  parameters in \(g\).
-\item
-  Let \(\theta = (\theta_1, \theta_2)\).
-\end{itemize}
-
-\subsection{Idea}\label{idea}
-
-\begin{itemize}
-\tightlist
-\item
-  Let \(q_{it}(w)\) be the probability that firm \(i\) is in unobserved
-  state \(w\) in time \(t\).
-\item
-  The idea of the EM algorithm is:
-\end{itemize}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \textbf{Expectation step}: Given a parameter \(\theta^{(r)}\), a
-  conditional choice probability \(p^{(r)}(a|x, w)\), an initial
-  distribution of the unobserved state variable \(h^{(r)}(s_1|x_1)\),
-  and a transition probability of the unobserved state variable
-  \(h^{(r)}(w'|w)\), update the probability that firm \(i\) is in
-  unobserved state \(w\) in time \(t\) to \(q_{it}^{(r + 1)}(w)\),
-  update the initial distribution of the unobserved state variable to
-  \(h^{(r + 1)}(w|x_1)\), update the transition probability of the
-  unobserved state variable to \(h^{(r + 1)}(w'|w)\), and update the
-  conditional choice probability to \(p^{(r + 1)}(a|x, w)\).
-\item
-  \textbf{Maximization step}: Given the probability that firm \(i\) is
-  in unobserved state \(w\) in time \(t\) to \(q_{it}^{(r + 1)}(w)\),
-  the initial distribution of the unobserved state variable to
-  \(h^{(r + 1)}(w|x_1)\), the transition probability of the unobserved
-  state variable to \(h^{(r + 1)}(w'|w)\), and the conditional choice
-  probability to \(p^{(r + 1)}(a|x, w)\), update the parameters to
-  \(\theta^{(r + 1)}\).
-\end{enumerate}
-
-\begin{itemize}
-\tightlist
-\item
-  And continue this until a convergence.
-\item
-  By doing so, we avoid integrating out the unobserved state variables
-  to evaluate the likelihood function.
-\end{itemize}
-
-\subsection{Optimal Conditional Choice
-Probability}\label{optimal-conditional-choice-probability-1}
-
-\begin{itemize}
-\tightlist
-\item
-  We can still define the optimal conditional choice probability given a
-  choice probability in the future as \(\varphi^{\theta, h}(p)\) because
-  we just assumed that some of the state is not observed to an
-  econometrician.
-\item
-  We just divided parameters in \(G\) into \(\theta_2\) and \(h\).
-\end{itemize}
-
-\subsection{Likelihood Functions}\label{likelihood-functions}
-
-\begin{itemize}
-\item
-  The following likelihood functions can be calculated if we know
-  \(\theta, h\), and \(p\).
-\item
-  The likelihood of observing \(\{a_{it}, x_{i, t + 1}\}\) conditional
-  on \(x_{it}\) and \(w_{it}\) is: \[
-  L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p) := \varphi^{\theta, h}(p)(a_{it}|x_{it}, w_{it}) g^{\theta_2}(x_{i, t + 1}|x_{it}, w_{it}, a_{it}).
-  \]
-\item
-  The likelihood of observing \(\{a_{it}, x_{it}\}_{t = 1}^T\)
-  conditional on \(x_{i1}\) is: \[
-  \begin{split}
-  L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
-  &\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
-  \end{split}
-  \]
-\item
-  The likelihood of having \(w_{it}\) in period \(t\) and having
-  \(\{a_{it}, x_{it}\}_{t = 1}^T\) conditional on \(x_{i1}\) is: \[
-  \begin{split}
-  L(w_{it}, \{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{i, t - 1} = 1}^W \sum_{w_{i, t + 1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
-  &\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
-  \end{split}
-  \]
-\item
-  The likelihood of having \(w_{it}\) in period \(t\) conditional on
-  \(\{a_{it}, x_{it}\}_{t = 1}^T\) is: \[
-  L(w_{it}|\{a_{it}, x_{it}\}_{t = 1}^T, \theta, h, p) := \frac{L(w_{it}, \{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p)}{L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p)}.
-  \]
-\end{itemize}
-
-\subsection{Expectation Step}\label{expectation-step}
-
-\begin{itemize}
-\tightlist
-\item
-  We have a parameter \(\theta^{(r)}\), a conditional choice probability
-  \(p^{(r)}(a|x, w)\), an initial distribution of the unobserved state
-  variable \(h^{(r)}(s_1|x_1)\), and a transition probability of the
-  unobserved state variable \(h^{(r)}(w'|w)\).
-\end{itemize}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Update the probability that firm \(i\) is in unobserved state \(w\) in
-  time \(t\) to \(q_{it}^{(r + 1)}(w)\): \[
-  q_{it}^{(r + 1)}(w) := L(w|\{a_{it}, x_{it}\}_{t = 1}^T, \theta^{(r)}, h^{(r)}, p^{(r)}).
-  \]
-\item
-  Update the initial distribution of the unobserved state variable to
-  \(h^{(r + 1)}(s_1|x_1)\): \[
-  h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = 1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = 1\}}.
-  \]
-\item
-  Update the transition probability of the unobserved state variable to
-  \(h^{(r + 1)}(w'|w)\): \[
-  h^{(r + 1)}(w'|w) := \frac{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(w) q_{it}^{(r + 1)}(w')}{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(w)}.
-  \]
-\item
-  Update the conditional choice probability to \(p^{(r + 1)}(a|x, w)\):
-  \[
-  p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}}.
-  \]
-\end{enumerate}
-
-\subsection{Maximization Step}\label{maximization-step}
-
-\begin{itemize}
-\tightlist
-\item
-  We have the probability that firm \(i\) is in unobserved state \(w\)
-  in time \(t\) to \(q_{it}^{(r + 1)}(w)\), the initial distribution of
-  the unobserved state variable to \(h^{(r + 1)}(w|x_1)\), the
-  transition probability of the unobserved state variable to
-  \(h^{(r + 1)}(w'|w)\), and the conditional choice probability to
-  \(p^{(r + 1)}(a|x, w)\).
-\item
-  Update parameters to \(\theta^{(r + 1)}\): \[
-  \theta^{(r + 1)} := \text{argmax}_{\theta} \sum_{i = 1}^N \sum_{t = 1}^T \sum_{w = 1}^W q_{it}^{(r + 1)}(w) \ln L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h^{(r + 1)}, p^{(r + 1)}).
-  \]
-\item
-  The maximization step can be either of a nested-fixed point algorithm
-  or CCP approach.
-\end{itemize}
-
 \chapter{Dynamic Game}\label{dynamicgame}
 
 \section{Multiple-Agent Model}\label{multiple-agent-model}
@@ -9327,7 +9156,7 @@ v_i(\sigma_i, a_i, s) &= \sum_{a_{-i} \in A_{-i}} \sigma_i(a_{-i}|s)[ \pi_i(a_i,
 \end{itemize}
 
 \subsection{Optimal Conditional Choice
-Probability}\label{optimal-conditional-choice-probability-2}
+Probability}\label{optimal-conditional-choice-probability-1}
 
 \begin{itemize}
 \tightlist
@@ -10183,107 +10012,12 @@ Results}\label{counterfactual-simulation-estimation-results}
 
 \end{figure}
 
-\section{Dynamic Oligopoly with Many
-Firms}\label{dynamic-oligopoly-with-many-firms}
-
-\begin{itemize}
-\tightlist
-\item
-  Solving a dynamic game becomes quickly intractable when the number of
-  firms increases and hence the dimension of the state profile
-  increases.
-\item
-  \citet{weintraubMarkovPerfectIndustry2008} propose a new equilibrium
-  concept called \textbf{oblivious equilibrium} that approximates a
-  Markov perfect equilibrium when there are many firms and do not suffer
-  from the aforementioned computational problem.
-\end{itemize}
-
-\subsection{Setting}\label{setting-4}
-
-\begin{itemize}
-\tightlist
-\item
-  The setting is effectively the same as
-  \citet{ericsonMarkovPerfectIndustryDynamics1995} and
-  \citet{doraszelskiComputableMarkovperfectIndustry2010}.
-\item
-  The time is discrete and infinite \(t \in \mathbb{N}\).
-\item
-  The information set at time \(t\) is \(\mathcal{F}_t\).
-\item
-  Each firm that enters the industry is assigned a positive integer
-  value index \(x_{it} \in \mathbb{N}\).
-\item
-  It can be regarded as a quality index, but can be whatever.
-\item
-  Let \(S_t\) be the set of indices of incumbent firms at time \(t\).
-\item
-  Let \(n_t\) be the number of incumbent firms at time \(t\).
-\item
-  The \textbf{industry state} \(s_t\) is a vector of counts over
-  possible values of \(x_{it}\) among \(i \in S_t\).
-\item
-  The state space is
-  \(\overline{\mathcal{S}} := \{s \in N^{\infty}: \sum_{x = 0}^\infty s(x) < \infty\}\).
-\item
-  For expositional reason, consider an extended state space too
-  \(\mathcal{S} := \{s \in \mathbb{R}_+^{\infty}: \sum_{x = 0}^\infty s(x) < \infty\}\)
-\item
-  For each \(i \in S_{t}\), define the state of the \textbf{competitors}
-  by \(s_{-i, t}(x) := s_t(x) - 1\{x_{it} = x\}\).
-\item
-  The expected period profit of firm \(i\) is
-  \(\pi(x_{it}, s_{-i, t})\).
-\item
-  In each period, each incumbent draws a positive real-valued sell-off
-  value \(\phi_{it}\), and exits from the market if the sell-off value
-  exceeds the continuation value.
-\item
-  If an incumbent firm stays in the market, the firm chooses an
-  investment \(\iota_{it} \in \mathbb{R}_+\).
-\item
-  Then, the state of the firm is updated according to a rule: \[
-  x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
-  \] where \(w\) captures the impact of investment and
-  \(\zeta_{i, t + 1}\) is a shock to the investment process.
-\item
-  In each period, new firms can enter the industry by paying a setup
-  cost \(\kappa\).
-\item
-  Entrants do not earn profits in the period that they enter.
-\item
-  They appear in the following period at state \(x^e \in \mathbb{N}\).
-\end{itemize}
-
-\subsection{Timing of the Game}\label{timing-of-the-game-1}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Each incumbent firm observes its sell-off value, and then makes exit
-  and investment decisions.
-\item
-  The number of entering firms is determined and each entrant pays an
-  entry cost \(\kappa\).
-\item
-  Incumbent firms compete in the spot market and receive profits.
-\item
-  Exiting firms exit and receive their sell-off values.
-\item
-  Investment outcomes are determined, new entrants enter, and the
-  industry takes on a new state \(s_{t + 1}\).
-\end{enumerate}
-
-\subsection{Assumptions}\label{assumptions}
-
 \chapter{Auction}\label{auction}
 
 \section{General symmetric information
 model}\label{general-symmetric-information-model}
 
-\subsection{Setting}\label{setting-5}
+\subsection{Setting}\label{setting-4}
 
 \begin{itemize}
 \tightlist
@@ -14878,10 +14612,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##              z_1       z_2
-## [1,] -11.8568626 -4.149052
-## [2,]   0.2513402 -5.914228
-## [3,]  -2.3395831 -3.770439
+##            z_1         z_2
+## [1,] 7.8945879  -4.9235635
+## [2,] 2.3644311 -10.9624766
+## [3,] 0.9121205   0.4651122
 \end{verbatim}
 
 \begin{Shaded}
@@ -15016,9 +14750,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##            [,1]
-## [1,] -0.2796788
-## [2,] -1.8173992
-## [3,] -0.7918693
+## [1,] -0.4750131
+## [2,]  0.8872286
+## [3,] -0.7263090
 \end{verbatim}
 
 \begin{enumerate}
@@ -15048,8 +14782,8 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##            [,1]
-## [1,] -13.166724
-## [2,]  -7.316558
+## [1,]   1.918165
+## [2,] -11.050590
 ## [3,]   0.000000
 \end{verbatim}
 
@@ -15075,9 +14809,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -15099,9 +14833,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -15130,9 +14864,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15144,11 +14878,11 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    0
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 ## [4,]    0
 ## [5,]    0
-## [6,]    0
+## [6,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15188,9 +14922,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15202,11 +14936,11 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    0
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 ## [4,]    0
 ## [5,]    0
-## [6,]    0
+## [6,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15301,9 +15035,9 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15314,7 +15048,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.3315
+## [1] 0.2859
 \end{verbatim}
 
 \begin{enumerate}
@@ -15342,9 +15076,9 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
+## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15355,7 +15089,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.322
+## [1] 0.2466
 \end{verbatim}
 
 \begin{enumerate}
@@ -16644,9 +16378,7 @@ probability \(\kappa\). If \(a = 1\), the state moves down by 1 with
 probability \(\kappa\), and stays at the same with probability
 \(1 - \kappa\).
 
-The mean period profit is summarized in \(\Pi\) as:
-
-\[
+The mean period profit is summarized in \(\Pi\) as: \[
 \Pi :=
 \begin{pmatrix}
 \pi(1, 1)\\
@@ -16700,7 +16432,7 @@ g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
 \CommentTok{# set parameters}
 \NormalTok{alpha <-}\StringTok{ }\DecValTok{1}
 \NormalTok{eta <-}\StringTok{ }\FloatTok{0.3}
-\NormalTok{beta <-}\StringTok{ }\DecValTok{2}
+\NormalTok{beta <-}\StringTok{ }\DecValTok{3}
 \NormalTok{kappa <-}\StringTok{ }\FloatTok{0.1}
 \NormalTok{gamma <-}\StringTok{ }\FloatTok{0.6}
 \NormalTok{delta <-}\StringTok{ }\FloatTok{0.95}
@@ -16841,8 +16573,8 @@ g(m_a, m_s, 1) & \cdots & g(m_a, m_s, m_s)\\
 ## [2,]    0
 ## [3,]    0
 ## [4,]    0
-## [5,]   -2
-## [6,]   -2
+## [5,]   -3
+## [6,]   -3
 \end{verbatim}
 
 \begin{Shaded}
@@ -16946,18 +16678,14 @@ conditional choice probability as follows: \[
 firm \(i\) choose action \(a_i\) when the state profile is \(s\), and:
 \[
 p(a|s) = \prod_{i = 1}^N p_i(a_i|s), 
-\]
-
-\[
+\] \[
 p(s) = 
 \begin{pmatrix}
 p(1|s) \\
 \vdots \\
 p(m_a|s)
 \end{pmatrix},
-\]
-
-\[
+\] \[
 p = 
 \begin{pmatrix}
 p(1)\\
@@ -16973,11 +16701,7 @@ p(1)' & & \\
  & \ddots & \\
  & & p(L)'
 \end{pmatrix}
-\]
-
-and:
-
-\[
+\] and: \[
 D_i(p) =
 \begin{pmatrix}
 \sum_{k = 0}^K \mathbb{E}\{\epsilon_i^k|a_i = k, 1\}p_i(a_i = k|1)\\
@@ -17000,10 +16724,7 @@ D_i(p) =
   corresponding joint conditional choice probability from a marginal
   conditional choice probability. In the output \texttt{p\_joint},
   \texttt{p} is the joint probability that firms take action profile
-  \texttt{k} condition on the state profile being \texttt{l}. Finally,
-  write a function \texttt{compute\_p\_marginal(p\_joint,\ A,\ S)} that
-  compute a corresponding marginal conditional choice probability from a
-  joint conditional choice probability.
+  \texttt{k} condition on the state profile being \texttt{l}.
 \end{enumerate}
 
 \begin{Shaded}
@@ -17043,7 +16764,7 @@ D_i(p) =
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# compute joint conitional choice probability from marginal probability}
+\CommentTok{# compute joint conitional choice probability}
 \NormalTok{p_joint <-}\StringTok{ }\KeywordTok{compute_p_joint}\NormalTok{(p_marginal, A, S)}
 \NormalTok{p_joint}
 \end{Highlighting}
@@ -17074,18 +16795,6 @@ D_i(p) =
 
 \begin{verbatim}
 ## [1] TRUE
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# compute marginal conditional chocie probability from joint probability}
-\NormalTok{p_marginal_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{compute_p_marginal}\NormalTok{(p_joint, A, S)}
-\KeywordTok{max}\NormalTok{(}\KeywordTok{abs}\NormalTok{(p_marginal }\OperatorTok{-}\StringTok{ }\NormalTok{p_marginal_}\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0
 \end{verbatim}
 
 \begin{enumerate}
@@ -17180,7 +16889,7 @@ D_i(p) =
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 10.786330 10.175982  9.606812  9.255459  9.115332 10.175982
+## [1]  0.7863303  0.1759825 -0.3931881 -0.7445407 -0.8846676  0.1759825
 \end{verbatim}
 
 \begin{Shaded}
@@ -17224,18 +16933,18 @@ as follows: \[
 
 \begin{verbatim}
 ## # A tibble: 3,000 x 4
-##        i     l     k value
-##    <int> <int> <int> <dbl>
-##  1     1     1     1 10.2 
-##  2     1     1     2  9.63
-##  3     1     1     3  9.90
-##  4     1     1     4  9.13
-##  5     1     1     5  9.90
-##  6     1     1     6  9.13
-##  7     1     1     7  9.55
-##  8     1     1     8  8.64
-##  9     1     2     1 13.0 
-## 10     1     2     2 12.1 
+##        i     l     k   value
+##    <int> <int> <int>   <dbl>
+##  1     1     1     1  0.747 
+##  2     1     1     2 -0.875 
+##  3     1     1     3  0.399 
+##  4     1     1     4 -1.37  
+##  5     1     1     5  0.399 
+##  6     1     1     6 -1.37  
+##  7     1     1     7  0.0512
+##  8     1     1     8 -1.86  
+##  9     1     2     1  3.51  
+## 10     1     2     2  1.60  
 ## # ... with 2,990 more rows
 \end{verbatim}
 
@@ -17271,18 +16980,18 @@ as follows: \[
 
 \begin{verbatim}
 ## # A tibble: 750 x 4
-##        i     l     a value
-##    <int> <int> <int> <dbl>
-##  1     1     1     0  9.90
-##  2     1     1     1  9.13
-##  3     1     2     0 12.4 
-##  4     1     2     1 11.4 
-##  5     1     3     0 14.5 
-##  6     1     3     1 13.2 
-##  7     1     4     0 16.0 
-##  8     1     4     1 14.3 
-##  9     1     5     0 16.8 
-## 10     1     5     1 14.8 
+##        i     l     a  value
+##    <int> <int> <int>  <dbl>
+##  1     1     1     0  0.399
+##  2     1     1     1 -1.37 
+##  3     1     2     0  2.94 
+##  4     1     2     1  0.925
+##  5     1     3     0  5.03 
+##  6     1     3     1  2.68 
+##  7     1     4     0  6.46 
+##  8     1     4     1  3.80 
+##  9     1     5     0  7.31 
+## 10     1     5     1  4.31 
 ## # ... with 740 more rows
 \end{verbatim}
 
@@ -17308,18 +17017,18 @@ as follows: \[
 
 \begin{verbatim}
 ## # A tibble: 750 x 4
-##        i     l     a     p
-##    <int> <int> <int> <dbl>
-##  1     1     1     0 0.683
-##  2     1     1     1 0.317
-##  3     1     2     0 0.734
-##  4     1     2     1 0.266
-##  5     1     3     0 0.794
-##  6     1     3     1 0.206
-##  7     1     4     0 0.840
-##  8     1     4     1 0.160
-##  9     1     5     0 0.881
-## 10     1     5     1 0.119
+##        i     l     a      p
+##    <int> <int> <int>  <dbl>
+##  1     1     1     0 0.854 
+##  2     1     1     1 0.146 
+##  3     1     2     0 0.883 
+##  4     1     2     1 0.117 
+##  5     1     3     0 0.913 
+##  6     1     3     1 0.0872
+##  7     1     4     0 0.934 
+##  8     1     4     1 0.0656
+##  9     1     5     0 0.953 
+## 10     1     5     1 0.0474
 ## # ... with 740 more rows
 \end{verbatim}
 
@@ -17350,50 +17059,169 @@ as follows: \[
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/A8_equilibrium.RData"}\NormalTok{)}
-\NormalTok{p_marginal <-}\StringTok{ }\NormalTok{output}\OperatorTok{$}\NormalTok{p_marginal; }\KeywordTok{head}\NormalTok{(p_marginal)}
+\NormalTok{output}\OperatorTok{$}\NormalTok{p_marginal}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 6 x 4
-##       i     l     a     p
-##   <int> <int> <int> <dbl>
-## 1     1     1     0 0.650
-## 2     1     1     1 0.350
-## 3     1     2     0 0.712
-## 4     1     2     1 0.288
-## 5     1     3     0 0.785
-## 6     1     3     1 0.215
+## # A tibble: 750 x 4
+##        i     l     a     p
+##    <int> <int> <int> <dbl>
+##  1     1     1     0 0.650
+##  2     1     1     1 0.350
+##  3     1     2     0 0.712
+##  4     1     2     1 0.288
+##  5     1     3     0 0.785
+##  6     1     3     1 0.215
+##  7     1     4     0 0.838
+##  8     1     4     1 0.162
+##  9     1     5     0 0.881
+## 10     1     5     1 0.119
+## # ... with 740 more rows
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{V <-}\StringTok{ }\NormalTok{output}\OperatorTok{$}\NormalTok{V[[N]]; }\KeywordTok{head}\NormalTok{(V)}
+\NormalTok{output}\OperatorTok{$}\NormalTok{V[[N]]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 13.25670 12.39394 11.47346 10.82808 10.53018 12.39394
+## 125 x 1 Matrix of class "dgeMatrix"
+##           [,1]
+## l1   13.256703
+## l2   12.393942
+## l3   11.473462
+## l4   10.828080
+## l5   10.530182
+## l6   12.393942
+## l7   11.514148
+## l8   10.580955
+## l9    9.929252
+## l10   9.628975
+## l11  11.473462
+## l12  10.580955
+## l13   9.638908
+## l14   8.983390
+## l15   8.681994
+## l16  10.828080
+## l17   9.929252
+## l18   8.983390
+## l19   8.326731
+## l20   8.025284
+## l21  10.530182
+## l22   9.628975
+## l23   8.681994
+## l24   8.025284
+## l25   7.724059
+## l26  15.868113
+## l27  14.547759
+## l28  13.266332
+## l29  12.373873
+## l30  11.933748
+## l31  14.547759
+## l32  13.219285
+## l33  11.931814
+## l34  11.036479
+## l35  10.595356
+## l36  13.266332
+## l37  11.931814
+## l38  10.640110
+## l39   9.743054
+## l40   9.301501
+## l41  12.373873
+## l42  11.036479
+## l43   9.743054
+## l44   8.845578
+## l45   8.404091
+## l46  11.933748
+## l47  10.595356
+## l48   9.301501
+## l49   8.404091
+## l50   7.962764
+## l51  17.913118
+## l52  16.246350
+## l53  14.680588
+## l54  13.593641
+## l55  13.045505
+## l56  16.246350
+## l57  14.577083
+## l58  13.009489
+## l59  11.921731
+## l60  11.373354
+## l61  14.680588
+## l62  13.009489
+## l63  11.440605
+## l64  10.352372
+## l65   9.803919
+## l66  13.593641
+## l67  11.921731
+## l68  10.352372
+## l69   9.264071
+## l70   8.715685
+## l71  13.045505
+## l72  11.373354
+## l73   9.803919
+## l74   8.715685
+## l75   8.167380
+## l76  19.225382
+## l77  17.336014
+## l78  15.589929
+## l79  14.378888
+## l80  13.760556
+## l81  17.336014
+## l82  15.445953
+## l83  13.699364
+## l84  12.488102
+## l85  11.869707
+## l86  15.589929
+## l87  13.699364
+## l88  11.952404
+## l89  10.740998
+## l90  10.122578
+## l91  14.378888
+## l92  12.488102
+## l93  10.740998
+## l94   9.529559
+## l95   8.911152
+## l96  13.760556
+## l97  11.869707
+## l98  10.122578
+## l99   8.911152
+## l100  8.292764
+## l101 19.888914
+## l102 17.881871
+## l103 16.046374
+## l104 14.773423
+## l105 14.117991
+## l106 17.881871
+## l107 15.874695
+## l108 14.039083
+## l109 12.766075
+## l110 12.110626
+## l111 16.046374
+## l112 14.039083
+## l113 12.203374
+## l114 10.930320
+## l115 10.274857
+## l116 14.773423
+## l117 12.766075
+## l118 10.930320
+## l119  9.657247
+## l120  9.001782
+## l121 14.117991
+## l122 12.110626
+## l123 10.274857
+## l124  9.001782
+## l125  8.346317
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# compute joint conitional choice probability}
-\NormalTok{p_joint <-}\StringTok{ }\KeywordTok{compute_p_joint}\NormalTok{(p_marginal, A, S); }\KeywordTok{head}\NormalTok{(p_joint)}
+\NormalTok{p_joint <-}\StringTok{ }\KeywordTok{compute_p_joint}\NormalTok{(p_marginal, A, S)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 6 x 3
-##       l     k      p
-##   <int> <int>  <dbl>
-## 1     1     1 0.275 
-## 2     1     2 0.148 
-## 3     1     3 0.148 
-## 4     1     4 0.0795
-## 5     1     5 0.148 
-## 6     1     6 0.0795
-\end{verbatim}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -17427,13 +17255,13 @@ as follows: \[
 ##  1     1     1     1     1     1     0
 ##  2     1     2     1     1     1     0
 ##  3     1     3     1     1     1     0
-##  4     2     1     1     5     1     0
-##  5     2     2     1     5     1     0
-##  6     2     3     1     5     1     1
-##  7     3     1    26     6     1     1
-##  8     3     2    26     6     1     0
-##  9     3     3    26     6     2     1
-## 10     4     1    26     5     1     0
+##  4     2     1     1     1     1     0
+##  5     2     2     1     1     1     0
+##  6     2     3     1     1     1     0
+##  7     3     1     1     1     1     0
+##  8     3     2     1     1     1     0
+##  9     3     3     1     1     1     0
+## 10     4     1     1     3     1     0
 ## # ... with 290 more rows
 \end{verbatim}
 
@@ -17451,7 +17279,7 @@ as follows: \[
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# simulate data across markets}
-\NormalTok{df <-}\StringTok{ }\KeywordTok{simulate_dynamic_decision_across_markets}\NormalTok{(p_joint, l, G, N, T, M, S, A)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{simulate_dynamic_decision_across_markets}\NormalTok{(p_joint, l, G, N, T, M, S, A, seed)}
 \KeywordTok{save}\NormalTok{(df, }\DataTypeTok{file =} \StringTok{"data/A8_df.RData"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -17602,12 +17430,12 @@ We estimate the parameters by a CCP approach.
 
 The objective function of the minimum distance estimator based on the
 conditional choice probability approach is: \[
-\frac{1}{N K m_s} \sum_{i = 1}^N \sum_{l = 1}^{m_s} \sum_{k = 1}^{K}\{\hat{p}_i(a_k|s_l) - p_i^{(\theta_1, \theta_2)}(a_k|s_l)\}^2,
-\] where \(\hat{p}_i\) is the non-parametric estimate of the marginal
-conditional choice probability and \(p_i^{(\theta_1, \theta_2)}\) is the
-marginal conditional choice probability under parameters \(\theta_1\)
-and \(\theta_2\) given \(\hat{p}_i\). \(a_k\) is \(k\)-th action for a
-firm and \(s_l\) is \(l\)-th state profile.
+\frac{1}{KL}\sum_{l = 1}^{m_s} \sum_{k = 1}^{m_a}\{\hat{p}(a_k, s_l) - p^{(\theta_1, \theta_2)}(a_k, s_l)\}^2,
+\] where \(\hat{p}\) is the non-parametric estimate of the joint
+conditional choice probability and \(p^{(\theta_1, \theta_2)}\) is the
+equilibrium join conditional choice probability under parameters
+\(\theta_1\) and \(\theta_2\). \(a_k\) is \(k\)-th action profile and
+\(s_l\) is \(l\)-th state profile.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -17623,8 +17451,10 @@ firm and \(s_l\) is \(l\)-th state profile.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# compute joint conditional choice probability}
+\NormalTok{p_joint_est <-}\StringTok{ }\KeywordTok{compute_p_joint}\NormalTok{(p_marginal_est, A, S)}
 \CommentTok{# compute the objective function of the minimum distance estimator based on the CCP approach}
-\NormalTok{objective <-}\StringTok{ }\KeywordTok{compute_CCP_objective_game}\NormalTok{(theta_}\DecValTok{1}\NormalTok{, theta_}\DecValTok{2}\NormalTok{, p_marginal_est, A, S, delta, lambda)}
+\NormalTok{objective <-}\StringTok{ }\KeywordTok{compute_CCP_objective_game}\NormalTok{(theta_}\DecValTok{1}\NormalTok{, theta_}\DecValTok{2}\NormalTok{, p_joint_est, A, S, delta, lambda)}
 \KeywordTok{save}\NormalTok{(objective, }\DataTypeTok{file =} \StringTok{"data/A8_objective.RData"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -17664,7 +17494,7 @@ firm and \(s_l\) is \(l\)-th state profile.
 \NormalTok{               theta_j <-}\StringTok{ }\NormalTok{theta_}\DecValTok{1}
 \NormalTok{               theta_j[i] <-}\StringTok{ }\NormalTok{theta_ij}
 \NormalTok{               objective_ij <-}\StringTok{ }
-\StringTok{                 }\KeywordTok{compute_CCP_objective_game}\NormalTok{(theta_j, theta_}\DecValTok{2}\NormalTok{, p_marginal_est, A, S, delta, lambda)}
+\StringTok{                 }\KeywordTok{compute_CCP_objective_game}\NormalTok{(theta_j, theta_}\DecValTok{2}\NormalTok{, p_joint_est, A, S, delta, lambda)}
                \KeywordTok{return}\NormalTok{(objective_ij)}
 \NormalTok{             \}}
 \NormalTok{  df_graph <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ theta_i_list, }\DataTypeTok{y =}\NormalTok{ objective_i)}
@@ -17726,7 +17556,7 @@ firm and \(s_l\) is \(l\)-th state profile.
         \DataTypeTok{lower =}\NormalTok{ lower,}
         \DataTypeTok{upper =}\NormalTok{ upper,}
         \DataTypeTok{theta_2 =}\NormalTok{ theta_2_est,}
-        \DataTypeTok{p_marginal_est =}\NormalTok{ p_marginal_est,}
+        \DataTypeTok{p_joint_est =}\NormalTok{ p_joint_est,}
         \DataTypeTok{A =}\NormalTok{ A,}
         \DataTypeTok{S =}\NormalTok{ S,}
         \DataTypeTok{delta =}\NormalTok{ delta,}
@@ -17773,7 +17603,7 @@ firm and \(s_l\) is \(l\)-th state profile.
 \begin{verbatim}
 ##   true estimate
 ## 1  1.0 1.000000
-## 2  2.0 2.011446
+## 2  3.0 2.011446
 ## 3  0.3 0.294446
 \end{verbatim}
 
@@ -18208,7 +18038,7 @@ R & Rcpp\tabularnewline
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1] -0.003723534  1.511672283 -0.475698284  0.797916438 -0.974002561
 \end{verbatim}
 
 \begin{Shaded}
@@ -18220,9 +18050,9 @@ R & Rcpp\tabularnewline
 \end{Shaded}
 
 \begin{verbatim}
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##            [,1]       [,2]       [,3]       [,4]       [,5]
+## [1,]  0.6893727 -1.2317071 -0.8697829 0.74127631 -0.3237508
+## [2,] -0.9558391 -0.9568919 -0.9106807 0.06851153 -1.0865030
 \end{verbatim}
 
 \begin{itemize}
@@ -18322,12 +18152,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 
 \begin{verbatim}
 ## $x
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1] -0.003723534  1.511672283 -0.475698284  0.797916438 -0.974002561
 ## 
 ## $Y
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##            [,1]       [,2]       [,3]       [,4]       [,5]
+## [1,]  0.6893727 -1.2317071 -0.8697829 0.74127631 -0.3237508
+## [2,] -0.9558391 -0.9568919 -0.9106807 0.06851153 -1.0865030
 ## 
 ## $z
 ## [1] 1 2 3 4 5
@@ -18342,12 +18172,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 \end{Shaded}
 
 \begin{verbatim}
-##            x1          x2
-## 1  0.24919601  0.45812526
-## 2  0.14922074 -1.45202829
-## 3 -0.96323318  0.07734228
-## 4 -0.06646677  0.55989527
-## 5  1.28692204 -0.07494657
+##           x1          x2
+## 1 -1.0159289 -1.18049068
+## 2 -0.7677902  1.47025700
+## 3 -1.1197201 -1.31142059
+## 4 -0.4481742 -0.09652492
+## 5  0.4717364  2.36971991
 \end{verbatim}
 
 \begin{Shaded}
@@ -18591,12 +18421,12 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## [[1]]
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1] -0.003723534  1.511672283 -0.475698284  0.797916438 -0.974002561
 ## 
 ## [[2]]
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##            [,1]       [,2]       [,3]       [,4]       [,5]
+## [1,]  0.6893727 -1.2317071 -0.8697829 0.74127631 -0.3237508
+## [2,] -0.9558391 -0.9568919 -0.9106807 0.06851153 -1.0865030
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -18661,12 +18491,12 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## $x
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1] -0.003723534  1.511672283 -0.475698284  0.797916438 -0.974002561
 ## 
 ## $Y
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##            [,1]       [,2]       [,3]       [,4]       [,5]
+## [1,]  0.6893727 -1.2317071 -0.8697829 0.74127631 -0.3237508
+## [2,] -0.9558391 -0.9568919 -0.9106807 0.06851153 -1.0865030
 ## 
 ## $z
 ## [1] 1 2 3 4 5
