@@ -450,6 +450,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.4.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-4"><i class="fa fa-check"></i><b>8.4.1</b> Setting</a></li>
 <li class="chapter" data-level="8.4.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game-1"><i class="fa fa-check"></i><b>8.4.2</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.4.3" data-path="dynamicgame.html"><a href="dynamicgame.html#assumptions"><i class="fa fa-check"></i><b>8.4.3</b> Assumptions</a></li>
+<li class="chapter" data-level="8.4.4" data-path="dynamicgame.html"><a href="dynamicgame.html#strategy-profile"><i class="fa fa-check"></i><b>8.4.4</b> Strategy Profile</a></li>
+<li class="chapter" data-level="8.4.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function"><i class="fa fa-check"></i><b>8.4.5</b> Value Function</a></li>
+<li class="chapter" data-level="8.4.6" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium-2"><i class="fa fa-check"></i><b>8.4.6</b> Markov-perfect Equilibrium</a></li>
+<li class="chapter" data-level="8.4.7" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-strategy"><i class="fa fa-check"></i><b>8.4.7</b> Oblivious Strategy</a></li>
+<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.8</b> Oblivious Value Function</a></li>
+<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Equilibrium</a></li>
+<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.10</b> Asymptotic Results and Extensions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a><ul>
@@ -1231,7 +1238,9 @@ where <span class="math inline">\(\Psi\)</span> is the cumulative distribution f
 <li>If an incumbent firm stays in the market, the firm chooses an investment <span class="math inline">\(\iota_{it} \in \mathbb{R}_+\)</span>.</li>
 <li>Then, the state of the firm is updated according to a rule: <span class="math display">\[
 x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
-\]</span> where <span class="math inline">\(w\)</span> captures the impact of investment and <span class="math inline">\(\zeta_{i, t + 1}\)</span> is a shock to the investment process.</li>
+\]</span></li>
+<li>where <span class="math inline">\(w\)</span> captures the impact of investment and <span class="math inline">\(\zeta_{i, t + 1}\)</span> is a shock to the investment process.</li>
+<li>The unit cost of investment is <span class="math inline">\(d\)</span>.</li>
 <li>In each period, new firms can enter the industry by paying a setup cost <span class="math inline">\(\kappa\)</span>.</li>
 <li>Entrants do not earn profits in the period that they enter.</li>
 <li>They appear in the following period at state <span class="math inline">\(x^e \in \mathbb{N}\)</span>.</li>
@@ -1249,6 +1258,146 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
 </div>
 <div id="assumptions" class="section level3">
 <h3><span class="header-section-number">8.4.3</span> Assumptions</h3>
+<ul>
+<li>An industry state <span class="math inline">\(s \in \mathcal{S}\)</span> is said to dominate <span class="math inline">\(s&#39; \in \mathcal{S}\)</span> if for all <span class="math inline">\(x \in \mathbb{N}\)</span> <span class="math inline">\(\sum_{z \ge x} s(z) \ge \sum_{z \ge x} s&#39;(z)\)</span>, and the relation is denoted by <span class="math inline">\(s \succeq s&#39;\)</span>.</li>
+<li><strong>Assumptions on <span class="math inline">\(\pi\)</span></strong>:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>For all <span class="math inline">\(s \in \mathcal{S}\)</span>, <span class="math inline">\(\pi(x, s)\)</span> is increasing in <span class="math inline">\(x\)</span>.</li>
+<li>For all <span class="math inline">\(x \in \mathbb{N}\)</span> and <span class="math inline">\(s, s&#39; \in \mathcal{S}\)</span>, if <span class="math inline">\(s \succeq s&#39;\)</span>, then <span class="math inline">\(\pi(x, s) \le \pi(x, s&#39;)\)</span>.</li>
+<li>For all <span class="math inline">\(x \in \mathbb{N}\)</span> and <span class="math inline">\(s \in \mathcal{S}\)</span>, <span class="math inline">\(\pi(x, s) &gt; 0\)</span> and <span class="math inline">\(\sup_{x, z} \pi(x, s) &lt; \infty\)</span>.</li>
+<li>For all <span class="math inline">\(x \in \mathbb{N}\)</span>, the function <span class="math inline">\(\ln \pi(x, \cdot): \mathcal{S} \to \mathbb{R}_+\)</span> is “smooth” enough (for the rigorous assumption, refer to the paper).</li>
+</ol>
+<ul>
+<li><strong>Assumptions on <span class="math inline">\(w\)</span> and shocks</strong>:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>The random variables <span class="math inline">\(\{\phi_{it}| t \ge 0, i \ge 1\}\)</span> are i.i.d. and have finite expectations and well-defined density functions with support <span class="math inline">\(\mathbb{R}_+\)</span>.</li>
+<li>The random variables <span class="math inline">\(\{\zeta_{it}| t \ge 0, i \ge 1\}\)</span> are i.i.d. and independent of <span class="math inline">\(\{\phi_{it}| t \ge 0, i \ge 1\}\)</span>.</li>
+<li>For all <span class="math inline">\(\zeta\)</span>, <span class="math inline">\(w(\iota, \zeta)\)</span> is non-decreasing in <span class="math inline">\(\iota\)</span>.</li>
+<li>For all <span class="math inline">\(\iota &gt; 0\)</span>, <span class="math inline">\(\mathbb{P}\{w(\iota, \zeta_{i, t + 1} &gt; 0\} &gt; 0\)</span>.</li>
+<li>There exists a positive constant <span class="math inline">\(\overline{w} \in \mathbb{N}\)</span> such that <span class="math inline">\(|w(\iota, \zeta)| \le \overline{w}\)</span> for all <span class="math inline">\((\iota, \zeta)\)</span>.</li>
+<li>There exist a positive constant <span class="math inline">\(\overline{\iota}\)</span> such that <span class="math inline">\(\iota_{it} &lt; \overline{\iota}\)</span>, <span class="math inline">\(\forall i, t\)</span>.</li>
+<li>For all <span class="math inline">\(k \in \{- \overline{w}, \cdots, \overline{w}\}\)</span>, <span class="math inline">\(\mathbb{P}\{w(\iota, \zeta_{i, t + 1} = k\}\)</span> is continuous in <span class="math inline">\(\iota\)</span>.</li>
+<li>The transitions generated by <span class="math inline">\(w(\iota, \zeta)\)</span> are <strong>unique investment choice admissible</strong>.</li>
+</ol>
+<ul>
+<li>The notion of unique investment choice admissibility is introduced by @<span class="citation">Ulrich Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010">2010</a>)</span> and means that under the investment function firms’ investment decision problem has a unique solution.</li>
+<li>Without this assumption, the existence of pure-strategy equilibrium is not guaranteed and the computation can become complicated.</li>
+<li><strong>Assumptions on potential entrants</strong>:</li>
+<li>When there are a large number of potential entrants who play a symmetric mixed entry strategy, the equilibrium number of entrants is well-approximated by a Poisson distribution.</li>
+<li>We assume this for simplicity.</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>The number of firms entering during period <span class="math inline">\(t\)</span> is a Poisson random variable that is independent of <span class="math inline">\(\{\phi_{it}| t \ge 0, i \ge 1\}\)</span> conditional on <span class="math inline">\(s_t\)</span>.</li>
+<li><span class="math inline">\(\kappa &gt; \beta \overline{\phi}\)</span>, where <span class="math inline">\(\overline{\phi}\)</span> is the expected net present value of entering the market, investing zero and earning zero profits each period, and then exiting at an optimal stopping time.</li>
+</ol>
+<ul>
+<li>Let <span class="math inline">\(\lambda(s_t)\)</span> be the expected number of firms entering at industry state, which is endogenously determined.</li>
+</ul>
+</div>
+<div id="strategy-profile" class="section level3">
+<h3><span class="header-section-number">8.4.4</span> Strategy Profile</h3>
+<ul>
+<li>Investment strategy <span class="math inline">\(\iota: \mathbb{N} \times \mathcal{S} \to \mathbb{R}_+\)</span> : <span class="math inline">\(\iota_{it} = \iota(x_{it}, s_{-it})\)</span>.</li>
+<li>Exit strategy <span class="math inline">\(\rho: \mathbb{N} \times \mathcal{S} \to \mathbb{R}_+\)</span> : an incumbent exits if and only if <span class="math inline">\(\phi_{it} &gt; \rho(x_{it}, s_{-it})\)</span>.</li>
+<li>Bundle them as <span class="math inline">\(\mu = (\iota, \rho) \in \mathcal{M}\)</span>.</li>
+<li>Entry rate <span class="math inline">\(\lambda: \mathcal{S} \to \mathbb{R}_+\)</span>, <span class="math inline">\(\lambda \in \Lambda\)</span>.</li>
+</ul>
+</div>
+<div id="value-function" class="section level3">
+<h3><span class="header-section-number">8.4.5</span> Value Function</h3>
+<ul>
+<li>The expected net present value for a firm at state <span class="math inline">\(x\)</span> when its competitors state is <span class="math inline">\(s\)</span>, given that its competitors each follows a common strategy <span class="math inline">\(\mu \in \mathcal{M}\)</span>, the entry rate function is <span class="math inline">\(\lambda \in \Lambda\)</span>, and the firm itself follows strategy <span class="math inline">\(\mu&#39; \in \mathcal{M}\)</span> is: <span class="math display">\[
+V(x, s|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;, \mu, \lambda}\left\{\sum_{k = t}^{\tau_i} \beta^{k - t}[\pi(x_{ik}, s_{-ik}) - d \iota_{ik}] + \beta^{\tau_i - t} \phi_{i, \tau_i}|x_{it} = x, s_{-it} = s\right\},
+\]</span> where <span class="math inline">\(\tau_i\)</span> is a random variable that represents the time at which firm <span class="math inline">\(i\)</span> exits under the exit strategy.</li>
+<li>We also write as <span class="math inline">\(V(x, s|\mu, \lambda) := V(x, s|\mu, \mu, \lambda)\)</span> when all firms follow the same strategy.</li>
+</ul>
+</div>
+<div id="markov-perfect-equilibrium-2" class="section level3">
+<h3><span class="header-section-number">8.4.6</span> Markov-perfect Equilibrium</h3>
+<ul>
+<li>A strategy profile <span class="math inline">\(\mu \in \mathcal{M}\)</span> and an entry rate <span class="math inline">\(\lambda \in \Lambda\)</span> is a Markov-perfect equilibrium if:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>The strategy profile satisfies: <span class="math display">\[
+\sup_{\mu&#39; \in \mathcal{M}} V(x, s|\mu&#39;, \mu, \lambda) = V(x, s|\mu, \lambda), \forall x \in \mathbb{N}, \forall s \in \overline{\mathcal{S}}.
+\]</span></li>
+<li>The entry rate satisfies: <span class="math display">\[
+\sum_{s \in \overline{S}} \lambda(s) \{\beta \mathbb{E}_{\mu, \lambda}[V(x^e, s_{-i, t + 1}|\mu, \lambda)|s_t = s] - \kappa\}
+ = 0,
+ \]</span> <span class="math display">\[
+ \beta \mathbb{E}_{\mu, \lambda}[V(x^e, s_{-i, t + 1}|\mu, \lambda)|s_t = s] - \kappa \le 0, \forall s \in \mathcal{\overline{S}},
+ \]</span> <span class="math display">\[
+ \lambda(s) \ge 0,s \in \mathcal{\overline{S}}.
+ \]</span></li>
+</ol>
+<ul>
+<li>That is, at each industry state, either the expected entry profit is zero or the entry rate is zero.</li>
+<li>The authors prove that there exists a symmetric equilibrium.</li>
+</ul>
+</div>
+<div id="oblivious-strategy" class="section level3">
+<h3><span class="header-section-number">8.4.7</span> Oblivious Strategy</h3>
+<ul>
+<li>The Markov-perfect equilibrium becomes quickly computationally intractable when the number of firms increases, because firms’ strategies depends on other firms’ states.</li>
+<li>We consider a firm who is <strong>oblivious</strong> of other firms’ exact states but only cares the <strong>long-run average industry state</strong> on top of its own state.</li>
+<li>Let <span class="math inline">\(\widetilde{\mathcal{M}} \subset \mathcal{M}\)</span> and <span class="math inline">\(\widetilde{\Lambda} \subset \Lambda\)</span> be the set of <strong>oblivious strategies</strong> and the set of <strong>oblivious entry rate functions</strong> in the sense that both <span class="math inline">\(\mu \in \widetilde{\mathcal{M}}\)</span> and <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> do not depend on <span class="math inline">\(s\)</span>.</li>
+</ul>
+<p>### Long-run Average Industry State</p>
+<ul>
+<li>Then, if all firms use a common strategy <span class="math inline">\(\mu \in \widetilde{\mathcal{M}} \subset \mathcal{M}\)</span>, each firm’s state evolves as an independent transient Markov chain.</li>
+<li>Let the <span class="math inline">\(k\)</span>-period transition probability of this Markov chain be denoted by <span class="math inline">\(P_{\mu}^k(x, y)\)</span>.</li>
+<li>The expected time that a firm spends at state <span class="math inline">\(x\)</span> is <span class="math inline">\(\sum_{k = 0}^\infty P_\mu^k(x^e, x)\)</span>.</li>
+<li>The expected lifespan of a firm is <span class="math inline">\(\sum_{k = 0}^\infty \sum_{x \in \mathbb{N}} P_\mu^k(x^e, x)\)</span>.</li>
+<li>Let <span class="math inline">\(\tilde{s}_t(x) := \mathbb{E}[s_t(x)]\)</span> be the expected number of firms at state <span class="math inline">\(x\)</span>.</li>
+<li>Under the stated assumptions, if firms make decisions according to an oblivious strategy <span class="math inline">\(\mu \in \widetilde{M}\)</span> and enter according to an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span>, and the expected time that firm spends in the industry is finite, then: <span class="math display">\[
+ \lim_{t \to \infty} \tilde{s}_t(x) = \lambda \sum_{k = 0}^\infty P_{\mu}^k(x^e, x),
+ \]</span> for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
+<li>We write the long-run average industry state as <span class="math inline">\(\tilde{s}_{\mu, \lambda}(x) := \lim_{t \to \infty} \tilde{s}_t(x)\)</span>.</li>
+</ul>
+</div>
+<div id="oblivious-value-function" class="section level3">
+<h3><span class="header-section-number">8.4.8</span> Oblivious Value Function</h3>
+<ul>
+<li><p>For an oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span>, we define an <strong>oblivious value function</strong>: <span class="math display">\[
+\widetilde{V}(x|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;} \left\{\sum_{k = t}^{\tau_i} \beta^{k - t}[\pi(x_{ik}, \tilde{s}_{\mu, \lambda}) - d \iota_{ik}] + \beta^{\tau_i - t} \phi_{i, \tau_i}| x_{it} = x \right\}.
+\]</span></p></li>
+<li>The firm approximates the value function by evaluating at the long-run average industry state.</li>
+<li>Note that it still depends on other firms’ strategy <span class="math inline">\(\mu\)</span> because it determines the long-run average industry state.</li>
+<li><p>We also write as <span class="math inline">\(\widetilde{V}(x|\mu, \lambda) := \widetilde{V}(x|\mu, \mu, \lambda)\)</span>.</p></li>
+</ul>
+</div>
+<div id="oblivious-equilibrium" class="section level3">
+<h3><span class="header-section-number">8.4.9</span> Oblivious Equilibrium</h3>
+<ul>
+<li>An oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> is an <strong>oblivious equilibrium</strong> if:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>The oblivious strategy satisfies: <span class="math display">\[
+\sup_{\mu&#39;  \in \widetilde{\mathcal{M}}} \widetilde{V}(x|\mu&#39;, \mu, \lambda) = \widetilde{V}(x|\mu, \lambda), \forall x \in \mathbb{N}.
+\]</span></li>
+<li>The oblivious entry rate function satisfies: <span class="math display">\[
+\lambda [\beta \widetilde{V}(x^e|\mu, \lambda) - \kappa] = 0,
+\]</span> <span class="math display">\[
+\beta \widetilde{V}(x^e|\mu, \lambda) - \kappa \le 0,
+\]</span> <span class="math display">\[
+\lambda \ge 0.
+\]</span></li>
+</ol>
+<ul>
+<li>Computing the equilibrium is surprisingly easy because the dynamic programming involves only one-dimensional state variable <span class="math inline">\(x_{it}\)</span>.</li>
+<li>Given a strategy profile, first compute <span class="math inline">\(\tilde{s}_{\mu, \lambda}\)</span>.</li>
+<li>Given <span class="math inline">\(\tilde{s}_{\mu, \lambda}\)</span>, the dynamic programming is only of <span class="math inline">\(x_{it}\)</span>.</li>
+</ul>
+</div>
+<div id="asymptotic-results-and-extensions" class="section level3">
+<h3><span class="header-section-number">8.4.10</span> Asymptotic Results and Extensions</h3>
+<ul>
+<li>The authors show that under a certain condition when the market size goes to infinity, an oblivious equilibrium approximates an Markov-perfect equilibrium in the sense that a deviation from the oblivious equilibrium to a (possibly non-oblivious) best response does not improve the value for a firm.</li>
+<li><span class="citation">Benkard, Jeziorski, &amp; Weintraub (<a href="#ref-Benkard2015">2015</a>)</span> consider an extension of the current model to the <strong>partially oblivious equlibrium</strong> in which a subset of firms follow a non-oblivious strategy and the other firms follow an oblivious strategy.</li>
+<li><span class="citation">Ifrach &amp; Weintraub (<a href="#ref-Ifrach2017">2017</a>)</span> further extends the current model to the <strong>moment-based Markov equilibrium</strong> in which a firm’s strategy depends on some sets of moments regarding the industry state.</li>
+</ul>
 
 </div>
 </div>
@@ -1275,6 +1424,12 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
 </div>
 <div id="ref-weintraubMarkovPerfectIndustry2008">
 <p>Weintraub, G. Y., Benkard, C. L., &amp; Roy, B. V. (2008). Markov Perfect Industry Dynamics With Many Firms. <em>Econometrica</em>, <em>76</em>(6), 1375–1411.</p>
+</div>
+<div id="ref-Benkard2015">
+<p>Benkard, C. L., Jeziorski, P., &amp; Weintraub, G. Y. (2015). Oblivious equilibrium for concentrated industries. <em>The RAND Journal of Economics</em>, <em>46</em>(4), 671–708.</p>
+</div>
+<div id="ref-Ifrach2017">
+<p>Ifrach, B., &amp; Weintraub, G. Y. (2017). A Framework for Dynamic Oligopoly in Concentrated Industries. <em>The Review of Economic Studies</em>, <em>84</em>, 1106–1150.</p>
 </div>
 </div>
             </section>

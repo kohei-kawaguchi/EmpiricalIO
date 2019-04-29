@@ -450,6 +450,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.4.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-4"><i class="fa fa-check"></i><b>8.4.1</b> Setting</a></li>
 <li class="chapter" data-level="8.4.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game-1"><i class="fa fa-check"></i><b>8.4.2</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.4.3" data-path="dynamicgame.html"><a href="dynamicgame.html#assumptions"><i class="fa fa-check"></i><b>8.4.3</b> Assumptions</a></li>
+<li class="chapter" data-level="8.4.4" data-path="dynamicgame.html"><a href="dynamicgame.html#strategy-profile"><i class="fa fa-check"></i><b>8.4.4</b> Strategy Profile</a></li>
+<li class="chapter" data-level="8.4.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function"><i class="fa fa-check"></i><b>8.4.5</b> Value Function</a></li>
+<li class="chapter" data-level="8.4.6" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium-2"><i class="fa fa-check"></i><b>8.4.6</b> Markov-perfect Equilibrium</a></li>
+<li class="chapter" data-level="8.4.7" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-strategy"><i class="fa fa-check"></i><b>8.4.7</b> Oblivious Strategy</a></li>
+<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.8</b> Oblivious Value Function</a></li>
+<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Equilibrium</a></li>
+<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.10</b> Asymptotic Results and Extensions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a><ul>
@@ -566,8 +573,6 @@ y_{ij} = 1\{j = \text{argmax}_{k = 1, 2} \beta x_k + \epsilon_{ik} \},
 <ol style="list-style-type: decimal">
 <li>To simulate data, first make a data frame as follows:</li>
 </ol>
-<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.</code></pre>
 <pre><code>## # A tibble: 2,000 x 3
 ##        i     k     x
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -646,7 +651,7 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 \]</span></p>
 <ol style="list-style-type: decimal">
 <li><p>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood_A1</code>.</p></li>
-<li><p>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label: <img src="lecture_files/figure-html/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label: <img src="lecture_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p></li>
 <li><p>Find and report <span class="math inline">\(\beta\)</span> that maximizes the log likelihood for the simulated data. You can use <code>optim</code> function to achieve this. You will use <code>Brent</code> method and set the lower bound at -1 and upper bound at 1 for the parameter search.</p></li>
 </ol>
 <pre><code>## $par
