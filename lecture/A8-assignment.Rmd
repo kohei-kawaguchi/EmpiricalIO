@@ -41,9 +41,8 @@ Suppose that $s_i = 1$. If $a_i = 0$, the state stays at the same state with pro
 
 Suppose that $s_i = L$. If $a_i = 0$, the state stays at the same state with probability $1 - \kappa$ and moves down by 1 with probability $\kappa$. If $a = 1$, the state moves down by 1 with probability $\kappa$, and stays at the same with probability $1 - \kappa$. 
 
-
-
 The mean period profit is summarized in $\Pi$ as:
+
 $$
 \Pi :=
 \begin{pmatrix}
@@ -91,7 +90,7 @@ lambda <- 1e-10
 # set parameters
 alpha <- 1
 eta <- 0.3
-beta <- 3
+beta <- 2
 kappa <- 0.1
 gamma <- 0.6
 delta <- 0.95
@@ -138,6 +137,7 @@ where $\theta_1 = (\alpha, \beta, \eta)$ and $\theta_2 = (\kappa, \gamma)$, $p_i
 $$
 p(a|s) = \prod_{i = 1}^N p_i(a_i|s), 
 $$
+
 $$
 p(s) = 
 \begin{pmatrix}
@@ -146,6 +146,7 @@ p(1|s) \\
 p(m_a|s)
 \end{pmatrix},
 $$
+
 $$
 p = 
 \begin{pmatrix}
@@ -155,6 +156,7 @@ p(m_s)
 \end{pmatrix},
 $$
 
+
 $$
 \Sigma(p) =
 \begin{pmatrix}
@@ -163,7 +165,9 @@ p(1)' & & \\
  & & p(L)'
 \end{pmatrix}
 $$
+
 and:
+
 $$
 D_i(p) =
 \begin{pmatrix}
@@ -173,17 +177,21 @@ D_i(p) =
 \end{pmatrix}.
 $$
 
-5. Write a function `initialize_p_marginal(A, S)` that defines an initial marginal condition choice probability. In the output `p_marginal`, `p` is the probability for firm `i` to take action `a` conditional on the state profile being `l`. Next, write a function `compute_p_joint(p_marginal, A, S)` that computes a corresponding joint conditional choice probability from a marginal conditional choice probability. In the output `p_joint`, `p` is the joint probability that firms take action profile `k` condition on the state profile being `l`.
+
+5. Write a function `initialize_p_marginal(A, S)` that defines an initial marginal condition choice probability. In the output `p_marginal`, `p` is the probability for firm `i` to take action `a` conditional on the state profile being `l`. Next, write a function `compute_p_joint(p_marginal, A, S)` that computes a corresponding joint conditional choice probability from a marginal conditional choice probability. In the output `p_joint`, `p` is the joint probability that firms take action profile `k` condition on the state profile being `l`. Finally, write a function `compute_p_marginal(p_joint, A, S)` that compute a corresponding marginal conditional choice probability from a joint conditional choice probability.
 
 ```{r}
 # define a conditional choice probability for each firm
 p_marginal <- initialize_p_marginal(A, S)
 p_marginal
 dim(p_marginal)[1] == N * m_s * (K + 1)
-# compute joint conitional choice probability
+# compute joint conitional choice probability from marginal probability
 p_joint <- compute_p_joint(p_marginal, A, S)
 p_joint
 dim(p_joint)[1] == m_s * m_a
+# compute marginal conditional chocie probability from joint probability
+p_marginal_2 <- compute_p_marginal(p_joint, A, S)
+max(abs(p_marginal - p_marginal_2))
 ```
 
 
@@ -257,10 +265,10 @@ save(output, file = "data/A8_equilibrium.RData")
 
 ```{r}
 load(file = "data/A8_equilibrium.RData")
-output$p_marginal
-output$V[[N]]
+p_marginal <- output$p_marginal; head(p_marginal)
+V <- output$V[[N]]; head(V)
 # compute joint conitional choice probability
-p_joint <- compute_p_joint(p_marginal, A, S)
+p_joint <- compute_p_joint(p_marginal, A, S); head(p_joint)
 ```
 
 12. Write a function `simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)` that simulate the data for a market starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
@@ -279,7 +287,7 @@ df
 
 ```{r, eval = FALSE}
 # simulate data across markets
-df <- simulate_dynamic_decision_across_markets(p_joint, l, G, N, T, M, S, A, seed)
+df <- simulate_dynamic_decision_across_markets(p_joint, l, G, N, T, M, S, A)
 save(df, file = "data/A8_df.RData")
 ```
 ```{r}
@@ -342,18 +350,16 @@ theta_2_est <- estimate_theta_2_game(df); theta_2_est
 
 The objective function of the minimum distance estimator based on the conditional choice probability approach is:
 $$
-\frac{1}{KL}\sum_{l = 1}^{m_s} \sum_{k = 1}^{m_a}\{\hat{p}(a_k, s_l) - p^{(\theta_1, \theta_2)}(a_k, s_l)\}^2,
+\frac{1}{N K m_s} \sum_{i = 1}^N \sum_{l = 1}^{m_s} \sum_{k = 1}^{K}\{\hat{p}_i(a_k|s_l) - p_i^{(\theta_1, \theta_2)}(a_k|s_l)\}^2,
 $$
-where $\hat{p}$ is the non-parametric estimate of the joint conditional choice probability and $p^{(\theta_1, \theta_2)}$ is the equilibrium join conditional choice probability under parameters $\theta_1$ and $\theta_2$. $a_k$ is $k$-th action profile and $s_l$ is $l$-th state profile.
+where $\hat{p}_i$ is the non-parametric estimate of the marginal conditional choice probability and $p_i^{(\theta_1, \theta_2)}$ is the marginal conditional choice probability under parameters $\theta_1$ and $\theta_2$ given $\hat{p}_i$. $a_k$ is $k$-th action for a firm and $s_l$ is $l$-th state profile.
 
 2. Write a function `compute_CCP_objective_game(theta_1, theta_2, p_est, L, K, delta)` that returns the objective function of the above minimum distance estimator given a non-parametric estimate of the conditional choice probability and $\theta_1$ and $\theta_2$.
 
 
 ```{r, eval = FALSE}
-# compute joint conditional choice probability
-p_joint_est <- compute_p_joint(p_marginal_est, A, S)
 # compute the objective function of the minimum distance estimator based on the CCP approach
-objective <- compute_CCP_objective_game(theta_1, theta_2, p_joint_est, A, S, delta, lambda)
+objective <- compute_CCP_objective_game(theta_1, theta_2, p_marginal_est, A, S, delta, lambda)
 save(objective, file = "data/A8_objective.RData")
 ```
 ```{r}
@@ -378,7 +384,7 @@ graph <- foreach (i = 1:length(theta_1)) %do% {
                theta_j <- theta_1
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 compute_CCP_objective_game(theta_j, theta_2, p_joint_est, A, S, delta, lambda)
+                 compute_CCP_objective_game(theta_j, theta_2, p_marginal_est, A, S, delta, lambda)
                return(objective_ij)
              }
   df_graph <- data.frame(x = theta_i_list, y = objective_i)
@@ -407,7 +413,7 @@ CCP_result <-
         lower = lower,
         upper = upper,
         theta_2 = theta_2_est,
-        p_joint_est = p_joint_est,
+        p_marginal_est = p_marginal_est,
         A = A,
         S = S,
         delta = delta,
@@ -424,6 +430,10 @@ compare <-
     estimate = CCP_result$par
   ); compare
 ```
+
+
+
+
 
 
 

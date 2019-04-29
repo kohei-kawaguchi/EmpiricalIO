@@ -847,5 +847,93 @@ where the third equality is because $V$ and $D_k^*$ are diagonal matrices.
 1. Then identify $V$.
 1. Once conditional choice probability is identified, we can use the standard estimation method based on the CCP approach to each type.
 
+### Estimation by an EM Algorithm
+
+- @arcidiaconoConditionalChoiceProbability2011 suggest to use an EM algorithm to estimate a dynamic decision model with unobserved heterogeneity.
+- Return to our original notation, and suppose that state $s_t$ is partitioned into $s_t := (x_t, w_t)$, where $x_t$ is observed but $w_t$ is unobserved to an econometrician.
+- Suppose that the transition probability is such that:
+$$
+\begin{split}
+\mathbb{P}\{s_{t + 1}|s_t, a_t\} &= \mathbb{P}\{x_{t + 1}|x_t, w_t, a_t\} \mathbb{P}\{w_{t + 1}|w_t\} \\
+&:= g(x_{t + 1}|x_t, w_t, a_t) h(w_{t + 1}|w_t).
+\end{split}
+$$
+- The initial distribution of $w_1$ is $h(w_1|x_1)$.
+- We __assume__ that the model is identified and only consider estimation.
+- For example, in the previous finite-mixture model, we considered a case with $h(w_{t + 1} = w'|w_{t} = w) = 1\{w' = w\}$ and provided a sufficient condition for identification.
+- Let $\theta_1$ be the parameters in $\pi$ and $\theta_2$ be the parameters in $g$.
+- Let $\theta = (\theta_1, \theta_2)$.
+
+### Idea
+
+- Let $q_{it}(w)$ be the probability that firm $i$ is in unobserved state $w$ in time $t$.
+- The idea of the EM algorithm is:
+1. __Expectation step__: Given a parameter $\theta^{(r)}$, a conditional choice probability $p^{(r)}(a|x, w)$, an initial distribution of the unobserved state variable $h^{(r)}(s_1|x_1)$, and a transition probability of the unobserved state variable $h^{(r)}(w'|w)$, update the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$, update the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$, update the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$, and update the conditional choice probability to $p^{(r + 1)}(a|x, w)$.
+1. __Maximization step__: Given the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$, the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$, the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$, and the conditional choice probability to $p^{(r + 1)}(a|x, w)$, update the parameters to $\theta^{(r + 1)}$.
+- And continue this until a convergence.
+- By doing so, we avoid integrating out the unobserved state variables to evaluate the likelihood function.
+
+### Optimal Conditional Choice Probability
+
+- We can still define the optimal conditional choice probability given a choice probability in the future as $\varphi^{\theta, h}(p)$ because we just assumed that some of the state is not observed to an econometrician.
+- We just divided parameters in $G$ into $\theta_2$ and $h$.
+
+### Likelihood Functions
+
+
+- The following likelihood functions can be calculated if we know $\theta, h$, and $p$.
+- The likelihood of observing $\{a_{it}, x_{i, t + 1}\}$ conditional on $x_{it}$ and $w_{it}$ is:
+$$
+L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p) := \varphi^{\theta, h}(p)(a_{it}|x_{it}, w_{it}) g^{\theta_2}(x_{i, t + 1}|x_{it}, w_{it}, a_{it}).
+$$
+
+- The likelihood of observing $\{a_{it}, x_{it}\}_{t = 1}^T$ conditional on $x_{i1}$ is:
+$$
+\begin{split}
+L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
+&\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
+\end{split}
+$$
+- The likelihood of having $w_{it}$ in period $t$ and having $\{a_{it}, x_{it}\}_{t = 1}^T$ conditional on $x_{i1}$ is:
+$$
+\begin{split}
+L(w_{it}, \{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{i, t - 1} = 1}^W \sum_{w_{i, t + 1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
+&\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
+\end{split}
+$$
+- The likelihood of having $w_{it}$ in period $t$ conditional on $\{a_{it}, x_{it}\}_{t = 1}^T$ is:
+$$
+L(w_{it}|\{a_{it}, x_{it}\}_{t = 1}^T, \theta, h, p) := \frac{L(w_{it}, \{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p)}{L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p)}.
+$$
+
+
+### Expectation Step
+
+- We have a parameter $\theta^{(r)}$, a conditional choice probability $p^{(r)}(a|x, w)$, an initial distribution of the unobserved state variable $h^{(r)}(s_1|x_1)$, and a transition probability of the unobserved state variable $h^{(r)}(w'|w)$.
+1. Update the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$:
+$$
+q_{it}^{(r + 1)}(w) := L(w|\{a_{it}, x_{it}\}_{t = 1}^T, \theta^{(r)}, h^{(r)}, p^{(r)}).
+$$
+1. Update the initial distribution of the unobserved state variable to $h^{(r + 1)}(s_1|x_1)$:
+$$
+h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = 1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = 1\}}.
+$$
+1. Update the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$:
+$$
+h^{(r + 1)}(w'|w) := \frac{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(w) q_{it}^{(r + 1)}(w')}{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(w)}.
+$$
+1. Update the conditional choice probability to $p^{(r + 1)}(a|x, w)$:
+$$
+p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}}.
+$$
+
+### Maximization Step
+
+- We have the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$, the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$, the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$, and the conditional choice probability to $p^{(r + 1)}(a|x, w)$.
+- Update parameters to $\theta^{(r + 1)}$:
+$$
+\theta^{(r + 1)} := \text{argmax}_{\theta} \sum_{i = 1}^N \sum_{t = 1}^T \sum_{w = 1}^W q_{it}^{(r + 1)}(w) \ln L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h^{(r + 1)}, p^{(r + 1)}).
+$$
+- The maximization step can be either of a nested-fixed point algorithm or CCP approach.
 
 

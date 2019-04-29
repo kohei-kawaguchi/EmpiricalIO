@@ -667,3 +667,47 @@ knitr::include_graphics("figuretable/mature.png")
 ```
 
 
+## Dynamic Oligopoly with Many Firms
+
+- Solving a dynamic game becomes quickly intractable when the number of firms increases and hence the dimension of the state profile increases.
+- @weintraubMarkovPerfectIndustry2008 propose a new equilibrium concept called __oblivious equilibrium__ that approximates a Markov perfect equilibrium when there are many firms and do not suffer from the aforementioned computational problem.
+
+### Setting
+
+- The setting is effectively the same as @ericsonMarkovPerfectIndustryDynamics1995 and @doraszelskiComputableMarkovperfectIndustry2010.
+- The time is discrete and infinite $t \in \mathbb{N}$.
+- The information set at time $t$ is $\mathcal{F}_t$.
+- Each firm that enters the industry is assigned a positive integer value index $x_{it} \in \mathbb{N}$.
+- It can be regarded as a quality index, but can be whatever.
+- Let $S_t$ be the set of indices of incumbent firms at time $t$.
+- Let $n_t$ be the number of incumbent firms at time $t$.
+- The __industry state__ $s_t$ is a vector of counts over possible values of $x_{it}$ among $i \in S_t$.
+- The state space is $\overline{\mathcal{S}} := \{s \in N^{\infty}: \sum_{x = 0}^\infty s(x) < \infty\}$.
+- For expositional reason, consider an extended state space too $\mathcal{S} := \{s \in \mathbb{R}_+^{\infty}: \sum_{x = 0}^\infty s(x) < \infty\}$
+- For each $i \in S_{t}$, define the state of the __competitors__ by $s_{-i, t}(x) := s_t(x) - 1\{x_{it} = x\}$.
+- The expected period profit of firm $i$ is $\pi(x_{it}, s_{-i, t})$.
+- In each period, each incumbent draws a positive real-valued sell-off value $\phi_{it}$, and exits from the market if the sell-off value exceeds the continuation value.
+- If an incumbent firm stays in the market, the firm chooses an investment $\iota_{it} \in \mathbb{R}_+$.
+- Then, the state of the firm is updated according to a rule:
+$$
+x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
+$$
+where $w$ captures the impact of investment and $\zeta_{i, t + 1}$ is a shock to the investment process.
+- In each period, new firms can enter the industry by paying a setup cost $\kappa$.
+- Entrants do not earn profits in the period that they enter.
+- They appear in the following period at state $x^e \in \mathbb{N}$.
+
+### Timing of the Game
+
+1. Each incumbent firm observes its sell-off value, and then makes exit and investment decisions.
+1. The number of entering firms is determined and each entrant pays an entry cost $\kappa$.
+1. Incumbent firms compete in the spot market and receive profits.
+1. Exiting firms exit and receive their sell-off values.
+1. Investment outcomes are determined, new entrants enter, and the industry takes on a new state $s_{t + 1}$.
+
+### Assumptions
+
+
+
+
+
