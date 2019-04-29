@@ -1127,14 +1127,9 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1} \end{center}
-
-\begin{itemize}
-\tightlist
-\item
-  Instead of loading a package by \texttt{library}, you can directly
-  call it as:
-\end{itemize}
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-15-1.pdf} -
+Instead of loading a package by \texttt{library}, you can directly call
+it as:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1142,7 +1137,7 @@ Analysis}\label{structural-estimation-and-counterfactual-analysis}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\includegraphics{lecture_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -7194,20 +7189,38 @@ Profits}\label{multiple-prediction-in-bivariate-game-with-heterogenous-profits}
 \item
   If we allow for mixed-strategy equilibria, the region of
   \(f_{im}, f_{jm}\) on which there are multiple equilibria will
-  increase. \textbackslash{}begin\{figure\}
+  increase.
+
+  \begin{figure}
+  \includegraphics[width=0.8\linewidth]{figuretable/bivariateentry} \end{figure}
+\item
+  In this example, we can write the likelihood of the number of
+  equilibrium entrants:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(2\): green area.
+  \item
+    \(1\): yellow, orange, and red areas.
+  \item
+    \(0\): blue area.
+  \end{itemize}
+\item
+  However, we cannot write the likelihood of the strategy profile.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \((1, 1)\): green area.
+  \item
+    \((0, 1)\): \(\ge\) red area, \(\le\) orange and red area.
+  \item
+    \((1, 0)\): \(\ge\) yellow area, \(\le\) orange and yellow area.
+  \item
+    \((0, 0)\): blue area.
+  \end{itemize}
 \end{itemize}
-
-\{\centering \includegraphics[width=0.8\linewidth]{figuretable/bivariateentry}
-
-\}
-
-\textbackslash{}end\{figure\} - In this example, we can write the
-likelihood of the number of equilibrium entrants: - \(2\): green area. -
-\(1\): yellow, orange, and red areas. - \(0\): blue area. - However, we
-cannot write the likelihood of the strategy profile. - \((1, 1)\): green
-area. - \((0, 1)\): \(\ge\) red area, \(\le\) orange and red area. -
-\((1, 0)\): \(\ge\) yellow area, \(\le\) orange and yellow area. -
-\((0, 0)\): blue area.
 
 \subsection{Inference Based on Moment
 Inequalities}\label{inference-based-on-moment-inequalities}
@@ -8583,7 +8596,7 @@ Mixture}\label{dynamic-decision-model-with-a-finite-mixture}
 \tightlist
 \item
   Then the probability of an observation becomes: \[
-  P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) P^m(a_t| x_t).
+  P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|x_{t - 1}, a_{t - 1}) P^m(a_t| x_t).
   \]
 \end{itemize}
 
@@ -8599,7 +8612,7 @@ Submodels}\label{lower-dimensional-submodels}
 \item
   Transform the previous equation as: \[
   \begin{split}
-  \widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})}\\
+  \widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|x_{t - 1}, a_{t - 1})}\\
   &= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T P^m(a_t| x_t).
   \end{split}
   \]
@@ -8636,9 +8649,6 @@ Submodels}\label{lower-dimensional-submodels}
   \] \[
   \lambda_\xi^m := P^m(a = 1|x = \xi).
   \]
-\item
-  Let \(\xi_j, j = 1, \cdots, M - 1\) be elements of \(X\) and \(k\) be
-  an element of \(X\).
 \end{itemize}
 
 \subsection{Notations for Parameters to be
@@ -8646,6 +8656,9 @@ Identified}\label{notations-for-parameters-to-be-identified}
 
 \begin{itemize}
 \tightlist
+\item
+  Let \(\xi_j, j = 1, \cdots, M - 1\) be elements of \(X\) and \(k\) be
+  an element of \(X\).
 \item
   Define a matrix of type-specific distribution functions and type
   probabilities as: \[
@@ -8778,7 +8791,7 @@ Identification}\label{sufficient-condition-for-identification}
     probabilities across types.
   \end{itemize}
 \item
-  The conditions says \(\lambda_k^m > 0\) for all \(m\).
+  The conditions says \(\lambda_k^{*m} > 0\) for all \(m\).
 
   \begin{itemize}
   \tightlist
@@ -8787,7 +8800,7 @@ Identification}\label{sufficient-condition-for-identification}
     such type never shows up in the data.
   \end{itemize}
 \item
-  The condition says \(\lambda_k^m \neq \lambda_k^n\) for any
+  The condition says \(\lambda_k^{*m} \neq \lambda_k^{*n}\) for any
   \(m \neq n\).
 
   \begin{itemize}
@@ -8934,7 +8947,7 @@ Algorithm}\label{estimation-by-an-em-algorithm}
 \item
   \textbf{Expectation step}: Given a parameter \(\theta^{(r)}\), a
   conditional choice probability \(p^{(r)}(a|x, w)\), an initial
-  distribution of the unobserved state variable \(h^{(r)}(s_1|x_1)\),
+  distribution of the unobserved state variable \(h^{(r)}(w_1|x_1)\),
   and a transition probability of the unobserved state variable
   \(h^{(r)}(w'|w)\), update the probability that firm \(i\) is in
   unobserved state \(w\) in time \(t\) to \(q_{it}^{(r + 1)}(w)\),
@@ -8990,7 +9003,7 @@ Probability}\label{optimal-conditional-choice-probability-1}
   The likelihood of observing \(\{a_{it}, x_{it}\}_{t = 1}^T\)
   conditional on \(x_{i1}\) is: \[
   \begin{split}
-  L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
+  L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{i1}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
   &\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
   \end{split}
   \]
@@ -9030,8 +9043,8 @@ Probability}\label{optimal-conditional-choice-probability-1}
   \]
 \item
   Update the initial distribution of the unobserved state variable to
-  \(h^{(r + 1)}(s_1|x_1)\): \[
-  h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = 1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = 1\}}.
+  \(h^{(r + 1)}(w|x_1)\): \[
+  h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = x_1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = x_1\}}.
   \]
 \item
   Update the transition probability of the unobserved state variable to
@@ -9041,7 +9054,7 @@ Probability}\label{optimal-conditional-choice-probability-1}
 \item
   Update the conditional choice probability to \(p^{(r + 1)}(a|x, w)\):
   \[
-  p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}}.
+  p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{it}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{it}^{(r + 1)}(w) 1\{x_{it} = x\}}.
   \]
 \end{enumerate}
 
@@ -10244,7 +10257,7 @@ Firms}\label{dynamic-oligopoly-with-many-firms}
   investment \(\iota_{it} \in \mathbb{R}_+\).
 \item
   Then, the state of the firm is updated according to a rule: \[
-  x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
+  x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
   \]
 \item
   where \(w\) captures the impact of investment and \(\zeta_{i, t + 1}\)
@@ -10483,7 +10496,8 @@ Equilibrium}\label{markov-perfect-equilibrium-2}
   \(\lambda \in \widetilde{\Lambda}\) do not depend on \(s\).
 \end{itemize}
 
-\#\#\# Long-run Average Industry State
+\subsection{Long-run Average Industry
+State}\label{long-run-average-industry-state}
 
 \begin{itemize}
 \tightlist
@@ -15197,10 +15211,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##            z_1       z_2
-## [1,] -3.470485 0.9793395
-## [2,]  1.528313 0.9863710
-## [3,] -4.520078 0.5487308
+##            z_1        z_2
+## [1,]  2.085976  0.3260281
+## [2,]  1.781727 -3.1784427
+## [3,] -4.357432 -1.7088977
 \end{verbatim}
 
 \begin{Shaded}
@@ -15335,9 +15349,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##            [,1]
-## [1,] -0.3047948
-## [2,]  1.4309572
-## [3,] -0.3680499
+## [1,]  1.8649451
+## [2,] -0.2151083
+## [3,] -1.0663548
 \end{verbatim}
 
 \begin{enumerate}
@@ -15366,10 +15380,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]
-## [1,] 1.998685
-## [2,] 7.825856
-## [3,] 0.000000
+##            [,1]
+## [1,]  7.6481730
+## [2,] -0.1605689
+## [3,]  0.0000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -15395,7 +15409,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    1
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 \end{verbatim}
 
@@ -15419,7 +15433,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    1
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 \end{verbatim}
 
@@ -15450,7 +15464,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    1
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 \end{verbatim}
 
@@ -15462,11 +15476,11 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
+## [1,]    0
+## [2,]    0
 ## [3,]    0
 ## [4,]    1
-## [5,]    0
+## [5,]    1
 ## [6,]    0
 \end{verbatim}
 
@@ -15508,7 +15522,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \begin{verbatim}
 ##      [,1]
 ## [1,]    1
-## [2,]    1
+## [2,]    0
 ## [3,]    0
 \end{verbatim}
 
@@ -15520,11 +15534,11 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
+## [1,]    0
 ## [2,]    0
 ## [3,]    0
 ## [4,]    1
-## [5,]    0
+## [5,]    1
 ## [6,]    0
 \end{verbatim}
 
@@ -15620,9 +15634,9 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    0
-## [2,]    1
-## [3,]    1
+## [1,]    1
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -15633,7 +15647,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.346
+## [1] 0.4001
 \end{verbatim}
 
 \begin{enumerate}
@@ -15662,8 +15676,8 @@ consider the following objective function: \[
 \begin{verbatim}
 ##      [,1]
 ## [1,]    1
-## [2,]    1
-## [3,]    1
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -15674,7 +15688,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2924
+## [1] 0.2787
 \end{verbatim}
 
 \begin{enumerate}
@@ -15898,14 +15912,14 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ## $par
-## [1] 0.71189269 0.15505175 0.86037228 1.81777944 1.17711412 0.04193266
+## [1] 0.59704343 0.04938142 0.93904853 1.80598524 1.04483638 0.39060511
 ## 
 ## $value
-## [1] 0.305
+## [1] 0.2762
 ## 
 ## $counts
 ## function gradient 
-##      161       NA 
+##      155       NA 
 ## 
 ## $convergence
 ## [1] 0
@@ -15927,12 +15941,12 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      actual   estimate
-## 1 0.6264538 0.71189269
-## 2 0.1836433 0.15505175
-## 3 0.8356286 0.86037228
-## 4 1.5952808 1.81777944
-## 5 1.0000000 1.17711412
-## 6 0.3295078 0.04193266
+## 1 0.6264538 0.59704343
+## 2 0.1836433 0.04938142
+## 3 0.8356286 0.93904853
+## 4 1.5952808 1.80598524
+## 5 1.0000000 1.04483638
+## 6 0.3295078 0.39060511
 \end{verbatim}
 
 \begin{enumerate}
@@ -15977,14 +15991,14 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ## $par
-## [1] 0.6781953 0.1751559 0.7923711 1.6865438 1.1773396 0.3878013
+## [1] 0.5787563 0.1216856 0.9521359 1.8443535 1.2177670 0.3075741
 ## 
 ## $value
-## [1] 0.3122
+## [1] 0.1623
 ## 
 ## $counts
 ## function gradient 
-##      149       NA 
+##      141       NA 
 ## 
 ## $convergence
 ## [1] 0
@@ -16006,12 +16020,12 @@ consider the following objective function: \[
 
 \begin{verbatim}
 ##      actual  estimate
-## 1 0.6264538 0.6781953
-## 2 0.1836433 0.1751559
-## 3 0.8356286 0.7923711
-## 4 1.5952808 1.6865438
-## 5 1.0000000 1.1773396
-## 6 0.3295078 0.3878013
+## 1 0.6264538 0.5787563
+## 2 0.1836433 0.1216856
+## 3 0.8356286 0.9521359
+## 4 1.5952808 1.8443535
+## 5 1.0000000 1.2177670
+## 6 0.3295078 0.3075741
 \end{verbatim}
 
 \section{Conduct counterfactual

@@ -672,7 +672,7 @@ where the second equality uses the Markovian assumption on the conditional choic
 1. The transition function does not depend on time: $f_t(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) = f(x_t|x_{t - 1}, a_{t - 1})$ for all $t$.
 - Then the probability of an observation becomes:
 $$
-P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) P^m(a_t| x_t).
+P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|x_{t - 1}, a_{t - 1}) P^m(a_t| x_t).
 $$
 
 ### Lower-dimensional Submodels
@@ -681,7 +681,7 @@ $$
 - Transform the previous equation as:
 $$
 \begin{split}
-\widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})}\\
+\widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|x_{t - 1}, a_{t - 1})}\\
 &= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T P^m(a_t| x_t).
 \end{split}
 $$
@@ -708,10 +708,10 @@ $$
 $$
 \lambda_\xi^m := P^m(a = 1|x = \xi).
 $$
-- Let $\xi_j, j = 1, \cdots, M - 1$ be elements of $X$ and $k$ be an element of $X$.
 
 ### Notations for Parameters to be Identified
 
+- Let $\xi_j, j = 1, \cdots, M - 1$ be elements of $X$ and $k$ be an element of $X$.
 - Define a matrix of type-specific distribution functions and type probabilities as:
 $$
 L := 
@@ -798,9 +798,9 @@ $$
 - The condition says that $L$ is non-singular. 
     - This implies that all columns in $L$ must be linearly independent.
     - In other words, the changes in covariate $x$ must induce sufficient heterogeneous variations in the conditional choice probabilities across types.
-- The conditions says $\lambda_k^m > 0$ for all $m$.
+- The conditions says $\lambda_k^{*m} > 0$ for all $m$.
     - If there is some $m$ that is $\lambda_k^m = 0$ for any $k$, such type never shows up in the data.
-- The condition says $\lambda_k^m \neq \lambda_k^n$ for any $m \neq n$.
+- The condition says $\lambda_k^{*m} \neq \lambda_k^{*n}$ for any $m \neq n$.
     - This condition is satisfied if initial distribution is different across types.
     - If this condition fails, the identification becomes severe.
     - Actually, $T = 3$ is not enough and $T \ge 4$ becomes necessary.
@@ -868,7 +868,7 @@ $$
 
 - Let $q_{it}(w)$ be the probability that firm $i$ is in unobserved state $w$ in time $t$.
 - The idea of the EM algorithm is:
-1. __Expectation step__: Given a parameter $\theta^{(r)}$, a conditional choice probability $p^{(r)}(a|x, w)$, an initial distribution of the unobserved state variable $h^{(r)}(s_1|x_1)$, and a transition probability of the unobserved state variable $h^{(r)}(w'|w)$, update the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$, update the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$, update the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$, and update the conditional choice probability to $p^{(r + 1)}(a|x, w)$.
+1. __Expectation step__: Given a parameter $\theta^{(r)}$, a conditional choice probability $p^{(r)}(a|x, w)$, an initial distribution of the unobserved state variable $h^{(r)}(w_1|x_1)$, and a transition probability of the unobserved state variable $h^{(r)}(w'|w)$, update the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$, update the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$, update the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$, and update the conditional choice probability to $p^{(r + 1)}(a|x, w)$.
 1. __Maximization step__: Given the probability that firm $i$ is in unobserved state $w$ in time $t$ to $q_{it}^{(r + 1)}(w)$, the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$, the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$, and the conditional choice probability to $p^{(r + 1)}(a|x, w)$, update the parameters to $\theta^{(r + 1)}$.
 - And continue this until a convergence.
 - By doing so, we avoid integrating out the unobserved state variables to evaluate the likelihood function.
@@ -890,7 +890,7 @@ $$
 - The likelihood of observing $\{a_{it}, x_{it}\}_{t = 1}^T$ conditional on $x_{i1}$ is:
 $$
 \begin{split}
-L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
+L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{i1}, \theta, h, p) &:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
 &\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
 \end{split}
 $$
@@ -914,9 +914,9 @@ $$
 $$
 q_{it}^{(r + 1)}(w) := L(w|\{a_{it}, x_{it}\}_{t = 1}^T, \theta^{(r)}, h^{(r)}, p^{(r)}).
 $$
-1. Update the initial distribution of the unobserved state variable to $h^{(r + 1)}(s_1|x_1)$:
+1. Update the initial distribution of the unobserved state variable to $h^{(r + 1)}(w|x_1)$:
 $$
-h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = 1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = 1\}}.
+h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = x_1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = x_1\}}.
 $$
 1. Update the transition probability of the unobserved state variable to $h^{(r + 1)}(w'|w)$:
 $$
@@ -924,7 +924,7 @@ h^{(r + 1)}(w'|w) := \frac{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(
 $$
 1. Update the conditional choice probability to $p^{(r + 1)}(a|x, w)$:
 $$
-p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}}.
+p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{it}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{it}^{(r + 1)}(w) 1\{x_{it} = x\}}.
 $$
 
 ### Maximization Step

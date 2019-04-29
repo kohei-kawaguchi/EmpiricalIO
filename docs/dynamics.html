@@ -454,9 +454,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.4.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function"><i class="fa fa-check"></i><b>8.4.5</b> Value Function</a></li>
 <li class="chapter" data-level="8.4.6" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium-2"><i class="fa fa-check"></i><b>8.4.6</b> Markov-perfect Equilibrium</a></li>
 <li class="chapter" data-level="8.4.7" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-strategy"><i class="fa fa-check"></i><b>8.4.7</b> Oblivious Strategy</a></li>
-<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.8</b> Oblivious Value Function</a></li>
-<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Equilibrium</a></li>
-<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.10</b> Asymptotic Results and Extensions</a></li>
+<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#long-run-average-industry-state"><i class="fa fa-check"></i><b>8.4.8</b> Long-run Average Industry State</a></li>
+<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Value Function</a></li>
+<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.10</b> Oblivious Equilibrium</a></li>
+<li class="chapter" data-level="8.4.11" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.11</b> Asymptotic Results and Extensions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a><ul>
@@ -1276,7 +1277,7 @@ P(\{a_t, x_t\}_{t = 1}^T) &amp;= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t 
 </ol>
 <ul>
 <li>Then the probability of an observation becomes: <span class="math display">\[
-P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1}) P^m(a_t| x_t).
+P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T f(x_t|x_{t - 1}, a_{t - 1}) P^m(a_t| x_t).
 \]</span></li>
 </ul>
 </div>
@@ -1286,7 +1287,7 @@ P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^
 <li>Because <span class="math inline">\(f(x_t|x_{t - 1}, a_{t - 1})\)</span> is non-parametrically identified from data, we are only concerned with identification of type probabilities and conditional choice probabilities.</li>
 <li>Transform the previous equation as: <span class="math display">\[
 \begin{split}
-\widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &amp;:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|\{x_\tau, a_\tau\}_{\tau = 1}^{t - 1})}\\
+\widetilde{P}(\{a_t, x_t\}_{t = 1}^T) &amp;:= \frac{P(\{a_t, x_t\}_{t = 1}^T)}{\prod_{t = 2}^T f(x_t|x_{t - 1}, a_{t - 1})}\\
 &amp;= \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^T P^m(a_t| x_t).
 \end{split}
 \]</span></li>
@@ -1309,12 +1310,12 @@ P(\{a_t, x_t\}_{t = 1}^T) = \sum_{m = 1}^M \pi^m p^{*m}(x_1, a_1) \prod_{t = 2}^
 \]</span> <span class="math display">\[
 \lambda_\xi^m := P^m(a = 1|x = \xi).
 \]</span></li>
-<li>Let <span class="math inline">\(\xi_j, j = 1, \cdots, M - 1\)</span> be elements of <span class="math inline">\(X\)</span> and <span class="math inline">\(k\)</span> be an element of <span class="math inline">\(X\)</span>.</li>
 </ul>
 </div>
 <div id="notations-for-parameters-to-be-identified" class="section level3">
 <h3><span class="header-section-number">7.6.7</span> Notations for Parameters to be Identified</h3>
 <ul>
+<li>Let <span class="math inline">\(\xi_j, j = 1, \cdots, M - 1\)</span> be elements of <span class="math inline">\(X\)</span> and <span class="math inline">\(k\)</span> be an element of <span class="math inline">\(X\)</span>.</li>
 <li>Define a matrix of type-specific distribution functions and type probabilities as: <span class="math display">\[
 L := 
 \begin{pmatrix}
@@ -1399,11 +1400,11 @@ F^*_{k, \xi_{M - 1}} &amp; F^*_{k, \xi_{M - 1}, \xi_1} &amp; \cdots &amp; F^*_{k
 <li>This implies that all columns in <span class="math inline">\(L\)</span> must be linearly independent.</li>
 <li>In other words, the changes in covariate <span class="math inline">\(x\)</span> must induce sufficient heterogeneous variations in the conditional choice probabilities across types.</li>
 </ul></li>
-<li>The conditions says <span class="math inline">\(\lambda_k^m &gt; 0\)</span> for all <span class="math inline">\(m\)</span>.
+<li>The conditions says <span class="math inline">\(\lambda_k^{*m} &gt; 0\)</span> for all <span class="math inline">\(m\)</span>.
 <ul>
 <li>If there is some <span class="math inline">\(m\)</span> that is <span class="math inline">\(\lambda_k^m = 0\)</span> for any <span class="math inline">\(k\)</span>, such type never shows up in the data.</li>
 </ul></li>
-<li>The condition says <span class="math inline">\(\lambda_k^m \neq \lambda_k^n\)</span> for any <span class="math inline">\(m \neq n\)</span>.
+<li>The condition says <span class="math inline">\(\lambda_k^{*m} \neq \lambda_k^{*n}\)</span> for any <span class="math inline">\(m \neq n\)</span>.
 <ul>
 <li>This condition is satisfied if initial distribution is different across types.</li>
 <li>If this condition fails, the identification becomes severe.</li>
@@ -1482,7 +1483,7 @@ P^{-1} P_k^* &amp;= L^{-1}V^{-1} L^{&#39;-1} L&#39;D_k^*VL\\
 <li>The idea of the EM algorithm is:</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li><strong>Expectation step</strong>: Given a parameter <span class="math inline">\(\theta^{(r)}\)</span>, a conditional choice probability <span class="math inline">\(p^{(r)}(a|x, w)\)</span>, an initial distribution of the unobserved state variable <span class="math inline">\(h^{(r)}(s_1|x_1)\)</span>, and a transition probability of the unobserved state variable <span class="math inline">\(h^{(r)}(w&#39;|w)\)</span>, update the probability that firm <span class="math inline">\(i\)</span> is in unobserved state <span class="math inline">\(w\)</span> in time <span class="math inline">\(t\)</span> to <span class="math inline">\(q_{it}^{(r + 1)}(w)\)</span>, update the initial distribution of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w|x_1)\)</span>, update the transition probability of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w&#39;|w)\)</span>, and update the conditional choice probability to <span class="math inline">\(p^{(r + 1)}(a|x, w)\)</span>.</li>
+<li><strong>Expectation step</strong>: Given a parameter <span class="math inline">\(\theta^{(r)}\)</span>, a conditional choice probability <span class="math inline">\(p^{(r)}(a|x, w)\)</span>, an initial distribution of the unobserved state variable <span class="math inline">\(h^{(r)}(w_1|x_1)\)</span>, and a transition probability of the unobserved state variable <span class="math inline">\(h^{(r)}(w&#39;|w)\)</span>, update the probability that firm <span class="math inline">\(i\)</span> is in unobserved state <span class="math inline">\(w\)</span> in time <span class="math inline">\(t\)</span> to <span class="math inline">\(q_{it}^{(r + 1)}(w)\)</span>, update the initial distribution of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w|x_1)\)</span>, update the transition probability of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w&#39;|w)\)</span>, and update the conditional choice probability to <span class="math inline">\(p^{(r + 1)}(a|x, w)\)</span>.</li>
 <li><strong>Maximization step</strong>: Given the probability that firm <span class="math inline">\(i\)</span> is in unobserved state <span class="math inline">\(w\)</span> in time <span class="math inline">\(t\)</span> to <span class="math inline">\(q_{it}^{(r + 1)}(w)\)</span>, the initial distribution of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w|x_1)\)</span>, the transition probability of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w&#39;|w)\)</span>, and the conditional choice probability to <span class="math inline">\(p^{(r + 1)}(a|x, w)\)</span>, update the parameters to <span class="math inline">\(\theta^{(r + 1)}\)</span>.</li>
 </ol>
 <ul>
@@ -1506,7 +1507,7 @@ L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p) := \varphi^{\theta, h}(p)(a
 \]</span></p></li>
 <li>The likelihood of observing <span class="math inline">\(\{a_{it}, x_{it}\}_{t = 1}^T\)</span> conditional on <span class="math inline">\(x_{i1}\)</span> is: <span class="math display">\[
 \begin{split}
-L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{1t}, \theta, h, p) &amp;:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
+L(\{a_{it}, x_{it}\}_{t = 1}^T|x_{i1}, \theta, h, p) &amp;:= \sum_{w_{i1} = 1}^W \cdots \sum_{w_{iT} = 1}^W h(w_{i1}|x_{i1}) L(a_{i1}, x_{i, 2}|x_{i1}, w_{i1}; \theta, h, p)\\
 &amp;\times \prod_{t = 2}^T h(w_{i, t + 1}| w_{it}) L(a_{it}, x_{i, t + 1}|x_{it}, w_{it}; \theta, h, p).
 \end{split}
 \]</span></li>
@@ -1530,14 +1531,14 @@ L(w_{it}|\{a_{it}, x_{it}\}_{t = 1}^T, \theta, h, p) := \frac{L(w_{it}, \{a_{it}
 <li>Update the probability that firm <span class="math inline">\(i\)</span> is in unobserved state <span class="math inline">\(w\)</span> in time <span class="math inline">\(t\)</span> to <span class="math inline">\(q_{it}^{(r + 1)}(w)\)</span>: <span class="math display">\[
 q_{it}^{(r + 1)}(w) := L(w|\{a_{it}, x_{it}\}_{t = 1}^T, \theta^{(r)}, h^{(r)}, p^{(r)}).
 \]</span></li>
-<li>Update the initial distribution of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(s_1|x_1)\)</span>: <span class="math display">\[
-h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = 1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = 1\}}.
+<li>Update the initial distribution of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w|x_1)\)</span>: <span class="math display">\[
+h^{(r + 1)}(w|x_1) := \frac{\sum_{i = 1}^N 1\{x_{i1} = x_1\} q_{i1}^{(r + 1)}(w)}{\sum_{i = 1}^N 1\{x_{i1} = x_1\}}.
 \]</span></li>
 <li>Update the transition probability of the unobserved state variable to <span class="math inline">\(h^{(r + 1)}(w&#39;|w)\)</span>: <span class="math display">\[
 h^{(r + 1)}(w&#39;|w) := \frac{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(w) q_{it}^{(r + 1)}(w&#39;)}{\sum_{i = 1}^N \sum_{t = 2}^T q_{i, t - 1}^{(r + 1)}(w)}.
 \]</span></li>
 <li>Update the conditional choice probability to <span class="math inline">\(p^{(r + 1)}(a|x, w)\)</span>: <span class="math display">\[
-p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{i, t - 1}^{(r + 1)}(w) 1\{x_{it} = x\}}.
+p^{(r + 1)}(a|x, w) := \frac{\sum_{i = 1}^N \sum_{t = 1}^T q_{it}^{(r + 1)}(w) 1\{x_{it} = x\}1\{a_{it} = a\}}{\sum_{i = 1}^N \sum_{t = 1}^T q_{it}^{(r + 1)}(w) 1\{x_{it} = x\}}.
 \]</span></li>
 </ol>
 </div>

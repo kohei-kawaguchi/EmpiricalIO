@@ -1,0 +1,367 @@
+---
+title: 'Assignment 9: Auction'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include = FALSE}
+rm(list = ls())
+library(EmpiricalIO)
+library(magrittr)
+library(stargazer)
+library(knitr)
+library(foreach)
+library(ggplot2)
+library(latex2exp)
+library(codetools)
+library(doParallel)
+registerDoParallel()
+knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center")
+```
+
+## Simulate data
+
+We simulate bid data from a second- and first-price sealed bid auctions.
+
+First, we draw bid data from a second-price sealed bid auctions. Suppose that for each auction $t = 1, \cdots, T$, there are $i = 1, \cdots, n_t$ potential bidders. At each auction, an auctioneer allocates one item and sets the reserve price at $r_t$. When the signal for bidder $i$ in auction $t$ is $x_{it}$, her expected value of the item is $x_{it}$. A signal $x_{it}$ is drawn from an i.i.d. beta distribution $B(\alpha, \beta)$. The distribution of the reserve prices is $B(\gamma, \delta)$. $n_t$ is drawn from a Poisson distribution with mean $\lambda$.  An equilibrium strategy is such that a bidder participates and bids $\beta(x) = x$ if $x \ge r_t$ and does not participate otherwise.
+
+1. Set the constants and parameters as follows:
+```{r}
+# set seed
+set.seed(1)
+# number of auctions
+T <- 100
+# parameter of value distribution
+alpha <- 2
+beta <- 2
+# parameters of reserve price distribution
+gamma <- 1
+delta <- 3
+# prameters of number of potential bidders
+lambda <- 10
+```
+
+2. Draw a vector of valuations and reservation prices.
+
+```{r}
+# number of bidders
+N <- rpois(T, lambda)
+# draw valuations
+valuation <-
+  foreach (tt = 1:T, .combine = "rbind") %do% {
+    n_t <- N[tt]
+    header <- expand.grid(t = tt, i = 1:n_t) 
+    return(header)
+  }
+valuation <- valuation %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(x = rbeta(length(i), alpha, beta))
+ggplot(valuation, aes(x = x)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+# draw reserve prices
+reserve <- rbeta(T, gamma, delta)
+reserve <- tibble::tibble(t = 1:T, r = reserve)
+ggplot(reserve, aes(x = r)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+```
+
+
+3. Write a function `compute_winning_bids_second(valuation, reserve)` that returns a winning bid from each second-price auction. It returns nothing for an auction in which no bid was above the reserve price. In the output, `t` refers to the auction index, `m` to the number of actual bidders, `r` to the reserve price, and `w` to the winning bid.
+```{r}
+compute_winning_bids_second <-
+  function(valuation, reserve) {
+    df_second_w <- valuation %>%
+      dplyr::left_join(reserve, by = "t") %>%
+      dplyr::group_by(t) %>%
+      # compute the number of potential bidders
+      dplyr::mutate(n = length(i)) %>%
+      # drop inactive bidders
+      dplyr::filter(x >= r) %>%
+      # compute the number of actual bidders
+      dplyr::mutate(m = length(i)) %>%
+      # rank the bids
+      dplyr::mutate(y = dplyr::dense_rank(-x)) %>%
+      # drop inactive auctions
+      dplyr::filter(m >= 1) %>%
+      # keep the winning bids
+      dplyr::filter(y == 2 | (y == 1 & m == 1)) %>%
+      # when there is one bidder, the winnig bid is equal to the reserve price
+      dplyr::mutate(x = ifelse(m == 1, r, x)) %>%
+      dplyr::ungroup() %>%
+      # rename
+      dplyr::rename(w = x) %>%
+      dplyr::select(t, n, m, r, w)
+    return(df_second_w)
+}
+df_second_w <-
+  compute_winning_bids_second(valuation, reserve)
+df_second_w
+ggplot(df_second_w, aes(x = w)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+```
+
+Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
+$$
+\beta(x) = x - \frac{\int_{r_t}^x B(t; \alpha, \beta)^{N - 1}}{B(x; \alpha, \beta)^{N - 1}},
+$$
+if $x \ge r$ and not to participate otherwise when there are more than one active bidder. If $x \ge r$ and there is only one bidder, the bidder bids $r_t$.
+
+4. Write a function `bid_first(x, r, alpha, beta, n, m)` that returns the equilibrium bid. To integrate a function, use `integrate` function in R. It returns `NA` if $x < r$.
+```{r}
+bid_first <- 
+  function(x, r, alpha, beta, n, m) {
+    if (x >= r) {
+      if (m > 1) {
+        f <- function(t) {pbeta(t, alpha, beta)^{n - 1}}
+        numerator <- integrate(f, r, x)$value
+        denominator <- f(x)
+        b <- x - numerator/denominator
+      } else {
+        b <- r
+      }
+    } else {
+      b <- NA
+    }
+  return(b)
+  }
+n <- N[1]
+m <- N[1]
+x <- valuation[1, "x"] %>% as.numeric(); x
+r <- reserve[1, "r"] %>% as.numeric(); r
+b <- bid_first(x, r, alpha, beta, n, m); b
+b <- bid_first(x, r, alpha, beta, n, 1); b
+x <- r/2; x
+b <- bid_first(x, r, alpha, beta, n, m); b
+```
+
+5. Write a function `compute_bids_first(valuation, reserve, alpha, beta)` that returns bids from each first-price auctions. It returns nothing for an auction in which no bid was above the reserve price.
+
+```{r}
+compute_bids_first <-
+  function(valuation, reserve, alpha, beta) {
+    df_first <- 
+      valuation %>%
+      dplyr::left_join(reserve, by = "t") %>%
+      dplyr::group_by(t) %>%
+      # number of potential bidders
+      dplyr::mutate(n = length(i)) %>%
+      # drop inactive bidders
+      dplyr::filter(x >= r) %>%
+      # number of active bidders
+      dplyr::mutate(m = length(i)) %>%
+      # drop inactive auctions
+      dplyr::filter(m >= 1) %>%
+      dplyr::ungroup() %>%
+      # draw bids
+      dplyr::rowwise() %>%
+      dplyr::mutate(b = bid_first(x, r, alpha, beta, n, m)) %>%
+      dplyr::ungroup()
+    return(df_first)
+  }
+df_first <- compute_bids_first(valuation, reserve, alpha, beta)
+ggplot(df_first, aes(x = b)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+```
+
+6. Write a function `compute_winning_bids_first(valuation, reserve, alpha, beta)` that returns only the winning bids from each first-price auction. It will call `compute_bids_first` inside the function.
+
+```{r}
+compute_winning_bids_first <-
+  function(valuation, reserve, alpha, beta) {
+    # compute bids
+    df_first <- compute_bids_first(valuation, reserve, alpha, beta)
+    # keep only winning bids
+    df_first_w <- df_first %>%
+      dplyr::group_by(t) %>%
+      # keep the winner
+      dplyr::mutate(y = dplyr::dense_rank(-x)) %>%
+      dplyr::filter(y == 1) %>%
+      dplyr::ungroup() %>%
+      dplyr::rename(w = x) %>%
+      dplyr::select(t, n, m, r, w)
+    return(df_first_w)
+  }
+df_first_w <-
+  compute_winning_bids_first(valuation, reserve, alpha, beta)
+df_first_w
+ggplot(df_first_w, aes(x = w)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+```
+
+
+
+
+
+```{r, echo = FALSE, eval = FALSE}
+#-----------------#
+# define funcitons
+#-----------------#
+##### second price auction
+f <- function(u, N) {
+  y <- (u^(N - 2))*(1 - u)
+  return(y)
+}
+objective.second <- function(theta, w.10, N, F.w) {
+  alpha <- theta[1]
+  alpha <- exp(alpha)
+  beta <- theta[2]
+  beta <- exp(beta)
+  # distribution at w
+  F.v <- pbeta(w.10, alpha, beta)
+  # phi
+  phi <- c()
+  for (i in 1:length(F.v)) {
+    phi.i <- N*(N - 1)*integrate(f, lower = 0, upper = F.v[i], N = N)$value
+    phi <- c(phi, phi.i)
+  }
+  output <- mean((phi - F.w)^2)
+  return(output)
+}
+##### frst price auction
+bid <- function(v, alpha, beta, N) {
+  f <- function(x) {pbeta(x, alpha, beta)^{N - 1}}
+  numerator <- integrate(f, 0, v)$value
+  denominator <- f(v)
+  b <- v - numerator/denominator
+  return(b)
+}
+
+#---------------------#
+# second price auction
+#---------------------#
+
+#---------------#
+# set parameters
+#---------------#
+# number of bidders
+N <- 10
+# number of auctions
+T <- 100
+# parameter of value distribution
+# beta distribution in [0, 1]
+alpha <- 1
+beta <- 3
+
+#------------#
+# draw values
+#------------#
+set.seed(1)
+v <- rbeta(N*T, alpha, beta)
+v <- data.frame(expand.grid(1:N, 1:T), v)
+hist(v$v)
+colnames(v) <- c("bidder", "auction", "v")
+w <- dplyr::group_by(v, auction) %>%
+  dplyr::arrange(auction, -v) %>%
+  dplyr::filter(row_number() == 2) %>%
+  dplyr::rename(w = v)
+hist(w$w)
+write.csv(w, file = "data_ps7_second.csv", row.names = FALSE)
+
+#--------------------#
+# estimate parameters
+#--------------------#
+# percentiles
+F.w <- seq(0, 1, 0.1)
+w.10 <- quantile(w$w, probs = F.w)
+
+res <- optim(par = c(0.5, 0.5), fn = objective.second,
+             method = "Nelder-Mead",
+             w.10 = w.10, N = N, F.w = F.w)
+
+pdf(file = "winning_bid.pdf")
+hist(w$w, xlab = "winning bid", main = "", col = "blue")
+dev.off()
+
+xtable <- format(round(w.10, 3), 3)
+x <- Hmisc::latex(xtable,
+      title = "",
+      file = "winning_bid_percentiles.tex",
+      table.env = FALSE
+)
+
+est <- res$par
+est <- exp(est)
+est <- as.matrix(est)
+rownames(est) <- c("alpha", "beta")
+colnames(est) <- c("estimate")
+est <- format(round(est, 3), 3)
+x <- Hmisc::latex(est,
+      title = "",
+      file = "second_estimate.tex",
+      table.env = FALSE)
+
+#--------------------#
+# first price auction
+#--------------------#
+# number of bidders
+N <- 10
+# number of auctions
+T <- 100
+# parameter of value distribution
+# beta distribution in [0, 1]
+alpha <- 2
+beta <- 3
+
+#------------#
+# draw values
+#------------#
+set.seed(10)
+v <- rbeta(N*T, alpha, beta)
+v <- data.frame(expand.grid(1:N, 1:T), v)
+hist(v$v)
+colnames(v) <- c("bidder", "auction", "v")
+b <- c()
+for (i in 1:dim(v)[1]) {
+  b.i <- bid(v[i, "v"], alpha, beta, N)
+  b <- c(b, b.i)
+}
+b <- data.frame(v, b = b) %>%
+  dplyr::select(-v)
+write.csv(b, file = "data_ps7_first.csv", row.names = FALSE)
+
+f.b <- ks::kde(b$b, eval.points = b$b)$estimate
+F.b <- ks::kcde(b$b, eval.points = b$b)$estimate
+
+v.star <- b$b + F.b/((N - 1)*f.b)
+b <- data.frame(b, v.star = v.star, v.true = v$v)
+v.star.ecdf <- ecdf(b$v.star)
+bid <- ecdf(b$b)
+pdf(file = "first_estimate.pdf")
+plot(v.star.ecdf, col = "red", main = "", 
+     xlab = "bid/value",
+     ylab = "cumulative distribution")
+lines(bid, col = "blue")
+legend("bottomright", c("value", "bid"), col = c("red", "blue"),
+       lty = c(1, 1))
+dev.off()
+
+```
+
+# Problems
+
+1. The data set `data_ps7_second.csv` contains a series of winning bids of 100 sealed-bid second price auctions. In each round, there were 10 bidders. Assume that the bidders play a dominant strategy equilibrium in each round and assume that the private value of bidder $i$ in auction $t$ is drawn from a beta distribution of shape parameters $(\alpha, \beta), B(\alpha, \beta)$, and that they are identical and independent across bidders and auctions. Estimate parameters $(\alpha, \beta)$ following the steps below:
+
+
+    1. Estimate the empirical distribution of winning bids and let $\hat{F}_w$ denote it. Plot the histogram.
+    1. Pick up 10 points on the support of winning bids, say, 0, 10, $\cdots$, 90, 100 percentiles and let $\{w_{j}\}_{j = 0}^{100}$ denote it.
+    1. Write a function to compute the predicted distribution of winning bids:
+\begin{equation}
+\varphi(B(w; \alpha, \beta), N) = N(N - 1)\int_0^{B(w; \alpha, \beta)} u^{N - 2}(1 - u) du,
+\end{equation}
+at $\{w_{j}\}_{j = 0}^{100}$. To numerically compute the integral of a function, you can use [`integrate`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/integrate.html) function build in R.
+    1. Write a function that computes the objective function such that:
+\begin{equation}
+ \frac{1}{10}\sum_{j = 0}^{100} [\hat{F}_w(w_j) - \varphi(B(w_j; \alpha, \beta), N) ]^2,
+\end{equation}
+as a function of model parameters $(\alpha, \beta)$.
+    1. Then, find paremters $(\alpha, \beta)$ that minimize the objective function.
+
+
+1. The data set `data_ps7_first.csv` contains a series of bids of 100 sealed-bid first price auctions. In each round, there were 10 bidders. Suppose that the equilibrium strategy of bidders are characterized as in the lecture slide. Estimate the distribution of bidder's private values nonparametrically by following the steps below:
+
+    1. Compute the kernel density and kernel cumulative distribution functions of bids, $f_b$ and $F_b$. For this, you can use `kde` and `kcde` functions in package `ks`. Let $\hat{f}_b$ and $\hat{F}_b$ denote the estimated functions.
+    1. For each bid, compute the values $\hat{f}_b(b_i^t)$ and $\hat{F}_b(b_i^t)$.
+    1. Use the first order condition:
+\begin{equation}
+v_i^t = b_i^t + \frac{\hat{F}_b(b_i^t)}{(N - 1)\hat{f}_b(b_i^t)}, 
+\end{equation}
+to compute the implied bidder's values.
+    1. Plot the empirical cumulative distribution of the implied bidder's values.

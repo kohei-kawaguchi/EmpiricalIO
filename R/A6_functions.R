@@ -146,18 +146,12 @@ compute_objective_sequential_entry <-
     # compute monte carlo simulations of sequential entry model
     Y_mc <- compute_monte_carlo_sequential_entry(X, Z, EP_mc, NU_mc,
                                                  beta, alpha, delta, rho)
-    # compute the sum
-    Y <-
-      Y %>%
-      purrr::map(sum)
-    Y_mc <-
-      Y_mc %>%
-      purrr::map(., ~ purrr::map(., ~ sum(abs(.))))   
     # compute the square difference
     objective <-
       foreach (r = 1:length(EP_mc), .combine = "rbind") %dopar% {
         Y_mc_r <- Y_mc[[r]]
         diff_r <- purrr::map2(Y_mc_r, Y, `-`) %>%
+          purrr::map(., ~ sum(abs(.))) %>%
           purrr::map(., ~ .^2) %>%
           purrr::reduce(`+`)
         diff_r <- diff_r / length(Y_mc_r)
@@ -198,18 +192,12 @@ compute_objective_simultaneous_entry <-
     Y_mc <-
       compute_monte_carlo_simultaneous_entry(
         X, Z, EP_mc, NU_mc, beta, alpha, delta)
-    # compute the sum
-    Y <-
-      Y %>%
-      purrr::map(sum)
-    Y_mc <-
-      Y_mc %>%
-      purrr::map(., ~ purrr::map(., sum))   
     # compute the square difference
     objective <-
       foreach (r = 1:length(EP_mc), .combine = "rbind") %dopar% {
         Y_mc_r <- Y_mc[[r]]
         diff_r <- purrr::map2(Y_mc_r, Y, `-`) %>%
+          purrr::map(., sum) %>%
           purrr::map(., ~ .^2) %>%
           purrr::reduce(`+`)
         diff_r <- diff_r / length(Y_mc_r)
@@ -219,5 +207,3 @@ compute_objective_simultaneous_entry <-
     # return
     return(objective)
   }
-
-

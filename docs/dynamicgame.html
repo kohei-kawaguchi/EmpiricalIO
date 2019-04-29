@@ -454,9 +454,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.4.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function"><i class="fa fa-check"></i><b>8.4.5</b> Value Function</a></li>
 <li class="chapter" data-level="8.4.6" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium-2"><i class="fa fa-check"></i><b>8.4.6</b> Markov-perfect Equilibrium</a></li>
 <li class="chapter" data-level="8.4.7" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-strategy"><i class="fa fa-check"></i><b>8.4.7</b> Oblivious Strategy</a></li>
-<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.8</b> Oblivious Value Function</a></li>
-<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Equilibrium</a></li>
-<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.10</b> Asymptotic Results and Extensions</a></li>
+<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#long-run-average-industry-state"><i class="fa fa-check"></i><b>8.4.8</b> Long-run Average Industry State</a></li>
+<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Value Function</a></li>
+<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.10</b> Oblivious Equilibrium</a></li>
+<li class="chapter" data-level="8.4.11" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.11</b> Asymptotic Results and Extensions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a><ul>
@@ -1237,7 +1238,7 @@ where <span class="math inline">\(\Psi\)</span> is the cumulative distribution f
 <li>In each period, each incumbent draws a positive real-valued sell-off value <span class="math inline">\(\phi_{it}\)</span>, and exits from the market if the sell-off value exceeds the continuation value.</li>
 <li>If an incumbent firm stays in the market, the firm chooses an investment <span class="math inline">\(\iota_{it} \in \mathbb{R}_+\)</span>.</li>
 <li>Then, the state of the firm is updated according to a rule: <span class="math display">\[
-x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1}\},
+x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 \]</span></li>
 <li>where <span class="math inline">\(w\)</span> captures the impact of investment and <span class="math inline">\(\zeta_{i, t + 1}\)</span> is a shock to the investment process.</li>
 <li>The unit cost of investment is <span class="math inline">\(d\)</span>.</li>
@@ -1344,7 +1345,9 @@ V(x, s|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;, \mu, \lambda}\left\{\sum
 <li>We consider a firm who is <strong>oblivious</strong> of other firms’ exact states but only cares the <strong>long-run average industry state</strong> on top of its own state.</li>
 <li>Let <span class="math inline">\(\widetilde{\mathcal{M}} \subset \mathcal{M}\)</span> and <span class="math inline">\(\widetilde{\Lambda} \subset \Lambda\)</span> be the set of <strong>oblivious strategies</strong> and the set of <strong>oblivious entry rate functions</strong> in the sense that both <span class="math inline">\(\mu \in \widetilde{\mathcal{M}}\)</span> and <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> do not depend on <span class="math inline">\(s\)</span>.</li>
 </ul>
-<p>### Long-run Average Industry State</p>
+</div>
+<div id="long-run-average-industry-state" class="section level3">
+<h3><span class="header-section-number">8.4.8</span> Long-run Average Industry State</h3>
 <ul>
 <li>Then, if all firms use a common strategy <span class="math inline">\(\mu \in \widetilde{\mathcal{M}} \subset \mathcal{M}\)</span>, each firm’s state evolves as an independent transient Markov chain.</li>
 <li>Let the <span class="math inline">\(k\)</span>-period transition probability of this Markov chain be denoted by <span class="math inline">\(P_{\mu}^k(x, y)\)</span>.</li>
@@ -1358,7 +1361,7 @@ V(x, s|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;, \mu, \lambda}\left\{\sum
 </ul>
 </div>
 <div id="oblivious-value-function" class="section level3">
-<h3><span class="header-section-number">8.4.8</span> Oblivious Value Function</h3>
+<h3><span class="header-section-number">8.4.9</span> Oblivious Value Function</h3>
 <ul>
 <li><p>For an oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span>, we define an <strong>oblivious value function</strong>: <span class="math display">\[
 \widetilde{V}(x|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;} \left\{\sum_{k = t}^{\tau_i} \beta^{k - t}[\pi(x_{ik}, \tilde{s}_{\mu, \lambda}) - d \iota_{ik}] + \beta^{\tau_i - t} \phi_{i, \tau_i}| x_{it} = x \right\}.
@@ -1369,7 +1372,7 @@ V(x, s|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;, \mu, \lambda}\left\{\sum
 </ul>
 </div>
 <div id="oblivious-equilibrium" class="section level3">
-<h3><span class="header-section-number">8.4.9</span> Oblivious Equilibrium</h3>
+<h3><span class="header-section-number">8.4.10</span> Oblivious Equilibrium</h3>
 <ul>
 <li>An oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> is an <strong>oblivious equilibrium</strong> if:</li>
 </ul>
@@ -1392,7 +1395,7 @@ V(x, s|\mu&#39;, \mu, \lambda) := \mathbb{E}_{\mu&#39;, \mu, \lambda}\left\{\sum
 </ul>
 </div>
 <div id="asymptotic-results-and-extensions" class="section level3">
-<h3><span class="header-section-number">8.4.10</span> Asymptotic Results and Extensions</h3>
+<h3><span class="header-section-number">8.4.11</span> Asymptotic Results and Extensions</h3>
 <ul>
 <li>The authors show that under a certain condition when the market size goes to infinity, an oblivious equilibrium approximates an Markov-perfect equilibrium in the sense that a deviation from the oblivious equilibrium to a (possibly non-oblivious) best response does not improve the value for a firm.</li>
 <li><span class="citation">Benkard, Jeziorski, &amp; Weintraub (<a href="#ref-Benkard2015">2015</a>)</span> consider an extension of the current model to the <strong>partially oblivious equlibrium</strong> in which a subset of firms follow a non-oblivious strategy and the other firms follow an oblivious strategy.</li>
