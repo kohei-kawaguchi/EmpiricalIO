@@ -52,7 +52,7 @@
     - Suppose that $u_k(v, x_i, x_{-i})$ depends on $v, x_i, x_{-i}$.
     - Suppose that bidder $i$ is uncertain about $V$ and the distribution of $V$ conditional on $x_i$ is independent of $x_{-i}$.
     - Suppose that $u(v, x_i, x_{-i}) = u(x, x_i)$.
-    - Then, $\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} \equiv f(x_i)$ for some monotone increasing function $f$.
+    - Then, $\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} := f(x_i)$ for some monotone increasing function $f$.
     - This is still a private value model.
     - If the distribution of $V$ is not independent of some $x_i$, it is no longer a private value model.
     - The last case is referred to as the __common values (CV)__ model.
@@ -72,7 +72,7 @@
 
 - Let:
 $$
-w(x, y) \equiv \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
+w(x, y) := \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
 $$
 be the expected payoff of the bidder when her signal is $x$ and the highest rival's signals is $y_1$.
 - Let $\underline{x}$ is the lower bound of the support of $X$.
@@ -153,7 +153,7 @@ $$
 - The likelihood is:
     - If $m_t = 0$, the $F_X(r_t)^{n_t}$.
     - If $m_t = 1$ then $\mathbb{P}\{m_t = 1\} = n_t F_X(r_t)^{n_t - 1} [1 - F_X(r_t)]$.
-    - If $m_t > 1$, then $h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 2} [1 - F_X(w_t)] f_X(w_t)$.
+    - If $m_t > 1$, then $h_t(w_t) := n_t (n_t - 1) F_X(w_t)^{n_t - 2} [1 - F_X(w_t)] f_X(w_t)$.
 - The likelihood function is, if the data is only about the auctions with $m_t \ge 1$:
 $$
 L = \prod_{t = 1}^T \frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}}{1 - \mathbb{P}\{m_t = 0\}}
@@ -194,7 +194,7 @@ x_{it} = \alpha + \beta z_{it} + u_{it}.
 $$
 - Then:
 $$
-x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta \equiv \tilde{b}_{it}.
+x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta := \tilde{b}_{it}.
 $$
 - We can first regress $b_{it}$ on $z_{it}$ to estimate $\alpha$ and $\beta$ to compute $\tilde{b}_{it}$.
 - Then, the rest of the argument is the same as above by replacing $b_{it}$ with $\tilde{b}_{it}$.
@@ -319,7 +319,7 @@ $$
 
 - @donaldPiecewisePseudoMaximumLikelihood1993 proposed a maximum likelihood estimator.
 - The data consists of $\{w_t, r_t, n_t\}_{t = 1}^T$ for the sample where the number of actual bidders $m_t \ge 1$.
-- The probability of having $w_t$ is:
+- The probability density of having $w_t$ is:
 $$
 \begin{split}
 h_t(w_t) &= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t'(w_t)\\

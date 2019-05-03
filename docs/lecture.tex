@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{Last updated: 2019-04-29}
+    \date{Last updated: 2019-05-03}
 
 \usepackage{booktabs}
 
@@ -10768,7 +10768,7 @@ Asssumptions}\label{discussion-about-the-asssumptions}
     Suppose that \(u(v, x_i, x_{-i}) = u(x, x_i)\).
   \item
     Then,
-    \(\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} \equiv f(x_i)\)
+    \(\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} := f(x_i)\)
     for some monotone increasing function \(f\).
   \item
     This is still a private value model.
@@ -10817,7 +10817,7 @@ Asssumptions}\label{discussion-about-the-asssumptions}
 \tightlist
 \item
   Let: \[
-  w(x, y) \equiv \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
+  w(x, y) := \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
   \] be the expected payoff of the bidder when her signal is \(x\) and
   the highest rival's signals is \(y_1\).
 \item
@@ -11013,7 +11013,7 @@ Auction}\label{likelihood-of-ipv-button-auction}
     \(\mathbb{P}\{m_t = 1\} = n_t F_X(r_t)^{n_t - 1} [1 - F_X(r_t)]\).
   \item
     If \(m_t > 1\), then
-    \(h_t(w_t) \equiv n_t (n_t - 1) F_X(w_t)^{n_t - 2} [1 - F_X(w_t)] f_X(w_t)\).
+    \(h_t(w_t) := n_t (n_t - 1) F_X(w_t)^{n_t - 2} [1 - F_X(w_t)] f_X(w_t)\).
   \end{itemize}
 \item
   The likelihood function is, if the data is only about the auctions
@@ -11083,7 +11083,7 @@ Data}\label{likelihood-of-ipv-english-auction-with-bid-data}
   \]
 \item
   Then: \[
-  x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta \equiv \tilde{b}_{it}.
+  x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta := \tilde{b}_{it}.
   \]
 \item
   We can first regress \(b_{it}\) on \(z_{it}\) to estimate \(\alpha\)
@@ -11273,7 +11273,7 @@ Auction}\label{maximum-likelihood-estimation-of-the-ipv-first-price-auction}
   The data consists of \(\{w_t, r_t, n_t\}_{t = 1}^T\) for the sample
   where the number of actual bidders \(m_t \ge 1\).
 \item
-  The probability of having \(w_t\) is: \[
+  The probability density of having \(w_t\) is: \[
   \begin{split}
   h_t(w_t) &= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t'(w_t)\\
   &= \frac{n_t F_X[\eta_t(w_t)]^{n_t}}{(n_t - 1)[\eta_t(w_t) - w_t]},
@@ -15212,9 +15212,9 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 
 \begin{verbatim}
 ##            z_1        z_2
-## [1,]  2.085976  0.3260281
-## [2,]  1.781727 -3.1784427
-## [3,] -4.357432 -1.7088977
+## [1,]  6.009675 -2.6090451
+## [2,] -5.940622 -0.0524375
+## [3,]  0.356437 -0.2639707
 \end{verbatim}
 
 \begin{Shaded}
@@ -15348,10 +15348,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##            [,1]
-## [1,]  1.8649451
-## [2,] -0.2151083
-## [3,] -1.0663548
+##           [,1]
+## [1,]  0.551453
+## [2,] -1.081993
+## [3,]  0.495678
 \end{verbatim}
 
 \begin{enumerate}
@@ -15380,10 +15380,10 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 \end{Shaded}
 
 \begin{verbatim}
-##            [,1]
-## [1,]  7.6481730
-## [2,] -0.1605689
-## [3,]  0.0000000
+##           [,1]
+## [1,]  5.004526
+## [2,] -2.445201
+## [3,]  0.000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -15410,7 +15410,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 ##      [,1]
 ## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -15434,7 +15434,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 ##      [,1]
 ## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -15465,7 +15465,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 ##      [,1]
 ## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15480,7 +15480,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 ## [2,]    0
 ## [3,]    0
 ## [4,]    1
-## [5,]    1
+## [5,]    0
 ## [6,]    0
 \end{verbatim}
 
@@ -15523,7 +15523,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 ##      [,1]
 ## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15538,7 +15538,7 @@ econometrician but \(\nu_{im}\) and \(\epsilon_m\) are not.
 ## [2,]    0
 ## [3,]    0
 ## [4,]    1
-## [5,]    1
+## [5,]    0
 ## [6,]    0
 \end{verbatim}
 
@@ -15636,7 +15636,7 @@ consider the following objective function: \[
 ##      [,1]
 ## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15647,7 +15647,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.4001
+## [1] 0.4951
 \end{verbatim}
 
 \begin{enumerate}
@@ -15677,7 +15677,7 @@ consider the following objective function: \[
 ##      [,1]
 ## [1,]    1
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -15688,7 +15688,7 @@ consider the following objective function: \[
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2787
+## [1] 0.3336
 \end{verbatim}
 
 \begin{enumerate}
@@ -18110,6 +18110,929 @@ firm and \(s_l\) is \(l\)-th state profile.
 ## 3  0.3 0.294446
 \end{verbatim}
 
+\chapter{Assignment 9: Auction}\label{assignment-9-auction}
+
+The deadline is \textbf{May 20 1:30pm}.
+
+\section{Simulate data}\label{simulate-data-8}
+
+We simulate bid data from a second- and first-price sealed bid auctions.
+
+First, we draw bid data from a second-price sealed bid auctions. Suppose
+that for each auction \(t = 1, \cdots, T\), there are
+\(i = 1, \cdots, n_t\) potential bidders. At each auction, an auctioneer
+allocates one item and sets the reserve price at \(r_t\). When the
+signal for bidder \(i\) in auction \(t\) is \(x_{it}\), her expected
+value of the item is \(x_{it}\). A signal \(x_{it}\) is drawn from an
+i.i.d. beta distribution \(B(\alpha, \beta)\). Let
+\(F_X(\cdot; \alpha, \beta)\) be its distribution and
+\(f_X(\cdot; \alpha, \beta)\) be the density. A reserve is set at 0.2.
+\(n_t\) is drawn from a Poisson distribution with mean \(\lambda\). An
+equilibrium strategy is such that a bidder participates and bids
+\(\beta(x) = x\) if \(x \ge r_t\) and does not participate otherwise.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set the constants and parameters as follows:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# set seed}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{# number of auctions}
+\NormalTok{T <-}\StringTok{ }\DecValTok{100}
+\CommentTok{# parameter of value distribution}
+\NormalTok{alpha <-}\StringTok{ }\DecValTok{2}
+\NormalTok{beta <-}\StringTok{ }\DecValTok{2}
+\CommentTok{# parameters of reserve price distribution}
+\NormalTok{gamma <-}\StringTok{ }\DecValTok{1}
+\NormalTok{delta <-}\StringTok{ }\DecValTok{3}
+\CommentTok{# prameters of number of potential bidders}
+\NormalTok{lambda <-}\StringTok{ }\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Draw a vector of valuations and reservation prices.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# number of bidders}
+\NormalTok{N <-}\StringTok{ }\KeywordTok{rpois}\NormalTok{(T, lambda)}
+\CommentTok{# draw valuations}
+\NormalTok{valuation <-}
+\StringTok{  }\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{tt =} \DecValTok{1}\OperatorTok{:}\NormalTok{T, }\DataTypeTok{.combine =} \StringTok{"rbind"}\NormalTok{) }\OperatorTok{%do%}\StringTok{ }\NormalTok{\{}
+\NormalTok{    n_t <-}\StringTok{ }\NormalTok{N[tt]}
+\NormalTok{    header <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ tt, }\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\NormalTok{n_t) }
+    \KeywordTok{return}\NormalTok{(header)}
+\NormalTok{  \}}
+\NormalTok{valuation <-}\StringTok{ }\NormalTok{valuation }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rbeta}\NormalTok{(}\KeywordTok{length}\NormalTok{(i), alpha, beta))}
+\KeywordTok{ggplot}\NormalTok{(valuation, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"steelblue"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-241-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# draw reserve prices}
+\NormalTok{reserve <-}\StringTok{ }\FloatTok{0.2}
+\NormalTok{reserve <-}\StringTok{ }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{tibble}\NormalTok{(}\DataTypeTok{t =} \DecValTok{1}\OperatorTok{:}\NormalTok{T, }\DataTypeTok{r =}\NormalTok{ reserve)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_winning\_bids\_second(valuation,\ reserve)} that
+  returns a winning bid from each second-price auction. It returns
+  nothing for an auction in which no bid was above the reserve price. In
+  the output, \texttt{t} refers to the auction index, \texttt{m} to the
+  number of actual bidders, \texttt{r} to the reserve price, and
+  \texttt{w} to the winning bid.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute winning bids from second-price auction}
+\NormalTok{df_second_w <-}
+\StringTok{  }\KeywordTok{compute_winning_bids_second}\NormalTok{(valuation, reserve)}
+\NormalTok{df_second_w}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 100 x 5
+##        t     n     m     r     w
+##    <int> <int> <int> <dbl> <dbl>
+##  1     1     8     8   0.2 0.637
+##  2     2    10    10   0.2 0.647
+##  3     3     7     5   0.2 0.484
+##  4     4    11     8   0.2 0.804
+##  5     5    14    12   0.2 0.920
+##  6     6    12    11   0.2 0.942
+##  7     7    11     9   0.2 0.810
+##  8     8     9     9   0.2 0.724
+##  9     9    14    14   0.2 0.880
+## 10    10    11     9   0.2 0.677
+## # ... with 90 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df_second_w, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ w)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"steelblue"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-242-1} \end{center}
+
+Next, we simulate bid data from first-price sealed bid auctions. The
+setting is the same as the second-price auctions expect for the auction
+rule. An equilibrium bidding strategy is to participate and bid: \[
+\beta(x) = x - \frac{\int_{r_t}^x F_X(t)^{N - 1}}{F_X(x)^{N - 1}},
+\] if \(x \ge r\) and not to participate otherwise when there are more
+than one active bidder. If \(x \ge r\) and there is only one bidder, the
+bidder bids \(r_t\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Write a function \texttt{bid\_first(x,\ r,\ alpha,\ beta,\ n)} that
+  returns the equilibrium bid. To integrate a function, use
+  \texttt{integrate} function in R. It returns 0 if \(x < r\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute bid from first-price auction}
+\NormalTok{n <-}\StringTok{ }\NormalTok{N[}\DecValTok{1}\NormalTok{]}
+\NormalTok{m <-}\StringTok{ }\NormalTok{N[}\DecValTok{1}\NormalTok{]}
+\NormalTok{x <-}\StringTok{ }\NormalTok{valuation[}\DecValTok{1}\NormalTok{, }\StringTok{"x"}\NormalTok{] }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(); x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3902289
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r <-}\StringTok{ }\NormalTok{reserve[}\DecValTok{1}\NormalTok{, }\StringTok{"r"}\NormalTok{] }\OperatorTok{%>%}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(); r}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{bid_first}\NormalTok{(x, r, alpha, beta, n); b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3596662
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{r}\OperatorTok{/}\DecValTok{2}\NormalTok{; x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{bid_first}\NormalTok{(x, r, alpha, beta, n); b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\KeywordTok{bid_first}\NormalTok{(}\DecValTok{1}\NormalTok{, r, alpha, beta, n); b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.7978258
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_bids\_first(valuation,\ reserve,\ alpha,\ beta)} that
+  returns bids from each first-price auctions. It returns bids below the
+  reserve price.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute bid data from first-price auctions}
+\NormalTok{df_first <-}\StringTok{ }\KeywordTok{compute_bids_first}\NormalTok{(valuation, reserve, alpha, beta)}
+\KeywordTok{ggplot}\NormalTok{(df_first, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ b)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"steelblue"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-244-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_winning\_bids\_first(valuation,\ reserve,\ alpha,\ beta)}
+  that returns only the winning bids from each first-price auction. It
+  will call \texttt{compute\_bids\_first} inside the function. It does
+  not return anything when no bidder bids above the reserve price.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute winning bids from first-price auctions}
+\NormalTok{df_first_w <-}
+\StringTok{  }\KeywordTok{compute_winning_bids_first}\NormalTok{(valuation, reserve, alpha, beta)}
+\NormalTok{df_first_w}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 100 x 5
+##        t     n     m     r     w
+##    <int> <int> <int> <dbl> <dbl>
+##  1     1     8     8   0.2 0.731
+##  2     2    10    10   0.2 0.638
+##  3     3     7     5   0.2 0.525
+##  4     4    11     8   0.2 0.818
+##  5     5    14    12   0.2 0.842
+##  6     6    12    11   0.2 0.833
+##  7     7    11     9   0.2 0.772
+##  8     8     9     9   0.2 0.753
+##  9     9    14    14   0.2 0.849
+## 10    10    11     9   0.2 0.803
+## # ... with 90 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(df_first_w, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ w)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"steelblue"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-245-1} \end{center}
+
+\section{Estimate the parameters}\label{estimate-the-parameters-5}
+
+We first estimate the parameters from the winning bids data of
+second-price auctions. We estimate the parameters by maximizing a
+log-likelihood.
+
+\[
+l(\alpha, \beta) := \frac{1}{T} \sum_{t = 1}^T \ln\frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}}{1 - \mathbb{P}\{m_t = 0\}},
+\] where: \[
+\mathbb{P}\{m_t = 0\} := F_X(r_t)^{n_t},
+\] \[
+\mathbb{P}\{m_t = 1\} := n_t F_X(r_t; \alpha, \beta)^{n_t - 1} [1 - F_X(r_t; \alpha, \beta)].
+\]
+
+\[
+h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha, \beta)] f_X(w_t; \alpha, \beta).
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_p\_second\_w(w,\ r,\ m,\ n,\ alpha,\ beta)} that
+  computes \(\mathbb{P}\{m_t = 1\}\) if \(m_t = 1\) and \(h_t(w_t)\) if
+  \(m_t > 1\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute probability density for winning bids from a second-price auction}
+\NormalTok{w <-}\StringTok{ }\NormalTok{df_second_w[}\DecValTok{1}\NormalTok{, ]}\OperatorTok{$}\NormalTok{w}
+\NormalTok{r <-}\StringTok{ }\NormalTok{df_second_w[}\DecValTok{1}\NormalTok{, ]}\OperatorTok{$}\NormalTok{r}
+\NormalTok{m <-}\StringTok{ }\NormalTok{df_second_w[}\DecValTok{1}\NormalTok{, ]}\OperatorTok{$}\NormalTok{m}
+\NormalTok{n <-}\StringTok{ }\NormalTok{df_second_w[}\DecValTok{1}\NormalTok{, ]}\OperatorTok{$}\NormalTok{n}
+\KeywordTok{compute_p_second_w}\NormalTok{(w, r, m, n, alpha, beta)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.752949
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Write a function \texttt{compute\_m0(r,\ n,\ alpha,\ beta)} that
+  computes \(\mathbb{P}\{m_t = 0\}\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute non-participation probability}
+\KeywordTok{compute_m0}\NormalTok{(r, n, alpha, beta)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.368569e-08
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_loglikelihood\_second\_price\_w(theta,\ df\_second\_w)}
+  that computes the log-likelihood for a second-price auction winning
+  bid data.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute log-likelihood for winning bids from second-price auctions}
+\NormalTok{theta <-}\StringTok{ }\KeywordTok{c}\NormalTok{(alpha, beta)}
+\KeywordTok{compute_loglikelihood_second_price_w}\NormalTok{(theta, df_second_w)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9849261
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Compare the value of objective function around the true parameters.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# label}
+\NormalTok{label <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{alpha"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{beta"}\NormalTok{)}
+\NormalTok{label <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"$"}\NormalTok{, label, }\StringTok{"$"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\CommentTok{# compute the graph}
+\NormalTok{graph <-}\StringTok{ }\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(theta)) }\OperatorTok{%do%}\StringTok{ }\NormalTok{\{}
+\NormalTok{  theta_i <-}\StringTok{ }\NormalTok{theta[i]}
+\NormalTok{  theta_i_list <-}\StringTok{ }\NormalTok{theta_i }\OperatorTok{*}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.8}\NormalTok{, }\FloatTok{1.2}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{  objective_i <-}
+\StringTok{    }\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{j =} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(theta_i_list),}
+             \DataTypeTok{.combine =} \StringTok{"rbind"}\NormalTok{) }\OperatorTok{%dopar%}\StringTok{ }\NormalTok{\{}
+\NormalTok{               theta_ij <-}\StringTok{ }\NormalTok{theta_i_list[j]}
+\NormalTok{               theta_j <-}\StringTok{ }\NormalTok{theta}
+\NormalTok{               theta_j[i] <-}\StringTok{ }\NormalTok{theta_ij}
+\NormalTok{               objective_ij <-}\StringTok{ }
+\StringTok{                 }\KeywordTok{compute_loglikelihood_second_price_w}\NormalTok{(}
+\NormalTok{                   theta_j, df_second_w)}
+               \KeywordTok{return}\NormalTok{(objective_ij)}
+\NormalTok{             \}}
+\NormalTok{  df_graph <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{as.numeric}\NormalTok{(theta_i_list), }
+                         \DataTypeTok{y =} \KeywordTok{as.numeric}\NormalTok{(objective_i))}
+\NormalTok{  g <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df_graph, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ theta_i, }\DataTypeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"objective function"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{TeX}\NormalTok{(label[i]))}
+  \KeywordTok{return}\NormalTok{(g)}
+\NormalTok{\}}
+\KeywordTok{save}\NormalTok{(graph, }\DataTypeTok{file =} \StringTok{"data/A9_second_parametric_graph.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/A9_second_parametric_graph.RData"}\NormalTok{)}
+\NormalTok{graph}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-250-1} \end{center}
+
+\begin{verbatim}
+## 
+## [[2]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-250-2} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Estimate the parameters by maximizing the log-likelihood.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{result_second_parametric <-}
+\StringTok{  }\KeywordTok{optim}\NormalTok{(}
+    \DataTypeTok{par =}\NormalTok{ theta,}
+    \DataTypeTok{fn =}\NormalTok{ compute_loglikelihood_second_price_w,}
+    \DataTypeTok{df_second_w =}\NormalTok{ df_second_w,}
+    \DataTypeTok{method =} \StringTok{"L-BFGS-B"}\NormalTok{,}
+    \DataTypeTok{control =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{fnscale =} \OperatorTok{-}\DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\KeywordTok{save}\NormalTok{(result_second_parametric, }\DataTypeTok{file =} \StringTok{"data/A9_result_second_parametric.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/A9_result_second_parametric.RData"}\NormalTok{)}
+\NormalTok{result_second_parametric}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $par
+## [1] 2.199238 2.078327
+## 
+## $value
+## [1] 0.9883372
+## 
+## $counts
+## function gradient 
+##       11       11 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## [1] "CONVERGENCE: REL_REDUCTION_OF_F <= FACTR*EPSMCH"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparison <-}
+\StringTok{  }\KeywordTok{data.frame}\NormalTok{(}
+    \DataTypeTok{true =}\NormalTok{ theta,}
+    \DataTypeTok{estimate =}\NormalTok{ result_second_parametric}\OperatorTok{$}\NormalTok{par}
+\NormalTok{  )}
+\NormalTok{comparison}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   true estimate
+## 1    2 2.199238
+## 2    2 2.078327
+\end{verbatim}
+
+Next, we estimate the parameters from the winning bids data from
+first-price auctions. We estimate the parameters by maximizing a
+log-likelihood.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Write a function
+  \texttt{inverse\_bid\_equation(x,\ b,\ r,\ alpha,\ beta,\ n)} that
+  returns \(\beta(x) - b\) for a bid \(b\). Write a function
+  \texttt{inverse\_bid\_first(b,\ r,\ alpha,\ beta,\ n)} that is an
+  inverse function \texttt{bid\_first} with respect to the signal, that
+  is, \[
+  \eta(b) := \beta^{-1}(b).
+  \]
+\end{enumerate}
+
+To do so, we can use a built-in function called \texttt{uniroot}, which
+solves \(x\) such that \(f(x) = 0\) for scalar \(x\). In
+\texttt{uniroot}, \texttt{lower} and \texttt{upper} are set at \(r_t\)
+and \(\beta(1)\), respectively.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r <-}\StringTok{ }\NormalTok{df_first_w[}\DecValTok{1}\NormalTok{, }\StringTok{"r"}\NormalTok{] }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{as.numeric}\NormalTok{()}
+\NormalTok{n <-}\StringTok{ }\NormalTok{df_first_w[}\DecValTok{1}\NormalTok{, }\StringTok{"n"}\NormalTok{] }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{as.integer}\NormalTok{()}
+\NormalTok{b <-}\StringTok{ }\FloatTok{0.5} \OperatorTok{*}\StringTok{ }\NormalTok{r }\OperatorTok{+}\StringTok{ }\FloatTok{0.5} 
+\NormalTok{x <-}\StringTok{ }\FloatTok{0.5}
+\CommentTok{# compute invecrse bid equation}
+\KeywordTok{inverse_bid_equation}\NormalTok{(x, b, r, alpha, beta, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.1421105
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute inverse bid}
+\KeywordTok{inverse_bid_first}\NormalTok{(b, r, alpha, beta, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.6653238
+\end{verbatim}
+
+The log-likelihood conditional on \(m_t \ge 1\) is: \[
+l(\alpha, \beta) := \frac{1}{T}\sum_{t = 1}^T \log \frac{h_t(w_t)}{1 - F_X(r_t)^{n_t}},
+\] where the probability density of having \(w_t\) is: \[
+\begin{split}
+h_t(w_t) &= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t'(w_t)\\
+&= \frac{n_t F_X[\eta_t(w_t)]^{n_t}}{(n_t - 1)[\eta_t(w_t) - w_t]},
+\end{split}
+\] where the second equation is from the first-order condition.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_p\_first\_w(w,\ r,\ alpha,\ beta,\ n)} that returns
+  \(h_t(w)\). Remark that the equilibrium bid at specific parameters is
+  \texttt{bid\_first(1,\ r,\ alpha,\ beta,\ n)}. If the observed wining
+  bid \texttt{w} is above the upper limit, the function will issue an
+  error. Therefore, inside the function
+  \texttt{compute\_p\_first\_w(w,\ r,\ alpha,\ beta,\ n)}, check if
+  \texttt{w} is above \texttt{bid\_first(1,\ r,\ alpha,\ beta,\ n)} and
+  if so return \(10^{-6}\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute probability density for a winning bid from a first-price auction}
+\NormalTok{w <-}\StringTok{ }\FloatTok{0.5}
+\KeywordTok{compute_p_first_w}\NormalTok{(w, r, alpha, beta, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2720049
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{upper <-}\StringTok{ }\KeywordTok{bid_first}\NormalTok{(}\DecValTok{1}\NormalTok{, r, alpha, beta, n)}
+\KeywordTok{compute_p_first_w}\NormalTok{(upper }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{, r, alpha, beta, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1e-06
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Write a function
+  \texttt{compute\_loglikelihood\_first\_price\_w(theta,\ df\_first\_w)}
+  that computes the log-likelihood for a first-price auction winning bid
+  data.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# compute log-likelihood for winning bids for first-price auctions}
+\KeywordTok{compute_loglikelihood_first_price_w}\NormalTok{(theta, df_first_w)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.597414
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Compare the value of the objective function around the true
+  parameters.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{theta <-}\StringTok{ }\KeywordTok{c}\NormalTok{(alpha, beta)}
+\CommentTok{# label}
+\NormalTok{label <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{alpha"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{beta"}\NormalTok{)}
+\NormalTok{label <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"$"}\NormalTok{, label, }\StringTok{"$"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\CommentTok{# compute the graph}
+\NormalTok{graph <-}\StringTok{ }\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{i =} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(theta)) }\OperatorTok{%do%}\StringTok{ }\NormalTok{\{}
+\NormalTok{  theta_i <-}\StringTok{ }\NormalTok{theta[i]}
+\NormalTok{  theta_i_list <-}\StringTok{ }\NormalTok{theta_i }\OperatorTok{*}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.8}\NormalTok{, }\FloatTok{1.2}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{  objective_i <-}
+\StringTok{    }\KeywordTok{foreach}\NormalTok{ (}\DataTypeTok{j =} \DecValTok{1}\OperatorTok{:}\KeywordTok{length}\NormalTok{(theta_i_list),}
+             \DataTypeTok{.combine =} \StringTok{"rbind"}\NormalTok{) }\OperatorTok{%do%}\StringTok{ }\NormalTok{\{}
+\NormalTok{               theta_ij <-}\StringTok{ }\NormalTok{theta_i_list[j]}
+\NormalTok{               theta_j <-}\StringTok{ }\NormalTok{theta}
+\NormalTok{               theta_j[i] <-}\StringTok{ }\NormalTok{theta_ij}
+\NormalTok{               objective_ij <-}\StringTok{ }
+\StringTok{                 }\KeywordTok{compute_loglikelihood_first_price_w}\NormalTok{(}
+\NormalTok{                   theta_j, df_first_w)}
+               \KeywordTok{return}\NormalTok{(objective_ij)}
+\NormalTok{             \}}
+\NormalTok{  df_graph <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{as.numeric}\NormalTok{(theta_i_list), }
+                         \DataTypeTok{y =} \KeywordTok{as.numeric}\NormalTok{(objective_i))}
+\NormalTok{  g <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df_graph, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =}\NormalTok{ y)) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =}\NormalTok{ theta_i, }\DataTypeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\KeywordTok{ylab}\NormalTok{(}\StringTok{"objective function"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{TeX}\NormalTok{(label[i]))}
+  \KeywordTok{return}\NormalTok{(g)}
+\NormalTok{\}}
+\KeywordTok{save}\NormalTok{(graph, }\DataTypeTok{file =} \StringTok{"data/A9_first_parametric_graph.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/A9_first_parametric_graph.RData"}\NormalTok{)}
+\NormalTok{graph}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-257-1} \end{center}
+
+\begin{verbatim}
+## 
+## [[2]]
+\end{verbatim}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-257-2} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Estimate the parameters by maximizing the log-likelihood. Set the
+  lower bounds at zero. Use the Nelder-Mead method. Otherwise the
+  parameter search can go to extreme values because of the discontinuity
+  at the point where the upper limit is below the observed bid.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{result_first_parametric <-}
+\StringTok{  }\KeywordTok{optim}\NormalTok{(}
+    \DataTypeTok{par =}\NormalTok{ theta,}
+    \DataTypeTok{fn =}\NormalTok{ compute_loglikelihood_first_price_w,}
+    \DataTypeTok{df_first_w =}\NormalTok{ df_first_w,}
+    \DataTypeTok{method =} \StringTok{"Nelder-Mead"}\NormalTok{,}
+    \DataTypeTok{control =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{fnscale =} \OperatorTok{-}\DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\KeywordTok{save}\NormalTok{(result_first_parametric, }\DataTypeTok{file =} \StringTok{"data/A9_result_first_parametric.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"data/A9_result_first_parametric.RData"}\NormalTok{)}
+\NormalTok{result_first_parametric}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $par
+## [1] 1.977676 2.004715
+## 
+## $value
+## [1] 1.607161
+## 
+## $counts
+## function gradient 
+##       91       NA 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparison <-}
+\StringTok{  }\KeywordTok{data.frame}\NormalTok{(}
+    \DataTypeTok{true =}\NormalTok{ theta,}
+    \DataTypeTok{estimate =}\NormalTok{ result_first_parametric}\OperatorTok{$}\NormalTok{par}
+\NormalTok{  )}
+\NormalTok{comparison}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   true estimate
+## 1    2 1.977676
+## 2    2 2.004715
+\end{verbatim}
+
+Finally, we non-parametrically estimate the distribution of the
+valuation using bid data from first-price auctions \texttt{df\_first}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Write a function \texttt{F\_b(b)} that returns an empirical cumulative
+  distribution at \texttt{b}. This can be obtained by using a function
+  \texttt{ecdf}. Also, write a function \texttt{f\_b(b)} that returns an
+  empirical probability density at \texttt{b}. This can be obtained by
+  combining functions \texttt{approxfun} and \texttt{density}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# cumulative distribution}
+\KeywordTok{ggplot}\NormalTok{(df_first, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ b)) }\OperatorTok{+}\StringTok{ }\KeywordTok{stat_ecdf}\NormalTok{(}\DataTypeTok{color =} \StringTok{"steelblue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"bid"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"cumulative distribution"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-260-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F_b <-}\StringTok{ }\KeywordTok{ecdf}\NormalTok{(df_first}\OperatorTok{$}\NormalTok{b)}
+\KeywordTok{F_b}\NormalTok{(}\FloatTok{0.4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4104628
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{F_b}\NormalTok{(}\FloatTok{0.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.7173038
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# probability density}
+\KeywordTok{ggplot}\NormalTok{(df_first, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ b)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"steelblue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-260-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f_b <-}\StringTok{ }\KeywordTok{approxfun}\NormalTok{(}\KeywordTok{density}\NormalTok{(df_first}\OperatorTok{$}\NormalTok{b))}
+\KeywordTok{f_b}\NormalTok{(}\FloatTok{0.4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.680124
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{f_b}\NormalTok{(}\FloatTok{0.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.469983
+\end{verbatim}
+
+The equilibrium distribution and density of the highest rival's bid are:
+\[
+H_b(b) := F_b(b)^{n - 1},
+\] \[
+h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{10}
+\tightlist
+\item
+  Write a function \texttt{H\_b(b,\ n)} and \texttt{h\_b(b)} that return
+  the equilibrium distribution and density of the highest rival's bid at
+  point \texttt{b}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{H_b}\NormalTok{(}\FloatTok{0.4}\NormalTok{, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.001962983
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{h_b}\NormalTok{(}\FloatTok{0.4}\NormalTok{, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.05624476
+\end{verbatim}
+
+When a bidder bids \(b\), the implied valuation of her is: \[
+x = b + \frac{H_b(b)}{h_b(b)}.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{11}
+\tightlist
+\item
+  Write a function \texttt{compute\_implied\_valuation(b,\ n,\ r)} that
+  returns the implied valuation given a bid. Let it return \(x = 0\) if
+  \(b < r\), because we cannot know the value when the bid is below the
+  reserve price.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r <-}\StringTok{ }\NormalTok{df_first[}\DecValTok{1}\NormalTok{, }\StringTok{"r"}\NormalTok{]}
+\NormalTok{n <-}\StringTok{ }\NormalTok{df_first[}\DecValTok{1}\NormalTok{, }\StringTok{"n"}\NormalTok{]}
+\KeywordTok{compute_implied_valuation}\NormalTok{(}\FloatTok{0.4}\NormalTok{, n, r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           n
+## 1 0.4349007
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{12}
+\tightlist
+\item
+  Obtain the vector of implied valuations from the vector of bids and
+  draw the empirical cumulative distribution. Overlay it with the true
+  empirical cumulative distribution of the valuations.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{valuation_implied <-}\StringTok{ }\NormalTok{df_first }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rowwise}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{compute_implied_valuation}\NormalTok{(b, n, r)) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(x) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{type =} \StringTok{"estimate"}\NormalTok{)}
+\NormalTok{valuation_true <-}\StringTok{ }\NormalTok{valuation }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(x) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{type =} \StringTok{"true"}\NormalTok{)}
+\NormalTok{valuation_plot <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(valuation_true, valuation_implied)}
+\KeywordTok{ggplot}\NormalTok{(valuation_plot, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{color =}\NormalTok{ type)) }\OperatorTok{+}\StringTok{ }\KeywordTok{stat_ecdf}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-263-1} \end{center}
+
 \chapter{Integrating with C++ using Rcpp and RcppEigen}\label{rcpp}
 
 \section{Prerequisite}\label{prerequisite}
@@ -18541,7 +19464,7 @@ R & Rcpp\tabularnewline
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 \end{verbatim}
 
 \begin{Shaded}
@@ -18553,9 +19476,9 @@ R & Rcpp\tabularnewline
 \end{Shaded}
 
 \begin{verbatim}
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##          [,1]       [,2]       [,3]       [,4]      [,5]
+## [1,] 2.106189 -0.2612649 -0.7788302 -0.4213451  1.218305
+## [2,] 0.412157  2.0737836  1.1315325 -1.0217474 -1.799761
 \end{verbatim}
 
 \begin{itemize}
@@ -18655,12 +19578,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 
 \begin{verbatim}
 ## $x
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
 ## $Y
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##          [,1]       [,2]       [,3]       [,4]      [,5]
+## [1,] 2.106189 -0.2612649 -0.7788302 -0.4213451  1.218305
+## [2,] 0.412157  2.0737836  1.1315325 -1.0217474 -1.799761
 ## 
 ## $z
 ## [1] 1 2 3 4 5
@@ -18675,12 +19598,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 \end{Shaded}
 
 \begin{verbatim}
-##            x1          x2
-## 1  0.24919601  0.45812526
-## 2  0.14922074 -1.45202829
-## 3 -0.96323318  0.07734228
-## 4 -0.06646677  0.55989527
-## 5  1.28692204 -0.07494657
+##            x1         x2
+## 1 -0.30824994 -1.5570357
+## 2  0.01551524  1.9231637
+## 3 -0.44231772 -1.8568296
+## 4 -1.63800773 -2.1061184
+## 5 -0.64140116  0.6976485
 \end{verbatim}
 
 \begin{Shaded}
@@ -18924,12 +19847,12 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## [[1]]
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
 ## [[2]]
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##          [,1]       [,2]       [,3]       [,4]      [,5]
+## [1,] 2.106189 -0.2612649 -0.7788302 -0.4213451  1.218305
+## [2,] 0.412157  2.0737836  1.1315325 -1.0217474 -1.799761
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -18994,12 +19917,12 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## $x
-## [1]  0.31451677  0.22221807 -0.84361539  0.44380533  0.05579711
+## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
 ## $Y
-##             [,1]       [,2]       [,3]        [,4]       [,5]
-## [1,]  0.06797239 -1.1580153 0.76606538  0.01464681 1.40059083
-## [2,] -0.20196174 -0.5927433 0.03892812 -0.18631697 0.01848557
+##          [,1]       [,2]       [,3]       [,4]      [,5]
+## [1,] 2.106189 -0.2612649 -0.7788302 -0.4213451  1.218305
+## [2,] 0.412157  2.0737836  1.1315325 -1.0217474 -1.799761
 ## 
 ## $z
 ## [1] 1 2 3 4 5

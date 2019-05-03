@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 2 Introduction | ECON 6120I Topics in Empirical Industrial Organization</title>
+  <title>Chapter 18 Assignment 9: Auction | ECON 6120I Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology.">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 2 Introduction | ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta property="og:title" content="Chapter 18 Assignment 9: Auction | ECON 6120I Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Introduction | ECON 6120I Topics in Empirical Industrial Organization" />
+  <meta name="twitter:title" content="Chapter 18 Assignment 9: Auction | ECON 6120I Topics in Empirical Industrial Organization" />
   
   <meta name="twitter:description" content="Thie is a lecture note for ECON6120I at Hong Kong University of Science and Technology." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="production.html">
+<link rel="prev" href="assignment8.html">
+<link rel="next" href="rcpp.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -559,416 +559,421 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<div id="structural-estimation-and-counterfactual-analysis" class="section level2">
-<h2><span class="header-section-number">2.1</span> Structural Estimation and Counterfactual Analysis</h2>
-<div id="example" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Example</h3>
-<ul>
-<li><p><span class="citation">Igami (<a href="#ref-Igami2017">2017</a>)</span> “Estimating the Innovator’s Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981-1998”.</p></li>
-<li><strong>Question</strong>:</li>
-<li>Does “Innovator’s Dilemma” <span class="citation">(Christensen, <a href="#ref-Christensen1997">1997</a>)</span> or the delay of innovation among incumbents exist?</li>
-<li>Christensen argued that old winners tend to lag behind entrants even when introducing a new technology is not too difficult, with a case study of the HDD industry.
-<ul>
-<li>Apple’s smartphone vs. Nokia’s feature phones.</li>
-<li>Amazon vs. Borders.</li>
-<li>Kodak’s digital camera.</li>
-</ul></li>
-<li>If it exists, what is the reason for that?</li>
-<li><p>How do we empirically answer this question?</p></li>
-</ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
-<img src="figuretable/Igam2017Fig1.png" alt="Figure 1 of Igam (2017)" width="80%" />
-<p class="caption">
-Figure 2.1: Figure 1 of Igam (2017)
-</p>
-</div>
-<ul>
-<li><strong>Hypotheses</strong>:</li>
-<li>Identify potentially competing hypotheses to explain the phenomenon.
+<div id="assignment-9-auction" class="section level1">
+<h1><span class="header-section-number">Chapter 18</span> Assignment 9: Auction</h1>
+<p>The deadline is <strong>May 20 1:30pm</strong>.</p>
+<div id="simulate-data-8" class="section level2">
+<h2><span class="header-section-number">18.1</span> Simulate data</h2>
+<p>We simulate bid data from a second- and first-price sealed bid auctions.</p>
+<p>First, we draw bid data from a second-price sealed bid auctions. Suppose that for each auction <span class="math inline">\(t = 1, \cdots, T\)</span>, there are <span class="math inline">\(i = 1, \cdots, n_t\)</span> potential bidders. At each auction, an auctioneer allocates one item and sets the reserve price at <span class="math inline">\(r_t\)</span>. When the signal for bidder <span class="math inline">\(i\)</span> in auction <span class="math inline">\(t\)</span> is <span class="math inline">\(x_{it}\)</span>, her expected value of the item is <span class="math inline">\(x_{it}\)</span>. A signal <span class="math inline">\(x_{it}\)</span> is drawn from an i.i.d. beta distribution <span class="math inline">\(B(\alpha, \beta)\)</span>. Let <span class="math inline">\(F_X(\cdot; \alpha, \beta)\)</span> be its distribution and <span class="math inline">\(f_X(\cdot; \alpha, \beta)\)</span> be the density. A reserve is set at 0.2. <span class="math inline">\(n_t\)</span> is drawn from a Poisson distribution with mean <span class="math inline">\(\lambda\)</span>. An equilibrium strategy is such that a bidder participates and bids <span class="math inline">\(\beta(x) = x\)</span> if <span class="math inline">\(x \ge r_t\)</span> and does not participate otherwise.</p>
 <ol style="list-style-type: decimal">
-<li>Cannibalization: Because of cannibalization, the benefits of introducing a new product are smaller for incumbents than for entrants.</li>
-<li>Different costs: The incumbents may have higher costs for innovation due to the organizational inertia, but at the same time they may have some cost advantage due to accumulated R&amp;D and better financial access.</li>
-<li>Preemption: The incumbents have additional incentive for innovation to preempt potential rivals.</li>
-<li>Institutional environment: The impacts of the three components differ across different institutional contexts such as the rules governing patents and market size.</li>
-</ol></li>
-<li>Casual empiricists pick up their favorite factors to make up a story.</li>
-<li>Serious empiricists should try to separate the contributions of each factor from data.</li>
-<li><p>To do so, the author develops an economic model that explicitly incorporates the above mentioned factors, while keeping the model parameters flexible enough to let the data tell the sign and size of the effects of each factor on innovation.</p></li>
-<li><p><strong>Economic model</strong>:</p></li>
-<li>The time is discrete with finite horizon <span class="math inline">\(t = 1, \cdots, T\)</span>.</li>
-<li>In each year, there is a finite number of firms indexed by <span class="math inline">\(i\)</span>.</li>
-<li>Each firm is in one of the technological states:
-<span class="math display">\[\begin{equation}
-s_{it} \in \{\text{old only, both, new only, potential entrant}\},
-\end{equation}\]</span>
-where the first two states are for incumbents (stick to the old technology or start using the new technology) and the last two states are for actual and potential entrants (enter with the new technology or stay outside the market).</li>
-<li>In each year:
-<ul>
-<li>Pre-innovation incumbent (<span class="math inline">\(s_{it} =\)</span> old): exit or innovate by paying a sunk cost <span class="math inline">\(\kappa^{inc}\)</span> (to be <span class="math inline">\(s_{i, t + 1} =\)</span> both).</li>
-<li>Post-innovation incumbent (<span class="math inline">\(s_{it} =\)</span> both): exit or stay to be both.</li>
-<li>Potential entrant (<span class="math inline">\(s_{it} =\)</span> potential entrant): give up entry or enter with the new technology by paying a sunk cost <span class="math inline">\(\kappa^{net}\)</span> (to be <span class="math inline">\(s_{i, t + 1} =\)</span> new).</li>
-<li>Actual entrant (<span class="math inline">\(s_{it} =\)</span> new): exit or stay to be new.</li>
-</ul></li>
-<li>Given the industry state <span class="math inline">\(s_t = \{s_{it}\}_i\)</span>, the product market competition opens and the profit of firm <span class="math inline">\(i\)</span>, <span class="math inline">\(\pi_t(s_{it}, s_{-it})\)</span>, is realized for each active firm.</li>
-<li>As the product market competition closes:
-<ul>
-<li>Pre-innovation incumbents draw private cost shocks and make decisions: <span class="math inline">\(a_t^{pre}\)</span>.</li>
-<li>Observing this, post-innovation incumbents draw private cost shocks and make decisions: <span class="math inline">\(a_t^{post}\)</span>.</li>
-<li>Observing this, actual entrants draw private cost shocks and make decisions: <span class="math inline">\(a_t^{act}\)</span>.</li>
-<li>Observing this, potential entrants draw private cost shocks and make decisions: <span class="math inline">\(a_t^{pot}\)</span>.</li>
-</ul></li>
-<li>This is a dynamic game. The equilibrium is defined by the concept of <strong>Markov-perfect equilibrium</strong> <span class="citation">(Maskin &amp; Tirole, <a href="#ref-Maskin1988">1988</a><a href="#ref-Maskin1988">a</a>)</span>.</li>
-<li>The representation of the competing theories in the model:
-<ul>
-<li>The existence of cannibalization is represented by the assumption that an incumbent maximizes the joint profits of old and new technology products.</li>
-<li>The size of cannibalization is captured by the shape of profit function.</li>
-<li>The difference in the cost of innovation is captured by the difference in the sunk costs of innovation.</li>
-<li>The preemptive incentive for incumbents are embodied in the dynamic optimization problem for each incumbent.</li>
-</ul></li>
-<li><p><strong>Econometric model</strong>:</p></li>
-<li>The author then turns the economic model into an econometric model.</li>
-<li>This amounts to specify which part of the economic model is observed/known and which part is unobserved/unknown.</li>
-<li>The author collects the data set of the HDD industry during 1977-99.</li>
-<li>Based on the data, the author specify the identities of active firms and their products and the technologies embodied in the products in each year to code their <strong>state variables</strong>.</li>
-<li>Moreover, by tracking the change in the state, the author code their <strong>action variables</strong>.</li>
-<li>Thus, the state and action variables, <span class="math inline">\(s_t\)</span> and <span class="math inline">\(a_t\)</span>. These are the <strong>observables</strong>.</li>
-<li>The author does not observe:
-<ul>
-<li>Profit function <span class="math inline">\(\pi_t(\cdot)\)</span>.</li>
-<li>Sunk cost of innovation for pre-innovation incumbents <span class="math inline">\(\kappa^{inc}\)</span>.</li>
-<li>Sunk cost of entry for potential entrants <span class="math inline">\(\kappa^{net}\)</span>.</li>
-<li>Private cost shocks.</li>
-</ul></li>
-<li>These are the <strong>unobservables</strong>.</li>
-<li><p>Among the unobservables, the profit function and sunk costs are the <strong>parameter of interets</strong> and the private cost shocks are <strong>nuissance parameters</strong> in the sense only the knowledge about the distribution of the latter is demanded.</p></li>
-<li><p><strong>Identification</strong>:</p></li>
-<li>Can we infer the unobservables from the observables and the restrictions on the distribution of observable by the economic theory?</li>
-<li>The profit function is identified from estimating the demand function for each firm’s product, and estimating the cost function for each firm from using their price setting behavior.</li>
-<li><p>The sunk costs of innovation are identified from the conditional probability of innovation across various states. If the cost is low, the probability should be high.</p></li>
-<li><p><strong>Estimation</strong>:</p></li>
-<li>The identification established that in principle we can uncover the parameters of interests from observables under the restrictions of economic theory.</li>
-<li><p>Finally, we apply a statistical method to the econometric model and infer the parameters of interest.</p></li>
-<li><p><strong>Counterfactual analysis</strong>:</p></li>
-<li><p>If we can uncover the parameters of interest, we can conduct <strong>comparative statics</strong>: study the change in the endogenous variables when the exogenous variables including the model parameters are set different. In the current framework, this exercise is often called the <strong>counterfactual analysis</strong>.</p></li>
-<li>What if there was no cannibalization?:
-<ul>
-<li>An incumbents separately maximizes the profit from old technology and new technology instead of jointly maximizing the profits. Solve the model under this new assumption everything else being equal.</li>
-<li>Free of cannibalization concerns, 8.95 incumbents start producing new HDDs in the first 10 years, compared with 6.30 in the baseline.</li>
-<li>The cumulative numbers of innovators among incumbents and entrants differ only by 2.8 compared with 6.45 in the baseline.</li>
-<li>Thus cannibalization can explain a significant part of the incumbent-entrant innovation gap.</li>
-</ul></li>
-<li>What if there was no preemption?:
-<ul>
-<li>A potential entrant ignores the incumbents’ innovations upon making entry decisions.</li>
-<li>Without the preemptive motives, only 6.02 incumbents would innovate in the first 10 7ears, compared with 6.30 in the baseline.</li>
-<li>The cumulative incumbent-entrant innovation gap widen to 8.91 compared with 6.45 in the baseline.</li>
-</ul></li>
-<li><p>The sunk cost of entry is smaller for incumbents than for entrants in the baseline.</p></li>
-<li><strong>Interpretations and policy/managerial implication</strong>:</li>
-<li>Despite the cost advantage and the preemptive motives, the speed of innovation is slower among incumbents due to the strong cannibalization effect.</li>
-<li><p>Incumbents that attempt to avoid the “innovator’s dilemma” should separate the decision makings between old and new sections inside the organization so that it can avoid the concern for cannibalization.</p></li>
-</ul>
-</div>
-<div id="recap" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Recap</h3>
-<ul>
-<li>The structural approach in empirical industrial organization consists of the following components:</li>
-</ul>
-<ol style="list-style-type: decimal">
-<li>Research question.</li>
-<li>Competing hypotheses.</li>
-<li>Economic model.</li>
-<li>Econometric model</li>
-<li>Identification.</li>
-<li>Data collection.</li>
-<li>Data cleaning.</li>
-<li>Estimation.</li>
-<li>Counterfactual analysis.</li>
-<li>Coding.</li>
-<li>Interpretations and policy/managerial implications.</li>
+<li>Set the constants and parameters as follows:</li>
 </ol>
-<ul>
-<li>The goal of this course is to be familiar with the standard methodology to complete this process.</li>
-<li>The methodology covered in this class is mostly developed to analyze the standard framework to dynamic or oligopoly competition.</li>
-<li>The policy implications are centered around competition policies.</li>
-<li>But the basic idea can be extend to different class of situations such as auction, matching, voting, contract, marketing, and so on.</li>
-<li>Note that the depth of the research question and the relevance of the policy/managerial implications are the most important part of the research.</li>
-<li>Focusing on the methodology in this class is to minimize the time to allocate to less important issues and maximize the attention and time to the most valuable part in the future research.</li>
-<li>Given a research question, what kind of data is necessary to answer the question?</li>
-<li>Given data, what kind of research questions can you address? Which question can be credibly answered? Which question can be an over-stretch?</li>
-<li>Given a research question and data, what is the best way to answer the question? What type of problem can you avoid using the method? What is the limitation of your approach? How will you defend the possible referee comments?</li>
-<li>Given a result, what kinds of interpretation can you credibly derive? What kinds of interpretation can be contested by potential opponents? What kinds of contribution can you claim?</li>
-<li>To address these issues is <strong>necessary</strong> to publish a paper and it is <strong>necessary</strong> to be familiar with the methodology to do so.</li>
-</ul>
-</div>
-<div id="historical-remark" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Historical Remark</h3>
-<ul>
-<li>The words <strong>reduced-form</strong> and <strong>structural-form</strong> date back to the literature of estimation of simultaneous equations in macroeconomics <span class="citation">(Hsiao, <a href="#ref-Hsiao1983">1983</a>)</span>.</li>
-<li>Let <span class="math inline">\(y\)</span> be the vector of observed endogenous variables, <span class="math inline">\(x\)</span> be the vector of observed exogenous variables, and <span class="math inline">\(\epsilon\)</span> be the vector of unobserved exogenous variables.</li>
-<li>The equilibrium condition for <span class="math inline">\(y\)</span> on <span class="math inline">\(x\)</span> and <span class="math inline">\(\epsilon\)</span> is often written as:
-<span class="math display" id="eq:structuralform">\[\begin{equation}
-Ay + Bx = \Sigma \epsilon. \tag{2.1}
-\end{equation}\]</span></li>
-<li>These equations <strong>implicitly</strong> determine the vector of endogenous variables <span class="math inline">\(y\)</span> .</li>
-<li>If <span class="math inline">\(A\)</span> is invertible, we can solve the equations for <span class="math inline">\(y\)</span> to obtain:
-<span class="math display" id="eq:reducedform">\[\begin{equation}
-y = - A^{-1} B x + A^{-1} \Sigma \epsilon. \tag{2.2}
-\end{equation}\]</span></li>
-<li>These equations <strong>explicitly</strong> determine the vector of endogenous variables <span class="math inline">\(y\)</span>.</li>
-<li>Equation <a href="intro.html#eq:structuralform">(2.1)</a> is the <strong>structural-form</strong> and <a href="intro.html#eq:reducedform">(2.2)</a> is the <strong>reduced-form</strong>.</li>
-<li>If <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are observed and <span class="math inline">\(x\)</span> is of full column rank, then <span class="math inline">\(A^{-1}B\)</span> and <span class="math inline">\(A^{-1} \Sigma A^{-1}\)</span> will be estimated by regression for <a href="intro.html#eq:reducedform">(2.2)</a>. But this does not mean that <span class="math inline">\(A, B\)</span> and <span class="math inline">\(\Sigma\)</span> are separately estimated.</li>
-<li>This was the traditional identification problems.</li>
-<li>Thus, reduced-form does not mean either of:
-<ul>
-<li>Regression analysis;</li>
-<li>Statistical analysis free from economic assumptions.</li>
-</ul></li>
-<li>Recent development in this line of literature of identification is found in <span class="citation">Matzkin (<a href="#ref-Matzkin2007">2007</a>)</span>.</li>
-<li>In econometrics, the idea of imposing restrictions from economic theories seems to have been formalized by the work of <span class="citation">Manski (<a href="#ref-Manski1994a">1994</a>)</span> and <span class="citation">Matzkin (<a href="#ref-Matzkin1994b">1994</a>)</span>.</li>
-</ul>
-</div>
-</div>
-<div id="setting-up-the-environment" class="section level2">
-<h2><span class="header-section-number">2.2</span> Setting Up The Environment</h2>
-<ul>
-<li>Assume that R, RStudio and LaTex are all installed in the local computer.</li>
-</ul>
-<div id="rstudio-project" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> RStudio Project</h3>
-<ul>
-<li>The assignments should be conducted inside a project folder for this course.</li>
-<li><code>File &gt; New Project...&gt; New Directory &gt; New Directory &gt; R Package using RcppEigen</code>.</li>
-<li>Name the directory <code>ECON6120I</code> and place in your favorite location.</li>
-<li>You can open this project from the upper right menu of RStudio or by double clicking the <code>ECON6120I.Rproj</code> file in the <code>ECON6120I</code> directory.</li>
-<li>This navigates you to the root directory of the project.</li>
-<li>In the root directory, make folders named:
-<ul>
-<li><code>assignment</code>.</li>
-<li><code>input</code>.</li>
-<li><code>output</code>.</li>
-<li><code>figuretable</code>.</li>
-</ul></li>
-<li>We will store R functions in <code>R</code> folder, C/C++ functions in <code>src</code> folder, and data in <code>input</code> folder, data generated from the code in <code>output</code>, and figures and tables in <code>figurtable</code> folder.</li>
-<li>Open <code>src/Makevars</code> and erase the content. Then, write: <code>PKG_CPPFLAGS = -w -std=c++11 -O3</code></li>
-<li>Open <code>src/Makevars.win</code> and erase the content. Then, write: <code>PKG_CPPFLAGS = -w -std=c++11</code></li>
-</ul>
-</div>
-<div id="basic-programming-in-r" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> Basic Programming in R</h3>
-<ul>
-<li><code>File &gt; New File &gt; R Script</code> to open <code>Untitled</code> file.</li>
-<li><code>Ctrl (Cmd) + S</code> to save it with <code>test.R</code> in <code>assignment</code> folder.</li>
-<li>In the console, type and push enter:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span><span class="op">:</span><span class="dv">130</span></code></pre></div>
-<pre><code>##  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116
-## [18] 117 118 119 120 121 122 123 124 125 126 127 128 129 130</code></pre>
-<ul>
-<li>This is the interactive way of using R functionalities.</li>
-<li>In <code>test.R</code>, write:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<ul>
-<li>Then, save the file and push <code>Run</code>.</li>
-<li>Alternatively, place the mouse over the <code>1 + 1</code> line in <code>test.R</code> file.</li>
-<li>Then, <code>Ctrl (Cmd) + Enter</code> to run the line.</li>
-<li><p>In this way, we can write procedures in the file and send to the console to run.</p></li>
-<li><p>There are functions to conduct basic calculations:</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">4</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">6</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">^</span><span class="dv">3</span></code></pre></div>
-<pre><code>## [1] 8</code></pre>
-<ul>
-<li>We can define objects and assign values to them.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="dv">1</span>
-a</code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a <span class="op">+</span><span class="st"> </span><span class="dv">2</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<ul>
-<li>In addition to scalar object, we can define a vector by:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span><span class="op">:</span><span class="dv">10</span></code></pre></div>
-<pre><code>## [1]  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span><span class="op">:</span><span class="dv">20</span></code></pre></div>
-<pre><code>##  [1]  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1]  2  3  5  9 10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 1 3 5 7 9</code></pre>
-<ul>
-<li><code>seq</code> is a function with initial value, end values, and the increment value.</li>
-<li>By typing <code>seq</code> in the <code>help</code>, we can read the manual page of the function.</li>
-<li><code>seq {base}</code> means that this function is named <code>seq</code> and is contained in the library called <code>base</code>.</li>
-<li>Some libraries are automatically called when the R is launched, but some are not.</li>
-<li>Some libraries are even not installed.</li>
-<li>We can install a library from a repository called <code>CRAN</code>.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
-<ul>
-<li>To use the package, we have to load by:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
-<ul>
-<li>Use <code>qplot</code> function in <code>ggplot2</code> library to draw a scatter plot.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="fl">0.8</span>, <span class="op">-</span><span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.4</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="dv">1</span>)
-y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">3</span>
-<span class="kw">qplot</span>(x, y)</code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-15-1.png" width="672" /> - Instead of loading a package by <code>library</code>, you can directly call it as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ggplot2<span class="op">::</span><span class="kw">qplot</span>(x, y)</code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<ul>
-<li>We can write own functions.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">roll &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
-  die &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>
-  dice &lt;-<span class="st"> </span><span class="kw">sample</span>(die, <span class="dt">size =</span> n, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-  y &lt;-<span class="st"> </span><span class="kw">sum</span>(dice)
-  <span class="kw">return</span>(y)
-}
-<span class="kw">roll</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">roll</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 8</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 32</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 28</code></pre>
-<ul>
-<li>We can <code>set.seed</code> to obtain the same realization of random variables.</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-<span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 38</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
-<span class="kw">roll</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] 38</code></pre>
-<ul>
-<li>When a variable used in a function is not given as its argument, the function calls the variable in the global environment:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>
-plus_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-  <span class="kw">return</span>(x <span class="op">+</span><span class="st"> </span>y)
-}
-<span class="kw">plus_1</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plus_1</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<ul>
-<li>However, you should NOT do this. All variables used in a function should be given as its arguments:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>
-plus_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) {
-  <span class="kw">return</span>(x <span class="op">+</span><span class="st"> </span>y)
-}
-<span class="kw">plus_2</span>(<span class="dv">2</span>, <span class="dv">3</span>)</code></pre></div>
-<pre><code>## [1] 5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plus_2</span>(<span class="dv">2</span>, <span class="dv">4</span>)</code></pre></div>
-<pre><code>## [1] 6</code></pre>
-<ul>
-<li>The best practice is to use <code>findGlobals</code> function in <code>codetools</code> to check global variables in a funciton:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(codetools)
-<span class="kw">findGlobals</span>(plus_<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] &quot;{&quot;      &quot;+&quot;      &quot;return&quot; &quot;y&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">findGlobals</span>(plus_<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] &quot;{&quot;      &quot;+&quot;      &quot;return&quot;</code></pre>
-<ul>
-<li><p>This function returns the list of global variables used in a function. If this returns a global variable other than the system global gariables, you should include it as the argument of the function.</p></li>
-<li>You can write the functions in the files with executing codes.</li>
-<li>But I recommend you to separate files for writing functions and executing codes.</li>
-<li><code>File &gt; New File &gt; R Rcript</code> and name it as <code>functions.R</code> and save to <code>R</code> folder.</li>
-<li>Cut the function you wrote and paste it in <code>functions.R</code>.</li>
-<li>There are two ways of calling a function in <code>functions.R</code> from <code>test.R</code>.</li>
-<li><p>One way is to use <code>source</code> function.</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;R/functions.R&quot;</span>)</code></pre></div>
-<ul>
-<li>When this line is read, the codes in the file are executed.</li>
-<li>The other way is to bundle functions as a package and load it.</li>
-<li>Choose <code>Build &gt; Clean and Rebuild</code>.</li>
-<li>This compiles files in <code>src</code> folder and bundle functions in <code>R</code> folder and build a package named <code>ECON6120I</code>.</li>
-<li>Now, the functions in <code>R</code> folder and <code>src</code> folder can be used by loading the package by:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ECON6120I)</code></pre></div>
-<ul>
-<li>Best practice:
-<ol style="list-style-type: decimal">
-<li>Write functions in the scratch file.</li>
-<li>As the functions are tested, move them to <code>R/functions.R</code>.</li>
-<li>Clean and rebuild and load them as a package.</li>
-</ol></li>
-</ul>
-</div>
-<div id="reproducible-reports-using-rmarkdown" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> Reproducible Reports using Rmarkdown</h3>
-<ul>
-<li>Reporting in empirical studies involves:</li>
-</ul>
-<ol style="list-style-type: decimal">
-<li>Writing texts;</li>
-<li>Writing formulas;</li>
-<li>Writing and implementing programs;</li>
-<li>Demonstrating the results with figures and tables.</li>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set seed</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="co"># number of auctions</span>
+T &lt;-<span class="st"> </span><span class="dv">100</span>
+<span class="co"># parameter of value distribution</span>
+alpha &lt;-<span class="st"> </span><span class="dv">2</span>
+beta &lt;-<span class="st"> </span><span class="dv">2</span>
+<span class="co"># parameters of reserve price distribution</span>
+gamma &lt;-<span class="st"> </span><span class="dv">1</span>
+delta &lt;-<span class="st"> </span><span class="dv">3</span>
+<span class="co"># prameters of number of potential bidders</span>
+lambda &lt;-<span class="st"> </span><span class="dv">10</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Draw a vector of valuations and reservation prices.</li>
 </ol>
-<ul>
-<li>Moreover, this has to be done in a <strong>reproducible</strong> manner: Whoever can reproduce the output from the scratch.</li>
-<li><p>“Whoever” includes yourself in the future. Because the revision process of structural papers is usually lengthy, you often have to remember the content few weeks or few months later. It is inefficient if you cannot recall what you have done.</p></li>
-<li>We use <code>Rmarkdown</code> to achieve this goal.</li>
-<li>This assumes that you have LaTex installed.</li>
-<li><p>Install package <code>Rmarkdown</code>:</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</code></pre></div>
-<ul>
-<li><code>File &gt; New File &gt; R Markdown... &gt; HTML</code> with title <code>Test</code>.</li>
-<li>Save it in <code>assignment</code> folder with name <code>test.Rmd</code>.</li>
-<li>From <code>Knit</code> tab, choose <code>Knit to HTML</code>.</li>
-<li>This outputs the content to html file.</li>
-<li>You can also choose <code>Knit to PDF</code> from <code>Knit</code> tab to obtain output in pdf file.</li>
-<li>Reports should be knit to pdf to submit.</li>
-<li>But you can use html output while writing a report because html is lighter to compile.</li>
-<li>Refer to the <a href="https://rmarkdown.rstudio.com/lesson-1.html">help page</a> for further information.</li>
-</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of bidders</span>
+N &lt;-<span class="st"> </span><span class="kw">rpois</span>(T, lambda)
+<span class="co"># draw valuations</span>
+valuation &lt;-
+<span class="st">  </span><span class="kw">foreach</span> (<span class="dt">tt =</span> <span class="dv">1</span><span class="op">:</span>T, <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{
+    n_t &lt;-<span class="st"> </span>N[tt]
+    header &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">t =</span> tt, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n_t) 
+    <span class="kw">return</span>(header)
+  }
+valuation &lt;-<span class="st"> </span>valuation <span class="op">%&gt;%</span>
+<span class="st">  </span>tibble<span class="op">::</span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">rbeta</span>(<span class="kw">length</span>(i), alpha, beta))
+<span class="kw">ggplot</span>(valuation, <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-241-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># draw reserve prices</span>
+reserve &lt;-<span class="st"> </span><span class="fl">0.2</span>
+reserve &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tibble</span>(<span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span>T, <span class="dt">r =</span> reserve)</code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Write a function <code>compute_winning_bids_second(valuation, reserve)</code> that returns a winning bid from each second-price auction. It returns nothing for an auction in which no bid was above the reserve price. In the output, <code>t</code> refers to the auction index, <code>m</code> to the number of actual bidders, <code>r</code> to the reserve price, and <code>w</code> to the winning bid.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute winning bids from second-price auction</span>
+df_second_w &lt;-
+<span class="st">  </span><span class="kw">compute_winning_bids_second</span>(valuation, reserve)
+df_second_w</code></pre></div>
+<pre><code>## # A tibble: 100 x 5
+##        t     n     m     r     w
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     8     8   0.2 0.637
+##  2     2    10    10   0.2 0.647
+##  3     3     7     5   0.2 0.484
+##  4     4    11     8   0.2 0.804
+##  5     5    14    12   0.2 0.920
+##  6     6    12    11   0.2 0.942
+##  7     7    11     9   0.2 0.810
+##  8     8     9     9   0.2 0.724
+##  9     9    14    14   0.2 0.880
+## 10    10    11     9   0.2 0.677
+## # … with 90 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_second_w, <span class="kw">aes</span>(<span class="dt">x =</span> w)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-242-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid: <span class="math display">\[
+\beta(x) = x - \frac{\int_{r_t}^x F_X(t)^{N - 1}}{F_X(x)^{N - 1}},
+\]</span> if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise when there are more than one active bidder. If <span class="math inline">\(x \ge r\)</span> and there is only one bidder, the bidder bids <span class="math inline">\(r_t\)</span>.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Write a function <code>bid_first(x, r, alpha, beta, n)</code> that returns the equilibrium bid. To integrate a function, use <code>integrate</code> function in R. It returns 0 if <span class="math inline">\(x &lt; r\)</span>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute bid from first-price auction</span>
+n &lt;-<span class="st"> </span>N[<span class="dv">1</span>]
+m &lt;-<span class="st"> </span>N[<span class="dv">1</span>]
+x &lt;-<span class="st"> </span>valuation[<span class="dv">1</span>, <span class="st">&quot;x&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(); x</code></pre></div>
+<pre><code>## [1] 0.3902289</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r &lt;-<span class="st"> </span>reserve[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(); r</code></pre></div>
+<pre><code>## [1] 0.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(x, r, alpha, beta, n); b</code></pre></div>
+<pre><code>## [1] 0.3596662</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>r<span class="op">/</span><span class="dv">2</span>; x</code></pre></div>
+<pre><code>## [1] 0.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(x, r, alpha, beta, n); b</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(<span class="dv">1</span>, r, alpha, beta, n); b</code></pre></div>
+<pre><code>## [1] 0.7978258</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Write a function <code>compute_bids_first(valuation, reserve, alpha, beta)</code> that returns bids from each first-price auctions. It returns bids below the reserve price.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute bid data from first-price auctions</span>
+df_first &lt;-<span class="st"> </span><span class="kw">compute_bids_first</span>(valuation, reserve, alpha, beta)
+<span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-244-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Write a function <code>compute_winning_bids_first(valuation, reserve, alpha, beta)</code> that returns only the winning bids from each first-price auction. It will call <code>compute_bids_first</code> inside the function. It does not return anything when no bidder bids above the reserve price.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute winning bids from first-price auctions</span>
+df_first_w &lt;-
+<span class="st">  </span><span class="kw">compute_winning_bids_first</span>(valuation, reserve, alpha, beta)
+df_first_w</code></pre></div>
+<pre><code>## # A tibble: 100 x 5
+##        t     n     m     r     w
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     8     8   0.2 0.731
+##  2     2    10    10   0.2 0.638
+##  3     3     7     5   0.2 0.525
+##  4     4    11     8   0.2 0.818
+##  5     5    14    12   0.2 0.842
+##  6     6    12    11   0.2 0.833
+##  7     7    11     9   0.2 0.772
+##  8     8     9     9   0.2 0.753
+##  9     9    14    14   0.2 0.849
+## 10    10    11     9   0.2 0.803
+## # … with 90 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df_first_w, <span class="kw">aes</span>(<span class="dt">x =</span> w)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-245-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="estimate-the-parameters-5" class="section level2">
+<h2><span class="header-section-number">18.2</span> Estimate the parameters</h2>
+<p>We first estimate the parameters from the winning bids data of second-price auctions. We estimate the parameters by maximizing a log-likelihood.</p>
+<p><span class="math display">\[
+l(\alpha, \beta) := \frac{1}{T} \sum_{t = 1}^T \ln\frac{h_t(w_t)^{1\{m_t &gt; 1\}} \mathbb{P}\{m_t = 1\}}{1 - \mathbb{P}\{m_t = 0\}},
+\]</span> where: <span class="math display">\[
+\mathbb{P}\{m_t = 0\} := F_X(r_t)^{n_t},
+\]</span> <span class="math display">\[
+\mathbb{P}\{m_t = 1\} := n_t F_X(r_t; \alpha, \beta)^{n_t - 1} [1 - F_X(r_t; \alpha, \beta)].
+\]</span></p>
+<p><span class="math display">\[
+h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha, \beta)] f_X(w_t; \alpha, \beta).
+\]</span></p>
+<ol style="list-style-type: decimal">
+<li>Write a function <code>compute_p_second_w(w, r, m, n, alpha, beta)</code> that computes <span class="math inline">\(\mathbb{P}\{m_t = 1\}\)</span> if <span class="math inline">\(m_t = 1\)</span> and <span class="math inline">\(h_t(w_t)\)</span> if <span class="math inline">\(m_t &gt; 1\)</span>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute probability density for winning bids from a second-price auction</span>
+w &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>w
+r &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>r
+m &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>m
+n &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>n
+<span class="kw">compute_p_second_w</span>(w, r, m, n, alpha, beta)</code></pre></div>
+<pre><code>## [1] 2.752949</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Write a function <code>compute_m0(r, n, alpha, beta)</code> that computes <span class="math inline">\(\mathbb{P}\{m_t = 0\}\)</span>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute non-participation probability</span>
+<span class="kw">compute_m0</span>(r, n, alpha, beta)</code></pre></div>
+<pre><code>## [1] 1.368569e-08</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Write a function <code>compute_loglikelihood_second_price_w(theta, df_second_w)</code> that computes the log-likelihood for a second-price auction winning bid data.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute log-likelihood for winning bids from second-price auctions</span>
+theta &lt;-<span class="st"> </span><span class="kw">c</span>(alpha, beta)
+<span class="kw">compute_loglikelihood_second_price_w</span>(theta, df_second_w)</code></pre></div>
+<pre><code>## [1] 0.9849261</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Compare the value of objective function around the true parameters.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># label</span>
+label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">alpha&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">beta&quot;</span>)
+label &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+<span class="co"># compute the graph</span>
+graph &lt;-<span class="st"> </span><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta)) <span class="op">%do%</span><span class="st"> </span>{
+  theta_i &lt;-<span class="st"> </span>theta[i]
+  theta_i_list &lt;-<span class="st"> </span>theta_i <span class="op">*</span><span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)
+  objective_i &lt;-
+<span class="st">    </span><span class="kw">foreach</span> (<span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta_i_list),
+             <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%dopar%</span><span class="st"> </span>{
+               theta_ij &lt;-<span class="st"> </span>theta_i_list[j]
+               theta_j &lt;-<span class="st"> </span>theta
+               theta_j[i] &lt;-<span class="st"> </span>theta_ij
+               objective_ij &lt;-<span class="st"> </span>
+<span class="st">                 </span><span class="kw">compute_loglikelihood_second_price_w</span>(
+                   theta_j, df_second_w)
+               <span class="kw">return</span>(objective_ij)
+             }
+  df_graph &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">as.numeric</span>(theta_i_list), 
+                         <span class="dt">y =</span> <span class="kw">as.numeric</span>(objective_i))
+  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df_graph, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> theta_i, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(label[i]))
+  <span class="kw">return</span>(g)
+}
+<span class="kw">save</span>(graph, <span class="dt">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)
+graph</code></pre></div>
+<pre><code>## [[1]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-250-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-250-2.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Estimate the parameters by maximizing the log-likelihood.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result_second_parametric &lt;-
+<span class="st">  </span><span class="kw">optim</span>(
+    <span class="dt">par =</span> theta,
+    <span class="dt">fn =</span> compute_loglikelihood_second_price_w,
+    <span class="dt">df_second_w =</span> df_second_w,
+    <span class="dt">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,
+    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="op">-</span><span class="dv">1</span>)
+  )
+<span class="kw">save</span>(result_second_parametric, <span class="dt">file =</span> <span class="st">&quot;data/A9_result_second_parametric.RData&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_result_second_parametric.RData&quot;</span>)
+result_second_parametric</code></pre></div>
+<pre><code>## $par
+## [1] 2.199238 2.078327
+## 
+## $value
+## [1] 0.9883372
+## 
+## $counts
+## function gradient 
+##       11       11 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comparison &lt;-
+<span class="st">  </span><span class="kw">data.frame</span>(
+    <span class="dt">true =</span> theta,
+    <span class="dt">estimate =</span> result_second_parametric<span class="op">$</span>par
+  )
+comparison</code></pre></div>
+<pre><code>##   true estimate
+## 1    2 2.199238
+## 2    2 2.078327</code></pre>
+<p>Next, we estimate the parameters from the winning bids data from first-price auctions. We estimate the parameters by maximizing a log-likelihood.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Write a function <code>inverse_bid_equation(x, b, r, alpha, beta, n)</code> that returns <span class="math inline">\(\beta(x) - b\)</span> for a bid <span class="math inline">\(b\)</span>. Write a function <code>inverse_bid_first(b, r, alpha, beta, n)</code> that is an inverse function <code>bid_first</code> with respect to the signal, that is, <span class="math display">\[
+\eta(b) := \beta^{-1}(b).
+\]</span></li>
+</ol>
+<p>To do so, we can use a built-in function called <code>uniroot</code>, which solves <span class="math inline">\(x\)</span> such that <span class="math inline">\(f(x) = 0\)</span> for scalar <span class="math inline">\(x\)</span>. In <code>uniroot</code>, <code>lower</code> and <code>upper</code> are set at <span class="math inline">\(r_t\)</span> and <span class="math inline">\(\beta(1)\)</span>, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r &lt;-<span class="st"> </span>df_first_w[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.numeric</span>()
+n &lt;-<span class="st"> </span>df_first_w[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>] <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.integer</span>()
+b &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>r <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> 
+x &lt;-<span class="st"> </span><span class="fl">0.5</span>
+<span class="co"># compute invecrse bid equation</span>
+<span class="kw">inverse_bid_equation</span>(x, b, r, alpha, beta, n)</code></pre></div>
+<pre><code>## [1] -0.1421105</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute inverse bid</span>
+<span class="kw">inverse_bid_first</span>(b, r, alpha, beta, n)</code></pre></div>
+<pre><code>## [1] 0.6653238</code></pre>
+<p>The log-likelihood conditional on <span class="math inline">\(m_t \ge 1\)</span> is: <span class="math display">\[
+l(\alpha, \beta) := \frac{1}{T}\sum_{t = 1}^T \log \frac{h_t(w_t)}{1 - F_X(r_t)^{n_t}},
+\]</span> where the probability density of having <span class="math inline">\(w_t\)</span> is: <span class="math display">\[
+\begin{split}
+h_t(w_t) &amp;= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t&#39;(w_t)\\
+&amp;= \frac{n_t F_X[\eta_t(w_t)]^{n_t}}{(n_t - 1)[\eta_t(w_t) - w_t]},
+\end{split}
+\]</span> where the second equation is from the first-order condition.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Write a function <code>compute_p_first_w(w, r, alpha, beta, n)</code> that returns <span class="math inline">\(h_t(w)\)</span>. Remark that the equilibrium bid at specific parameters is <code>bid_first(1, r, alpha, beta, n)</code>. If the observed wining bid <code>w</code> is above the upper limit, the function will issue an error. Therefore, inside the function <code>compute_p_first_w(w, r, alpha, beta, n)</code>, check if <code>w</code> is above <code>bid_first(1, r, alpha, beta, n)</code> and if so return <span class="math inline">\(10^{-6}\)</span>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute probability density for a winning bid from a first-price auction</span>
+w &lt;-<span class="st"> </span><span class="fl">0.5</span>
+<span class="kw">compute_p_first_w</span>(w, r, alpha, beta, n)</code></pre></div>
+<pre><code>## [1] 0.2720049</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">upper &lt;-<span class="st"> </span><span class="kw">bid_first</span>(<span class="dv">1</span>, r, alpha, beta, n)
+<span class="kw">compute_p_first_w</span>(upper <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, r, alpha, beta, n)</code></pre></div>
+<pre><code>## [1] 1e-06</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Write a function <code>compute_loglikelihood_first_price_w(theta, df_first_w)</code> that computes the log-likelihood for a first-price auction winning bid data.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute log-likelihood for winning bids for first-price auctions</span>
+<span class="kw">compute_loglikelihood_first_price_w</span>(theta, df_first_w)</code></pre></div>
+<pre><code>## [1] 1.597414</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Compare the value of the objective function around the true parameters.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">theta &lt;-<span class="st"> </span><span class="kw">c</span>(alpha, beta)
+<span class="co"># label</span>
+label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">alpha&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">beta&quot;</span>)
+label &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)
+<span class="co"># compute the graph</span>
+graph &lt;-<span class="st"> </span><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta)) <span class="op">%do%</span><span class="st"> </span>{
+  theta_i &lt;-<span class="st"> </span>theta[i]
+  theta_i_list &lt;-<span class="st"> </span>theta_i <span class="op">*</span><span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)
+  objective_i &lt;-
+<span class="st">    </span><span class="kw">foreach</span> (<span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta_i_list),
+             <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{
+               theta_ij &lt;-<span class="st"> </span>theta_i_list[j]
+               theta_j &lt;-<span class="st"> </span>theta
+               theta_j[i] &lt;-<span class="st"> </span>theta_ij
+               objective_ij &lt;-<span class="st"> </span>
+<span class="st">                 </span><span class="kw">compute_loglikelihood_first_price_w</span>(
+                   theta_j, df_first_w)
+               <span class="kw">return</span>(objective_ij)
+             }
+  df_graph &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">as.numeric</span>(theta_i_list), 
+                         <span class="dt">y =</span> <span class="kw">as.numeric</span>(objective_i))
+  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df_graph, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> theta_i, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(label[i]))
+  <span class="kw">return</span>(g)
+}
+<span class="kw">save</span>(graph, <span class="dt">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)
+graph</code></pre></div>
+<pre><code>## [[1]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-257-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-257-2.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="9" style="list-style-type: decimal">
+<li>Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result_first_parametric &lt;-
+<span class="st">  </span><span class="kw">optim</span>(
+    <span class="dt">par =</span> theta,
+    <span class="dt">fn =</span> compute_loglikelihood_first_price_w,
+    <span class="dt">df_first_w =</span> df_first_w,
+    <span class="dt">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,
+    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="op">-</span><span class="dv">1</span>)
+  )
+<span class="kw">save</span>(result_first_parametric, <span class="dt">file =</span> <span class="st">&quot;data/A9_result_first_parametric.RData&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_result_first_parametric.RData&quot;</span>)
+result_first_parametric</code></pre></div>
+<pre><code>## $par
+## [1] 1.977676 2.004715
+## 
+## $value
+## [1] 1.607161
+## 
+## $counts
+## function gradient 
+##       91       NA 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">comparison &lt;-
+<span class="st">  </span><span class="kw">data.frame</span>(
+    <span class="dt">true =</span> theta,
+    <span class="dt">estimate =</span> result_first_parametric<span class="op">$</span>par
+  )
+comparison</code></pre></div>
+<pre><code>##   true estimate
+## 1    2 1.977676
+## 2    2 2.004715</code></pre>
+<p>Finally, we non-parametrically estimate the distribution of the valuation using bid data from first-price auctions <code>df_first</code>.</p>
+<ol start="10" style="list-style-type: decimal">
+<li>Write a function <code>F_b(b)</code> that returns an empirical cumulative distribution at <code>b</code>. This can be obtained by using a function <code>ecdf</code>. Also, write a function <code>f_b(b)</code> that returns an empirical probability density at <code>b</code>. This can be obtained by combining functions <code>approxfun</code> and <code>density</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cumulative distribution</span>
+<span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_ecdf</span>(<span class="dt">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;bid&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;cumulative distribution&quot;</span>)</code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-260-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">F_b &lt;-<span class="st"> </span><span class="kw">ecdf</span>(df_first<span class="op">$</span>b)
+<span class="kw">F_b</span>(<span class="fl">0.4</span>)</code></pre></div>
+<pre><code>## [1] 0.4104628</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">F_b</span>(<span class="fl">0.6</span>)</code></pre></div>
+<pre><code>## [1] 0.7173038</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># probability density</span>
+<span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)</code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-260-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_b &lt;-<span class="st"> </span><span class="kw">approxfun</span>(<span class="kw">density</span>(df_first<span class="op">$</span>b))
+<span class="kw">f_b</span>(<span class="fl">0.4</span>)</code></pre></div>
+<pre><code>## [1] 1.680124</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f_b</span>(<span class="fl">0.6</span>)</code></pre></div>
+<pre><code>## [1] 1.469983</code></pre>
+<p>The equilibrium distribution and density of the highest rival’s bid are: <span class="math display">\[
+H_b(b) := F_b(b)^{n - 1},
+\]</span> <span class="math display">\[
+h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
+\]</span></p>
+<ol start="11" style="list-style-type: decimal">
+<li>Write a function <code>H_b(b, n)</code> and <code>h_b(b)</code> that return the equilibrium distribution and density of the highest rival’s bid at point <code>b</code>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">H_b</span>(<span class="fl">0.4</span>, n)</code></pre></div>
+<pre><code>## [1] 0.001962983</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">h_b</span>(<span class="fl">0.4</span>, n)</code></pre></div>
+<pre><code>## [1] 0.05624476</code></pre>
+<p>When a bidder bids <span class="math inline">\(b\)</span>, the implied valuation of her is: <span class="math display">\[
+x = b + \frac{H_b(b)}{h_b(b)}.
+\]</span></p>
+<ol start="12" style="list-style-type: decimal">
+<li>Write a function <code>compute_implied_valuation(b, n, r)</code> that returns the implied valuation given a bid. Let it return <span class="math inline">\(x = 0\)</span> if <span class="math inline">\(b &lt; r\)</span>, because we cannot know the value when the bid is below the reserve price.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r &lt;-<span class="st"> </span>df_first[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>]
+n &lt;-<span class="st"> </span>df_first[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>]
+<span class="kw">compute_implied_valuation</span>(<span class="fl">0.4</span>, n, r)</code></pre></div>
+<pre><code>##           n
+## 1 0.4349007</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">valuation_implied &lt;-<span class="st"> </span>df_first <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">compute_implied_valuation</span>(b, n, r)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(x) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;estimate&quot;</span>)
+valuation_true &lt;-<span class="st"> </span>valuation <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(x) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;true&quot;</span>)
+valuation_plot &lt;-<span class="st"> </span><span class="kw">rbind</span>(valuation_true, valuation_implied)
+<span class="kw">ggplot</span>(valuation_plot, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">color =</span> type)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_ecdf</span>()</code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-263-1.png" width="672" style="display: block; margin: auto;" /></p>
 
-</div>
-</div>
-</div>
-<h3> References</h3>
-<div id="refs" class="references">
-<div id="ref-Igami2017">
-<p>Igami, M. (2017). Estimating the Innovator’s Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 19811998. <em>Journal of Political Economy</em>, <em>125</em>(3), 798–847.</p>
-</div>
-<div id="ref-Christensen1997">
-<p>Christensen, C. M. (1997). <em>The innovator’s dilemma : When new technologies cause great firms to fail</em>. New York: HarperBusiness.</p>
-</div>
-<div id="ref-Maskin1988">
-<p>Maskin, E., &amp; Tirole, J. (1988a). <em>A Theory of Dynamic Oligopoly, I: Overview and Quantity Competition with Large Fixed Costs</em> (No. 3) (Vol. 56, p. 549).</p>
-</div>
-<div id="ref-Hsiao1983">
-<p>Hsiao, C. (1983). Chapter 4 Identification. <em>Handbook of Econometrics</em>, <em>1</em>, 223–283.</p>
-</div>
-<div id="ref-Matzkin2007">
-<p>Matzkin, R. L. (2007). Chapter 73 Nonparametric identification. <em>Handbook of Econometrics</em>, <em>6</em>, 5307–5368.</p>
-</div>
-<div id="ref-Manski1994a">
-<p>Manski, C. F. (1994). Chapter 43 Analog estimation of econometric models. <em>Handbook of Econometrics</em>, <em>4</em>, 2559–2582.</p>
-</div>
-<div id="ref-Matzkin1994b">
-<p>Matzkin, R. L. (1994). Chapter 42 Restrictions of economic theory in nonparametric methods. <em>Handbook of Econometrics</em>, <em>4</em>, 2523–2558.</p>
 </div>
 </div>
             </section>
@@ -976,8 +981,8 @@ plus_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">fu
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="production.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="assignment8.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rcpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
