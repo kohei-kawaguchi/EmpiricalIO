@@ -196,7 +196,7 @@ df
 ```
 
 9. Repeat this procedure for $t = 1, \cdots 10$ by updating the capital and anticipated shocks, and name the resulting data frame `df_T`.
-```{r}
+```{r, eval = FALSE}
 df_T <- df
 for (t in 2:T) {
   # change time index
@@ -248,6 +248,7 @@ save(df_T, file = "data/A2_df_T.RData")
 
 10. Check the simulated data by making summary table.
 ```{r}
+load(file = "data/A2_df_T.RData")
 df_T_summary <-
   foreach (i = 1:dim(df_T)[2], .combine = "rbind") %do% {
     df_T_i <- as.data.frame(df_T)[, i]
