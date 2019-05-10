@@ -114,7 +114,7 @@ ggplot(df_first_w, aes(x = w)) + geom_histogram(fill = "steelblue", alpha = 0.8)
 We first estimate the parameters from the winning bids data of second-price auctions. We estimate the parameters by maximizing a log-likelihood.
 
 $$
-l(\alpha, \beta) := \frac{1}{T} \sum_{t = 1}^T \ln\frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}}{1 - \mathbb{P}\{m_t = 0\}},
+l(\alpha, \beta) := \frac{1}{T} \sum_{t = 1}^T \ln\frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}^{1\{m_t = 1\}}}{1 - \mathbb{P}\{m_t = 0\}},
 $$
 where:
 $$
