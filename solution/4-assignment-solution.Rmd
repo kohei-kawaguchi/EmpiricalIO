@@ -1,0 +1,837 @@
+---
+title: 'Assignment 4: Demand Function Estimation II'
+author: "Kohei Kawaguchi"
+date: "2019/3/25"
+output:
+  pdf_document: default
+---
+
+```{r setup, include = FALSE}
+library(EmpiricalIO)
+library(magrittr)
+library(stargazer)
+library(knitr)
+library(foreach)
+library(ggplot2)
+library(latex2exp)
+library(doParallel)
+registerDoParallel()
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+## Simulate data
+
+__Be carefull that some parameters are changed from assignment 3__. We simulate data from a discrete choice model that is the same with in assignment 3 except for the existence of unobserved product-specific fixed effects. There are $T$ markets and each market has $N$ consumers. There are $J$ products and the indirect utility of consumer $i$ in market $t$ for product $j$ is:
+$$
+u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+$$
+where $\epsilon_{ijt}$ is an i.i.d. type-I extreme random variable.  $x_j$ is $K$-dimensional observed characteristics of the product. $p_{jt}$ is the retail price of the product in the market. 
+
+$\xi_{jt}$ is product-market specific fixed effect. $p_{jt}$ can be correlated with $\xi_{jt}$ but $x_{jt}$s are independent of $\xi_{jt}$. $j = 0$ is an outside option whose indirect utility is:
+$$
+u_{it0} = \epsilon_{i0t},
+$$
+where $\epsilon_{i0t}$ is an i.i.d. type-I extreme random variable. 
+
+$\beta_{it}$ and $\alpha_{it}$ are different across consumers, and they are distributed as:
+$$
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+$$
+$$
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+$$
+where $\nu_{itk}$ for $k = 1, \cdots, K$ and $\upsilon_{it}$ are i.i.d. standard normal random variables. $\alpha_0$ is the mean of $\alpha_i$ and $\tilde{\alpha}_i$ is the deviation from the mean.
+
+Given a choice set in the market, $\mathcal{J}_t \cup \{0\}$, a consumer chooses the alternative that maximizes her utility:
+$$
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+The choice probability of product $j$ for consumer $i$ in market $t$ is:
+$$
+\sigma_{jt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+
+Suppose that we only observe the share data:
+$$
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
+$$
+along with the product-market characteristics $x_{jt}$ and the retail prices $p_{jt}$ for $j \in \mathcal{J}_t \cup \{0\}$ for $t = 1, \cdots, T$. We do not observe the choice data $q_{ijt}$ nor shocks $\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}$.
+
+We draw $\xi_{jt}$ from i.i.d. normal distribution with mean 0 and standard deviation $\sigma_{\xi}$.
+
+1. Set the seed, constants, and parameters of interest as follows.
+
+```{r, echo = TRUE}
+# set the seed
+set.seed(1)
+# number of products
+J <- 10
+# dimension of product characteristics including the intercept
+K <- 3
+# number of markets
+T <- 100
+# number of consumers per market
+N <- 500
+# number of Monte Carlo
+L <- 500
+```
+
+```{r, echo = TRUE}
+# set parameters of interests
+beta <- rnorm(K); 
+beta[1] <- 4
+beta
+sigma <- abs(rnorm(K)); sigma
+mu <- 0.5
+omega <- 1
+```
+
+Generate the covariates as follows.
+
+The product-market characteristics:
+$$
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+$$
+where $\sigma_x$ is referred to as `sd_x` in the code.
+
+The product-market-specific unobserved fixed effect:
+$$
+\xi_{jt} \sim N(0, \sigma_\xi),
+$$
+where $\sigma_xi$ is referred to as `sd_xi` in the code.
+
+The marginal cost of product $j$ in market $t$:
+$$
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+$$
+where $\sigma_c$ is referred to as `sd_c` in the code.
+
+
+The retail price:
+$$
+p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
+$$
+where $\gamma$ is referred to as `price_xi` and $\sigma_p$ as `sd_p` in the code. This price is not the equilibrium price. We will revisit this point in a subsequent assignment.
+
+The value of the auxiliary parameters are set as follows:
+
+```{r, echo = TRUE}
+# set auxiliary parameters
+price_xi <- 1
+sd_x <- 2
+sd_xi <- 0.5
+sd_c <- 0.05
+sd_p <- 0.05
+```
+
+2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
+
+
+```{r}
+# make product characteristics data
+X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
+X <- cbind(rep(1, J), X)
+colnames(X) <- paste("x", 1:K, sep = "_")
+X <- data.frame(j = 1:J, X) %>%
+  tibble::as_tibble()
+# add outside option
+X <- rbind(
+  rep(0, dim(X)[2]),
+  X
+) 
+```
+
+```{r, echo = TRUE}
+X
+```
+
+3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. After generating the variables, drop some products in each market. __In this assignment, we drop products in a different way from the last assignment__. In order to change the number of available products in each market, for each market, first draw $J_t$ from a discrete uniform distribution between $1$ and $J$. Then, drop products from each market using `dplyr::sample_frac` function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
+
+```{r}
+# make market-product data
+M <- expand.grid(j = 1:J, t = 1:T) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(
+    xi = sd_xi * rnorm(J*T),
+    c = exp(sd_c * rnorm(J*T)),
+    p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
+  ) 
+M <- M %>%
+  dplyr::group_by(t) %>%
+  dplyr::sample_frac(size = purrr::rdunif(1, J)/J) %>%
+  dplyr::ungroup()
+# add outside option
+outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
+M <- rbind(
+  M,
+  outside
+) %>%
+  dplyr::arrange(t, j)
+```
+
+```{r, echo = TRUE}
+M
+```
+
+4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
+
+
+```{r}
+# make consumer-market data
+V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
+colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V <- data.frame(
+  expand.grid(i = 1:N, t = 1:T),
+  V
+) %>%
+  tibble::as_tibble()
+```
+
+```{r, echo = TRUE}
+V
+```
+
+5. Join `X`, `M`, `V` using `dplyr::left_join` and name it `df`. `df` is the data frame such that a row contains variables for a consumer about a product that is available in a market.
+
+
+```{r}
+# make choice data
+df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+```
+
+```{r, echo = TRUE}
+df
+```
+
+6. Draw a vector of preference shocks `e` whose length is the same as the number of rows of `df`.
+
+```{r}
+# draw idiosyncratic shocks
+e <- evd::rgev(dim(df)[1])
+```
+
+```{r, echo = TRUE}
+head(e)
+```
+
+7. Write a function `compute_indirect_utility(df, beta, sigma, mu, omega)` that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with $e$. (This function is the same with assignment 3. You can use the function.)
+
+```{r, echo = TRUE}
+# compute indirect utility
+u <- 
+  compute_indirect_utility(
+    df, beta, sigma, 
+           mu, omega)
+head(u)
+```
+
+In the previous assingment, we computed predicted share by simulating choice and taking their average. Instead, we compute the actual share by:
+$$
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N \frac{\exp[\beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt}]}{1 + \sum_{k \in \mathcal{J}_t} \exp[\beta_{it}' x_k + \alpha_{it} p_{kt} + \xi_{jt}]}
+$$
+and the predicted share by:
+$$
+\widehat{\sigma}_{j}(x, p_t, \xi_t) = \frac{1}{L} \sum_{l = 1}^L \frac{\exp[\beta_{t}^{(l)\prime} x_j + \alpha_{t}^{(l)} p_{jt} + \xi_{jt}]}{1 + \sum_{k \in \mathcal{J}_t} \exp[\beta_{t}^{(l)\prime} x_k + \alpha_{t}^{(l)} p_{kt} + \xi_{jt}]}.
+$$
+
+8. To do so, write a function `compute_choice_smooth(X, M, V, beta, sigma, mu, omega)` in which the choice of each consumer is not:
+$$
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\},
+$$
+but
+$$
+\tilde{q}_{ijt} = \frac{\exp(u_{ijt})}{1 + \sum_{k \in \mathcal{J}_t} \exp(u_{ikt})}.
+$$
+```{r, echo = TRUE}
+# compute choice
+compute_choice_smooth <-
+  function(X, M, V, beta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # make choice data
+    df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+      tibble::as_tibble() %>%
+      dplyr::left_join(V, by = c("i", "t")) %>%
+      dplyr::left_join(X, by = c("j")) %>%
+      dplyr::left_join(M, by = c("j", "t")) %>%
+      dplyr::filter(!is.na(p)) %>%
+      dplyr::arrange(t, i, j)
+    # compute indirect utility
+    u <- compute_indirect_utility(df, beta, sigma, 
+                                  mu, omega)
+    # add u 
+    df_choice <- data.frame(df, u) %>%
+      tibble::as_tibble()
+    # make choice
+    df_choice <- df_choice %>%
+      dplyr::group_by(t, i) %>%
+      dplyr::mutate(q = exp(u)/sum(exp(u))) %>%
+      dplyr::ungroup()
+    # return
+    return(df_choice)
+  }
+df_choice_smooth <-
+  compute_choice_smooth(X, M, V, beta, sigma, mu, omega)
+summary(df_choice_smooth)
+```
+
+9. Next, write a function `compute_share_smooth(X, M, V, beta, sigma, mu, omega)` that calls `compute_choice_smooth` and then returns the share based on above $\tilde{q}_{ijt}$. If we use these functions with the Monte Carlo shocks, it gives us the predicted share of the products. 
+
+```{r, echo = TRUE}
+# compute share
+compute_share_smooth <-
+  function(X, M, V, beta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # compute choice
+    df_choice <- 
+      compute_choice_smooth(X, M, V, beta, sigma, 
+                     mu, omega)
+    # make share data
+    df_share_smooth <- df_choice %>%
+      dplyr::select(-dplyr::starts_with("v_"), -u, -i) %>%
+      dplyr::group_by(t, j) %>%
+      dplyr::mutate(q = sum(q)) %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(t, j, .keep_all = TRUE) %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(s = q/sum(q)) %>%
+      dplyr::ungroup()
+    # log share difference
+    df_share_smooth <- df_share_smooth %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(y = log(s/sum(s * (j == 0)))) %>%
+      dplyr::ungroup()
+    return(df_share_smooth)
+  }
+
+df_share_smooth <- compute_share_smooth(X, M, V, beta, sigma, mu, omega)
+summary(df_share_smooth)
+```
+
+Use this `df_share_smooth` as the data to estimate the parameters in the following section.
+
+
+## Estimate the parameters
+
+1. First draw Monte Carlo consumer-level heterogeneity `V_mcmc` and Monte Carlo preference shocks `e_mcmc`. The number of simulations is `L`. This does not have to be the same with the actual number of consumers `N`. 
+
+```{r}
+# mixed logit estimation
+## draw mcmc V
+V_mcmc <- matrix(rnorm(L*T*(K + 1)), nrow = L*T) 
+colnames(V_mcmc) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V_mcmc <- data.frame(
+  expand.grid(i = 1:L, t = 1:T),
+  V_mcmc
+) %>%
+  tibble::as_tibble() 
+```
+
+```{r, echo = TRUE}
+V_mcmc
+```
+
+```{r}
+## draw mcmc e
+df_mcmc <- expand.grid(t = 1:T, i = 1:L, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V_mcmc, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+# draw idiosyncratic shocks
+e_mcmc <- evd::rgev(dim(df_mcmc)[1])
+```
+```{r, echo = TRUE}
+head(e_mcmc)
+```
+
+2. Vectorize the parameters to a vector `theta` because `optim` requires the maximiand to be a vector.
+
+```{r, echo = TRUE}
+# set parameters
+theta <- c(beta, sigma, mu, omega)
+theta
+```
+
+3. Estimate the parameters assuming there is no product-specific unobserved fixed effects $\xi_{jt}$, i.e., using the functions in assignment 3. To do so, first modify `M` to `M_no` in which `xi` is replaced with 0 and estimate the model with `M_no`. Otherwise, your function will compute the share with the true `xi`.
+
+```{r, echo = TRUE}
+M_no <- M %>%
+  dplyr::mutate(xi = 0)
+```
+
+```{r, eval = FALSE}
+# find NLLS estimator
+result_NLLS <- 
+  optim(par = theta, fn = NLLS_objective_A3,
+        method = "Nelder-Mead",
+        df_share = df_share_smooth, 
+        X = X, 
+        M = M_no, 
+        V_mcmc = V_mcmc, 
+        e_mcmc = e_mcmc)
+save(result_NLLS, file = "data/A4_result_NLLS.RData")
+```
+
+
+```{r}
+result_NLLS <- get(load(file = "data/A4_result_NLLS.RData"))
+result_NLLS
+result <- data.frame(true = theta, estimates = result_NLLS$par)
+result
+```
+
+
+Next, we estimate the model allowing for the product-market-specific unobserved fixed effect $\xi_{jt}$ using the BLP algorithm. To do so, we slightly modify the `compute_indirect_utility`, `compute_choice_smooth`, and `compute_share_smooth` functions so that they receive $\delta_{jt}$ to compute the indirect utilities, choices, and shares. Be careful that the treatment of $\alpha_i$ is slightly different from the lecture note, because we assumed that $\alpha_i$s are log-normal random variables.
+
+4. Compute and print out $\delta_{jt}$ at the true parameters, i.e.:
+$$
+\delta_{jt} = \beta_0' x_j + \alpha_0' p_{jt} + \xi_{jt}.
+$$
+```{r}
+XX <- as.matrix(dplyr::select(df_share_smooth, dplyr::starts_with("x_")))
+pp <- as.matrix(dplyr::select(df_share_smooth, p)) 
+xi <- as.matrix(dplyr::select(df_share_smooth, xi))
+alpha <- - exp(mu + omega^2/2)
+delta <- XX %*% as.matrix(beta) + pp * alpha + xi
+delta <- dplyr::select(df_share_smooth, t, j) %>%
+  dplyr::mutate(delta = as.numeric(delta))
+```
+```{r, echo = TRUE}
+delta
+```
+
+
+
+5. Write a function `compute_indirect_utility_delta(df, delta, sigma, mu, omega)` that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with $e$. Print out the output with $\delta_{jt}$ evaluated at the true parameters. Check if the output is close to the true indirect utilities.
+```{r, echo = TRUE}
+# compute indirect utility from delta
+compute_indirect_utility_delta <- 
+  function(df, delta, sigma, 
+           mu, omega) {
+    # extract matrices
+    X <- as.matrix(dplyr::select(df, dplyr::starts_with("x_")))
+    p <- as.matrix(dplyr::select(df, p)) 
+    v_x <- as.matrix(dplyr::select(df, dplyr::starts_with("v_x")))
+    v_p <- as.matrix(dplyr::select(df, v_p))
+    # expand delta
+    delta_ijt <- df %>%
+      dplyr::left_join(delta, by = c("t", "j")) %>%
+      dplyr::select(delta) %>%
+      as.matrix()
+    # random coefficients
+    beta_i <- v_x %*% diag(sigma) 
+    alpha_i <- - exp(mu + omega * v_p) - (- exp(mu + omega^2/2))
+    # conditional mean indirect utility
+    value <- as.matrix(delta_ijt + rowSums(beta_i * X) + p * alpha_i) 
+    colnames(value) <- "u"
+    return(value)
+  }
+
+# compute indirect utility from delta
+u_delta <-
+  compute_indirect_utility_delta(df, delta, sigma,
+                                 mu, omega)
+head(u_delta)
+summary(u - u_delta)
+```
+
+
+6. Write a function `compute_choice_smooth_delta(X, M, V, delta, sigma, mu, omega)` that first construct `df` from `X`, `M`, `V`, second call `compute_indirect_utility_delta` to obtain the vector of mean indirect utilities `u`, third compute the (smooth) choice vector `q` based on the vector of mean indirect utilities, and finally return the data frame to which `u` and `q` are added as columns. Print out the output with $\delta_{jt}$ evaluated at the true parameters. Check if the output is close to the true (smooth) choice vector.
+
+
+```{r, echo = TRUE}
+# compute choice from delta
+compute_choice_smooth_delta <-
+  function(X, M, V, delta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # make choice data
+    df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+      tibble::as_tibble() %>%
+      dplyr::left_join(V, by = c("i", "t")) %>%
+      dplyr::left_join(X, by = c("j")) %>%
+      dplyr::left_join(M, by = c("j", "t")) %>%
+      dplyr::filter(!is.na(p)) %>%
+      dplyr::arrange(t, i, j)
+    # compute indirect utility
+    u <- compute_indirect_utility_delta(df, delta, sigma, 
+                                        mu, omega)
+    # add u 
+    df_choice <- data.frame(df, u) %>%
+      tibble::as_tibble()
+    # make choice
+    df_choice <- df_choice %>%
+      dplyr::group_by(t, i) %>%
+      dplyr::mutate(q = exp(u)/sum(exp(u))) %>%
+      dplyr::ungroup()
+    # return
+    return(df_choice)
+  }
+
+# compute choice
+df_choice_smooth_delta <- 
+  compute_choice_smooth_delta(X, M, V, delta, sigma, mu, omega)
+df_choice_smooth_delta
+summary(df_choice_smooth_delta)
+summary(df_choice_smooth$q - df_choice_smooth_delta$q)
+```
+
+
+7. Write a function `compute_share_delta(X, M, V, delta, sigma, mu, omega)` that first construct `df` from `X`, `M`, `V`, second call `compute_choice_delta` to obtain a data frame with `u` and `q`, third compute the share of each product at each market `s` and the log difference in the share from the outside option, $\ln(s_{jt}/s_{0t})$, denoted by `y`, and finally return the data frame that is summarized at the product-market level, dropped consumer-level variables, and added `s` and `y`.
+
+```{r, echo = TRUE}
+# compute share from delta
+compute_share_smooth_delta <-
+  function(X, M, V, delta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # compute choice
+    df_choice <- 
+      compute_choice_smooth_delta(X, M, V, delta, sigma, 
+                                  mu, omega)
+    # make share data
+    df_share_smooth <- df_choice %>%
+      dplyr::select(-dplyr::starts_with("v_"), -u, -i) %>%
+      dplyr::group_by(t, j) %>%
+      dplyr::mutate(q = sum(q)) %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(t, j, .keep_all = TRUE) %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(s = q/sum(q)) %>%
+      dplyr::ungroup()
+    # log share difference
+    df_share_smooth <- df_share_smooth %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(y = log(s/sum(s * (j == 0)))) %>%
+      dplyr::ungroup()
+    return(df_share_smooth)
+  }
+
+# compute share
+df_share_smooth_delta <-
+  compute_share_smooth_delta(X, M, V, delta, sigma, mu, omega) 
+df_share_smooth_delta
+summary(df_share_smooth_delta)
+summary(df_share_smooth$s - df_share_smooth_delta$s)
+```
+
+8. Write a function `solve_delta(df_share_smooth, X, M, V, delta, sigma, mu, omega)` that finds $\delta_{jt}$ that equates the actua share and the predicted share based on `compute_share_smooth_delta` by the fixed-point algorithm with an operator:
+$$
+T(\delta_{jt}^{(r)}) = \delta_{jt}^{(r)} + \kappa \cdot \log\left(\frac{s_{jt}}{\sigma_{jt}[\delta^{(r)}]}\right),
+$$
+where $s_{jt}$ is the actual share of product $j$ in market $t$ and $\sigma_{jt}[\delta^{(r)}]$ is the predicted share of product $j$ in market $t$ given $\delta^{(r)}$. Multiplying $\kappa$ is for the numerical stability. I set the value at $\kappa = 1$. Adjust it if the algorithm did not work. Set the stopping criterion at $\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| < \lambda$. Set $\lambda$ at $10^{-3}$. Make sure that $\delta_{i0t}$ is always set at zero while the iteration. 
+
+Start the algorithm with the true $\delta_{jt}$ and check if the algorithm returns (almost) the same $\delta_{jt}$ when the actual and predicted smooth share are equated.
+
+```{r, echo = TRUE}
+# solve delta by the fixed-point algorithm
+solve_delta <-
+  function(df_share_smooth, X, M, V, delta, sigma, mu, omega, kappa, lambda) {
+    # initial distance
+    distance <- 10000
+    # fixed-point algorithm
+    delta_old <- delta
+    while (distance > lambda) {
+      # save the old delta
+      delta_old$delta <- delta$delta
+      # compute the share with the old delta
+      df_share_smooth_predicted <- 
+        compute_share_smooth_delta(X, M, V, delta_old, sigma, mu, omega)  
+      # update the delta
+      delta$delta <- delta_old$delta + 
+        (log(df_share_smooth$s) - log(df_share_smooth_predicted$s)) * kappa
+      delta <- delta %>%
+        dplyr::mutate(delta = ifelse(j == 0, 0, delta))
+      # update the distance
+      distance <- max(abs(delta$delta - delta_old$delta))
+    }
+    return(delta)
+  }
+
+
+kappa <- 1
+lambda <- 1e-3
+delta_new <-
+  solve_delta(df_share_smooth, X, M, V, delta, sigma, mu, omega, kappa, lambda)
+head(delta_new)
+summary(delta_new$delta - delta$delta)
+```
+
+9. Check how long it takes to compute the limit $\delta$ under the Monte Carlo shocks starting from the true $\delta$ to match with `df_share_smooth`. This is approximately the time to evaluate the objective function.
+```{r, echo = TRUE, eval = FALSE}
+delta_new <-
+  solve_delta(df_share_smooth, X, M, V_mcmc, delta, sigma, mu, omega, kappa, lambda)
+save(delta_new, file = "data/A4_delta_new.RData")
+```
+
+
+
+```{r, echo = TRUE}
+delta_new <- get(load(file = "data/A4_delta_new.RData"))
+summary(delta_new$delta - delta$delta)
+```
+
+
+
+10. We use the marginal cost $c_{jt}$ as the excluded instrumental variable for $p_{jt}$. Let $\Psi$ be the weighing matrix for the GMM estimator. For now, let it be the identity matrix. Write a function `compute_theta_linear(df_share_smooth, delta, mu, omega, Psi)` that returns the optimal linear parameters associated with the data and $\delta$. Notice that we only obtain $\beta_0$ in this way because $\alpha_0$ is directly computed from the non-linear parameters by $-\exp(\mu + \omega^2/2)$. The first order condition for $\beta_0$ is:
+\begin{equation}
+\beta_0 = (X'W \Phi^{-1} W'X)^{-1} X' W \Phi^{-1} W' [\delta - \alpha_0 p],
+\end{equation} 
+where
+
+\begin{equation}
+X = 
+\begin{pmatrix}
+x_{11}'\\
+\vdots \\
+x_{J_1 1}'\\
+\vdots \\
+x_{1T}' \\
+\vdots \\
+x_{J_T T} 
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+W = 
+\begin{pmatrix}
+x_{11}' & c_{11}\\
+\vdots & \vdots \\
+x_{J_1 1}' & c_{J_1 1}\\
+\vdots & \vdots \\
+x_{1T}' & c_{1T}\\
+\vdots & \vdots \\
+x_{J_T T} & c_{J_T T}
+\end{pmatrix},
+\end{equation}
+
+\begin{equation}
+\delta =
+\begin{pmatrix}
+\delta_11\\
+\vdots\\
+\delta_{J_1 1}\\
+\vdots\\
+\delta_1T\\
+\vdots\\
+\delta_{J_T T}\\
+\end{pmatrix}
+\end{equation},
+
+where $\alpha_0 = - \exp(\mu + \omega^2/2)$. Notice that $X$ and $W$ does not include rows for the outwide option.
+
+```{r, echo = TRUE}
+# compute the optimal linear parameters
+compute_theta_linear <-
+  function(df_share_smooth, delta, mu, omega, Psi) {
+    # extract matrices
+    X <- df_share_smooth %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_")) %>%
+      as.matrix()
+    p <- df_share_smooth %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(p) %>%
+      as.matrix()
+    W <- df_share_smooth %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_"), c) %>%
+      as.matrix()
+    delta_m <- delta %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(delta) %>%
+      as.matrix()
+    alpha <- - exp(mu + omega^2/2)
+    # compute the optimal linear parameters
+    theta_linear_1 <-
+      crossprod(X, W) %*% 
+      solve(Psi, crossprod(W, X))
+    theta_linear_2 <-
+      crossprod(X, W) %*% 
+      solve(Psi, crossprod(W, delta_m - alpha * p))
+    theta_linear <- solve(theta_linear_1, theta_linear_2)
+    return(theta_linear)
+  }
+
+Psi <- diag(length(beta) + 1)
+theta_linear <-
+  compute_theta_linear(df_share_smooth, delta, mu, omega, Psi) 
+cbind(theta_linear, beta)
+```
+
+11. Write a function `solve_xi(df_share_smooth, delta, beta, mu, omega)` that computes the values of $\xi$ that are implied from the data, $\delta$, and the linear parameters. Check that the (almost) true values are returned when true $\delta$ and the true linear parmaeters are passed to the function. Notice that the returend $\xi$ should not include rows for the outside option.
+
+```{r, echo = TRUE}
+# solve xi associated with delta and linear parameters
+solve_xi <-
+  function(df_share_smooth, delta, beta, mu, omega) {
+    # extract matrices
+    X1 <- df_share_smooth %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_"), p) %>%
+      as.matrix()
+    delta_m <- delta %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(delta) %>%
+      as.matrix()
+    alpha <- - exp(mu + omega^2/2)
+    theta_linear <- c(beta, alpha)
+    # compute xi
+    xi <- delta_m - X1 %*% theta_linear
+    colnames(xi) <- "xi"
+    # return
+    return(xi)
+  }
+
+xi_new <- solve_xi(df_share_smooth, delta, beta, mu, omega)
+head(xi_new)
+xi_true <-
+  df_share_smooth %>%
+  dplyr::filter(j != 0) %>%
+  dplyr::select(xi)
+summary(xi_true - xi_new)
+```
+
+
+11. Write a function `GMM_objective_A4(theta_nonlinear, delta, df_share_smooth, Psi, X, M, V_mcmc, kappa, lambda)` that returns the value of the GMM objective function as a function of non-linear parameters `mu`, `omega`, and `sigma`:
+$$
+\min_{\theta} \xi(\theta)' W \Phi^{-1} W' \xi(\theta),
+$$
+where $\xi(\theta)$ is the values of $\xi$ that solves:
+$$
+s = \sigma(p, x, \xi),
+$$
+given parameters $\theta$. Note that the row of $\xi(\theta)$ and $W$ do not include the rows for the outside options.
+
+```{r, echo = TRUE}
+# non-linear parmaeters
+theta_nonlinear <- c(mu, omega, sigma)
+```
+
+
+```{r, echo = TRUE, eval = FALSE}
+# compute GMM objective function
+GMM_objective_A4 <-
+  function(theta_nonlinear, delta, df_share_smooth, Psi, 
+           X, M, V_mcmc, kappa, lambda) {
+    # exctract parameters
+    mu <- theta_nonlinear[1]
+    omega <- theta_nonlinear[2]
+    sigma <- theta_nonlinear[3:length(theta_nonlinear)]
+    # extract matrix
+    W <- df_share_smooth %>%
+      dplyr::filter(j != 0) %>%
+      dplyr::select(dplyr::starts_with("x_"), c) %>%
+      as.matrix()
+    # compute the delta that equates the actual and predicted shares
+    delta <- 
+      solve_delta(df_share_smooth, X, M, V_mcmc,  
+                  delta, sigma, mu, omega, kappa, lambda)
+    # compute the optimal linear parameters
+    beta <-
+      compute_theta_linear(df_share_smooth, delta, mu, omega, Psi) 
+    # compute associated xi
+    xi <- solve_xi(df_share_smooth, delta, beta, mu, omega)
+    # compute objective
+    objective <- crossprod(xi, W) %*% solve(Psi, crossprod(W, xi))
+    # return
+    return(objective)
+  }
+
+# compute GMM objective function
+objective <-
+  GMM_objective_A4(theta_nonlinear, delta, df_share_smooth, Psi, 
+                   X, M, V_mcmc, kappa, lambda) 
+save(objective, file = "data/A4_objective.RData")
+```
+```{r, echo = TRUE}
+objective <- get(load(file = "data/A4_objective.RData"))
+objective
+```
+
+
+
+
+12. Draw a graph of the objective function that varies each non-linear parameter from 0, 0.2, $\cdots$, 2.0 of the true value. Try with the actual shocks `V`. 
+
+```{r, eval = FALSE}
+label <- c( "\\mu",
+           "\\omega",
+           paste("\\sigma_", 1:K, sep = ""))
+label <- paste("$", label, "$", sep = "")
+graph_true <- foreach (i = 1:length(theta_nonlinear)) %do% {
+  theta_nonlinear_i <- theta_nonlinear[i]
+  theta_nonlinear_i_list <- theta_nonlinear_i * seq(0, 2, by = 0.2)
+  objective_i <- 
+    foreach (theta_nonlinear_ij = theta_nonlinear_i_list,
+             .combine = "rbind") %dopar% {
+               theta_nonlinear_j <- theta_nonlinear
+               theta_nonlinear_j[i] <- theta_nonlinear_ij
+               objective_ij <-
+                 GMM_objective_A4(theta_nonlinear_j, delta, df_share_smooth, Psi, 
+                                  X, M, V, kappa, lambda) 
+               return(objective_ij)
+             }
+  df_graph <- 
+    data.frame(x = theta_nonlinear_i_list, y = as.numeric(objective_i)) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_nonlinear_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph_true, file = "data/A4_graph_true.RData")
+```
+```{r}
+graph_true <- get(load(file = "data/A4_graph_true.RData"))
+graph_true
+```
+
+
+
+13. Find non-linear parameters that minimize the GMM objective function. Because standard deviations of the same absolute value with positive and negative values have almost the same implication for the data, you can take the absolute value if the estimates of the standard deviations happened to be negative (Another way is to set the non-negativity constraints on the standard deviations).
+```{r, eval = FALSE}
+result <-
+  optim(par = theta_nonlinear,
+        fn = GMM_objective_A4,
+        method = "BFGS",
+        delta = delta, 
+        df_share_smooth = df_share_smooth, 
+        Psi = Psi, 
+        X = X, M = M, 
+        V_mcmc = V_mcmc, 
+        kappa = kappa,
+        lambda = lambda)
+save(result, file = "data/A4_result.RData")
+```
+
+```{r}
+result <- get(load(file = "data/A4_result.RData"))
+result
+comparison <- cbind(theta_nonlinear, abs(result$par))
+colnames(comparison) <- c("true", "estimate")
+comparison
+```
+

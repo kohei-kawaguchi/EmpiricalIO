@@ -1,0 +1,580 @@
+---
+title: 'Assignment 3: Demand Function Estimation I'
+author: "Kohei Kawaguchi"
+date: "2019/3/11"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include = FALSE}
+library(EmpiricalIO)
+library(magrittr)
+library(stargazer)
+library(knitr)
+library(foreach)
+library(ggplot2)
+library(latex2exp)
+library(doParallel)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+## Simulate data
+
+We simulate data from a discrete choice model. There are $T$ markets and each market has $N$ consumers. There are $J$ products and the indirect utility of consumer $i$ in market $t$ for product $j$ is:
+$$
+u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+$$
+where $\epsilon_{ijt}$ is an i.i.d. type-I extreme random variable.  $x_j$ is $K$-dimensional observed characteristics of the product. $p_{jt}$ is the retail price of the product in the market. 
+
+$\xi_{jt}$ is product-market specific fixed effect. $p_{jt}$ can be correlated with $\xi_{jt}$ but $x_{jt}$s are independent of $\xi_{jt}$. $j = 0$ is an outside option whose indirect utility is:
+$$
+u_{it0} = \epsilon_{i0t},
+$$
+where $\epsilon_{i0t}$ is an i.i.d. type-I extreme random variable. 
+
+$\beta_{it}$ and $\alpha_{it}$ are different across consumers, and they are distributed as:
+$$
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+$$
+$$
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+$$
+where $\nu_{itk}$ for $k = 1, \cdots, K$ and $\upsilon_{it}$ are i.i.d. standard normal random variables. $\alpha_0$ is the mean of $\alpha_i$ and $\tilde{\alpha}_i$ is the deviation from the mean.
+
+Given a choice set in the market, $\mathcal{J}_t \cup \{0\}$, a consumer chooses the alternative that maximizes her utility:
+$$
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+The choice probability of product $j$ for consumer $i$ in market $t$ is:
+$$
+\sigma_{jt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+$$
+
+Suppose that we only observe the share data:
+$$
+s_{jt} = \frac{1}{N} \sum_{i = 1}^N q_{ijt},
+$$
+along with the product-market characteristics $x_{jt}$ and the retail prices $p_{jt}$ for $j \in \mathcal{J}_t \cup \{0\}$ for $t = 1, \cdots, T$. We do not observe the choice data $q_{ijt}$ nor shocks $\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}$.
+
+In this assignment, we consider a model with $\xi_{jt} = 0$, i.e., the model without the unobserved fixed effects. However, the code to simulate data should be written for general $\xi_{jt}$, so that we can use the same code in the next assignment in which we consider a model with the unobserved fixed effects.
+
+1. Set the seed, constants, and parameters of interest as follows.
+
+```{r, echo = TRUE}
+# set the seed
+set.seed(1)
+# number of products
+J <- 10
+# dimension of product characteristics including the intercept
+K <- 3
+# number of markets
+T <- 100
+# number of consumers per market
+N <- 500
+# number of Monte Carlo
+L <- 500
+```
+
+```{r, echo = TRUE}
+# set parameters of interests
+beta <- rnorm(K); 
+beta[1] <- 4
+beta
+sigma <- abs(rnorm(K)); sigma
+mu <- 0.5
+omega <- 1
+```
+
+Generate the covariates as follows.
+
+The product-market characteristics:
+$$
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+$$
+where $\sigma_x$ is referred to as `sd_x` in the code.
+
+The product-market-specific unobserved fixed effect:
+$$
+\xi_{jt} = 0.
+$$
+The marginal cost of product $j$ in market $t$:
+$$
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+$$
+where $\sigma_c$ is referred to as `sd_c` in the code.
+
+
+The retail price:
+$$
+p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
+$$
+where $\gamma$ is referred to as `price_xi` and $\sigma_p$ as `sd_p` in the code. This price is not the equilibrium price. We will revisit this point in a subsequent assignment.
+
+The value of the auxiliary parameters are set as follows:
+
+```{r, echo = TRUE}
+# set auxiliary parameters
+price_xi <- 1
+prop_jt <- 0.6
+sd_x <- 0.5
+sd_c <- 0.05
+sd_p <- 0.05
+```
+
+2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
+
+
+```{r}
+# make product characteristics data
+X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
+X <- cbind(rep(1, J), X)
+colnames(X) <- paste("x", 1:K, sep = "_")
+X <- data.frame(j = 1:J, X) %>%
+  tibble::as_tibble()
+# add outside option
+X <- rbind(
+  rep(0, dim(X)[2]),
+  X
+) 
+```
+
+```{r, echo = TRUE}
+X
+```
+
+3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. After generating the variables, drop `1 - prop_jt` products from each market using `dplyr::sample_frac` function. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
+
+```{r}
+# make market-product data
+M <- expand.grid(j = 1:J, t = 1:T) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(
+    xi = 0 * rnorm(J*T),
+    c = exp(sd_c * rnorm(J*T)),
+    p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
+  ) 
+M <- M %>%
+  dplyr::group_by(t) %>%
+  dplyr::sample_frac(prop_jt) %>%
+  dplyr::ungroup()
+# add outside option
+outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
+M <- rbind(
+  M,
+  outside
+) %>%
+  dplyr::arrange(t, j)
+```
+
+```{r, echo = TRUE}
+M
+```
+
+4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
+
+
+```{r}
+# make consumer-market data
+V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
+colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V <- data.frame(
+  expand.grid(i = 1:N, t = 1:T),
+  V
+) %>%
+  tibble::as_tibble()
+```
+
+```{r, echo = TRUE}
+V
+```
+
+5. Join `X`, `M`, `V` using `dplyr::left_join` and name it `df`. `df` is the data frame such that a row contains variables for a consumer about a product that is available in a market.
+
+
+```{r}
+# make choice data
+df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+```
+
+```{r, echo = TRUE}
+df
+```
+
+6. Draw a vector of preference shocks `e` whose length is the same as the number of rows of `df`.
+
+```{r}
+# draw idiosyncratic shocks
+e <- evd::rgev(dim(df)[1])
+```
+
+```{r, echo = TRUE}
+head(e)
+```
+
+7. Write a function `compute_indirect_utility(df, beta, sigma, mu, omega)` that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with $e$.
+
+```{r, echo = TRUE}
+# compute indirect utility
+compute_indirect_utility <- 
+  function(df, beta, sigma, 
+           mu, omega) {
+    # extract matrices
+    X <- as.matrix(dplyr::select(df, dplyr::starts_with("x_")))
+    p <- as.matrix(dplyr::select(df, p)) 
+    v_x <- as.matrix(dplyr::select(df, dplyr::starts_with("v_x")))
+    v_p <- as.matrix(dplyr::select(df, v_p))
+    xi <- as.matrix(dplyr::select(df, xi))
+    # random coefficients
+    beta_i <- as.matrix(rep(1, dim(v_x)[1])) %*% t(as.matrix(beta)) + v_x %*% diag(sigma) 
+    alpha_i <- - exp(mu + omega * v_p)
+    # conditional mean indirect utility
+    value <- as.matrix(rowSums(beta_i * X) + p * alpha_i + xi) 
+    colnames(value) <- "u"
+    return(value)
+  }
+u <- 
+  compute_indirect_utility(
+    df, beta, sigma, 
+           mu, omega)
+head(u)
+```
+
+8. Write a function `compute_choice(X, M, V, e, beta, sigma, mu, omega)` that first construct `df` from `X`, `M`, `V`, second call `compute_indirect_utility` to obtain the vector of mean indirect utilities `u`, third compute the choice vector `q` based on the vector of mean indirect utilities and `e`, and finally return the data frame to which `u` and `q` are added as columns. 
+
+```{r, echo = TRUE}
+# compute choice
+compute_choice <-
+  function(X, M, V, e, beta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # make choice data
+    df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+      tibble::as_tibble() %>%
+      dplyr::left_join(V, by = c("i", "t")) %>%
+      dplyr::left_join(X, by = c("j")) %>%
+      dplyr::left_join(M, by = c("j", "t")) %>%
+      dplyr::filter(!is.na(p)) %>%
+      dplyr::arrange(t, i, j)
+    # compute indirect utility
+    u <- compute_indirect_utility(df, beta, sigma, 
+                                  mu, omega)
+    # add u and e
+    df_choice <- data.frame(df, u, e) %>%
+      tibble::as_tibble()
+    # make choice
+    df_choice <- df_choice %>%
+      dplyr::group_by(t, i) %>%
+      dplyr::mutate(q = ifelse(u + e == max(u + e), 1, 0)) %>%
+      dplyr::ungroup()
+    # return
+    return(df_choice)
+  }
+df_choice <- 
+  compute_choice(X, M, V, e, beta, sigma, 
+                 mu, omega)
+df_choice
+summary(df_choice)
+```
+
+9. Write a function `compute_share(X, M, V, e, beta, sigma, mu, omega)` that first construct `df` from `X`, `M`, `V`, second call `compute_choice` to obtain a data frame with `u` and `q`, third compute the share of each product at each market `s` and the log difference in the share from the outside option, $\ln(s_{jt}/s_{0t})$, denoted by `y`, and finally return the data frame that is summarized at the product-market level, dropped consumer-level variables, and added `s` and `y`.
+
+
+```{r share, echo = TRUE}
+# compute share
+compute_share <-
+  function(X, M, V, e, beta, sigma, 
+           mu, omega) {
+    # constants
+    T <- max(M$t)
+    N <- max(V$i)
+    J <- max(X$j)
+    # compute choice
+    df_choice <- 
+      compute_choice(X, M, V, e, beta, sigma, 
+                     mu, omega)
+    # make share data
+    df_share <- df_choice %>%
+      dplyr::select(-dplyr::starts_with("v_"), -u, -e, -i) %>%
+      dplyr::group_by(t, j) %>%
+      dplyr::mutate(q = sum(q)) %>%
+      dplyr::ungroup() %>%
+      dplyr::distinct(t, j, .keep_all = TRUE) %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(s = q/sum(q)) %>%
+      dplyr::ungroup()
+    # log share difference
+    df_share <- df_share %>%
+      dplyr::group_by(t) %>%
+      dplyr::mutate(y = log(s/sum(s * (j == 0)))) %>%
+      dplyr::ungroup()
+    return(df_share)
+  }
+df_share <-
+  compute_share(X, M, V, e, beta, sigma, 
+                mu, omega)
+df_share
+summary(df_share)
+```
+
+## Estimate the parameters
+
+1. Estimate the parameters assuming there is no consumer-level heterogeneity, i.e., by assuming:
+$$
+\ln \frac{s_{jt}}{s_{0t}} = \beta' x_{jt} + \alpha p_{jt}.
+$$
+This can be implemented using `lm` function. Print out the estimate results.
+
+```{r}
+# logit regression
+result_logit <- lm(
+  data = df_share,
+  formula = y ~ - 1 + x_1 + x_2 + x_3 + p
+)
+summary(result_logit)
+```
+
+We estimate the model using simulated share. 
+
+When optimizing an objective function that uses the Monte Carlo simulation, it is important to keep the realizations of the shocks the same across the evaluations of the objective function. If the realization of the shocks differ across the objective function evaluations, the optimization algorithm will not converge because it cannot distinguish the change in the value of the objective function due to the difference in the parameters and the difference in the realized shocks.
+
+The best practice to avoid this problem is to generate the shocks outside the optimization algorithm as in the current case. If the size of the shocks can be too large to store in the memory, the second best practice is to make sure to set the seed inside the optimization algorithm so that the realized shocks are the same across function evaluations.
+
+2. For this reason, we first draw Monte Carlo consumer-level heterogeneity `V_mcmc` and Monte Carlo preference shocks `e_mcmc`. The number of simulations is `L`. This does not have to be the same with the actual number of consumers `N`. 
+
+```{r}
+# mixed logit estimation
+## draw mcmc V
+V_mcmc <- matrix(rnorm(L*T*(K + 1)), nrow = L*T) 
+colnames(V_mcmc) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
+V_mcmc <- data.frame(
+  expand.grid(i = 1:L, t = 1:T),
+  V_mcmc
+) %>%
+  tibble::as_tibble() 
+```
+
+```{r, echo = TRUE}
+V_mcmc
+```
+
+```{r}
+## draw mcmc e
+df_mcmc <- expand.grid(t = 1:T, i = 1:L, j = 0:J) %>%
+  tibble::as_tibble() %>%
+  dplyr::left_join(V_mcmc, by = c("i", "t")) %>%
+  dplyr::left_join(X, by = c("j")) %>%
+  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::filter(!is.na(p)) %>%
+  dplyr::arrange(t, i, j)
+# draw idiosyncratic shocks
+e_mcmc <- evd::rgev(dim(df_mcmc)[1])
+```
+```{r, echo = TRUE}
+head(e_mcmc)
+```
+
+3. Use `compute_share` to check the simulated share at the true parameter using the Monte Carlo shocks. Remember that the number of consumers should be set at `L` instead of `N`.
+
+```{r}
+# compute predicted share
+df_share_mcmc <-
+  compute_share(X, M, V_mcmc, e_mcmc, beta, sigma, 
+                mu, omega)
+```
+```{r, echo = TRUE}
+df_share_mcmc
+```
+
+5. Vectorize the parameters to a vector `theta` because `optim` requires the maximiand to be a vector.
+
+```{r, echo = TRUE}
+# set parameters
+theta <- c(beta, sigma, mu, omega)
+theta
+```
+
+6. Write a function `NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
+
+```{r}
+# NLLS objective function
+NLLS_objective_A3 <-
+  function(theta, df_share, X, M, V_mcmc, e_mcmc) {
+    # constants
+    K <- length(grep("x_", colnames(X)))
+    # extract parameters
+    beta <- theta[1:K]
+    sigma <- theta[(K + 1):(2 * K)]
+    mu <- theta[2 * K + 1]
+    omega <- theta[2 * K + 2]
+    # compute predicted share
+    df_share_mcmc <-
+      compute_share(X, M, V_mcmc, e_mcmc, beta, sigma, 
+                    mu, omega)
+    # compute distance
+    distance <- mean((df_share_mcmc$s - df_share$s)^2)
+    # return
+    return(distance)
+  }
+NLLS_objective <- NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)
+```
+```{r, echo = TRUE}
+NLLS_objective
+```
+
+7. Draw a graph of the objective function that varies each parameter from 0.5, 0.6, $\cdots$, 1.5 of the true value. First try with the actual shocks `V` and `e` and then try with the Monte Carlo shocks `V_mcmc` and `e_mcmc`. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.
+
+Because this takes time, you may want to parallelize the computation using `%dopar` functionality of `foreach` loop. To do so, first install `doParallel` package and then load it and register the workers as follows:
+
+```{r, echo = TRUE}
+registerDoParallel()
+```
+
+This automatically detect the number of cores available at your computer and registers them as the workers. Then, you only have to change `%do%` to `%dopar` in the `foreach` loop as follows:
+
+```{r, echo = TRUE}
+foreach (i = 1:4) %dopar% {
+  # this part is parallelized
+  y <- 2 * i
+  return(y)
+}
+```
+
+In windows, you may have to explicitly pass packages, functions, and data to the worker by using `.export` and `.packages` options as follows:
+```{r, echo = TRUE}
+temp_func <- function(x) {
+  y <- 2 * x
+  return(y)
+}
+foreach (i = 1:4, 
+         .export = "temp_func",
+         .packages = "magrittr") %dopar% {
+  # this part is parallelized
+  y <- temp_func(i)
+  return(y)
+}
+```
+
+If you have called a function in a package in this way `dplyr::mutate`, then you will not have to pass `dplyr` by `.packages` option. This is one of the reasons why I prefer to explicitly call the package every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:
+```{r, echo = TRUE}
+# this function is compiled in the package EmpiricalIO
+# temp_func <- function(x) {
+#   y <- 2 * x
+#   return(y)
+# }
+foreach (i = 1:4, 
+         .packages = c(
+           "EmpiricalIO",
+           "magrittr")) %dopar% {
+  # this part is parallelized
+  y <- temp_func(i)
+  return(y)
+}
+```
+
+
+The graphs with the true shocks:
+
+
+```{r, eval = FALSE}
+label <- c(paste("\\beta_", 1:K, sep = ""), 
+           paste("\\sigma_", 1:K, sep = ""),
+           "\\mu",
+           "\\omega")
+label <- paste("$", label, "$", sep = "")
+graph_true <- foreach (i = 1:length(theta)) %do% {
+  theta_i <- theta[i]
+  theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
+  objective_i <- 
+    foreach (theta_ij = theta_i_list,
+             .combine = "rbind") %dopar% {
+               theta_j <- theta
+               theta_j[i] <- theta_ij
+               objective_ij <- 
+                 NLLS_objective_A3(
+                   theta_j, df_share, X, M, V, e)
+               return(objective_ij)
+             }
+  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph_true, file = "data/A3_graph_true.RData")
+```
+```{r}
+graph_true <- get(load(file = "data/A3_graph_true.RData"))
+graph_true
+```
+
+
+The graphs with the Monte Carlo shocks:
+
+```{r, eval = FALSE}
+label <- c(paste("\\beta_", 1:K, sep = ""), 
+           paste("\\sigma_", 1:K, sep = ""),
+           "\\mu",
+           "\\omega")
+label <- paste("$", label, "$", sep = "")
+graph_mcmc <- foreach (i = 1:length(theta)) %do% {
+  theta_i <- theta[i]
+  theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
+  objective_i <- 
+    foreach (theta_ij = theta_i_list,
+             .combine = "rbind") %dopar% {
+               theta_j <- theta
+               theta_j[i] <- theta_ij
+               objective_ij <- 
+                 NLLS_objective_A3(
+                   theta_j, df_share, X, M, V_mcmc, e_mcmc)
+               return(objective_ij)
+             }
+  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
+  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+    geom_point() +
+    geom_vline(xintercept = theta_i, linetype = "dotted") +
+    ylab("objective function") + xlab(TeX(label[i]))
+  return(g)
+}
+save(graph_mcmc, file = "data/A3_graph_mcmc.RData")
+```
+```{r}
+graph_mcmc <- get(load(file = "data/A3_graph_mcmc.RData"))
+graph_mcmc
+```
+
+
+8. Use `optim` to find the minimizer of the objective function using `Nelder-Mead` method. You can start from the true parameter values. Compare the estimates with the true parameters.
+
+```{r, eval = FALSE}
+# find NLLS estimator
+result_NLLS <- 
+  optim(par = theta, fn = NLLS_objective_A3,
+        method = "Nelder-Mead",
+        df_share = df_share, 
+        X = X, 
+        M = M, 
+        V_mcmc = V_mcmc, 
+        e_mcmc = e_mcmc)
+save(result_NLLS, file = "data/A3_result_NLLS.RData")
+```
+
+
+```{r}
+result_NLLS <- get(load(file = "data/A3_result_NLLS.RData"))
+result_NLLS
+result <- data.frame(true = theta, estimates = result_NLLS$par)
+result
+```
+
