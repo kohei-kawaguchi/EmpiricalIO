@@ -25,13 +25,17 @@ compute_winning_bids_second <-
     return(df_second_w)
   }
 
+f <- function(t, alpha, beta, n) {
+  f <- pbeta(t, alpha, beta)^{n - 1}
+  return(f)
+}
+
 # compute bid from first-price auction
 bid_first <- 
   function(x, r, alpha, beta, n) {
     if (x >= r) {
-      f <- function(t) {pbeta(t, alpha, beta)^{n - 1}}
-      numerator <- integrate(f, r, x)$value
-      denominator <- f(x)
+      numerator <- integrate(f, r, x, alpha = alpha, beta = beta, n = n)$value
+      denominator <- f(x, alpha = alpha, beta = beta, n = n)
       b <- x - numerator / denominator
     } else {
       b <- 0
@@ -171,23 +175,23 @@ compute_loglikelihood_first_price_w <-
 
 # distribution of the highest rival's bid
 H_b <-
-  function(b, n) {
+  function(b, n, F_b) {
     H <- F_b(b)^(n - 1)
     return(H)
   }
 
 # density of the highest rival's bid
 h_b <-
-  function(b, n) {
+  function(b, n, F_b, f_b) {
     h <- (n - 1) * f_b(b) * F_b(b)^(n - 2)
     return(h)
   }
 
 # compute implied valuation
 compute_implied_valuation <-
-  function(b, n, r) {
+  function(b, n, r, F_b, f_b) {
     if (b >= r) {
-      x <- b + H_b(b, n) / h_b(b, n)
+      x <- b + H_b(b, n, F_b) / h_b(b, n, F_b, f_b)
     } else {
       x <- 0
     }

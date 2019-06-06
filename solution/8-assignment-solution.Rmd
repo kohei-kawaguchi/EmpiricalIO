@@ -28,11 +28,11 @@ Suppose that there are $m = 1, \cdots, M$ markets and in each market there are $
 
 The mean period payoff to firm $i$ is:
 $$
-\pi_i(a, s) := \tilde{\pi}(a_i, s_i, \overline{s}) :=  \alpha \ln s_i - \eta \ln s_i \sum_{j \neq i} \ln s_j - \beta a_i,
+\pi_i(a, s) := \tilde{\pi}(a_i, s_i, \overline{s}_{-i}) :=  \alpha \ln s_i - \eta \ln s_i \sum_{j \neq i} \ln s_j - \beta a_i,
 $$
 where $\alpha, \beta, \eta> 0$, and $\alpha > \eta$. The term $\eta$ means that the returns to investment decreases as rival's average state profile improves. The period payoff is:
 $$
-\tilde{\pi}(a_i, s_i, \overline{s})+ \epsilon_i(a_i),
+\tilde{\pi}(a_i, s_i, \overline{s}_{-i}) + \epsilon_i(a_i),
 $$
 and $\epsilon_i(a_i)$ is an i.i.d. type-I extreme random variable that is independent of all the other variables.
 
@@ -459,7 +459,7 @@ dim(V[[N]])[1] == m_s
 
 The optimal conditional choice probability is written as a function of an ex-ante value function and a conditional choice probability of others as follows:
 $$
-\Lambda_i^{(\theta_1, \theta_2)}(V_i, p_{-i})(a_i, s) := \frac{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i, a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i, a_{-i}, s, s')]}{\sum_{a_i'}\{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i', a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i', a_{-i}, s, s')]\}},
+\Lambda_i^{(\theta_1, \theta_2)}(V_i, p_{-i})(a_i, s) := \frac{\exp\{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i, a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i, a_{-i}, s, s')]\} }{\sum_{a_i'}\exp\{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i', a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i', a_{-i}, s, s')]\}},
 $$
 where $V$ is an ex-ante value function.
 

@@ -136,7 +136,7 @@ dim(G)[2] == m_s
 
 The ex-ante-value function for a firm is written as a function of a conditional choice probability as follows:
 $$
-\varphi_i^{(\theta_1, \theta_2)}(p) := [I - \delta \Sigma_i(p) G]^{-1}[\Sigma_i(p)\Pi_i + D_i(p)],
+\varphi_i^{(\theta_1, \theta_2)}(p) := [I - \delta \Sigma(p) G]^{-1}[\Sigma(p)\Pi_i + D_i(p)],
 $$
 where $\theta_1 = (\alpha, \beta, \eta)$ and $\theta_2 = (\kappa, \gamma)$, $p_i(a_i|s)$ is the probability that firm $i$ choose action $a_i$ when the state profile is $s$, and:
 $$
@@ -226,7 +226,7 @@ dim(V[[N]])[1] == m_s
 
 The optimal conditional choice probability is written as a function of an ex-ante value function and a conditional choice probability of others as follows:
 $$
-\Lambda_i^{(\theta_1, \theta_2)}(V_i, p_{-i})(a_i, s) := \frac{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i, a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i, a_{-i}, s, s')]}{\sum_{a_i'}\{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i', a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i', a_{-i}, s, s')]\}},
+\Lambda_i^{(\theta_1, \theta_2)}(V_i, p_{-i})(a_i, s) := \frac{\exp\{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i, a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i, a_{-i}, s, s')]\}}{\sum_{a_i'}\exp\{\sum_{a_{-i}}p_{-i}(a_{-i}|s)[\pi_i(a_i', a_{-i}, s) + \delta \sum_{s'}V_i(s')g(a_i', a_{-i}, s, s')]\}},
 $$
 where $V$ is an ex-ante value function.
 
