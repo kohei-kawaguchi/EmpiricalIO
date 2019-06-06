@@ -728,7 +728,7 @@ E(p) =
 ## l4 10.115439
 ## l5 10.593438</code></pre>
 <p>The optimal conditional choice probability is written as a function of an exante value function as follows: <span class="math display">\[
-\Lambda^{(\theta_1, \theta_2)}(V)(a, s) := \frac{\pi(a, s) + \delta \sum_{s&#39;}V(s&#39;)g(a, s, s&#39;)}{\sum_{a&#39;}[\pi(a&#39;, s) + \delta \sum_{s&#39;}V(s&#39;)g(a&#39;, s, s&#39;)]},
+\Lambda^{(\theta_1, \theta_2)}(V)(a, s) := \frac{\exp[\pi(a, s) + \delta \sum_{s&#39;}V(s&#39;)g(a, s, s&#39;)]}{\sum_{a&#39;}\exp[\pi(a&#39;, s) + \delta \sum_{s&#39;}V(s&#39;)g(a&#39;, s, s&#39;)]},
 \]</span> where <span class="math inline">\(V\)</span> is an exante value function.</p>
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>compute_ccp(V, PI, G, L, K, delta)</code> that returns the optimal conditional choice probability given an exante value function. Don’t use methods in <code>dplyr</code> and deal with matrix operations. To do so, write a function <code>compute_choice_value(V, PI, G, delta)</code> that returns the choice-specific value function. Use this for debugging by checking if the results are intuitive.</li>
