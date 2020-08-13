@@ -1,0 +1,425 @@
+---
+title: "Assignment 2: Production Function Estimation"
+author: Lin ZHAO
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Simulate data
+
+Consider the following production and investment process for $j = 1, · · · , 1000$ firms across $t = 1, · · · , 10$ periods.
+
+The log production function is of the form: $$y_{jt} = \beta_{0} + \beta_{l}l_{jt} + \beta_{k}k_{jt} + \omega_{jt} + \eta_{jt},$$
+where $\omega_{jt}$ is an anticipated shock and $\eta_{jt}$ is an ex post shock.
+The anticipated shocks evolve as:
+$$\omega_{jt} = \omega_{j,t-1} + v_{jt},$$
+where $\nu_{jt}$ is an i.i.d. normal random variable with mean 0 and standard deviation $\sigma_{\nu}$. The ex post shock is an i.i.d. normal random variable with mean 0 and standard deviation $\sigma_{\eta}$.
+
+
+The product price the same across firms and normalized at 1. The price is normalized at 1. The wage $w_t$ is constant at 0.5.
+Finally, the capital accumulate according to:
+$$K_{j,t+1} = (1 − \delta) K_{jt} + I_{jt}.$$
+
+1. We set the parameters as follows:
+
+```{r}
+beta_0 <- 1
+beta_l <- 0.2
+beta_k <- 0.7
+alpha <- 0.7
+sigma_eta <- 0.2
+sigma_nu <- 0.5
+sigma_w <- 0.1
+delta <- 0.05
+```
+
+2. Write a function that returns the log output given $l_{jt}$, $k_{jt}$, $\omega_{jt}$, and $\eta_{jt}$ under the given parameter values according to the above production function and name it log_production(l, k, omega, eta, beta_0, beta_l, beta_k).
+
+```{r}
+log_production<-
+  function(l, k, omega, eta, beta_0, beta_l, beta_k){
+   y <- beta_0 + beta_l * l + beta_k * k + omega +eta 
+return(y)
+   }
+```
+Suppose that the labor is determined after $\omega_{jt}$ is observed, but before $\eta_{jt}$ is observed, given the log capital level $k_{jt}$.
+
+3. Derive the optimal log labor as a function of $k_{jt}$, $\omega_{jt}$, and $\eta_{jt}$ and wage. Write a function to return the optimal log labor given the variables and parameters and name it log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta).
+
+$$max \mathbb{E}_{\eta}[A L_{jt}^{\beta_{l}} K_{jt}^{\beta_{k}} - w_{t}L_{jt}]$$
+$$max \mathbb{E}[exp\{\beta_{0}+ \omega_{jt} + \eta_{jt}\}L_{jt}^{\beta_{l}} K_{jt}^{\beta_{k}} - w_{t}L_{jt}] $$
+$$F.O.C \ \ \ \ \  exp\{\beta_{0}+ \omega_{jt}\}exp\{\frac{\sigma_{\eta}^2}{2}\} \beta_{l}L_{jt}^{\beta_{l}-1}K_{jt}^{\beta_{k}}=w_{t}$$
+$$\beta_{0}+ \omega_{jt}+\frac{\sigma_{\eta}^2}{2}+ln\beta_{l}+(\beta_{l}-1)lnL_{jt}+\beta_{k}lnK_{jt}=lnw_{t}$$
+$$l_{jt} =[\beta_{0}+\omega_{jt}+\frac{\sigma_{\eta}^2}{2}+ln \beta_{l}+\beta_{k}k_{jt} - lnw_{t}]\frac{1}{1-\beta_{l}}$$
+```{r}
+log_labor_choice <-
+  function(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta){
+  l <- (beta_0+omega+(1/2)*sigma_eta^2+log(beta_l)+beta_k*k - log(wage))/(1-beta_l)
+ return(l)
+  }
+```
+
+As discussed in the class, if there is no additional variation in labor, the coefficient on the labor  $beta_l$ is not identified. Thus, if we generate labor choice from the previous function, $beta_l $ will not be identified from the simulated data. To see this, we write a modified version of the previous function in which $\omega_{jt}$ is replaced with $\omega_{jt}+\iota_{jt}$, where  $\iota_{jt}$ is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is $\omega_{jt}+\iota_{jt}$  , even though the true shock is $\omega_{jt}$. 
+
+4. Modify the previous function by including  $iota_{jt}$ as an additional input and name it log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta).
+```{r}
+log_labor_choice_error <-
+  function(k, wage,omega, beta_0, beta_l, beta_k, iota, sigma_eta){
+  l <- (beta_0+omega + iota+ (1/2)*sigma_eta^2+log(beta_l)+beta_k*k - log(wage))/(1-beta_l)
+ return(l)
+  }
+```
+
+Consider an investment process such that:$$I_{jt}=(\delta + \gamma\omega_{jt})K_{jt},$$
+where $I_{jt}$and $K_{jt}$ are investment and capital in level. Set $\gamma=0.1$, i.e., the investment is strictly increasing in $\omega_{jt}$. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.
+
+5. Define variable  $\gamma$ and assign it the value. Write a function that returns the investment given  $K_{jt}$,$\omega_{jt}$, and parameter values, according to the previous equation, and name it investment_choice(k, omega, gamma, delta).
+
+```{r}
+gamma <- 0.1
+investment_choice <-
+  function(k, omega, gamma, delta){
+    I = (delta + gamma * omega) * exp(k)
+  return(I)  
+  }
+```
+
+Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables  $k_{jt}$ and  $\omega_{jt}$ as follows.
+
+6. Draw $k_{jt}$ from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw $\omega_{jt}$ from its stationary distribution (check the stationary distribution of AR(1) process). Before simulating the rest of the data, set the seed at 1.
+
+```{r}
+library(magrittr)
+set.seed(1)
+df <- expand.grid(j=1:1000, t=1)%>%
+tibble::as.tibble() %>%
+dplyr::mutate(k = rnorm(1000, mean = 1, sd = 0.5))%>%
+dplyr::mutate(omega = rnorm(1000, 0, sd=sqrt(0.25/0.51)))%>%
+dplyr::mutate(wage = rep(0.5,1000))%>%
+dplyr::arrange(j,t)
+df
+```
+7. Draw optimization error $\iota_{jt}$ and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.
+
+```{r}
+df <-df %>%
+dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>% 
+dplyr::arrange(j,t)
+df
+```
+8. Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error y and the one with optimization error y_error.
+```{r}
+df <-df%>%
+dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))%>% 
+dplyr::arrange(j,t)
+df
+ 
+```
+9. Repeat this procedure for t = 1, · · · 10 by updating the capital and anticipated shocks, and name the resulting data frame df_T.
+```{r}
+
+
+set.seed(2)
+df_2 <- df%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+  set.seed(3)
+df_3 <- df_2%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k)) 
+
+  set.seed(4)
+df_4 <- df_3%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error = log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+  set.seed(5)
+df_5 <- df_4%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+  set.seed(6)
+df_6 <- df_5%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k)) 
+
+  set.seed(7)
+df_7 <- df_6%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+  set.seed(8)
+df_8 <- df_7%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+  set.seed(9)
+df_9 <- df_8%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+  set.seed(10)
+df_10 <- df_9%>%
+  dplyr::mutate(t=t+1)%>%
+  dplyr::mutate(k = log((1-delta)*exp(k)+I))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>%
+  dplyr::mutate(omega = alpha * omega + nu)%>%
+  dplyr::mutate(iota = rnorm(1000, mean = 0, sd = 0.05))%>%
+  dplyr::mutate(l=log_labor_choice(k, wage,omega, beta_0, beta_l, beta_k, sigma_eta))%>%
+  dplyr::mutate(l_error=log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta))%>%
+  dplyr::mutate(I=investment_choice(k, omega, gamma, delta))%>%
+  dplyr::mutate(eta = rnorm(1000, mean = 0, sd = sigma_eta))%>%
+  dplyr::mutate(nu = rnorm(1000, 0, sd=sigma_nu))%>% 
+  dplyr::mutate(y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k))%>%
+  dplyr::mutate(y_error=log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k))
+
+df_T <- dplyr::full_join(df,df_2)%>%
+  dplyr::full_join(df_3)%>%
+  dplyr::full_join(df_4)%>%
+  dplyr::full_join(df_5)%>%
+  dplyr::full_join(df_6)%>%
+  dplyr::full_join(df_7)%>%
+  dplyr::full_join(df_8)%>%
+  dplyr::full_join(df_9)%>%
+  dplyr::full_join(df_10)%>%
+  tibble::as.tibble()
+df_T 
+```
+10. Check the simulated data by making summary table.
+```{r}
+summary(df_T)
+```
+##Estimate the parameters
+or now, use the labor choice with optimization error.
+
+1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. This is likely to give an upwardly biased estimates on $β_l$ and $β_k$. Why is it?
+
+```{r}
+fit <- lm(y_error~l_error+k,df_T)
+summary(fit)
+```
+2. take within-transformation on $y_{jt}$ on $l_{jt}$ and $k_{jt}$ and let  $\Delta y_{jt}$,$\Delta l_{jt}$ and $\Delta k_{jt}$ denote them. Then, regress  $\Delta y_{jt}$ on $\Delta l_{jt}$ and $\Delta k_{jt}$ by the least squares method.
+
+```{r}
+df_within <- df_T[c("j", "t", "y_error","l_error","k")]%>%
+  dplyr::group_by(j)%>%
+dplyr::mutate(dl_error = ifelse(t==1, NA, diff(l_error,lag = 1)))%>%
+dplyr::mutate(dy_error = ifelse(t==1, NA, diff(y_error,lag = 1)))%>%
+dplyr::mutate(dk =ifelse(t==1,NA,diff(k,lag = 1)))
+
+dfit <- lm(dy_error~-1+dl_error+dk, df_within)
+summary(dfit)
+
+```
+3.
+```{r}
+n <- 10000
+y <- 1 + df_T$l_error + df_T$k + df_T$I + rnorm(n,sd=sigma_eta)
+
+X <- data.frame(df_T$l_error,df_T$k, df_T$I)
+Z <- data.frame(df_T$k, df_T$I)
+
+library("np")
+bw <- npplregbw(xdat=X, zdat=Z, ydat=y)
+
+pl <- npplreg(bws=bw, residuals = TRUE)
+summary(pl)
+npplot(bws=bw)
+
+```
+
+4. 
+```{r}
+
+y1 <- 1 + df_T$l + df_T$k + df_T$I + rnorm(n,sd=sigma_eta)
+
+X1 <- data.frame(df_T$l,df_T$k, df_T$I)
+Z1 <- data.frame(df_T$k, df_T$I)
+
+library("np")
+bw1 <- npplregbw(xdat=X1, zdat=Z1, ydat=y1)
+pl1 <- npplreg(bws=bw1, residuals = TRUE)
+summary(pl1)
+npplot(bws=bw1)
+
+```
+
+5.
+
+```{r}
+
+beta_lhat <- coef(pl)
+df_T_1st <- df_T%>%
+dplyr::mutate(l_error_tilde = y_error-beta_lhat*l_error)%>%
+dplyr::mutate(phi_t= y_error-beta_lhat*l_error-beta_0hat)%>%
+dplyr::mutate(phi_t_1 = ifelse(t==1,NA,lag(phi_t)))%>%
+dplyr::select(j,t,l_error_tilde, phi_t_1)
+df_T_1st
+
+```
+
+6
+```{r}
+df_T <-df_T%>%
+dplyr::mutate(k_t_1 = ifelse(t==1,NA,lag(k)))%>%
+ dplyr::mutate(I_t_1 = ifelse(t==1,NA,lag(I))) 
+moment_OP_2nd <-
+  function(a,b_0,b_k){
+    x1 <- mean((df_T_1st$l_error_tilde-b_0-b_k*df_T$k-a*(df_T_1st$phi_t_1-b_0-b_k*df_T$k ))*df_T$k)
+    x2 <- mean((df_T_1st$l_error_tilde-b_0-b_k*df_T$k-a*(df_T_1st$phi_t_1-b_0-b_k*df_T$k ))*df_T$k_t_1)
+    x3 <- mean((df_T_1st$l_error_tilde-b_0-b_k*df_T$k-a*(df_T_1st$phi_t_1-b_0-b_k*df_T$k ))*df_T$I_t_1)
+    X<- c(x1,x2,x3)
+    return(X) 
+  }
+moment_OP_2nd(alpha,beta_0,beta_k)
+```
+7.
+
+```{r}
+objective_OP_2nd<-
+  function(a,b_0,b_k){
+    y = moment_OP_2nd(a,b_0,b_k)%*%moment_OP_2nd(a,b_0,b_k)
+    return(y)
+    }
+ objective_OP_2nd(alpha,beta_0,beta_k)   
+    
+```
+
+8.
+```{r}
+library("latex2exp")
+library("ggplot2")
+library("foreach")
+a_seq <- seq(0,1,0.1)
+output_a <-
+foreach(a=a_seq,
+.combine="rbind") %do% {
+  l=objective_OP_2nd(a,beta_0,beta_k)
+  return(l)
+}
+output_a <- data.frame(x=a_seq,y=output_a)
+ggplot(output_a,aes(x=x,y=y)) + geom_point()+xlab(TeX("$\\alpha$"))+ylab("bojective")
+
+b0_seq <- seq(0,1,0.1)
+output_b0 <-
+foreach(b=b0_seq,
+.combine="rbind")%do%{
+  l=objective_OP_2nd(alpha,b,beta_k)
+  return(l)
+}
+output_b0 <- data.frame(x=b0_seq,y=output_b0)
+ggplot(output_b0,aes(x=x,y=y))+geom_point()+xlab(TeX("$\\beta_{0}$"))+ylab("ojective")
+
+bk_seq <- seq(0,1,0.1)
+output_bk <-
+foreach(b=bk_seq,
+.combine="rbind")%do%{
+  l=objective_OP_2nd(alpha,beta_0,b)
+  return(l)
+}
+output_bk <- data.frame(x=bk_seq,y=output_bk)
+ggplot(output_bk,aes(x=x,y=y))+geom_point()+xlab(TeX("$\\beta_{k}$"))+ylab("ojective")
+```
+
+9.
+```{r}
+result <- optim(par=c("alpha","beta_l","beta_k") ,fn=objective_OP_2nd,
+  method = "L-BFGS-B",
+   lower = -Inf, upper = Inf,
+)
+result
+```
+
+
+
+

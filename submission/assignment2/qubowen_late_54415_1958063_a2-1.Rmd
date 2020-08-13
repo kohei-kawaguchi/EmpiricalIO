@@ -1,0 +1,264 @@
+---
+title: 'Assignment 2: Peroduction Function Estimation'
+author: "Bowen QU"
+date: "2/18/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 5.1 Simulate data
+1. First, we define parameter variables as follows:
+```{r parameters}
+beta_0 <- 1
+beta_l <- 0.2
+beta_k <- 0.7
+alpha <- 0.7
+sigma_eta <- 0.2
+sigma_nu <- 0.5
+sigma_w <- 0.1
+sigma_iota <- 0.05
+delta <- 0.05
+gama <- 0.1
+```
+
+| parameter | variable | value |
+|-----------|----------|-------|
+|$\beta_0$ | beta\_0 | 1 |
+|$\beta_l$ | beta\_l | 0.2 |
+|$\beta_k$ | beta\_k | 0.7 |
+|$\alpha$ | alpha | 0.7 |
+|$\sigma_{\eta}$ | sigma_eta | 0.2 |
+|$\sigma_{\nu}$ | sigma_nu | 0.5 |
+|$\sigma_{\iota}$ | sigma_iota | 0.05 |
+|$\sigma_w$ | sigma_w | 0.1 |
+|$\delta$ | delta | 0.05 |
+|$\gamma$ | gama | 0.1 |
+
+Suppose that labor is chosen after $\omega_{j,t}$ is observed, but before $\eta_{j,t}$ is realized, then given the capital stock $k_{j,t}$, we assume that each firm $j$ at time $t$ faces a profit maximization problem, given that the product price being normalized at 1, such that:
+$$\max_{l_{j,t}} \mathbb{E} [e^{\beta_0 + \omega_{j,t}+\eta_{j,t}+\beta_l l_{j,t} +{\beta_k} k_{j,t}}  -w_{j,t}e^{l_{j,t}}|\omega_{j,t},w_{j,t},k_{j,t}].$$
+Since that $\eta_{j,t}$ is the only unknown random variable and that it is independent of the known info, we take everything out of the unconditional expectation sign except $e^{\eta_{j,t}}$: 
+$$\max_{l_{j,t}} e^{\beta_0 +\omega_{j,t} + {\beta_k} k_{j,t}}\mathbb{E}[e^{\eta_{j,t}}] e^{\beta_l l_{j,t}} - w_{j,t}e^{l_{j,t}}.$$
+Property of a normally distributed variable $X$ tells us that $\mathbb{E}[e^{X}]=e^{\mu+\frac{1}{2}\sigma^2}$. We can then rewrite the above problem into:
+$$\max_{l_{j,t}} e^{\beta_0 +\omega_{j,t} + {\beta_k} k_{j,t}+\frac{1}{2}\sigma_{\eta}^2} e^{\beta_l l_{j,t}} - w_{j,t}e^{l_{j,t}}.$$
+We can easily derive the F.O.C. with respect to $l_{j,t}$. Taking log on both sides, we get:
+$$l_{j,t}=l_{j,t}(w_{j,t}, \omega_{j,t}, k_{j,t})=\frac{1}{1-\beta_l}[ \beta_0 + \omega_{j,t} + \beta_kk_{j,t}  + \ln{\beta_l}  + \frac{1}{2} \sigma_{\eta}^2 - \ln{w_{j,t}}].$$
+
+```{r}
+source("/Users/bowenqu/Documents/RStudio/ECON6120I_debug_and_backup/R/functions.R")
+# source("E:/RStudio/ECON6120I/R/functions.R")
+# set.seed(1), here we are not asked to set seed to be 1 when drawing k_0 and omega_0, 
+# so we comment these 'two set.seed(1)' off
+# here 0 means initial value, actually k_0 equals to k_1
+
+library(dplyr)
+set.seed(1)
+df_a2_1 <- expand.grid(j = 1:1000, t = 1) %>%
+  tibble::as_tibble() %>%
+  dplyr::arrange(t,j) %>%
+  dplyr::mutate(k = rnorm(1000, mean = 1, sd = 0.5), omega = rnorm(1000, mean = 0, sd = sigma_nu/(1 - alpha^2)^(1/2)),  wage = rep(0.5, 1000), iota = rnorm(1000, mean = 0, sd = sigma_iota), l = log_labor_choice(k, omega, wage, beta_0, beta_l, beta_k, sigma_eta), l.error = log_labor_choice_error(k, omega, wage, beta_0, beta_l, beta_k, sigma_eta,  iota), I = investment_choice(k, omega, gama, delta), eta = rnorm(1000, mean = 0, sd = sigma_eta), y = log_production(k, omega, l, eta, beta_0, beta_l, beta_k), y.error = log_production(k, omega, l.error, eta, beta_0, beta_l, beta_k), nu = rnorm(1000, mean = 0, sd = sigma_nu))
+omega_lag <- df_a2_1$omega
+k_lag <- df_a2_1$k
+I_lag <- df_a2_1$I
+
+for (i in 2:10) {
+  # K = (1 - delta)*K(-1) +I(-1)
+  df_a2_i <- expand.grid(j = 1: 1000, t = i) %>%
+  tibble::as_tibble() %>%
+  dplyr::arrange(t,j) %>%
+  dplyr::mutate(nu = rnorm(1000, mean = 0, sd = sigma_nu), iota = rnorm(1000, mean = 0, sd = sigma_iota), eta = rnorm(1000, mean = 0, sd = sigma_eta), k = log((1- delta)*exp(k_lag) + I_lag, base = exp(1)), omega = alpha*omega_lag + nu, wage = rep(0.5, 1000), l = log_labor_choice(k, omega, wage, beta_0, beta_l, beta_k, sigma_eta), l.error = log_labor_choice_error(k, omega, wage, beta_0, beta_l, beta_k, sigma_eta,  iota), I = investment_choice(k, omega, gama, delta), y = log_production(k, omega, l, eta, beta_0, beta_l, beta_k), y.error = log_production(k, omega, l.error, eta, beta_0, beta_l, beta_k))
+  rm(omega_lag, k_lag, I_lag)
+  omega_lag <- df_a2_i$omega
+  k_lag <- df_a2_i$k
+  I_lag <- df_a2_i$I
+  assign(paste("df_a2_", i, sep = ""), df_a2_i)
+}
+
+df_T <- bind_rows(df_a2_1, df_a2_2, df_a2_3, df_a2_4, df_a2_5, df_a2_6, df_a2_7, df_a2_8, df_a2_9, df_a2_10, id = NULL)
+df_T
+```
+We check the simulated data by making summary table below:
+```{r}
+# install.packages("tidyr")
+library(tidyr)
+# I tried funs like n() dim(), or count(), and these functions fail to give the number 
+# of obs, I write a function by myself: 
+# x below in the bracket is the name of the var of interest
+col_name <- colnames(df_T)
+# this function returns the number of Obs of certain variable in a data frame:
+tibble_obs_count <- function(x) { 
+  j <- which(col_name == 'x')
+  y <- dim(df_T[j])[1]
+  return(y)
+}
+
+df_T.sum <- summarise_all(df_T, list(N = tibble_obs_count, min = min, max = max, mean = mean, sd = sd))
+
+# reshape it using tidyr functions
+df_T.sum %>% 
+  gather(stat, val) %>%
+  separate(stat, into = c("var", "stat"), sep = "_") %>%
+  spread(stat, val) %>%
+  select(var, N, mean, sd, min, max) # reorder columns
+  df_T.sum.tbl <- .Last.value
+  df_T.sum.tbl[c(4, 10, 5, 9, 11, 3, 6, 7, 2, 1, 12, 13, 8),]
+  # since '.Last.value' DOES NOT work in Knitr, to present exactly the same value, 
+  # we should adapt our code into the followings:
+df_T.sum.1 <- gather(df_T.sum, stat, val)
+df_T.sum.2 <- separate(df_T.sum.1, stat, into = c("var", "stat"), sep = "_")
+df_T.sum.3 <- spread(df_T.sum.2, stat, val)
+df_T.sum.4 <- select(df_T.sum.3, var, N, mean, sd, min, max)
+df_T.sum.4[c(4, 10, 5, 9, 11, 3, 6, 7, 2, 1, 12, 13, 8),]
+```
+
+## 5.2 Estimate the parameters
+
+```{r}
+model_lm <- lm(formula = df_T$y.error ~ df_T$l.error + df_T$k, data = df_T)
+summary(model_lm)
+```
+Obviously, our simple OLS estimation gives an upward-biased estimation for $\beta_l$, and gives a fairly underestimation for $\beta_k$. Why is this?
+Intuition: Given the same capital level, there is an extra portion of change taking place in the output because of the shock $\iota$ which finally gives credit to the variation of l_error. 
+
+But one thing I am quite curious is that I cannot figure out why I cannot replicate exactly the same result as in lecture notes. (Need more think)
+
+```{r}
+# dy.error_mat <- matrix(, nrow = 1000, ncol = 10)
+# dl.error_mat <- matrix(, nrow = 1000, ncol = 10)
+# dk_mat <- matrix(, nrow = 1000, ncol = 10)
+
+# dy.error <- vector(mode = "double", length = 10000)
+# dl.error <- vector(mode = "double", length = 10000)
+# dk <- vector(mode = "double", length = 10000)
+
+# for (j in 1:1000) { #when t =1:
+  # dy.error_mat[j,1] <- NaN 
+    # dl.error_mat[j,1] <- NaN
+    # dk_mat[j,1] <- NaN
+      # dy.error[j] <- dy.error_mat[j,1]
+      # dl.error[j] <- dl.error_mat[j,1]
+      # dk[j] <- dk_mat[j,1]
+# }
+# for (t in 2:10) {
+  # for (j in 1:1000) {
+    # dy.error_mat[j,t] <- y_error_mat[j,t] - y_error_mat[j,t-1] 
+    # dl.error_mat[j,t] <- l_error_mat[j,t] - l_error_mat[j,t-1]
+    # dk_mat[j,t] <- k_mat[j,t] - k_mat[j,t-1]
+      # dy.error[1000*(t-1)+j] <- dy.error_mat[j,t]
+      # dl.error[1000*(t-1)+j] <- dl.error_mat[j,t]
+      # dk[1000*(t-1)+j] <- dk_mat[j,t]
+  # }
+# }
+
+# df_T_within <- expand.grid(j = 1:1000, t = 1:10) %>%
+  # tibble::as_tibble() %>%
+  # dplyr::arrange() %>%
+  # dplyr::mutate(dy_error = dy.error, dl_error = dl.error, dk = dk)
+
+df_T_within <- df_T %>%
+  group_by(j) %>%
+  dplyr::mutate(dy.error = y.error - dplyr::lag(y.error, 1), dl.error = l.error - dplyr::lag(l.error, 1), dk = k - dplyr::lag(k, 1)) %>%
+  dplyr::ungroup()
+df_T_within
+
+model_within <- lm(formula = dy.error ~ -1 + dl.error + dk, data = df_T_within)
+summary(model_within)
+```
+
+Again, we get a similar but slightly different result from that in the lecture notes. It's good to see that the coefficient of dk is negative this time, as what lecture notes gets, while the p-value is much smaller in my result.
+
+Next, we move to the OP method. We estimate the first step model of OP method:
+$$y_{jt} = \beta_0 + \beta_ll_{jt} + \phi(k_{jt}, I_{jt})+\eta_{jt},$$
+
+## To Be Continued
+I am sorry that I didn't work out the whole html file before the deadline, since I didn't expect such a long time for the computer to run (I ran it in the last night. But I didn't get any result in the morning, which I thought may indicate that it is broken down, so I just restarted it, which wastes me a lot of time). 
+
+The rest of results are presented in PNG files. Unfortunately, I cannot get the exactly outcomes as in the notes. 
+
+```{r}
+# install.packages("np")
+bw <- np::npplregbw(formula = df_T$y.error ~ df_T$l.error + df_T$k + df_T$I | df_T$k + df_T$I)
+summary(bw)
+pl <- np::npplreg(bws = bw)
+summary(pl)
+
+# adding a constant term in the parametric part DOES NO help
+# bw_const <- np::npplregbw(formula = df_T$y.error ~ 1 + df_T$l.error + df_T$k + df_T$I | df_T$k + df_T$I)
+# summary(bw_const)
+# pl_const <- np::npplreg(bws = bw_const)
+# summary(pl_const)
+
+# next we plot the fitted value against the data points:
+df_T <- df_T %>%
+  dplyr::mutate(y_hat_1 = fitted(pl))
+require(ggplot2)
+p1 <- ggplot(df_T, aes(x = y_hat_1, y = y.error)) + 
+  geom_point()
+p1 + xlab("fitted") + ylab("actual")
+
+# in contrast, we redo it using labor data without error iota:
+bw_noerr <- np::npplregbw(formula = df_T$y ~ df_T$l + df_T$k + df_T$I | df_T$k + df_T$I)
+summary(bw_noerr)
+pl_noerror <- np::npplreg(bws = bw_noerr)
+summary(pl_noerror)
+
+resid <- residuals(pl)
+require(dplyr)
+df_T_1st <- df_T %>%
+mutate(resid = resid) %>%
+group_by(j) %>%
+mutate(y_4_2nd = y.error - coef(pl)[1]*l.error, l.k = lag(k, 1, default = 0), l.I = lag(I, 1, default = 0), l.phi_est = lag(y.error, 1, default = 0) -  coef(pl)[1]*lag(l.error, 1, default = 0) - lag(resid, 1, default = 0)) %>%
+ungroup()
+df_T_1st
+
+mmt_real <- moment_OP_2nd(alfa = alpha, beta0 = beta_0, betak = beta_k)
+mmt_real
+
+oj_real <- objective_OP_2nd(alfa = alpha, beta0 = beta_0, betak = beta_k)
+oj_real
+
+df_4_plot <- tibble::tibble(alfa_test = seq(from = 0, to = 1, by = 0.1), beta0_test = seq(from = 0, to = 1, by = 0.1), betak_test = seq(from = 0, to = 1, by = 0.1))
+
+oj_alfa <- vector(mode = "double", length = 11)
+oj_beta0 <- vector(mode = "double", length = 11)
+oj_betak <- vector(mode = "double", length = 11)
+
+for (i in 1:11){
+oj_alfa[i] <- objective_OP_2nd(df_4_plot$alfa_test[i], beta_0, beta_k)
+oj_beta0[i] <- objective_OP_2nd(alpha, df_4_plot$beta0_test[i], beta_k)
+oj_betak[i] <- objective_OP_2nd(alpha, beta_0, df_4_plot$betak_test[i])
+}
+
+df_4_plot <- df_4_plot %>%
+  dplyr::mutate(oj_alfa, oj_beta0, oj_betak)
+
+library(latex2exp)
+p_alfa <- ggplot(df_4_plot, aes(x = alfa_test, y = oj_alfa)) + geom_point()
+p_alfa + xlab(TeX("$\\alpha")) + ylab("Objective")
+
+p_beta0 <- ggplot(df_4_plot, aes(x = beta0_test, y = oj_beta0)) + geom_point()
+p_beta0 + xlab(TeX("$\\beta_0")) + ylab("Objective")
+
+p_betak <- ggplot(df_4_plot, aes(x = betak_test, y = oj_betak)) + geom_point()
+p_betak + xlab(TeX("$\\beta_k")) + ylab("Objective")
+
+# why it DOES NOT work when I directly assign fn <- objective_OP_2nd?
+# error msg: Error in moment_OP_2nd(alfa, beta0, betak) : 
+  # argument "beta0" is missing, with no default 
+
+fn <- function(par){
+  alfa <- par[1]
+  beta0 <- par[2]
+  betak <- par[3]
+  out <- objective_OP_2nd(alfa, beta0, betak)
+  return(out)
+}
+optim(par = c(0.5, 0.5, 0.5), fn, method = "L-BFGS-B", lower = 0, upper = 1)
+
+```
+
+

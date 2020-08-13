@@ -1,0 +1,314 @@
+---
+title: "assignment2"
+author: "weixuan"
+date: "2019年2月18日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+source("R/functions.R")
+library(tibble)
+library(psych)
+library(np)
+library(latex2exp)
+set.seed(1)
+beta_0=1
+beta_l=0.2
+beta_k=0.7
+alpha=0.7
+sigma_eta=0.2
+sigma_nu=0.5
+sigma_w=0.1
+sigma_iota=0.05
+delta=0.05
+gamma=0.1
+w_t=0.5
+j1=seq(1,1000,1)
+t1=1
+k1=rnorm(1000,1,0.5)
+omega1=rnorm(1000,0,sigma_nu*7/5)
+iota_1=rnorm(1000,0,sigma_iota)
+eta_1=rnorm(1000,0,sigma_eta)
+l_1=seq(1,1000,1)
+l_error_1=seq(1,1000,1)
+I_1=seq(1,1000,1)
+y_1=seq(1,1000,1)
+y_error_1=seq(1,1000,1)
+for (u in seq(1,1000,1)){
+  l_1[u]=log_labor_choice(k1[u],w_t,omega1[u],beta_0,beta_1,beta_k,sigma_eta)
+  l_error_1[u]=log_labor_choice_error(k1[u],w_t,omega1[u],beta_0,beta_1,beta_k,iota_1[u],sigma_eta)
+  I_1[u]=investment_choice(k1[u],omega1[u],gamma,delta)
+  y_1[u]=log_production(l_1[u],k1[u],omega1[u],eta_1[u],beta_0,beta_1,beta_k)
+  y_error_1[u]=log_production(l_error_1[u],k1[u],omega1[u],eta_1[u],beta_0,beta_1,beta_k)
+}
+table=tibble(j=j1,t=t1,k=k1,omega=omega1,wage=w_t,iota=iota_1,l=l_1,l_error=l_error_1,I=I_1,eta=eta_1,y=y_1,y_error=y_error_1)
+table
+
+j10=seq(1,10000,1)
+t10=rep(1:10,each=1000)
+
+nu1=rnorm(1000,0,sigma_nu)
+nu2=rnorm(1000,0,sigma_nu)
+nu3=rnorm(1000,0,sigma_nu)
+nu4=rnorm(1000,0,sigma_nu)
+nu5=rnorm(1000,0,sigma_nu)
+nu6=rnorm(1000,0,sigma_nu)
+nu7=rnorm(1000,0,sigma_nu)
+nu8=rnorm(1000,0,sigma_nu)
+nu9=rnorm(1000,0,sigma_nu)
+nu10=rnorm(1000,0,sigma_nu)
+nu=seq(1,10000,1)
+
+iota2=rnorm(1000,0,sigma_iota)
+iota3=rnorm(1000,0,sigma_iota)
+iota4=rnorm(1000,0,sigma_iota)
+iota5=rnorm(1000,0,sigma_iota)
+iota6=rnorm(1000,0,sigma_iota)
+iota7=rnorm(1000,0,sigma_iota)
+iota8=rnorm(1000,0,sigma_iota)
+iota9=rnorm(1000,0,sigma_iota)
+iota10=rnorm(1000,0,sigma_iota)
+iota=seq(1,10000,1)
+
+eta2=rnorm(1000,0,sigma_eta)
+eta3=rnorm(1000,0,sigma_eta)
+eta4=rnorm(1000,0,sigma_eta)
+eta5=rnorm(1000,0,sigma_eta)
+eta6=rnorm(1000,0,sigma_eta)
+eta7=rnorm(1000,0,sigma_eta)
+eta8=rnorm(1000,0,sigma_eta)
+eta9=rnorm(1000,0,sigma_eta)
+eta10=rnorm(1000,0,sigma_eta)
+eta=seq(1,10000,1)
+
+for (u in seq(1,1000,1)){
+  nu[u]=nu1[u]
+  iota[u]=iota_1[u]
+  eta[u]=eta_1[u]
+}
+for (u in seq(1001,2000,1)){
+  nu[u]=nu2[u-1000]
+  iota[u]=iota2[u-1000]
+  eta[u]=eta2[u-1000]
+}
+
+for (u in seq(2001,3000,1)){
+  nu[u]=nu3[u-2000]
+  iota[u]=iota3[u-2000]
+  eta[u]=eta3[u-2000]
+}
+
+for (u in seq(3001,4000,1)){
+  nu[u]=nu4[u-3000]
+  iota[u]=iota4[u-3000]
+  eta[u]=eta4[u-3000]
+}
+
+for (u in seq(4001,5000,1)){
+  nu[u]=nu5[u-4000]
+  iota[u]=iota5[u-4000]
+  eta[u]=eta5[u-4000]
+}
+
+for (u in seq(5001,6000,1)){
+  nu[u]=nu6[u-5000]
+  iota[u]=iota6[u-5000]
+  eta[u]=eta6[u-5000]
+}
+
+for (u in seq(6001,7000,1)){
+  nu[u]=nu7[u-6000]
+  iota[u]=iota7[u-6000]
+  eta[u]=eta7[u-6000]
+}
+
+for (u in seq(7001,8000,1)){
+  nu[u]=nu8[u-7000]
+  iota[u]=iota8[u-7000]
+  eta[u]=eta8[u-7000]
+}
+
+for (u in seq(8001,9000,1)){
+  nu[u]=nu9[u-8000]
+  iota[u]=iota9[u-8000]
+  eta[u]=eta9[u-8000]
+}
+
+for (u in seq(9001,10000,1)){
+  nu[u]=nu10[u-9000]
+  iota[u]=iota10[u-9000]
+  eta[u]=eta10[u-9000]
+}
+k9=rnorm(9000,1,0.5)
+omega9=rnorm(9000,0,sigma_nu*7/5)
+eta_9=rnorm(9000,0,sigma_eta)
+l_9=seq(1,9000,1)
+l_error_9=seq(1,9000,1)
+I_9=seq(1,9000,1)
+y_9=seq(1,9000,1)
+y_error_9=seq(1,9000,1)
+
+
+k10=seq(1,10000,1)
+omega10=seq(1,10000,1)
+l_10=seq(1,10000,1)
+l_error_10=seq(1,10000,1)
+I_10=seq(1,10000,1)
+y_10=seq(1,10000,1)
+y_error_10=seq(1,10000,1)
+
+for (u in seq(1,1000,1)){
+  j10[u]=u
+  if (u%%1000<0.5){
+    j10[u]=1000
+  }
+  k10[u]=k1[u]
+  omega10[u]=omega1[u]
+  l_10[u]=l_1[u]
+  l_error_10[u]=l_error_1[u]
+  I_10[u]=I_1[u]
+  y_10[u]=y_1[u]
+  y_error_10[u]=y_error_1[u]
+}
+
+for (u in seq(1001,10000,1)){
+  j10[u]=u%%1000
+  if (u%%1000<0.5){
+    j10[u]=1000
+  }
+  k10[u]=k9[u-1000]
+  omega10[u]=omega9[u-1000]
+  l_10[u]=l_9[u-1000]
+  l_error_10[u]=l_error_9[u-1000]
+  I_10[u]=I_9[u-1000]
+  y_10[u]=y_9[u-1000]
+  y_error_10[u]=y_error_9[u-1000]
+}
+
+
+df_T=tibble(j=j10,t=t10,k=k10,omega=omega10,wage=w_t,iota,l=l_10,l_error=l_error_10,I=I_10,eta,y=y_10,y_error=y_error_10,nu)
+
+for (u in seq(1001,10000,1)){
+  df_T[u,3]=log((1-delta)*exp(df_T[u-1000,3])+df_T[u-1000,9])
+  df_T[u,4]=alpha*df_T[u-1000,4]+df_T[u,13]
+  df_T[u,9]=investment_choice(df_T[u,3],df_T[u,4],gamma,delta)
+  df_T[u,7]=log_labor_choice(df_T[u,3],w_t,df_T[u,4],beta_0,beta_1,beta_k,sigma_eta)
+  df_T[u,8]=log_labor_choice_error(df_T[u,3],w_t,df_T[u,4],beta_0,beta_1,beta_k,df_T[u,6],sigma_eta)
+  df_T[u,11]=log_production(df_T[u,7],df_T[u,3],df_T[u,4],df_T[u,10],beta_0,beta_1,beta_k)
+  df_T[u,12]=log_production(df_T[u,8],df_T[u,3],df_T[u,4],df_T[u,10],beta_0,beta_1,beta_k)
+}
+df_T
+describe(df_T)
+
+summary(lm(y_error~l_error+k,data=df_T))
+
+dy_error_1=df_T[[12]]
+dl_error_1=df_T[[8]]
+dk_1=df_T[[3]]
+dy_error=dy_error_1
+dl_error=dl_error_1
+dk=dk_1
+avery=0
+averl=0
+averk=0
+for (u in seq(1,10000,1)){
+  umod=u%%1000
+  if (umod>0.5){
+      avery=(dy_error_1[umod]+dy_error_1[umod+1000]+dy_error_1[umod+2000]+dy_error_1[umod+3000]+dy_error_1[umod+4000]+dy_error_1[umod+5000]+dy_error_1[umod+6000]+dy_error_1[umod+7000]+dy_error_1[umod+8000]+dy_error_1[umod+9000])/10
+      averl=(dl_error_1[umod]+dl_error_1[umod+1000]+dl_error_1[umod+2000]+dl_error_1[umod+3000]+dl_error_1[umod+4000]+dl_error_1[umod+5000]+dl_error_1[umod+6000]+dl_error_1[umod+7000]+dl_error_1[umod+8000]+dl_error_1[umod+9000])/10
+      averk=(dk_1[umod]+dk_1[umod+1000]+dk_1[umod+2000]+dk_1[umod+3000]+dk_1[umod+4000]+dk_1[umod+5000]+dk_1[umod+6000]+dk_1[umod+7000]+dk_1[umod+8000]+dk_1[umod+9000])/10
+      dy_error[u]=dy_error[u]-avery
+      dl_error[u]=dl_error[u]-averl
+      dk[u]=dk[u]-averk
+  }
+  if (umod<0.5){
+      avery=(dy_error_1[umod+10000]+dy_error_1[umod+1000]+dy_error_1[umod+2000]+dy_error_1[umod+3000]+dy_error_1[umod+4000]+dy_error_1[umod+5000]+dy_error_1[umod+6000]+dy_error_1[umod+7000]+dy_error_1[umod+8000]+dy_error_1[umod+9000])/10
+       averl=(dl_error_1[umod+10000]+dl_error_1[umod+1000]+dl_error_1[umod+2000]+dl_error_1[umod+3000]+dl_error_1[umod+4000]+dl_error_1[umod+5000]+dl_error_1[umod+6000]+dl_error_1[umod+7000]+dl_error_1[umod+8000]+dl_error_1[umod+9000])/10
+        averk=(dk_1[umod+10000]+dk_1[umod+1000]+dk_1[umod+2000]+dk_1[umod+3000]+dk_1[umod+4000]+dk_1[umod+5000]+dk_1[umod+6000]+dk_1[umod+7000]+dk_1[umod+8000]+dk_1[umod+9000])/10
+      dy_error[u]=dy_error[u]-avery
+      dl_error[u]=dl_error[u]-averl
+      dk[u]=dk[u]-averk
+  }
+}
+
+dy_error<-unlist(dy_error)
+dl_error<-unlist(dl_error)
+dk<-unlist(dk)
+
+df_T_within=tibble(dy_error,dl_error,dk)
+summary(lm(dy_error~-1+dl_error+dk,data=df_T_within))
+
+y_error_2=df_T[[12]]
+l_error_2=df_T[[8]]
+k_2=df_T[[3]]
+I_2=df_T[[9]]
+bw1=np::npplregbw(formula=y_error_2~l_error_2+k_2+I_2|k_2+I_2)
+pl1=np::npplreg(bws=bw1)
+summary(pl1)
+plot(predict(pl1),y_error_2,xlab="fitted",ylab="actual")
+
+
+y_2=df_T[[11]]
+l_2=df_T[[7]]
+bw2=np::npplregbw(formula=y_2~l_2+k_2+I_2|k_2+I_2)
+pl2=np::npplreg(bws=bw_2)
+summary(pl2)
+
+y_error_tilde=y_error_2-0.2750182*l_error_2
+phi_t_1=predict(pl1)-0.2750182*l_error_2
+
+df_T_1st=tibble(j=j10,t=t10,y_error_tilde,phi_t_1)
+
+df_T_1st
+
+
+truevalue1=moment_OP_2nd(alpha=alpha,beta_0=beta_0,beta_k=beta_k,df_T,df_T_1st)
+
+truevalue1
+
+truevalue2=objective_OP_2nd(alpha=alpha,beta_0=beta_0,beta_k=beta_k,df_T,df_T_1st)
+
+truevalue2
+
+change_alpha=seq(0,1,0.1)
+change_beta_0=seq(0,1,0.1)
+change_beta_k=seq(0,1,0.1)
+
+for (u in seq(0,1,0.1)){
+  change_alpha[u*10+1]=objective_OP_2nd(alpha=u,beta_0=beta_0,beta_k=beta_k,df_T,df_T_1st)
+  change_beta_0[u*10+1]=objective_OP_2nd(alpha=alpha,beta_0=u,beta_k=beta_k,df_T,df_T_1st)
+  change_beta_k[u*10+1]=objective_OP_2nd(alpha=alpha,beta_0=beta_0,beta_k=u,df_T,df_T_1st)
+}
+
+change_xaxis=seq(from=0,to=1,by=0.1)
+ggplot2::qplot(change_xaxis,change_alpha,xlab=expression(alpha),ylab="Objective")
+ggplot2::qplot(change_xaxis,change_beta_0,xlab=expression(beta_0),ylab="Objective")
+ggplot2::qplot(change_xaxis,change_beta_k,xlab=expression(beta_k),ylab="Objective")
+
+result=optim(par=c(0,0,0),fn=objective_OP_2nd_final,method="L-BFGS-B")
+result
+```
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

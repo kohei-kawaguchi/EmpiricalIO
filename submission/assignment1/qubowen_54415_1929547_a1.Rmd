@@ -1,0 +1,108 @@
+---
+title: 'Assignment 1: Basic programming in R'
+author: "Bowen QU"
+date: "2/12/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Simulate data:
+
+```{r}
+# install.packages("dplyr")
+#we generate k and x sequences first:
+vec_1 <- c(1,2)
+vec_2 <- c(0,1)
+k <- rep(vec_1, 1000)
+x <- rep(vec_2, 1000)
+# then we generate i sequence using 'floor' function in a for-loop:
+i <- c()
+for (j in 1:2000){
+  i[j] <- floor((j+1)/2)
+}
+#install.packages("evd")
+#Type-I extreme value distribution is also known as the Gumbel distribution.
+set.seed(1)
+e <- evd::rgumbel(2000, loc=0, scale=1)
+beta <- 0.2
+latent <- beta * x + e
+# next we generate sequence y using a loop:
+y <- c()
+for (j in 1:2000) {
+  if (j %% 2 == 0) { #i.e. when j is even, we compare the value of latent upwards
+    if (latent[j] >= latent[j-1]) {
+      y[j] <- 1
+    }
+    else {
+      y[j] <- 0
+      }
+  }
+  else { #when j is odd, we compare the value of latent downwards
+    if (latent[j] >= latent[j+1]) {
+      y[j] <- 1
+    }
+    else {
+      y[j] <- 0
+      }
+  }
+}
+#to summarise multiple variables, we employ the 'dplyr' package, I have tried some
+#different ways including applying 'print' and 'dplyr::summarise_all()', but it 
+#turns out that it cannot give exactly the same outcome as what we have in 
+#lecture notes:
+# print(asmt1.data)
+# asmt1.data %>% 
+    # group_by() %>% 
+      # summarize_all()
+# Then I learned from the Internet that maybe I should try the package 'tibble', 
+#which also gives a data frame:
+# install.packages("tibble")
+asmt1.data <- tibble::tibble(i, k, x, e, latent, y)
+asmt1.data
+#as we can see, tibble gives exactly the same results. 
+```
+
+## Estimate the parameter
+From the background knowledge, we know that the likelihood for person $i$ to choose $k$ $(y_{ik}=1)$ can be shown to be :
+$$p_{ik}(\beta)=\frac{\exp{(\beta x_k)}}{\exp{(\beta x_1)}\exp{(\beta x_2)}},$$
+Then the lilelihood for us to obserbve the sequence $\{y_{ik}\}^{k=1,2}_{i=1...1000}$ is:
+$$L(\beta)=\Pi_{i=1}^{1000}p_{i1}(\beta)^{y_{i1}}[1-p_{i1}(\beta)]^{1-y_{i1}}.$$
+Taking logs, we have:
+$$l(\beta)=\sum_{i=1}^{1000}\{y_{i1}\log{p_{i1}(\beta)}+(1-y_{i1})\log{[1-p_{i1}(\beta)]}\}.$$
+```{r}
+source("/Users/bowenqu/Documents/RStudio/ECON6120I/R/loglikelihood_A1.R") 
+# library(ECON6120I)
+# install.packages("latex2exp")
+beta_hat <- seq(from = 0, to = 1, by = 0.005)
+lglklhd <- loglikelihood_A1(beta_hat)
+library(ggplot2)
+plt <- ggplot() + geom_line(aes(beta_hat, lglklhd), colour = 'red', size = 0.4)
+library(latex2exp)
+#after referring to the the Reference manual, latex2exp.pdf, 
+#(url https://cran.r-project.org/web/packages/latex2exp/latex2exp.pdf)
+plt + xlab(TeX("$\\beta")) + ylab("Loglikelihood")
+```
+```{r}
+fn <- function(beta_hat) {
+  y <- -loglikelihood_A1(beta_hat)
+  return(y)
+}
+optim(par = 0, fn, method = "Brent", lower = -1, upper = 1)
+```
+
+
+
+
+
+
+
+
+
+
+
+

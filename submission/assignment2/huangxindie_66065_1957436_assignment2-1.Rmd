@@ -1,0 +1,265 @@
+---
+title: "Assignment 2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Simulate Data
+
+1. Define the parameter variables as above.
+
+```{r}
+# clear and set up the working environment
+rm(list = ls())
+library(ECON6120I)
+# initialization
+beta_0 <- 1
+beta_l <- 0.2
+beta_k <- 0.7
+alpha <-0.7
+sigma_eta <- 0.2
+sigma_nu <- 0.5
+sigma_w	<- 0.1
+delta <- 0.05
+```
+
+2. Write a function that returns the log output given $l_{jt}, k_{jt}, \omega_{jt}$, and $\eta_{jt}$ under the given parameter values according to the above production function and name it `log_production`.
+
+
+Suppose that the labor is determined after $\omega_{jt}$ is observed, but before $\eta_{jt}$ is observed, given the log capital level $k_{jt}$.
+
+3. Derive the optimal log labor as a function of $\omega_{jt}, \eta_{jt}, k_{jt}$, and $w_t$. Write a function to return the optimal log labor given the variables and parameters and name it `log_labor_choice`.
+
+
+As discussed in the class, if there is no additional variation in labor, the coefficient on the labor $\beta_l$ is not identified. Thus, if we generate labor choice from the previous function, $\beta_l$ will not be identified from the simulated data. To see this, we write a modified version of the previous function in which $\omega_{jt}$ is replaced with $\omega_{j,t}+\iota_{jt}$, where $\iota_{jt}$ is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is $\omega_{j,t}+\iota_{jt}$, even though the true shock is $\omega_{j,t}$.
+
+4. Modify the previous function by including $\iota_{jt}$ as an additional input and name it `log_labor_choice_error`.
+
+
+Consider an investment process such that: 
+
+$I_{jt}=(\delta+\gamma \omega_{jt})K_{jt},$
+
+where $I_{jt}$ and $K_{jt}$ are investment and capital in level. Set $\gamma=0.1$, i.e., the investment is strictly increasing in $\omega_{jt}$. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.
+
+Define variable $\gamma$ and assign it the value. Write a function that returns the investment given $K_{jt}, \omega_{jt}$, and parameter values, according to the previous equation, and name it `investment_choice`.
+ 
+```{r}
+gamma <- 0.1
+```
+
+Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables $k_{jt}$ and $\omega_{jt}$ as follows.
+
+6. Draw $k_{j0}$ from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw $\omega_{j0}$ from its stationary distribution (check the stationary distribution of AR(1) process). Draw a wage. Before simulating the rest of the data, set the seed at 1.
+
+* Since the sequence $\{\omega_{jt}\}_{t=0}^{1000}$ follows AR(1) process, we know that $\omega_{jt}\sim N(\mu_{\omega},\sigma_{\omega}^2)$.
+
+* By $\omega_{jt}=\alpha\omega_{jt}+\nu_{jt}$, $\nu_{jt}\stackrel{i.i.d.}{\sim}N(0,\sigma_{\nu}^2)$, $\sigma_{\nu}=0.5$ and $\alpha=0.7$,
+
+* we know that $\mu_{\omega}=0.7\mu_{\omega}+0$ and $\sigma_{\omega}^2=0.7^2\sigma_{\omega}^2+0.5^2$.
+
+* Hence $\omega_{jt}\sim N(0,\sqrt{25/51})$.
+
+```{r}
+library(tibble)
+set.seed(1)
+df <- tibble(j = 1:1000, t = rep(1, 1000), k = rnorm(1000, 1, 0.5), omega = rnorm(1000, 0, sqrt(25/51)), wage = 0.5)
+df
+```
+
+7. Compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.
+
+```{r}
+df$iota <- rnorm(1000, 0, 0.05)
+df$l <- log_labor_choice(k = df$k, wage = df$wage, omega = df$omega, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k, sigma_eta = sigma_eta)
+df$l_error <- log_labor_choice_error(k = df$k, wage = df$wage, omega = df$omega, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k, iota = df$iota, sigma_eta = sigma_eta)
+df$I <- investment_choice(K = exp(df$k), omega = df$omega,delta = delta, gamma = gamma)
+df
+```
+
+8. Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error.
+
+```{r}
+df$eta <- rnorm(1000, 0, sigma_eta)
+df$y <- log_production(l = df$l, k = df$k, omega = df$omega, eta = df$eta, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k)
+df$y_error <- log_production(l = df$l_error, k = df$k, omega = df$omega, eta = df$eta, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k)
+df
+```
+
+9. Repeat this procedure for $t=1,...,10$ by updating the capital and anticipated shocks, and name the resulting data frame `df_T`.
+
+```{r}
+library(dplyr)
+df$nu <- rep(NA,1000)
+tmp <- df
+for (i in 2: 10) {
+  tmp$t <- rep(i, 1000)
+  tmp$k <- log((1 - delta) * exp(tmp$k) + tmp$I)
+  tmp$nu <- rnorm(1000, 0, sigma_nu)
+  tmp$omega <- alpha * tmp$omega + tmp$nu
+  tmp$iota <- rnorm(1000, 0, 0.05)
+  tmp$l <- log_labor_choice(k = tmp$k, wage = tmp$wage, omega = tmp$omega, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k, sigma_eta = sigma_eta)
+  tmp$l_error <- log_labor_choice_error(k = tmp$k, wage = tmp$wage, omega = tmp$omega, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k, iota = tmp$iota, sigma_eta = sigma_eta)
+  tmp$I <- investment_choice(K = exp(tmp$k), omega = tmp$omega, delta = delta, gamma = gamma)
+  tmp$eta <- rnorm(1000, 0, sigma_eta)
+  tmp$y <- log_production(l = tmp$l, k = tmp$k, omega = tmp$omega, eta = tmp$eta, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k)
+  tmp$y_error <- log_production(l = tmp$l_error, k = tmp$k, omega = tmp$omega, eta = tmp$eta, beta_0 = beta_0, beta_l = beta_l, beta_k = beta_k)
+  df <- bind_rows(df, tmp)
+}
+df_T <- df
+df_T
+rm(tmp)
+rm(df)
+```
+
+10. Check the simulated data by making summary table.
+
+```{r}
+library(knitr)
+library(summarytools)
+kable(descr(df_T, stats = c("n.valid", "mean", "sd", "min", "max"), transpose = TRUE), format = "markdown")
+```
+
+## Estimate the parameters
+
+For now, use the labor choice with optimization error.
+
+1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. This is likely to give an upwardly biased estimates on $\beta_l$ and $\beta_k$. Why is it?
+
+* In this case, the optimized labor input choice and capital input choice are both positively correlated with $\epsilon_{jt}$. 
+
+* Hence when $\epsilon_{jt}$ is high, $l_{jt}, k_{jt}$ both will be high.
+
+* The crease in output $y_{jt}$ caused by $\epsilon_{jt}$ is captured as if caused by the increase in labor and capital input choices, which presents as upward bias in least squre estimators $\hat{\beta_l}, \hat{\beta_k}$.
+ 
+```{r}
+lmod <- lm(formula = y_error ~ l_error + k, data = df_T)
+summary(lmod)
+```
+
+2. Second, take within-transformation on $y_{jt}, l_{jt}$ and $k_{jt}$ and let $\Delta y_{jt}, \Delta l_{jt}$, and $\Delta k_{jt}$ denote them. Then, regress $\Delta y_{jt}$ on $\Delta l_{jt}$ and $\Delta k_{jt}$ by the least squares method.
+
+```{r}
+df_T_within <- df_T %>%
+  group_by(j) %>%
+  mutate(dk = k - mean(k),
+         dl = l - mean(l),
+         dl_error = l_error - mean(l_error),
+         dy = y - mean(y),
+         dy_error = y_error - mean(y_error))
+ungroup(df_T)
+ungroup(df_T_within)
+
+lmod2 <- lm(formula = dy_error ~ -1 + dl_error + dk, data = df_T_within)
+summary(lmod2)
+```
+
+Next, we attempt to estimate the parameters using Olley-Pakes method. Estimate the first-step model of Olley-Pakes method:
+$$y_{jt} = \beta_0 + \beta_1 l_{jt} + \phi(k_{jt}, I_{jt}) + \eta_{jt}$$ 
+by approximating $\phi_t$ by a kernel function.
+
+Remark that $\phi$ in general depends on observed and unobserved state variables. For this reason, in theory, $\phi$ should be estimated for each period. In this exercise, we assume$\phi$ is common across periods because we know that there is no unobserved state variables in the true data generating process. Moreover, we do not include $w_t$ because we know that it is time -invariant. Do not forget to consider them in the actual data analysis.
+
+You can use `npplreg` function of `np` package to estimate a partially linear model with a multivariate kernel. You first use `npplregbw` to obtain the optimal band width and then use `npplreg` to estimate the model under the optimal bandwidth. The computation of the optimal bandwidth is time consuming.
+
+3. Return the summary of the first stage estimation and plot the fitted values against the data points.
+
+```{r}
+library(np)
+library(ggplot2)
+bw1 <- npplregbw(formula = y_error ~ l_error + k + I | k + I , df_T)
+plmod1 <- npplreg(bws = bw1)
+summary(plmod1)
+Sys.sleep(5)
+qplot(x = fitted(plmod1), y = df_T$y_error, xlab = "fitted", ylab = "actual")
+```
+
+4. Check that $\beta_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
+
+```{r}
+bw2 <- npplregbw(formula = y ~ l + k + I | k + I , df_T)
+plmod2 <- npplreg(bws = bw2)
+summary(plmod2)
+Sys.sleep(5)
+```
+
+Then, we estimate the second stage model of Olley-Pakes method:
+$$y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}] + \nu_{jt} + \eta_{jt}$$
+In this model, we do not have to non-parametetrically estimate the conditional expectation of $\omega_{jt}$ on $\omega_{j,t-1}$, because we know that the anticipated shock follows an AR(1) process. Remark that we in general have to non-parametrically estimate it.
+
+
+The model is non-linear in parameters, because of the term $\alpha \beta_0$ and $\alpha \beta_k$. We estimate $\alpha, \beta_0$ and $\beta_k$ by a GMM estimator. The moment is: 
+$$g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}]\} 
+\begin{bmatrix}
+k_{jt} \\
+k_{j, t - 1} \\
+I_{j, t - 1}
+\end{bmatrix}.$$
+
+5. Using the estimates in the first step, compute:
+$$y_{jt} - \hat{\beta_l} l_{jt},$$
+and:
+$$\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}),$$
+
+for each $j$ and $t$ and save it as a data frame names `df_T_1st`.
+
+```{r}
+res <- as.vector(residuals(plmod1))
+df_T_1st <- tibble(
+  j = df_T$j,
+  t = df_T$t,
+  y_error_tilde = df_T$y_error - plmod1$xcoef[1] * df_T$l_error,
+  resid = res
+)
+df_T_1st <- df_T_1st %>%
+  group_by(j) %>%
+  mutate(
+    phi_t_1 = lag(y_error_tilde - resid, 1)
+    )
+df_T_1st <- ungroup(df_T_1st)
+df_T_1st <- select(arrange(df_T_1st, j, t), j, t, y_error_tilde, phi_t_1)
+df_T_1st
+```
+
+6. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_T_1st`, and name it `moment_OP_2nd`. Show the values of the moments evaluated at the true parameters.
+```{r}
+moment_OP_2nd(c(alpha, beta_0, beta_k), df_T = df_T, df_T_1st = df_T_1st)
+```
+
+Based on the moment, we can define the objective function of a generalized method of moments estimator with a weighting matrix $W$ as:
+$$Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{JT}(\alpha, \beta_0, \beta_k)$$
+
+7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_T_1st`, and name it `objective_OP_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
+
+```{r}
+objective_OP_2nd(c(alpha, beta_0, beta_k), df_T = df_T, df_T_1st = df_T_1st)
+```
+
+8. Draw the graph of the objective function when one of $\alpha, \beta_0, \beta_k$ are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
+
+```{r}
+library(latex2exp)
+library("foreach")
+grid <- seq(from = 0, to = 1, by = 0.1)
+output <- foreach (g = grid, .combine = "rbind") %do% {
+                     a <- objective_OP_2nd(c(g, beta_0, beta_k), df_T = df_T, df_T_1st = df_T_1st)
+                     b <- objective_OP_2nd(c(alpha, g, beta_k), df_T = df_T, df_T_1st = df_T_1st)
+                     c <- objective_OP_2nd(c(alpha, beta_0, g), df_T = df_T, df_T_1st = df_T_1st)
+                     l <- list(a, b, c)
+                     return(l)
+}
+output <- data.frame(x = grid, y_a = as.numeric(output[,1]), y_b0 = as.numeric(output[,2]), y_bk = as.numeric(output[,3]))
+ggplot(output, aes(x = x, y = y_a)) + geom_point() + xlab(TeX('$\\alpha$')) + ylab("Objective")
+ggplot(output, aes(x = x, y = y_b0)) + geom_point() + xlab(TeX('$\\beta_0$')) + ylab("Objective")
+ggplot(output, aes(x = x, y = y_bk)) + geom_point() + xlab(TeX('$\\beta_k$')) + ylab("Objective")
+```
+
+9. Find the parameters that minimize the objective function using `optim`. You may use `L-BFGS-B` method to solve it.
+```{r}
+optim(par = c(0.7, 0.9, 0.6), fn = objective_OP_2nd, df_T = df_T, df_T_1st = df_T_1st, method = "L-BFGS-B", lower = c(0, 0, 0), upper = c(1, 1, 1), hessian = FALSE)
+```
+
+

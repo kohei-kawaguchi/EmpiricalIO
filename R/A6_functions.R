@@ -66,7 +66,8 @@ compute_simultaneous_entry <-
 compute_payoff_across_markets <-
   function(Y, X, Z, EP, NU, beta, alpha, delta, rho) {
     payoff <-
-      foreach (m = 1:length(Y)) %dopar% {
+      foreach (m = 1:length(Y),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")) %dopar% {
         y_m <- Y[[m]]
         # extract
         X_m <- X[m, , drop = FALSE]
@@ -121,7 +122,9 @@ compute_monte_carlo_sequential_entry <-
            beta, alpha, delta, rho) {
     # Monte Carlo Simulation
     Y_mc <-
-      foreach (r = 1:length(EP_mc)) %dopar% {
+      foreach (r = 1:length(EP_mc),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         # extract
         EP_r <- EP_mc[[r]]
         NU_r <- NU_mc[[r]]
@@ -148,7 +151,8 @@ compute_objective_sequential_entry <-
                                                  beta, alpha, delta, rho)
     # compute the square difference
     objective <-
-      foreach (r = 1:length(EP_mc), .combine = "rbind") %dopar% {
+      foreach (r = 1:length(EP_mc), .combine = "rbind",
+               .packages = c("foreach", "magrittr", "EmpiricalIO")) %dopar% {
         Y_mc_r <- Y_mc[[r]]
         diff_r <- purrr::map2(Y_mc_r, Y, `-`) %>%
           purrr::map(., ~ sum(abs(.))) %>%
@@ -168,7 +172,9 @@ compute_monte_carlo_simultaneous_entry <-
            beta, alpha, delta) {
     # Monte Carlo Simulation
     Y_mc <-
-      foreach (r = 1:length(EP_mc)) %dopar% {
+      foreach (r = 1:length(EP_mc),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         # extract
         EP_r <- EP_mc[[r]]
         NU_r <- NU_mc[[r]]
@@ -194,7 +200,9 @@ compute_objective_simultaneous_entry <-
         X, Z, EP_mc, NU_mc, beta, alpha, delta)
     # compute the square difference
     objective <-
-      foreach (r = 1:length(EP_mc), .combine = "rbind") %dopar% {
+      foreach (r = 1:length(EP_mc), .combine = "rbind",
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         Y_mc_r <- Y_mc[[r]]
         diff_r <- purrr::map2(Y_mc_r, Y, `-`) %>%
           purrr::map(., sum) %>%

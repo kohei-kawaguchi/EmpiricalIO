@@ -1,0 +1,108 @@
+---
+title: "assignment1"
+author: "Si_ZUO"
+date: "2019/02/13"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+# simulate data
+#1
+```{r 1_1}
+i<-c(sort(rep(1:1000,2)))
+k<-c(rep(1:2,1000))
+x<-c(rep(0:1,1000))
+A<-data.frame(i,k,x)
+str(A)
+```
+
+#2
+```{r 1_2}
+library("evd")
+set.seed(1) 
+A<-t(A)
+e<-rgev(A)
+e<-e[1:2000]
+A<-data.frame(i,k,x,e)
+str(A)
+```
+#3
+```{r 1_3}
+latent<-0.2*x+e
+A<-data.frame(i,k,x,e,latent)
+str(A)
+```
+#4
+```{r 1_4}
+A1<- subset(A, k==1)
+j1<- as.vector(A1$latent) 
+A2<- subset(A, k==2)
+j2<- as.vector(A2$latent) 
+y1<-j1-j2
+y2<-replace(y1,y1<0,0)
+y2<-replace(y2,y2>0,1)
+n<-c(rep(1,1000))
+y3<-n-y2
+y <- vector(class(y2), length(c(y2, y3)))
+y[c(TRUE, FALSE)] <- y2
+y[c(FALSE, TRUE)] <- y3
+A<-data.frame(i,k,x,e,latent,y)
+str(A)
+```
+
+#Estimate the parameter
+#1
+```{r 2_1}
+loglikelihood<-function(beta){
+  one<-(rep(1,2000))
+  x<-x
+  y<-y
+  p<-exp(beta*x)/(1+exp(beta))
+  l<-(sum(y*log(p)+(one-y)*log(one-p)))/2000
+  return(l)
+}
+loglikelihood(0)
+```
+
+#2
+```{r 2_2}
+xa<-seq(0,1,0.1)
+xa
+
+for (j in 1:length(xa)[1])
+{ya[j]<-loglikelihood(xa[j])}
+ya
+
+ya<-c(-0.6931472,-0.6884967,-0.6863389,-0.6866552,-0.6894153,
+-0.6945770,-0.7020880,-0.7118860,-0.7239007,-0.7380539,
+-0.7542617)
+```
+```{r,fig.width=6,fig.height=4}
+plot(xa,ya,main = "Estimate the parameter",xlab = "beta",ylab="likelihood",col="red")
+```
+
+#3
+```{r 2_3}
+result<-optim(c(0), loglikelihood,method="Brent",lower = -1, upper = 1)
+
+fr <- function(x) {   ## Rosenbrock Banana function
+    x1 <- x[1]
+    x2 <- x[2]
+    100 * (x2 - x1 * x1)^2 + (1 - x1)^2
+}
+grr <- function(x) { ## Gradient of 'fr'
+    x1 <- x[1]
+    x2 <- x[2]
+    c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
+       200 *      (x2 - x1 * x1))
+}
+optim(c(-1.2,1), fr)
+(res <- optim(c(-1.2,1), fr, grr, method = "BFGS"))
+```
+

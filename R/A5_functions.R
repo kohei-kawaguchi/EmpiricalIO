@@ -3,7 +3,9 @@ compute_derivative_share_smooth <-
   function(X, M, V, beta, sigma, mu, omega) {
     df_choice_smooth <- compute_choice_smooth(X, M, V, beta, sigma, mu, omega)
     derivative_choice_smooth <-
-      foreach (tt = unique(df_choice_smooth$t)) %dopar% {
+      foreach (tt = unique(df_choice_smooth$t),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         # extract data for market t
         df_choice_smooth_t <- df_choice_smooth %>%
           dplyr::filter(t == tt)
@@ -59,6 +61,7 @@ update_price <-
     # evaluate equilibrium condition
     p_new <-
       foreach (tt = 1:length(ds),
+               .packages = c("foreach", "magrittr", "EmpiricalIO"),
                .combine = "rbind") %dopar% {
                  print(tt)
                  # extract
@@ -92,6 +95,7 @@ compute_equilibrium_condition <-
     # evaluate equilibrium condition
     equilibrium_condition <-
       foreach (tt = 1:length(ds),
+               .packages = c("foreach", "magrittr", "EmpiricalIO"),
                .combine = "rbind") %dopar% {
                  print(tt)
                  # extract
@@ -147,6 +151,7 @@ estimate_marginal_cost <-
     # estimate the marginal cost
     marginal_cost_estimate <-
       foreach (tt = 1:length(ds),
+               .packages = c("foreach", "magrittr", "EmpiricalIO"),
                .combine = "rbind") %dopar% {
                  print(tt)
                  # extract
@@ -219,7 +224,9 @@ compute_consumer_surplus <-
 compute_indirect_utility_matrix <- 
   function(df_list, beta, sigma, mu, omega) {
     value <-
-      foreach (t = 1:length(df_list)) %dopar% {
+      foreach (t = 1:length(df_list),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         value_t <- 
           foreach (i = 1:length(df_list[[t]])) %do% {
             # extrast matrices
@@ -251,7 +258,9 @@ compute_choice_smooth_matrix <-
       df_list, beta, sigma, mu, omega)
     # make choice
     q <-
-      foreach (t = 1:length(u)) %dopar% {
+      foreach (t = 1:length(u),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         q_t <-
           foreach (i = 1:length(u[[t]])) %do% {
             u_ti <- u[[t]][[i]]
@@ -269,7 +278,9 @@ compute_derivative_share_smooth_matrix <-
   function(df_list, beta, sigma, mu, omega) {
     q <- compute_choice_smooth_matrix(df_list, beta, sigma, mu, omega)
     derivative_choice_smooth <-
-      foreach (t = 1:length(q)) %dopar% {
+      foreach (t = 1:length(q),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         # extract data for market t
         q_t <- q[[t]]
         # compute the derivative matrix for each market
@@ -320,7 +331,9 @@ compute_share_smooth_matrix <-
                             mu, omega)
     # make share data
     df_share_smooth <-
-      foreach (t = 1:length(df_choice)) %dopar% {
+      foreach (t = 1:length(df_choice),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         q_t <- df_choice[[t]]
         q_t <- q_t %>%
           purrr::reduce(`+`)
@@ -337,7 +350,9 @@ update_price_matrix <-
     # replace the price in M
     p <- exp(logp)
     df_list <-
-      foreach (t = 1:length(df_list)) %dopar% {
+      foreach (t = 1:length(df_list),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         df_list_t <- 
           foreach (i = 1:length(df_list[[t]])) %do% {
             df_list_ti <- df_list[[t]][[i]]
@@ -355,7 +370,9 @@ update_price_matrix <-
     ds <- compute_derivative_share_smooth_matrix(df_list, beta, sigma, mu, omega)
     # evaluate equilibrium condition
     p_new <-
-      foreach (tt = 1:length(ds)) %dopar% {
+      foreach (tt = 1:length(ds),
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
                  print(tt)
                  # extract
                  s_t <- share[[tt]] 

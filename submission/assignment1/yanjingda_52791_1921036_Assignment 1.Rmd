@@ -1,0 +1,76 @@
+---
+title: "Assignment 1"
+author: Jingda YAN (20483703)
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Install packages
+install.packages('tibble')\
+install.packages('evd')\
+install.packages("ggplot2")\
+install.packages('latex2exp')
+```{r packages}
+library(ggplot2)
+library(tibble)
+library(evd)
+library(latex2exp)
+```
+
+
+#1.Simulate the data
+##Step 1 : Generate the Dataframe
+```{r step1}
+library(tibble)
+df <- tibble(i = rep(1:1000, each = 2), k = rep(1:2, times = 1000), 
+                 x = rep(0:1, times = 1000))
+df
+```
+
+##Step2 : Generate the random variable as the forth column
+```{r step2}
+library(evd)
+set.seed(1)
+df <- add_column(df, e = rgev(2000, 0, 1))
+df
+```
+
+##Step 3 : Compute the latent variable as the fifth column
+```{r step3}
+df <- add_column(df, latent = 0.2 * df[['x']] + df[['e']])
+df
+```
+
+##Step 4 : Compute y by comparing the latent variable
+```{r step4}
+extract_odd <- df[seq(1,2000,2), 'latent']
+extract_even <- df[seq(2,2000,2), 'latent']
+average <- (extract_odd[['latent']] + extract_even[['latent']])/2
+compare <- tibble(dup = rep(average, each = 2))
+df <- add_column(df, y = 
+                   c(ifelse((df[['latent']] >= compare) =="TRUE", 1, 0)))
+df
+```
+
+#2.Estimate the parameter
+##Define the loglikelihood function and build it as a package
+```{r logfunction}
+library(ECON6120I)
+```
+##Compute the value of log likelihood for $\beta = 0, 0.1, \cdots, 1$ and plot
+
+
+```{r plot1, echo=FALSE}
+qplot(seq(0,1,0.1),loglikelihood_A1(seq(0,1,0.1)),
+      xlab = TeX('$ \\beta $'), ylab = TeX('$ Loglikellihood $'))
+```
+
+##Find the optimal $\beta$
+```{r optimal}
+optim(par = 0, fn = loglikelihood_A1, method = "Brent", 
+      lower = -1, upper = 1, control = list(fnscale = -1))
+
+```

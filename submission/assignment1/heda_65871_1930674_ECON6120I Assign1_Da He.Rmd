@@ -1,0 +1,110 @@
+---
+title: "ECON6120I Assignment 1: Basic programming in R"
+author: "Da He"
+date: "18 February 2019"
+output: html_document
+---
+
+## Simulate data
+
+Consider to simulate data from the following model and estimate the parameters from the simulated data.
+
+$$ y_{ij} = 1\{j = argmax_{k = 1,2} \beta {x_k} + \epsilon_{ik}\}, $$
+
+where $\epsilon_{ik}$ follows i.i.d. type-I extreme value distribution, $\beta = 0.2$, $x_1 = 0$ and $x_2 = 1$.
+
+1. To simulate data, first make a data frame as follows:
+
+```{r}
+library(tidyverse)
+i <- rep(1:1000, each = 2)
+k <- rep(1:2, times = 1000)
+x <- rep(0:1, times = 1000)
+data <- tibble(i, k, x)
+list(data)
+```
+
+2. Second, draw type-I extreme value random variables. Set the seed at 1. You can use `evd` package to draw the variables. You should get exactly the same realization if the seed is correctly set.
+
+```{r}
+# install.packages("evd")
+library(evd)
+set.seed(1)
+e <- rgev(n = 2000)
+library(tibble)
+data <- add_column(data, e)
+list(data)
+```
+
+3. Third, compute the latent value of each option to obtain the following data frame:
+
+```{r}
+beta <- 0.2
+latent <- beta * x + e
+data <- add_column(data, latent)
+list(data)
+```
+
+4. Finally, compute $y$ by comparing the latent values of $k = 1,2$ for each i to obtain the following result:
+
+```{r}
+y <- rep(0, times = 2000)
+index <- seq(from = 1, to = 1999, by = 2)
+for(j in index){
+  if(latent[j] >= latent[j + 1]){y[j] <- 1}
+  else{y[j+1] <- 1}
+}
+data <- add_column(data, y)
+list(data)
+```
+
+## Estimate the parameter
+
+Now you generated simulated data. Suppose you observe $x_k$ and $y_{ik}$ for each $i$ and $k$ and estimate $\beta$ by a maximum likelihood estimator. The likelihood for $i$ to choose $k$ ($y_{ik}=1$) can be shown to be:
+
+$$ p_{ik}(\beta) = \frac{exp(\beta x_k)}{exp(\beta x_1) + exp(\beta x_2)}. $$
+
+Then the likelihood of observing $\{y_{ik}\}_{i,k}$ is:
+
+$$ L(\beta) = \prod_{i = 1} ^ {1000} p_{i1} (\beta) ^ {y_{i1}}[1 - p_{i1} (\beta)] ^ {1 - y_{i1}}, $$
+
+and the log likelihood is:
+
+$$ l(\beta) = \prod_{i=1}^{1000} \{y_{i1} log p_{i1} (\beta) + (1 - y_{i1}) log [1 - p_{i1} (\beta)]\}. $$
+
+1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_A1`.
+
+```{r}
+loglikelihood_A1 <- function(n){
+  exp_term <- exp(n * x)
+p <- rep(0, times = 2000)
+for(j in index){
+  p[j] <- exp_term[j] / (exp_term[j] + exp_term[j+1])
+  p[j+1] <- exp_term[j+1] / (exp_term[j] + exp_term[j+1])
+}
+sum <- 0
+for (l in 1:2000){
+  sum <- sum + y[l] * log(p[l])  
+  }
+return(sum)
+}
+```
+
+2. Compute the value of log likelihood for $\beta = 0, 0.1, ..., 1$ and plot the result using `ggplot2` packages. You can use `latex2exp` package to use LaTex math symbol in the label:
+
+```{r}
+para_of_interest <- c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+loglikelihood <- rep(0, times = 11)
+for (m in 1:11){loglikelihood[m] <- loglikelihood_A1(n = para_of_interest[m])}
+# install.packages("ggplot2")
+library(ggplot2)
+ggplot2::qplot(para_of_interest, loglikelihood)
+```
+
+3. Find and report \beta that maximizes the log likelihood for the simulated data. You can use `optim` function to achive this. You will use `Brent` method and set the lower bound at -1 and upper bound at 1 for the parameter search.
+
+```{r}
+# install.packages("minqa")
+library(minqa)
+optim(par = n, fn = loglikelihood_A1, method = c("Brent"), lower = -1, upper = 1)
+```

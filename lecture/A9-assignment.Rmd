@@ -162,6 +162,7 @@ graph <- foreach (i = 1:length(theta)) %do% {
   theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
   objective_i <-
     foreach (j = 1:length(theta_i_list),
+             .packages = c("EmpiricalIO", "foreach", "magrittr"),
              .combine = "rbind") %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
@@ -353,8 +354,8 @@ $$
 11. Write a function `H_b(b, n)` and `h_b(b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
 
 ```{r}
-H_b(0.4, n)
-h_b(0.4, n)
+H_b(0.4, n, F_b)
+h_b(0.4, n, F_b, f_b)
 ```
 
 When a bidder bids $b$, the implied valuation of her is:
@@ -367,7 +368,7 @@ $$
 ```{r}
 r <- df_first[1, "r"]
 n <- df_first[1, "n"]
-compute_implied_valuation(0.4, n, r)
+compute_implied_valuation(0.4, n, r, F_b, f_b)
 ```
 
 13. Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.
@@ -375,7 +376,7 @@ compute_implied_valuation(0.4, n, r)
 ```{r}
 valuation_implied <- df_first %>%
   dplyr::rowwise() %>%
-  dplyr::mutate(x = compute_implied_valuation(b, n, r)) %>%
+  dplyr::mutate(x = compute_implied_valuation(b, n, r, F_b, f_b)) %>%
   dplyr::ungroup() %>%
   dplyr::select(x) %>%
   dplyr::mutate(type = "estimate")

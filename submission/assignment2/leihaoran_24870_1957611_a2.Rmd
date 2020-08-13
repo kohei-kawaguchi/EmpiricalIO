@@ -1,0 +1,448 @@
+---
+title: "Assignment 2"
+author: "Haoran LEI (20135212)"
+date: "2019 Feb 28"
+output: html_document
+---
+
+## 5.1 Simulate data
+
+1. Set the parameter variables.
+
+``` {r message=FALSE}
+library(empiricalio)
+library(tidyverse)
+library(np)
+library(latex2exp)
+
+
+beta_0    <-  1
+beta_l    <-  0.2
+beta_k    <-	0.7
+alpha     <-	0.7
+sigma_eta <-	0.2
+sigma_nu  <-	0.5
+sigma_w   <-	0.1
+delta     <-	0.05
+```
+
+---
+
+2. Write the function `log_production(l, k, omega, eta, beta_0, beta_l, beta_k)`.
+
+
+
+``` r
+log_production <- function(l, k, omega, eta, beta_0, beta_l, beta_k)
+{
+beta_0 + beta_l * l + beta_k * k + omega + eta
+}
+```
+
+---
+
+3. Derive the optimal log labor. Write the function to return the optimal log labor  and name it `log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)`.
+
+
+
+Firm $j$ in time $t$ solves:
+$$ \max_{l_{jt}} \mathbb{E}  \text{ exp}(\beta_0 +  \beta_l l_{jt} + \beta_k k_{jt} + ω_{jt} + η_{jt}) - w_t \text{exp}(l_{jt})$$
+Note that $\mathbb{E} \text{exp} (η_{jt}) =\text{exp}(\sigma_\eta^2/2)$. The objective function is reduced to
+$$ \text{ exp}(\sigma_\eta^2/2 + \beta_0  + \beta_k k_{jt} +  η_{jt}) \text{ exp}(\beta_l l_{jt}) - w_t \text{exp}(l_{jt}). $$
+
+FOC yields
+$$l_{jt}^*  = \frac{1}{1-\beta_l} (\beta_0 + \beta_k k_{jt} + \omega_{jt} + \sigma_\eta^2/2 + \log(\frac{\beta_l}{w_t})   )$$
+
+
+
+``` r
+log_labor_choice <- function(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)
+{
+  (beta_0 + beta_k * k +  omega + (sigma_eta^2)/2  + log(beta_l / wage) ) / (1 - beta_l)
+}
+``` 
+---
+
+4.  Modify the previous function by including $ι_{jt}$ as an additional input and name it `log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)`.
+
+
+
+The new log labor choice function is
+
+
+$$l_{jt}^*  = \frac{1}{1-\beta_l} (\beta_0 + \beta_k k_{jt} + (\omega_{jt} + ι_{jt}) + \sigma_\eta^2/2 + \log(\frac{\beta_l}{w_t})   )$$
+
+
+``` r
+log_labor_choice_error <- function(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)
+{
+  (beta_0 + beta_k * k +  (omega + iota) + (sigma_eta^2)/2  + log(beta_l / wage) ) / (1 - beta_l)
+}
+``` 
+
+---
+5 Set variable $γ$. Write the function that returns the investment and name it `investment_choice(k, omega, gamma, delta)`.
+
+
+```r
+# Set gamma.
+gamma <- 0.1
+
+investment_choice <- function(k, omega, delta, gamma){
+   (delta + gamma * omega) * exp(k) 
+}
+```
+
+
+
+
+---
+
+6 Draw $k_{j1}$ from  i.i.d. $N(1,0.5)$. Draw $ω_{j1}$ from its stationary distribution. Set wage at 0.5. 
+---
+
+The stationary distribution of $ω_{j1}$ is $N(0,\sigma_ω)$ with 
+$$  \sigma_ω = \sqrt{\frac{1}{1- \alpha^2}} \sigma_\nu . $$
+
+``` {r message=FALSE}
+
+N <- 1000
+j <- 1:N
+t <- rep(1,N)
+
+set.seed(1)
+#Draw log_capital at t=0
+k <- rnorm(N, mean = 1, sd = 0.5)
+
+#Define sd of omega
+sigma_omega <- sqrt(1/( 1- alpha ^ 2)) * sigma_nu
+
+#Draw omega at t=1
+omega <- rnorm(N, mean = 0, sd = sigma_omega)
+
+# Set wage at 0.5
+wage <- 0.5
+
+library(tibble)
+tibble(j ,t, k, omega, wage)
+``` 
+
+---
+
+7 Draw optimization error $ι_{ij}$ from  i.i.d. $N(0,0.05)$. Compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.
+
+
+```{r message=FALSE}
+iota <- rnorm(N, 0, 0.05)
+gamma <- 0.1
+
+library(empiricalio)
+l <- log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)
+
+l_error <- log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)
+
+I <- investment_choice(k, omega, delta, gamma)
+
+tibble(j ,t, k, omega, wage, iota, l, l_error, I)
+```
+
+---
+
+8. Draw ex post shock. Compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error `y` and the one with optimization error `y_error`.
+
+
+```{r message=FALSE}
+# Set ex post shock
+eta <- rnorm(N, 0, sigma_eta)
+
+y <- log_production(l, k, omega, eta, beta_0, beta_l, beta_k)
+
+y_error <- log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k)
+
+tibble(j ,t, k, omega, wage, iota, l, l_error, I, eta, y, y_error)
+```
+
+---
+
+9. Repeat this procedure for $t=1,...,10$, and name the resulting data frame `df_T`.
+```{r message=FALSE}
+# Sorry for using for loop...
+# Luckily it only takes seconds to finish.
+
+
+# Set the number of time periods
+T = 10
+
+# Set the initial state variables
+omega_temp <- omega
+k_temp <- k
+I_temp <- I
+
+# draw nu at t=1
+nu <- rnorm(N, 0, sigma_nu)
+
+for (val in 2:T){
+  # compute new state variables
+  k_new <- log_capital_evolution(delta, k_temp, I_temp)
+  
+  nu_new <- rnorm(N, 0, sigma_nu) 
+  omega_new <- omega_evolution(alpha, omega_temp, nu_new)
+  
+  iota_new <- rnorm(N, 0, 0.05)
+  
+  eta_new <- rnorm(N, 0, sigma_eta)
+  
+  
+  # store new state variables
+  k <- c(k, k_new)
+  nu <- c(nu, nu_new)
+  omega <- c(omega, omega_new)
+  iota <- c(iota, iota_new)
+  eta <- c(eta, eta_new)
+  
+  
+  
+  
+  # compute new control variables
+  l_new <- log_labor_choice(k_new, wage, omega_new, beta_0, beta_l, beta_k, sigma_eta)
+  
+  l_error_new <- log_labor_choice_error(k_new, wage, omega_new, beta_0, beta_l, beta_k, iota_new, sigma_eta)
+  
+  I_new <- investment_choice(k_new, omega_new, delta, gamma)
+  
+  # compute new production
+  y_new<- log_production(l_new, k_new, omega_new, eta_new, beta_0, beta_l, beta_k)
+  y_error_new <- log_production(l_error_new, k_new, omega_new, eta_new, beta_0, beta_l, beta_k)
+  
+  
+  # store new control variables
+  l <- c(l, l_new)
+  l_error<- c(l_error, l_error_new)
+  I <- c(I, I_new)    
+  
+  y <- c(y, y_new)    
+  y_error <- c(y_error, y_error_new)
+
+  
+  # set the new initial values
+  omega_temp <- omega_new
+  k_temp <- k_new
+  I_temp <- I_new
+}
+
+
+j <- rep(1:N, T)
+t <- rep(1:T,each = N)
+
+df_T <- tibble(j, t, k, omega, wage, iota, l, l_error, I, eta, y, y_error, nu)
+df_T
+```
+
+---
+10. Check the simulated data by making summary table.
+
+```{r message=FALSE}
+# Cancel scientific notation
+options(scipen=999)
+
+do.call(data.frame, 
+   list(N = apply(df_T, 2, length),
+    Mean = apply(df_T, 2, mean),
+    Sd = apply(df_T, 2, sd),
+    Min = apply(df_T, 2, min),
+    Max = apply(df_T, 2, max))
+    )
+```
+
+
+## 5.2 Estimate the parameters
+
+For now, use the labor choice with optimization error.
+
+1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. This is likely to give an upwardly biased estimates on $\beta_l$ and $\beta_k$. Why?
+
+```{r message=FALSE}
+fit <- lm(y_error ~ l_error + k, data = df_T)
+summary(fit)
+
+```
+
+The estimated $\beta_l$ and $\beta_k$ are both likely upwardly biased. The reason is that the input choices of labor and capital are positively correalted with the unobserved anticipated shock: $l_{jt}$ is clearly correalted with $\omega_{jt}$,  $k_{jt}$ is positively correalted with  $\omega_{j,t-1}$ and hence is positively correlated with $\omega_{jt}$.
+As result, the increase in output due to a positive $\omega_{jt}$ are mistakenly attributed to the contribution of labor and capital, leading to higher estimates of $\beta_l$ and  $\beta_k$. 
+
+
+2. Second, take within-transformation on $y_{jt}$, $l_{jt}$, and $k_{jt}$ and let $Δy_{jt}$, $Δl_{jt}$, and $Δk_{jt}$ denote them. Then, regress $Δy_{jt}$ on $Δl_{jt}$, and $Δk_{jt}$ by the least squares method.
+
+```{r message=FALSE}
+library(dplyr)
+
+# Group the new dataFrame by column j
+df_T_within <- df_T %>%
+  dplyr::arrange(j)
+
+ 
+### Sorry for the usage of for loop.
+# First, compute the mean y,l,k of  firm 1 across 10 periods
+mean_of_y_error = mean(df_T_within$y_error[1:T])
+mean_of_l_error = mean(df_T_within$l_error[1:T])
+mean_of_k       = mean(df_T_within$k[1:T])
+
+# Then compute the mean y,l,k of firm 2 to N
+for (val in 2:N){
+  start = T * (val-1) + 1
+  end = T * val
+  # compute the mean of firm "val"
+  mean_y_temp <- mean(df_T_within$y_error[start : end])
+  mean_l_temp <- mean(df_T_within$l_error[start : end]) 
+  mean_k_temp <- mean(df_T_within$k[start : end])
+  
+  # store the mean
+  mean_of_y_error =c(mean_of_y_error,mean_y_temp) 
+  mean_of_l_error =c(mean_of_l_error, mean_l_temp)
+  mean_of_k =c(mean_of_k, mean_k_temp)
+}
+
+# add mean_of_production to df_T_within
+df_T_within <- df_T_within %>%
+  dplyr::mutate(mean_y_error = rep(mean_of_y_error, each = T))%>%
+  dplyr::mutate(mean_l_error = rep(mean_of_l_error, each = T))%>%
+  dplyr::mutate(mean_k = rep(mean_of_k, each = T))
+
+
+# compute and add dy_error, dl_error and dk
+df_T_within <- df_T_within %>%
+  dplyr::mutate(dy_error = y_error - mean_y_error)%>%
+  dplyr::mutate(dl_error = l_error - mean_l_error)%>%
+  dplyr::mutate(dk       = k       - mean_k)
+
+
+# Regression without intercept  
+fit <- lm(dy_error ~ -1 + dl_error + dk, data = df_T_within)
+summary(fit)
+```
+
+
+
+
+
+
+3. Estimate the first-step model of Olley-Pakes method. Return the summary of the first stage estimation and plot the fitted values against the data points. 
+```{r message=FALSE, results="hide"}
+library(np)
+library(ggplot2)
+# compute data-driven bandwidths. 
+bw <- npplregbw( formula = y_error ~ l_error + k + I| k + I, data = df_T_within)
+# compute the partially linear fit
+pl <- npplreg(bws=bw)
+```
+```{r message=FALSE}
+summary(pl)
+qplot(fitted(pl), df_T_within$y_error, xlab = "fitted", ylab = "actual")
+```
+
+4. Check that $β_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
+```{r message=FALSE, results="hide"}
+bw_unidentified <- npplregbw( formula = y ~ l + k + I| k + I, data = df_T_within)
+pl_unidentified <- npplreg(bws = bw_unidentified)
+```
+```{r}
+summary(pl_unidentified)
+```
+Clearly, $β_l$ is not identified as the estimated value is significantly different from its true value.
+
+
+5. Estimate the second stage model of Olley-Pakes method. Compute 
+$y_{jt} - \hat{\beta_l} l_{jt}$ and $\hat{\phi}(k_{j, t - 1}, I_{j, t - 1})$ for each `j` and `t` and save it as a data frame naming `df_T_1st`.
+
+```{r message=FALSE}
+beta_l_tilde <- coef(pl)["l_error"]
+y_error_tilde <- df_T_within$y -  beta_l_tilde * df_T_within$l
+
+
+phi_t <- fitted(pl) -  beta_l_tilde * df_T_within$l
+phi_t_1 <- c(NA, phi_t[1 : (N*T - 1) ])
+
+df_T_1st = tibble(df_T_within$j, df_T_within$t, y_error_tilde, phi_t_1)
+
+
+colnames(df_T_1st)[c(1,2)] <- c("j", "t")
+```
+
+
+6. Set the function that computes the GM and name it `moment_OP_2nd`. Show the values of the moments evaluated at the true parameters.
+```{r message=FALSE}
+# Add y_error_tilde and phi_t_1 to `df_T_within`
+df_T_within <- df_T_within %>%
+  dplyr::mutate(y_error_tilde = df_T_1st$y_error_tilde, phi_t_1 = df_T_1st$phi_t_1)
+
+moment_OP_2nd(alpha, beta_0, beta_k, df_T_within)
+```
+
+7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ and name it `objective_OP_2nd`. Show the value of the objective function evaluated at the true parameters. 
+```{r message=FALSE}
+objective_OP_2nd <- function(alpha, beta_0, beta_k, df_T_within){
+  moment_OP_2nd(alpha, beta_0, beta_k, df_T_within) %*% moment_OP_2nd(alpha, beta_0, beta_k, df_T_within)
+}
+
+objective_OP_2nd(alpha, beta_0, beta_k, df_T_within)
+```
+
+
+8. Draw the graphs of the objective function when one of $α$, $β_0$, and $β_k$ are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
+```{r message=FALSE}
+library(latex2exp)
+# beta_k
+objective = c()
+for (val in seq(0, 1, 0.1)){
+  objective = c(objective, objective_OP_2nd(alpha, beta_0, val, df_T_within)) 
+}
+qplot(seq(0, 1, 0.1), objective, xlab = TeX("$\\beta_k$"))
+
+
+# alpha 
+objective = c()
+for (val in seq(0, 1, 0.1)){
+  objective = c(objective, objective_OP_2nd(val, beta_0, beta_k, df_T_within)) 
+}
+
+qplot(seq(0, 1, 0.1), objective, xlab = TeX("$\\alpha$"))
+
+# beta_0
+objective = c()
+for (val in seq(0, 1, 0.1)){
+  objective = c(objective, objective_OP_2nd(alpha, val, beta_k, df_T_within)) 
+}
+
+qplot(seq(0, 1, 0.1), objective, xlab = TeX("$\\beta_0$"))
+```
+
+In the intended results, the objective function is minimized around the true value.
+
+
+
+
+9. Find the parameters that minimize the objective function using `optim`. You may use `L-BFGS-B` method to solve it.
+
+Somehow the results are sensitive to the initial values. Below are different results given two different initials: (0,0,0) and the true ones.
+
+```{r message=FALSE}
+objective_optim <- function(x, df_T_within){
+  objective_OP_2nd(x[1], x[2], x[3], df_T_within)
+}
+
+optim(par = c(0, 0, 0), fn = objective_optim, gr = NULL, df_T_within = df_T_within, 
+      method = "L-BFGS-B", 
+      lower = -1, upper = 1) 
+``` 
+
+```{r message=FALSE}
+objective_optim <- function(x, df_T_within){
+  objective_OP_2nd(x[1], x[2], x[3], df_T_within)
+}
+
+optim(par = c(0.7, 1, 0.7), fn = objective_optim, gr = NULL, df_T_within = df_T_within, 
+      method = "L-BFGS-B", 
+      lower = -1, upper = 1) 
+```
+
+

@@ -376,7 +376,8 @@ simulate_dynamic_game <-
 simulate_dynamic_decision_across_markets <-
   function(p_joint, l, G, N, T, M, S, A) {
     df <-
-      foreach (mm = 1:M, .combine = "rbind") %dopar% {
+      foreach (mm = 1:M, .combine = "rbind",
+               .packages = c("foreach", "magrittr", "EmpiricalIO")) %dopar% {
         seed <- mm
         df_m <- simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)
         df_m <- data.frame(m = mm, df_m) 

@@ -1,0 +1,132 @@
+---
+title: "Assignment 1"
+author: "Haoran LEI (20305212)"
+date: "2019 Feb 17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 4.1 Simulate data
+
+1. Make the desired data frame.
+
+---
+
+```{r 4.1}
+i <- rep(1:1000, each = 2)
+k <- rep(1:2, 1000)
+x <- rep(c(0.0, 1.0), 1000)
+library(tibble)
+tbl <- tibble(i, k, x)
+tbl
+```
+
+---
+
+2. Draw type-I extreme value random variables.
+
+---
+
+```{r message=FALSE}
+## I use package extRemes instead. Results look the same.
+library(extRemes)
+set.seed(1)
+e <- revd(2000,loc=0,scale=1,shape=0)
+add_column(tbl, e)
+```
+
+---
+
+3. Compute the latent value of each option to obtain the desired data frame.
+
+---
+
+```{r}
+latent <- 0.2 * x + e
+add_column(tbl, e, latent)
+```
+
+---
+
+4. Finally, compute $y$ by comparing the latent values of $k=1,2$ for each $i$ to obtain the following result.
+
+---
+
+```{r}
+y = c()
+loopv = 2 * seq(1:1000)
+
+for (val in loopv)
+{
+  if ( latent[val - 1] > latent[val]  ) {
+    y = c(y, c(1.0,0.0))
+  } else {
+    y = c(y, c(0.0,1.0))
+  }
+}
+data_simulated <- tibble(i, k, x, e, latent, y)
+data_simulated
+```
+
+---
+
+## 4.2 Estimate the parameter
+
+1. Write a function to compute the livelihood for a given $¦Â$ and data and name the function `<loglikelihood_A1>`.
+
+---
+
+```{r}
+loglikelihood_A1 <- function(b, y){
+  ## Define y1 to store values of y_{i1}
+  l <- length(y)
+  odd_index <- 2 * seq(1:(l/2)) - 1
+  y1 <- y[odd_index]
+  
+  # prob that i chooses good 1
+  p1 <- 1/(1+exp(b))
+  
+  likelihood <- mean(y1 * log(p1) + (1 - y1) * log(1 - p1))
+  return(likelihood)
+}
+```
+
+---
+
+2. Compute the value of log likelihood for $\beta=0, 0.1, ... ,1$ and plot the result using `<ggplot2>` packages. You can use `<latex2exp>` package to use LaTeX math symbol in the label. 
+
+---
+
+```{r}
+# define beta
+b_vector <- seq(0, 1, 0.1)
+
+# define loglikelihood
+logl_vector <- c()
+
+for (val in b_vector)
+{
+  logl_vector = c(logl_vector, loglikelihood_A1(val, y))
+}
+library(latex2exp)
+library(ggplot2)
+qplot(b_vector,logl_vector,ylab = "Loglikelihood", xlab = TeX("$\\beta$"))
+```
+
+---
+
+3. Find and report $\beta$ that maximizes the log likelihood for the simulated data. You can use `<optim>` function to achieve this. You will use `<Brent>` method and set the lower bound at $-1$ and upper bound at $1$ for the parameter search.
+
+---
+
+```{r}
+
+
+optim(0, loglikelihood_A1, gr = NULL, y = y,  
+      method = "Brent", control=list(fnscale=-1),
+      lower = -1, upper = 1) 
+```
+---

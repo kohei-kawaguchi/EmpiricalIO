@@ -140,7 +140,9 @@ simulate_dynamic_decision <-
 simulate_dynamic_decision_across_firms <-
   function(p, s, PI, G, L, K, T, N, delta) {
     df <-
-      foreach (i = 1:N, .combine = "rbind") %dopar% {
+      foreach (i = 1:N, .combine = "rbind",
+               .packages = c("foreach", "magrittr", "EmpiricalIO")
+               ) %dopar% {
         seed <- i
         df_i <- simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)
         df_i <- data.frame(i = i, df_i)
