@@ -349,3 +349,35 @@ install.packages("rmarkdown")
 - But you can use html output while writing a report because html is lighter to compile.
 - Refer to the [help page](https://rmarkdown.rstudio.com/lesson-1.html) for further information.
 
+### Github and Github Classroom
+
+
+- The assignments should be conducted through Github Classroom.
+- Sign up in the page [Github](https://github.com/) and inform the instructor your username.
+- An invitation will be sent to your email. Open the link and accept the invitation. This will give you a repository url.
+- Open Rstudio, and then: `File > New Project...> Version Control`.
+-  Copy the above-mentioned repository url into the first blank, name the directory `HKUSTIO` and place the project in your favorite location.
+- You can open this project from the upper right menu of RStudio or by double clicking the `Assignment.Rproj` file in the `HKUSTIO` directory.
+- the `Git` option in the upper right window navigates you between your local repository and the remote repository in Github. Before you make any changes, use `Pull` button to pull all new changes from the remote repository so that your local repository is up to date. 
+- In the root directory, make folders named:
+    - `assignment`.
+    - `input`.
+    - `output`.
+    - `figuretable`.
+- We will store R functions in `R` folder, C/C++ functions in `src` folder, and data in `input` folder, data generated from the code in `output`, figures and tables in `figurtable` folder, and your assignment files in the `assignment` folder
+- Open `src/Makevars` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11 -O3`
+- Open `src/Makevars.win` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11`
+- Use `Push` button in the `Git` option to upload your changes to the remote repository. 
+
+- To submit the assignments, please follow the steps:
+  1. Pull all new changes from the remote repository.
+  1. Work on the assignment and save your assignment.
+  1. If everything is ok, click `Commit` button, input some commit message, and commit your changes. This saves your changes locally and creates a subject to be submitted to the remote repository. 
+  1. Push your changes to the remote repository so that the instructor can view your assignment. 
+  
+- Some advice:
+1. More git command can be exerted in `Git > More > Shell`, or you can download Github Desktop. 
+2. Pull before you make new changes, otherwise there might be conflicts when you push the changes.  
+3. Commit the changes only if you want to push the changes. If you just want to temporarily save the changes locally so that they will not be covered by the remote repostiory in case you pull, use `git stash`. 
+4. To remove unwanted commits, you can use `git reset`. Google more details if you need.
+5. If you are still not familiar with git, make a copy of your changes before you try some new commands. 
