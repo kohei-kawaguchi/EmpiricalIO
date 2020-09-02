@@ -855,9 +855,9 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <span id="cb268-10"><a href="assignment6.html#cb268-10" aria-hidden="true"></a>  }</span>
 <span id="cb268-11"><a href="assignment6.html#cb268-11" aria-hidden="true"></a>Z[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##             z_1       z_2
-## [1,] -0.6926518 -4.490132
-## [2,]  4.1810667  3.598191
-## [3,]  5.2616561 -3.584975</code></pre>
+## [1,] 2.68149640  3.153150
+## [2,] 6.28259569 -4.796526
+## [3,] 0.01900497 -2.271157</code></pre>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="assignment6.html#cb270-1" aria-hidden="true"></a><span class="co"># unobserved market attributes</span></span>
 <span id="cb270-2"><a href="assignment6.html#cb270-2" aria-hidden="true"></a>EP &lt;-<span class="st"> </span><span class="kw">matrix</span>(</span>
 <span id="cb270-3"><a href="assignment6.html#cb270-3" aria-hidden="true"></a>  <span class="kw">rnorm</span>(M),</span>
@@ -976,9 +976,9 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <span id="cb272-9"><a href="assignment6.html#cb272-9" aria-hidden="true"></a>  }</span>
 <span id="cb272-10"><a href="assignment6.html#cb272-10" aria-hidden="true"></a>NU[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##            [,1]
-## [1,] -1.1365421
-## [2,]  0.6173477
-## [3,] -0.5541285</code></pre>
+## [1,]  1.2979784
+## [2,] -0.8617480
+## [3,] -0.2592781</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>compute_payoff(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code> that returns the vector of payoffs of the potential entrants when the vector of entry decisions is <code>y_m</code>.</li>
 </ol>
@@ -991,10 +991,10 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <span id="cb274-7"><a href="assignment6.html#cb274-7" aria-hidden="true"></a>EP_m &lt;-<span class="st"> </span>EP[m, , drop =<span class="st"> </span><span class="ot">FALSE</span>]</span>
 <span id="cb274-8"><a href="assignment6.html#cb274-8" aria-hidden="true"></a>NU_m &lt;-<span class="st"> </span>NU[[m]]</span>
 <span id="cb274-9"><a href="assignment6.html#cb274-9" aria-hidden="true"></a><span class="kw">compute_payoff</span>(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</span></code></pre></div>
-<pre><code>##            [,1]
-## [1,] -10.313861
-## [2,]   8.317845
-## [3,]   0.000000</code></pre>
+<pre><code>##           [,1]
+## [1,]  6.997415
+## [2,] -4.714481
+## [3,]  0.000000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Assume that the order of entry is predetermined. Assume that the potential entrants sequentially decide entry according to the order of the payoff excluding the competitive effects, i.e.:
 <span class="math display">\[
@@ -1004,16 +1004,16 @@ Write a function <code>compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alph
 </ol>
 <div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="assignment6.html#cb276-1" aria-hidden="true"></a><span class="kw">compute_sequential_entry</span>(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</span></code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
-## [2,]    1
+## [1,]    1
+## [2,]    0
 ## [3,]    0</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Next, assume <span class="math inline">\(\rho = 0\)</span>. Assume that potential entrants simultaneously decide entry. Write a function <code>compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)</code> that returns the equilibrium vector of entry at a market.</li>
 </ol>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="assignment6.html#cb278-1" aria-hidden="true"></a><span class="kw">compute_simultaneous_entry</span>(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)</span></code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
-## [2,]    1
+## [1,]    1
+## [2,]    0
 ## [3,]    0</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)</code> compute the equilibrium entry vectors under the assumption of sequential entry. The output should be a list of entry vectors across markets. Write a function to compute the equilibrium payoffs across markets, <code>compute_payoff_across_markets(Y, X, Z, EP, NU, beta, alpha, delta, rho)</code> and check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code.</li>
@@ -1022,8 +1022,8 @@ Write a function <code>compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alph
 <span id="cb280-2"><a href="assignment6.html#cb280-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">compute_sequential_entry_across_markets</span>(X, Z, EP, NU, beta, alpha, delta, rho)</span>
 <span id="cb280-3"><a href="assignment6.html#cb280-3" aria-hidden="true"></a>Y_sequential[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
-## [2,]    1
+## [1,]    1
+## [2,]    0
 ## [3,]    0</code></pre>
 <div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="assignment6.html#cb282-1" aria-hidden="true"></a>Y_sequential[[M]]</span></code></pre></div>
 <pre><code>##      [,1]
@@ -1043,8 +1043,8 @@ Write a function <code>compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alph
 <span id="cb286-3"><a href="assignment6.html#cb286-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">compute_simultaneous_entry_across_markets</span>(X, Z, EP, NU, beta, alpha, delta)</span>
 <span id="cb286-4"><a href="assignment6.html#cb286-4" aria-hidden="true"></a>Y_simultaneous[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
-## [2,]    1
+## [1,]    1
+## [2,]    0
 ## [3,]    0</code></pre>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="assignment6.html#cb288-1" aria-hidden="true"></a>Y_simultaneous[[M]]</span></code></pre></div>
 <pre><code>##      [,1]
@@ -1107,12 +1107,12 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 <span id="cb293-8"><a href="assignment6.html#cb293-8" aria-hidden="true"></a>    X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)</span>
 <span id="cb293-9"><a href="assignment6.html#cb293-9" aria-hidden="true"></a>Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
-## [2,]    1
+## [1,]    1
+## [2,]    0
 ## [3,]    0</code></pre>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="assignment6.html#cb295-1" aria-hidden="true"></a><span class="co"># compute objective function</span></span>
 <span id="cb295-2"><a href="assignment6.html#cb295-2" aria-hidden="true"></a><span class="kw">compute_objective_sequential_entry</span>(Y, X, Z, EP_mc, NU_mc, theta)</span></code></pre></div>
-<pre><code>## [1] 0.5953</code></pre>
+<pre><code>## [1] 0.5007</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Write a function <code>compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)</code> that returns the value of the objective function given data and parameters under the assumption of simultaneous entry.</li>
 </ol>
@@ -1124,12 +1124,12 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 <span id="cb297-6"><a href="assignment6.html#cb297-6" aria-hidden="true"></a>Y_mc &lt;-<span class="st"> </span><span class="kw">compute_monte_carlo_simultaneous_entry</span>(X, Z, EP_mc, NU_mc, beta, alpha, delta)</span>
 <span id="cb297-7"><a href="assignment6.html#cb297-7" aria-hidden="true"></a>Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
-## [1,]    0
-## [2,]    1
+## [1,]    1
+## [2,]    0
 ## [3,]    0</code></pre>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="assignment6.html#cb299-1" aria-hidden="true"></a><span class="co"># compute objective function</span></span>
 <span id="cb299-2"><a href="assignment6.html#cb299-2" aria-hidden="true"></a><span class="kw">compute_objective_simultaneous_entry</span>(Y, X, Z, EP_mc, NU_mc, theta)</span></code></pre></div>
-<pre><code>## [1] 0.3443</code></pre>
+<pre><code>## [1] 0.3186</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Check the value of the objective function around the true parameter under the assumption of the sequential entry.</li>
 </ol>
