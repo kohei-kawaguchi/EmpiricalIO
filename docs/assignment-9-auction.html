@@ -685,7 +685,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="assignment-9-auction" class="section level1" number="19">
 <h1><span class="header-section-number">Chapter 19</span> Assignment 9: Auction</h1>
-<p>The deadline is <strong>May 20 1:30pm</strong>.</p>
 <div id="simulate-data" class="section level2" number="19.1">
 <h2><span class="header-section-number">19.1</span> Simulate data</h2>
 <p>We simulate bid data from a second- and first-price sealed bid auctions.</p>
@@ -693,43 +692,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>Set the constants and parameters as follows:</li>
 </ol>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="assignment-9-auction.html#cb470-1" aria-hidden="true"></a><span class="co"># set seed</span></span>
-<span id="cb470-2"><a href="assignment-9-auction.html#cb470-2" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb470-3"><a href="assignment-9-auction.html#cb470-3" aria-hidden="true"></a><span class="co"># number of auctions</span></span>
-<span id="cb470-4"><a href="assignment-9-auction.html#cb470-4" aria-hidden="true"></a>T &lt;-<span class="st"> </span><span class="dv">100</span></span>
-<span id="cb470-5"><a href="assignment-9-auction.html#cb470-5" aria-hidden="true"></a><span class="co"># parameter of value distribution</span></span>
-<span id="cb470-6"><a href="assignment-9-auction.html#cb470-6" aria-hidden="true"></a>alpha &lt;-<span class="st"> </span><span class="dv">2</span></span>
-<span id="cb470-7"><a href="assignment-9-auction.html#cb470-7" aria-hidden="true"></a>beta &lt;-<span class="st"> </span><span class="dv">2</span></span>
-<span id="cb470-8"><a href="assignment-9-auction.html#cb470-8" aria-hidden="true"></a><span class="co"># prameters of number of potential bidders</span></span>
-<span id="cb470-9"><a href="assignment-9-auction.html#cb470-9" aria-hidden="true"></a>lambda &lt;-<span class="st"> </span><span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="assignment-9-auction.html#cb436-1" aria-hidden="true"></a><span class="co"># set seed</span></span>
+<span id="cb436-2"><a href="assignment-9-auction.html#cb436-2" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb436-3"><a href="assignment-9-auction.html#cb436-3" aria-hidden="true"></a><span class="co"># number of auctions</span></span>
+<span id="cb436-4"><a href="assignment-9-auction.html#cb436-4" aria-hidden="true"></a>T &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb436-5"><a href="assignment-9-auction.html#cb436-5" aria-hidden="true"></a><span class="co"># parameter of value distribution</span></span>
+<span id="cb436-6"><a href="assignment-9-auction.html#cb436-6" aria-hidden="true"></a>alpha &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb436-7"><a href="assignment-9-auction.html#cb436-7" aria-hidden="true"></a>beta &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb436-8"><a href="assignment-9-auction.html#cb436-8" aria-hidden="true"></a><span class="co"># prameters of number of potential bidders</span></span>
+<span id="cb436-9"><a href="assignment-9-auction.html#cb436-9" aria-hidden="true"></a>lambda &lt;-<span class="st"> </span><span class="dv">10</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Draw a vector of valuations and reservation prices.</li>
 </ol>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="assignment-9-auction.html#cb471-1" aria-hidden="true"></a><span class="co"># number of bidders</span></span>
-<span id="cb471-2"><a href="assignment-9-auction.html#cb471-2" aria-hidden="true"></a>N &lt;-<span class="st"> </span><span class="kw">rpois</span>(T, lambda)</span>
-<span id="cb471-3"><a href="assignment-9-auction.html#cb471-3" aria-hidden="true"></a><span class="co"># draw valuations</span></span>
-<span id="cb471-4"><a href="assignment-9-auction.html#cb471-4" aria-hidden="true"></a>valuation &lt;-</span>
-<span id="cb471-5"><a href="assignment-9-auction.html#cb471-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">foreach</span> (<span class="dt">tt =</span> <span class="dv">1</span><span class="op">:</span>T, <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{</span>
-<span id="cb471-6"><a href="assignment-9-auction.html#cb471-6" aria-hidden="true"></a>    n_t &lt;-<span class="st"> </span>N[tt]</span>
-<span id="cb471-7"><a href="assignment-9-auction.html#cb471-7" aria-hidden="true"></a>    header &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">t =</span> tt, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n_t) </span>
-<span id="cb471-8"><a href="assignment-9-auction.html#cb471-8" aria-hidden="true"></a>    <span class="kw">return</span>(header)</span>
-<span id="cb471-9"><a href="assignment-9-auction.html#cb471-9" aria-hidden="true"></a>  }</span>
-<span id="cb471-10"><a href="assignment-9-auction.html#cb471-10" aria-hidden="true"></a>valuation &lt;-<span class="st"> </span>valuation <span class="op">%&gt;%</span></span>
-<span id="cb471-11"><a href="assignment-9-auction.html#cb471-11" aria-hidden="true"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></span>
-<span id="cb471-12"><a href="assignment-9-auction.html#cb471-12" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">rbeta</span>(<span class="kw">length</span>(i), alpha, beta))</span>
-<span id="cb471-13"><a href="assignment-9-auction.html#cb471-13" aria-hidden="true"></a><span class="kw">ggplot</span>(valuation, <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="assignment-9-auction.html#cb437-1" aria-hidden="true"></a><span class="co"># number of bidders</span></span>
+<span id="cb437-2"><a href="assignment-9-auction.html#cb437-2" aria-hidden="true"></a>N &lt;-<span class="st"> </span><span class="kw">rpois</span>(T, lambda)</span>
+<span id="cb437-3"><a href="assignment-9-auction.html#cb437-3" aria-hidden="true"></a><span class="co"># draw valuations</span></span>
+<span id="cb437-4"><a href="assignment-9-auction.html#cb437-4" aria-hidden="true"></a>valuation &lt;-</span>
+<span id="cb437-5"><a href="assignment-9-auction.html#cb437-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">foreach</span> (<span class="dt">tt =</span> <span class="dv">1</span><span class="op">:</span>T, <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{</span>
+<span id="cb437-6"><a href="assignment-9-auction.html#cb437-6" aria-hidden="true"></a>    n_t &lt;-<span class="st"> </span>N[tt]</span>
+<span id="cb437-7"><a href="assignment-9-auction.html#cb437-7" aria-hidden="true"></a>    header &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">t =</span> tt, <span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>n_t) </span>
+<span id="cb437-8"><a href="assignment-9-auction.html#cb437-8" aria-hidden="true"></a>    <span class="kw">return</span>(header)</span>
+<span id="cb437-9"><a href="assignment-9-auction.html#cb437-9" aria-hidden="true"></a>  }</span>
+<span id="cb437-10"><a href="assignment-9-auction.html#cb437-10" aria-hidden="true"></a>valuation &lt;-<span class="st"> </span>valuation <span class="op">%&gt;%</span></span>
+<span id="cb437-11"><a href="assignment-9-auction.html#cb437-11" aria-hidden="true"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span></span>
+<span id="cb437-12"><a href="assignment-9-auction.html#cb437-12" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">rbeta</span>(<span class="kw">length</span>(i), alpha, beta))</span>
+<span id="cb437-13"><a href="assignment-9-auction.html#cb437-13" aria-hidden="true"></a><span class="kw">ggplot</span>(valuation, <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-241-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="assignment-9-auction.html#cb473-1" aria-hidden="true"></a><span class="co"># draw reserve prices</span></span>
-<span id="cb473-2"><a href="assignment-9-auction.html#cb473-2" aria-hidden="true"></a>reserve &lt;-<span class="st"> </span><span class="fl">0.2</span></span>
-<span id="cb473-3"><a href="assignment-9-auction.html#cb473-3" aria-hidden="true"></a>reserve &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tibble</span>(<span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span>T, <span class="dt">r =</span> reserve)</span></code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-235-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="assignment-9-auction.html#cb439-1" aria-hidden="true"></a><span class="co"># draw reserve prices</span></span>
+<span id="cb439-2"><a href="assignment-9-auction.html#cb439-2" aria-hidden="true"></a>reserve &lt;-<span class="st"> </span><span class="fl">0.2</span></span>
+<span id="cb439-3"><a href="assignment-9-auction.html#cb439-3" aria-hidden="true"></a>reserve &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tibble</span>(<span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span>T, <span class="dt">r =</span> reserve)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Write a function <code>compute_winning_bids_second(valuation, reserve)</code> that returns a winning bid from each second-price auction. It returns nothing for an auction in which no bid was above the reserve price. In the output, <code>t</code> refers to the auction index, <code>m</code> to the number of actual bidders, <code>r</code> to the reserve price, and <code>w</code> to the winning bid.</li>
 </ol>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="assignment-9-auction.html#cb474-1" aria-hidden="true"></a><span class="co"># compute winning bids from second-price auction</span></span>
-<span id="cb474-2"><a href="assignment-9-auction.html#cb474-2" aria-hidden="true"></a>df_second_w &lt;-</span>
-<span id="cb474-3"><a href="assignment-9-auction.html#cb474-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">compute_winning_bids_second</span>(valuation, reserve)</span>
-<span id="cb474-4"><a href="assignment-9-auction.html#cb474-4" aria-hidden="true"></a>df_second_w</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="assignment-9-auction.html#cb440-1" aria-hidden="true"></a><span class="co"># compute winning bids from second-price auction</span></span>
+<span id="cb440-2"><a href="assignment-9-auction.html#cb440-2" aria-hidden="true"></a>df_second_w &lt;-</span>
+<span id="cb440-3"><a href="assignment-9-auction.html#cb440-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">compute_winning_bids_second</span>(valuation, reserve)</span>
+<span id="cb440-4"><a href="assignment-9-auction.html#cb440-4" aria-hidden="true"></a>df_second_w</span></code></pre></div>
 <pre><code>## # A tibble: 100 x 5
 ##        t     n     m     r     w
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -744,9 +743,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9     9    14    14   0.2 0.880
 ## 10    10    11     9   0.2 0.677
 ## # ... with 90 more rows</code></pre>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="assignment-9-auction.html#cb476-1" aria-hidden="true"></a><span class="kw">ggplot</span>(df_second_w, <span class="kw">aes</span>(<span class="dt">x =</span> w)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="assignment-9-auction.html#cb442-1" aria-hidden="true"></a><span class="kw">ggplot</span>(df_second_w, <span class="kw">aes</span>(<span class="dt">x =</span> w)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-242-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-236-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
 <span class="math display">\[
 \beta(x) = x - \frac{\int_{r_t}^x F_X(t)^{N - 1}}{F_X(x)^{N - 1}},
@@ -755,27 +754,27 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>bid_first(x, r, alpha, beta, n)</code> that returns the equilibrium bid. To integrate a function, use <code>integrate</code> function in R. It returns 0 if <span class="math inline">\(x &lt; r\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="assignment-9-auction.html#cb478-1" aria-hidden="true"></a><span class="co"># compute bid from first-price auction</span></span>
-<span id="cb478-2"><a href="assignment-9-auction.html#cb478-2" aria-hidden="true"></a>n &lt;-<span class="st"> </span>N[<span class="dv">1</span>]</span>
-<span id="cb478-3"><a href="assignment-9-auction.html#cb478-3" aria-hidden="true"></a>m &lt;-<span class="st"> </span>N[<span class="dv">1</span>]</span>
-<span id="cb478-4"><a href="assignment-9-auction.html#cb478-4" aria-hidden="true"></a>x &lt;-<span class="st"> </span>valuation[<span class="dv">1</span>, <span class="st">&quot;x&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(); x</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="assignment-9-auction.html#cb444-1" aria-hidden="true"></a><span class="co"># compute bid from first-price auction</span></span>
+<span id="cb444-2"><a href="assignment-9-auction.html#cb444-2" aria-hidden="true"></a>n &lt;-<span class="st"> </span>N[<span class="dv">1</span>]</span>
+<span id="cb444-3"><a href="assignment-9-auction.html#cb444-3" aria-hidden="true"></a>m &lt;-<span class="st"> </span>N[<span class="dv">1</span>]</span>
+<span id="cb444-4"><a href="assignment-9-auction.html#cb444-4" aria-hidden="true"></a>x &lt;-<span class="st"> </span>valuation[<span class="dv">1</span>, <span class="st">&quot;x&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(); x</span></code></pre></div>
 <pre><code>## [1] 0.3902289</code></pre>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="assignment-9-auction.html#cb480-1" aria-hidden="true"></a>r &lt;-<span class="st"> </span>reserve[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(); r</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="assignment-9-auction.html#cb446-1" aria-hidden="true"></a>r &lt;-<span class="st"> </span>reserve[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(); r</span></code></pre></div>
 <pre><code>## [1] 0.2</code></pre>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="assignment-9-auction.html#cb482-1" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(x, r, alpha, beta, n); b</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="assignment-9-auction.html#cb448-1" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(x, r, alpha, beta, n); b</span></code></pre></div>
 <pre><code>## [1] 0.3596662</code></pre>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="assignment-9-auction.html#cb484-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span>r<span class="op">/</span><span class="dv">2</span>; x</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="assignment-9-auction.html#cb450-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span>r<span class="op">/</span><span class="dv">2</span>; x</span></code></pre></div>
 <pre><code>## [1] 0.1</code></pre>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="assignment-9-auction.html#cb486-1" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(x, r, alpha, beta, n); b</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="assignment-9-auction.html#cb452-1" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(x, r, alpha, beta, n); b</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="assignment-9-auction.html#cb488-1" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(<span class="dv">1</span>, r, alpha, beta, n); b</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="assignment-9-auction.html#cb454-1" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="kw">bid_first</span>(<span class="dv">1</span>, r, alpha, beta, n); b</span></code></pre></div>
 <pre><code>## [1] 0.7978258</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Write a function <code>compute_bids_first(valuation, reserve, alpha, beta)</code> that returns bids from each first-price auctions. It returns bids below the reserve price.</li>
 </ol>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="assignment-9-auction.html#cb490-1" aria-hidden="true"></a><span class="co"># compute bid data from first-price auctions</span></span>
-<span id="cb490-2"><a href="assignment-9-auction.html#cb490-2" aria-hidden="true"></a>df_first &lt;-<span class="st"> </span><span class="kw">compute_bids_first</span>(valuation, reserve, alpha, beta)</span>
-<span id="cb490-3"><a href="assignment-9-auction.html#cb490-3" aria-hidden="true"></a>df_first</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="assignment-9-auction.html#cb456-1" aria-hidden="true"></a><span class="co"># compute bid data from first-price auctions</span></span>
+<span id="cb456-2"><a href="assignment-9-auction.html#cb456-2" aria-hidden="true"></a>df_first &lt;-<span class="st"> </span><span class="kw">compute_bids_first</span>(valuation, reserve, alpha, beta)</span>
+<span id="cb456-3"><a href="assignment-9-auction.html#cb456-3" aria-hidden="true"></a>df_first</span></code></pre></div>
 <pre><code>## # A tibble: 994 x 7
 ##        t     i     x     r     n     m     b
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -790,16 +789,16 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 ##  9     2     1 0.449   0.2    10    10 0.420
 ## 10     2     2 0.472   0.2    10    10 0.441
 ## # ... with 984 more rows</code></pre>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="assignment-9-auction.html#cb492-1" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="assignment-9-auction.html#cb458-1" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-244-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-238-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_winning_bids_first(valuation, reserve, alpha, beta)</code> that returns only the winning bids from each first-price auction. It will call <code>compute_bids_first</code> inside the function. It does not return anything when no bidder bids above the reserve price.</li>
 </ol>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="assignment-9-auction.html#cb494-1" aria-hidden="true"></a><span class="co"># compute winning bids from first-price auctions</span></span>
-<span id="cb494-2"><a href="assignment-9-auction.html#cb494-2" aria-hidden="true"></a>df_first_w &lt;-</span>
-<span id="cb494-3"><a href="assignment-9-auction.html#cb494-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">compute_winning_bids_first</span>(valuation, reserve, alpha, beta)</span>
-<span id="cb494-4"><a href="assignment-9-auction.html#cb494-4" aria-hidden="true"></a>df_first_w</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="assignment-9-auction.html#cb460-1" aria-hidden="true"></a><span class="co"># compute winning bids from first-price auctions</span></span>
+<span id="cb460-2"><a href="assignment-9-auction.html#cb460-2" aria-hidden="true"></a>df_first_w &lt;-</span>
+<span id="cb460-3"><a href="assignment-9-auction.html#cb460-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">compute_winning_bids_first</span>(valuation, reserve, alpha, beta)</span>
+<span id="cb460-4"><a href="assignment-9-auction.html#cb460-4" aria-hidden="true"></a>df_first_w</span></code></pre></div>
 <pre><code>## # A tibble: 100 x 5
 ##        t     n     m     r     w
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -814,9 +813,9 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 ##  9     9    14    14   0.2 0.849
 ## 10    10    11     9   0.2 0.803
 ## # ... with 90 more rows</code></pre>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="assignment-9-auction.html#cb496-1" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first_w, <span class="kw">aes</span>(<span class="dt">x =</span> w)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="assignment-9-auction.html#cb462-1" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first_w, <span class="kw">aes</span>(<span class="dt">x =</span> w)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-245-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-239-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="estimate-the-parameters" class="section level2" number="19.2">
 <h2><span class="header-section-number">19.2</span> Estimate the parameters</h2>
@@ -837,78 +836,78 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 <ol style="list-style-type: decimal">
 <li>Write a function <code>compute_p_second_w(w, r, m, n, alpha, beta)</code> that computes <span class="math inline">\(\mathbb{P}\{m_t = 1\}\)</span> if <span class="math inline">\(m_t = 1\)</span> and <span class="math inline">\(h_t(w_t)\)</span> if <span class="math inline">\(m_t &gt; 1\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="assignment-9-auction.html#cb498-1" aria-hidden="true"></a><span class="co"># compute probability density for winning bids from a second-price auction</span></span>
-<span id="cb498-2"><a href="assignment-9-auction.html#cb498-2" aria-hidden="true"></a>w &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>w</span>
-<span id="cb498-3"><a href="assignment-9-auction.html#cb498-3" aria-hidden="true"></a>r &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>r</span>
-<span id="cb498-4"><a href="assignment-9-auction.html#cb498-4" aria-hidden="true"></a>m &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>m</span>
-<span id="cb498-5"><a href="assignment-9-auction.html#cb498-5" aria-hidden="true"></a>n &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>n</span>
-<span id="cb498-6"><a href="assignment-9-auction.html#cb498-6" aria-hidden="true"></a><span class="kw">compute_p_second_w</span>(w, r, m, n, alpha, beta)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="assignment-9-auction.html#cb464-1" aria-hidden="true"></a><span class="co"># compute probability density for winning bids from a second-price auction</span></span>
+<span id="cb464-2"><a href="assignment-9-auction.html#cb464-2" aria-hidden="true"></a>w &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>w</span>
+<span id="cb464-3"><a href="assignment-9-auction.html#cb464-3" aria-hidden="true"></a>r &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>r</span>
+<span id="cb464-4"><a href="assignment-9-auction.html#cb464-4" aria-hidden="true"></a>m &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>m</span>
+<span id="cb464-5"><a href="assignment-9-auction.html#cb464-5" aria-hidden="true"></a>n &lt;-<span class="st"> </span>df_second_w[<span class="dv">1</span>, ]<span class="op">$</span>n</span>
+<span id="cb464-6"><a href="assignment-9-auction.html#cb464-6" aria-hidden="true"></a><span class="kw">compute_p_second_w</span>(w, r, m, n, alpha, beta)</span></code></pre></div>
 <pre><code>## [1] 2.752949</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a function <code>compute_m0(r, n, alpha, beta)</code> that computes <span class="math inline">\(\mathbb{P}\{m_t = 0\}\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="assignment-9-auction.html#cb500-1" aria-hidden="true"></a><span class="co"># compute non-participation probability</span></span>
-<span id="cb500-2"><a href="assignment-9-auction.html#cb500-2" aria-hidden="true"></a><span class="kw">compute_m0</span>(r, n, alpha, beta)</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="assignment-9-auction.html#cb466-1" aria-hidden="true"></a><span class="co"># compute non-participation probability</span></span>
+<span id="cb466-2"><a href="assignment-9-auction.html#cb466-2" aria-hidden="true"></a><span class="kw">compute_m0</span>(r, n, alpha, beta)</span></code></pre></div>
 <pre><code>## [1] 1.368569e-08</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a function <code>compute_loglikelihood_second_price_w(theta, df_second_w)</code> that computes the log-likelihood for a second-price auction winning bid data.</li>
 </ol>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="assignment-9-auction.html#cb502-1" aria-hidden="true"></a><span class="co"># compute log-likelihood for winning bids from second-price auctions</span></span>
-<span id="cb502-2"><a href="assignment-9-auction.html#cb502-2" aria-hidden="true"></a>theta &lt;-<span class="st"> </span><span class="kw">c</span>(alpha, beta)</span>
-<span id="cb502-3"><a href="assignment-9-auction.html#cb502-3" aria-hidden="true"></a><span class="kw">compute_loglikelihood_second_price_w</span>(theta, df_second_w)</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="assignment-9-auction.html#cb468-1" aria-hidden="true"></a><span class="co"># compute log-likelihood for winning bids from second-price auctions</span></span>
+<span id="cb468-2"><a href="assignment-9-auction.html#cb468-2" aria-hidden="true"></a>theta &lt;-<span class="st"> </span><span class="kw">c</span>(alpha, beta)</span>
+<span id="cb468-3"><a href="assignment-9-auction.html#cb468-3" aria-hidden="true"></a><span class="kw">compute_loglikelihood_second_price_w</span>(theta, df_second_w)</span></code></pre></div>
 <pre><code>## [1] 0.9849261</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Compare the value of objective function around the true parameters.</li>
 </ol>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="assignment-9-auction.html#cb504-1" aria-hidden="true"></a><span class="co"># label</span></span>
-<span id="cb504-2"><a href="assignment-9-auction.html#cb504-2" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">alpha&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">beta&quot;</span>)</span>
-<span id="cb504-3"><a href="assignment-9-auction.html#cb504-3" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb504-4"><a href="assignment-9-auction.html#cb504-4" aria-hidden="true"></a><span class="co"># compute the graph</span></span>
-<span id="cb504-5"><a href="assignment-9-auction.html#cb504-5" aria-hidden="true"></a>graph &lt;-<span class="st"> </span><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta)) <span class="op">%do%</span><span class="st"> </span>{</span>
-<span id="cb504-6"><a href="assignment-9-auction.html#cb504-6" aria-hidden="true"></a>  theta_i &lt;-<span class="st"> </span>theta[i]</span>
-<span id="cb504-7"><a href="assignment-9-auction.html#cb504-7" aria-hidden="true"></a>  theta_i_list &lt;-<span class="st"> </span>theta_i <span class="op">*</span><span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)</span>
-<span id="cb504-8"><a href="assignment-9-auction.html#cb504-8" aria-hidden="true"></a>  objective_i &lt;-</span>
-<span id="cb504-9"><a href="assignment-9-auction.html#cb504-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">foreach</span> (<span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta_i_list),</span>
-<span id="cb504-10"><a href="assignment-9-auction.html#cb504-10" aria-hidden="true"></a>             <span class="dt">.packages =</span> <span class="kw">c</span>(<span class="st">&quot;EmpiricalIO&quot;</span>, <span class="st">&quot;foreach&quot;</span>, <span class="st">&quot;magrittr&quot;</span>),</span>
-<span id="cb504-11"><a href="assignment-9-auction.html#cb504-11" aria-hidden="true"></a>             <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%dopar%</span><span class="st"> </span>{</span>
-<span id="cb504-12"><a href="assignment-9-auction.html#cb504-12" aria-hidden="true"></a>               theta_ij &lt;-<span class="st"> </span>theta_i_list[j]</span>
-<span id="cb504-13"><a href="assignment-9-auction.html#cb504-13" aria-hidden="true"></a>               theta_j &lt;-<span class="st"> </span>theta</span>
-<span id="cb504-14"><a href="assignment-9-auction.html#cb504-14" aria-hidden="true"></a>               theta_j[i] &lt;-<span class="st"> </span>theta_ij</span>
-<span id="cb504-15"><a href="assignment-9-auction.html#cb504-15" aria-hidden="true"></a>               objective_ij &lt;-<span class="st"> </span></span>
-<span id="cb504-16"><a href="assignment-9-auction.html#cb504-16" aria-hidden="true"></a><span class="st">                 </span><span class="kw">compute_loglikelihood_second_price_w</span>(</span>
-<span id="cb504-17"><a href="assignment-9-auction.html#cb504-17" aria-hidden="true"></a>                   theta_j, df_second_w)</span>
-<span id="cb504-18"><a href="assignment-9-auction.html#cb504-18" aria-hidden="true"></a>               <span class="kw">return</span>(objective_ij)</span>
-<span id="cb504-19"><a href="assignment-9-auction.html#cb504-19" aria-hidden="true"></a>             }</span>
-<span id="cb504-20"><a href="assignment-9-auction.html#cb504-20" aria-hidden="true"></a>  df_graph &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">as.numeric</span>(theta_i_list), </span>
-<span id="cb504-21"><a href="assignment-9-auction.html#cb504-21" aria-hidden="true"></a>                         <span class="dt">y =</span> <span class="kw">as.numeric</span>(objective_i))</span>
-<span id="cb504-22"><a href="assignment-9-auction.html#cb504-22" aria-hidden="true"></a>  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df_graph, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></span>
-<span id="cb504-23"><a href="assignment-9-auction.html#cb504-23" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb504-24"><a href="assignment-9-auction.html#cb504-24" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> theta_i, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span></span>
-<span id="cb504-25"><a href="assignment-9-auction.html#cb504-25" aria-hidden="true"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(label[i]))</span>
-<span id="cb504-26"><a href="assignment-9-auction.html#cb504-26" aria-hidden="true"></a>  <span class="kw">return</span>(g)</span>
-<span id="cb504-27"><a href="assignment-9-auction.html#cb504-27" aria-hidden="true"></a>}</span>
-<span id="cb504-28"><a href="assignment-9-auction.html#cb504-28" aria-hidden="true"></a><span class="kw">save</span>(graph, <span class="dt">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="assignment-9-auction.html#cb505-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)</span>
-<span id="cb505-2"><a href="assignment-9-auction.html#cb505-2" aria-hidden="true"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="assignment-9-auction.html#cb470-1" aria-hidden="true"></a><span class="co"># label</span></span>
+<span id="cb470-2"><a href="assignment-9-auction.html#cb470-2" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">alpha&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">beta&quot;</span>)</span>
+<span id="cb470-3"><a href="assignment-9-auction.html#cb470-3" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb470-4"><a href="assignment-9-auction.html#cb470-4" aria-hidden="true"></a><span class="co"># compute the graph</span></span>
+<span id="cb470-5"><a href="assignment-9-auction.html#cb470-5" aria-hidden="true"></a>graph &lt;-<span class="st"> </span><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta)) <span class="op">%do%</span><span class="st"> </span>{</span>
+<span id="cb470-6"><a href="assignment-9-auction.html#cb470-6" aria-hidden="true"></a>  theta_i &lt;-<span class="st"> </span>theta[i]</span>
+<span id="cb470-7"><a href="assignment-9-auction.html#cb470-7" aria-hidden="true"></a>  theta_i_list &lt;-<span class="st"> </span>theta_i <span class="op">*</span><span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb470-8"><a href="assignment-9-auction.html#cb470-8" aria-hidden="true"></a>  objective_i &lt;-</span>
+<span id="cb470-9"><a href="assignment-9-auction.html#cb470-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">foreach</span> (<span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta_i_list),</span>
+<span id="cb470-10"><a href="assignment-9-auction.html#cb470-10" aria-hidden="true"></a>             <span class="dt">.packages =</span> <span class="kw">c</span>(<span class="st">&quot;EmpiricalIO&quot;</span>, <span class="st">&quot;foreach&quot;</span>, <span class="st">&quot;magrittr&quot;</span>),</span>
+<span id="cb470-11"><a href="assignment-9-auction.html#cb470-11" aria-hidden="true"></a>             <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%dopar%</span><span class="st"> </span>{</span>
+<span id="cb470-12"><a href="assignment-9-auction.html#cb470-12" aria-hidden="true"></a>               theta_ij &lt;-<span class="st"> </span>theta_i_list[j]</span>
+<span id="cb470-13"><a href="assignment-9-auction.html#cb470-13" aria-hidden="true"></a>               theta_j &lt;-<span class="st"> </span>theta</span>
+<span id="cb470-14"><a href="assignment-9-auction.html#cb470-14" aria-hidden="true"></a>               theta_j[i] &lt;-<span class="st"> </span>theta_ij</span>
+<span id="cb470-15"><a href="assignment-9-auction.html#cb470-15" aria-hidden="true"></a>               objective_ij &lt;-<span class="st"> </span></span>
+<span id="cb470-16"><a href="assignment-9-auction.html#cb470-16" aria-hidden="true"></a><span class="st">                 </span><span class="kw">compute_loglikelihood_second_price_w</span>(</span>
+<span id="cb470-17"><a href="assignment-9-auction.html#cb470-17" aria-hidden="true"></a>                   theta_j, df_second_w)</span>
+<span id="cb470-18"><a href="assignment-9-auction.html#cb470-18" aria-hidden="true"></a>               <span class="kw">return</span>(objective_ij)</span>
+<span id="cb470-19"><a href="assignment-9-auction.html#cb470-19" aria-hidden="true"></a>             }</span>
+<span id="cb470-20"><a href="assignment-9-auction.html#cb470-20" aria-hidden="true"></a>  df_graph &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">as.numeric</span>(theta_i_list), </span>
+<span id="cb470-21"><a href="assignment-9-auction.html#cb470-21" aria-hidden="true"></a>                         <span class="dt">y =</span> <span class="kw">as.numeric</span>(objective_i))</span>
+<span id="cb470-22"><a href="assignment-9-auction.html#cb470-22" aria-hidden="true"></a>  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df_graph, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></span>
+<span id="cb470-23"><a href="assignment-9-auction.html#cb470-23" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb470-24"><a href="assignment-9-auction.html#cb470-24" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> theta_i, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span></span>
+<span id="cb470-25"><a href="assignment-9-auction.html#cb470-25" aria-hidden="true"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(label[i]))</span>
+<span id="cb470-26"><a href="assignment-9-auction.html#cb470-26" aria-hidden="true"></a>  <span class="kw">return</span>(g)</span>
+<span id="cb470-27"><a href="assignment-9-auction.html#cb470-27" aria-hidden="true"></a>}</span>
+<span id="cb470-28"><a href="assignment-9-auction.html#cb470-28" aria-hidden="true"></a><span class="kw">save</span>(graph, <span class="dt">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="assignment-9-auction.html#cb471-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)</span>
+<span id="cb471-2"><a href="assignment-9-auction.html#cb471-2" aria-hidden="true"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-250-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-244-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-250-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-244-2.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Estimate the parameters by maximizing the log-likelihood.</li>
 </ol>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="assignment-9-auction.html#cb508-1" aria-hidden="true"></a>result_second_parametric &lt;-</span>
-<span id="cb508-2"><a href="assignment-9-auction.html#cb508-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">optim</span>(</span>
-<span id="cb508-3"><a href="assignment-9-auction.html#cb508-3" aria-hidden="true"></a>    <span class="dt">par =</span> theta,</span>
-<span id="cb508-4"><a href="assignment-9-auction.html#cb508-4" aria-hidden="true"></a>    <span class="dt">fn =</span> compute_loglikelihood_second_price_w,</span>
-<span id="cb508-5"><a href="assignment-9-auction.html#cb508-5" aria-hidden="true"></a>    <span class="dt">df_second_w =</span> df_second_w,</span>
-<span id="cb508-6"><a href="assignment-9-auction.html#cb508-6" aria-hidden="true"></a>    <span class="dt">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
-<span id="cb508-7"><a href="assignment-9-auction.html#cb508-7" aria-hidden="true"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="dv">-1</span>)</span>
-<span id="cb508-8"><a href="assignment-9-auction.html#cb508-8" aria-hidden="true"></a>  )</span>
-<span id="cb508-9"><a href="assignment-9-auction.html#cb508-9" aria-hidden="true"></a><span class="kw">save</span>(result_second_parametric, <span class="dt">file =</span> <span class="st">&quot;data/A9_result_second_parametric.RData&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="assignment-9-auction.html#cb509-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_result_second_parametric.RData&quot;</span>)</span>
-<span id="cb509-2"><a href="assignment-9-auction.html#cb509-2" aria-hidden="true"></a>result_second_parametric</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="assignment-9-auction.html#cb474-1" aria-hidden="true"></a>result_second_parametric &lt;-</span>
+<span id="cb474-2"><a href="assignment-9-auction.html#cb474-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">optim</span>(</span>
+<span id="cb474-3"><a href="assignment-9-auction.html#cb474-3" aria-hidden="true"></a>    <span class="dt">par =</span> theta,</span>
+<span id="cb474-4"><a href="assignment-9-auction.html#cb474-4" aria-hidden="true"></a>    <span class="dt">fn =</span> compute_loglikelihood_second_price_w,</span>
+<span id="cb474-5"><a href="assignment-9-auction.html#cb474-5" aria-hidden="true"></a>    <span class="dt">df_second_w =</span> df_second_w,</span>
+<span id="cb474-6"><a href="assignment-9-auction.html#cb474-6" aria-hidden="true"></a>    <span class="dt">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
+<span id="cb474-7"><a href="assignment-9-auction.html#cb474-7" aria-hidden="true"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="dv">-1</span>)</span>
+<span id="cb474-8"><a href="assignment-9-auction.html#cb474-8" aria-hidden="true"></a>  )</span>
+<span id="cb474-9"><a href="assignment-9-auction.html#cb474-9" aria-hidden="true"></a><span class="kw">save</span>(result_second_parametric, <span class="dt">file =</span> <span class="st">&quot;data/A9_result_second_parametric.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="assignment-9-auction.html#cb475-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_result_second_parametric.RData&quot;</span>)</span>
+<span id="cb475-2"><a href="assignment-9-auction.html#cb475-2" aria-hidden="true"></a>result_second_parametric</span></code></pre></div>
 <pre><code>## $par
 ## [1] 2.199238 2.078327
 ## 
@@ -924,12 +923,12 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 ## 
 ## $message
 ## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="assignment-9-auction.html#cb511-1" aria-hidden="true"></a>comparison &lt;-</span>
-<span id="cb511-2"><a href="assignment-9-auction.html#cb511-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">data.frame</span>(</span>
-<span id="cb511-3"><a href="assignment-9-auction.html#cb511-3" aria-hidden="true"></a>    <span class="dt">true =</span> theta,</span>
-<span id="cb511-4"><a href="assignment-9-auction.html#cb511-4" aria-hidden="true"></a>    <span class="dt">estimate =</span> result_second_parametric<span class="op">$</span>par</span>
-<span id="cb511-5"><a href="assignment-9-auction.html#cb511-5" aria-hidden="true"></a>  )</span>
-<span id="cb511-6"><a href="assignment-9-auction.html#cb511-6" aria-hidden="true"></a>comparison</span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="assignment-9-auction.html#cb477-1" aria-hidden="true"></a>comparison &lt;-</span>
+<span id="cb477-2"><a href="assignment-9-auction.html#cb477-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">data.frame</span>(</span>
+<span id="cb477-3"><a href="assignment-9-auction.html#cb477-3" aria-hidden="true"></a>    <span class="dt">true =</span> theta,</span>
+<span id="cb477-4"><a href="assignment-9-auction.html#cb477-4" aria-hidden="true"></a>    <span class="dt">estimate =</span> result_second_parametric<span class="op">$</span>par</span>
+<span id="cb477-5"><a href="assignment-9-auction.html#cb477-5" aria-hidden="true"></a>  )</span>
+<span id="cb477-6"><a href="assignment-9-auction.html#cb477-6" aria-hidden="true"></a>comparison</span></code></pre></div>
 <pre><code>##   true estimate
 ## 1    2 2.199238
 ## 2    2 2.078327</code></pre>
@@ -941,17 +940,17 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 \]</span></li>
 </ol>
 <p>To do so, we can use a built-in function called <code>uniroot</code>, which solves <span class="math inline">\(x\)</span> such that <span class="math inline">\(f(x) = 0\)</span> for scalar <span class="math inline">\(x\)</span>. In <code>uniroot</code>, <code>lower</code> and <code>upper</code> are set at <span class="math inline">\(r_t\)</span> and <span class="math inline">\(\beta(1)\)</span>, respectively.</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="assignment-9-auction.html#cb513-1" aria-hidden="true"></a>r &lt;-<span class="st"> </span>df_first_w[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="op">%&gt;%</span></span>
-<span id="cb513-2"><a href="assignment-9-auction.html#cb513-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">as.numeric</span>()</span>
-<span id="cb513-3"><a href="assignment-9-auction.html#cb513-3" aria-hidden="true"></a>n &lt;-<span class="st"> </span>df_first_w[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>] <span class="op">%&gt;%</span></span>
-<span id="cb513-4"><a href="assignment-9-auction.html#cb513-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">as.integer</span>()</span>
-<span id="cb513-5"><a href="assignment-9-auction.html#cb513-5" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>r <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> </span>
-<span id="cb513-6"><a href="assignment-9-auction.html#cb513-6" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
-<span id="cb513-7"><a href="assignment-9-auction.html#cb513-7" aria-hidden="true"></a><span class="co"># compute invecrse bid equation</span></span>
-<span id="cb513-8"><a href="assignment-9-auction.html#cb513-8" aria-hidden="true"></a><span class="kw">inverse_bid_equation</span>(x, b, r, alpha, beta, n)</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="assignment-9-auction.html#cb479-1" aria-hidden="true"></a>r &lt;-<span class="st"> </span>df_first_w[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="op">%&gt;%</span></span>
+<span id="cb479-2"><a href="assignment-9-auction.html#cb479-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">as.numeric</span>()</span>
+<span id="cb479-3"><a href="assignment-9-auction.html#cb479-3" aria-hidden="true"></a>n &lt;-<span class="st"> </span>df_first_w[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>] <span class="op">%&gt;%</span></span>
+<span id="cb479-4"><a href="assignment-9-auction.html#cb479-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">as.integer</span>()</span>
+<span id="cb479-5"><a href="assignment-9-auction.html#cb479-5" aria-hidden="true"></a>b &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>r <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> </span>
+<span id="cb479-6"><a href="assignment-9-auction.html#cb479-6" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb479-7"><a href="assignment-9-auction.html#cb479-7" aria-hidden="true"></a><span class="co"># compute invecrse bid equation</span></span>
+<span id="cb479-8"><a href="assignment-9-auction.html#cb479-8" aria-hidden="true"></a><span class="kw">inverse_bid_equation</span>(x, b, r, alpha, beta, n)</span></code></pre></div>
 <pre><code>## [1] -0.1421105</code></pre>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="assignment-9-auction.html#cb515-1" aria-hidden="true"></a><span class="co"># compute inverse bid</span></span>
-<span id="cb515-2"><a href="assignment-9-auction.html#cb515-2" aria-hidden="true"></a><span class="kw">inverse_bid_first</span>(b, r, alpha, beta, n)</span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="assignment-9-auction.html#cb481-1" aria-hidden="true"></a><span class="co"># compute inverse bid</span></span>
+<span id="cb481-2"><a href="assignment-9-auction.html#cb481-2" aria-hidden="true"></a><span class="kw">inverse_bid_first</span>(b, r, alpha, beta, n)</span></code></pre></div>
 <pre><code>## [1] 0.6653238</code></pre>
 <p>The log-likelihood conditional on <span class="math inline">\(m_t \ge 1\)</span> is:
 <span class="math display">\[
@@ -968,71 +967,71 @@ where the second equation is from the first-order condition.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_p_first_w(w, r, alpha, beta, n)</code> that returns <span class="math inline">\(h_t(w)\)</span>. Remark that the equilibrium bid at specific parameters is <code>bid_first(1, r, alpha, beta, n)</code>. If the observed wining bid <code>w</code> is above the upper limit, the function will issue an error. Therefore, inside the function <code>compute_p_first_w(w, r, alpha, beta, n)</code>, check if <code>w</code> is above <code>bid_first(1, r, alpha, beta, n)</code> and if so return <span class="math inline">\(10^{-6}\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="assignment-9-auction.html#cb517-1" aria-hidden="true"></a><span class="co"># compute probability density for a winning bid from a first-price auction</span></span>
-<span id="cb517-2"><a href="assignment-9-auction.html#cb517-2" aria-hidden="true"></a>w &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
-<span id="cb517-3"><a href="assignment-9-auction.html#cb517-3" aria-hidden="true"></a><span class="kw">compute_p_first_w</span>(w, r, alpha, beta, n)</span></code></pre></div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="assignment-9-auction.html#cb483-1" aria-hidden="true"></a><span class="co"># compute probability density for a winning bid from a first-price auction</span></span>
+<span id="cb483-2"><a href="assignment-9-auction.html#cb483-2" aria-hidden="true"></a>w &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb483-3"><a href="assignment-9-auction.html#cb483-3" aria-hidden="true"></a><span class="kw">compute_p_first_w</span>(w, r, alpha, beta, n)</span></code></pre></div>
 <pre><code>## [1] 0.2720049</code></pre>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="assignment-9-auction.html#cb519-1" aria-hidden="true"></a>upper &lt;-<span class="st"> </span><span class="kw">bid_first</span>(<span class="dv">1</span>, r, alpha, beta, n)</span>
-<span id="cb519-2"><a href="assignment-9-auction.html#cb519-2" aria-hidden="true"></a><span class="kw">compute_p_first_w</span>(upper <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, r, alpha, beta, n)</span></code></pre></div>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="assignment-9-auction.html#cb485-1" aria-hidden="true"></a>upper &lt;-<span class="st"> </span><span class="kw">bid_first</span>(<span class="dv">1</span>, r, alpha, beta, n)</span>
+<span id="cb485-2"><a href="assignment-9-auction.html#cb485-2" aria-hidden="true"></a><span class="kw">compute_p_first_w</span>(upper <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, r, alpha, beta, n)</span></code></pre></div>
 <pre><code>## [1] 1e-06</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_loglikelihood_first_price_w(theta, df_first_w)</code> that computes the log-likelihood for a first-price auction winning bid data.</li>
 </ol>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="assignment-9-auction.html#cb521-1" aria-hidden="true"></a><span class="co"># compute log-likelihood for winning bids for first-price auctions</span></span>
-<span id="cb521-2"><a href="assignment-9-auction.html#cb521-2" aria-hidden="true"></a><span class="kw">compute_loglikelihood_first_price_w</span>(theta, df_first_w)</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="assignment-9-auction.html#cb487-1" aria-hidden="true"></a><span class="co"># compute log-likelihood for winning bids for first-price auctions</span></span>
+<span id="cb487-2"><a href="assignment-9-auction.html#cb487-2" aria-hidden="true"></a><span class="kw">compute_loglikelihood_first_price_w</span>(theta, df_first_w)</span></code></pre></div>
 <pre><code>## [1] 1.597414</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Compare the value of the objective function around the true parameters.</li>
 </ol>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="assignment-9-auction.html#cb523-1" aria-hidden="true"></a>theta &lt;-<span class="st"> </span><span class="kw">c</span>(alpha, beta)</span>
-<span id="cb523-2"><a href="assignment-9-auction.html#cb523-2" aria-hidden="true"></a><span class="co"># label</span></span>
-<span id="cb523-3"><a href="assignment-9-auction.html#cb523-3" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">alpha&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">beta&quot;</span>)</span>
-<span id="cb523-4"><a href="assignment-9-auction.html#cb523-4" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb523-5"><a href="assignment-9-auction.html#cb523-5" aria-hidden="true"></a><span class="co"># compute the graph</span></span>
-<span id="cb523-6"><a href="assignment-9-auction.html#cb523-6" aria-hidden="true"></a>graph &lt;-<span class="st"> </span><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta)) <span class="op">%do%</span><span class="st"> </span>{</span>
-<span id="cb523-7"><a href="assignment-9-auction.html#cb523-7" aria-hidden="true"></a>  theta_i &lt;-<span class="st"> </span>theta[i]</span>
-<span id="cb523-8"><a href="assignment-9-auction.html#cb523-8" aria-hidden="true"></a>  theta_i_list &lt;-<span class="st"> </span>theta_i <span class="op">*</span><span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)</span>
-<span id="cb523-9"><a href="assignment-9-auction.html#cb523-9" aria-hidden="true"></a>  objective_i &lt;-</span>
-<span id="cb523-10"><a href="assignment-9-auction.html#cb523-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">foreach</span> (<span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta_i_list),</span>
-<span id="cb523-11"><a href="assignment-9-auction.html#cb523-11" aria-hidden="true"></a>             <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{</span>
-<span id="cb523-12"><a href="assignment-9-auction.html#cb523-12" aria-hidden="true"></a>               theta_ij &lt;-<span class="st"> </span>theta_i_list[j]</span>
-<span id="cb523-13"><a href="assignment-9-auction.html#cb523-13" aria-hidden="true"></a>               theta_j &lt;-<span class="st"> </span>theta</span>
-<span id="cb523-14"><a href="assignment-9-auction.html#cb523-14" aria-hidden="true"></a>               theta_j[i] &lt;-<span class="st"> </span>theta_ij</span>
-<span id="cb523-15"><a href="assignment-9-auction.html#cb523-15" aria-hidden="true"></a>               objective_ij &lt;-<span class="st"> </span></span>
-<span id="cb523-16"><a href="assignment-9-auction.html#cb523-16" aria-hidden="true"></a><span class="st">                 </span><span class="kw">compute_loglikelihood_first_price_w</span>(</span>
-<span id="cb523-17"><a href="assignment-9-auction.html#cb523-17" aria-hidden="true"></a>                   theta_j, df_first_w)</span>
-<span id="cb523-18"><a href="assignment-9-auction.html#cb523-18" aria-hidden="true"></a>               <span class="kw">return</span>(objective_ij)</span>
-<span id="cb523-19"><a href="assignment-9-auction.html#cb523-19" aria-hidden="true"></a>             }</span>
-<span id="cb523-20"><a href="assignment-9-auction.html#cb523-20" aria-hidden="true"></a>  df_graph &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">as.numeric</span>(theta_i_list), </span>
-<span id="cb523-21"><a href="assignment-9-auction.html#cb523-21" aria-hidden="true"></a>                         <span class="dt">y =</span> <span class="kw">as.numeric</span>(objective_i))</span>
-<span id="cb523-22"><a href="assignment-9-auction.html#cb523-22" aria-hidden="true"></a>  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df_graph, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></span>
-<span id="cb523-23"><a href="assignment-9-auction.html#cb523-23" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb523-24"><a href="assignment-9-auction.html#cb523-24" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> theta_i, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span></span>
-<span id="cb523-25"><a href="assignment-9-auction.html#cb523-25" aria-hidden="true"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(label[i]))</span>
-<span id="cb523-26"><a href="assignment-9-auction.html#cb523-26" aria-hidden="true"></a>  <span class="kw">return</span>(g)</span>
-<span id="cb523-27"><a href="assignment-9-auction.html#cb523-27" aria-hidden="true"></a>}</span>
-<span id="cb523-28"><a href="assignment-9-auction.html#cb523-28" aria-hidden="true"></a><span class="kw">save</span>(graph, <span class="dt">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="assignment-9-auction.html#cb524-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)</span>
-<span id="cb524-2"><a href="assignment-9-auction.html#cb524-2" aria-hidden="true"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="assignment-9-auction.html#cb489-1" aria-hidden="true"></a>theta &lt;-<span class="st"> </span><span class="kw">c</span>(alpha, beta)</span>
+<span id="cb489-2"><a href="assignment-9-auction.html#cb489-2" aria-hidden="true"></a><span class="co"># label</span></span>
+<span id="cb489-3"><a href="assignment-9-auction.html#cb489-3" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">alpha&quot;</span>, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">beta&quot;</span>)</span>
+<span id="cb489-4"><a href="assignment-9-auction.html#cb489-4" aria-hidden="true"></a>label &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb489-5"><a href="assignment-9-auction.html#cb489-5" aria-hidden="true"></a><span class="co"># compute the graph</span></span>
+<span id="cb489-6"><a href="assignment-9-auction.html#cb489-6" aria-hidden="true"></a>graph &lt;-<span class="st"> </span><span class="kw">foreach</span> (<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta)) <span class="op">%do%</span><span class="st"> </span>{</span>
+<span id="cb489-7"><a href="assignment-9-auction.html#cb489-7" aria-hidden="true"></a>  theta_i &lt;-<span class="st"> </span>theta[i]</span>
+<span id="cb489-8"><a href="assignment-9-auction.html#cb489-8" aria-hidden="true"></a>  theta_i_list &lt;-<span class="st"> </span>theta_i <span class="op">*</span><span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb489-9"><a href="assignment-9-auction.html#cb489-9" aria-hidden="true"></a>  objective_i &lt;-</span>
+<span id="cb489-10"><a href="assignment-9-auction.html#cb489-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">foreach</span> (<span class="dt">j =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(theta_i_list),</span>
+<span id="cb489-11"><a href="assignment-9-auction.html#cb489-11" aria-hidden="true"></a>             <span class="dt">.combine =</span> <span class="st">&quot;rbind&quot;</span>) <span class="op">%do%</span><span class="st"> </span>{</span>
+<span id="cb489-12"><a href="assignment-9-auction.html#cb489-12" aria-hidden="true"></a>               theta_ij &lt;-<span class="st"> </span>theta_i_list[j]</span>
+<span id="cb489-13"><a href="assignment-9-auction.html#cb489-13" aria-hidden="true"></a>               theta_j &lt;-<span class="st"> </span>theta</span>
+<span id="cb489-14"><a href="assignment-9-auction.html#cb489-14" aria-hidden="true"></a>               theta_j[i] &lt;-<span class="st"> </span>theta_ij</span>
+<span id="cb489-15"><a href="assignment-9-auction.html#cb489-15" aria-hidden="true"></a>               objective_ij &lt;-<span class="st"> </span></span>
+<span id="cb489-16"><a href="assignment-9-auction.html#cb489-16" aria-hidden="true"></a><span class="st">                 </span><span class="kw">compute_loglikelihood_first_price_w</span>(</span>
+<span id="cb489-17"><a href="assignment-9-auction.html#cb489-17" aria-hidden="true"></a>                   theta_j, df_first_w)</span>
+<span id="cb489-18"><a href="assignment-9-auction.html#cb489-18" aria-hidden="true"></a>               <span class="kw">return</span>(objective_ij)</span>
+<span id="cb489-19"><a href="assignment-9-auction.html#cb489-19" aria-hidden="true"></a>             }</span>
+<span id="cb489-20"><a href="assignment-9-auction.html#cb489-20" aria-hidden="true"></a>  df_graph &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">as.numeric</span>(theta_i_list), </span>
+<span id="cb489-21"><a href="assignment-9-auction.html#cb489-21" aria-hidden="true"></a>                         <span class="dt">y =</span> <span class="kw">as.numeric</span>(objective_i))</span>
+<span id="cb489-22"><a href="assignment-9-auction.html#cb489-22" aria-hidden="true"></a>  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df_graph, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span></span>
+<span id="cb489-23"><a href="assignment-9-auction.html#cb489-23" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb489-24"><a href="assignment-9-auction.html#cb489-24" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> theta_i, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span></span>
+<span id="cb489-25"><a href="assignment-9-auction.html#cb489-25" aria-hidden="true"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">TeX</span>(label[i]))</span>
+<span id="cb489-26"><a href="assignment-9-auction.html#cb489-26" aria-hidden="true"></a>  <span class="kw">return</span>(g)</span>
+<span id="cb489-27"><a href="assignment-9-auction.html#cb489-27" aria-hidden="true"></a>}</span>
+<span id="cb489-28"><a href="assignment-9-auction.html#cb489-28" aria-hidden="true"></a><span class="kw">save</span>(graph, <span class="dt">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="assignment-9-auction.html#cb490-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)</span>
+<span id="cb490-2"><a href="assignment-9-auction.html#cb490-2" aria-hidden="true"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-257-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-251-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-257-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-251-2.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="9" style="list-style-type: decimal">
 <li>Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.</li>
 </ol>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="assignment-9-auction.html#cb527-1" aria-hidden="true"></a>result_first_parametric &lt;-</span>
-<span id="cb527-2"><a href="assignment-9-auction.html#cb527-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">optim</span>(</span>
-<span id="cb527-3"><a href="assignment-9-auction.html#cb527-3" aria-hidden="true"></a>    <span class="dt">par =</span> theta,</span>
-<span id="cb527-4"><a href="assignment-9-auction.html#cb527-4" aria-hidden="true"></a>    <span class="dt">fn =</span> compute_loglikelihood_first_price_w,</span>
-<span id="cb527-5"><a href="assignment-9-auction.html#cb527-5" aria-hidden="true"></a>    <span class="dt">df_first_w =</span> df_first_w,</span>
-<span id="cb527-6"><a href="assignment-9-auction.html#cb527-6" aria-hidden="true"></a>    <span class="dt">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
-<span id="cb527-7"><a href="assignment-9-auction.html#cb527-7" aria-hidden="true"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="dv">-1</span>)</span>
-<span id="cb527-8"><a href="assignment-9-auction.html#cb527-8" aria-hidden="true"></a>  )</span>
-<span id="cb527-9"><a href="assignment-9-auction.html#cb527-9" aria-hidden="true"></a><span class="kw">save</span>(result_first_parametric, <span class="dt">file =</span> <span class="st">&quot;data/A9_result_first_parametric.RData&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="assignment-9-auction.html#cb528-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_result_first_parametric.RData&quot;</span>)</span>
-<span id="cb528-2"><a href="assignment-9-auction.html#cb528-2" aria-hidden="true"></a>result_first_parametric</span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="assignment-9-auction.html#cb493-1" aria-hidden="true"></a>result_first_parametric &lt;-</span>
+<span id="cb493-2"><a href="assignment-9-auction.html#cb493-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">optim</span>(</span>
+<span id="cb493-3"><a href="assignment-9-auction.html#cb493-3" aria-hidden="true"></a>    <span class="dt">par =</span> theta,</span>
+<span id="cb493-4"><a href="assignment-9-auction.html#cb493-4" aria-hidden="true"></a>    <span class="dt">fn =</span> compute_loglikelihood_first_price_w,</span>
+<span id="cb493-5"><a href="assignment-9-auction.html#cb493-5" aria-hidden="true"></a>    <span class="dt">df_first_w =</span> df_first_w,</span>
+<span id="cb493-6"><a href="assignment-9-auction.html#cb493-6" aria-hidden="true"></a>    <span class="dt">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
+<span id="cb493-7"><a href="assignment-9-auction.html#cb493-7" aria-hidden="true"></a>    <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="dv">-1</span>)</span>
+<span id="cb493-8"><a href="assignment-9-auction.html#cb493-8" aria-hidden="true"></a>  )</span>
+<span id="cb493-9"><a href="assignment-9-auction.html#cb493-9" aria-hidden="true"></a><span class="kw">save</span>(result_first_parametric, <span class="dt">file =</span> <span class="st">&quot;data/A9_result_first_parametric.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="assignment-9-auction.html#cb494-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;data/A9_result_first_parametric.RData&quot;</span>)</span>
+<span id="cb494-2"><a href="assignment-9-auction.html#cb494-2" aria-hidden="true"></a>result_first_parametric</span></code></pre></div>
 <pre><code>## $par
 ## [1] 1.977676 2.004715
 ## 
@@ -1048,12 +1047,12 @@ where the second equation is from the first-order condition.</p>
 ## 
 ## $message
 ## NULL</code></pre>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="assignment-9-auction.html#cb530-1" aria-hidden="true"></a>comparison &lt;-</span>
-<span id="cb530-2"><a href="assignment-9-auction.html#cb530-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">data.frame</span>(</span>
-<span id="cb530-3"><a href="assignment-9-auction.html#cb530-3" aria-hidden="true"></a>    <span class="dt">true =</span> theta,</span>
-<span id="cb530-4"><a href="assignment-9-auction.html#cb530-4" aria-hidden="true"></a>    <span class="dt">estimate =</span> result_first_parametric<span class="op">$</span>par</span>
-<span id="cb530-5"><a href="assignment-9-auction.html#cb530-5" aria-hidden="true"></a>  )</span>
-<span id="cb530-6"><a href="assignment-9-auction.html#cb530-6" aria-hidden="true"></a>comparison</span></code></pre></div>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="assignment-9-auction.html#cb496-1" aria-hidden="true"></a>comparison &lt;-</span>
+<span id="cb496-2"><a href="assignment-9-auction.html#cb496-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">data.frame</span>(</span>
+<span id="cb496-3"><a href="assignment-9-auction.html#cb496-3" aria-hidden="true"></a>    <span class="dt">true =</span> theta,</span>
+<span id="cb496-4"><a href="assignment-9-auction.html#cb496-4" aria-hidden="true"></a>    <span class="dt">estimate =</span> result_first_parametric<span class="op">$</span>par</span>
+<span id="cb496-5"><a href="assignment-9-auction.html#cb496-5" aria-hidden="true"></a>  )</span>
+<span id="cb496-6"><a href="assignment-9-auction.html#cb496-6" aria-hidden="true"></a>comparison</span></code></pre></div>
 <pre><code>##   true estimate
 ## 1    2 1.977676
 ## 2    2 2.004715</code></pre>
@@ -1062,22 +1061,22 @@ where the second equation is from the first-order condition.</p>
 <li>Write a function <code>F_b(b)</code> that returns an empirical cumulative distribution at <code>b</code>. This can be obtained by using a function <code>ecdf</code>.
 Also, write a function <code>f_b(b)</code> that returns an empirical probability density at <code>b</code>. This can be obtained by combining functions <code>approxfun</code> and <code>density</code>.</li>
 </ol>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="assignment-9-auction.html#cb532-1" aria-hidden="true"></a><span class="co"># cumulative distribution</span></span>
-<span id="cb532-2"><a href="assignment-9-auction.html#cb532-2" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_ecdf</span>(<span class="dt">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></span>
-<span id="cb532-3"><a href="assignment-9-auction.html#cb532-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;bid&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;cumulative distribution&quot;</span>)</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-260-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="assignment-9-auction.html#cb533-1" aria-hidden="true"></a>F_b &lt;-<span class="st"> </span><span class="kw">ecdf</span>(df_first<span class="op">$</span>b)</span>
-<span id="cb533-2"><a href="assignment-9-auction.html#cb533-2" aria-hidden="true"></a><span class="kw">F_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="assignment-9-auction.html#cb498-1" aria-hidden="true"></a><span class="co"># cumulative distribution</span></span>
+<span id="cb498-2"><a href="assignment-9-auction.html#cb498-2" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_ecdf</span>(<span class="dt">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></span>
+<span id="cb498-3"><a href="assignment-9-auction.html#cb498-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;bid&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;cumulative distribution&quot;</span>)</span></code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-254-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="assignment-9-auction.html#cb499-1" aria-hidden="true"></a>F_b &lt;-<span class="st"> </span><span class="kw">ecdf</span>(df_first<span class="op">$</span>b)</span>
+<span id="cb499-2"><a href="assignment-9-auction.html#cb499-2" aria-hidden="true"></a><span class="kw">F_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
 <pre><code>## [1] 0.4104628</code></pre>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="assignment-9-auction.html#cb535-1" aria-hidden="true"></a><span class="kw">F_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="assignment-9-auction.html#cb501-1" aria-hidden="true"></a><span class="kw">F_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
 <pre><code>## [1] 0.7173038</code></pre>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="assignment-9-auction.html#cb537-1" aria-hidden="true"></a><span class="co"># probability density</span></span>
-<span id="cb537-2"><a href="assignment-9-auction.html#cb537-2" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-260-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="assignment-9-auction.html#cb538-1" aria-hidden="true"></a>f_b &lt;-<span class="st"> </span><span class="kw">approxfun</span>(<span class="kw">density</span>(df_first<span class="op">$</span>b))</span>
-<span id="cb538-2"><a href="assignment-9-auction.html#cb538-2" aria-hidden="true"></a><span class="kw">f_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="assignment-9-auction.html#cb503-1" aria-hidden="true"></a><span class="co"># probability density</span></span>
+<span id="cb503-2"><a href="assignment-9-auction.html#cb503-2" aria-hidden="true"></a><span class="kw">ggplot</span>(df_first, <span class="kw">aes</span>(<span class="dt">x =</span> b)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)</span></code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-254-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="assignment-9-auction.html#cb504-1" aria-hidden="true"></a>f_b &lt;-<span class="st"> </span><span class="kw">approxfun</span>(<span class="kw">density</span>(df_first<span class="op">$</span>b))</span>
+<span id="cb504-2"><a href="assignment-9-auction.html#cb504-2" aria-hidden="true"></a><span class="kw">f_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
 <pre><code>## [1] 1.680124</code></pre>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="assignment-9-auction.html#cb540-1" aria-hidden="true"></a><span class="kw">f_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="assignment-9-auction.html#cb506-1" aria-hidden="true"></a><span class="kw">f_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
 <pre><code>## [1] 1.469983</code></pre>
 <p>The equilibrium distribution and density of the highest rival’s bid are:
 <span class="math display">\[
@@ -1089,9 +1088,9 @@ h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 <ol start="11" style="list-style-type: decimal">
 <li>Write a function <code>H_b(b, n)</code> and <code>h_b(b)</code> that return the equilibrium distribution and density of the highest rival’s bid at point <code>b</code>.</li>
 </ol>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="assignment-9-auction.html#cb542-1" aria-hidden="true"></a><span class="kw">H_b</span>(<span class="fl">0.4</span>, n, F_b)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="assignment-9-auction.html#cb508-1" aria-hidden="true"></a><span class="kw">H_b</span>(<span class="fl">0.4</span>, n, F_b)</span></code></pre></div>
 <pre><code>## [1] 0.001962983</code></pre>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="assignment-9-auction.html#cb544-1" aria-hidden="true"></a><span class="kw">h_b</span>(<span class="fl">0.4</span>, n, F_b, f_b)</span></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="assignment-9-auction.html#cb510-1" aria-hidden="true"></a><span class="kw">h_b</span>(<span class="fl">0.4</span>, n, F_b, f_b)</span></code></pre></div>
 <pre><code>## [1] 0.05624476</code></pre>
 <p>When a bidder bids <span class="math inline">\(b\)</span>, the implied valuation of her is:
 <span class="math display">\[
@@ -1100,26 +1099,26 @@ x = b + \frac{H_b(b)}{h_b(b)}.
 <ol start="12" style="list-style-type: decimal">
 <li>Write a function <code>compute_implied_valuation(b, n, r)</code> that returns the implied valuation given a bid. Let it return <span class="math inline">\(x = 0\)</span> if <span class="math inline">\(b &lt; r\)</span>, because we cannot know the value when the bid is below the reserve price.</li>
 </ol>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="assignment-9-auction.html#cb546-1" aria-hidden="true"></a>r &lt;-<span class="st"> </span>df_first[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>]</span>
-<span id="cb546-2"><a href="assignment-9-auction.html#cb546-2" aria-hidden="true"></a>n &lt;-<span class="st"> </span>df_first[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>]</span>
-<span id="cb546-3"><a href="assignment-9-auction.html#cb546-3" aria-hidden="true"></a><span class="kw">compute_implied_valuation</span>(<span class="fl">0.4</span>, n, r, F_b, f_b)</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="assignment-9-auction.html#cb512-1" aria-hidden="true"></a>r &lt;-<span class="st"> </span>df_first[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>]</span>
+<span id="cb512-2"><a href="assignment-9-auction.html#cb512-2" aria-hidden="true"></a>n &lt;-<span class="st"> </span>df_first[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>]</span>
+<span id="cb512-3"><a href="assignment-9-auction.html#cb512-3" aria-hidden="true"></a><span class="kw">compute_implied_valuation</span>(<span class="fl">0.4</span>, n, r, F_b, f_b)</span></code></pre></div>
 <pre><code>##           n
 ## 1 0.4349007</code></pre>
 <ol start="13" style="list-style-type: decimal">
 <li>Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.</li>
 </ol>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="assignment-9-auction.html#cb548-1" aria-hidden="true"></a>valuation_implied &lt;-<span class="st"> </span>df_first <span class="op">%&gt;%</span></span>
-<span id="cb548-2"><a href="assignment-9-auction.html#cb548-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span></span>
-<span id="cb548-3"><a href="assignment-9-auction.html#cb548-3" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">compute_implied_valuation</span>(b, n, r, F_b, f_b)) <span class="op">%&gt;%</span></span>
-<span id="cb548-4"><a href="assignment-9-auction.html#cb548-4" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb548-5"><a href="assignment-9-auction.html#cb548-5" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(x) <span class="op">%&gt;%</span></span>
-<span id="cb548-6"><a href="assignment-9-auction.html#cb548-6" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;estimate&quot;</span>)</span>
-<span id="cb548-7"><a href="assignment-9-auction.html#cb548-7" aria-hidden="true"></a>valuation_true &lt;-<span class="st"> </span>valuation <span class="op">%&gt;%</span></span>
-<span id="cb548-8"><a href="assignment-9-auction.html#cb548-8" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(x) <span class="op">%&gt;%</span></span>
-<span id="cb548-9"><a href="assignment-9-auction.html#cb548-9" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;true&quot;</span>)</span>
-<span id="cb548-10"><a href="assignment-9-auction.html#cb548-10" aria-hidden="true"></a>valuation_plot &lt;-<span class="st"> </span><span class="kw">rbind</span>(valuation_true, valuation_implied)</span>
-<span id="cb548-11"><a href="assignment-9-auction.html#cb548-11" aria-hidden="true"></a><span class="kw">ggplot</span>(valuation_plot, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">color =</span> type)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_ecdf</span>()</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-263-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="assignment-9-auction.html#cb514-1" aria-hidden="true"></a>valuation_implied &lt;-<span class="st"> </span>df_first <span class="op">%&gt;%</span></span>
+<span id="cb514-2"><a href="assignment-9-auction.html#cb514-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span></span>
+<span id="cb514-3"><a href="assignment-9-auction.html#cb514-3" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">compute_implied_valuation</span>(b, n, r, F_b, f_b)) <span class="op">%&gt;%</span></span>
+<span id="cb514-4"><a href="assignment-9-auction.html#cb514-4" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
+<span id="cb514-5"><a href="assignment-9-auction.html#cb514-5" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(x) <span class="op">%&gt;%</span></span>
+<span id="cb514-6"><a href="assignment-9-auction.html#cb514-6" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;estimate&quot;</span>)</span>
+<span id="cb514-7"><a href="assignment-9-auction.html#cb514-7" aria-hidden="true"></a>valuation_true &lt;-<span class="st"> </span>valuation <span class="op">%&gt;%</span></span>
+<span id="cb514-8"><a href="assignment-9-auction.html#cb514-8" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(x) <span class="op">%&gt;%</span></span>
+<span id="cb514-9"><a href="assignment-9-auction.html#cb514-9" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;true&quot;</span>)</span>
+<span id="cb514-10"><a href="assignment-9-auction.html#cb514-10" aria-hidden="true"></a>valuation_plot &lt;-<span class="st"> </span><span class="kw">rbind</span>(valuation_true, valuation_implied)</span>
+<span id="cb514-11"><a href="assignment-9-auction.html#cb514-11" aria-hidden="true"></a><span class="kw">ggplot</span>(valuation_plot, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">color =</span> type)) <span class="op">+</span><span class="st"> </span><span class="kw">stat_ecdf</span>()</span></code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-257-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

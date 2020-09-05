@@ -1,8 +1,7 @@
 # Assignment 9: Auction
 
-The deadline is __May 20 1:30pm__.
 
-```{r, include = FALSE}
+```{r assignment_9, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -152,7 +151,7 @@ compute_loglikelihood_second_price_w(theta, df_second_w)
 
 3. Compare the value of objective function around the true parameters.
 
-```{r}
+```{r, eval = FALSE}
 # label
 label <- c("\\alpha", "\\beta")
 label <- paste("$", label, "$", sep = "")
@@ -189,7 +188,7 @@ graph
 
 4. Estimate the parameters by maximizing the log-likelihood.
 
-```{r}
+```{r, eval = FALSE}
 result_second_parametric <-
   optim(
     par = theta,
@@ -265,7 +264,7 @@ compute_loglikelihood_first_price_w(theta, df_first_w)
 
 8. Compare the value of the objective function around the true parameters.
 
-```{r}
+```{r, eval = FALSE}
 theta <- c(alpha, beta)
 # label
 label <- c("\\alpha", "\\beta")
@@ -302,7 +301,7 @@ graph
 
 9. Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.
 
-```{r}
+```{r, eval = FALSE}
 result_first_parametric <-
   optim(
     par = theta,
