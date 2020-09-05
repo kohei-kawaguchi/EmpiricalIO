@@ -162,8 +162,8 @@ y = - A^{-1} B x + A^{-1} \Sigma \epsilon. (\#eq:reducedform)
 
 - The assignments should be conducted inside a project folder for this course.
 - `File > New Project...> New Directory > New Directory > R Package using RcppEigen`.
-- Name the directory `ECON6120I` and place in your favorite location.
-- You can open this project from the upper right menu of RStudio or by double clicking the `ECON6120I.Rproj` file in the `ECON6120I` directory.
+- Name the directory `ECON5630` and place in your favorite location.
+- You can open this project from the upper right menu of RStudio or by double clicking the `ECON5630.Rproj` file in the `ECON5630` directory.
 - This navigates you to the root directory of the project.
 - In the root directory, make folders named:
     - `assignment`.
@@ -352,21 +352,17 @@ install.packages("rmarkdown")
 ### Github and Github Classroom
 
 
-- The assignments should be conducted through Github Classroom.
-- Sign up in the page [Github](https://github.com/) and inform the instructor your username.
-- An invitation will be sent to your email. Open the link and accept the invitation. This will give you a repository url.
-- Open Rstudio, and then: `File > New Project...> Version Control`.
+- The assignments should be conducted through Github Classroom. Steps to set up Git environment and to submit assignments throungh git are provided as follows. 
+- Sign up in [Github](https://github.com/) 
+- In the Github Classroom, a Rstudio project folder has been created. What you need to do is to clone the project in the Github(the remote repository) to your local computer so that you can work on the assignments locally. 
+- To do this, download [Git](https://git-scm.com/download/win). This allows you to use Git Bash. 
+- Then, set up your Git username and Git email address following the instructions: [Sep up username](https://docs.github.com/en/github/using-git/setting-your-username-in-git) and [Set up email address](https://docs.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address).
+- To connect to the Github, you need to generate a ssh key , add the ssh key to the ssh-agent, and also add it to your Github account.This saves you from entering your username and password everytime you interact with Github repository. A detailed instruction can be found [here](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+- Inform the instructor your Github account username. An invitation will be sent to your email. Open the link and accept the invitation. This will give you a repository url.
+- Open Rstudio: `File > New Project...> Version Control`.
 -  Copy the above-mentioned repository url into the first blank, name the directory `HKUSTIO` and place the project in your favorite location.
 - You can open this project from the upper right menu of RStudio or by double clicking the `Assignment.Rproj` file in the `HKUSTIO` directory.
 - the `Git` option in the upper right window navigates you between your local repository and the remote repository in Github. Before you make any changes, use `Pull` button to pull all new changes from the remote repository so that your local repository is up to date. 
-- In the root directory, make folders named:
-    - `assignment`.
-    - `input`.
-    - `output`.
-    - `figuretable`.
-- We will store R functions in `R` folder, C/C++ functions in `src` folder, and data in `input` folder, data generated from the code in `output`, figures and tables in `figurtable` folder, and your assignment files in the `assignment` folder
-- Open `src/Makevars` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11 -O3`
-- Open `src/Makevars.win` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11`
 - Use `Push` button in the `Git` option to upload your changes to the remote repository. 
 
 - To submit the assignments, please follow the steps:
@@ -376,8 +372,8 @@ install.packages("rmarkdown")
   1. Push your changes to the remote repository so that the instructor can view your assignment. 
   
 - Some advice:
-1. More git command can be exerted in `Git > More > Shell`, or you can download Github Desktop. 
+1. More git command can be found [here](https://docs.github.com/en/github/using-git). They can be exerted in `Git > More > Shell`, or you can download [Git Desktop](https://git-scm.com/download/win). 
 2. Pull before you make new changes, otherwise there might be conflicts when you push the changes.  
 3. Commit the changes only if you want to push the changes. If you just want to temporarily save the changes locally so that they will not be covered by the remote repostiory in case you pull, use `git stash`. 
 4. To remove unwanted commits, you can use `git reset`. Google more details if you need.
-5. If you are still not familiar with git, make a copy of your changes before you try some new commands. 
+5. If you are still not familiar with Git, make a copy of your changes before you try some new commands. 
