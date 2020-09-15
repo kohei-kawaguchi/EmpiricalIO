@@ -330,7 +330,7 @@ y_{jt} = \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
 by approximating $\phi$ with some basis functions, say, polynomials or splines:
 \begin{equation}
 \begin{split}
-y_{jt} &= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{n = 1}^N \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
+y_{jt} &= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{p = 1}^P \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
 & = \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) + \tilde{\eta}_{jt}
 \end{split}
 \end{equation}
@@ -398,16 +398,16 @@ Therefore, we can identify $\beta_l$ and $\phi(\cdot)$ as in the previous case.
 - One the other hand, we need correction in the second step, because:
 \begin{equation}
 \begin{split}
-&\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+&\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt},  k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1\} \\
 &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{jt}, i_{jt}) - (\beta_0 + \beta_k k_{jt})]\\
 & + \mathbb{E}\{\nu_{jt} + \eta_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\}\\
 &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\\
-& + \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}.
+& + \mathbb{E}\{\nu_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1} , \chi_{jt} = 1\}.
 \end{split}
 \end{equation}
 and
 \begin{equation}
-\mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
+\mathbb{E}\{\nu_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
 \end{equation}
 since anticipated shock matters continuation/exit decision in period $t$.
  
@@ -419,8 +419,8 @@ since anticipated shock matters continuation/exit decision in period $t$.
 - Let's see that the conditional expectation:
 \begin{equation}
 \begin{split}
-&\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \}\\
-&=\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
+&\mathbb{E}\{\omega_{jt}| k_{jt},  k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1 \}\\
+&=\mathbb{E}\{\omega_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
 &=\int_{\underline{\omega}(k_{jt})} \omega_{jt} \frac{p(\omega_{jt}|\omega_{j, t - 1})}{\int_{\underline{\omega}(k_{jt})} p(\omega|\omega_{j, t - 1}) d\omega } d \omega_{jt}\\
 &\equiv \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt})),
 \end{split}
@@ -459,8 +459,8 @@ and it is invertible in $\underline{\omega}(k_{jt})$, that is,
 - Now, he have:
 \begin{equation}
 \begin{split}
-&\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
-&= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}\\
+&\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1\} \\
+&= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1} , \chi_{jt} = 1\}\\
 &= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt}))\\
 &= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \psi(P_{jt}, \omega_{j, t - 1}))\\
 &\equiv \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}(\omega_{j, t - 1}, P_{jt})\\

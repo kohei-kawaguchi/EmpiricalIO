@@ -1018,7 +1018,7 @@ y_{jt} = \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
 by approximating <span class="math inline">\(\phi\)</span> with some basis functions, say, polynomials or splines:
 <span class="math display">\[\begin{equation}
 \begin{split}
-y_{jt} &amp;= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{n = 1}^N \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
+y_{jt} &amp;= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{p = 1}^P \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
 &amp; = \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) + \tilde{\eta}_{jt}
 \end{split}
 \end{equation}\]</span>
@@ -1092,16 +1092,16 @@ Therefore, we can identify <span class="math inline">\(\beta_l\)</span> and <spa
 <li>One the other hand, we need correction in the second step, because:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+&amp;\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt},  k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1\} \\
 &amp;= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{jt}, i_{jt}) - (\beta_0 + \beta_k k_{jt})]\\
 &amp; + \mathbb{E}\{\nu_{jt} + \eta_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\}\\
 &amp;= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\\
-&amp; + \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}.
+&amp; + \mathbb{E}\{\nu_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1} , \chi_{jt} = 1\}.
 \end{split}
 \end{equation}\]</span>
 and
 <span class="math display">\[\begin{equation}
-\mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
+\mathbb{E}\{\nu_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
 \end{equation}\]</span>
 since anticipated shock matters continuation/exit decision in period <span class="math inline">\(t\)</span>.</li>
 </ul>
@@ -1112,8 +1112,8 @@ since anticipated shock matters continuation/exit decision in period <span class
 <li>Let’s see that the conditional expectation:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \}\\
-&amp;=\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
+&amp;\mathbb{E}\{\omega_{jt}| k_{jt},  k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1 \}\\
+&amp;=\mathbb{E}\{\omega_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
 &amp;=\int_{\underline{\omega}(k_{jt})} \omega_{jt} \frac{p(\omega_{jt}|\omega_{j, t - 1})}{\int_{\underline{\omega}(k_{jt})} p(\omega|\omega_{j, t - 1}) d\omega } d \omega_{jt}\\
 &amp;\equiv \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt})),
 \end{split}
@@ -1150,8 +1150,8 @@ and it is invertible in <span class="math inline">\(\underline{\omega}(k_{jt})\)
 <li>Now, he have:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
-&amp;= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}\\
+&amp;\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1\} \\
+&amp;= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1} , \chi_{jt} = 1\}\\
 &amp;= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt}))\\
 &amp;= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \psi(P_{jt}, \omega_{j, t - 1}))\\
 &amp;\equiv \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}(\omega_{j, t - 1}, P_{jt})\\

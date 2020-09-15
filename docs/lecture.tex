@@ -113,7 +113,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2020-09-10}
+\date{Last updated: 2020-09-15}
 
 \begin{document}
 \maketitle
@@ -1895,7 +1895,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   by approximating \(\phi\) with some basis functions, say, polynomials or splines:
   \begin{equation}
   \begin{split}
-  y_{jt} &= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{n = 1}^N \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
+  y_{jt} &= \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) +  \left[\phi(k_{jt}, i_{jt}) - \sum_{p = 1}^P \gamma_n \phi_n(k_{jt}, i_{jt})\right] + \eta_{jt}\\
   & = \beta_l l_{jt} +  \sum_{p = 1}^P \gamma_p \phi_p(k_{jt}, i_{jt}) + \tilde{\eta}_{jt}
   \end{split}
   \end{equation}
@@ -1993,16 +1993,16 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   One the other hand, we need correction in the second step, because:
   \begin{equation}
   \begin{split}
-  &\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
+  &\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt},  k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1\} \\
   &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{jt}, i_{jt}) - (\beta_0 + \beta_k k_{jt})]\\
   & + \mathbb{E}\{\nu_{jt} + \eta_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\}\\
   &= \beta_0 + \beta_k k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})]\\
-  & + \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}.
+  & + \mathbb{E}\{\nu_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1} , \chi_{jt} = 1\}.
   \end{split}
   \end{equation}
   and
   \begin{equation}
-  \mathbb{E}\{\nu_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
+  \mathbb{E}\{\nu_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1 \} \neq 0,
   \end{equation}
   since anticipated shock matters continuation/exit decision in period \(t\).
 \end{itemize}
@@ -2016,8 +2016,8 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   Let's see that the conditional expectation:
   \begin{equation}
   \begin{split}
-  &\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1 \}\\
-  &=\mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
+  &\mathbb{E}\{\omega_{jt}| k_{jt},  k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1 \}\\
+  &=\mathbb{E}\{\omega_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \omega_{jt} \ge \underline{\omega}(k_{jt}) \}\\
   &=\int_{\underline{\omega}(k_{jt})} \omega_{jt} \frac{p(\omega_{jt}|\omega_{j, t - 1})}{\int_{\underline{\omega}(k_{jt})} p(\omega|\omega_{j, t - 1}) d\omega } d \omega_{jt}\\
   &\equiv \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt})),
   \end{split}
@@ -2062,8 +2062,8 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   Now, he have:
   \begin{equation}
   \begin{split}
-  &\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1}, \chi_{jt} = 1\} \\
-  &= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, i_{jt}, k_{j, t - 1}, l_{j, t - 1} , \chi_{jt} = 1\}\\
+  &\mathbb{E}\{y_{jt} - \beta_l^0 l_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}, \chi_{jt} = 1\} \\
+  &= \beta_0 + \beta_k k_{jt} + \mathbb{E}\{\omega_{jt}| k_{jt}, k_{j, t - 1}, i_{j, t - 1} , \chi_{jt} = 1\}\\
   &= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \underline{\omega}(k_{jt}))\\
   &= \beta_0 + \beta_k k_{jt} + \tilde{g}(\omega_{j, t - 1}, \psi(P_{jt}, \omega_{j, t - 1}))\\
   &\equiv \beta_0 + \beta_k k_{jt} + \tilde{\tilde{g}}(\omega_{j, t - 1}, P_{jt})\\
@@ -14056,10 +14056,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 \end{Shaded}
 
 \begin{verbatim}
-##             z_1      z_2
-## [1,] -0.9070353 2.037853
-## [2,]  0.2163753 7.332762
-## [3,] -5.0190572 6.471973
+##            z_1       z_2
+## [1,] -9.676507 -6.730499
+## [2,] -3.622914 -2.587886
+## [3,] -2.272987 -2.353181
 \end{verbatim}
 
 \begin{Shaded}
@@ -14194,9 +14194,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##            [,1]
-## [1,]  0.8679860
-## [2,] -1.2263211
-## [3,] -0.3717451
+## [1,]  1.2775883
+## [2,]  1.8871575
+## [3,] -0.3357982
 \end{verbatim}
 
 \begin{enumerate}
@@ -14222,10 +14222,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]
-## [1,] 1.813545
-## [2,] 9.221819
-## [3,] 0.000000
+##           [,1]
+## [1,] -19.11573
+## [2,]  -6.87302
+## [3,]   0.00000
 \end{verbatim}
 
 \begin{enumerate}
@@ -14248,9 +14248,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
+## [1,]    0
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{enumerate}
@@ -14269,9 +14269,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
+## [1,]    0
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{enumerate}
@@ -14292,9 +14292,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
+## [1,]    0
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14305,10 +14305,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
+## [1,]    0
 ## [2,]    1
 ## [3,]    1
-## [4,]    1
+## [4,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14342,9 +14342,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
+## [1,]    0
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14355,10 +14355,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
+## [1,]    0
 ## [2,]    1
 ## [3,]    1
-## [4,]    1
+## [4,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14445,9 +14445,9 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
+## [1,]    0
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14458,7 +14458,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.5352
+## [1] 0.4302
 \end{verbatim}
 
 \begin{enumerate}
@@ -14483,9 +14483,9 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    1
-## [3,]    1
+## [1,]    0
+## [2,]    0
+## [3,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14496,7 +14496,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.3298
+## [1] 0.3164
 \end{verbatim}
 
 \begin{enumerate}
