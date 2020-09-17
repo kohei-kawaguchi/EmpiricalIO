@@ -113,7 +113,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2020-09-15}
+\date{Last updated: 2020-09-17}
 
 \begin{document}
 \maketitle
@@ -2123,13 +2123,13 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \item
   Then, invertibility recovers on this selected sample.
 \item
-  This \textbf{does not} cause bias in the estimator because \(\nu_{jt}\) in :
+  This does not cause bias in the estimator because \(\nu_{jt}\) in :
   \begin{equation}
   \beta_0 + \beta_l k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt},
   \end{equation}
   is independent of the event up to \(t - 1\), including \(i_{j, t - 1}\).
 \item
-  However, this \textbf{does} cause information loss. The loss is high if the proportion of the sample such that \(i_{j, t - 1} = 0\) is high.
+  However, this causes information loss. The loss is high if the proportion of the sample such that \(i_{j, t - 1} = 0\) is high.
 \end{itemize}
 
 \hypertarget{tackle-zero-investment-problem-ii-use-another-proxy}{%
@@ -2161,11 +2161,11 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \end{split}
   \end{equation}
 \item
-  We can identify \(\beta_l\) and \(\phi\) by exploiting the moment condition:
+  We can identify \(\beta_l\) and \(\phi\) by exploiting the moment condition (you can include \(i_{jt}\) if it is available):
   \begin{equation}
   \begin{split}
   & \mathbb{E}\{\eta_{jt}|l_{jt}, m_{jt}, k_{jt}, i_{jt}\} = 0\\
-  & \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \phi(m_{jt}, k_{jt}) |l_{jt}, m_{jt}, k_{jt}\} = 0,
+  & \Leftrightarrow \mathbb{E}\{y_{jt}  - \beta_l l_{jt} - \phi(m_{jt}, k_{jt}) |l_{jt}, m_{jt}, k_{jt}, i_{jt}\} = 0,
   \end{split}
   \end{equation}
   if \textbf{there is enough variation} in \(l_{jt}, m_{jt}, k_{jt}\).
@@ -2174,7 +2174,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \begin{equation}
   \begin{split}
   &y_{jt} - \beta_l^0 l_{jt}\\
-  & = \beta_k k_{jt} + \beta_m m_{jt} + g[\phi^0(m_{j, t - 1}, k_{j, t - 1}) - \beta_k k_{j, t - 1} - \beta_m m_{j, t - 1}]\\
+  & = \beta_0 + \beta_k k_{jt} + \beta_m m_{jt} + g[\phi^0(m_{j, t - 1}, k_{j, t - 1}) - \beta_0 - \beta_k k_{j, t - 1} - \beta_m m_{j, t - 1}]\\
   & + \nu_{jt} + \eta_{jt}.
   \end{split}
   \end{equation}
@@ -2490,7 +2490,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \begin{split}
   &P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}} = w_t\\
   &\Leftrightarrow \frac{P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}}}{F(L_{jt}, K_{jt}) } = \frac{w_t}{F(L_{jt}, K_{jt}) }\\
-  &\Leftrightarrow \frac{F_L(L_{jt}, K_{jt}) L_{jt}}{F(L_{jt}, K_{jt})  e^{\eta_{jt}} } = \frac{w_t L_{jt}}{P_t \underbrace{F(L_{jt}, K_{jt}) e^{\omega_{jt}} e^{\eta_{jt}}}_{Y_{jt}} },
+  &\Leftrightarrow \frac{F_L(L_{jt}, K_{jt}) L_{jt}\mathbb{E} e^{\eta_{jt}}}{F(L_{jt}, K_{jt})  e^{\eta_{jt}}} = \frac{w_t L_{jt}}{P_t \underbrace{F(L_{jt}, K_{jt}) e^{\omega_{jt}} e^{\eta_{jt}}}_{Y_{jt}} },
   \end{split}
   \end{equation}
   where the right hand side is expenditure share to the labor, which is observed.
@@ -14056,10 +14056,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 \end{Shaded}
 
 \begin{verbatim}
-##            z_1       z_2
-## [1,] -9.676507 -6.730499
-## [2,] -3.622914 -2.587886
-## [3,] -2.272987 -2.353181
+##             z_1       z_2
+## [1,]  0.1871493 -7.317478
+## [2,] -4.8557409 -4.277614
+## [3,]  4.8348481  4.737415
 \end{verbatim}
 
 \begin{Shaded}
@@ -14193,10 +14193,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 \end{Shaded}
 
 \begin{verbatim}
-##            [,1]
-## [1,]  1.2775883
-## [2,]  1.8871575
-## [3,] -0.3357982
+##           [,1]
+## [1,] 1.1610786
+## [2,] 0.4733227
+## [3,] 1.8753586
 \end{verbatim}
 
 \begin{enumerate}
@@ -14223,8 +14223,8 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##           [,1]
-## [1,] -19.11573
-## [2,]  -6.87302
+## [1,] -11.91978
+## [2,] -11.93367
 ## [3,]   0.00000
 \end{verbatim}
 
@@ -14250,7 +14250,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ##      [,1]
 ## [1,]    0
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -14271,7 +14271,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ##      [,1]
 ## [1,]    0
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{enumerate}
@@ -14294,7 +14294,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ##      [,1]
 ## [1,]    0
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14308,7 +14308,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1
-## [4,]    0
+## [4,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14344,7 +14344,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ##      [,1]
 ## [1,]    0
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14358,7 +14358,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1
-## [4,]    0
+## [4,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14447,7 +14447,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 ##      [,1]
 ## [1,]    0
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14458,7 +14458,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.4302
+## [1] 0.5009
 \end{verbatim}
 
 \begin{enumerate}
@@ -14485,7 +14485,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 ##      [,1]
 ## [1,]    0
 ## [2,]    0
-## [3,]    0
+## [3,]    1
 \end{verbatim}
 
 \begin{Shaded}
@@ -14496,7 +14496,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.3164
+## [1] 0.3427
 \end{verbatim}
 
 \begin{enumerate}

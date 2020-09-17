@@ -496,12 +496,12 @@ by a kernel estimator.
 - Discard a data $(j, t)$ such that $i_{j, t - 1} = 0$.
 - Use a data $(j, t)$ such that $i_{j, t - 1} > 0$.
 - Then, invertibility recovers on this selected sample.
-- This \textbf{does not} cause bias in the estimator because $\nu_{jt}$ in :
+- This does not cause bias in the estimator because $\nu_{jt}$ in :
 \begin{equation}
 \beta_0 + \beta_l k_{jt} + g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] + \nu_{jt} + \eta_{jt},
 \end{equation}
 is independent of the event up to $t - 1$, including $i_{j, t - 1}$. 
-- However, this \textbf{does} cause information loss. The loss is high if the proportion of the sample such that $i_{j, t - 1} = 0$ is high.
+- However, this causes information loss. The loss is high if the proportion of the sample such that $i_{j, t - 1} = 0$ is high.
  
 
 
@@ -527,11 +527,11 @@ y_{jt} &= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \beta_m m_{jt} + h(m_{jt},
 &= \beta_l l_{jt} + \phi(m_{jt}, k_{jt}) + \eta_{jt}.
 \end{split}
 \end{equation}
-- We can identify $\beta_l$ and $\phi$ by exploiting the moment condition:
+- We can identify $\beta_l$ and $\phi$ by exploiting the moment condition (you can include $i_{jt}$ if it is available):
 \begin{equation}
 \begin{split}
 & \mathbb{E}\{\eta_{jt}|l_{jt}, m_{jt}, k_{jt}, i_{jt}\} = 0\\
-& \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \phi(m_{jt}, k_{jt}) |l_{jt}, m_{jt}, k_{jt}\} = 0,
+& \Leftrightarrow \mathbb{E}\{y_{jt}  - \beta_l l_{jt} - \phi(m_{jt}, k_{jt}) |l_{jt}, m_{jt}, k_{jt}, i_{jt}\} = 0,
 \end{split}
 \end{equation}
 if __there is enough variation__ in $l_{jt}, m_{jt}, k_{jt}$.
@@ -539,7 +539,7 @@ if __there is enough variation__ in $l_{jt}, m_{jt}, k_{jt}$.
 \begin{equation}
 \begin{split}
 &y_{jt} - \beta_l^0 l_{jt}\\
-& = \beta_k k_{jt} + \beta_m m_{jt} + g[\phi^0(m_{j, t - 1}, k_{j, t - 1}) - \beta_k k_{j, t - 1} - \beta_m m_{j, t - 1}]\\
+& = \beta_0 + \beta_k k_{jt} + \beta_m m_{jt} + g[\phi^0(m_{j, t - 1}, k_{j, t - 1}) - \beta_0 - \beta_k k_{j, t - 1} - \beta_m m_{j, t - 1}]\\
 & + \nu_{jt} + \eta_{jt}.
 \end{split}
 \end{equation}
@@ -752,7 +752,7 @@ y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\tilde{\phi}(i_{j, t - 1}
 \begin{split}
 &P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}} = w_t\\
 &\Leftrightarrow \frac{P_t F_L(L_{jt}, K_{jt})e^{\omega_{jt}} \mathbb{E} e^{\eta_{jt}}}{F(L_{jt}, K_{jt}) } = \frac{w_t}{F(L_{jt}, K_{jt}) }\\
-&\Leftrightarrow \frac{F_L(L_{jt}, K_{jt}) L_{jt}}{F(L_{jt}, K_{jt})  e^{\eta_{jt}} } = \frac{w_t L_{jt}}{P_t \underbrace{F(L_{jt}, K_{jt}) e^{\omega_{jt}} e^{\eta_{jt}}}_{Y_{jt}} },
+&\Leftrightarrow \frac{F_L(L_{jt}, K_{jt}) L_{jt}\mathbb{E} e^{\eta_{jt}}}{F(L_{jt}, K_{jt})  e^{\eta_{jt}}} = \frac{w_t L_{jt}}{P_t \underbrace{F(L_{jt}, K_{jt}) e^{\omega_{jt}} e^{\eta_{jt}}}_{Y_{jt}} },
 \end{split}
 \end{equation}
 where the right hand side is expenditure share to the labor, which is observed.
