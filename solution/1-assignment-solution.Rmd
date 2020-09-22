@@ -38,7 +38,7 @@ where $\epsilon_{ik}$ follows i.i.d. type-I extreme value distribution, $\beta =
 1. To simulate data, first make a data frame as follows:
 ```{r}
 df <- expand.grid(i = 1:1000, k = 1:2) %>%
-  tibble::as.tibble() %>%
+  tibble::as_tibble() %>%
   dplyr::mutate(x = ifelse(k == 1, 0, 1)) %>%
   dplyr::arrange(i, k)
 df
