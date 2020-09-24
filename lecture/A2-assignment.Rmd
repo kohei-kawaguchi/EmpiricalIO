@@ -345,14 +345,14 @@ summary(result_1st_unidentified)
 
 Then, we estimate the second stage model of Olley-Pakes method:
 $$
-y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}] + \nu_{jt} + \eta_{jt}.
+y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}] + \nu_{jt} + \eta_{jt}.
 $$
 
 In this model, we do not have to non-parametetrically estimate the conditional expectation of $\omega_{jt}$ on $\omega_{j, t - 1}$, because we know that the anticipated shock follows an AR(1) process. Remark that we in general have to non-parametrically estimate it.
 
 The model is non-linear in parameters, because of the term $\alpha \beta_0$ and $\alpha \beta_k$. We estimate $\alpha$, $\beta_0$, and $\beta_k$ by a GMM estimator. The moment is:
 $$
-g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}]\} 
+g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}]\} 
 \begin{bmatrix}
 k_{jt} \\
 k_{j, t - 1} \\

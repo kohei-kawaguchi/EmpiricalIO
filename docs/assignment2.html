@@ -1006,12 +1006,12 @@ by approximating <span class="math inline">\(\phi_t\)</span> by a kernel functio
 ## No. Continuous Explanatory Vars.: 2</code></pre>
 <p>Then, we estimate the second stage model of Olley-Pakes method:
 <span class="math display">\[
-y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}] + \nu_{jt} + \eta_{jt}.
+y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}] + \nu_{jt} + \eta_{jt}.
 \]</span></p>
 <p>In this model, we do not have to non-parametetrically estimate the conditional expectation of <span class="math inline">\(\omega_{jt}\)</span> on <span class="math inline">\(\omega_{j, t - 1}\)</span>, because we know that the anticipated shock follows an AR(1) process. Remark that we in general have to non-parametrically estimate it.</p>
 <p>The model is non-linear in parameters, because of the term <span class="math inline">\(\alpha \beta_0\)</span> and <span class="math inline">\(\alpha \beta_k\)</span>. We estimate <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> by a GMM estimator. The moment is:
 <span class="math display">\[
-g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{jt}]\} 
+g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}]\} 
 \begin{bmatrix}
 k_{jt} \\
 k_{j, t - 1} \\
