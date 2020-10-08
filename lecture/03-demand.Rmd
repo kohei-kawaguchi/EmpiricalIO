@@ -449,7 +449,7 @@ where $x_j$ is a quality of product $j$ and $z_i$ is the consumer's willingness 
 - Consumer $i$ prefers good $j + 1$ to good $j$ if and only if:
 \begin{equation}
 \begin{split}
-&v(p_{j + 1}, wx{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
+&v(p_{j + 1}, x_{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
 &\Leftrightarrow z_i x_{j + 1} - p_{j + 1} \ge z_i x_j - p_j\\
 &\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{x_{j + 1} - x_j} \equiv \Delta_j.
 \end{split}
@@ -929,9 +929,9 @@ we have:
 - We discuss how to include unobserved heterogeneity in the subsequent sections.
 - Suppose that the indirect utility function of good $j$ for consumer $i$ in market $t$ is:
 \begin{equation}
-\beta' x_{jt}  - \alpha p_{jt} - \xi_{jt} + \epsilon_{ik},
+\beta' x_{jt}  - \alpha p_{jt} + \xi_{jt} + \epsilon_{ijt},
 \end{equation}
-- $\epsilon_{ik}$ is i.i.d. Type-I extreme value.
+- $\epsilon_{ijt}$ is i.i.d. Type-I extreme value.
 - $\xi_{jt}$ is the _unobserved product-market-specific fixed effect_ of product $j$ in market $t$, which can be correlated with $p_{jt}$.
 - We hold the assumption that $x_{jt}$ is uncorrelated with $\xi_{jt}$. 
 - The choice probability of good $j$ for this consumer and hence the choice share in this market is:
@@ -1001,7 +1001,7 @@ with the observed share $s$.
 - So far we abstracted away from the unobserved consumer heterogeneity.
 - Next, suppose that the indirect utility function of good $j$ for consumer $i$ in market $t$ is:
 \begin{equation}
-\beta_i' x_{jt}  - \alpha_i p_{jt} - \xi_{jt} + \epsilon_{ik},
+\beta_i' x_{jt}  - \alpha_i p_{jt} + \xi_{jt} + \epsilon_{ijt},
 \end{equation}
 where $\epsilon_{ik}$ is i.i.d. Type-I extreme value.
 - The coefficient are drawn according to:
@@ -1073,12 +1073,13 @@ for $j = 1, \cdots, J, t = 1, \cdots, T$.
 
 - Now, fix $\theta_2$ and define an operator $T$ such that:
 \begin{equation}
-T_t(\delta_t) = \delta_t + \ln \underbrace{s_{jt}}_{\text{data}} - \ln \underbrace{\sigma_{jt}(\delta_t, \theta_2)}_{\text{model}}.
+T_t(\delta_t) = \delta_t + \ln \underbrace{s_{t}}_{\text{data}} - \ln \underbrace{\sigma_{t}(\delta_t, \theta_2)}_{\text{model}},
 \end{equation} 
+where $\delta_t = (\delta_{1t}, \cdots, \delta_{Jt})'$,  $s_t = (s_{1t}, \cdots, s_{Jt})'$ and $\sigma_t = (\sigma_{1t}, \cdots, \sigma_{Jt})'$.
 - Let $\delta_t^{(0)} = (\delta_{1t}^{(0)}, \cdots, \delta_{Jt}^{(0)})'$ be an arbitrary starting vector of average utility of products in a market.
 - Using the operator above, we update $\delta_{t}^{(r)}$ by:
 \begin{equation}
-\delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{jt} - \ln \sigma_{jt}(\delta_t^{(r)}, \theta_2),
+\delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{t} - \ln \sigma_{t}(\delta_t^{(r)}, \theta_2),
 \end{equation}
 for $r = 0, 1, \cdots$.
 - @Berry1995a proved that $T_t$ as specified above is a __contraction mapping with modulus less than one__.
@@ -1088,8 +1089,8 @@ for $r = 0, 1, \cdots$.
 - The fixed point of $T_t$ is $\delta_t^*$ such that $\delta_t^* = T_t(\delta_t^*)$, i.e.,
 \begin{equation}
 \begin{split}
-&\delta_t^* = \delta_t^* + \ln s_{jt} - \ln \sigma_{jt}(\delta_t^*, \theta_2),\\
-&\Leftrightarrow s_{jt} = \sigma_{jt}(\delta_t^*, \theta_2).
+&\delta_t^* = \delta_t^* + \ln s_{t} - \ln \sigma_{t}(\delta_t^*, \theta_2),\\
+&\Leftrightarrow s_{t} = \sigma_{t}(\delta_t^*, \theta_2).
 \end{split}
 \end{equation}
 - So, the fixed point $\delta_t^*$ is the conditional mean indirect utility that solves the equality given non-linear parameter $\theta_2$.
@@ -1108,7 +1109,7 @@ for $r = 0, 1, \cdots$.
 \end{equation}
 - Hence, if we set:
 \begin{equation}
-\xi_{jt}(\theta) \equiv \delta_t(\theta_2) - \Bigg[\sum_{l = 1}^L \beta_{l} x_{jl} + \alpha_0 p_{jt} \Bigg],
+\xi_{jt}(\theta) \equiv \delta_{jt}(\theta_2) - \Bigg[\beta_0' x_{jt} - \alpha_0 p_{jt} \Bigg],
 \end{equation}
 the $\xi_{jt}(\theta)$ solves the equality:
 \begin{equation}
@@ -1241,6 +1242,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.
     - Assume that demand shocks are independent across markets, whereas the cost shocks are correlated.
     - The latter will be true if the product is produced by the same manufacturer.
     - Then, the price of the same product in the other markets $p_{j, -t}$ will be valid instruments for the price of the product in a given market, $p_{jt}$. 
+    
 - __BLP-type IV__ [@Berry1995a]:
     - In oligopoly, the price of a good in a market depends on the market structure, i.e., what kind of products are available in the market.
     - For example, if there are similar products in the market, the price will tend to be lower.
@@ -1256,6 +1258,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.
 \sum_{k \neq j \in \mathcal{J}_t \setminus \mathcal{F}_{f}} x_{kt}.
 \end{equation}
     - $f$ is the firm that owns product $j$ and $\mathcal{F}_{f}$ is the set of products firm $f$ owns. 
+    
 - __Differentiation IV__ [@Gandhi2015a]:
     - Let $d_{jkt} = d(x_{jt}, x_{kt})$ be some distance between product characteristics.
     - They showed that under certain conditions the optimal BLP-type IV is a function $d_{-jt}\{d_{jkt}\}_{k \neq j \in \mathcal{J}_t}$.

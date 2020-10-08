@@ -1115,7 +1115,7 @@ where <span class="math inline">\(x_j\)</span> is a quality of product <span cla
 <li>Consumer <span class="math inline">\(i\)</span> prefers good <span class="math inline">\(j + 1\)</span> to good <span class="math inline">\(j\)</span> if and only if:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;v(p_{j + 1}, wx{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
+&amp;v(p_{j + 1}, x_{j + 1}, y_i, z_i) \ge v(p_j, x_j, y_i, z_i)\\
 &amp;\Leftrightarrow z_i x_{j + 1} - p_{j + 1} \ge z_i x_j - p_j\\
 &amp;\Leftrightarrow z_i \ge \frac{p_{j + 1} - p_j}{x_{j + 1} - x_j} \equiv \Delta_j.
 \end{split}
@@ -1594,9 +1594,9 @@ we have:
 <li>We discuss how to include unobserved heterogeneity in the subsequent sections.</li>
 <li>Suppose that the indirect utility function of good <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is:
 <span class="math display">\[\begin{equation}
-\beta&#39; x_{jt}  - \alpha p_{jt} - \xi_{jt} + \epsilon_{ik},
+\beta&#39; x_{jt}  - \alpha p_{jt} + \xi_{jt} + \epsilon_{ijt},
 \end{equation}\]</span></li>
-<li><span class="math inline">\(\epsilon_{ik}\)</span> is i.i.d. Type-I extreme value.</li>
+<li><span class="math inline">\(\epsilon_{ijt}\)</span> is i.i.d. Type-I extreme value.</li>
 <li><span class="math inline">\(\xi_{jt}\)</span> is the <em>unobserved product-market-specific fixed effect</em> of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span>, which can be correlated with <span class="math inline">\(p_{jt}\)</span>.</li>
 <li>We hold the assumption that <span class="math inline">\(x_{jt}\)</span> is uncorrelated with <span class="math inline">\(\xi_{jt}\)</span>.</li>
 <li>The choice probability of good <span class="math inline">\(j\)</span> for this consumer and hence the choice share in this market is:</li>
@@ -1671,7 +1671,7 @@ with the observed share <span class="math inline">\(s\)</span>.</li>
 <li>So far we abstracted away from the unobserved consumer heterogeneity.</li>
 <li>Next, suppose that the indirect utility function of good <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is:
 <span class="math display">\[\begin{equation}
-\beta_i&#39; x_{jt}  - \alpha_i p_{jt} - \xi_{jt} + \epsilon_{ik},
+\beta_i&#39; x_{jt}  - \alpha_i p_{jt} + \xi_{jt} + \epsilon_{ijt},
 \end{equation}\]</span>
 where <span class="math inline">\(\epsilon_{ik}\)</span> is i.i.d. Type-I extreme value.</li>
 <li>The coefficient are drawn according to:
@@ -1741,12 +1741,13 @@ for <span class="math inline">\(j = 1, \cdots, J, t = 1, \cdots, T\)</span>.</li
 <ul>
 <li>Now, fix <span class="math inline">\(\theta_2\)</span> and define an operator <span class="math inline">\(T\)</span> such that:
 <span class="math display">\[\begin{equation}
-T_t(\delta_t) = \delta_t + \ln \underbrace{s_{jt}}_{\text{data}} - \ln \underbrace{\sigma_{jt}(\delta_t, \theta_2)}_{\text{model}}.
-\end{equation}\]</span></li>
+T_t(\delta_t) = \delta_t + \ln \underbrace{s_{t}}_{\text{data}} - \ln \underbrace{\sigma_{t}(\delta_t, \theta_2)}_{\text{model}},
+\end{equation}\]</span>
+where <span class="math inline">\(\delta_t = (\delta_{1t}, \cdots, \delta_{Jt})&#39;\)</span>, <span class="math inline">\(s_t = (s_{1t}, \cdots, s_{Jt})&#39;\)</span> and <span class="math inline">\(\sigma_t = (\sigma_{1t}, \cdots, \sigma_{Jt})&#39;\)</span>.</li>
 <li>Let <span class="math inline">\(\delta_t^{(0)} = (\delta_{1t}^{(0)}, \cdots, \delta_{Jt}^{(0)})&#39;\)</span> be an arbitrary starting vector of average utility of products in a market.</li>
 <li>Using the operator above, we update <span class="math inline">\(\delta_{t}^{(r)}\)</span> by:
 <span class="math display">\[\begin{equation}
-\delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{jt} - \ln \sigma_{jt}(\delta_t^{(r)}, \theta_2),
+\delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{t} - \ln \sigma_{t}(\delta_t^{(r)}, \theta_2),
 \end{equation}\]</span>
 for <span class="math inline">\(r = 0, 1, \cdots\)</span>.</li>
 <li><span class="citation">Berry, Levinsohn, &amp; Pakes (<a href="#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> proved that <span class="math inline">\(T_t\)</span> as specified above is a <strong>contraction mapping with modulus less than one</strong>.</li>
@@ -1758,8 +1759,8 @@ for <span class="math inline">\(r = 0, 1, \cdots\)</span>.</li>
 <li>The fixed point of <span class="math inline">\(T_t\)</span> is <span class="math inline">\(\delta_t^*\)</span> such that <span class="math inline">\(\delta_t^* = T_t(\delta_t^*)\)</span>, i.e.,
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;\delta_t^* = \delta_t^* + \ln s_{jt} - \ln \sigma_{jt}(\delta_t^*, \theta_2),\\
-&amp;\Leftrightarrow s_{jt} = \sigma_{jt}(\delta_t^*, \theta_2).
+&amp;\delta_t^* = \delta_t^* + \ln s_{t} - \ln \sigma_{t}(\delta_t^*, \theta_2),\\
+&amp;\Leftrightarrow s_{t} = \sigma_{t}(\delta_t^*, \theta_2).
 \end{split}
 \end{equation}\]</span></li>
 <li>So, the fixed point <span class="math inline">\(\delta_t^*\)</span> is the conditional mean indirect utility that solves the equality given non-linear parameter <span class="math inline">\(\theta_2\)</span>.</li>
@@ -1779,7 +1780,7 @@ for <span class="math inline">\(r = 0, 1, \cdots\)</span>.</li>
 \end{equation}\]</span></li>
 <li>Hence, if we set:
 <span class="math display">\[\begin{equation}
-\xi_{jt}(\theta) \equiv \delta_t(\theta_2) - \Bigg[\sum_{l = 1}^L \beta_{l} x_{jl} + \alpha_0 p_{jt} \Bigg],
+\xi_{jt}(\theta) \equiv \delta_{jt}(\theta_2) - \Bigg[\beta_0&#39; x_{jt} - \alpha_0 p_{jt} \Bigg],
 \end{equation}\]</span>
 the <span class="math inline">\(\xi_{jt}(\theta)\)</span> solves the equality:
 <span class="math display">\[\begin{equation}
@@ -1936,17 +1937,25 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <p><span class="math display">\[\begin{equation}
 \sum_{k \neq j \in \mathcal{J}_t \setminus \mathcal{F}_{f}} x_{kt}.
 \end{equation}\]</span>
-- <span class="math inline">\(f\)</span> is the firm that owns product <span class="math inline">\(j\)</span> and <span class="math inline">\(\mathcal{F}_{f}\)</span> is the set of products firm <span class="math inline">\(f\)</span> owns.
-- <strong>Differentiation IV</strong> <span class="citation">(Gandhi &amp; Houde, <a href="#ref-Gandhi2015a" role="doc-biblioref">2015</a>)</span>:
-- Let <span class="math inline">\(d_{jkt} = d(x_{jt}, x_{kt})\)</span> be some distance between product characteristics.
-- They showed that under certain conditions the optimal BLP-type IV is a function <span class="math inline">\(d_{-jt}\{d_{jkt}\}_{k \neq j \in \mathcal{J}_t}\)</span>.
-- The suggest to use the moments of <span class="math inline">\(d_{-jt}\)</span> as the excluded instrument variables.
-- Weak instruments problem of BLP-type IV:
-- <span class="citation">Armstrong (<a href="#ref-Armstrong2016b" role="doc-biblioref">2016</a>)</span> argued that estimates based on BLP-type IV may be inconsistent when <span class="math inline">\(J \times \infty\)</span> asymptotics is considered, because then the market approaches the competitive market and the correlation between the markup and the product characteristics of the rivals disappear.
-- Specifically, the estimator is inconsistent if all of the following conditions are met:
-1. <span class="math inline">\(J \to \infty\)</span> but <span class="math inline">\(T\)</span> is fixed;
-1. The demand/cost functions are such that the correlation between markups and characteristics of other products decreases quickly enough as <span class="math inline">\(J \to \infty\)</span>.
-1. There is no cost instruments or other sources of identification.</p>
+- <span class="math inline">\(f\)</span> is the firm that owns product <span class="math inline">\(j\)</span> and <span class="math inline">\(\mathcal{F}_{f}\)</span> is the set of products firm <span class="math inline">\(f\)</span> owns.</p>
+<ul>
+<li><strong>Differentiation IV</strong> <span class="citation">(Gandhi &amp; Houde, <a href="#ref-Gandhi2015a" role="doc-biblioref">2015</a>)</span>:
+<ul>
+<li>Let <span class="math inline">\(d_{jkt} = d(x_{jt}, x_{kt})\)</span> be some distance between product characteristics.</li>
+<li>They showed that under certain conditions the optimal BLP-type IV is a function <span class="math inline">\(d_{-jt}\{d_{jkt}\}_{k \neq j \in \mathcal{J}_t}\)</span>.</li>
+<li>The suggest to use the moments of <span class="math inline">\(d_{-jt}\)</span> as the excluded instrument variables.</li>
+</ul></li>
+<li>Weak instruments problem of BLP-type IV:
+<ul>
+<li><span class="citation">Armstrong (<a href="#ref-Armstrong2016b" role="doc-biblioref">2016</a>)</span> argued that estimates based on BLP-type IV may be inconsistent when <span class="math inline">\(J \times \infty\)</span> asymptotics is considered, because then the market approaches the competitive market and the correlation between the markup and the product characteristics of the rivals disappear.</li>
+<li>Specifically, the estimator is inconsistent if all of the following conditions are met:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(J \to \infty\)</span> but <span class="math inline">\(T\)</span> is fixed;</li>
+<li>The demand/cost functions are such that the correlation between markups and characteristics of other products decreases quickly enough as <span class="math inline">\(J \to \infty\)</span>.</li>
+<li>There is no cost instruments or other sources of identification.</li>
+</ol></li>
+</ul>
 <!-- ### Control Function Approach -->
 <!-- - The equilibrium price vector in a market is determined by product characteristics, and productivity and demand conditions. -->
 <!-- - It will depends on the unobserved product characteristics $\xi_{jt}$. -->
