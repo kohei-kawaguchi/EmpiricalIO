@@ -32,6 +32,7 @@
   
 <link rel="prev" href="dynamics.html"/>
 <link rel="next" href="auction.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,25 +53,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -79,9 +81,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,9 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">ECON5630</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Syllabus</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Syllabus</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#instructor-information"><i class="fa fa-check"></i><b>1.1</b> Instructor Information</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#general-information"><i class="fa fa-check"></i><b>1.2</b> General Information</a><ul>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#general-information"><i class="fa fa-check"></i><b>1.2</b> General Information</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#class-time"><i class="fa fa-check"></i><b>1.2.1</b> Class Time</a></li>
 <li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i><b>1.2.2</b> Description</a></li>
 <li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#expectation-and-goals"><i class="fa fa-check"></i><b>1.2.3</b> Expectation and Goals</a></li>
@@ -141,28 +145,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#evaluation"><i class="fa fa-check"></i><b>1.4</b> Evaluation</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#academic-integrity"><i class="fa fa-check"></i><b>1.5</b> Academic Integrity</a></li>
 <li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i><b>1.6</b> Schedule</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#course-materials"><i class="fa fa-check"></i><b>1.7</b> Course Materials</a><ul>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#course-materials"><i class="fa fa-check"></i><b>1.7</b> Course Materials</a>
+<ul>
 <li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.7.1</b> R and RStudio</a></li>
 <li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#handbook-chapters"><i class="fa fa-check"></i><b>1.7.2</b> Handbook Chapters</a></li>
 <li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.7.3</b> Books</a></li>
 <li class="chapter" data-level="1.7.4" data-path="index.html"><a href="index.html#papers"><i class="fa fa-check"></i><b>1.7.4</b> Papers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#structural-estimation-and-counterfactual-analysis"><i class="fa fa-check"></i><b>2.1</b> Structural Estimation and Counterfactual Analysis</a><ul>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#structural-estimation-and-counterfactual-analysis"><i class="fa fa-check"></i><b>2.1</b> Structural Estimation and Counterfactual Analysis</a>
+<ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
 <li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#recap"><i class="fa fa-check"></i><b>2.1.2</b> Recap</a></li>
 <li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#historical-remark"><i class="fa fa-check"></i><b>2.1.3</b> Historical Remark</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#setting-up-the-environment"><i class="fa fa-check"></i><b>2.2</b> Setting Up The Environment</a><ul>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#setting-up-the-environment"><i class="fa fa-check"></i><b>2.2</b> Setting Up The Environment</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#rstudio-project"><i class="fa fa-check"></i><b>2.2.1</b> RStudio Project</a></li>
 <li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#basic-programming-in-r"><i class="fa fa-check"></i><b>2.2.2</b> Basic Programming in R</a></li>
 <li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#reproducible-reports-using-rmarkdown"><i class="fa fa-check"></i><b>2.2.3</b> Reproducible Reports using Rmarkdown</a></li>
 <li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#github-and-github-classroom"><i class="fa fa-check"></i><b>2.2.4</b> GitHub and GitHub Classroom</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="production.html"><a href="production.html"><i class="fa fa-check"></i><b>3</b> Production and Cost Function Estimation</a><ul>
-<li class="chapter" data-level="3.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>3.1</b> Motivations</a><ul>
+<li class="chapter" data-level="3" data-path="production.html"><a href="production.html"><i class="fa fa-check"></i><b>3</b> Production and Cost Function Estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>3.1</b> Motivations</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="production.html"><a href="production.html#io"><i class="fa fa-check"></i><b>3.1.1</b> IO</a></li>
 <li class="chapter" data-level="3.1.2" data-path="production.html"><a href="production.html#development"><i class="fa fa-check"></i><b>3.1.2</b> Development</a></li>
 <li class="chapter" data-level="3.1.3" data-path="production.html"><a href="production.html#trade"><i class="fa fa-check"></i><b>3.1.3</b> Trade</a></li>
@@ -170,7 +180,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.5" data-path="production.html"><a href="production.html#education"><i class="fa fa-check"></i><b>3.1.5</b> Education</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="production.html"><a href="production.html#analyzing-producer-behaviors"><i class="fa fa-check"></i><b>3.2</b> Analyzing Producer Behaviors</a></li>
-<li class="chapter" data-level="3.3" data-path="production.html"><a href="production.html#production-function-estimation"><i class="fa fa-check"></i><b>3.3</b> Production Function Estimation</a><ul>
+<li class="chapter" data-level="3.3" data-path="production.html"><a href="production.html#production-function-estimation"><i class="fa fa-check"></i><b>3.3</b> Production Function Estimation</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="production.html"><a href="production.html#cobb-douglas-specification-as-a-benchmark"><i class="fa fa-check"></i><b>3.3.1</b> Cobb-Douglas Specification as a Benchmark</a></li>
 <li class="chapter" data-level="3.3.2" data-path="production.html"><a href="production.html#potential-bias-i-endogeneity"><i class="fa fa-check"></i><b>3.3.2</b> Potential Bias I: Endogeneity</a></li>
 <li class="chapter" data-level="3.3.3" data-path="production.html"><a href="production.html#potential-bias-ii-selection"><i class="fa fa-check"></i><b>3.3.3</b> Potential Bias II: Selection</a></li>
@@ -206,7 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.33" data-path="production.html"><a href="production.html#tackle-collinearity-problem-peculiar-assumptions"><i class="fa fa-check"></i><b>3.3.33</b> Tackle Collinearity Problem: Peculiar Assumptions</a></li>
 <li class="chapter" data-level="3.3.34" data-path="production.html"><a href="production.html#tackle-collinearity-problem-share-regression"><i class="fa fa-check"></i><b>3.3.34</b> Tackle Collinearity Problem: Share Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="production.html"><a href="production.html#cost-function-estimation"><i class="fa fa-check"></i><b>3.4</b> Cost Function Estimation</a><ul>
+<li class="chapter" data-level="3.4" data-path="production.html"><a href="production.html#cost-function-estimation"><i class="fa fa-check"></i><b>3.4</b> Cost Function Estimation</a>
+<ul>
 <li class="chapter" data-level="3.4.1" data-path="production.html"><a href="production.html#cost-function-duality"><i class="fa fa-check"></i><b>3.4.1</b> Cost Function: Duality</a></li>
 <li class="chapter" data-level="3.4.2" data-path="production.html"><a href="production.html#translog-cost-function"><i class="fa fa-check"></i><b>3.4.2</b> Translog Cost Function</a></li>
 <li class="chapter" data-level="3.4.3" data-path="production.html"><a href="production.html#translog-cost-function-integrability"><i class="fa fa-check"></i><b>3.4.3</b> Translog Cost Function: Integrability</a></li>
@@ -219,10 +231,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.10</b> Oligopoly</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a><ul>
+<li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>4.1</b> Motivations</a></li>
 <li class="chapter" data-level="4.2" data-path="demand.html"><a href="demand.html#analyzing-consumer-behaviors"><i class="fa fa-check"></i><b>4.2</b> Analyzing Consumer Behaviors</a></li>
-<li class="chapter" data-level="4.3" data-path="demand.html"><a href="demand.html#continuous-choice"><i class="fa fa-check"></i><b>4.3</b> Continuous Choice</a><ul>
+<li class="chapter" data-level="4.3" data-path="demand.html"><a href="demand.html#continuous-choice"><i class="fa fa-check"></i><b>4.3</b> Continuous Choice</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="demand.html"><a href="demand.html#duality-between-utility-and-expenditure-functions"><i class="fa fa-check"></i><b>4.3.1</b> Duality between Utility and Expenditure Functions</a></li>
 <li class="chapter" data-level="4.3.2" data-path="demand.html"><a href="demand.html#deriving-other-functions"><i class="fa fa-check"></i><b>4.3.2</b> Deriving Other Functions</a></li>
 <li class="chapter" data-level="4.3.3" data-path="demand.html"><a href="demand.html#starting-from-an-indirect-utility-function"><i class="fa fa-check"></i><b>4.3.3</b> Starting from an Indirect Utility Function</a></li>
@@ -236,7 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.11" data-path="demand.html"><a href="demand.html#from-product-space-approach-to-characteristics-space-approach"><i class="fa fa-check"></i><b>4.3.11</b> From Product Space Approach to Characteristics Space Approach</a></li>
 <li class="chapter" data-level="4.3.12" data-path="demand.html"><a href="demand.html#from-continuous-choice-approach-to-discrete-choice-approach"><i class="fa fa-check"></i><b>4.3.12</b> From Continuous Choice Approach to Discrete Choice Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="demand.html"><a href="demand.html#discrete-choice"><i class="fa fa-check"></i><b>4.4</b> Discrete Choice</a><ul>
+<li class="chapter" data-level="4.4" data-path="demand.html"><a href="demand.html#discrete-choice"><i class="fa fa-check"></i><b>4.4</b> Discrete Choice</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="demand.html"><a href="demand.html#discrete-choice-approach"><i class="fa fa-check"></i><b>4.4.1</b> Discrete Choice Approach</a></li>
 <li class="chapter" data-level="4.4.2" data-path="demand.html"><a href="demand.html#discrete-choice-approach-1"><i class="fa fa-check"></i><b>4.4.2</b> Discrete Choice Approach</a></li>
 <li class="chapter" data-level="4.4.3" data-path="demand.html"><a href="demand.html#discrete-choice-approach-2"><i class="fa fa-check"></i><b>4.4.3</b> Discrete Choice Approach</a></li>
@@ -293,9 +308,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.54</b> Instrumental Variables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a><ul>
+<li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>5.1</b> Motivations</a></li>
-<li class="chapter" data-level="5.2" data-path="merger.html"><a href="merger.html#identification-of-conduct"><i class="fa fa-check"></i><b>5.2</b> Identification of Conduct</a><ul>
+<li class="chapter" data-level="5.2" data-path="merger.html"><a href="merger.html#identification-of-conduct"><i class="fa fa-check"></i><b>5.2</b> Identification of Conduct</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="merger.html"><a href="merger.html#identification-of-conduct-1"><i class="fa fa-check"></i><b>5.2.1</b> Identification of Conduct</a></li>
 <li class="chapter" data-level="5.2.2" data-path="merger.html"><a href="merger.html#marginal-revenue-function"><i class="fa fa-check"></i><b>5.2.2</b> Marginal Revenue Function</a></li>
 <li class="chapter" data-level="5.2.3" data-path="merger.html"><a href="merger.html#first-order-condition"><i class="fa fa-check"></i><b>5.2.3</b> First-Order Condition</a></li>
@@ -308,7 +325,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.10" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.10</b> Identification of the Conduct Parameter: Demand Rotater is Available</a></li>
 <li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.11</b> Identification of Conduct in Differentiated Product Market</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a><ul>
+<li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="merger.html"><a href="merger.html#unilateral-and-coordinated-effects-of-a-horizontal-merger"><i class="fa fa-check"></i><b>5.3.1</b> Unilateral and Coordinated Effects of a Horizontal Merger</a></li>
 <li class="chapter" data-level="5.3.2" data-path="merger.html"><a href="merger.html#merger-simulation-1"><i class="fa fa-check"></i><b>5.3.2</b> Merger Simulation</a></li>
 <li class="chapter" data-level="5.3.3" data-path="merger.html"><a href="merger.html#quantifying-the-unilateral-effect"><i class="fa fa-check"></i><b>5.3.3</b> Quantifying the Unilateral Effect</a></li>
@@ -318,24 +336,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.7" data-path="merger.html"><a href="merger.html#quantifying-the-coordinated-effect"><i class="fa fa-check"></i><b>5.3.7</b> Quantifying the Coordinated Effect</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="entryexit.html"><a href="entryexit.html"><i class="fa fa-check"></i><b>6</b> Entry and Exit</a><ul>
-<li class="chapter" data-level="6.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>6.1</b> Motivations</a><ul>
+<li class="chapter" data-level="6" data-path="entryexit.html"><a href="entryexit.html"><i class="fa fa-check"></i><b>6</b> Entry and Exit</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>6.1</b> Motivations</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="entryexit.html"><a href="entryexit.html#entry-cost-mode-of-competition-and-market-structure"><i class="fa fa-check"></i><b>6.1.1</b> Entry Cost, Mode of Competition, and Market Structure</a></li>
 <li class="chapter" data-level="6.1.2" data-path="entryexit.html"><a href="entryexit.html#exogenous-and-endogenous-entry-cost"><i class="fa fa-check"></i><b>6.1.2</b> Exogenous and Endogenous Entry Cost</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="entryexit.html"><a href="entryexit.html#monopoly-entry"><i class="fa fa-check"></i><b>6.2</b> Monopoly Entry</a><ul>
+<li class="chapter" data-level="6.2" data-path="entryexit.html"><a href="entryexit.html#monopoly-entry"><i class="fa fa-check"></i><b>6.2</b> Monopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="entryexit.html"><a href="entryexit.html#variable-profits-and-fixed-costs"><i class="fa fa-check"></i><b>6.2.1</b> Variable Profits and Fixed Costs</a></li>
 <li class="chapter" data-level="6.2.2" data-path="entryexit.html"><a href="entryexit.html#non-identification"><i class="fa fa-check"></i><b>6.2.2</b> Non-Identification</a></li>
 <li class="chapter" data-level="6.2.3" data-path="entryexit.html"><a href="entryexit.html#restrictions-for-identification."><i class="fa fa-check"></i><b>6.2.3</b> Restrictions for Identification.</a></li>
 <li class="chapter" data-level="6.2.4" data-path="entryexit.html"><a href="entryexit.html#homogeneous-of-degree-1-variable-profits"><i class="fa fa-check"></i><b>6.2.4</b> Homogeneous of Degree 1 Variable Profits</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="entryexit.html"><a href="entryexit.html#complete-information-homogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.3</b> Complete-Information Homogeneous Oligopoly Entry</a><ul>
+<li class="chapter" data-level="6.3" data-path="entryexit.html"><a href="entryexit.html#complete-information-homogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.3</b> Complete-Information Homogeneous Oligopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="entryexit.html"><a href="entryexit.html#variable-and-fixed-costs"><i class="fa fa-check"></i><b>6.3.1</b> Variable and Fixed Costs</a></li>
 <li class="chapter" data-level="6.3.2" data-path="entryexit.html"><a href="entryexit.html#equilibrium-condition"><i class="fa fa-check"></i><b>6.3.2</b> Equilibrium Condition</a></li>
 <li class="chapter" data-level="6.3.3" data-path="entryexit.html"><a href="entryexit.html#identification-under-a-shape-restriction"><i class="fa fa-check"></i><b>6.3.3</b> Identification under a Shape Restriction</a></li>
 <li class="chapter" data-level="6.3.4" data-path="entryexit.html"><a href="entryexit.html#log-likelihood-function"><i class="fa fa-check"></i><b>6.3.4</b> Log Likelihood Function</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="entryexit.html"><a href="entryexit.html#complete-information-heterogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.4</b> Complete-Information Heterogeneous Oligopoly Entry</a><ul>
+<li class="chapter" data-level="6.4" data-path="entryexit.html"><a href="entryexit.html#complete-information-heterogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.4</b> Complete-Information Heterogeneous Oligopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="entryexit.html"><a href="entryexit.html#bivartiate-game-with-heterogeneous-profits"><i class="fa fa-check"></i><b>6.4.1</b> Bivartiate Game with Heterogeneous Profits</a></li>
 <li class="chapter" data-level="6.4.2" data-path="entryexit.html"><a href="entryexit.html#sampling-assumption-and-observations"><i class="fa fa-check"></i><b>6.4.2</b> Sampling Assumption and Observations</a></li>
 <li class="chapter" data-level="6.4.3" data-path="entryexit.html"><a href="entryexit.html#identification-assuming-pure-strategy-equilibrium"><i class="fa fa-check"></i><b>6.4.3</b> Identification Assuming Pure-Strategy Equilibrium</a></li>
@@ -348,20 +371,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.10" data-path="entryexit.html"><a href="entryexit.html#entry-in-the-airline-industry-likelihood-function"><i class="fa fa-check"></i><b>6.4.10</b> Entry in the Airline Industry: Likelihood Function</a></li>
 <li class="chapter" data-level="6.4.11" data-path="entryexit.html"><a href="entryexit.html#is-the-equilibrium-number-of-firms-unique"><i class="fa fa-check"></i><b>6.4.11</b> Is the Equilibrium Number of Firms Unique?</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction"><i class="fa fa-check"></i><b>6.5</b> Multiple Prediction</a><ul>
+<li class="chapter" data-level="6.5" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction"><i class="fa fa-check"></i><b>6.5</b> Multiple Prediction</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="entryexit.html"><a href="entryexit.html#multiple-equilibria-in-bivariate-game-with-heterogenous-profits"><i class="fa fa-check"></i><b>6.5.1</b> Multiple Equilibria in Bivariate Game with Heterogenous Profits</a></li>
 <li class="chapter" data-level="6.5.2" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction-in-bivariate-game-with-heterogenous-profits"><i class="fa fa-check"></i><b>6.5.2</b> Multiple Prediction in Bivariate Game with Heterogenous Profits</a></li>
 <li class="chapter" data-level="6.5.3" data-path="entryexit.html"><a href="entryexit.html#inference-based-on-moment-inequalities"><i class="fa fa-check"></i><b>6.5.3</b> Inference Based on Moment Inequalities</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="entryexit.html"><a href="entryexit.html#incompelete-information-heterogenous-oligopoly-entry"><i class="fa fa-check"></i><b>6.6</b> Incompelete-Information Heterogenous Oligopoly Entry</a><ul>
+<li class="chapter" data-level="6.6" data-path="entryexit.html"><a href="entryexit.html#incompelete-information-heterogenous-oligopoly-entry"><i class="fa fa-check"></i><b>6.6</b> Incompelete-Information Heterogenous Oligopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="entryexit.html"><a href="entryexit.html#bivariate-case"><i class="fa fa-check"></i><b>6.6.1</b> Bivariate Case</a></li>
 <li class="chapter" data-level="6.6.2" data-path="entryexit.html"><a href="entryexit.html#the-equilibrium-strategy-and-belief"><i class="fa fa-check"></i><b>6.6.2</b> The Equilibrium Strategy and Belief</a></li>
 <li class="chapter" data-level="6.6.3" data-path="entryexit.html"><a href="entryexit.html#equilibrium-selection-and-likelihood"><i class="fa fa-check"></i><b>6.6.3</b> Equilibrium Selection and Likelihood</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="dynamics.html"><a href="dynamics.html"><i class="fa fa-check"></i><b>7</b> Dynamic Decision Model</a><ul>
+<li class="chapter" data-level="7" data-path="dynamics.html"><a href="dynamics.html"><i class="fa fa-check"></i><b>7</b> Dynamic Decision Model</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>7.1</b> Motivations</a></li>
-<li class="chapter" data-level="7.2" data-path="dynamics.html"><a href="dynamics.html#single-agent-model"><i class="fa fa-check"></i><b>7.2</b> Single-Agent Model</a><ul>
+<li class="chapter" data-level="7.2" data-path="dynamics.html"><a href="dynamics.html#single-agent-model"><i class="fa fa-check"></i><b>7.2</b> Single-Agent Model</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>7.2.1</b> Setting</a></li>
 <li class="chapter" data-level="7.2.2" data-path="dynamics.html"><a href="dynamics.html#timing-of-the-model"><i class="fa fa-check"></i><b>7.2.2</b> Timing of the Model</a></li>
 <li class="chapter" data-level="7.2.3" data-path="dynamics.html"><a href="dynamics.html#period-payoff"><i class="fa fa-check"></i><b>7.2.3</b> Period Payoff</a></li>
@@ -378,18 +405,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2.14" data-path="dynamics.html"><a href="dynamics.html#the-optimality-conditions"><i class="fa fa-check"></i><b>7.2.14</b> The Optimality Conditions</a></li>
 <li class="chapter" data-level="7.2.15" data-path="dynamics.html"><a href="dynamics.html#fixed-point-algorithm"><i class="fa fa-check"></i><b>7.2.15</b> Fixed-point Algorithm</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>7.3</b> Identification</a><ul>
+<li class="chapter" data-level="7.3" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>7.3</b> Identification</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="dynamics.html"><a href="dynamics.html#unidentification-result"><i class="fa fa-check"></i><b>7.3.1</b> Unidentification Result</a></li>
 <li class="chapter" data-level="7.3.2" data-path="dynamics.html"><a href="dynamics.html#identification-when-beta-and-f-is-known"><i class="fa fa-check"></i><b>7.3.2</b> Identification when <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span> is Known</a></li>
 <li class="chapter" data-level="7.3.3" data-path="dynamics.html"><a href="dynamics.html#crucial-assumptions-for-the-argument"><i class="fa fa-check"></i><b>7.3.3</b> Crucial Assumptions for the Argument</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4</b> Estimation by Nested Fixed-point Algorithm</a><ul>
+<li class="chapter" data-level="7.4" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4</b> Estimation by Nested Fixed-point Algorithm</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="dynamics.html"><a href="dynamics.html#nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4.1</b> Nested Fixed-Point Algorithm</a></li>
 <li class="chapter" data-level="7.4.2" data-path="dynamics.html"><a href="dynamics.html#solving-for-the-ex-ante-value-function"><i class="fa fa-check"></i><b>7.4.2</b> Solving for the Ex-ante Value Function</a></li>
 <li class="chapter" data-level="7.4.3" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm-1"><i class="fa fa-check"></i><b>7.4.3</b> Estimation by Nested Fixed-Point Algorithm</a></li>
 <li class="chapter" data-level="7.4.4" data-path="dynamics.html"><a href="dynamics.html#full-and-partial-likelihood"><i class="fa fa-check"></i><b>7.4.4</b> Full and Partial Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="dynamics.html"><a href="dynamics.html#estimation-by-conditional-choice-probability-ccp-approach"><i class="fa fa-check"></i><b>7.5</b> Estimation by Conditional Choice Probability (CCP) Approach</a><ul>
+<li class="chapter" data-level="7.5" data-path="dynamics.html"><a href="dynamics.html#estimation-by-conditional-choice-probability-ccp-approach"><i class="fa fa-check"></i><b>7.5</b> Estimation by Conditional Choice Probability (CCP) Approach</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="dynamics.html"><a href="dynamics.html#ccp-approach"><i class="fa fa-check"></i><b>7.5.1</b> CCP Approach</a></li>
 <li class="chapter" data-level="7.5.2" data-path="dynamics.html"><a href="dynamics.html#first-step-estimating-ccp"><i class="fa fa-check"></i><b>7.5.2</b> First Step: Estimating CCP</a></li>
 <li class="chapter" data-level="7.5.3" data-path="dynamics.html"><a href="dynamics.html#first-step-estimating-ccp-1"><i class="fa fa-check"></i><b>7.5.3</b> First Step: Estimating CCP</a></li>
@@ -402,7 +432,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5.10" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution-4"><i class="fa fa-check"></i><b>7.5.10</b> Type-I Extreme Value Distribution</a></li>
 <li class="chapter" data-level="7.5.11" data-path="dynamics.html"><a href="dynamics.html#general-distribution"><i class="fa fa-check"></i><b>7.5.11</b> General Distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="dynamics.html"><a href="dynamics.html#unobserved-heterogeneity"><i class="fa fa-check"></i><b>7.6</b> Unobserved Heterogeneity</a><ul>
+<li class="chapter" data-level="7.6" data-path="dynamics.html"><a href="dynamics.html#unobserved-heterogeneity"><i class="fa fa-check"></i><b>7.6</b> Unobserved Heterogeneity</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="dynamics.html"><a href="dynamics.html#dynamic-decision-model-with-a-finite-mixture"><i class="fa fa-check"></i><b>7.6.1</b> Dynamic Decision Model with a Finite Mixture</a></li>
 <li class="chapter" data-level="7.6.2" data-path="dynamics.html"><a href="dynamics.html#setting-1"><i class="fa fa-check"></i><b>7.6.2</b> Setting</a></li>
 <li class="chapter" data-level="7.6.3" data-path="dynamics.html"><a href="dynamics.html#observation"><i class="fa fa-check"></i><b>7.6.3</b> Observation</a></li>
@@ -424,8 +455,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.19" data-path="dynamics.html"><a href="dynamics.html#maximization-step"><i class="fa fa-check"></i><b>7.6.19</b> Maximization Step</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="dynamicgame.html"><a href="dynamicgame.html"><i class="fa fa-check"></i><b>8</b> Dynamic Game</a><ul>
-<li class="chapter" data-level="8.1" data-path="dynamicgame.html"><a href="dynamicgame.html#multiple-agent-model"><i class="fa fa-check"></i><b>8.1</b> Multiple-Agent Model</a><ul>
+<li class="chapter" data-level="8" data-path="dynamicgame.html"><a href="dynamicgame.html"><i class="fa fa-check"></i><b>8</b> Dynamic Game</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dynamicgame.html"><a href="dynamicgame.html#multiple-agent-model"><i class="fa fa-check"></i><b>8.1</b> Multiple-Agent Model</a>
+<ul>
 <li class="chapter" data-level="8.1.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>8.1.1</b> Setting</a></li>
 <li class="chapter" data-level="8.1.2" data-path="dynamics.html"><a href="dynamics.html#timing-of-the-model"><i class="fa fa-check"></i><b>8.1.2</b> Timing of the Model</a></li>
 <li class="chapter" data-level="8.1.3" data-path="dynamicgame.html"><a href="dynamicgame.html#period-profit"><i class="fa fa-check"></i><b>8.1.3</b> Period Profit</a></li>
@@ -442,7 +475,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1.14" data-path="dynamicgame.html"><a href="dynamicgame.html#estimation-ccp-approach"><i class="fa fa-check"></i><b>8.1.14</b> Estimation: CCP Approach</a></li>
 <li class="chapter" data-level="8.1.15" data-path="dynamicgame.html"><a href="dynamicgame.html#computing-psi"><i class="fa fa-check"></i><b>8.1.15</b> Computing <span class="math inline">\(\Psi\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="dynamicgame.html"><a href="dynamicgame.html#with-continuous-dynamic-choice"><i class="fa fa-check"></i><b>8.2</b> With Continuous Dynamic Choice</a><ul>
+<li class="chapter" data-level="8.2" data-path="dynamicgame.html"><a href="dynamicgame.html#with-continuous-dynamic-choice"><i class="fa fa-check"></i><b>8.2</b> With Continuous Dynamic Choice</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="dynamicgame.html"><a href="dynamicgame.html#continuous-control"><i class="fa fa-check"></i><b>8.2.1</b> Continuous Control</a></li>
 <li class="chapter" data-level="8.2.2" data-path="dynamics.html"><a href="dynamics.html#period-payoff"><i class="fa fa-check"></i><b>8.2.2</b> Period Payoff</a></li>
 <li class="chapter" data-level="8.2.3" data-path="dynamicgame.html"><a href="dynamicgame.html#policy-function-estimation-with-continuous-control"><i class="fa fa-check"></i><b>8.2.3</b> Policy Function Estimation with Continuous Control</a></li>
@@ -450,7 +484,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.2.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function-based-ccp-approach"><i class="fa fa-check"></i><b>8.2.5</b> Value Function Based CCP Approach</a></li>
 <li class="chapter" data-level="8.2.6" data-path="dynamicgame.html"><a href="dynamicgame.html#approximating-the-ex-ante-value-function"><i class="fa fa-check"></i><b>8.2.6</b> Approximating the Ex-ante Value Function</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a><ul>
+<li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamics.html"><a href="dynamics.html#setting-1"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
@@ -474,7 +509,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.21" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation-results"><i class="fa fa-check"></i><b>8.3.21</b> Counterfactual Simulation Results</a></li>
 <li class="chapter" data-level="8.3.22" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation-estimation-results"><i class="fa fa-check"></i><b>8.3.22</b> Counterfactual Simulation Estimation Results</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-with-many-firms"><i class="fa fa-check"></i><b>8.4</b> Dynamic Oligopoly with Many Firms</a><ul>
+<li class="chapter" data-level="8.4" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-with-many-firms"><i class="fa fa-check"></i><b>8.4</b> Dynamic Oligopoly with Many Firms</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-2"><i class="fa fa-check"></i><b>8.4.1</b> Setting</a></li>
 <li class="chapter" data-level="8.4.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game-1"><i class="fa fa-check"></i><b>8.4.2</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.4.3" data-path="dynamicgame.html"><a href="dynamicgame.html#assumptions"><i class="fa fa-check"></i><b>8.4.3</b> Assumptions</a></li>
@@ -488,14 +524,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.11" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.11</b> Asymptotic Results and Extensions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a><ul>
-<li class="chapter" data-level="9.1" data-path="auction.html"><a href="auction.html#general-symmetric-information-model"><i class="fa fa-check"></i><b>9.1</b> General symmetric information model</a><ul>
+<li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="auction.html"><a href="auction.html#general-symmetric-information-model"><i class="fa fa-check"></i><b>9.1</b> General symmetric information model</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>9.1.1</b> Setting</a></li>
 <li class="chapter" data-level="9.1.2" data-path="auction.html"><a href="auction.html#discussion-about-the-asssumptions"><i class="fa fa-check"></i><b>9.1.2</b> Discussion About the Asssumptions</a></li>
 <li class="chapter" data-level="9.1.3" data-path="auction.html"><a href="auction.html#bidding-strategy"><i class="fa fa-check"></i><b>9.1.3</b> Bidding Strategy</a></li>
 <li class="chapter" data-level="9.1.4" data-path="auction.html"><a href="auction.html#special-cases"><i class="fa fa-check"></i><b>9.1.4</b> Special Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="auction.html"><a href="auction.html#second-price-auctions"><i class="fa fa-check"></i><b>9.2</b> Second-Price Auctions</a><ul>
+<li class="chapter" data-level="9.2" data-path="auction.html"><a href="auction.html#second-price-auctions"><i class="fa fa-check"></i><b>9.2</b> Second-Price Auctions</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="auction.html"><a href="auction.html#the-button-auction"><i class="fa fa-check"></i><b>9.2.1</b> The Button Auction</a></li>
 <li class="chapter" data-level="9.2.2" data-path="auction.html"><a href="auction.html#equilibrium-bidding-strategies"><i class="fa fa-check"></i><b>9.2.2</b> Equilibrium Bidding Strategies</a></li>
 <li class="chapter" data-level="9.2.3" data-path="auction.html"><a href="auction.html#reserve-price"><i class="fa fa-check"></i><b>9.2.3</b> Reserve Price</a></li>
@@ -507,7 +546,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.9" data-path="auction.html"><a href="auction.html#observed-heterogeneity"><i class="fa fa-check"></i><b>9.2.9</b> Observed Heterogeneity</a></li>
 <li class="chapter" data-level="9.2.10" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>9.2.10</b> Identification</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="auction.html"><a href="auction.html#first-price-auctions"><i class="fa fa-check"></i><b>9.3</b> First-Price Auctions</a><ul>
+<li class="chapter" data-level="9.3" data-path="auction.html"><a href="auction.html#first-price-auctions"><i class="fa fa-check"></i><b>9.3</b> First-Price Auctions</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="auction.html"><a href="auction.html#first-price-sealed-bid-auction"><i class="fa fa-check"></i><b>9.3.1</b> First-Price Sealed Bid Auction</a></li>
 <li class="chapter" data-level="9.3.2" data-path="auction.html"><a href="auction.html#equilibrium-bidding-strategies-1"><i class="fa fa-check"></i><b>9.3.2</b> Equilibrium Bidding Strategies</a></li>
 <li class="chapter" data-level="9.3.3" data-path="auction.html"><a href="auction.html#maximum-likelihood-estimation-of-the-ipv-first-price-auction"><i class="fa fa-check"></i><b>9.3.3</b> Maximum Likelihood Estimation of the IPV First-Price Auction</a></li>
@@ -515,12 +555,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3.5" data-path="auction.html"><a href="auction.html#non-parmaetric-approach-estimation"><i class="fa fa-check"></i><b>9.3.5</b> Non-Parmaetric Approach: Estimation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a><ul>
-<li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#section"><i class="fa fa-check"></i><b>10.1</b> 2018-2019</a><ul>
+<li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#section"><i class="fa fa-check"></i><b>10.1</b> 2018-2019</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="applications.html"><a href="applications.html#american-economic-review"><i class="fa fa-check"></i><b>10.1.1</b> American Economic Review</a></li>
 <li class="chapter" data-level="10.1.2" data-path="applications.html"><a href="applications.html#econometrica"><i class="fa fa-check"></i><b>10.1.2</b> Econometrica</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="applications.html"><a href="applications.html#asymmetric-information-and-market-power"><i class="fa fa-check"></i><b>10.2</b> Asymmetric Information and Market Power</a><ul>
+<li class="chapter" data-level="10.2" data-path="applications.html"><a href="applications.html#asymmetric-information-and-market-power"><i class="fa fa-check"></i><b>10.2</b> Asymmetric Information and Market Power</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="applications.html"><a href="applications.html#motivation"><i class="fa fa-check"></i><b>10.2.1</b> Motivation</a></li>
 <li class="chapter" data-level="10.2.2" data-path="applications.html"><a href="applications.html#question-method-and-materials"><i class="fa fa-check"></i><b>10.2.2</b> Question, Method, and Materials</a></li>
 <li class="chapter" data-level="10.2.3" data-path="applications.html"><a href="applications.html#findings"><i class="fa fa-check"></i><b>10.2.3</b> Findings</a></li>
@@ -557,51 +600,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2.34" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>10.2.34</b> Merger Simulation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="assignment1.html"><a href="assignment1.html"><i class="fa fa-check"></i><b>11</b> Assignment 1: Basic Programming in R</a><ul>
+<li class="chapter" data-level="11" data-path="assignment1.html"><a href="assignment1.html"><i class="fa fa-check"></i><b>11</b> Assignment 1: Basic Programming in R</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>11.1</b> Simulate data</a></li>
 <li class="chapter" data-level="11.2" data-path="assignment1.html"><a href="assignment1.html#estimate-the-parameter"><i class="fa fa-check"></i><b>11.2</b> Estimate the parameter</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="assignment2.html"><a href="assignment2.html"><i class="fa fa-check"></i><b>12</b> Assignment 2: Production Function Estimation</a><ul>
+<li class="chapter" data-level="12" data-path="assignment2.html"><a href="assignment2.html"><i class="fa fa-check"></i><b>12</b> Assignment 2: Production Function Estimation</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>12.1</b> Simulate data</a></li>
 <li class="chapter" data-level="12.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>12.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="assignment3.html"><a href="assignment3.html"><i class="fa fa-check"></i><b>13</b> Assignment 3: Demand Function Estimation I</a><ul>
+<li class="chapter" data-level="13" data-path="assignment3.html"><a href="assignment3.html"><i class="fa fa-check"></i><b>13</b> Assignment 3: Demand Function Estimation I</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>13.1</b> Simulate data</a></li>
 <li class="chapter" data-level="13.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>13.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="assignment4.html"><a href="assignment4.html"><i class="fa fa-check"></i><b>14</b> Assignment 4: Demand Function Estimation II</a><ul>
+<li class="chapter" data-level="14" data-path="assignment4.html"><a href="assignment4.html"><i class="fa fa-check"></i><b>14</b> Assignment 4: Demand Function Estimation II</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>14.1</b> Simulate data</a></li>
 <li class="chapter" data-level="14.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>14.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="assignment5.html"><a href="assignment5.html"><i class="fa fa-check"></i><b>15</b> Assignment 5: Merger Simulation</a><ul>
+<li class="chapter" data-level="15" data-path="assignment5.html"><a href="assignment5.html"><i class="fa fa-check"></i><b>15</b> Assignment 5: Merger Simulation</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>15.1</b> Simulate data</a></li>
 <li class="chapter" data-level="15.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>15.2</b> Estimate the parameters</a></li>
 <li class="chapter" data-level="15.3" data-path="assignment5.html"><a href="assignment5.html#conduct-counterfactual-simulation"><i class="fa fa-check"></i><b>15.3</b> Conduct counterfactual simulation</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="assignment6.html"><a href="assignment6.html"><i class="fa fa-check"></i><b>16</b> Assignment 6: Entry and Exit Analysis</a><ul>
+<li class="chapter" data-level="16" data-path="assignment6.html"><a href="assignment6.html"><i class="fa fa-check"></i><b>16</b> Assignment 6: Entry and Exit Analysis</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>16.1</b> Simulate data</a></li>
 <li class="chapter" data-level="16.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>16.2</b> Estimate the parameters</a></li>
 <li class="chapter" data-level="16.3" data-path="assignment6.html"><a href="assignment6.html#conduct-counterfactual-simulations"><i class="fa fa-check"></i><b>16.3</b> Conduct counterfactual simulations</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="assignment7.html"><a href="assignment7.html"><i class="fa fa-check"></i><b>17</b> Assignment 7: Dynamic Decision</a><ul>
+<li class="chapter" data-level="17" data-path="assignment7.html"><a href="assignment7.html"><i class="fa fa-check"></i><b>17</b> Assignment 7: Dynamic Decision</a>
+<ul>
 <li class="chapter" data-level="17.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>17.1</b> Simulate data</a></li>
 <li class="chapter" data-level="17.2" data-path="assignment7.html"><a href="assignment7.html#estimate-parameters"><i class="fa fa-check"></i><b>17.2</b> Estimate parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="assignment8.html"><a href="assignment8.html"><i class="fa fa-check"></i><b>18</b> Assignment 8: Dynamic Game</a><ul>
+<li class="chapter" data-level="18" data-path="assignment8.html"><a href="assignment8.html"><i class="fa fa-check"></i><b>18</b> Assignment 8: Dynamic Game</a>
+<ul>
 <li class="chapter" data-level="18.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>18.1</b> Simulate data</a></li>
 <li class="chapter" data-level="18.2" data-path="assignment7.html"><a href="assignment7.html#estimate-parameters"><i class="fa fa-check"></i><b>18.2</b> Estimate parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html"><i class="fa fa-check"></i><b>19</b> Assignment 9: Auction</a><ul>
+<li class="chapter" data-level="19" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html"><i class="fa fa-check"></i><b>19</b> Assignment 9: Auction</a>
+<ul>
 <li class="chapter" data-level="19.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>19.1</b> Simulate data</a></li>
 <li class="chapter" data-level="19.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>19.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>20</b> Integrating with C++ using Rcpp and RcppEigen</a><ul>
+<li class="chapter" data-level="20" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>20</b> Integrating with C++ using Rcpp and RcppEigen</a>
+<ul>
 <li class="chapter" data-level="20.1" data-path="rcpp.html"><a href="rcpp.html#prerequisite"><i class="fa fa-check"></i><b>20.1</b> Prerequisite</a></li>
 <li class="chapter" data-level="20.2" data-path="rcpp.html"><a href="rcpp.html#workflow"><i class="fa fa-check"></i><b>20.2</b> Workflow</a></li>
 <li class="chapter" data-level="20.3" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-rcpp-objects"><i class="fa fa-check"></i><b>20.3</b> Passing R Objects as Rcpp Objects</a></li>
 <li class="chapter" data-level="20.4" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-eigen-objects"><i class="fa fa-check"></i><b>20.4</b> Passing R Objects as Eigen Objects</a></li>
 <li class="chapter" data-level="20.5" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-in-other-objects-in-cc"><i class="fa fa-check"></i><b>20.5</b> Passing R Objects in Other Objects in C/C++</a></li>
-<li class="chapter" data-level="20.6" data-path="rcpp.html"><a href="rcpp.html#manipulating-objects-in-a-c-function"><i class="fa fa-check"></i><b>20.6</b> Manipulating Objects in a C++ Function</a><ul>
+<li class="chapter" data-level="20.6" data-path="rcpp.html"><a href="rcpp.html#manipulating-objects-in-a-c-function"><i class="fa fa-check"></i><b>20.6</b> Manipulating Objects in a C++ Function</a>
+<ul>
 <li class="chapter" data-level="20.6.1" data-path="rcpp.html"><a href="rcpp.html#matrix-and-vector-arithmetic"><i class="fa fa-check"></i><b>20.6.1</b> Matrix and Vector Arithmetic</a></li>
 <li class="chapter" data-level="20.6.2" data-path="rcpp.html"><a href="rcpp.html#the-array-class-and-coefficient-wise-operations"><i class="fa fa-check"></i><b>20.6.2</b> The Array Class and Coefficient-wise Operations</a></li>
 <li class="chapter" data-level="20.6.3" data-path="rcpp.html"><a href="rcpp.html#solving-linear-least-squares-systems"><i class="fa fa-check"></i><b>20.6.3</b> Solving Linear Least Squares Systems</a></li>
@@ -629,15 +683,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="dynamicgame" class="section level1">
+<div id="dynamicgame" class="section level1" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Dynamic Game</h1>
-<div id="multiple-agent-model" class="section level2">
+<div id="multiple-agent-model" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Multiple-Agent Model</h2>
 <ul>
 <li>There are multiple players in an industry.</li>
 <li>There is a strategic interaction across players.</li>
 </ul>
-<div id="setting" class="section level3">
+<div id="setting" class="section level3" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Setting</h3>
 <ul>
 <li>There is <span class="math inline">\(i = 1, \cdots, N\)</span> players.</li>
@@ -648,7 +702,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(S = \prod_{i = 1}^N S_i\)</span>. <span class="math inline">\(m_s = L^N\)</span>.</li>
 </ul>
 </div>
-<div id="timing-of-the-model" class="section level3">
+<div id="timing-of-the-model" class="section level3" number="8.1.2">
 <h3><span class="header-section-number">8.1.2</span> Timing of the Model</h3>
 <ul>
 <li>At period <span class="math inline">\(t\)</span>:</li>
@@ -674,7 +728,7 @@ g(m_a, m_s, 1) &amp; \cdots &amp; g(m_a, m_s, m_s)\\
 \end{pmatrix}.
 \end{equation}\]</span></p>
 </div>
-<div id="period-profit" class="section level3">
+<div id="period-profit" class="section level3" number="8.1.3">
 <h3><span class="header-section-number">8.1.3</span> Period Profit</h3>
 <ul>
 <li><p>When the state is <span class="math inline">\(s_t\)</span>, action profile is <span class="math inline">\(a_t\)</span>, and the profitability shocks are <span class="math inline">\(\epsilon_t\)</span>, the period payoff of player <span class="math inline">\(i\)</span> is:
@@ -703,7 +757,7 @@ be the choice-specific profitability shock.</p></li>
 <li><p>The profit of player <span class="math inline">\(i\)</span> is the discounted sum of future payoffs with discount factor <span class="math inline">\(\beta &lt; 1\)</span>.</p></li>
 </ul>
 </div>
-<div id="belief" class="section level3">
+<div id="belief" class="section level3" number="8.1.4">
 <h3><span class="header-section-number">8.1.4</span> Belief</h3>
 <ul>
 <li>Let <span class="math inline">\(\sigma_i(a|s)\)</span> be the player <span class="math inline">\(i\)</span>’s belief about the possibility of having action profile <span class="math inline">\(a\)</span> when the realized state is <span class="math inline">\(s\)</span>, which may or may not coincide with the equilibrium probability.</li>
@@ -735,7 +789,7 @@ and let <span class="math inline">\(\sigma\)</span> be:
 \]</span></li>
 </ul>
 </div>
-<div id="markov-perfect-equilibrium" class="section level3">
+<div id="markov-perfect-equilibrium" class="section level3" number="8.1.5">
 <h3><span class="header-section-number">8.1.5</span> Markov Perfect Equilibrium</h3>
 <ul>
 <li>A collection <span class="math inline">\((a, \sigma) = (a_1, \cdots, a_N, \sigma_1, \cdots, \sigma_N)\)</span> is a pure-strategy <strong>Markov perfect equilibrium</strong> if:
@@ -746,7 +800,7 @@ and let <span class="math inline">\(\sigma\)</span> be:
 </ul></li>
 </ul>
 </div>
-<div id="ex-ante-value-function" class="section level3">
+<div id="ex-ante-value-function" class="section level3" number="8.1.6">
 <h3><span class="header-section-number">8.1.6</span> Ex-ante Value Function</h3>
 <ul>
 <li>When the belief of player <span class="math inline">\(i\)</span> about the future behavior is <span class="math inline">\(\sigma_i\)</span>, then the ex-ante value function associated with this belief is:</li>
@@ -786,7 +840,7 @@ V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}[\Sigma_i(\sigma_i)\Pi_i + D
 \]</span></li>
 </ul>
 </div>
-<div id="choice-specific-value-function" class="section level3">
+<div id="choice-specific-value-function" class="section level3" number="8.1.7">
 <h3><span class="header-section-number">8.1.7</span> Choice-specific Value Function</h3>
 <ul>
 <li>When the state is <span class="math inline">\(s\)</span> and the belief of player <span class="math inline">\(i\)</span> is <span class="math inline">\(\sigma_i\)</span>, then the mean value of choosing action <span class="math inline">\(a_i\)</span> is:</li>
@@ -799,7 +853,7 @@ v_i(\sigma_i, a_i, s) &amp;= \sum_{a_{-i} \in A_{-i}} \sigma_i(a_{-i}|s)[ \pi_i(
 \end{equation}\]</span>
 - This is the choice-specific mean value function given belief <span class="math inline">\(\sigma_i\)</span>.</p>
 </div>
-<div id="optimality-condition" class="section level3">
+<div id="optimality-condition" class="section level3" number="8.1.8">
 <h3><span class="header-section-number">8.1.8</span> Optimality Condition</h3>
 <ul>
 <li>When the state is <span class="math inline">\(s\)</span> and profitability shock is <span class="math inline">\(\epsilon_i\)</span>, <span class="math inline">\(a_i\)</span> is optimal for player <span class="math inline">\(i\)</span> under belief <span class="math inline">\(\sigma_i\)</span> if and only if:
@@ -810,7 +864,7 @@ v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i&#39;, s) + \eps
 <li>Only difference is that the belief is now about the others’ actions in addition to about own future behaviors.</li>
 </ul>
 </div>
-<div id="optimal-conditional-choice-probability" class="section level3">
+<div id="optimal-conditional-choice-probability" class="section level3" number="8.1.9">
 <h3><span class="header-section-number">8.1.9</span> Optimal Conditional Choice Probability</h3>
 <ul>
 <li>Therefore, the optimal conditional choice probability of player <span class="math inline">\(i\)</span> with belief <span class="math inline">\(\sigma_i\)</span> is:</li>
@@ -823,7 +877,7 @@ p(a_i|s) &amp;= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\
 \end{split}
 \end{equation}\]</span></p>
 </div>
-<div id="equilibrium-condition" class="section level3">
+<div id="equilibrium-condition" class="section level3" number="8.1.10">
 <h3><span class="header-section-number">8.1.10</span> Equilibrium Condition</h3>
 <ul>
 <li>Let:
@@ -877,7 +931,7 @@ p = \Psi(p).
 <li>Conversely, any <span class="math inline">\(p\)</span> that satisfies the equilibrium condition above can be derived as the optimal conditional choice probability of a Markov perfect equilibrium strategy profile.</li>
 </ul>
 </div>
-<div id="equilibrium-condition-1" class="section level3">
+<div id="equilibrium-condition-1" class="section level3" number="8.1.11">
 <h3><span class="header-section-number">8.1.11</span> Equilibrium Condition</h3>
 <ul>
 <li><span class="citation">Pesendorfer &amp; Schmidt-Dengler (<a href="#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">2008</a>)</span> also show the following statements.</li>
@@ -888,7 +942,7 @@ p = \Psi(p).
 <li>This significantly reduces the dimensionality of the problem.</li>
 </ul>
 </div>
-<div id="single-path-of-play" class="section level3">
+<div id="single-path-of-play" class="section level3" number="8.1.12">
 <h3><span class="header-section-number">8.1.12</span> Single Path of Play</h3>
 <ul>
 <li>The estimation of dynamic games is mostly based on time series data of an industry.</li>
@@ -899,7 +953,7 @@ p = \Psi(p).
 <li>The assumption that the same equilibrium is played across markets may need further justification.</li>
 </ul>
 </div>
-<div id="identification" class="section level3">
+<div id="identification" class="section level3" number="8.1.13">
 <h3><span class="header-section-number">8.1.13</span> Identification</h3>
 <ul>
 <li>The parameters of the model is <span class="math inline">\((\Pi_1, \cdots, \Pi_N, F, \beta, G)\)</span>.</li>
@@ -916,7 +970,7 @@ p = \Psi(p).
 <li>So, if <span class="math inline">\(L \ge K + 1\)</span>, i.e., the number of states is larger than the number of actions, at least the order condition is satisfied.</li>
 </ul>
 </div>
-<div id="estimation-ccp-approach" class="section level3">
+<div id="estimation-ccp-approach" class="section level3" number="8.1.14">
 <h3><span class="header-section-number">8.1.14</span> Estimation: CCP Approach</h3>
 <ul>
 <li>Because dynamic games often have multiple equillibria, nested-fixed point algorithm fails to pin down the likelihood of data.</li>
@@ -933,7 +987,7 @@ where <span class="math inline">\(\theta_1\)</span> is the parameters in the mea
 where <span class="math inline">\(W\)</span> is some weighting matrix.</li>
 </ul>
 </div>
-<div id="computing-psi" class="section level3">
+<div id="computing-psi" class="section level3" number="8.1.15">
 <h3><span class="header-section-number">8.1.15</span> Computing <span class="math inline">\(\Psi\)</span></h3>
 <ul>
 <li><p>Mapping from conditional choice probabilities to ex-ante value function:
@@ -952,9 +1006,9 @@ v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i
 </ul>
 </div>
 </div>
-<div id="with-continuous-dynamic-choice" class="section level2">
+<div id="with-continuous-dynamic-choice" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> With Continuous Dynamic Choice</h2>
-<div id="continuous-control" class="section level3">
+<div id="continuous-control" class="section level3" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Continuous Control</h3>
 <ul>
 <li>So far we have assumed that players’ actions are discrete.</li>
@@ -967,7 +1021,7 @@ v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i
 <li>Let <span class="math inline">\(\epsilon_{ti} \in \mathbb{R}^M\)</span> be profitability shocks for player <span class="math inline">\(i\)</span> in period <span class="math inline">\(t\)</span>, which are independent across players.</li>
 </ul>
 </div>
-<div id="period-payoff" class="section level3">
+<div id="period-payoff" class="section level3" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Period Payoff</h3>
 <ul>
 <li>Let <span class="math inline">\(\pi_i(a, s, \epsilon_{ti})\)</span> be the period payoff of player <span class="math inline">\(i\)</span> in period <span class="math inline">\(t\)</span> including the profitability shocks when the action profile is <span class="math inline">\(a\)</span>, the state is <span class="math inline">\(s\)</span>, and the profitability shocks are <span class="math inline">\(\epsilon_{ti}\)</span>.</li>
@@ -981,7 +1035,7 @@ v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="policy-function-estimation-with-continuous-control" class="section level3">
+<div id="policy-function-estimation-with-continuous-control" class="section level3" number="8.2.3">
 <h3><span class="header-section-number">8.2.3</span> Policy Function Estimation with Continuous Control</h3>
 <ul>
 <li>Let <span class="math inline">\(a_{ic}(s, \epsilon_{i}) = a_{ic}(s, \epsilon_{ic})\)</span> be the policy function of firm <span class="math inline">\(i\)</span> and suppose that it is increasing in <span class="math inline">\(\epsilon_{ic}\)</span>.</li>
@@ -1006,7 +1060,7 @@ a_{ic}(s, \epsilon_{ic}) &amp;= F_{a_{ic}}^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, 
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="converting-to-the-standard-discrete-choice-model" class="section level3">
+<div id="converting-to-the-standard-discrete-choice-model" class="section level3" number="8.2.4">
 <h3><span class="header-section-number">8.2.4</span> Converting to the Standard Discrete Choice Model</h3>
 <ul>
 <li>Inserting the identified policy for the continuous controls, we have:</li>
@@ -1021,7 +1075,7 @@ a_{ic}(s, \epsilon_{ic}) &amp;= F_{a_{ic}}^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, 
 - Therefore, we can identify the optimal conditional choice probability in a reduced-form and from which we can identify the policy function for the discrete choice as well.
 - Then, we can apply the CCP approach to estimate the structural parameters.</p>
 </div>
-<div id="value-function-based-ccp-approach" class="section level3">
+<div id="value-function-based-ccp-approach" class="section level3" number="8.2.5">
 <h3><span class="header-section-number">8.2.5</span> Value Function Based CCP Approach</h3>
 <ul>
 <li><span class="citation">Bajari, Benkard, &amp; Levin (<a href="#ref-bajariEstimatingDynamicModels2007" role="doc-biblioref">2007</a>)</span> proposes an alternative estimation method.</li>
@@ -1041,7 +1095,7 @@ which penalizes the parameter violating the inequality condition of the equilibr
 <li>Thus, the summation over continuous control does not cover the entire range.</li>
 </ul>
 </div>
-<div id="approximating-the-ex-ante-value-function" class="section level3">
+<div id="approximating-the-ex-ante-value-function" class="section level3" number="8.2.6">
 <h3><span class="header-section-number">8.2.6</span> Approximating the Ex-ante Value Function</h3>
 <ul>
 <li>Once we obtain the equilibrium policy functions, then in principle, we can compute the associated ex-ante value function, <span class="math inline">\(V_i^{(a_i, a_{-i})}\)</span>, in the equilibrium.</li>
@@ -1061,7 +1115,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 </ul>
 </div>
 </div>
-<div id="dynamic-oligopoly-model" class="section level2">
+<div id="dynamic-oligopoly-model" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Dynamic Oligopoly Model</h2>
 <ul>
 <li>In the application of the dynamic game estimation to the dynamic oligopoly model, we often jointly consider entry and exit decisions and investment decisions of firms.</li>
@@ -1069,7 +1123,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <li>The formal models and their characterization are found in <span class="citation">Ericson &amp; Pakes (<a href="#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">1995</a>)</span> and <span class="citation">Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span>.</li>
 <li><span class="citation">Igami et al. (<a href="#ref-Igami2018" role="doc-biblioref">2018</a>)</span>’, the paper referred to in the introduction, falls into this category.</li>
 </ul>
-<div id="ryancostenvironmentregulation2012" class="section level3">
+<div id="ryancostenvironmentregulation2012" class="section level3" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> <span class="citation">Ryan (<a href="#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">2012</a>)</span></h3>
 <ul>
 <li><span class="citation">Ryan (<a href="#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">2012</a>)</span> is one of the earliest applications.</li>
@@ -1082,7 +1136,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <li>This paper quantifies the welfare cost based on an empirical dynamic oligopoly model.</li>
 </ul>
 </div>
-<div id="setting-1" class="section level3">
+<div id="setting-1" class="section level3" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> Setting</h3>
 <ul>
 <li>There are several regional cement markets in the U.S.</li>
@@ -1090,7 +1144,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <li><span class="math inline">\(s_{it} = 0\)</span> means the firm is inactive.</li>
 </ul>
 </div>
-<div id="timing-of-the-game" class="section level3">
+<div id="timing-of-the-game" class="section level3" number="8.3.3">
 <h3><span class="header-section-number">8.3.3</span> Timing of the Game</h3>
 <ul>
 <li>Incumbent firms (<span class="math inline">\(s_{it} &gt; 0\)</span>) receives a private draw from the distribution of scrap values.</li>
@@ -1102,7 +1156,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <li>The economy moves to the next period.</li>
 </ul>
 </div>
-<div id="demand-function" class="section level3">
+<div id="demand-function" class="section level3" number="8.3.4">
 <h3><span class="header-section-number">8.3.4</span> Demand Function</h3>
 <ul>
 <li>In each market <span class="math inline">\(m\)</span>, firms face a constant elasticity of demand curves:
@@ -1112,7 +1166,7 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 where <span class="math inline">\(Q_m\)</span> is the aggregate market quantity, <span class="math inline">\(P_m\)</span> is price, <span class="math inline">\(\alpha_{0m}\)</span> is market-specific intercept, and <span class="math inline">\(\alpha_1\)</span> is the elasticity of demand.</li>
 </ul>
 </div>
-<div id="production-cost-function" class="section level3">
+<div id="production-cost-function" class="section level3" number="8.3.5">
 <h3><span class="header-section-number">8.3.5</span> Production Cost Function</h3>
 <ul>
 <li>The cost of output, <span class="math inline">\(q_i\)</span>, is given by:
@@ -1122,7 +1176,7 @@ C_i(q_i; \delta) = \delta_0 + \delta_1 q_1 + \delta_2 1\{q_i &gt; \epsilon s_i\}
 where <span class="math inline">\(q_i\)</span> is the output of firm <span class="math inline">\(i\)</span>, <span class="math inline">\(\delta_0\)</span> is the fixed cost of production, <span class="math inline">\(\delta_1\)</span> is the linear variable cost, and the last term is a quadratic cost that matters only when the output is sufficiently close to the capacity.</li>
 </ul>
 </div>
-<div id="investment-cost" class="section level3">
+<div id="investment-cost" class="section level3" number="8.3.6">
 <h3><span class="header-section-number">8.3.6</span> Investment Cost</h3>
 <ul>
 <li>The cost of investment and disinvestment is:</li>
@@ -1136,7 +1190,7 @@ where <span class="math inline">\(q_i\)</span> is the output of firm <span class
 where <span class="math inline">\(x_i\)</span> is the investment of firm <span class="math inline">\(i\)</span>, and fixed investment and disinvestment costs <span class="math inline">\(\gamma_{i1}\)</span> and <span class="math inline">\(\gamma_{i4}\)</span> are drawn from distributions <span class="math inline">\(F_{\gamma}\)</span> and <span class="math inline">\(G_{\gamma}\)</span>.
 - Let <span class="math inline">\(\mu_\gamma^+\)</span> and <span class="math inline">\(\sigma_\gamma^+\)</span> be the mean and standard deviation of <span class="math inline">\(F_\gamma\)</span> and <span class="math inline">\(\mu_\gamma^-\)</span> and <span class="math inline">\(\sigma_\gamma^-\)</span> be the mean and standard deviation of <span class="math inline">\(G_\gamma\)</span>.</p>
 </div>
-<div id="entry-and-exit-costs" class="section level3">
+<div id="entry-and-exit-costs" class="section level3" number="8.3.7">
 <h3><span class="header-section-number">8.3.7</span> Entry and Exit Costs</h3>
 <ul>
 <li>If the firm is a new entrant, it draws entry cost <span class="math inline">\(-\kappa_i\)</span> from <span class="math inline">\(F_\kappa\)</span>.</li>
@@ -1151,7 +1205,7 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 \end{cases}
 \end{equation}\]</span></p>
 </div>
-<div id="period-profit-function" class="section level3">
+<div id="period-profit-function" class="section level3" number="8.3.8">
 <h3><span class="header-section-number">8.3.8</span> Period Profit Function</h3>
 <ul>
 <li>As a consequence, the period profit function of firm <span class="math inline">\(i\)</span> is:
@@ -1161,7 +1215,7 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 <li>Let <span class="math inline">\(\theta\)</span> summarize the parameter regarding the period profit.</li>
 </ul>
 </div>
-<div id="transition" class="section level3">
+<div id="transition" class="section level3" number="8.3.9">
 <h3><span class="header-section-number">8.3.9</span> Transition</h3>
 <ul>
 <li>The transition is deterministic.</li>
@@ -1170,14 +1224,14 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 <li>As a firm enters, the capacity moves to the initial investment level.</li>
 </ul>
 </div>
-<div id="equilibrium" class="section level3">
+<div id="equilibrium" class="section level3" number="8.3.10">
 <h3><span class="header-section-number">8.3.10</span> Equilibrium</h3>
 <ul>
 <li>Let <span class="math inline">\(\epsilon_i\)</span> represent the firm’s private information about the cost of entry, exit, investment, and disinvestment.</li>
 <li>Each firm’s Markovian strategy <span class="math inline">\(\sigma_i(s, \epsilon_i)\)</span> is a mapping from states and shocks to actions.</li>
 </ul>
 </div>
-<div id="value-function-for-incumbents" class="section level3">
+<div id="value-function-for-incumbents" class="section level3" number="8.3.11">
 <h3><span class="header-section-number">8.3.11</span> Value Function for Incumbents</h3>
 <ul>
 <li>The value function for a firm with <span class="math inline">\(s_i &gt; 0\)</span> at the time of the exit decision under strategy profile <span class="math inline">\(\sigma\)</span> is:</li>
@@ -1193,7 +1247,7 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 where each term in the blanket represents the value of exit, staying and making investment, and staying and making disinvestment.
 - At this timing the incumbent only observes <span class="math inline">\(\phi_i\)</span>, although it is a bit confusing because the value function is written as a function of <span class="math inline">\(\epsilon_i\)</span>.</p>
 </div>
-<div id="value-function-for-entrants" class="section level3">
+<div id="value-function-for-entrants" class="section level3" number="8.3.12">
 <h3><span class="header-section-number">8.3.12</span> Value Function for Entrants</h3>
 <ul>
 <li>The value function for a firm with <span class="math inline">\(s_i = 0\)</span> at the time of entry decision under strategy profile <span class="math inline">\(\sigma\)</span> at the time of entry and investment decisions are:</li>
@@ -1206,7 +1260,7 @@ where each term in the blanket represents the value of exit, staying and making 
 \end{split}
 \end{equation}\]</span></p>
 </div>
-<div id="markov-perfect-equilibrium-1" class="section level3">
+<div id="markov-perfect-equilibrium-1" class="section level3" number="8.3.13">
 <h3><span class="header-section-number">8.3.13</span> Markov Perfect Equilibrium</h3>
 <ul>
 <li>The strategy profile <span class="math inline">\(\sigma^*\)</span> is a Markov perfect equilibrium if:
@@ -1220,7 +1274,7 @@ for all <span class="math inline">\(s, \epsilon_i\)</span>, and <span class="mat
 <li>We assume that firms assume that the regulatory environment is permanent.</li>
 </ul>
 </div>
-<div id="demand-and-production-cost-estimation" class="section level3">
+<div id="demand-and-production-cost-estimation" class="section level3" number="8.3.14">
 <h3><span class="header-section-number">8.3.14</span> Demand and Production Cost Estimation</h3>
 <ul>
 <li>To estimate the demand function, Ryan uses supply-side cost shifters as the instrumental variables: coal prices, gas prices, electricity rates, and wage rates.</li>
@@ -1228,14 +1282,14 @@ for all <span class="math inline">\(s, \epsilon_i\)</span>, and <span class="mat
 <li>You should already know how to do this.</li>
 </ul>
 </div>
-<div id="investment-policy-function-estimation" class="section level3">
+<div id="investment-policy-function-estimation" class="section level3" number="8.3.15">
 <h3><span class="header-section-number">8.3.15</span> Investment Policy Function Estimation</h3>
 <ul>
 <li>With fixed costs of investment and disinvestment, investment policy function follows a so-called <span class="math inline">\((s, S)\)</span> rule, in which firms investment only when the current capacity is below a certain lower bound and makes disinvestment only when the current capacity is above a certain upper bound.</li>
 <li>The lower and upper bounds, and the adjustment level are chosen optimal as a function of the state.</li>
 </ul>
 </div>
-<div id="investment-policy-function-estimation-1" class="section level3">
+<div id="investment-policy-function-estimation-1" class="section level3" number="8.3.16">
 <h3><span class="header-section-number">8.3.16</span> Investment Policy Function Estimation</h3>
 <ul>
 <li>Let <span class="math inline">\(s_{it}^*\)</span> be the target level of capacity, which is parameterize as:
@@ -1252,7 +1306,7 @@ where <span class="math inline">\(bs(\cdot)\)</span> is finite-dimensional piece
 \end{split}
 \end{equation}\]</span></p>
 </div>
-<div id="entry-and-exit-policy-functions" class="section level3">
+<div id="entry-and-exit-policy-functions" class="section level3" number="8.3.17">
 <h3><span class="header-section-number">8.3.17</span> Entry and Exit Policy Functions</h3>
 <ul>
 <li>The probability of entry is parameterized as:
@@ -1266,7 +1320,7 @@ and the probability of exit is parameterized as:
 where <span class="math inline">\(\Psi\)</span> is the cumulative distribution function of the standard normal random variable.</li>
 </ul>
 </div>
-<div id="bbl-estimation" class="section level3">
+<div id="bbl-estimation" class="section level3" number="8.3.18">
 <h3><span class="header-section-number">8.3.18</span> BBL Estimation</h3>
 <ul>
 <li>Now by comparing the value function under the identified policies with value functions under alternative policies, one can estimate the structural parameters.</li>
@@ -1275,11 +1329,11 @@ where <span class="math inline">\(\Psi\)</span> is the cumulative distribution f
 <li>Then, Ryan finds structural parameters that minimizes the BBL objective function.</li>
 </ul>
 </div>
-<div id="structural-parameters-estimation-results" class="section level3">
+<div id="structural-parameters-estimation-results" class="section level3" number="8.3.19">
 <h3><span class="header-section-number">8.3.19</span> Structural Parameters Estimation Results</h3>
 <p><img src="figuretable/dynamic.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="counterfactual-simulation" class="section level3">
+<div id="counterfactual-simulation" class="section level3" number="8.3.20">
 <h3><span class="header-section-number">8.3.20</span> Counterfactual Simulation</h3>
 <ul>
 <li>To asses the welfare cost of the amendment, Ryan solves the model under two sets of parameters: the actual parameters and the parameters before the regulation.</li>
@@ -1291,22 +1345,22 @@ where <span class="math inline">\(\Psi\)</span> is the cumulative distribution f
 </ul></li>
 </ul>
 </div>
-<div id="counterfactual-simulation-results" class="section level3">
+<div id="counterfactual-simulation-results" class="section level3" number="8.3.21">
 <h3><span class="header-section-number">8.3.21</span> Counterfactual Simulation Results</h3>
 <p><img src="figuretable/denovo.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="counterfactual-simulation-estimation-results" class="section level3">
+<div id="counterfactual-simulation-estimation-results" class="section level3" number="8.3.22">
 <h3><span class="header-section-number">8.3.22</span> Counterfactual Simulation Estimation Results</h3>
 <p><img src="figuretable/mature.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="dynamic-oligopoly-with-many-firms" class="section level2">
+<div id="dynamic-oligopoly-with-many-firms" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Dynamic Oligopoly with Many Firms</h2>
 <ul>
 <li>Solving a dynamic game becomes quickly intractable when the number of firms increases and hence the dimension of the state profile increases.</li>
 <li><span class="citation">Weintraub, Benkard, &amp; Roy (<a href="#ref-weintraubMarkovPerfectIndustry2008" role="doc-biblioref">2008</a>)</span> propose a new equilibrium concept called <strong>oblivious equilibrium</strong> that approximates a Markov perfect equilibrium when there are many firms and do not suffer from the aforementioned computational problem.</li>
 </ul>
-<div id="setting-2" class="section level3">
+<div id="setting-2" class="section level3" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> Setting</h3>
 <ul>
 <li>The setting is effectively the same as <span class="citation">Ericson &amp; Pakes (<a href="#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">1995</a>)</span> and <span class="citation">Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span>.</li>
@@ -1334,7 +1388,7 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>They appear in the following period at state <span class="math inline">\(x^e \in \mathbb{N}\)</span>.</li>
 </ul>
 </div>
-<div id="timing-of-the-game-1" class="section level3">
+<div id="timing-of-the-game-1" class="section level3" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> Timing of the Game</h3>
 <ol style="list-style-type: decimal">
 <li>Each incumbent firm observes its sell-off value, and then makes exit and investment decisions.</li>
@@ -1344,7 +1398,7 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>Investment outcomes are determined, new entrants enter, and the industry takes on a new state <span class="math inline">\(s_{t + 1}\)</span>.</li>
 </ol>
 </div>
-<div id="assumptions" class="section level3">
+<div id="assumptions" class="section level3" number="8.4.3">
 <h3><span class="header-section-number">8.4.3</span> Assumptions</h3>
 <ul>
 <li>An industry state <span class="math inline">\(s \in \mathcal{S}\)</span> is said to dominate <span class="math inline">\(s&#39; \in \mathcal{S}\)</span> if for all <span class="math inline">\(x \in \mathbb{N}\)</span> <span class="math inline">\(\sum_{z \ge x} s(z) \ge \sum_{z \ge x} s&#39;(z)\)</span>, and the relation is denoted by <span class="math inline">\(s \succeq s&#39;\)</span>.</li>
@@ -1384,7 +1438,7 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>Let <span class="math inline">\(\lambda(s_t)\)</span> be the expected number of firms entering at industry state, which is endogenously determined.</li>
 </ul>
 </div>
-<div id="strategy-profile" class="section level3">
+<div id="strategy-profile" class="section level3" number="8.4.4">
 <h3><span class="header-section-number">8.4.4</span> Strategy Profile</h3>
 <ul>
 <li>Investment strategy <span class="math inline">\(\iota: \mathbb{N} \times \mathcal{S} \to \mathbb{R}_+\)</span> : <span class="math inline">\(\iota_{it} = \iota(x_{it}, s_{-it})\)</span>.</li>
@@ -1393,7 +1447,7 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>Entry rate <span class="math inline">\(\lambda: \mathcal{S} \to \mathbb{R}_+\)</span>, <span class="math inline">\(\lambda \in \Lambda\)</span>.</li>
 </ul>
 </div>
-<div id="value-function" class="section level3">
+<div id="value-function" class="section level3" number="8.4.5">
 <h3><span class="header-section-number">8.4.5</span> Value Function</h3>
 <ul>
 <li>The expected net present value for a firm at state <span class="math inline">\(x\)</span> when its competitors state is <span class="math inline">\(s\)</span>, given that its competitors each follows a common strategy <span class="math inline">\(\mu \in \mathcal{M}\)</span>, the entry rate function is <span class="math inline">\(\lambda \in \Lambda\)</span>, and the firm itself follows strategy <span class="math inline">\(\mu&#39; \in \mathcal{M}\)</span> is:
@@ -1404,7 +1458,7 @@ where <span class="math inline">\(\tau_i\)</span> is a random variable that repr
 <li>We also write as <span class="math inline">\(V(x, s|\mu, \lambda) := V(x, s|\mu, \mu, \lambda)\)</span> when all firms follow the same strategy.</li>
 </ul>
 </div>
-<div id="markov-perfect-equilibrium-2" class="section level3">
+<div id="markov-perfect-equilibrium-2" class="section level3" number="8.4.6">
 <h3><span class="header-section-number">8.4.6</span> Markov-perfect Equilibrium</h3>
 <ul>
 <li>A strategy profile <span class="math inline">\(\mu \in \mathcal{M}\)</span> and an entry rate <span class="math inline">\(\lambda \in \Lambda\)</span> is a Markov-perfect equilibrium if:</li>
@@ -1431,7 +1485,7 @@ where <span class="math inline">\(\tau_i\)</span> is a random variable that repr
 <li>The authors prove that there exists a symmetric equilibrium.</li>
 </ul>
 </div>
-<div id="oblivious-strategy" class="section level3">
+<div id="oblivious-strategy" class="section level3" number="8.4.7">
 <h3><span class="header-section-number">8.4.7</span> Oblivious Strategy</h3>
 <ul>
 <li>The Markov-perfect equilibrium becomes quickly computationally intractable when the number of firms increases, because firms’ strategies depends on other firms’ states.</li>
@@ -1439,7 +1493,7 @@ where <span class="math inline">\(\tau_i\)</span> is a random variable that repr
 <li>Let <span class="math inline">\(\widetilde{\mathcal{M}} \subset \mathcal{M}\)</span> and <span class="math inline">\(\widetilde{\Lambda} \subset \Lambda\)</span> be the set of <strong>oblivious strategies</strong> and the set of <strong>oblivious entry rate functions</strong> in the sense that both <span class="math inline">\(\mu \in \widetilde{\mathcal{M}}\)</span> and <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> do not depend on <span class="math inline">\(s\)</span>.</li>
 </ul>
 </div>
-<div id="long-run-average-industry-state" class="section level3">
+<div id="long-run-average-industry-state" class="section level3" number="8.4.8">
 <h3><span class="header-section-number">8.4.8</span> Long-run Average Industry State</h3>
 <ul>
 <li>Then, if all firms use a common strategy <span class="math inline">\(\mu \in \widetilde{\mathcal{M}} \subset \mathcal{M}\)</span>, each firm’s state evolves as an independent transient Markov chain.</li>
@@ -1455,7 +1509,7 @@ for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
 <li>We write the long-run average industry state as <span class="math inline">\(\tilde{s}_{\mu, \lambda}(x) := \lim_{t \to \infty} \tilde{s}_t(x)\)</span>.</li>
 </ul>
 </div>
-<div id="oblivious-value-function" class="section level3">
+<div id="oblivious-value-function" class="section level3" number="8.4.9">
 <h3><span class="header-section-number">8.4.9</span> Oblivious Value Function</h3>
 <ul>
 <li><p>For an oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span>, we define an <strong>oblivious value function</strong>:
@@ -1467,7 +1521,7 @@ for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
 <li><p>We also write as <span class="math inline">\(\widetilde{V}(x|\mu, \lambda) := \widetilde{V}(x|\mu, \mu, \lambda)\)</span>.</p></li>
 </ul>
 </div>
-<div id="oblivious-equilibrium" class="section level3">
+<div id="oblivious-equilibrium" class="section level3" number="8.4.10">
 <h3><span class="header-section-number">8.4.10</span> Oblivious Equilibrium</h3>
 <ul>
 <li>An oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> is an <strong>oblivious equilibrium</strong> if:</li>
@@ -1494,7 +1548,7 @@ for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
 <li>Given <span class="math inline">\(\tilde{s}_{\mu, \lambda}\)</span>, the dynamic programming is only of <span class="math inline">\(x_{it}\)</span>.</li>
 </ul>
 </div>
-<div id="asymptotic-results-and-extensions" class="section level3">
+<div id="asymptotic-results-and-extensions" class="section level3" number="8.4.11">
 <h3><span class="header-section-number">8.4.11</span> Asymptotic Results and Extensions</h3>
 <ul>
 <li>The authors show that under a certain condition when the market size goes to infinity, an oblivious equilibrium approximates an Markov-perfect equilibrium in the sense that a deviation from the oblivious equilibrium to a (possibly non-oblivious) best response does not improve the value for a firm.</li>
