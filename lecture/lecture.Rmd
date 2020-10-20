@@ -6430,7 +6430,7 @@ where $\epsilon_{ik}$ follows i.i.d. type-I extreme value distribution, $\beta =
 1. To simulate data, first make a data frame as follows:
 ```{r, echo = FALSE}
 df <- expand.grid(i = 1:1000, k = 1:2) %>%
-  tibble::as.tibble() %>%
+  tibble::as_tibble() %>%
   dplyr::mutate(x = ifelse(k == 1, 0, 1)) %>%
   dplyr::arrange(i, k)
 df
@@ -6677,7 +6677,7 @@ set.seed(1)
 # draw initial state values
 wage <- 0.5
 df <- expand.grid(j = 1:J, t = 1) %>%
-  tibble::as.tibble() %>%
+  tibble::as_tibble() %>%
   dplyr::mutate(
     k = rnorm(J, mean_k_initial, sigma_k_initial),
     omega = rnorm(J, 0, sigma_v_initial),

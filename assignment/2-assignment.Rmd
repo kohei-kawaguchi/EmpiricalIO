@@ -157,7 +157,7 @@ set.seed(1)
 # draw initial state values
 wage <- 0.5
 df <- expand.grid(j = 1:J, t = 1) %>%
-  tibble::as.tibble() %>%
+  tibble::as_tibble() %>%
   dplyr::mutate(
     k = rnorm(J, mean_k_initial, sigma_k_initial),
     omega = rnorm(J, 0, sigma_v_initial),
