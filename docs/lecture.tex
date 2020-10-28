@@ -113,7 +113,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2020-10-14}
+\date{Last updated: 2020-10-28}
 
 \begin{document}
 \maketitle
@@ -2693,6 +2693,8 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 
   \begin{itemize}
   \tightlist
+  \item
+    Originates at \citet{rosseEstimatingCostFunction1970}.
   \item
     A parameter affects economic agent's action.
   \item
@@ -11178,18 +11180,18 @@ I_{j, t - 1}
 
 \begin{verbatim}
 ## # A tibble: 10,000 x 4
-##        j     t y_error_tilde phi_t_1
-##    <int> <dbl>         <dbl>   <dbl>
-##  1     1     1         2.34   NA    
-##  2     1     2         1.37    2.21 
-##  3     1     3         0.621   1.49 
-##  4     1     4         0.447   0.882
-##  5     1     5         0.878   0.611
-##  6     1     6         1.62    0.926
-##  7     1     7         0.558   1.40 
-##  8     1     8         0.684   0.439
-##  9     1     9         0.939   0.520
-## 10     1    10         1.49    0.836
+##        j     t y_error_tilde phi_t_1[,1]
+##    <int> <dbl>         <dbl>       <dbl>
+##  1     1     1         2.34       NA    
+##  2     1     2         1.37        2.21 
+##  3     1     3         0.621       1.49 
+##  4     1     4         0.447       0.882
+##  5     1     5         0.878       0.611
+##  6     1     6         1.62        0.926
+##  7     1     7         0.558       1.40 
+##  8     1     8         0.684       0.439
+##  9     1     9         0.939       0.520
+## 10     1    10         1.49        0.836
 ## # ... with 9,990 more rows
 \end{verbatim}
 
@@ -12629,15 +12631,15 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 
 \begin{verbatim}
 ## $par
-## [1]  3.1292612  0.1834495 -0.9357865  1.5678279  0.3768438  1.1698887
-## [7] -0.1108147  1.9156776
+## [1]  3.76434503  0.09615737 -0.80752298  1.58043119  0.37196977  0.91068523
+## [7]  0.25811030  1.61772334
 ## 
 ## $value
-## [1] 0.0004291768
+## [1] 0.0006911641
 ## 
 ## $counts
 ## function gradient 
-##      297       NA 
+##      337       NA 
 ## 
 ## $convergence
 ## [1] 0
@@ -12647,15 +12649,15 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 \end{verbatim}
 
 \begin{verbatim}
-##         true  estimates
-## 1  4.0000000  3.1292612
-## 2  0.1836433  0.1834495
-## 3 -0.8356286 -0.9357865
-## 4  1.5952808  1.5678279
-## 5  0.3295078  0.3768438
-## 6  0.8204684  1.1698887
-## 7  0.5000000 -0.1108147
-## 8  1.0000000  1.9156776
+##         true   estimates
+## 1  4.0000000  3.76434503
+## 2  0.1836433  0.09615737
+## 3 -0.8356286 -0.80752298
+## 4  1.5952808  1.58043119
+## 5  0.3295078  0.37196977
+## 6  0.8204684  0.91068523
+## 7  0.5000000  0.25811030
+## 8  1.0000000  1.61772334
 \end{verbatim}
 
 Next, we estimate the model allowing for the product-market-specific unobserved fixed effect \(\xi_{jt}\) using the BLP algorithm. To do so, we slightly modify the \texttt{compute\_indirect\_utility}, \texttt{compute\_choice\_smooth}, and \texttt{compute\_share\_smooth} functions so that they receive \(\delta_{jt}\) to compute the indirect utilities, choices, and shares. Be careful that the treatment of \(\alpha_i\) is slightly different from the lecture note, because we assumed that \(\alpha_i\)s are log-normal random variables.
@@ -12967,13 +12969,8 @@ Start the algorithm with the true \(\delta_{jt}\) and check if the algorithm ret
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in delta_new$delta - delta$delta: longer object length is not a
-## multiple of shorter object length
-\end{verbatim}
-
-\begin{verbatim}
-##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## -14.32511  -1.55451  -0.04656  -0.06849   1.45225  13.35118
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.23557 -0.28653  0.00000 -0.01944  0.21330  1.04105
 \end{verbatim}
 
 \begin{enumerate}
@@ -13131,8 +13128,8 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and \(W\) does 
 \end{Shaded}
 
 \begin{verbatim}
-##           xi
-## xi 0.1368324
+##            xi
+## xi 0.09356849
 \end{verbatim}
 
 \begin{enumerate}
@@ -13187,14 +13184,14 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and \(W\) does 
 
 \begin{verbatim}
 ## $par
-## [1] 0.3635051 0.7502512 1.5852184 0.4223104 0.8757237
+## [1] 0.7089402 1.0230697 1.5954835 0.2944111 0.8077278
 ## 
 ## $value
-## [1] 2.064906e-18
+## [1] 9.475859e-19
 ## 
 ## $counts
 ## function gradient 
-##       54       11 
+##       70       10 
 ## 
 ## $convergence
 ## [1] 0
@@ -13205,11 +13202,11 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and \(W\) does 
 
 \begin{verbatim}
 ##           true  estimate
-## [1,] 0.5000000 0.3635051
-## [2,] 1.0000000 0.7502512
-## [3,] 1.5952808 1.5852184
-## [4,] 0.3295078 0.4223104
-## [5,] 0.8204684 0.8757237
+## [1,] 0.5000000 0.7089402
+## [2,] 1.0000000 1.0230697
+## [3,] 1.5952808 1.5954835
+## [4,] 0.3295078 0.2944111
+## [5,] 0.8204684 0.8077278
 \end{verbatim}
 
 \hypertarget{assignment5}{%
@@ -13683,6 +13680,10 @@ Of course, in reality, we first draw Monte Carlo shocks to approximate the share
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
+\end{verbatim}
+
 \begin{tabular}{r|r}
 \hline
 j & p\_change\\
@@ -13753,6 +13754,10 @@ j & p\_change\\
 ##  Mean   :0.171809  
 ##  3rd Qu.:0.153746  
 ##  Max.   :1.607658
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` ungrouping output (override with `.groups` argument)
 \end{verbatim}
 
 \begin{tabular}{r|r}
@@ -14085,9 +14090,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##             z_1       z_2
-## [1,] -0.1816112  2.941961
-## [2,]  1.3865642 -2.702801
-## [3,]  3.4994266  2.486293
+## [1,] -2.3581574 -7.334507
+## [2,] -0.4604547  3.771050
+## [3,]  2.7599294  4.610126
 \end{verbatim}
 
 \begin{Shaded}
@@ -14102,107 +14107,107 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 \end{Shaded}
 
 \begin{verbatim}
-##                [,1]
-##   [1,]  0.398130155
-##   [2,] -0.407528579
-##   [3,]  1.324258630
-##   [4,] -0.701231669
-##   [5,] -0.580614304
-##   [6,] -1.001072181
-##   [7,] -0.668178607
-##   [8,]  0.945184953
-##   [9,]  0.433702150
-##  [10,]  1.005159218
-##  [11,] -0.390118664
-##  [12,]  0.376370292
-##  [13,]  0.244164924
-##  [14,] -1.426257342
-##  [15,]  1.778429287
-##  [16,]  0.134447661
-##  [17,]  0.765598999
-##  [18,]  0.955136677
-##  [19,] -0.050565701
-##  [20,] -0.305815420
-##  [21,]  0.893673702
-##  [22,] -1.047298149
-##  [23,]  1.971337386
-##  [24,] -0.383632106
-##  [25,]  1.654145302
-##  [26,]  1.512212694
-##  [27,]  0.082965734
-##  [28,]  0.567220915
-##  [29,] -1.024548480
-##  [30,]  0.323006503
-##  [31,]  1.043612458
-##  [32,]  0.099078487
-##  [33,] -0.454136909
-##  [34,] -0.655781852
-##  [35,] -0.035922423
-##  [36,]  1.069161461
-##  [37,] -0.483974930
-##  [38,] -0.121010111
-##  [39,] -1.294140004
-##  [40,]  0.494312836
-##  [41,]  1.307901520
-##  [42,]  1.497041009
-##  [43,]  0.814702731
-##  [44,] -1.869788790
-##  [45,]  0.482029504
-##  [46,]  0.456135603
-##  [47,] -0.353400286
-##  [48,]  0.170489471
-##  [49,] -0.864035954
-##  [50,]  0.679230774
-##  [51,] -0.327101015
-##  [52,] -1.569082185
-##  [53,] -0.367450756
-##  [54,]  1.364434929
-##  [55,] -0.334281365
-##  [56,]  0.732750042
-##  [57,]  0.946585640
-##  [58,]  0.004398704
-##  [59,] -0.352322306
-##  [60,] -0.529695509
-##  [61,]  0.739589226
-##  [62,] -1.063457415
-##  [63,]  0.246210844
-##  [64,] -0.289499367
-##  [65,] -2.264889356
-##  [66,] -1.408850456
-##  [67,]  0.916019329
-##  [68,] -0.191278951
-##  [69,]  0.803283216
-##  [70,]  1.887474463
-##  [71,]  1.473881181
-##  [72,]  0.677268492
-##  [73,]  0.379962687
-##  [74,] -0.192798426
-##  [75,]  1.577891795
-##  [76,]  0.596234109
-##  [77,] -1.173576941
-##  [78,] -0.155642535
-##  [79,] -1.918909820
-##  [80,] -0.195258846
-##  [81,] -2.592327670
-##  [82,]  1.314002167
-##  [83,] -0.635543001
-##  [84,] -0.429978839
-##  [85,] -0.169318332
-##  [86,]  0.612218174
-##  [87,]  0.678340177
-##  [88,]  0.567951972
-##  [89,] -0.572542604
-##  [90,] -1.363291256
-##  [91,] -0.388722244
-##  [92,]  0.277914132
-##  [93,] -0.823081122
-##  [94,] -0.068840934
-##  [95,] -1.167662326
-##  [96,] -0.008309014
-##  [97,]  0.128855402
-##  [98,] -0.145875628
-##  [99,] -0.163910957
-## [100,]  1.763552003
+##               [,1]
+##   [1,] -1.11312295
+##   [2,]  0.61696648
+##   [3,]  0.51349372
+##   [4,]  0.36945910
+##   [5,]  1.72389413
+##   [6,] -0.20614457
+##   [7,] -1.31419514
+##   [8,]  0.06347410
+##   [9,] -0.23197745
+##  [10,]  0.63506033
+##  [11,]  1.63464429
+##  [12,] -1.80832758
+##  [13,] -0.21388595
+##  [14,]  0.07036614
+##  [15,]  0.54970767
+##  [16,] -0.69682355
+##  [17,]  0.39056594
+##  [18,]  0.38141126
+##  [19,] -0.01237277
+##  [20,] -0.12443499
+##  [21,]  1.46674459
+##  [22,]  0.67392868
+##  [23,]  1.95642526
+##  [24,] -0.26904101
+##  [25,] -1.24455152
+##  [26,] -0.39570292
+##  [27,]  0.09739665
+##  [28,] -0.23838695
+##  [29,] -0.41182796
+##  [30,] -1.57721805
+##  [31,] -0.79727610
+##  [32,] -1.09623678
+##  [33,]  0.30830875
+##  [34,]  0.34479512
+##  [35,]  1.53964809
+##  [36,] -0.32951419
+##  [37,]  0.94838935
+##  [38,] -0.47925559
+##  [39,] -1.51488680
+##  [40,]  0.43453666
+##  [41,] -0.51953667
+##  [42,] -0.83455903
+##  [43,] -0.75664761
+##  [44,]  1.08950350
+##  [45,]  1.57243292
+##  [46,]  1.00736437
+##  [47,] -0.27315799
+##  [48,] -1.30967954
+##  [49,]  0.22257383
+##  [50,]  1.11343318
+##  [51,]  0.83739440
+##  [52,]  0.31451677
+##  [53,]  0.22221807
+##  [54,] -0.84361539
+##  [55,]  0.44380533
+##  [56,]  0.05579711
+##  [57,]  0.06797239
+##  [58,] -0.20196174
+##  [59,] -1.15801525
+##  [60,] -0.59274327
+##  [61,]  0.76606538
+##  [62,]  0.03892812
+##  [63,]  0.01464681
+##  [64,] -0.18631697
+##  [65,]  1.40059083
+##  [66,]  0.01848557
+##  [67,]  0.24919601
+##  [68,]  0.14922074
+##  [69,] -0.96323318
+##  [70,] -0.06646677
+##  [71,]  1.28692204
+##  [72,]  0.45812526
+##  [73,] -1.45202829
+##  [74,]  0.07734228
+##  [75,]  0.55989527
+##  [76,] -0.07494657
+##  [77,]  0.78269770
+##  [78,] -0.17266856
+##  [79,] -1.05129378
+##  [80,]  0.72945128
+##  [81,]  0.26266524
+##  [82,]  0.54365786
+##  [83,]  1.04106030
+##  [84,]  0.19750615
+##  [85,] -1.62957829
+##  [86,]  0.12104023
+##  [87,] -1.63742195
+##  [88,] -0.53104311
+##  [89,]  0.95367979
+##  [90,] -1.72065066
+##  [91,]  0.10632062
+##  [92,] -0.60866850
+##  [93,] -0.30119698
+##  [94,]  0.97620252
+##  [95,]  0.45600867
+##  [96,]  1.29440807
+##  [97,] -1.13320221
+##  [98,] -0.86946035
+##  [99,] -0.75497029
+## [100,] -0.12963535
 \end{verbatim}
 
 \begin{Shaded}
@@ -14222,9 +14227,9 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##            [,1]
-## [1,]  0.8480155
-## [2,]  2.1562657
-## [3,] -0.3035186
+## [1,]  0.3934210
+## [2,]  0.2303175
+## [3,] -0.6046126
 \end{verbatim}
 
 \begin{enumerate}
@@ -14250,10 +14255,10 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 \end{Shaded}
 
 \begin{verbatim}
-##           [,1]
-## [1,]  3.843181
-## [2,] -2.616200
-## [3,]  0.000000
+##            [,1]
+## [1,] -15.296633
+## [2,]   3.851629
+## [3,]   0.000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -14276,8 +14281,8 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    0
+## [1,]    0
+## [2,]    1
 ## [3,]    1
 \end{verbatim}
 
@@ -14297,8 +14302,8 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    0
+## [1,]    0
+## [2,]    1
 ## [3,]    1
 \end{verbatim}
 
@@ -14320,8 +14325,8 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    0
+## [1,]    0
+## [2,]    1
 ## [3,]    1
 \end{verbatim}
 
@@ -14336,7 +14341,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ## [1,]    1
 ## [2,]    1
 ## [3,]    1
-## [4,]    1
+## [4,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14370,8 +14375,8 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    0
+## [1,]    0
+## [2,]    1
 ## [3,]    1
 \end{verbatim}
 
@@ -14386,7 +14391,7 @@ where \(y_{im} \in \{0, 1\}\) is the indicator for entrant \(i\) in market \(m\)
 ## [1,]    1
 ## [2,]    1
 ## [3,]    1
-## [4,]    1
+## [4,]    0
 \end{verbatim}
 
 \begin{Shaded}
@@ -14473,8 +14478,8 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    0
+## [1,]    0
+## [2,]    1
 ## [3,]    1
 \end{verbatim}
 
@@ -14486,7 +14491,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.6858
+## [1] 0.34
 \end{verbatim}
 
 \begin{enumerate}
@@ -14511,8 +14516,8 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ##      [,1]
-## [1,]    1
-## [2,]    0
+## [1,]    0
+## [2,]    1
 ## [3,]    1
 \end{verbatim}
 
@@ -14524,7 +14529,7 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.3127
+## [1] 0.2456
 \end{verbatim}
 
 \begin{enumerate}
@@ -14746,14 +14751,14 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ## $par
-## [1] 0.59704343 0.04938142 0.93904853 1.80598524 1.04483638 0.39060511
+## [1] 0.7761887 0.2204343 1.0747480 2.0150864 0.9116741 0.2875538
 ## 
 ## $value
-## [1] 0.2762
+## [1] 0.2638
 ## 
 ## $counts
 ## function gradient 
-##      155       NA 
+##      233       NA 
 ## 
 ## $convergence
 ## [1] 0
@@ -14774,13 +14779,13 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 \end{Shaded}
 
 \begin{verbatim}
-##      actual   estimate
-## 1 0.6264538 0.59704343
-## 2 0.1836433 0.04938142
-## 3 0.8356286 0.93904853
-## 4 1.5952808 1.80598524
-## 5 1.0000000 1.04483638
-## 6 0.3295078 0.39060511
+##      actual  estimate
+## 1 0.6264538 0.7761887
+## 2 0.1836433 0.2204343
+## 3 0.8356286 1.0747480
+## 4 1.5952808 2.0150864
+## 5 1.0000000 0.9116741
+## 6 0.3295078 0.2875538
 \end{verbatim}
 
 \begin{enumerate}
@@ -14824,14 +14829,14 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ## $par
-## [1] 0.5787563 0.1216856 0.9521359 1.8443535 1.2177670 0.3075741
+## [1] 0.7606044 0.1807671 0.9998862 1.7476048 0.9322339 0.2166783
 ## 
 ## $value
-## [1] 0.1623
+## [1] 0.222
 ## 
 ## $counts
 ## function gradient 
-##      141       NA 
+##      183       NA 
 ## 
 ## $convergence
 ## [1] 0
@@ -14853,12 +14858,12 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 
 \begin{verbatim}
 ##      actual  estimate
-## 1 0.6264538 0.5787563
-## 2 0.1836433 0.1216856
-## 3 0.8356286 0.9521359
-## 4 1.5952808 1.8443535
-## 5 1.0000000 1.2177670
-## 6 0.3295078 0.3075741
+## 1 0.6264538 0.7606044
+## 2 0.1836433 0.1807671
+## 3 0.8356286 0.9998862
+## 4 1.5952808 1.7476048
+## 5 1.0000000 0.9322339
+## 6 0.3295078 0.2166783
 \end{verbatim}
 
 \hypertarget{conduct-counterfactual-simulations}{%
@@ -14871,7 +14876,15 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
   Fix the first draw of the Monte Carlo shocks. Suppose that the competitive effect becomes mild, i.e.~\(\delta\) is changed to 0.5. Under these shocks, compute the equilibrium number of entrants across markets and plot the histogram with the estimated and counterfactual parameters. Conduct this analysis under the assumptions of sequential and simultaneous entry.
 \end{enumerate}
 
+\begin{verbatim}
+## `summarise()` regrouping output by 'parameters' (override with `.groups` argument)
+\end{verbatim}
+
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-185-1} \end{center}
+
+\begin{verbatim}
+## `summarise()` regrouping output by 'parameters' (override with `.groups` argument)
+\end{verbatim}
 
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-186-1} \end{center}
 
