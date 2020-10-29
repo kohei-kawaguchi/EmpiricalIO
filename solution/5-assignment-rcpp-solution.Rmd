@@ -1,7 +1,6 @@
 ---
 title: 'Assignment 5: Merger Simulation with Rcpp'
 author: "Kohei Kawaguchi"
-date: "2019/4/9"
 output:
   pdf_document: default
 ---
@@ -223,14 +222,14 @@ df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
 # make list of matrices
 J_start <- 1
 df_list <-
-  foreach (tt = 1:T) %do% {
+  foreach (tt = 1:T) %dopar% {
     df_ti <-
       df %>%
       dplyr::filter(t == tt, i == 1)
     J_t <- dim(df_ti)[1] - 1
     J_end <- J_start + J_t - 1
     df_list_t <-
-      foreach (ii = 1:N) %dopar% {
+      foreach (ii = 1:N) %do% {
         df_ti <-
           df %>%
           dplyr::filter(t == tt, i == ii)
@@ -255,7 +254,6 @@ df_list <-
     J_start <- J_end + 1
     return(df_list_t)
   }
-  
 ```
 
 
