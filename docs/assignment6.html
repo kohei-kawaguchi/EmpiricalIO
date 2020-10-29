@@ -636,21 +636,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="simulate-data" class="section level2">
 <h2><span class="header-section-number">16.1</span> Simulate data</h2>
 <p>In this assignment, we consider a Berry-type entry model. Suppose that there are <span class="math inline">\(M\)</span> markets indexed by <span class="math inline">\(m = 1, \cdots, M\)</span>. In each market, there are <span class="math inline">\(N_m\)</span> potential entrants such that <span class="math inline">\(N_m \le \overline{N}\)</span>. Let <span class="math inline">\(x_m\)</span> be the <span class="math inline">\(K\)</span> dimensional market attributes and <span class="math inline">\(z_{im}\)</span> be the <span class="math inline">\(L\)</span> dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is <span class="math inline">\(R\)</span>.</p>
+<p>A standard %dopar% is not replicable. Therefore, we use package doRNG to perform reproducible foreach parallel.</p>
 <ol style="list-style-type: decimal">
 <li>Set the constants as follows:</li>
 </ol>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" title="1"><span class="co"># set the seed</span></a>
-<a class="sourceLine" id="cb252-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb252-3" title="3"><span class="co"># number of markets</span></a>
-<a class="sourceLine" id="cb252-4" title="4">M &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb252-5" title="5"><span class="co"># the upper bound of the number of potential entrants</span></a>
-<a class="sourceLine" id="cb252-6" title="6">N &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb252-7" title="7"><span class="co"># the dimension of market attributes</span></a>
-<a class="sourceLine" id="cb252-8" title="8">K &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb252-9" title="9"><span class="co"># the dimension of potential entrant attributes</span></a>
-<a class="sourceLine" id="cb252-10" title="10">L &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb252-11" title="11"><span class="co"># the number of Monte Carlo simulations</span></a>
-<a class="sourceLine" id="cb252-12" title="12">R &lt;-<span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" title="1"><span class="co"># register doRNG backend</span></a>
+<a class="sourceLine" id="cb252-2" title="2"><span class="kw">registerDoRNG</span>()</a>
+<a class="sourceLine" id="cb252-3" title="3"><span class="co"># set the seed</span></a>
+<a class="sourceLine" id="cb252-4" title="4"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb252-5" title="5"><span class="co"># number of markets</span></a>
+<a class="sourceLine" id="cb252-6" title="6">M &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb252-7" title="7"><span class="co"># the upper bound of the number of potential entrants</span></a>
+<a class="sourceLine" id="cb252-8" title="8">N &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb252-9" title="9"><span class="co"># the dimension of market attributes</span></a>
+<a class="sourceLine" id="cb252-10" title="10">K &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb252-11" title="11"><span class="co"># the dimension of potential entrant attributes</span></a>
+<a class="sourceLine" id="cb252-12" title="12">L &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb252-13" title="13"><span class="co"># the number of Monte Carlo simulations</span></a>
+<a class="sourceLine" id="cb252-14" title="14">R &lt;-<span class="st"> </span><span class="dv">100</span></a></code></pre></div>
 <p>The payoff of entrant <span class="math inline">\(i\)</span> in market <span class="math inline">\(m\)</span> is:
 <span class="math display">\[
 \pi_{im}(y_m) = x_m&#39;\beta - \delta \ln \left(\sum_{i = 1}^{N_m} y_{im}\right) + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m},

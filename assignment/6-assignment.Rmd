@@ -19,7 +19,6 @@ library(codetools)
 library(doParallel)
 library(doRNG)
 registerDoParallel()
-registerDoRNG(123)
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 ```
 
@@ -27,9 +26,13 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 In this assignment, we consider a Berry-type entry model. Suppose that there are $M$ markets indexed by $m = 1, \cdots, M$. In each market, there are $N_m$ potential entrants such that $N_m \le \overline{N}$. Let $x_m$ be the $K$ dimensional market attributes and $z_{im}$ be the $L$ dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is $R$.
 
+A standard %dopar% is not replicable. Therefore, we use package doRNG to perform reproducible foreach parallel. 
+
 1. Set the constants as follows:
 
 ```{r}
+# register doRNG backend
+registerDoRNG()
 # set the seed
 set.seed(1)
 # number of markets

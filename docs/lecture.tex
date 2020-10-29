@@ -113,7 +113,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2020-10-28}
+\date{Last updated: 2020-10-29}
 
 \begin{document}
 \maketitle
@@ -6251,7 +6251,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \item
   The second equation is without loss of generality because \(y_{jm}\) is a binary variable.
 \item
-  The competitive effect of firm \(j\) on \(i\) and the effect o firm \(i\) on \(j\) are asymmetric.
+  The competitive effect of firm \(j\) on \(i\) and the effect of firm \(i\) on \(j\) are asymmetric.
 \item
   The parameters of interest are \(v_{0i}, v_{0j}, v_{1i}, v_{1j}\) and the joint distribution of \(f_{im}, f_{jm}\) conditional on \(x_{im}\) and \(x_{jm}\).
 \item
@@ -6284,17 +6284,17 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \item
   When firm \(j\) follows strategy \(t_{jm}\), the expected payoff for firm \(i\) to enter is:
   \[
-  [v_{0i}(x_{im}) - f_{im}][1 - G_{jm}^{im}(t_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im} - f_{im})] G_{jm}^{im}(t_{jm}).
+  [v_{0i}(x_{im}) - f_{im}][1 - G_{jm}^{im}(t_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im}) - f_{im})] G_{jm}^{im}(t_{jm}).
   \]
 \item
   Thus, the threshold \(t_{im}\) is determined by:
   \[
-  [v_{0i}(x_{im}) - t_{im}][1 - G_{jm}^{im}(t_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im} - t_{im})] G_{jm}^{im}(t_{jm}) = 0.
+  [v_{0i}(x_{im}) - t_{im}][1 - G_{jm}^{im}(t_{jm})] + [v_{0i}(x_{im}) + v_{1i}(x_{im}) - t_{im})] G_{jm}^{im}(t_{jm}) = 0.
   \]
 \item
   In the same way, the threshold \(t_{jm}\) is determined by:
   \[
-  [v_{0j}(x_{jm}) - t_{jm}][1 - G_{im}^{jm}(t_{im})] + [v_{0j}(x_{jm}) + v_{1j}(x_{jm} - t_{jm})] G_{im}^{jm}(t_{im}) = 0.
+  [v_{0j}(x_{jm}) - t_{jm}][1 - G_{im}^{jm}(t_{im})] + [v_{0j}(x_{jm}) + v_{1j}(x_{jm}) - t_{jm})] G_{im}^{jm}(t_{im}) = 0.
   \]
 \item
   This system of equations can have multiple solution.
@@ -6510,7 +6510,7 @@ g(K, L, 1) & \cdots & g(K, L, L)\\
 \begin{itemize}
 \tightlist
 \item
-  When a play makes a decision, s/he should have some belief about the future \(\epsilon_t, s_t\), and \(a_t\).
+  When a player makes a decision, s/he should have some belief about the future \(\epsilon_t, s_t\), and \(a_t\).
 \item
   We usually assume the \textbf{rational expectation}: the play knows the equilibrium distribution of these future variables and use it as his/her belief.
 \item
@@ -6543,7 +6543,7 @@ g(K, L, 1) & \cdots & g(K, L, L)\\
   \begin{equation}
   \begin{split}
   \max_{a(\cdot, \cdot)} & \pi[a(\epsilon_0, s_0), s_0] + \epsilon_{0 a(\epsilon_0, s_0)}\\
-  &+ \mathbb{E}\Bigg\{ \sum_{t = 1}^\infty \beta^t \Bigg[\pi(a_t, s_t) + \epsilon_{t a(\epsilon_t, s_t)}\Bigg]\Bigg|s_0, a(\epsilon_0, s_0)\Bigg\}
+  &+ \mathbb{E}\Bigg\{ \sum_{t = 1}^\infty \beta^t \Bigg[\pi(a(\epsilon_t, s_t), s_t) + \epsilon_{t a(\epsilon_t, s_t)}\Bigg]\Bigg|s_0, a(\epsilon_0, s_0)\Bigg\}
   \end{split}
   \end{equation}
 \item
@@ -13844,6 +13844,8 @@ j & producer\_surplus\_change\\
 
 In this assignment, we consider a Berry-type entry model. Suppose that there are \(M\) markets indexed by \(m = 1, \cdots, M\). In each market, there are \(N_m\) potential entrants such that \(N_m \le \overline{N}\). Let \(x_m\) be the \(K\) dimensional market attributes and \(z_{im}\) be the \(L\) dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is \(R\).
 
+A standard \%dopar\% is not replicable. Therefore, we use package doRNG to perform reproducible foreach parallel.
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
@@ -13853,6 +13855,8 @@ In this assignment, we consider a Berry-type entry model. Suppose that there are
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# register doRNG backend}
+\KeywordTok{registerDoRNG}\NormalTok{()}
 \CommentTok{# set the seed}
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
 \CommentTok{# number of markets}
