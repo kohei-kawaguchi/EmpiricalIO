@@ -198,7 +198,7 @@ compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)
 compute_payoff_across_markets <-
   function(Y, X, Z, EP, NU, beta, alpha, delta, rho) {
     payoff <-
-      foreach (m = 1:length(Y)) %dopar% {
+      foreach (m = 1:length(Y), .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
         y_m <- Y[[m]]
         # extract
         X_m <- X[m, , drop = FALSE]
@@ -295,7 +295,7 @@ EP_mc <-
 }
 # unobserved entrant attributes
 NU_mc <-
-  foreach (r = 1:R) %dopar% {
+  foreach (r = 1:R, .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
   NU <-
     foreach (m = 1:M) %do% {
       NU_m <- matrix(
@@ -317,7 +317,7 @@ compute_monte_carlo_sequential_entry <-
            beta, alpha, delta, rho) {
     # Monte Carlo Simulation
     Y_mc <-
-      foreach (r = 1:length(EP_mc)) %dopar% {
+      foreach (r = 1:length(EP_mc), .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
         # extract
         EP_r <- EP_mc[[r]]
         NU_r <- NU_mc[[r]]
@@ -343,7 +343,7 @@ compute_objective_sequential_entry <-
                                                  beta, alpha, delta, rho)
     # compute the square difference
     objective <-
-      foreach (r = 1:length(EP_mc), .combine = "rbind") %dopar% {
+      foreach (r = 1:length(EP_mc), .combine = "rbind", .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
         Y_mc_r <- Y_mc[[r]]
         diff_r <- purrr::map2(Y_mc_r, Y, `-`) %>%
           purrr::map(., ~ sum(abs(.))) %>%
@@ -379,7 +379,7 @@ compute_monte_carlo_simultaneous_entry <-
            beta, alpha, delta) {
     # Monte Carlo Simulation
     Y_mc <-
-      foreach (r = 1:length(EP_mc)) %dopar% {
+      foreach (r = 1:length(EP_mc), .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
         # extract
         EP_r <- EP_mc[[r]]
         NU_r <- NU_mc[[r]]
@@ -405,7 +405,7 @@ compute_objective_simultaneous_entry <-
         X, Z, EP_mc, NU_mc, beta, alpha, delta)
     # compute the square difference
     objective <-
-      foreach (r = 1:length(EP_mc), .combine = "rbind") %dopar% {
+      foreach (r = 1:length(EP_mc), .combine = "rbind", .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
         Y_mc_r <- Y_mc[[r]]
         diff_r <- purrr::map2(Y_mc_r, Y, `-`) %>%
           purrr::map(., sum) %>%
@@ -582,7 +582,7 @@ comparison
 1. Fix the first draw of the Monte Carlo shocks. Suppose that the competitive effect becomes mild, i.e. $\delta$ is changed to 0.5. Under these shocks, compute the equilibrium number of entrants across markets and plot the histogram with the estimated and counterfactual parameters. Conduct this analysis under the assumptions of sequential and simultaneous entry.
 
 
-```{r, echo = FALSE}
+```{r}
 # sequential entry
 # extract parameters
 theta <- result_sequential$par
@@ -632,7 +632,7 @@ ggplot(N_df, aes(x = value, y = n, colour = parameters, fill = parameters)) +
 ```
 
 
-```{r, echo = FALSE}
+```{r}
 # simultaneous entry
 # extract parameters
 theta <- result_simultaneous$par
