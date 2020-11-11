@@ -108,7 +108,7 @@ solve_dynamic_decision <-
 
 # simulate the dynamic decision model for a single player
 simulate_dynamic_decision <-
-  function(p, s, PI, G, L, K, T, delta, seed) {
+  function(p, s, G, L, K, T, delta, seed) {
     set.seed(seed)
     df <- data.frame(t = 1:T, s = rep(s, T), a = rep(0, T))
     for (t in 1:T) {
@@ -138,13 +138,13 @@ simulate_dynamic_decision <-
 
 # solve the dynamic decision model for each player
 simulate_dynamic_decision_across_firms <-
-  function(p, s, PI, G, L, K, T, N, delta) {
+  function(p, s, G, L, K, T, N, delta) {
     df <-
       foreach (i = 1:N, .combine = "rbind",
                .packages = c("foreach", "magrittr", "EmpiricalIO")
                ) %dopar% {
         seed <- i
-        df_i <- simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)
+        df_i <- simulate_dynamic_decision(p, s, G, L, K, T, delta, seed)
         df_i <- data.frame(i = i, df_i)
         return(df_i)
       }

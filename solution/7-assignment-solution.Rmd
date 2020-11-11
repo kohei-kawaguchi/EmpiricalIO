@@ -260,12 +260,12 @@ V <- output$V
 value <- compute_choice_value(V, PI, G, delta); value
 ```
 
-6. Write a function `simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)` that simulate the data for a single firm starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
+6. Write a function `simulate_dynamic_decision(p, s, G, L, K, T, delta, seed)` that simulate the data for a single firm starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
 
 ```{r}
 # simulate the dynamic decision model for a single player
 simulate_dynamic_decision <-
-  function(p, s, PI, G, L, K, T, delta, seed) {
+  function(p, s, G, L, K, T, delta, seed) {
     set.seed(seed)
     df <- data.frame(t = 1:T, s = rep(s, T), a = rep(0, T))
     for (t in 1:T) {
@@ -297,19 +297,19 @@ simulate_dynamic_decision <-
 s <- 1
 # draw simulation for a firm
 seed <- 1
-df <- simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed); df
+df <- simulate_dynamic_decision(p, s, G, L, K, T, delta, seed); df
 ```
 
-7. Write a function `simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
+7. Write a function `simulate_dynamic_decision_across_firms(p, s, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
 
 ```{r, eval = FALSE}
 # solve the dynamic decision model for each player
 simulate_dynamic_decision_across_firms <-
-  function(p, s, PI, G, L, K, T, N, delta) {
+  function(p, s, G, L, K, T, N, delta) {
     df <-
-      foreach (i = 1:N, .combine = "rbind") %dopar% {
+      foreach (i = 1:N, .combine = "rbind", .packages = "EmpiricalIO") %dopar% {
         seed <- i
-        df_i <- simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)
+        df_i <- simulate_dynamic_decision(p, s, G, L, K, T, delta, seed)
         df_i <- data.frame(i = i, df_i)
         return(df_i)
       }
@@ -318,7 +318,7 @@ simulate_dynamic_decision_across_firms <-
     # return
     return(df)
   }
-df <- simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)
+df <- simulate_dynamic_decision_across_firms(p, s, G, L, K, T, N, delta)
 save(df, file = "data/A7_df.RData")
 ```
 ```{r}

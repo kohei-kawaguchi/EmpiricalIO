@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 20 Integrating with C++ using Rcpp and RcppEigen | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 20 Integrating with C++ using Rcpp and RcppEigen | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="assignment-9-auction.html"/>
 <link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -54,25 +55,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -81,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -132,9 +134,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">ECON5630</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Syllabus</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Syllabus</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#instructor-information"><i class="fa fa-check"></i><b>1.1</b> Instructor Information</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#general-information"><i class="fa fa-check"></i><b>1.2</b> General Information</a><ul>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#general-information"><i class="fa fa-check"></i><b>1.2</b> General Information</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#class-time"><i class="fa fa-check"></i><b>1.2.1</b> Class Time</a></li>
 <li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i><b>1.2.2</b> Description</a></li>
 <li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#expectation-and-goals"><i class="fa fa-check"></i><b>1.2.3</b> Expectation and Goals</a></li>
@@ -143,28 +147,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#evaluation"><i class="fa fa-check"></i><b>1.4</b> Evaluation</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#academic-integrity"><i class="fa fa-check"></i><b>1.5</b> Academic Integrity</a></li>
 <li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i><b>1.6</b> Schedule</a></li>
-<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#course-materials"><i class="fa fa-check"></i><b>1.7</b> Course Materials</a><ul>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#course-materials"><i class="fa fa-check"></i><b>1.7</b> Course Materials</a>
+<ul>
 <li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.7.1</b> R and RStudio</a></li>
 <li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#handbook-chapters"><i class="fa fa-check"></i><b>1.7.2</b> Handbook Chapters</a></li>
 <li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.7.3</b> Books</a></li>
 <li class="chapter" data-level="1.7.4" data-path="index.html"><a href="index.html#papers"><i class="fa fa-check"></i><b>1.7.4</b> Papers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#structural-estimation-and-counterfactual-analysis"><i class="fa fa-check"></i><b>2.1</b> Structural Estimation and Counterfactual Analysis</a><ul>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#structural-estimation-and-counterfactual-analysis"><i class="fa fa-check"></i><b>2.1</b> Structural Estimation and Counterfactual Analysis</a>
+<ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
 <li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#recap"><i class="fa fa-check"></i><b>2.1.2</b> Recap</a></li>
 <li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#historical-remark"><i class="fa fa-check"></i><b>2.1.3</b> Historical Remark</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#setting-up-the-environment"><i class="fa fa-check"></i><b>2.2</b> Setting Up The Environment</a><ul>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#setting-up-the-environment"><i class="fa fa-check"></i><b>2.2</b> Setting Up The Environment</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#rstudio-project"><i class="fa fa-check"></i><b>2.2.1</b> RStudio Project</a></li>
 <li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#basic-programming-in-r"><i class="fa fa-check"></i><b>2.2.2</b> Basic Programming in R</a></li>
 <li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#reproducible-reports-using-rmarkdown"><i class="fa fa-check"></i><b>2.2.3</b> Reproducible Reports using Rmarkdown</a></li>
 <li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#github-and-github-classroom"><i class="fa fa-check"></i><b>2.2.4</b> GitHub and GitHub Classroom</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="production.html"><a href="production.html"><i class="fa fa-check"></i><b>3</b> Production and Cost Function Estimation</a><ul>
-<li class="chapter" data-level="3.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>3.1</b> Motivations</a><ul>
+<li class="chapter" data-level="3" data-path="production.html"><a href="production.html"><i class="fa fa-check"></i><b>3</b> Production and Cost Function Estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>3.1</b> Motivations</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="production.html"><a href="production.html#io"><i class="fa fa-check"></i><b>3.1.1</b> IO</a></li>
 <li class="chapter" data-level="3.1.2" data-path="production.html"><a href="production.html#development"><i class="fa fa-check"></i><b>3.1.2</b> Development</a></li>
 <li class="chapter" data-level="3.1.3" data-path="production.html"><a href="production.html#trade"><i class="fa fa-check"></i><b>3.1.3</b> Trade</a></li>
@@ -172,7 +182,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.5" data-path="production.html"><a href="production.html#education"><i class="fa fa-check"></i><b>3.1.5</b> Education</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="production.html"><a href="production.html#analyzing-producer-behaviors"><i class="fa fa-check"></i><b>3.2</b> Analyzing Producer Behaviors</a></li>
-<li class="chapter" data-level="3.3" data-path="production.html"><a href="production.html#production-function-estimation"><i class="fa fa-check"></i><b>3.3</b> Production Function Estimation</a><ul>
+<li class="chapter" data-level="3.3" data-path="production.html"><a href="production.html#production-function-estimation"><i class="fa fa-check"></i><b>3.3</b> Production Function Estimation</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="production.html"><a href="production.html#cobb-douglas-specification-as-a-benchmark"><i class="fa fa-check"></i><b>3.3.1</b> Cobb-Douglas Specification as a Benchmark</a></li>
 <li class="chapter" data-level="3.3.2" data-path="production.html"><a href="production.html#potential-bias-i-endogeneity"><i class="fa fa-check"></i><b>3.3.2</b> Potential Bias I: Endogeneity</a></li>
 <li class="chapter" data-level="3.3.3" data-path="production.html"><a href="production.html#potential-bias-ii-selection"><i class="fa fa-check"></i><b>3.3.3</b> Potential Bias II: Selection</a></li>
@@ -189,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -197,18 +208,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
 <li class="chapter" data-level="3.3.33" data-path="production.html"><a href="production.html#tackle-collinearity-problem-peculiar-assumptions"><i class="fa fa-check"></i><b>3.3.33</b> Tackle Collinearity Problem: Peculiar Assumptions</a></li>
 <li class="chapter" data-level="3.3.34" data-path="production.html"><a href="production.html#tackle-collinearity-problem-share-regression"><i class="fa fa-check"></i><b>3.3.34</b> Tackle Collinearity Problem: Share Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="production.html"><a href="production.html#cost-function-estimation"><i class="fa fa-check"></i><b>3.4</b> Cost Function Estimation</a><ul>
+<li class="chapter" data-level="3.4" data-path="production.html"><a href="production.html#cost-function-estimation"><i class="fa fa-check"></i><b>3.4</b> Cost Function Estimation</a>
+<ul>
 <li class="chapter" data-level="3.4.1" data-path="production.html"><a href="production.html#cost-function-duality"><i class="fa fa-check"></i><b>3.4.1</b> Cost Function: Duality</a></li>
 <li class="chapter" data-level="3.4.2" data-path="production.html"><a href="production.html#translog-cost-function"><i class="fa fa-check"></i><b>3.4.2</b> Translog Cost Function</a></li>
 <li class="chapter" data-level="3.4.3" data-path="production.html"><a href="production.html#translog-cost-function-integrability"><i class="fa fa-check"></i><b>3.4.3</b> Translog Cost Function: Integrability</a></li>
@@ -221,10 +233,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.10</b> Oligopoly</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a><ul>
-<li class="chapter" data-level="4.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>4.1</b> Motivations</a></li>
+<li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="demand.html"><a href="demand.html#motivations-1"><i class="fa fa-check"></i><b>4.1</b> Motivations</a></li>
 <li class="chapter" data-level="4.2" data-path="demand.html"><a href="demand.html#analyzing-consumer-behaviors"><i class="fa fa-check"></i><b>4.2</b> Analyzing Consumer Behaviors</a></li>
-<li class="chapter" data-level="4.3" data-path="demand.html"><a href="demand.html#continuous-choice"><i class="fa fa-check"></i><b>4.3</b> Continuous Choice</a><ul>
+<li class="chapter" data-level="4.3" data-path="demand.html"><a href="demand.html#continuous-choice"><i class="fa fa-check"></i><b>4.3</b> Continuous Choice</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="demand.html"><a href="demand.html#duality-between-utility-and-expenditure-functions"><i class="fa fa-check"></i><b>4.3.1</b> Duality between Utility and Expenditure Functions</a></li>
 <li class="chapter" data-level="4.3.2" data-path="demand.html"><a href="demand.html#deriving-other-functions"><i class="fa fa-check"></i><b>4.3.2</b> Deriving Other Functions</a></li>
 <li class="chapter" data-level="4.3.3" data-path="demand.html"><a href="demand.html#starting-from-an-indirect-utility-function"><i class="fa fa-check"></i><b>4.3.3</b> Starting from an Indirect Utility Function</a></li>
@@ -238,7 +252,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.11" data-path="demand.html"><a href="demand.html#from-product-space-approach-to-characteristics-space-approach"><i class="fa fa-check"></i><b>4.3.11</b> From Product Space Approach to Characteristics Space Approach</a></li>
 <li class="chapter" data-level="4.3.12" data-path="demand.html"><a href="demand.html#from-continuous-choice-approach-to-discrete-choice-approach"><i class="fa fa-check"></i><b>4.3.12</b> From Continuous Choice Approach to Discrete Choice Approach</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="demand.html"><a href="demand.html#discrete-choice"><i class="fa fa-check"></i><b>4.4</b> Discrete Choice</a><ul>
+<li class="chapter" data-level="4.4" data-path="demand.html"><a href="demand.html#discrete-choice"><i class="fa fa-check"></i><b>4.4</b> Discrete Choice</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="demand.html"><a href="demand.html#discrete-choice-approach"><i class="fa fa-check"></i><b>4.4.1</b> Discrete Choice Approach</a></li>
 <li class="chapter" data-level="4.4.2" data-path="demand.html"><a href="demand.html#discrete-choice-approach-1"><i class="fa fa-check"></i><b>4.4.2</b> Discrete Choice Approach</a></li>
 <li class="chapter" data-level="4.4.3" data-path="demand.html"><a href="demand.html#discrete-choice-approach-2"><i class="fa fa-check"></i><b>4.4.3</b> Discrete Choice Approach</a></li>
@@ -295,9 +310,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.54</b> Instrumental Variables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a><ul>
-<li class="chapter" data-level="5.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>5.1</b> Motivations</a></li>
-<li class="chapter" data-level="5.2" data-path="merger.html"><a href="merger.html#identification-of-conduct"><i class="fa fa-check"></i><b>5.2</b> Identification of Conduct</a><ul>
+<li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="merger.html"><a href="merger.html#motivations-2"><i class="fa fa-check"></i><b>5.1</b> Motivations</a></li>
+<li class="chapter" data-level="5.2" data-path="merger.html"><a href="merger.html#identification-of-conduct"><i class="fa fa-check"></i><b>5.2</b> Identification of Conduct</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="merger.html"><a href="merger.html#identification-of-conduct-1"><i class="fa fa-check"></i><b>5.2.1</b> Identification of Conduct</a></li>
 <li class="chapter" data-level="5.2.2" data-path="merger.html"><a href="merger.html#marginal-revenue-function"><i class="fa fa-check"></i><b>5.2.2</b> Marginal Revenue Function</a></li>
 <li class="chapter" data-level="5.2.3" data-path="merger.html"><a href="merger.html#first-order-condition"><i class="fa fa-check"></i><b>5.2.3</b> First-Order Condition</a></li>
@@ -310,7 +327,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.10" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.10</b> Identification of the Conduct Parameter: Demand Rotater is Available</a></li>
 <li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.11</b> Identification of Conduct in Differentiated Product Market</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a><ul>
+<li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="merger.html"><a href="merger.html#unilateral-and-coordinated-effects-of-a-horizontal-merger"><i class="fa fa-check"></i><b>5.3.1</b> Unilateral and Coordinated Effects of a Horizontal Merger</a></li>
 <li class="chapter" data-level="5.3.2" data-path="merger.html"><a href="merger.html#merger-simulation-1"><i class="fa fa-check"></i><b>5.3.2</b> Merger Simulation</a></li>
 <li class="chapter" data-level="5.3.3" data-path="merger.html"><a href="merger.html#quantifying-the-unilateral-effect"><i class="fa fa-check"></i><b>5.3.3</b> Quantifying the Unilateral Effect</a></li>
@@ -320,24 +338,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.7" data-path="merger.html"><a href="merger.html#quantifying-the-coordinated-effect"><i class="fa fa-check"></i><b>5.3.7</b> Quantifying the Coordinated Effect</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="entryexit.html"><a href="entryexit.html"><i class="fa fa-check"></i><b>6</b> Entry and Exit</a><ul>
-<li class="chapter" data-level="6.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>6.1</b> Motivations</a><ul>
+<li class="chapter" data-level="6" data-path="entryexit.html"><a href="entryexit.html"><i class="fa fa-check"></i><b>6</b> Entry and Exit</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="entryexit.html"><a href="entryexit.html#motivations-3"><i class="fa fa-check"></i><b>6.1</b> Motivations</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="entryexit.html"><a href="entryexit.html#entry-cost-mode-of-competition-and-market-structure"><i class="fa fa-check"></i><b>6.1.1</b> Entry Cost, Mode of Competition, and Market Structure</a></li>
 <li class="chapter" data-level="6.1.2" data-path="entryexit.html"><a href="entryexit.html#exogenous-and-endogenous-entry-cost"><i class="fa fa-check"></i><b>6.1.2</b> Exogenous and Endogenous Entry Cost</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="entryexit.html"><a href="entryexit.html#monopoly-entry"><i class="fa fa-check"></i><b>6.2</b> Monopoly Entry</a><ul>
+<li class="chapter" data-level="6.2" data-path="entryexit.html"><a href="entryexit.html#monopoly-entry"><i class="fa fa-check"></i><b>6.2</b> Monopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="entryexit.html"><a href="entryexit.html#variable-profits-and-fixed-costs"><i class="fa fa-check"></i><b>6.2.1</b> Variable Profits and Fixed Costs</a></li>
 <li class="chapter" data-level="6.2.2" data-path="entryexit.html"><a href="entryexit.html#non-identification"><i class="fa fa-check"></i><b>6.2.2</b> Non-Identification</a></li>
 <li class="chapter" data-level="6.2.3" data-path="entryexit.html"><a href="entryexit.html#restrictions-for-identification."><i class="fa fa-check"></i><b>6.2.3</b> Restrictions for Identification.</a></li>
 <li class="chapter" data-level="6.2.4" data-path="entryexit.html"><a href="entryexit.html#homogeneous-of-degree-1-variable-profits"><i class="fa fa-check"></i><b>6.2.4</b> Homogeneous of Degree 1 Variable Profits</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="entryexit.html"><a href="entryexit.html#complete-information-homogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.3</b> Complete-Information Homogeneous Oligopoly Entry</a><ul>
+<li class="chapter" data-level="6.3" data-path="entryexit.html"><a href="entryexit.html#complete-information-homogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.3</b> Complete-Information Homogeneous Oligopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="entryexit.html"><a href="entryexit.html#variable-and-fixed-costs"><i class="fa fa-check"></i><b>6.3.1</b> Variable and Fixed Costs</a></li>
 <li class="chapter" data-level="6.3.2" data-path="entryexit.html"><a href="entryexit.html#equilibrium-condition"><i class="fa fa-check"></i><b>6.3.2</b> Equilibrium Condition</a></li>
 <li class="chapter" data-level="6.3.3" data-path="entryexit.html"><a href="entryexit.html#identification-under-a-shape-restriction"><i class="fa fa-check"></i><b>6.3.3</b> Identification under a Shape Restriction</a></li>
 <li class="chapter" data-level="6.3.4" data-path="entryexit.html"><a href="entryexit.html#log-likelihood-function"><i class="fa fa-check"></i><b>6.3.4</b> Log Likelihood Function</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="entryexit.html"><a href="entryexit.html#complete-information-heterogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.4</b> Complete-Information Heterogeneous Oligopoly Entry</a><ul>
+<li class="chapter" data-level="6.4" data-path="entryexit.html"><a href="entryexit.html#complete-information-heterogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.4</b> Complete-Information Heterogeneous Oligopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="entryexit.html"><a href="entryexit.html#bivartiate-game-with-heterogeneous-profits"><i class="fa fa-check"></i><b>6.4.1</b> Bivartiate Game with Heterogeneous Profits</a></li>
 <li class="chapter" data-level="6.4.2" data-path="entryexit.html"><a href="entryexit.html#sampling-assumption-and-observations"><i class="fa fa-check"></i><b>6.4.2</b> Sampling Assumption and Observations</a></li>
 <li class="chapter" data-level="6.4.3" data-path="entryexit.html"><a href="entryexit.html#identification-assuming-pure-strategy-equilibrium"><i class="fa fa-check"></i><b>6.4.3</b> Identification Assuming Pure-Strategy Equilibrium</a></li>
@@ -350,20 +373,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.10" data-path="entryexit.html"><a href="entryexit.html#entry-in-the-airline-industry-likelihood-function"><i class="fa fa-check"></i><b>6.4.10</b> Entry in the Airline Industry: Likelihood Function</a></li>
 <li class="chapter" data-level="6.4.11" data-path="entryexit.html"><a href="entryexit.html#is-the-equilibrium-number-of-firms-unique"><i class="fa fa-check"></i><b>6.4.11</b> Is the Equilibrium Number of Firms Unique?</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction"><i class="fa fa-check"></i><b>6.5</b> Multiple Prediction</a><ul>
+<li class="chapter" data-level="6.5" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction"><i class="fa fa-check"></i><b>6.5</b> Multiple Prediction</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="entryexit.html"><a href="entryexit.html#multiple-equilibria-in-bivariate-game-with-heterogenous-profits"><i class="fa fa-check"></i><b>6.5.1</b> Multiple Equilibria in Bivariate Game with Heterogenous Profits</a></li>
 <li class="chapter" data-level="6.5.2" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction-in-bivariate-game-with-heterogenous-profits"><i class="fa fa-check"></i><b>6.5.2</b> Multiple Prediction in Bivariate Game with Heterogenous Profits</a></li>
 <li class="chapter" data-level="6.5.3" data-path="entryexit.html"><a href="entryexit.html#inference-based-on-moment-inequalities"><i class="fa fa-check"></i><b>6.5.3</b> Inference Based on Moment Inequalities</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="entryexit.html"><a href="entryexit.html#incompelete-information-heterogenous-oligopoly-entry"><i class="fa fa-check"></i><b>6.6</b> Incompelete-Information Heterogenous Oligopoly Entry</a><ul>
+<li class="chapter" data-level="6.6" data-path="entryexit.html"><a href="entryexit.html#incompelete-information-heterogenous-oligopoly-entry"><i class="fa fa-check"></i><b>6.6</b> Incompelete-Information Heterogenous Oligopoly Entry</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="entryexit.html"><a href="entryexit.html#bivariate-case"><i class="fa fa-check"></i><b>6.6.1</b> Bivariate Case</a></li>
 <li class="chapter" data-level="6.6.2" data-path="entryexit.html"><a href="entryexit.html#the-equilibrium-strategy-and-belief"><i class="fa fa-check"></i><b>6.6.2</b> The Equilibrium Strategy and Belief</a></li>
 <li class="chapter" data-level="6.6.3" data-path="entryexit.html"><a href="entryexit.html#equilibrium-selection-and-likelihood"><i class="fa fa-check"></i><b>6.6.3</b> Equilibrium Selection and Likelihood</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="dynamics.html"><a href="dynamics.html"><i class="fa fa-check"></i><b>7</b> Dynamic Decision Model</a><ul>
-<li class="chapter" data-level="7.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>7.1</b> Motivations</a></li>
-<li class="chapter" data-level="7.2" data-path="dynamics.html"><a href="dynamics.html#single-agent-model"><i class="fa fa-check"></i><b>7.2</b> Single-Agent Model</a><ul>
+<li class="chapter" data-level="7" data-path="dynamics.html"><a href="dynamics.html"><i class="fa fa-check"></i><b>7</b> Dynamic Decision Model</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="dynamics.html"><a href="dynamics.html#motivations-4"><i class="fa fa-check"></i><b>7.1</b> Motivations</a></li>
+<li class="chapter" data-level="7.2" data-path="dynamics.html"><a href="dynamics.html#single-agent-model"><i class="fa fa-check"></i><b>7.2</b> Single-Agent Model</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>7.2.1</b> Setting</a></li>
 <li class="chapter" data-level="7.2.2" data-path="dynamics.html"><a href="dynamics.html#timing-of-the-model"><i class="fa fa-check"></i><b>7.2.2</b> Timing of the Model</a></li>
 <li class="chapter" data-level="7.2.3" data-path="dynamics.html"><a href="dynamics.html#period-payoff"><i class="fa fa-check"></i><b>7.2.3</b> Period Payoff</a></li>
@@ -380,18 +407,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2.14" data-path="dynamics.html"><a href="dynamics.html#the-optimality-conditions"><i class="fa fa-check"></i><b>7.2.14</b> The Optimality Conditions</a></li>
 <li class="chapter" data-level="7.2.15" data-path="dynamics.html"><a href="dynamics.html#fixed-point-algorithm"><i class="fa fa-check"></i><b>7.2.15</b> Fixed-point Algorithm</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>7.3</b> Identification</a><ul>
+<li class="chapter" data-level="7.3" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>7.3</b> Identification</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="dynamics.html"><a href="dynamics.html#unidentification-result"><i class="fa fa-check"></i><b>7.3.1</b> Unidentification Result</a></li>
 <li class="chapter" data-level="7.3.2" data-path="dynamics.html"><a href="dynamics.html#identification-when-beta-and-f-is-known"><i class="fa fa-check"></i><b>7.3.2</b> Identification when <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span> is Known</a></li>
 <li class="chapter" data-level="7.3.3" data-path="dynamics.html"><a href="dynamics.html#crucial-assumptions-for-the-argument"><i class="fa fa-check"></i><b>7.3.3</b> Crucial Assumptions for the Argument</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4</b> Estimation by Nested Fixed-point Algorithm</a><ul>
+<li class="chapter" data-level="7.4" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4</b> Estimation by Nested Fixed-point Algorithm</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="dynamics.html"><a href="dynamics.html#nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4.1</b> Nested Fixed-Point Algorithm</a></li>
 <li class="chapter" data-level="7.4.2" data-path="dynamics.html"><a href="dynamics.html#solving-for-the-ex-ante-value-function"><i class="fa fa-check"></i><b>7.4.2</b> Solving for the Ex-ante Value Function</a></li>
 <li class="chapter" data-level="7.4.3" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm-1"><i class="fa fa-check"></i><b>7.4.3</b> Estimation by Nested Fixed-Point Algorithm</a></li>
 <li class="chapter" data-level="7.4.4" data-path="dynamics.html"><a href="dynamics.html#full-and-partial-likelihood"><i class="fa fa-check"></i><b>7.4.4</b> Full and Partial Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="dynamics.html"><a href="dynamics.html#estimation-by-conditional-choice-probability-ccp-approach"><i class="fa fa-check"></i><b>7.5</b> Estimation by Conditional Choice Probability (CCP) Approach</a><ul>
+<li class="chapter" data-level="7.5" data-path="dynamics.html"><a href="dynamics.html#estimation-by-conditional-choice-probability-ccp-approach"><i class="fa fa-check"></i><b>7.5</b> Estimation by Conditional Choice Probability (CCP) Approach</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="dynamics.html"><a href="dynamics.html#ccp-approach"><i class="fa fa-check"></i><b>7.5.1</b> CCP Approach</a></li>
 <li class="chapter" data-level="7.5.2" data-path="dynamics.html"><a href="dynamics.html#first-step-estimating-ccp"><i class="fa fa-check"></i><b>7.5.2</b> First Step: Estimating CCP</a></li>
 <li class="chapter" data-level="7.5.3" data-path="dynamics.html"><a href="dynamics.html#first-step-estimating-ccp-1"><i class="fa fa-check"></i><b>7.5.3</b> First Step: Estimating CCP</a></li>
@@ -404,7 +434,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5.10" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution-4"><i class="fa fa-check"></i><b>7.5.10</b> Type-I Extreme Value Distribution</a></li>
 <li class="chapter" data-level="7.5.11" data-path="dynamics.html"><a href="dynamics.html#general-distribution"><i class="fa fa-check"></i><b>7.5.11</b> General Distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="dynamics.html"><a href="dynamics.html#unobserved-heterogeneity"><i class="fa fa-check"></i><b>7.6</b> Unobserved Heterogeneity</a><ul>
+<li class="chapter" data-level="7.6" data-path="dynamics.html"><a href="dynamics.html#unobserved-heterogeneity"><i class="fa fa-check"></i><b>7.6</b> Unobserved Heterogeneity</a>
+<ul>
 <li class="chapter" data-level="7.6.1" data-path="dynamics.html"><a href="dynamics.html#dynamic-decision-model-with-a-finite-mixture"><i class="fa fa-check"></i><b>7.6.1</b> Dynamic Decision Model with a Finite Mixture</a></li>
 <li class="chapter" data-level="7.6.2" data-path="dynamics.html"><a href="dynamics.html#setting-1"><i class="fa fa-check"></i><b>7.6.2</b> Setting</a></li>
 <li class="chapter" data-level="7.6.3" data-path="dynamics.html"><a href="dynamics.html#observation"><i class="fa fa-check"></i><b>7.6.3</b> Observation</a></li>
@@ -426,35 +457,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.19" data-path="dynamics.html"><a href="dynamics.html#maximization-step"><i class="fa fa-check"></i><b>7.6.19</b> Maximization Step</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="dynamicgame.html"><a href="dynamicgame.html"><i class="fa fa-check"></i><b>8</b> Dynamic Game</a><ul>
-<li class="chapter" data-level="8.1" data-path="dynamicgame.html"><a href="dynamicgame.html#multiple-agent-model"><i class="fa fa-check"></i><b>8.1</b> Multiple-Agent Model</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>8.1.1</b> Setting</a></li>
-<li class="chapter" data-level="8.1.2" data-path="dynamics.html"><a href="dynamics.html#timing-of-the-model"><i class="fa fa-check"></i><b>8.1.2</b> Timing of the Model</a></li>
+<li class="chapter" data-level="8" data-path="dynamicgame.html"><a href="dynamicgame.html"><i class="fa fa-check"></i><b>8</b> Dynamic Game</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dynamicgame.html"><a href="dynamicgame.html#multiple-agent-model"><i class="fa fa-check"></i><b>8.1</b> Multiple-Agent Model</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-2"><i class="fa fa-check"></i><b>8.1.1</b> Setting</a></li>
+<li class="chapter" data-level="8.1.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-model-1"><i class="fa fa-check"></i><b>8.1.2</b> Timing of the Model</a></li>
 <li class="chapter" data-level="8.1.3" data-path="dynamicgame.html"><a href="dynamicgame.html#period-profit"><i class="fa fa-check"></i><b>8.1.3</b> Period Profit</a></li>
-<li class="chapter" data-level="8.1.4" data-path="dynamics.html"><a href="dynamics.html#belief"><i class="fa fa-check"></i><b>8.1.4</b> Belief</a></li>
+<li class="chapter" data-level="8.1.4" data-path="dynamicgame.html"><a href="dynamicgame.html#belief-1"><i class="fa fa-check"></i><b>8.1.4</b> Belief</a></li>
 <li class="chapter" data-level="8.1.5" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium"><i class="fa fa-check"></i><b>8.1.5</b> Markov Perfect Equilibrium</a></li>
 <li class="chapter" data-level="8.1.6" data-path="dynamicgame.html"><a href="dynamicgame.html#ex-ante-value-function"><i class="fa fa-check"></i><b>8.1.6</b> Ex-ante Value Function</a></li>
-<li class="chapter" data-level="8.1.7" data-path="dynamics.html"><a href="dynamics.html#choice-specific-value-function"><i class="fa fa-check"></i><b>8.1.7</b> Choice-specific Value Function</a></li>
-<li class="chapter" data-level="8.1.8" data-path="dynamics.html"><a href="dynamics.html#optimality-condition"><i class="fa fa-check"></i><b>8.1.8</b> Optimality Condition</a></li>
-<li class="chapter" data-level="8.1.9" data-path="dynamics.html"><a href="dynamics.html#optimal-conditional-choice-probability"><i class="fa fa-check"></i><b>8.1.9</b> Optimal Conditional Choice Probability</a></li>
-<li class="chapter" data-level="8.1.10" data-path="entryexit.html"><a href="entryexit.html#equilibrium-condition"><i class="fa fa-check"></i><b>8.1.10</b> Equilibrium Condition</a></li>
-<li class="chapter" data-level="8.1.11" data-path="dynamicgame.html"><a href="dynamicgame.html#equilibrium-condition-1"><i class="fa fa-check"></i><b>8.1.11</b> Equilibrium Condition</a></li>
+<li class="chapter" data-level="8.1.7" data-path="dynamicgame.html"><a href="dynamicgame.html#choice-specific-value-function-1"><i class="fa fa-check"></i><b>8.1.7</b> Choice-specific Value Function</a></li>
+<li class="chapter" data-level="8.1.8" data-path="dynamicgame.html"><a href="dynamicgame.html#optimality-condition-2"><i class="fa fa-check"></i><b>8.1.8</b> Optimality Condition</a></li>
+<li class="chapter" data-level="8.1.9" data-path="dynamicgame.html"><a href="dynamicgame.html#optimal-conditional-choice-probability-2"><i class="fa fa-check"></i><b>8.1.9</b> Optimal Conditional Choice Probability</a></li>
+<li class="chapter" data-level="8.1.10" data-path="dynamicgame.html"><a href="dynamicgame.html#equilibrium-condition-1"><i class="fa fa-check"></i><b>8.1.10</b> Equilibrium Condition</a></li>
+<li class="chapter" data-level="8.1.11" data-path="dynamicgame.html"><a href="dynamicgame.html#equilibrium-condition-2"><i class="fa fa-check"></i><b>8.1.11</b> Equilibrium Condition</a></li>
 <li class="chapter" data-level="8.1.12" data-path="dynamicgame.html"><a href="dynamicgame.html#single-path-of-play"><i class="fa fa-check"></i><b>8.1.12</b> Single Path of Play</a></li>
-<li class="chapter" data-level="8.1.13" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>8.1.13</b> Identification</a></li>
+<li class="chapter" data-level="8.1.13" data-path="dynamicgame.html"><a href="dynamicgame.html#identification-1"><i class="fa fa-check"></i><b>8.1.13</b> Identification</a></li>
 <li class="chapter" data-level="8.1.14" data-path="dynamicgame.html"><a href="dynamicgame.html#estimation-ccp-approach"><i class="fa fa-check"></i><b>8.1.14</b> Estimation: CCP Approach</a></li>
 <li class="chapter" data-level="8.1.15" data-path="dynamicgame.html"><a href="dynamicgame.html#computing-psi"><i class="fa fa-check"></i><b>8.1.15</b> Computing <span class="math inline">\(\Psi\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="dynamicgame.html"><a href="dynamicgame.html#with-continuous-dynamic-choice"><i class="fa fa-check"></i><b>8.2</b> With Continuous Dynamic Choice</a><ul>
+<li class="chapter" data-level="8.2" data-path="dynamicgame.html"><a href="dynamicgame.html#with-continuous-dynamic-choice"><i class="fa fa-check"></i><b>8.2</b> With Continuous Dynamic Choice</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="dynamicgame.html"><a href="dynamicgame.html#continuous-control"><i class="fa fa-check"></i><b>8.2.1</b> Continuous Control</a></li>
-<li class="chapter" data-level="8.2.2" data-path="dynamics.html"><a href="dynamics.html#period-payoff"><i class="fa fa-check"></i><b>8.2.2</b> Period Payoff</a></li>
+<li class="chapter" data-level="8.2.2" data-path="dynamicgame.html"><a href="dynamicgame.html#period-payoff-1"><i class="fa fa-check"></i><b>8.2.2</b> Period Payoff</a></li>
 <li class="chapter" data-level="8.2.3" data-path="dynamicgame.html"><a href="dynamicgame.html#policy-function-estimation-with-continuous-control"><i class="fa fa-check"></i><b>8.2.3</b> Policy Function Estimation with Continuous Control</a></li>
 <li class="chapter" data-level="8.2.4" data-path="dynamicgame.html"><a href="dynamicgame.html#converting-to-the-standard-discrete-choice-model"><i class="fa fa-check"></i><b>8.2.4</b> Converting to the Standard Discrete Choice Model</a></li>
 <li class="chapter" data-level="8.2.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function-based-ccp-approach"><i class="fa fa-check"></i><b>8.2.5</b> Value Function Based CCP Approach</a></li>
 <li class="chapter" data-level="8.2.6" data-path="dynamicgame.html"><a href="dynamicgame.html#approximating-the-ex-ante-value-function"><i class="fa fa-check"></i><b>8.2.6</b> Approximating the Ex-ante Value Function</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="dynamics.html"><a href="dynamics.html#setting-1"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
+<li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
 <li class="chapter" data-level="8.3.5" data-path="dynamicgame.html"><a href="dynamicgame.html#production-cost-function"><i class="fa fa-check"></i><b>8.3.5</b> Production Cost Function</a></li>
@@ -476,8 +511,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.21" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation-results"><i class="fa fa-check"></i><b>8.3.21</b> Counterfactual Simulation Results</a></li>
 <li class="chapter" data-level="8.3.22" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation-estimation-results"><i class="fa fa-check"></i><b>8.3.22</b> Counterfactual Simulation Estimation Results</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-with-many-firms"><i class="fa fa-check"></i><b>8.4</b> Dynamic Oligopoly with Many Firms</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-2"><i class="fa fa-check"></i><b>8.4.1</b> Setting</a></li>
+<li class="chapter" data-level="8.4" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-with-many-firms"><i class="fa fa-check"></i><b>8.4</b> Dynamic Oligopoly with Many Firms</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-4"><i class="fa fa-check"></i><b>8.4.1</b> Setting</a></li>
 <li class="chapter" data-level="8.4.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game-1"><i class="fa fa-check"></i><b>8.4.2</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.4.3" data-path="dynamicgame.html"><a href="dynamicgame.html#assumptions"><i class="fa fa-check"></i><b>8.4.3</b> Assumptions</a></li>
 <li class="chapter" data-level="8.4.4" data-path="dynamicgame.html"><a href="dynamicgame.html#strategy-profile"><i class="fa fa-check"></i><b>8.4.4</b> Strategy Profile</a></li>
@@ -490,14 +526,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.11" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.11</b> Asymptotic Results and Extensions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a><ul>
-<li class="chapter" data-level="9.1" data-path="auction.html"><a href="auction.html#general-symmetric-information-model"><i class="fa fa-check"></i><b>9.1</b> General symmetric information model</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>9.1.1</b> Setting</a></li>
+<li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="auction.html"><a href="auction.html#general-symmetric-information-model"><i class="fa fa-check"></i><b>9.1</b> General symmetric information model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="auction.html"><a href="auction.html#setting-5"><i class="fa fa-check"></i><b>9.1.1</b> Setting</a></li>
 <li class="chapter" data-level="9.1.2" data-path="auction.html"><a href="auction.html#discussion-about-the-asssumptions"><i class="fa fa-check"></i><b>9.1.2</b> Discussion About the Asssumptions</a></li>
 <li class="chapter" data-level="9.1.3" data-path="auction.html"><a href="auction.html#bidding-strategy"><i class="fa fa-check"></i><b>9.1.3</b> Bidding Strategy</a></li>
 <li class="chapter" data-level="9.1.4" data-path="auction.html"><a href="auction.html#special-cases"><i class="fa fa-check"></i><b>9.1.4</b> Special Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="auction.html"><a href="auction.html#second-price-auctions"><i class="fa fa-check"></i><b>9.2</b> Second-Price Auctions</a><ul>
+<li class="chapter" data-level="9.2" data-path="auction.html"><a href="auction.html#second-price-auctions"><i class="fa fa-check"></i><b>9.2</b> Second-Price Auctions</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="auction.html"><a href="auction.html#the-button-auction"><i class="fa fa-check"></i><b>9.2.1</b> The Button Auction</a></li>
 <li class="chapter" data-level="9.2.2" data-path="auction.html"><a href="auction.html#equilibrium-bidding-strategies"><i class="fa fa-check"></i><b>9.2.2</b> Equilibrium Bidding Strategies</a></li>
 <li class="chapter" data-level="9.2.3" data-path="auction.html"><a href="auction.html#reserve-price"><i class="fa fa-check"></i><b>9.2.3</b> Reserve Price</a></li>
@@ -507,9 +546,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.7" data-path="auction.html"><a href="auction.html#optimal-reserve-price"><i class="fa fa-check"></i><b>9.2.7</b> Optimal Reserve Price</a></li>
 <li class="chapter" data-level="9.2.8" data-path="auction.html"><a href="auction.html#likelihood-of-ipv-english-auction-with-bid-data"><i class="fa fa-check"></i><b>9.2.8</b> Likelihood of IPV English Auction with Bid Data</a></li>
 <li class="chapter" data-level="9.2.9" data-path="auction.html"><a href="auction.html#observed-heterogeneity"><i class="fa fa-check"></i><b>9.2.9</b> Observed Heterogeneity</a></li>
-<li class="chapter" data-level="9.2.10" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>9.2.10</b> Identification</a></li>
+<li class="chapter" data-level="9.2.10" data-path="auction.html"><a href="auction.html#identification-2"><i class="fa fa-check"></i><b>9.2.10</b> Identification</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="auction.html"><a href="auction.html#first-price-auctions"><i class="fa fa-check"></i><b>9.3</b> First-Price Auctions</a><ul>
+<li class="chapter" data-level="9.3" data-path="auction.html"><a href="auction.html#first-price-auctions"><i class="fa fa-check"></i><b>9.3</b> First-Price Auctions</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="auction.html"><a href="auction.html#first-price-sealed-bid-auction"><i class="fa fa-check"></i><b>9.3.1</b> First-Price Sealed Bid Auction</a></li>
 <li class="chapter" data-level="9.3.2" data-path="auction.html"><a href="auction.html#equilibrium-bidding-strategies-1"><i class="fa fa-check"></i><b>9.3.2</b> Equilibrium Bidding Strategies</a></li>
 <li class="chapter" data-level="9.3.3" data-path="auction.html"><a href="auction.html#maximum-likelihood-estimation-of-the-ipv-first-price-auction"><i class="fa fa-check"></i><b>9.3.3</b> Maximum Likelihood Estimation of the IPV First-Price Auction</a></li>
@@ -517,12 +557,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3.5" data-path="auction.html"><a href="auction.html#non-parmaetric-approach-estimation"><i class="fa fa-check"></i><b>9.3.5</b> Non-Parmaetric Approach: Estimation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a><ul>
-<li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#section"><i class="fa fa-check"></i><b>10.1</b> 2018-2019</a><ul>
+<li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#section"><i class="fa fa-check"></i><b>10.1</b> 2018-2019</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="applications.html"><a href="applications.html#american-economic-review"><i class="fa fa-check"></i><b>10.1.1</b> American Economic Review</a></li>
 <li class="chapter" data-level="10.1.2" data-path="applications.html"><a href="applications.html#econometrica"><i class="fa fa-check"></i><b>10.1.2</b> Econometrica</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="applications.html"><a href="applications.html#asymmetric-information-and-market-power"><i class="fa fa-check"></i><b>10.2</b> Asymmetric Information and Market Power</a><ul>
+<li class="chapter" data-level="10.2" data-path="applications.html"><a href="applications.html#asymmetric-information-and-market-power"><i class="fa fa-check"></i><b>10.2</b> Asymmetric Information and Market Power</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="applications.html"><a href="applications.html#motivation"><i class="fa fa-check"></i><b>10.2.1</b> Motivation</a></li>
 <li class="chapter" data-level="10.2.2" data-path="applications.html"><a href="applications.html#question-method-and-materials"><i class="fa fa-check"></i><b>10.2.2</b> Question, Method, and Materials</a></li>
 <li class="chapter" data-level="10.2.3" data-path="applications.html"><a href="applications.html#findings"><i class="fa fa-check"></i><b>10.2.3</b> Findings</a></li>
@@ -532,7 +575,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2.7" data-path="applications.html"><a href="applications.html#firm-data"><i class="fa fa-check"></i><b>10.2.7</b> Firm Data</a></li>
 <li class="chapter" data-level="10.2.8" data-path="applications.html"><a href="applications.html#default-data"><i class="fa fa-check"></i><b>10.2.8</b> Default Data</a></li>
 <li class="chapter" data-level="10.2.9" data-path="applications.html"><a href="applications.html#positive-correlation-tests"><i class="fa fa-check"></i><b>10.2.9</b> Positive Correlation Tests</a></li>
-<li class="chapter" data-level="10.2.10" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>10.2.10</b> Setting</a></li>
+<li class="chapter" data-level="10.2.10" data-path="applications.html"><a href="applications.html#setting-6"><i class="fa fa-check"></i><b>10.2.10</b> Setting</a></li>
 <li class="chapter" data-level="10.2.11" data-path="applications.html"><a href="applications.html#firm-preference-over-banks"><i class="fa fa-check"></i><b>10.2.11</b> Firm Preference over Banks</a></li>
 <li class="chapter" data-level="10.2.12" data-path="applications.html"><a href="applications.html#required-loand-amount"><i class="fa fa-check"></i><b>10.2.12</b> Required Loand Amount</a></li>
 <li class="chapter" data-level="10.2.13" data-path="applications.html"><a href="applications.html#default-decision"><i class="fa fa-check"></i><b>10.2.13</b> Default Decision</a></li>
@@ -556,54 +599,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.2.31" data-path="applications.html"><a href="applications.html#counterfactuals"><i class="fa fa-check"></i><b>10.2.31</b> Counterfactuals</a></li>
 <li class="chapter" data-level="10.2.32" data-path="applications.html"><a href="applications.html#what-if-adverse-selection-got-severer"><i class="fa fa-check"></i><b>10.2.32</b> What if Adverse Selection Got Severer?</a></li>
 <li class="chapter" data-level="10.2.33" data-path="applications.html"><a href="applications.html#what-if-cost-of-capital-increased"><i class="fa fa-check"></i><b>10.2.33</b> What if Cost of Capital Increased?</a></li>
-<li class="chapter" data-level="10.2.34" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>10.2.34</b> Merger Simulation</a></li>
+<li class="chapter" data-level="10.2.34" data-path="applications.html"><a href="applications.html#merger-simulation-2"><i class="fa fa-check"></i><b>10.2.34</b> Merger Simulation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="assignment1.html"><a href="assignment1.html"><i class="fa fa-check"></i><b>11</b> Assignment 1: Basic Programming in R</a><ul>
+<li class="chapter" data-level="11" data-path="assignment1.html"><a href="assignment1.html"><i class="fa fa-check"></i><b>11</b> Assignment 1: Basic Programming in R</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>11.1</b> Simulate data</a></li>
 <li class="chapter" data-level="11.2" data-path="assignment1.html"><a href="assignment1.html#estimate-the-parameter"><i class="fa fa-check"></i><b>11.2</b> Estimate the parameter</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="assignment2.html"><a href="assignment2.html"><i class="fa fa-check"></i><b>12</b> Assignment 2: Production Function Estimation</a><ul>
-<li class="chapter" data-level="12.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>12.1</b> Simulate data</a></li>
+<li class="chapter" data-level="12" data-path="assignment2.html"><a href="assignment2.html"><i class="fa fa-check"></i><b>12</b> Assignment 2: Production Function Estimation</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="assignment2.html"><a href="assignment2.html#simulate-data-1"><i class="fa fa-check"></i><b>12.1</b> Simulate data</a></li>
 <li class="chapter" data-level="12.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>12.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="assignment3.html"><a href="assignment3.html"><i class="fa fa-check"></i><b>13</b> Assignment 3: Demand Function Estimation I</a><ul>
-<li class="chapter" data-level="13.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>13.1</b> Simulate data</a></li>
-<li class="chapter" data-level="13.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>13.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="13" data-path="assignment3.html"><a href="assignment3.html"><i class="fa fa-check"></i><b>13</b> Assignment 3: Demand Function Estimation I</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="assignment3.html"><a href="assignment3.html#simulate-data-2"><i class="fa fa-check"></i><b>13.1</b> Simulate data</a></li>
+<li class="chapter" data-level="13.2" data-path="assignment3.html"><a href="assignment3.html#estimate-the-parameters-1"><i class="fa fa-check"></i><b>13.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="assignment4.html"><a href="assignment4.html"><i class="fa fa-check"></i><b>14</b> Assignment 4: Demand Function Estimation II</a><ul>
-<li class="chapter" data-level="14.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>14.1</b> Simulate data</a></li>
-<li class="chapter" data-level="14.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>14.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="14" data-path="assignment4.html"><a href="assignment4.html"><i class="fa fa-check"></i><b>14</b> Assignment 4: Demand Function Estimation II</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="assignment4.html"><a href="assignment4.html#simulate-data-3"><i class="fa fa-check"></i><b>14.1</b> Simulate data</a></li>
+<li class="chapter" data-level="14.2" data-path="assignment4.html"><a href="assignment4.html#estimate-the-parameters-2"><i class="fa fa-check"></i><b>14.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="assignment5.html"><a href="assignment5.html"><i class="fa fa-check"></i><b>15</b> Assignment 5: Merger Simulation</a><ul>
-<li class="chapter" data-level="15.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>15.1</b> Simulate data</a></li>
-<li class="chapter" data-level="15.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>15.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="15" data-path="assignment5.html"><a href="assignment5.html"><i class="fa fa-check"></i><b>15</b> Assignment 5: Merger Simulation</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="assignment5.html"><a href="assignment5.html#simulate-data-4"><i class="fa fa-check"></i><b>15.1</b> Simulate data</a></li>
+<li class="chapter" data-level="15.2" data-path="assignment5.html"><a href="assignment5.html#estimate-the-parameters-3"><i class="fa fa-check"></i><b>15.2</b> Estimate the parameters</a></li>
 <li class="chapter" data-level="15.3" data-path="assignment5.html"><a href="assignment5.html#conduct-counterfactual-simulation"><i class="fa fa-check"></i><b>15.3</b> Conduct counterfactual simulation</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="assignment6.html"><a href="assignment6.html"><i class="fa fa-check"></i><b>16</b> Assignment 6: Entry and Exit Analysis</a><ul>
-<li class="chapter" data-level="16.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>16.1</b> Simulate data</a></li>
-<li class="chapter" data-level="16.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>16.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="16" data-path="assignment6.html"><a href="assignment6.html"><i class="fa fa-check"></i><b>16</b> Assignment 6: Entry and Exit Analysis</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="assignment6.html"><a href="assignment6.html#simulate-data-5"><i class="fa fa-check"></i><b>16.1</b> Simulate data</a></li>
+<li class="chapter" data-level="16.2" data-path="assignment6.html"><a href="assignment6.html#estimate-the-parameters-4"><i class="fa fa-check"></i><b>16.2</b> Estimate the parameters</a></li>
 <li class="chapter" data-level="16.3" data-path="assignment6.html"><a href="assignment6.html#conduct-counterfactual-simulations"><i class="fa fa-check"></i><b>16.3</b> Conduct counterfactual simulations</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="assignment7.html"><a href="assignment7.html"><i class="fa fa-check"></i><b>17</b> Assignment 7: Dynamic Decision</a><ul>
-<li class="chapter" data-level="17.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>17.1</b> Simulate data</a></li>
+<li class="chapter" data-level="17" data-path="assignment7.html"><a href="assignment7.html"><i class="fa fa-check"></i><b>17</b> Assignment 7: Dynamic Decision</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="assignment7.html"><a href="assignment7.html#simulate-data-6"><i class="fa fa-check"></i><b>17.1</b> Simulate data</a></li>
 <li class="chapter" data-level="17.2" data-path="assignment7.html"><a href="assignment7.html#estimate-parameters"><i class="fa fa-check"></i><b>17.2</b> Estimate parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="assignment8.html"><a href="assignment8.html"><i class="fa fa-check"></i><b>18</b> Assignment 8: Dynamic Game</a><ul>
-<li class="chapter" data-level="18.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>18.1</b> Simulate data</a></li>
-<li class="chapter" data-level="18.2" data-path="assignment7.html"><a href="assignment7.html#estimate-parameters"><i class="fa fa-check"></i><b>18.2</b> Estimate parameters</a></li>
+<li class="chapter" data-level="18" data-path="assignment8.html"><a href="assignment8.html"><i class="fa fa-check"></i><b>18</b> Assignment 8: Dynamic Game</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="assignment8.html"><a href="assignment8.html#simulate-data-7"><i class="fa fa-check"></i><b>18.1</b> Simulate data</a></li>
+<li class="chapter" data-level="18.2" data-path="assignment8.html"><a href="assignment8.html#estimate-parameters-1"><i class="fa fa-check"></i><b>18.2</b> Estimate parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html"><i class="fa fa-check"></i><b>19</b> Assignment 9: Auction</a><ul>
-<li class="chapter" data-level="19.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>19.1</b> Simulate data</a></li>
-<li class="chapter" data-level="19.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>19.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="19" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html"><i class="fa fa-check"></i><b>19</b> Assignment 9: Auction</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html#simulate-data-8"><i class="fa fa-check"></i><b>19.1</b> Simulate data</a></li>
+<li class="chapter" data-level="19.2" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html#estimate-the-parameters-5"><i class="fa fa-check"></i><b>19.2</b> Estimate the parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>20</b> Integrating with C++ using Rcpp and RcppEigen</a><ul>
+<li class="chapter" data-level="20" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>20</b> Integrating with C++ using Rcpp and RcppEigen</a>
+<ul>
 <li class="chapter" data-level="20.1" data-path="rcpp.html"><a href="rcpp.html#prerequisite"><i class="fa fa-check"></i><b>20.1</b> Prerequisite</a></li>
 <li class="chapter" data-level="20.2" data-path="rcpp.html"><a href="rcpp.html#workflow"><i class="fa fa-check"></i><b>20.2</b> Workflow</a></li>
 <li class="chapter" data-level="20.3" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-rcpp-objects"><i class="fa fa-check"></i><b>20.3</b> Passing R Objects as Rcpp Objects</a></li>
 <li class="chapter" data-level="20.4" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-eigen-objects"><i class="fa fa-check"></i><b>20.4</b> Passing R Objects as Eigen Objects</a></li>
 <li class="chapter" data-level="20.5" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-in-other-objects-in-cc"><i class="fa fa-check"></i><b>20.5</b> Passing R Objects in Other Objects in C/C++</a></li>
-<li class="chapter" data-level="20.6" data-path="rcpp.html"><a href="rcpp.html#manipulating-objects-in-a-c-function"><i class="fa fa-check"></i><b>20.6</b> Manipulating Objects in a C++ Function</a><ul>
+<li class="chapter" data-level="20.6" data-path="rcpp.html"><a href="rcpp.html#manipulating-objects-in-a-c-function"><i class="fa fa-check"></i><b>20.6</b> Manipulating Objects in a C++ Function</a>
+<ul>
 <li class="chapter" data-level="20.6.1" data-path="rcpp.html"><a href="rcpp.html#matrix-and-vector-arithmetic"><i class="fa fa-check"></i><b>20.6.1</b> Matrix and Vector Arithmetic</a></li>
 <li class="chapter" data-level="20.6.2" data-path="rcpp.html"><a href="rcpp.html#the-array-class-and-coefficient-wise-operations"><i class="fa fa-check"></i><b>20.6.2</b> The Array Class and Coefficient-wise Operations</a></li>
 <li class="chapter" data-level="20.6.3" data-path="rcpp.html"><a href="rcpp.html#solving-linear-least-squares-systems"><i class="fa fa-check"></i><b>20.6.3</b> Solving Linear Least Squares Systems</a></li>
@@ -631,9 +685,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rcpp" class="section level1">
+<div id="rcpp" class="section level1" number="20">
 <h1><span class="header-section-number">Chapter 20</span> Integrating with C++ using Rcpp and RcppEigen</h1>
-<div id="prerequisite" class="section level2">
+<div id="prerequisite" class="section level2" number="20.1">
 <h2><span class="header-section-number">20.1</span> Prerequisite</h2>
 <ul>
 <li>In this chapter, we learn how to integrate C++ using Rcpp and RcppEigen.</li>
@@ -692,7 +746,7 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3</code></pre>
 - `-std=c++11` is for using the latest functionalities of C++ (optional).
 - `-I../inst/include/` is for setting the header path to `../inst/include/` (optional).</code></pre>
 </div>
-<div id="workflow" class="section level2">
+<div id="workflow" class="section level2" number="20.2">
 <h2><span class="header-section-number">20.2</span> Workflow</h2>
 <ul>
 <li>To minimize the likelihood of bugs and the time to edit and debug the code, I recommend you to follw the following workflow.</li>
@@ -701,25 +755,25 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3</code></pre>
 <ol style="list-style-type: decimal">
 <li>Write a procedure in <code>main/main.R</code>.</li>
 </ol>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb551-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb551-2" title="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb551-3" title="3">y1 &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="rcpp.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb551-2"><a href="rcpp.html#cb551-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb551-3"><a href="rcpp.html#cb551-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Rewrite the procedure to a function in <code>main/main.R</code>.</li>
 </ol>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb552-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb552-2" title="2"><span class="co"># compute coefficient-wise square</span></a>
-<a class="sourceLine" id="cb552-3" title="3">compute_square &lt;-</a>
-<a class="sourceLine" id="cb552-4" title="4"><span class="st">  </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb552-5" title="5">    y &lt;-<span class="st"> </span>x<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb552-6" title="6">    <span class="kw">return</span>(y)</a>
-<a class="sourceLine" id="cb552-7" title="7">  }</a></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="rcpp.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb552-2"><a href="rcpp.html#cb552-2" aria-hidden="true" tabindex="-1"></a><span class="co"># compute coefficient-wise square</span></span>
+<span id="cb552-3"><a href="rcpp.html#cb552-3" aria-hidden="true" tabindex="-1"></a>compute_square <span class="ot">&lt;-</span></span>
+<span id="cb552-4"><a href="rcpp.html#cb552-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
+<span id="cb552-5"><a href="rcpp.html#cb552-5" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb552-6"><a href="rcpp.html#cb552-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb552-7"><a href="rcpp.html#cb552-7" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Execute the function in <code>main/main.R</code> and check that the output is the same with the output of the original</li>
 </ol>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb553-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb553-2" title="2">y2 &lt;-<span class="st"> </span><span class="kw">compute_square</span>(x)</a>
-<a class="sourceLine" id="cb553-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(y1 <span class="op">-</span><span class="st"> </span>y2))</a></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="rcpp.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb553-2"><a href="rcpp.html#cb553-2" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">compute_square</span>(x)</span>
+<span id="cb553-3"><a href="rcpp.html#cb553-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(y1 <span class="sc">-</span> y2))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Cut and paste the function to <code>R/functions.R</code>.</li>
@@ -772,9 +826,9 @@ Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
 <ol start="11" style="list-style-type: decimal">
 <li>Now by calling the library, you should be able to use the function written in C++ in R. Check if it returns a valid value and if the output is the same as the output of the R function.</li>
 </ol>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb558-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb558-2" title="2">y3 &lt;-<span class="st"> </span><span class="kw">compute_square_rcpp</span>(x)</a>
-<a class="sourceLine" id="cb558-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(y2 <span class="op">-</span><span class="st"> </span>y3))</a></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="rcpp.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb558-2"><a href="rcpp.html#cb558-2" aria-hidden="true" tabindex="-1"></a>y3 <span class="ot">&lt;-</span> <span class="fu">compute_square_rcpp</span>(x)</span>
+<span id="cb558-3"><a href="rcpp.html#cb558-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(y2 <span class="sc">-</span> y3))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ol start="12" style="list-style-type: decimal">
 <li>If there is a run-time bug in the C++ function, you may have to use some debugger for C++ to debug the function.
@@ -804,7 +858,7 @@ and then continue the process by typing <code>c</code> in the terminal.
 <li>If you need to modify the function, first rewrite the R function and then follow the same step to rewrite the C++ function. Never start the debugging from C++ functions.</li>
 </ol>
 </div>
-<div id="passing-r-objects-as-rcpp-objects" class="section level2">
+<div id="passing-r-objects-as-rcpp-objects" class="section level2" number="20.3">
 <h2><span class="header-section-number">20.3</span> Passing R Objects as Rcpp Objects</h2>
 <ul>
 <li>R class corresponds to the following Rcpp class:</li>
@@ -879,14 +933,14 @@ and then continue the process by typing <code>c</code> in the terminal.
 <ul>
 <li>For example, a numeric vector in R is passed to <code>Rcpp::NumericVector</code> in Rcpp, an integer matrix is to <code>Rcpp::IntegerMatrix</code>, and so on.</li>
 </ul>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb563-2" title="2"><span class="co"># numeric vector </span></a>
-<a class="sourceLine" id="cb563-3" title="3">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb563-4" title="4">x</a></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="rcpp.html#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb563-2"><a href="rcpp.html#cb563-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric vector </span></span>
+<span id="cb563-3"><a href="rcpp.html#cb563-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
+<span id="cb563-4"><a href="rcpp.html#cb563-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850</code></pre>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" title="1"><span class="co"># numeric matrix</span></a>
-<a class="sourceLine" id="cb565-2" title="2">Y &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb565-3" title="3">Y</a></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="rcpp.html#cb565-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric matrix</span></span>
+<span id="cb565-2"><a href="rcpp.html#cb565-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb565-3"><a href="rcpp.html#cb565-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
 <pre><code>##          [,1]       [,2]       [,3]       [,4]      [,5]
 ## [1,] 2.106189 -0.2612649 -0.7788302 -0.4213451  1.218305
 ## [2,] 0.412157  2.0737836  1.1315325 -1.0217474 -1.799761</code></pre>
@@ -905,30 +959,30 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 <ul>
 <li>Check if you can pass R objects and get the right result:</li>
 </ul>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb568-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb568-2" title="2">x_rcpp &lt;-<span class="st"> </span><span class="kw">pass_numeric_vector_to_rcpp</span>(x)</a>
-<a class="sourceLine" id="cb568-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x_rcpp))</a></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="rcpp.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb568-2"><a href="rcpp.html#cb568-2" aria-hidden="true" tabindex="-1"></a>x_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_numeric_vector_to_rcpp</span>(x)</span>
+<span id="cb568-3"><a href="rcpp.html#cb568-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb570-1" title="1">Y_rcpp &lt;-<span class="st"> </span><span class="kw">pass_numeric_matrix_to_rcpp</span>(Y)</a>
-<a class="sourceLine" id="cb570-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_rcpp))</a></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="rcpp.html#cb570-1" aria-hidden="true" tabindex="-1"></a>Y_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_numeric_matrix_to_rcpp</span>(Y)</span>
+<span id="cb570-2"><a href="rcpp.html#cb570-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li><strong>Exercise</strong>: Write functions <code>pass_integer_vector_to_rcpp</code>, <code>pass_integer_matrix_to_rcpp</code>, <code>pass_list_to_rcpp</code>, <code>pass_data_frame_to_rcpp</code> that receive an integer vector, list, and data frame and just return themselves.</li>
 </ul>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb572-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb572-2" title="2"><span class="co"># integer vector</span></a>
-<a class="sourceLine" id="cb572-3" title="3">z &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb572-4" title="4">z</a></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="rcpp.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb572-2"><a href="rcpp.html#cb572-2" aria-hidden="true" tabindex="-1"></a><span class="co"># integer vector</span></span>
+<span id="cb572-3"><a href="rcpp.html#cb572-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb572-4"><a href="rcpp.html#cb572-4" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5</code></pre>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb574-1" title="1"><span class="co"># integer matrix</span></a>
-<a class="sourceLine" id="cb574-2" title="2">W &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb574-3" title="3">W</a></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="rcpp.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="co"># integer matrix</span></span>
+<span id="cb574-2"><a href="rcpp.html#cb574-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb574-3"><a href="rcpp.html#cb574-3" aria-hidden="true" tabindex="-1"></a>W</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb576-1" title="1"><span class="co"># list</span></a>
-<a class="sourceLine" id="cb576-2" title="2">L &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> x, <span class="dt">Y =</span> Y, <span class="dt">z =</span> z)</a>
-<a class="sourceLine" id="cb576-3" title="3">L</a></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="rcpp.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list</span></span>
+<span id="cb576-2"><a href="rcpp.html#cb576-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">Y =</span> Y, <span class="at">z =</span> z)</span>
+<span id="cb576-3"><a href="rcpp.html#cb576-3" aria-hidden="true" tabindex="-1"></a>L</span></code></pre></div>
 <pre><code>## $x
 ## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
@@ -939,29 +993,29 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 ## 
 ## $z
 ## [1] 1 2 3 4 5</code></pre>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb578-1" title="1"><span class="co"># data frame</span></a>
-<a class="sourceLine" id="cb578-2" title="2">D &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x1 =</span> <span class="kw">rnorm</span>(<span class="dv">5</span>), <span class="dt">x2 =</span> <span class="kw">rnorm</span>(<span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb578-3" title="3">D</a></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="rcpp.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame</span></span>
+<span id="cb578-2"><a href="rcpp.html#cb578-2" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>), <span class="at">x2 =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>))</span>
+<span id="cb578-3"><a href="rcpp.html#cb578-3" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
 <pre><code>##            x1         x2
 ## 1 -0.30824994 -1.5570357
 ## 2  0.01551524  1.9231637
 ## 3 -0.44231772 -1.8568296
 ## 4 -1.63800773 -2.1061184
 ## 5 -0.64140116  0.6976485</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb580-1" title="1">z_rcpp &lt;-<span class="st"> </span><span class="kw">pass_integer_vector_to_rcpp</span>(z)</a>
-<a class="sourceLine" id="cb580-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(z <span class="op">-</span><span class="st"> </span>z_rcpp))</a></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="rcpp.html#cb580-1" aria-hidden="true" tabindex="-1"></a>z_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_integer_vector_to_rcpp</span>(z)</span>
+<span id="cb580-2"><a href="rcpp.html#cb580-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(z <span class="sc">-</span> z_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb582-1" title="1">W_rcpp &lt;-<span class="st"> </span><span class="kw">pass_integer_matrix_to_rcpp</span>(W)</a>
-<a class="sourceLine" id="cb582-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(W <span class="op">-</span><span class="st"> </span>W_rcpp))</a></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="rcpp.html#cb582-1" aria-hidden="true" tabindex="-1"></a>W_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_integer_matrix_to_rcpp</span>(W)</span>
+<span id="cb582-2"><a href="rcpp.html#cb582-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(W <span class="sc">-</span> W_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb584-1" title="1">L_rcpp &lt;-<span class="st"> </span><span class="kw">pass_list_to_rcpp</span>(L)</a>
-<a class="sourceLine" id="cb584-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(L) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(L_rcpp)))</a></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="rcpp.html#cb584-1" aria-hidden="true" tabindex="-1"></a>L_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_list_to_rcpp</span>(L)</span>
+<span id="cb584-2"><a href="rcpp.html#cb584-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(L) <span class="sc">-</span> <span class="fu">unlist</span>(L_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb586-1" title="1">D_rcpp &lt;-<span class="st"> </span><span class="kw">pass_data_frame_to_rcpp</span>(D)</a>
-<a class="sourceLine" id="cb586-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(D <span class="op">-</span><span class="st"> </span>D_rcpp))</a></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="rcpp.html#cb586-1" aria-hidden="true" tabindex="-1"></a>D_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_data_frame_to_rcpp</span>(D)</span>
+<span id="cb586-2"><a href="rcpp.html#cb586-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(D <span class="sc">-</span> D_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>
-<div id="passing-r-objects-as-eigen-objects" class="section level2">
+<div id="passing-r-objects-as-eigen-objects" class="section level2" number="20.4">
 <h2><span class="header-section-number">20.4</span> Passing R Objects as Eigen Objects</h2>
 <ul>
 <li>R data structure corresponds to the following Eigen data structure:</li>
@@ -999,22 +1053,22 @@ Eigen::VectorXd pass_numeric_vector_to_eigen(Eigen::VectorXd x) {
 Eigen::MatrixXd pass_numeric_matrix_to_eigen(Eigen::MatrixXd Y) {
   return(Y);
 }</code></pre>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb589-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb589-2" title="2">x_eigen &lt;-<span class="st"> </span><span class="kw">pass_numeric_vector_to_eigen</span>(x)</a>
-<a class="sourceLine" id="cb589-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x_eigen))</a></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="rcpp.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb589-2"><a href="rcpp.html#cb589-2" aria-hidden="true" tabindex="-1"></a>x_eigen <span class="ot">&lt;-</span> <span class="fu">pass_numeric_vector_to_eigen</span>(x)</span>
+<span id="cb589-3"><a href="rcpp.html#cb589-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb591-1" title="1">Y_eigen &lt;-<span class="st"> </span><span class="kw">pass_numeric_matrix_to_eigen</span>(Y)</a>
-<a class="sourceLine" id="cb591-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_eigen))</a></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="rcpp.html#cb591-1" aria-hidden="true" tabindex="-1"></a>Y_eigen <span class="ot">&lt;-</span> <span class="fu">pass_numeric_matrix_to_eigen</span>(Y)</span>
+<span id="cb591-2"><a href="rcpp.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li><strong>Exercise</strong>: Write functions <code>pass_integer_vector_to_rcpp</code> and <code>pass_integer_matrix_to_rcpp</code> that receive an integer vector and integer matrix and just return themselves.</li>
 </ul>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb593-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb593-2" title="2">z_eigen &lt;-<span class="st"> </span><span class="kw">pass_integer_vector_to_eigen</span>(z)</a>
-<a class="sourceLine" id="cb593-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(z <span class="op">-</span><span class="st"> </span>z_eigen))</a></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="rcpp.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb593-2"><a href="rcpp.html#cb593-2" aria-hidden="true" tabindex="-1"></a>z_eigen <span class="ot">&lt;-</span> <span class="fu">pass_integer_vector_to_eigen</span>(z)</span>
+<span id="cb593-3"><a href="rcpp.html#cb593-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(z <span class="sc">-</span> z_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb595-1" title="1">W_eigen &lt;-<span class="st"> </span><span class="kw">pass_integer_matrix_to_eigen</span>(W)</a>
-<a class="sourceLine" id="cb595-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(W <span class="op">-</span><span class="st"> </span>W_eigen))</a></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="rcpp.html#cb595-1" aria-hidden="true" tabindex="-1"></a>W_eigen <span class="ot">&lt;-</span> <span class="fu">pass_integer_matrix_to_eigen</span>(W)</span>
+<span id="cb595-2"><a href="rcpp.html#cb595-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(W <span class="sc">-</span> W_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>If you pass a vector and matrix by <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code>, the objects are <strong>copied</strong> to the new objects. This means that the new memory is allocated. If you are going to modify the passed object inside the C++ function, the objects have to be copied. Otherwise, you can just map the objects in the following way so that the new memory is not allocated, whereas you cannot modify the objects in the C++ function.</li>
@@ -1028,12 +1082,12 @@ Eigen::VectorXd map_numeric_vector_to_eigen(Eigen::Map&lt;Eigen::VectorXd&gt; x)
 Eigen::MatrixXd map_numeric_matrix_to_eigen(Eigen::Map&lt;Eigen::MatrixXd&gt; Y) {
   return(Y);
 }</code></pre>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb598-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb598-2" title="2">x_eigen_map &lt;-<span class="st"> </span><span class="kw">map_numeric_vector_to_eigen</span>(x)</a>
-<a class="sourceLine" id="cb598-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x_eigen_map))</a></code></pre></div>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="rcpp.html#cb598-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb598-2"><a href="rcpp.html#cb598-2" aria-hidden="true" tabindex="-1"></a>x_eigen_map <span class="ot">&lt;-</span> <span class="fu">map_numeric_vector_to_eigen</span>(x)</span>
+<span id="cb598-3"><a href="rcpp.html#cb598-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_eigen_map))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb600-1" title="1">Y_eigen_map &lt;-<span class="st"> </span><span class="kw">map_numeric_matrix_to_eigen</span>(Y)</a>
-<a class="sourceLine" id="cb600-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(Y <span class="op">-</span><span class="st"> </span>Y_eigen_map))</a></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="rcpp.html#cb600-1" aria-hidden="true" tabindex="-1"></a>Y_eigen_map <span class="ot">&lt;-</span> <span class="fu">map_numeric_matrix_to_eigen</span>(Y)</span>
+<span id="cb600-2"><a href="rcpp.html#cb600-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_eigen_map))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li><p>I recommend to directly pass R vectors and matrices to <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> rather than to <code>Vector</code> and <code>Matrix</code> in Rcpp, because <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> have richer methods for linear algebra.</p></li>
@@ -1054,13 +1108,13 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
   Rcpp::List output = Rcpp::List::create(x, Y, z, W);
   return(output);
 }</code></pre>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb603-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb603-2" title="2">list_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb603-3" title="3">list_<span class="dv">1</span>[[<span class="dv">1</span>]] &lt;-<span class="st"> </span>x</a>
-<a class="sourceLine" id="cb603-4" title="4">list_<span class="dv">1</span>[[<span class="dv">2</span>]] &lt;-<span class="st"> </span>Y</a>
-<a class="sourceLine" id="cb603-5" title="5">list_<span class="dv">1</span>[[<span class="dv">3</span>]] &lt;-<span class="st"> </span>z</a>
-<a class="sourceLine" id="cb603-6" title="6">list_<span class="dv">1</span>[[<span class="dv">4</span>]] &lt;-<span class="st"> </span>W</a>
-<a class="sourceLine" id="cb603-7" title="7">list_<span class="dv">1</span></a></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="rcpp.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb603-2"><a href="rcpp.html#cb603-2" aria-hidden="true" tabindex="-1"></a>list_1 <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb603-3"><a href="rcpp.html#cb603-3" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> x</span>
+<span id="cb603-4"><a href="rcpp.html#cb603-4" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> Y</span>
+<span id="cb603-5"><a href="rcpp.html#cb603-5" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">3</span>]] <span class="ot">&lt;-</span> z</span>
+<span id="cb603-6"><a href="rcpp.html#cb603-6" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">4</span>]] <span class="ot">&lt;-</span> W</span>
+<span id="cb603-7"><a href="rcpp.html#cb603-7" aria-hidden="true" tabindex="-1"></a>list_1</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
@@ -1076,8 +1130,8 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 ##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb605-1" title="1">list_<span class="dv">1</span>_eigen &lt;-<span class="st"> </span><span class="kw">pass_list_to_eigen</span>(list_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb605-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(list_<span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(list_<span class="dv">1</span>_eigen)))</a></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="rcpp.html#cb605-1" aria-hidden="true" tabindex="-1"></a>list_1_eigen <span class="ot">&lt;-</span> <span class="fu">pass_list_to_eigen</span>(list_1)</span>
+<span id="cb605-2"><a href="rcpp.html#cb605-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(list_1) <span class="sc">-</span> <span class="fu">unlist</span>(list_1_eigen)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>You can also pass a list with named arguments and return a named list as follows:</li>
@@ -1101,13 +1155,13 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
     Rcpp::Named(&quot;W&quot;) = W);
   return(output);
 }</code></pre>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb608-1" title="1"><span class="co"># main/main.r</span></a>
-<a class="sourceLine" id="cb608-2" title="2">list_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">list</span>()</a>
-<a class="sourceLine" id="cb608-3" title="3">list_<span class="dv">2</span><span class="op">$</span>x &lt;-<span class="st"> </span>x</a>
-<a class="sourceLine" id="cb608-4" title="4">list_<span class="dv">2</span><span class="op">$</span>Y &lt;-<span class="st"> </span>Y</a>
-<a class="sourceLine" id="cb608-5" title="5">list_<span class="dv">2</span><span class="op">$</span>z &lt;-<span class="st"> </span>z</a>
-<a class="sourceLine" id="cb608-6" title="6">list_<span class="dv">2</span><span class="op">$</span>W &lt;-<span class="st"> </span>W</a>
-<a class="sourceLine" id="cb608-7" title="7">list_<span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="rcpp.html#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb608-2"><a href="rcpp.html#cb608-2" aria-hidden="true" tabindex="-1"></a>list_2 <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb608-3"><a href="rcpp.html#cb608-3" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
+<span id="cb608-4"><a href="rcpp.html#cb608-4" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>Y <span class="ot">&lt;-</span> Y</span>
+<span id="cb608-5"><a href="rcpp.html#cb608-5" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>z <span class="ot">&lt;-</span> z</span>
+<span id="cb608-6"><a href="rcpp.html#cb608-6" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>W <span class="ot">&lt;-</span> W</span>
+<span id="cb608-7"><a href="rcpp.html#cb608-7" aria-hidden="true" tabindex="-1"></a>list_2</span></code></pre></div>
 <pre><code>## $x
 ## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
@@ -1123,8 +1177,8 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 ##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb610-1" title="1">list_<span class="dv">2</span>_eigen &lt;-<span class="st"> </span><span class="kw">pass_named_list_to_eigen</span>(list_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb610-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(list_<span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(list_<span class="dv">2</span>_eigen)))</a></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="rcpp.html#cb610-1" aria-hidden="true" tabindex="-1"></a>list_2_eigen <span class="ot">&lt;-</span> <span class="fu">pass_named_list_to_eigen</span>(list_2)</span>
+<span id="cb610-2"><a href="rcpp.html#cb610-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(list_2) <span class="sc">-</span> <span class="fu">unlist</span>(list_2_eigen)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>You can also access to the column of <code>Rcpp::DataFrame</code> in the similar way.</li>
@@ -1136,30 +1190,30 @@ Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
   Eigen::VectorXd x1(Rcpp::as&lt;Eigen::VectorXd&gt;(D[&quot;x1&quot;]));
   return(x1);
 }</code></pre>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb613-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb613-2" title="2">x1 &lt;-<span class="st"> </span><span class="kw">extract_column_from_data_frame</span>(D)</a>
-<a class="sourceLine" id="cb613-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(D<span class="op">$</span>x1 <span class="op">-</span><span class="st"> </span>x1))</a></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="rcpp.html#cb613-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb613-2"><a href="rcpp.html#cb613-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">extract_column_from_data_frame</span>(D)</span>
+<span id="cb613-3"><a href="rcpp.html#cb613-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(D<span class="sc">$</span>x1 <span class="sc">-</span> x1))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>This allows us to pass whatever objects in R to a C++ function.</li>
 <li>If you are planning to translate R functions to C/C++, from the beginning, you should write the R functions in the way inputs and outpus can be passed to C/C++ as above.</li>
 </ul>
 </div>
-<div id="passing-r-objects-in-other-objects-in-cc" class="section level2">
+<div id="passing-r-objects-in-other-objects-in-cc" class="section level2" number="20.5">
 <h2><span class="header-section-number">20.5</span> Passing R Objects in Other Objects in C/C++</h2>
 <ul>
 <li><code>integer</code> and <code>numeric</code> scalars in R can be simply passed to <code>int</code> and <code>double</code> in C/C++.</li>
 <li>Vectors in R can be passed to <code>std::vector&lt;int&gt;</code> or <code>std::vector&lt;double&gt;</code> objects. This may be helpful if you want to use the methods for <code>std::vector</code>.</li>
 </ul>
 </div>
-<div id="manipulating-objects-in-a-c-function" class="section level2">
+<div id="manipulating-objects-in-a-c-function" class="section level2" number="20.6">
 <h2><span class="header-section-number">20.6</span> Manipulating Objects in a C++ Function</h2>
 <ul>
 <li>As mentioned above, the best practice is to pass vectors and matrices to <code>Eigen::VectorXd</code>/<code>Eigen::VectorXi</code> and <code>Eigen::MatrixXd</code>/<code>Eigen::MatrixXi</code> rather than <code>Rcpp::NumericVector</code>/<code>Rcpp::IntegerVector</code> and <code>Rcpp::NumericMatrix</code>/<code>Rcpp::IntegerMatrix</code>.</li>
 <li>The other objects will be passed as <code>Rcpp::DataFrame</code> or <code>Rcpp::List</code> and at the end converted to <code>Eigen::VectorXd</code>/<code>Eigen::VectorXi</code> and <code>Eigen::MatrixXd</code>/<code>Eigen::MatrixXi</code> usin <code>Rcpp::as</code> as explained above.</li>
 <li>The rest of manipulation will be done using the methods in Eigen. Here I introduce basic operations. For the detail, refer to the <a href="https://eigen.tuxfamily.org/dox/GettingStarted.html">online document of Eigen</a>.</li>
 </ul>
-<div id="matrix-and-vector-arithmetic" class="section level3">
+<div id="matrix-and-vector-arithmetic" class="section level3" number="20.6.1">
 <h3><span class="header-section-number">20.6.1</span> Matrix and Vector Arithmetic</h3>
 <ul>
 <li>Addition and subtraction:
@@ -1186,42 +1240,42 @@ Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
 </ul></li>
 <li>Following the best practice, first write R function for these operations in <code>R/functions.R</code> and run in <code>main/main.R</code>:</li>
 </ul>
-<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb615-1" title="1"><span class="co"># R/functions.R</span></a>
-<a class="sourceLine" id="cb615-2" title="2"><span class="co"># matrix and vector arithmetic</span></a>
-<a class="sourceLine" id="cb615-3" title="3">matrix_vector_arithmetic &lt;-</a>
-<a class="sourceLine" id="cb615-4" title="4"><span class="st">  </span><span class="cf">function</span>(A, B, v, c) {</a>
-<a class="sourceLine" id="cb615-5" title="5">    <span class="co"># addition and subtraction</span></a>
-<a class="sourceLine" id="cb615-6" title="6">    X1 &lt;-<span class="st"> </span>A <span class="op">+</span><span class="st"> </span>B</a>
-<a class="sourceLine" id="cb615-7" title="7">    X2 &lt;-<span class="st"> </span>A <span class="op">-</span><span class="st"> </span>B</a>
-<a class="sourceLine" id="cb615-8" title="8">    X3 &lt;-<span class="st"> </span><span class="op">-</span>A</a>
-<a class="sourceLine" id="cb615-9" title="9">    <span class="co"># scalar multiplication and division</span></a>
-<a class="sourceLine" id="cb615-10" title="10">    X4 &lt;-<span class="st"> </span>A <span class="op">*</span><span class="st"> </span>c</a>
-<a class="sourceLine" id="cb615-11" title="11">    X5 &lt;-<span class="st"> </span>c <span class="op">*</span><span class="st"> </span>A</a>
-<a class="sourceLine" id="cb615-12" title="12">    X6 &lt;-<span class="st"> </span>A <span class="op">/</span><span class="st"> </span>c</a>
-<a class="sourceLine" id="cb615-13" title="13">    <span class="co"># transpose</span></a>
-<a class="sourceLine" id="cb615-14" title="14">    X7 &lt;-<span class="st"> </span><span class="kw">t</span>(A)</a>
-<a class="sourceLine" id="cb615-15" title="15">    <span class="co"># matrix-matrix and matrix-vector multiplication</span></a>
-<a class="sourceLine" id="cb615-16" title="16">    X8 &lt;-<span class="st"> </span>A <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(B)</a>
-<a class="sourceLine" id="cb615-17" title="17">    X9 &lt;-<span class="st"> </span>A <span class="op">%*%</span><span class="st"> </span>v</a>
-<a class="sourceLine" id="cb615-18" title="18">    <span class="co"># return</span></a>
-<a class="sourceLine" id="cb615-19" title="19">    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">X1 =</span> X1,</a>
-<a class="sourceLine" id="cb615-20" title="20">                <span class="dt">X2 =</span> X2,</a>
-<a class="sourceLine" id="cb615-21" title="21">                <span class="dt">X3 =</span> X3,</a>
-<a class="sourceLine" id="cb615-22" title="22">                <span class="dt">X4 =</span> X4,</a>
-<a class="sourceLine" id="cb615-23" title="23">                <span class="dt">X5 =</span> X5,</a>
-<a class="sourceLine" id="cb615-24" title="24">                <span class="dt">X6 =</span> X6,</a>
-<a class="sourceLine" id="cb615-25" title="25">                <span class="dt">X7 =</span> X7,</a>
-<a class="sourceLine" id="cb615-26" title="26">                <span class="dt">X8 =</span> X8,</a>
-<a class="sourceLine" id="cb615-27" title="27">                <span class="dt">X9 =</span> X9))</a>
-<a class="sourceLine" id="cb615-28" title="28">  }</a></code></pre></div>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb616-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb616-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb616-3" title="3"><span class="co"># addition subtraction</span></a>
-<a class="sourceLine" id="cb616-4" title="4">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb616-5" title="5">B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb616-6" title="6">c &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb616-7" title="7">v &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb616-8" title="8">output &lt;-<span class="st"> </span><span class="kw">matrix_vector_arithmetic</span>(A, B, v, c)</a></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="rcpp.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb615-2"><a href="rcpp.html#cb615-2" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix and vector arithmetic</span></span>
+<span id="cb615-3"><a href="rcpp.html#cb615-3" aria-hidden="true" tabindex="-1"></a>matrix_vector_arithmetic <span class="ot">&lt;-</span></span>
+<span id="cb615-4"><a href="rcpp.html#cb615-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B, v, c) {</span>
+<span id="cb615-5"><a href="rcpp.html#cb615-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># addition and subtraction</span></span>
+<span id="cb615-6"><a href="rcpp.html#cb615-6" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> A <span class="sc">+</span> B</span>
+<span id="cb615-7"><a href="rcpp.html#cb615-7" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> A <span class="sc">-</span> B</span>
+<span id="cb615-8"><a href="rcpp.html#cb615-8" aria-hidden="true" tabindex="-1"></a>    X3 <span class="ot">&lt;-</span> <span class="sc">-</span>A</span>
+<span id="cb615-9"><a href="rcpp.html#cb615-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scalar multiplication and division</span></span>
+<span id="cb615-10"><a href="rcpp.html#cb615-10" aria-hidden="true" tabindex="-1"></a>    X4 <span class="ot">&lt;-</span> A <span class="sc">*</span> c</span>
+<span id="cb615-11"><a href="rcpp.html#cb615-11" aria-hidden="true" tabindex="-1"></a>    X5 <span class="ot">&lt;-</span> c <span class="sc">*</span> A</span>
+<span id="cb615-12"><a href="rcpp.html#cb615-12" aria-hidden="true" tabindex="-1"></a>    X6 <span class="ot">&lt;-</span> A <span class="sc">/</span> c</span>
+<span id="cb615-13"><a href="rcpp.html#cb615-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># transpose</span></span>
+<span id="cb615-14"><a href="rcpp.html#cb615-14" aria-hidden="true" tabindex="-1"></a>    X7 <span class="ot">&lt;-</span> <span class="fu">t</span>(A)</span>
+<span id="cb615-15"><a href="rcpp.html#cb615-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># matrix-matrix and matrix-vector multiplication</span></span>
+<span id="cb615-16"><a href="rcpp.html#cb615-16" aria-hidden="true" tabindex="-1"></a>    X8 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb615-17"><a href="rcpp.html#cb615-17" aria-hidden="true" tabindex="-1"></a>    X9 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> v</span>
+<span id="cb615-18"><a href="rcpp.html#cb615-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
+<span id="cb615-19"><a href="rcpp.html#cb615-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">X1 =</span> X1,</span>
+<span id="cb615-20"><a href="rcpp.html#cb615-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">X2 =</span> X2,</span>
+<span id="cb615-21"><a href="rcpp.html#cb615-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">X3 =</span> X3,</span>
+<span id="cb615-22"><a href="rcpp.html#cb615-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">X4 =</span> X4,</span>
+<span id="cb615-23"><a href="rcpp.html#cb615-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">X5 =</span> X5,</span>
+<span id="cb615-24"><a href="rcpp.html#cb615-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">X6 =</span> X6,</span>
+<span id="cb615-25"><a href="rcpp.html#cb615-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">X7 =</span> X7,</span>
+<span id="cb615-26"><a href="rcpp.html#cb615-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">X8 =</span> X8,</span>
+<span id="cb615-27"><a href="rcpp.html#cb615-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">X9 =</span> X9))</span>
+<span id="cb615-28"><a href="rcpp.html#cb615-28" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="rcpp.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb616-2"><a href="rcpp.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb616-3"><a href="rcpp.html#cb616-3" aria-hidden="true" tabindex="-1"></a><span class="co"># addition subtraction</span></span>
+<span id="cb616-4"><a href="rcpp.html#cb616-4" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb616-5"><a href="rcpp.html#cb616-5" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb616-6"><a href="rcpp.html#cb616-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb616-7"><a href="rcpp.html#cb616-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb616-8"><a href="rcpp.html#cb616-8" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">matrix_vector_arithmetic</span>(A, B, v, c)</span></code></pre></div>
 <ul>
 <li>Next, write these operations in C++ function:</li>
 </ul>
@@ -1260,15 +1314,15 @@ Rcpp::List matrix_vector_arithmetic_rcpp(
 <ul>
 <li>Then, we can check if this yields (almost) the same result with the R function:</li>
 </ul>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb618-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb618-2" title="2">output_rcpp &lt;-<span class="st"> </span><span class="kw">matrix_vector_arithmetic_rcpp</span>(A, B, v, c)</a>
-<a class="sourceLine" id="cb618-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(output) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(output_rcpp)))</a></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="rcpp.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb618-2"><a href="rcpp.html#cb618-2" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">matrix_vector_arithmetic_rcpp</span>(A, B, v, c)</span>
+<span id="cb618-3"><a href="rcpp.html#cb618-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 5.551115e-17</code></pre>
 <ul>
 <li>The output looks like:</li>
 </ul>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb620-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb620-2" title="2">output_rcpp</a></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="rcpp.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb620-2"><a href="rcpp.html#cb620-2" aria-hidden="true" tabindex="-1"></a>output_rcpp</span></code></pre></div>
 <pre><code>## $X1
 ##             [,1]      [,2]       [,3]      [,4]
 ## [1,] -0.05067246 0.6761526 -0.2917328 1.6123600
@@ -1314,7 +1368,7 @@ Rcpp::List matrix_vector_arithmetic_rcpp(
 ## $X9
 ## [1] -0.2184706  1.2674165</code></pre>
 </div>
-<div id="the-array-class-and-coefficient-wise-operations" class="section level3">
+<div id="the-array-class-and-coefficient-wise-operations" class="section level3" number="20.6.2">
 <h3><span class="header-section-number">20.6.2</span> The Array Class and Coefficient-wise Operations</h3>
 <ul>
 <li><p>When you want to have coefficient-wise operations, you first use <code>.array()</code> method to convert the object to an array and then apply methods for arrays.</p></li>
@@ -1333,29 +1387,29 @@ Rcpp::List matrix_vector_arithmetic_rcpp(
 </ul></li>
 <li><p>Write functions in R in <code>R/functions.R</code> and run in <code>main/main.R</code>:</p></li>
 </ul>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb622-1" title="1"><span class="co"># R/functions.R</span></a>
-<a class="sourceLine" id="cb622-2" title="2">coefficientwise_operation &lt;-</a>
-<a class="sourceLine" id="cb622-3" title="3"><span class="st">  </span><span class="cf">function</span>(A, B, r) {</a>
-<a class="sourceLine" id="cb622-4" title="4">    <span class="co"># coefficient-wise multiplication</span></a>
-<a class="sourceLine" id="cb622-5" title="5">    X1 &lt;-<span class="st"> </span>A <span class="op">*</span><span class="st"> </span>B</a>
-<a class="sourceLine" id="cb622-6" title="6">    <span class="co"># other coefficient-wise math functions</span></a>
-<a class="sourceLine" id="cb622-7" title="7">    X2 &lt;-<span class="st"> </span><span class="kw">abs</span>(A)</a>
-<a class="sourceLine" id="cb622-8" title="8">    X3 &lt;-<span class="st"> </span><span class="kw">exp</span>(A)</a>
-<a class="sourceLine" id="cb622-9" title="9">    X4 &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">abs</span>(A))</a>
-<a class="sourceLine" id="cb622-10" title="10">    X5 &lt;-<span class="st"> </span>A<span class="op">^</span>r</a>
-<a class="sourceLine" id="cb622-11" title="11">    <span class="co"># return</span></a>
-<a class="sourceLine" id="cb622-12" title="12">    <span class="kw">return</span>(<span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb622-13" title="13">      <span class="dt">X1 =</span> X1,</a>
-<a class="sourceLine" id="cb622-14" title="14">      <span class="dt">X2 =</span> X2,</a>
-<a class="sourceLine" id="cb622-15" title="15">      <span class="dt">X3 =</span> X3,</a>
-<a class="sourceLine" id="cb622-16" title="16">      <span class="dt">X4 =</span> X4,</a>
-<a class="sourceLine" id="cb622-17" title="17">      <span class="dt">X5 =</span> X5</a>
-<a class="sourceLine" id="cb622-18" title="18">    ))</a>
-<a class="sourceLine" id="cb622-19" title="19">  }</a></code></pre></div>
-<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb623-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb623-2" title="2"><span class="co"># coefficient-wise operations</span></a>
-<a class="sourceLine" id="cb623-3" title="3">r &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb623-4" title="4">output &lt;-<span class="st"> </span><span class="kw">coefficientwise_operation</span>(A, B, r)</a></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="rcpp.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb622-2"><a href="rcpp.html#cb622-2" aria-hidden="true" tabindex="-1"></a>coefficientwise_operation <span class="ot">&lt;-</span></span>
+<span id="cb622-3"><a href="rcpp.html#cb622-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B, r) {</span>
+<span id="cb622-4"><a href="rcpp.html#cb622-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># coefficient-wise multiplication</span></span>
+<span id="cb622-5"><a href="rcpp.html#cb622-5" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> A <span class="sc">*</span> B</span>
+<span id="cb622-6"><a href="rcpp.html#cb622-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># other coefficient-wise math functions</span></span>
+<span id="cb622-7"><a href="rcpp.html#cb622-7" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> <span class="fu">abs</span>(A)</span>
+<span id="cb622-8"><a href="rcpp.html#cb622-8" aria-hidden="true" tabindex="-1"></a>    X3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(A)</span>
+<span id="cb622-9"><a href="rcpp.html#cb622-9" aria-hidden="true" tabindex="-1"></a>    X4 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">abs</span>(A))</span>
+<span id="cb622-10"><a href="rcpp.html#cb622-10" aria-hidden="true" tabindex="-1"></a>    X5 <span class="ot">&lt;-</span> A<span class="sc">^</span>r</span>
+<span id="cb622-11"><a href="rcpp.html#cb622-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
+<span id="cb622-12"><a href="rcpp.html#cb622-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(</span>
+<span id="cb622-13"><a href="rcpp.html#cb622-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">X1 =</span> X1,</span>
+<span id="cb622-14"><a href="rcpp.html#cb622-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">X2 =</span> X2,</span>
+<span id="cb622-15"><a href="rcpp.html#cb622-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">X3 =</span> X3,</span>
+<span id="cb622-16"><a href="rcpp.html#cb622-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">X4 =</span> X4,</span>
+<span id="cb622-17"><a href="rcpp.html#cb622-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">X5 =</span> X5</span>
+<span id="cb622-18"><a href="rcpp.html#cb622-18" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb622-19"><a href="rcpp.html#cb622-19" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="rcpp.html#cb623-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb623-2"><a href="rcpp.html#cb623-2" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficient-wise operations</span></span>
+<span id="cb623-3"><a href="rcpp.html#cb623-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb623-4"><a href="rcpp.html#cb623-4" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">coefficientwise_operation</span>(A, B, r)</span></code></pre></div>
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call from <code>main/main.R</code>:</li>
 </ul>
@@ -1384,10 +1438,10 @@ Rcpp::List coefficientwise_operation_rcpp(
     );
   return(output);
 }</code></pre>
-<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb625-1" title="1">output_rcpp &lt;-<span class="st"> </span><span class="kw">coefficientwise_operation_rcpp</span>(A, B, r)</a>
-<a class="sourceLine" id="cb625-2" title="2"><span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(output) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(output_rcpp)))</a></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="rcpp.html#cb625-1" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">coefficientwise_operation_rcpp</span>(A, B, r)</span>
+<span id="cb625-2"><a href="rcpp.html#cb625-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 2.220446e-16</code></pre>
-<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb627-1" title="1">output_rcpp</a></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="rcpp.html#cb627-1" aria-hidden="true" tabindex="-1"></a>output_rcpp</span></code></pre></div>
 <pre><code>## $X1
 ##             [,1]       [,2]       [,3]        [,4]
 ## [1,] -0.36070042 -1.2632876 -0.2047036  0.54832401
@@ -1413,7 +1467,7 @@ Rcpp::List coefficientwise_operation_rcpp(
 ## [1,] 0.39244438 0.6982752 0.1085754 0.2375871
 ## [2,] 0.03372487 2.5449208 0.6731684 0.5451234</code></pre>
 </div>
-<div id="solving-linear-least-squares-systems" class="section level3">
+<div id="solving-linear-least-squares-systems" class="section level3" number="20.6.3">
 <h3><span class="header-section-number">20.6.3</span> Solving Linear Least Squares Systems</h3>
 <ul>
 <li>It is often required to solve a linear least squares system <span class="math inline">\(A \cdot x = b\)</span>.</li>
@@ -1427,17 +1481,17 @@ Rcpp::List coefficientwise_operation_rcpp(
 <ul>
 <li>Write R function in <code>R/functions.R</code> and run in <code>main/main.R</code>:</li>
 </ul>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb631-1" title="1"><span class="co"># R/functions.R</span></a>
-<a class="sourceLine" id="cb631-2" title="2">solve_least_squares &lt;-</a>
-<a class="sourceLine" id="cb631-3" title="3"><span class="st">  </span><span class="cf">function</span>(A, B) {</a>
-<a class="sourceLine" id="cb631-4" title="4">    x &lt;-<span class="st"> </span><span class="kw">solve</span>(A, B)</a>
-<a class="sourceLine" id="cb631-5" title="5">    <span class="kw">return</span>(x)</a>
-<a class="sourceLine" id="cb631-6" title="6">  }</a></code></pre></div>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb632-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb632-2" title="2"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb632-3" title="3">A &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb632-4" title="4">B &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb632-5" title="5">output &lt;-<span class="st"> </span><span class="kw">solve_least_squares</span>(A, B)</a></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="rcpp.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb631-2"><a href="rcpp.html#cb631-2" aria-hidden="true" tabindex="-1"></a>solve_least_squares <span class="ot">&lt;-</span></span>
+<span id="cb631-3"><a href="rcpp.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B) {</span>
+<span id="cb631-4"><a href="rcpp.html#cb631-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, B)</span>
+<span id="cb631-5"><a href="rcpp.html#cb631-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x)</span>
+<span id="cb631-6"><a href="rcpp.html#cb631-6" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="rcpp.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb632-2"><a href="rcpp.html#cb632-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb632-3"><a href="rcpp.html#cb632-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb632-4"><a href="rcpp.html#cb632-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb632-5"><a href="rcpp.html#cb632-5" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">solve_least_squares</span>(A, B)</span></code></pre></div>
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call in <code>main/main.R</code>:</li>
 </ul>
@@ -1460,27 +1514,27 @@ Eigen::MatrixXd solve_least_squares_qr(
   Eigen::MatrixXd x = A.colPivHouseholderQr().solve(B);
   return(x);
 }</code></pre>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb634-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb634-2" title="2">output_svd &lt;-<span class="st"> </span><span class="kw">solve_least_squares_svd</span>(A, B)</a>
-<a class="sourceLine" id="cb634-3" title="3">output_qr &lt;-<span class="st"> </span><span class="kw">solve_least_squares_qr</span>(A, B)</a>
-<a class="sourceLine" id="cb634-4" title="4"><span class="kw">max</span>(<span class="kw">abs</span>(output <span class="op">-</span><span class="st"> </span>output_svd))</a></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="rcpp.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb634-2"><a href="rcpp.html#cb634-2" aria-hidden="true" tabindex="-1"></a>output_svd <span class="ot">&lt;-</span> <span class="fu">solve_least_squares_svd</span>(A, B)</span>
+<span id="cb634-3"><a href="rcpp.html#cb634-3" aria-hidden="true" tabindex="-1"></a>output_qr <span class="ot">&lt;-</span> <span class="fu">solve_least_squares_qr</span>(A, B)</span>
+<span id="cb634-4"><a href="rcpp.html#cb634-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(output <span class="sc">-</span> output_svd))</span></code></pre></div>
 <pre><code>## [1] 8.881784e-16</code></pre>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb636-1" title="1"><span class="kw">max</span>(<span class="kw">abs</span>(output <span class="op">-</span><span class="st"> </span>output_qr))</a></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="rcpp.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(output <span class="sc">-</span> output_qr))</span></code></pre></div>
 <pre><code>## [1] 1.554312e-15</code></pre>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb638-1" title="1">output_svd</a></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="rcpp.html#cb638-1" aria-hidden="true" tabindex="-1"></a>output_svd</span></code></pre></div>
 <pre><code>##             [,1]       [,2]       [,3]       [,4]
 ## [1,]  0.65530863 -1.2441297 -1.0799835  0.5926519
 ## [2,] -1.34801870  0.1453720  0.7313845 -2.2353988
 ## [3,]  1.38750763 -0.3405502 -0.7649107  1.5987206
 ## [4,] -0.06376266 -0.4632165 -0.2296862  0.4681169</code></pre>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb640-1" title="1">output_qr</a></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="rcpp.html#cb640-1" aria-hidden="true" tabindex="-1"></a>output_qr</span></code></pre></div>
 <pre><code>##             [,1]       [,2]       [,3]       [,4]
 ## [1,]  0.65530863 -1.2441297 -1.0799835  0.5926519
 ## [2,] -1.34801870  0.1453720  0.7313845 -2.2353988
 ## [3,]  1.38750763 -0.3405502 -0.7649107  1.5987206
 ## [4,] -0.06376266 -0.4632165 -0.2296862  0.4681169</code></pre>
 </div>
-<div id="accessing-to-elements-of-a-matrix-and-vector" class="section level3">
+<div id="accessing-to-elements-of-a-matrix-and-vector" class="section level3" number="20.6.4">
 <h3><span class="header-section-number">20.6.4</span> Accessing to Elements of a Matrix and Vector</h3>
 <ul>
 <li><p>You can access to the size information and elements of a matrix and vector as follows:</p></li>
@@ -1489,26 +1543,26 @@ Eigen::MatrixXd solve_least_squares_qr(
 <li><p>Rows and columns: <code>A.row(i)</code> for <span class="math inline">\(i + 1\)</span>-th row and <code>A.col(j)</code> for <span class="math inline">\(j + 1\)</span>-th column.</p></li>
 <li><p>Write R function in <code>R/functions.R</code> and run in <code>main/main.R</code>:</p></li>
 </ul>
-<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb642-1" title="1"><span class="co"># R/functions.R</span></a>
-<a class="sourceLine" id="cb642-2" title="2">access &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb642-3" title="3"><span class="st">  </span><span class="cf">function</span>(A, i, j) {</a>
-<a class="sourceLine" id="cb642-4" title="4">    I &lt;-<span class="st"> </span><span class="kw">nrow</span>(A)</a>
-<a class="sourceLine" id="cb642-5" title="5">    J &lt;-<span class="st"> </span><span class="kw">ncol</span>(A)</a>
-<a class="sourceLine" id="cb642-6" title="6">    a_ij &lt;-<span class="st"> </span>A[i, j]</a>
-<a class="sourceLine" id="cb642-7" title="7">    a_i &lt;-<span class="st"> </span>A[i, ]</a>
-<a class="sourceLine" id="cb642-8" title="8">    a_j &lt;-<span class="st"> </span>A[, j]</a>
-<a class="sourceLine" id="cb642-9" title="9">    <span class="kw">return</span>(</a>
-<a class="sourceLine" id="cb642-10" title="10">      <span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb642-11" title="11">        <span class="dt">I =</span> I,</a>
-<a class="sourceLine" id="cb642-12" title="12">        <span class="dt">J =</span> J,</a>
-<a class="sourceLine" id="cb642-13" title="13">        <span class="dt">a_ij =</span> a_ij,</a>
-<a class="sourceLine" id="cb642-14" title="14">        <span class="dt">a_i =</span> a_i,</a>
-<a class="sourceLine" id="cb642-15" title="15">        <span class="dt">a_j =</span> a_j</a>
-<a class="sourceLine" id="cb642-16" title="16">      )</a>
-<a class="sourceLine" id="cb642-17" title="17">    )</a>
-<a class="sourceLine" id="cb642-18" title="18">  }</a></code></pre></div>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb643-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb643-2" title="2">output &lt;-<span class="st"> </span><span class="kw">access</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="rcpp.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb642-2"><a href="rcpp.html#cb642-2" aria-hidden="true" tabindex="-1"></a>access <span class="ot">&lt;-</span> </span>
+<span id="cb642-3"><a href="rcpp.html#cb642-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, i, j) {</span>
+<span id="cb642-4"><a href="rcpp.html#cb642-4" aria-hidden="true" tabindex="-1"></a>    I <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A)</span>
+<span id="cb642-5"><a href="rcpp.html#cb642-5" aria-hidden="true" tabindex="-1"></a>    J <span class="ot">&lt;-</span> <span class="fu">ncol</span>(A)</span>
+<span id="cb642-6"><a href="rcpp.html#cb642-6" aria-hidden="true" tabindex="-1"></a>    a_ij <span class="ot">&lt;-</span> A[i, j]</span>
+<span id="cb642-7"><a href="rcpp.html#cb642-7" aria-hidden="true" tabindex="-1"></a>    a_i <span class="ot">&lt;-</span> A[i, ]</span>
+<span id="cb642-8"><a href="rcpp.html#cb642-8" aria-hidden="true" tabindex="-1"></a>    a_j <span class="ot">&lt;-</span> A[, j]</span>
+<span id="cb642-9"><a href="rcpp.html#cb642-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(</span>
+<span id="cb642-10"><a href="rcpp.html#cb642-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
+<span id="cb642-11"><a href="rcpp.html#cb642-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">I =</span> I,</span>
+<span id="cb642-12"><a href="rcpp.html#cb642-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">J =</span> J,</span>
+<span id="cb642-13"><a href="rcpp.html#cb642-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_ij =</span> a_ij,</span>
+<span id="cb642-14"><a href="rcpp.html#cb642-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_i =</span> a_i,</span>
+<span id="cb642-15"><a href="rcpp.html#cb642-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_j =</span> a_j</span>
+<span id="cb642-16"><a href="rcpp.html#cb642-16" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb642-17"><a href="rcpp.html#cb642-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb642-18"><a href="rcpp.html#cb642-18" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="rcpp.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb643-2"><a href="rcpp.html#cb643-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">access</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call in <code>main/main.R</code>:</li>
 </ul>
@@ -1534,11 +1588,11 @@ Rcpp::List access_rcpp(
       );
     return(output);
   }</code></pre>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb645-1" title="1"><span class="co"># main/main.R</span></a>
-<a class="sourceLine" id="cb645-2" title="2">output_rcpp &lt;-<span class="st"> </span><span class="kw">access_rcpp</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb645-3" title="3"><span class="kw">max</span>(<span class="kw">abs</span>(<span class="kw">unlist</span>(output) <span class="op">-</span><span class="st"> </span><span class="kw">unlist</span>(output_rcpp)))</a></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="rcpp.html#cb645-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb645-2"><a href="rcpp.html#cb645-2" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">access_rcpp</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb645-3"><a href="rcpp.html#cb645-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb647-1" title="1">output_rcpp </a></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="rcpp.html#cb647-1" aria-hidden="true" tabindex="-1"></a>output_rcpp </span></code></pre></div>
 <pre><code>## $I
 ## [1] 4
 ## 
