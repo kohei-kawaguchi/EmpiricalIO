@@ -51,8 +51,8 @@
     - The assumption holds in more general settings than we may think.
     - Suppose that $u_k(v, x_i, x_{-i})$ depends on $v, x_i, x_{-i}$.
     - Suppose that bidder $i$ is uncertain about $V$ and the distribution of $V$ conditional on $x_i$ is independent of $x_{-i}$.
-    - Suppose that $u(v, x_i, x_{-i}) = u(x, x_i)$.
-    - Then, $\mathbb{E}\{u_i(V, X_i)|X_i = x_i, X_{-i} = x_{-i}\} = \mathbb{E}\{u_i(V, X_i)|X_i = x_i\} := f(x_i)$ for some monotone increasing function $f$.
+    - Suppose that $u_i(v, x_i, x_{-i}) = u(v, x_i)$.
+    - Then, $\mathbb{E}\{u(v, x_i)|X_i = x_i, X_{-i} = x_{-i}\} = f(x_i)$ for some monotone increasing function $f$.
     - This is still a private value model.
     - If the distribution of $V$ is not independent of some $x_i$, it is no longer a private value model.
     - The last case is referred to as the __common values (CV)__ model.
@@ -328,10 +328,11 @@ h_t(w_t) &= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t'(w_t)\\
 $$
 where the second equation is from the first-order condition.
 
-Because the probability of $m_t \ge 1$ is $1 - F_X(r_t)^{n_t}$, the likelihood is:
+- Because the probability of $m_t \ge 1$ is $1 - F_X(r_t)^{n_t}$, the likelihood is:
 $$
 L = \prod_{t = 1}^T \frac{h_t(w_t)}{1 - F_X(r_t)^{n_t}}.
 $$
+
 - To apply this approach, we may need to have a closed-form for $\eta$, and this may require to assume a specific functional-form for $F_X$.
 
 ### Non-Parametric Approach
