@@ -886,8 +886,8 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 ##  8     1     2     0  1.24  0.217 -0.0313  0.0643     0  0      0           0
 ##  9     1     2     1  1.24  0.217 -0.0313  0.0643     1  0.244 -0.00810     0
 ## 10     1     2     2  1.24  0.217 -0.0313  0.0643     1  0.369  0.472       0
-## # ... with 349,990 more rows, and 5 more variables: c &lt;dbl&gt;, p &lt;dbl&gt;,
-## #   u &lt;dbl&gt;, e &lt;dbl&gt;, q &lt;dbl&gt;</code></pre>
+## # ... with 349,990 more rows, and 5 more variables: c &lt;dbl&gt;, p &lt;dbl&gt;, u &lt;dbl&gt;,
+## #   e &lt;dbl&gt;, q &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="assignment3.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_choice)</span></code></pre></div>
 <pre><code>##        t                i               j              v_x_1          
 ##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.471031  
@@ -947,20 +947,20 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 ##  Mean   : 50.50   Mean   : 4.716   Mean   :0.8571   Mean   : 0.08733  
 ##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000   3rd Qu.: 0.36916  
 ##  Max.   :100.00   Max.   :10.000   Max.   :1.0000   Max.   : 0.75589  
-##       x_3                xi          c                p        
-##  Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9412   1st Qu.:1.914  
-##  Median : 0.2970   Median :0   Median :0.9866   Median :1.985  
-##  Mean   : 0.1273   Mean   :0   Mean   :0.8566   Mean   :1.715  
-##  3rd Qu.: 0.4106   3rd Qu.:0   3rd Qu.:1.0267   3rd Qu.:2.043  
-##  Max.   : 0.4719   Max.   :0   Max.   :1.1996   Max.   :2.197  
-##        q                s                y           
-##  Min.   : 25.00   Min.   :0.0500   Min.   :-1.96851  
-##  1st Qu.: 44.00   1st Qu.:0.0880   1st Qu.:-1.35239  
-##  Median : 52.00   Median :0.1040   Median :-1.16761  
-##  Mean   : 71.43   Mean   :0.1429   Mean   :-1.00050  
-##  3rd Qu.: 71.00   3rd Qu.:0.1420   3rd Qu.:-0.84881  
-##  Max.   :193.00   Max.   :0.3860   Max.   : 0.01316</code></pre>
+##       x_3                xi          c                p               q         
+##  Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000   Min.   : 25.00  
+##  1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9412   1st Qu.:1.914   1st Qu.: 44.00  
+##  Median : 0.2970   Median :0   Median :0.9866   Median :1.985   Median : 52.00  
+##  Mean   : 0.1273   Mean   :0   Mean   :0.8566   Mean   :1.715   Mean   : 71.43  
+##  3rd Qu.: 0.4106   3rd Qu.:0   3rd Qu.:1.0267   3rd Qu.:2.043   3rd Qu.: 71.00  
+##  Max.   : 0.4719   Max.   :0   Max.   :1.1996   Max.   :2.197   Max.   :193.00  
+##        s                y           
+##  Min.   :0.0500   Min.   :-1.96851  
+##  1st Qu.:0.0880   1st Qu.:-1.35239  
+##  Median :0.1040   Median :-1.16761  
+##  Mean   :0.1429   Mean   :-1.00050  
+##  3rd Qu.:0.1420   3rd Qu.:-0.84881  
+##  Max.   :0.3860   Max.   : 0.01316</code></pre>
 </div>
 <div id="estimate-the-parameters-1" class="section level2" number="13.2">
 <h2><span class="header-section-number">13.2</span> Estimate the parameters</h2>
@@ -1038,8 +1038,8 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="assignment3.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set parameters</span></span>
 <span id="cb109-2"><a href="assignment3.html#cb109-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">c</span>(beta, sigma, mu, omega)</span>
 <span id="cb109-3"><a href="assignment3.html#cb109-3" aria-hidden="true" tabindex="-1"></a>theta</span></code></pre></div>
-<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684
-## [7]  0.5000000  1.0000000</code></pre>
+<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684  0.5000000
+## [8]  1.0000000</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)</code> that first computes the simulated share and then compute the mean-squared error between the share data.</li>
 </ol>
@@ -1079,8 +1079,8 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 <span id="cb116-9"><a href="assignment3.html#cb116-9" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
 <span id="cb116-10"><a href="assignment3.html#cb116-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(y)</span>
 <span id="cb116-11"><a href="assignment3.html#cb116-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>## Warning in e$fun(obj, substitute(ex), parent.frame(), e$data): already
-## exporting variable(s): temp_func</code></pre>
+<pre><code>## Warning in e$fun(obj, substitute(ex), parent.frame(), e$data): already exporting
+## variable(s): temp_func</code></pre>
 <pre><code>## [[1]]
 ## [1] 2
 ## 
@@ -1169,8 +1169,8 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 <li>Use <code>optim</code> to find the minimizer of the objective function using <code>Nelder-Mead</code> method. You can start from the true parameter values. Compare the estimates with the true parameters.</li>
 </ol>
 <pre><code>## $par
-## [1]  4.0425713  0.1841677 -0.8230489  1.6348574  0.3148886  0.7831262
-## [7]  0.4998710  1.0138327
+## [1]  4.0425713  0.1841677 -0.8230489  1.6348574  0.3148886  0.7831262  0.4998710
+## [8]  1.0138327
 ## 
 ## $value
 ## [1] 0.0004760686
