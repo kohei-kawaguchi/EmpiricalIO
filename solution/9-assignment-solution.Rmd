@@ -1,13 +1,10 @@
 ---
 title: 'Assignment 9: Auction'
 author: "Kohei Kawaguchi"
-date: "2019/5/20"
 output:
   pdf_document: default
   html_document: default
 ---
-
-The deadline is __May 20 1:30pm__.
 
 ```{r, include = FALSE}
 library(EmpiricalIO)
@@ -288,6 +285,7 @@ graph <- foreach (i = 1:length(theta)) %do% {
   theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
   objective_i <-
     foreach (j = 1:length(theta_i_list),
+             .packages = c("EmpiricalIO", "foreach", "magrittr"),
              .combine = "rbind") %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
