@@ -19,6 +19,7 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center")
+options(dplyr.summarise.inform = FALSE)
 ```
 
 ## Simulate data
@@ -375,9 +376,9 @@ compute_Sigma <-
     p_joint <- compute_p_joint(p_marginal, A, S)
     m_s <- max(p_joint$l)
     p_joint <-
-      foreach (l = 1:m_s) %do% {
+      foreach (ll = 1:m_s) %do% {
         p_joint_l <- p_joint %>%
-          dplyr::filter(l == 1) %>%
+          dplyr::filter(ll == l) %>%
           dplyr::arrange(k)
         p_joint_l <- t(matrix(p_joint_l$p))
         return(p_joint_l)
@@ -664,7 +665,8 @@ df
 simulate_dynamic_decision_across_markets <-
   function(p_joint, l, G, N, T, M, S, A) {
     df <-
-      foreach (mm = 1:M, .combine = "rbind") %dopar% {
+      foreach (mm = 1:M, .combine = "rbind",
+               .packages = c("EmpiricalIO", "foreach", "magrittr")) %dopar% {
         seed <- mm
         df_m <- simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)
         df_m <- data.frame(m = mm, df_m) 

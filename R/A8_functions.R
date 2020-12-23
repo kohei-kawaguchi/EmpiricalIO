@@ -175,9 +175,9 @@ compute_Sigma <-
     p_joint <- compute_p_joint(p_marginal, A, S)
     m_s <- max(p_joint$l)
     p_joint <-
-      foreach (l = 1:m_s) %do% {
+      foreach (ll = 1:m_s) %do% {
         p_joint_l <- p_joint %>%
-          dplyr::filter(l == 1) %>%
+          dplyr::filter(ll == l) %>%
           dplyr::arrange(k)
         p_joint_l <- t(matrix(p_joint_l$p))
         return(p_joint_l)
