@@ -316,7 +316,7 @@ M_no <- M %>%
   dplyr::mutate(xi = 0)
 ```
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 # find NLLS estimator
 result_NLLS <- 
   optim(par = theta, fn = NLLS_objective_A3,
@@ -331,7 +331,7 @@ save(result_NLLS, file = "data/A4_result_NLLS.RData")
 
 
 ```{r}
-result_NLLS <- get(load(file = "data/A4_result_NLLS.RData"))
+load(file = "data/A4_result_NLLS.RData")
 result_NLLS
 result <- data.frame(true = theta, estimates = result_NLLS$par)
 result
@@ -412,7 +412,7 @@ summary(delta_new$delta - delta$delta)
 ```
 
 9. Check how long it takes to compute the limit $\delta$ under the Monte Carlo shocks starting from the true $\delta$ to match with `df_share_smooth`. This is approximately the time to evaluate the objective function.
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 delta_new <-
   solve_delta(df_share_smooth, X, M, V_mcmc, delta, sigma, mu, omega, kappa, lambda)
 save(delta_new, file = "data/A4_delta_new.RData")
@@ -421,7 +421,7 @@ save(delta_new, file = "data/A4_delta_new.RData")
 
 
 ```{r, echo = TRUE}
-delta_new <- get(load(file = "data/A4_delta_new.RData"))
+load(file = "data/A4_delta_new.RData")
 summary(delta_new$delta - delta$delta)
 ```
 
@@ -510,7 +510,7 @@ theta_nonlinear <- c(mu, omega, sigma)
 ```
 
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 # compute GMM objective function
 objective <-
   GMM_objective_A4(theta_nonlinear, delta, df_share_smooth, Psi, 
@@ -518,7 +518,7 @@ objective <-
 save(objective, file = "data/A4_objective.RData")
 ```
 ```{r, echo = TRUE}
-objective <- get(load(file = "data/A4_objective.RData"))
+load(file = "data/A4_objective.RData")
 objective
 ```
 
@@ -527,7 +527,7 @@ objective
 
 12. Draw a graph of the objective function that varies each non-linear parameter from 0, 0.2, $\cdots$, 2.0 of the true value. Try with the actual shocks `V`. 
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 label <- c( "\\mu",
            "\\omega",
            paste("\\sigma_", 1:K, sep = ""))
@@ -537,6 +537,11 @@ graph_true <- foreach (i = 1:length(theta_nonlinear)) %do% {
   theta_nonlinear_i_list <- theta_nonlinear_i * seq(0, 2, by = 0.2)
   objective_i <- 
     foreach (theta_nonlinear_ij = theta_nonlinear_i_list,
+             .packages = c(
+               "EmpiricalIO",
+               "magrittr",
+               "foreach"
+               ),
              .combine = "rbind") %dopar% {
                theta_nonlinear_j <- theta_nonlinear
                theta_nonlinear_j[i] <- theta_nonlinear_ij
@@ -556,14 +561,14 @@ graph_true <- foreach (i = 1:length(theta_nonlinear)) %do% {
 save(graph_true, file = "data/A4_graph_true.RData")
 ```
 ```{r}
-graph_true <- get(load(file = "data/A4_graph_true.RData"))
+load(file = "data/A4_graph_true.RData")
 graph_true
 ```
 
 
 
 13. Find non-linear parameters that minimize the GMM objective function. Because standard deviations of the same absolute value with positive and negative values have almost the same implication for the data, you can take the absolute value if the estimates of the standard deviations happened to be negative (Another way is to set the non-negativity constraints on the standard deviations).
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 result <-
   optim(par = theta_nonlinear,
         fn = GMM_objective_A4,
@@ -579,7 +584,7 @@ save(result, file = "data/A4_result.RData")
 ```
 
 ```{r}
-result <- get(load(file = "data/A4_result.RData"))
+load(file = "data/A4_result.RData")
 result
 comparison <- cbind(theta_nonlinear, abs(result$par))
 colnames(comparison) <- c("true", "estimate")

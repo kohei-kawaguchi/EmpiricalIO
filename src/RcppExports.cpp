@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // compute_indirect_utility_matrix_rcpp
 Rcpp::List compute_indirect_utility_matrix_rcpp(Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega);
 RcppExport SEXP _EmpiricalIO_compute_indirect_utility_matrix_rcpp(SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP) {
