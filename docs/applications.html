@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Applications | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Applications | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="auction.html"/>
 <link rel="next" href="assignment1.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,42 +708,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="applications" class="section level1" number="10">
-<h1><span class="header-section-number">Chapter 10</span> Applications</h1>
+<div id="applications" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Applications<a href="applications.html#applications" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <ul>
 <li>Recently published empirical studies using a structural estimation based on a partial equilibrium model, mostly in the field of industrial organization.</li>
 </ul>
-<div id="section" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> 2018-2019</h2>
-<div id="american-economic-review" class="section level3" number="10.1.1">
-<h3><span class="header-section-number">10.1.1</span> American Economic Review</h3>
+<div id="section" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> 2018-2019<a href="applications.html#section" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="american-economic-review" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> American Economic Review<a href="applications.html#american-economic-review" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><p><span class="citation"><a href="references.html#ref-wollmannTrucksBailoutsEquilibrium2018" role="doc-biblioref">Wollmann</a> (<a href="references.html#ref-wollmannTrucksBailoutsEquilibrium2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of the US commercial vehicle market and demonstrate the importance of allowing for endogenous product offerings in a merger analysis.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-dinersteinConsumerPriceSearch2018" role="doc-biblioref">Dinerstein, Einav, Levin, &amp; Sundaresan</a> (<a href="references.html#ref-dinersteinConsumerPriceSearch2018" role="doc-biblioref">2018</a>)</span>: Study how the redesign of the search engine at eBay affect consumer search and price competition among sellers.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-crawfordAsymmetricInformationImperfect2018" role="doc-biblioref">Crawford, Pavanini, &amp; Schivardi</a> (<a href="references.html#ref-crawfordAsymmetricInformationImperfect2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of credit demand, loan use, pricing, and firm default using matched firm-bank data from Italy, and find evidence of adverse selection and how banks can mitigate the negative effects by adjusting credit supply.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-hortacsuBidShadingBidder2018" role="doc-biblioref">Hortaçsu, Kastl, &amp; Zhang</a> (<a href="references.html#ref-hortacsuBidShadingBidder2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of bidding at the uniform price auctions of US Treasury bills and notes that takes into account informational asymmetries introduced by the bidding system and show that primary dealers have bid-shading ability higher than their willingness-to-pay.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-aizawaAdvertisingRiskSelection2018" role="doc-biblioref">Aizawa &amp; Kim</a> (<a href="references.html#ref-aizawaAdvertisingRiskSelection2018" role="doc-biblioref">2018</a>)</span>: Estimate an equilibrium model of Medicare Advantage with advertising allowing rich individual heterogeneity and show that advertising is effective in attracting healthy individuals for are newly eligible for Medicare, contributing to advantageous selection into Medicare Advantage.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-doraszelskiJustStartingOut2018" role="doc-biblioref">Ulrich Doraszelski, Lewis, &amp; Pakes</a> (<a href="references.html#ref-doraszelskiJustStartingOut2018" role="doc-biblioref">2018</a>)</span>: Draw on models of fictitious play and adaptive learning to analyze the evolution of the new market for frequency response within the UK electricity system and explain the convergence of pricing to a rest point that is consistent with equilibrium play.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-acemogluInnovationReallocationGrowth2018" role="doc-biblioref">Acemoglu, Akcigit, Alp, Bloom, &amp; Kerr</a> (<a href="references.html#ref-acemogluInnovationReallocationGrowth2018" role="doc-biblioref">2018</a>)</span>: Estimate a model of firm-level innovation, productivity growth, and reallocation featuring endogenous entry and exit and the selection between high- and low-type firms which differ in terms for their innovation capacity, and show that taxing the continued operation of incumbent can lead to gains because of the exit of less productive firms.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-duboisIdentifyingIndustryMargins2018" role="doc-biblioref">Dubois &amp; Lasio</a> (<a href="references.html#ref-duboisIdentifyingIndustryMargins2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of pharmaceutical with price constraints and infer whether these constraints are binding and study its consequences.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-hoEquilibriumProviderNetworks2019" role="doc-biblioref">Ho &amp; Lee</a> (<a href="references.html#ref-hoEquilibriumProviderNetworks2019" role="doc-biblioref">2019</a>)</span>: Estimate a Nash-in-Nash bargaining model between insurers and hospitals and evaluate the consequence of narrowing hospital networks in commercial heal care markets in the US.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-crawfordQualityOverprovisionCable2019" role="doc-biblioref">Crawford, Shcherbakov, &amp; Shum</a> (<a href="references.html#ref-crawfordQualityOverprovisionCable2019" role="doc-biblioref">2019</a>)</span>: Estimate a model of endogenous quality choice in imperfectly competitive markets and show that a quality over-provision in the US cable television markets is caused by the presence of competition from high-end satellite TV providers.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-fackTruthTellingPreferenceEstimation2019" role="doc-biblioref">Fack, Grenet, &amp; He</a> (<a href="references.html#ref-fackTruthTellingPreferenceEstimation2019" role="doc-biblioref">2019</a>)</span>: Propose a new approach to estimate student preferences with data from matching mechanisms and estimate the model with school choice data in Paris.</p></li>
+<li><p><span class="citation">Wollmann (<a href="#ref-wollmannTrucksBailoutsEquilibrium2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of the US commercial vehicle market and demonstrate the importance of allowing for endogenous product offerings in a merger analysis.</p></li>
+<li><p><span class="citation">Dinerstein, Einav, Levin, &amp; Sundaresan (<a href="#ref-dinersteinConsumerPriceSearch2018" role="doc-biblioref">2018</a>)</span>: Study how the redesign of the search engine at eBay affect consumer search and price competition among sellers.</p></li>
+<li><p><span class="citation">Crawford, Pavanini, &amp; Schivardi (<a href="#ref-crawfordAsymmetricInformationImperfect2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of credit demand, loan use, pricing, and firm default using matched firm-bank data from Italy, and find evidence of adverse selection and how banks can mitigate the negative effects by adjusting credit supply.</p></li>
+<li><p><span class="citation">Hortaçsu, Kastl, &amp; Zhang (<a href="#ref-hortacsuBidShadingBidder2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of bidding at the uniform price auctions of US Treasury bills and notes that takes into account informational asymmetries introduced by the bidding system and show that primary dealers have bid-shading ability higher than their willingness-to-pay.</p></li>
+<li><p><span class="citation">Aizawa &amp; Kim (<a href="#ref-aizawaAdvertisingRiskSelection2018" role="doc-biblioref">2018</a>)</span>: Estimate an equilibrium model of Medicare Advantage with advertising allowing rich individual heterogeneity and show that advertising is effective in attracting healthy individuals for are newly eligible for Medicare, contributing to advantageous selection into Medicare Advantage.</p></li>
+<li><p><span class="citation">Ulrich Doraszelski, Lewis, &amp; Pakes (<a href="#ref-doraszelskiJustStartingOut2018" role="doc-biblioref">2018</a>)</span>: Draw on models of fictitious play and adaptive learning to analyze the evolution of the new market for frequency response within the UK electricity system and explain the convergence of pricing to a rest point that is consistent with equilibrium play.</p></li>
+<li><p><span class="citation">Acemoglu, Akcigit, Alp, Bloom, &amp; Kerr (<a href="#ref-acemogluInnovationReallocationGrowth2018" role="doc-biblioref">2018</a>)</span>: Estimate a model of firm-level innovation, productivity growth, and reallocation featuring endogenous entry and exit and the selection between high- and low-type firms which differ in terms for their innovation capacity, and show that taxing the continued operation of incumbent can lead to gains because of the exit of less productive firms.</p></li>
+<li><p><span class="citation">Dubois &amp; Lasio (<a href="#ref-duboisIdentifyingIndustryMargins2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of pharmaceutical with price constraints and infer whether these constraints are binding and study its consequences.</p></li>
+<li><p><span class="citation">Ho &amp; Lee (<a href="#ref-hoEquilibriumProviderNetworks2019" role="doc-biblioref">2019</a>)</span>: Estimate a Nash-in-Nash bargaining model between insurers and hospitals and evaluate the consequence of narrowing hospital networks in commercial heal care markets in the US.</p></li>
+<li><p><span class="citation">Crawford, Shcherbakov, &amp; Shum (<a href="#ref-crawfordQualityOverprovisionCable2019" role="doc-biblioref">2019</a>)</span>: Estimate a model of endogenous quality choice in imperfectly competitive markets and show that a quality over-provision in the US cable television markets is caused by the presence of competition from high-end satellite TV providers.</p></li>
+<li><p><span class="citation">Fack, Grenet, &amp; He (<a href="#ref-fackTruthTellingPreferenceEstimation2019" role="doc-biblioref">2019</a>)</span>: Propose a new approach to estimate student preferences with data from matching mechanisms and estimate the model with school choice data in Paris.</p></li>
 </ul>
 </div>
-<div id="econometrica" class="section level3" number="10.1.2">
-<h3><span class="header-section-number">10.1.2</span> Econometrica</h3>
+<div id="econometrica" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> Econometrica<a href="applications.html#econometrica" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><p><span class="citation"><a href="references.html#ref-trebbiInsurgencySmallWars2019" role="doc-biblioref">Trebbi &amp; Weese</a> (<a href="references.html#ref-trebbiInsurgencySmallWars2019" role="doc-biblioref">2019</a>)</span>: Propose methodologies for the detection of unobserved coalitions of militants in conflict areas and apply to the Afghan conflict during the 2004-2009 period and to Pakistan during the 2008-2011 period, identifying systematically different coalition structures.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-einavProviderIncentivesHealthcare2018" role="doc-biblioref">Einav, Finkelstein, &amp; Mahoney</a> (<a href="references.html#ref-einavProviderIncentivesHealthcare2018" role="doc-biblioref">2018</a>)</span>: Estimate a dynamic discrete choice model of long-term care hospitals discharge decisions and study the design of provider incentive in the post-acute setting.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-miraveteMarketPowerLaffer2018" role="doc-biblioref">Miravete, Seim, &amp; Thurk</a> (<a href="references.html#ref-miraveteMarketPowerLaffer2018" role="doc-biblioref">2018</a>)</span>: Estimate a model of taxation in a imperfectly competitive market that leads to incomplete tax pass-through using a data from alcoholic beverages in Pennsylvania and study the welfare implication of the state’s current tax policy.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-crawfordWelfareEffectsVertical2018" role="doc-biblioref">Crawford, Lee, Whinston, &amp; Yurukoglu</a> (<a href="references.html#ref-crawfordWelfareEffectsVertical2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of view-ship, subscription, distributor pricing, and affiliate fee bargaining using a data set on the US cable an satellite television industry to analyze the impact of simulated vertical mergers and divestitures of regional sports networks on competition and welfare.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-agarwalDemandAnalysisUsing2018" role="doc-biblioref">Agarwal &amp; Somaini</a> (<a href="references.html#ref-agarwalDemandAnalysisUsing2018" role="doc-biblioref">2018</a>)</span>: Propose an empirical method for studying random utility models in a school choice mechanisms and apply it to the data from Cambridge.</p></li>
+<li><p><span class="citation">Trebbi &amp; Weese (<a href="#ref-trebbiInsurgencySmallWars2019" role="doc-biblioref">2019</a>)</span>: Propose methodologies for the detection of unobserved coalitions of militants in conflict areas and apply to the Afghan conflict during the 2004-2009 period and to Pakistan during the 2008-2011 period, identifying systematically different coalition structures.</p></li>
+<li><p><span class="citation">Einav, Finkelstein, &amp; Mahoney (<a href="#ref-einavProviderIncentivesHealthcare2018" role="doc-biblioref">2018</a>)</span>: Estimate a dynamic discrete choice model of long-term care hospitals discharge decisions and study the design of provider incentive in the post-acute setting.</p></li>
+<li><p><span class="citation">Miravete, Seim, &amp; Thurk (<a href="#ref-miraveteMarketPowerLaffer2018" role="doc-biblioref">2018</a>)</span>: Estimate a model of taxation in a imperfectly competitive market that leads to incomplete tax pass-through using a data from alcoholic beverages in Pennsylvania and study the welfare implication of the state’s current tax policy.</p></li>
+<li><p><span class="citation">Crawford, Lee, Whinston, &amp; Yurukoglu (<a href="#ref-crawfordWelfareEffectsVertical2018" role="doc-biblioref">2018</a>)</span>: Estimate a structural model of view-ship, subscription, distributor pricing, and affiliate fee bargaining using a data set on the US cable an satellite television industry to analyze the impact of simulated vertical mergers and divestitures of regional sports networks on competition and welfare.</p></li>
+<li><p><span class="citation">Agarwal &amp; Somaini (<a href="#ref-agarwalDemandAnalysisUsing2018" role="doc-biblioref">2018</a>)</span>: Propose an empirical method for studying random utility models in a school choice mechanisms and apply it to the data from Cambridge.</p></li>
 </ul>
 </div>
 </div>
-<div id="asymmetric-information-and-market-power" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Asymmetric Information and Market Power</h2>
+<div id="asymmetric-information-and-market-power" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Asymmetric Information and Market Power<a href="applications.html#asymmetric-information-and-market-power" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>I present this paper in detail because the structure of the paper, especially the structure of the introduction, is textbook-perfect.</li>
 <li>It also applies textbook-perfect demand and cost estimation techniques but to an empirically interesting setting.</li>
@@ -747,25 +770,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li>The data section can come after model and estimation sections if it is a methodological paper that builds estimation and/or identification techniques on an abstract model.</li>
 </ul>
-<div id="motivation" class="section level3" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> Motivation</h3>
+<div id="motivation" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Motivation<a href="applications.html#motivation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Asymmetric information works differently in imperfectly competitive markets.</li>
 <li><strong>Competitive market</strong>: adverse selection <span class="math inline">\(\to\)</span> higher average cost <span class="math inline">\(\to\)</span> higher price.</li>
-<li><strong>Imperfectly competitive market</strong>: additional channel: adverse selection <span class="math inline">\(\to\)</span> lower benefit of setting a high price <span class="math inline">\(\to\)</span> lower price <span class="citation">(<a href="references.html#ref-lesterScreeningAdverseSelection2018" role="doc-biblioref">Lester, Shourideh, Venkateswaran, &amp; Zetlin-Jones, 2018</a>; <a href="references.html#ref-mahoneyImperfectCompetitionSelection2017" role="doc-biblioref">Mahoney &amp; Weyl, 2017</a>)</span>.</li>
+<li><strong>Imperfectly competitive market</strong>: additional channel: adverse selection <span class="math inline">\(\to\)</span> lower benefit of setting a high price <span class="math inline">\(\to\)</span> lower price <span class="citation">(<a href="#ref-lesterScreeningAdverseSelection2018" role="doc-biblioref">Lester, Shourideh, Venkateswaran, &amp; Zetlin-Jones, 2018</a>; <a href="#ref-mahoneyImperfectCompetitionSelection2017" role="doc-biblioref">Mahoney &amp; Weyl, 2017</a>)</span>.</li>
 <li>Adverse selection can moderate the welfare losses from market power, and <em>vice versa</em>.</li>
 </ul>
 </div>
-<div id="question-method-and-materials" class="section level3" number="10.2.2">
-<h3><span class="header-section-number">10.2.2</span> Question, Method, and Materials</h3>
+<div id="question-method-and-materials" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Question, Method, and Materials<a href="applications.html#question-method-and-materials" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>This paper measures the consequences of asymmetric information and imperfect competition in the market for small business lines of credit.</li>
 <li>To do so, formulate and estimate a model of credit demand, loan use, default, and bank pricing;</li>
 <li>using data on a representative sample of Italian firms, the population of medium and large Italian banks, individual lines of credits between them, and subsequent defaults.</li>
 </ul>
 </div>
-<div id="findings" class="section level3" number="10.2.3">
-<h3><span class="header-section-number">10.2.3</span> Findings</h3>
+<div id="findings" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Findings<a href="applications.html#findings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Find evidence of adverse selection:
 <ul>
@@ -779,8 +802,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="policy-experiments" class="section level3" number="10.2.4">
-<h3><span class="header-section-number">10.2.4</span> Policy Experiments</h3>
+<div id="policy-experiments" class="section level3 hasAnchor" number="10.2.4">
+<h3><span class="header-section-number">10.2.4</span> Policy Experiments<a href="applications.html#policy-experiments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>What if the degree of adverse selection changes?
 <ul>
@@ -797,8 +820,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="source" class="section level3" number="10.2.5">
-<h3><span class="header-section-number">10.2.5</span> Source</h3>
+<div id="source" class="section level3 hasAnchor" number="10.2.5">
+<h3><span class="header-section-number">10.2.5</span> Source<a href="applications.html#source" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Data on individual loans from the Central Credit Register.</li>
 <li>Firm-level balance sheet data from the Company Accounts Data Services.</li>
@@ -807,8 +830,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The resulting data is over 1988-1998.</li>
 </ul>
 </div>
-<div id="loan-data" class="section level3" number="10.2.6">
-<h3><span class="header-section-number">10.2.6</span> Loan Data</h3>
+<div id="loan-data" class="section level3 hasAnchor" number="10.2.6">
+<h3><span class="header-section-number">10.2.6</span> Loan Data<a href="applications.html#loan-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Italian banks have to report data for each individual borrower to the register.</li>
 <li>Focus on the short-term lines of credit:
@@ -827,8 +850,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Average bank asset EUR11 billion, average employees 3,200.</li>
 </ul>
 </div>
-<div id="firm-data" class="section level3" number="10.2.7">
-<h3><span class="header-section-number">10.2.7</span> Firm Data</h3>
+<div id="firm-data" class="section level3 hasAnchor" number="10.2.7">
+<h3><span class="header-section-number">10.2.7</span> Firm Data<a href="applications.html#firm-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The service collects yearly data on the balance sheets and income statements of a sample of 35,000 Italian non-financial and non-agricultural firms, roughly 30% of the total value added reported in the national accounting.</li>
 <li>The service also computes an indicator of the risk profile of each firm, Score, and reports to banks.</li>
@@ -837,18 +860,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Banks’ loan approval decisions are not observed.</li>
 </ul>
 </div>
-<div id="default-data" class="section level3" number="10.2.8">
-<h3><span class="header-section-number">10.2.8</span> Default Data</h3>
+<div id="default-data" class="section level3 hasAnchor" number="10.2.8">
+<h3><span class="header-section-number">10.2.8</span> Default Data<a href="applications.html#default-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>A loan is classified as default if a firm’s main line of credit defined it as a bad debt within three years of being granted.</li>
 <li>Reporting a loan as a bad debt to the Credit Registry can happen prior to a legally certified bankruptcy filing, but it usually prevents the firm from borrowing any other loans.</li>
 <li>6% of new loans default during the sample period.</li>
 </ul>
 </div>
-<div id="positive-correlation-tests" class="section level3" number="10.2.9">
-<h3><span class="header-section-number">10.2.9</span> Positive Correlation Tests</h3>
+<div id="positive-correlation-tests" class="section level3 hasAnchor" number="10.2.9">
+<h3><span class="header-section-number">10.2.9</span> Positive Correlation Tests<a href="applications.html#positive-correlation-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Positive correlation tests <span class="citation">(<a href="references.html#ref-chiapporiTestingAsymmetricInformation2000" role="doc-biblioref">Chiappori &amp; Salanie, 2000</a>)</span> are often used to test the presence of asymmetric information.</li>
+<li>Positive correlation tests <span class="citation">(<a href="#ref-chiapporiTestingAsymmetricInformation2000" role="doc-biblioref">Chiappori &amp; Salanie, 2000</a>)</span> are often used to test the presence of asymmetric information.</li>
 <li>Are firms more likely to demand credit more likely to default?
 <span class="math display">\[
 d_i = 1\{X_i^d \beta + \nu_i &gt; 0\},
@@ -874,12 +897,12 @@ f_i = X_i \gamma + \eta_i,
 \]</span>
 where <span class="math inline">\(l_i\)</span> is the amount of its loan used by the firm.</li>
 <li>A positive and significant correlation of 0.03 between <span class="math inline">\(\epsilon_i\)</span> and <span class="math inline">\(\eta_i\)</span>.</li>
-<li>These positive correlations can be interpreted as evidence of adverse selection <span class="citation">(<a href="references.html#ref-stiglitzCreditRationingMarkets1981" role="doc-biblioref">Stiglitz &amp; Weiss, 1981</a>)</span>.</li>
+<li>These positive correlations can be interpreted as evidence of adverse selection <span class="citation">(<a href="#ref-stiglitzCreditRationingMarkets1981" role="doc-biblioref">Stiglitz &amp; Weiss, 1981</a>)</span>.</li>
 <li>We further control several factors such as strategic interactions in the following structural model.</li>
 </ul>
 </div>
-<div id="setting-6" class="section level3" number="10.2.10">
-<h3><span class="header-section-number">10.2.10</span> Setting</h3>
+<div id="setting-6" class="section level3 hasAnchor" number="10.2.10">
+<h3><span class="header-section-number">10.2.10</span> Setting<a href="applications.html#setting-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Each of <span class="math inline">\(i = 1, \cdots, I_{mt}\)</span> firms in market <span class="math inline">\(m\)</span> in year <span class="math inline">\(t\)</span> is willing to invest in a project and is looking for credit to finance it.</li>
 <li>Firms select their main line of credit from <span class="math inline">\(j = 1, \cdots, J_{mt}\)</span> banks in <span class="math inline">\(m\)</span> in <span class="math inline">\(t\)</span>.</li>
@@ -888,8 +911,8 @@ where <span class="math inline">\(l_i\)</span> is the amount of its loan used by
 <li><strong>Screening device</strong>: assume that banks use interest rates as their only screening device; the amount of credit granted from a bank to a firm is exogenously given.</li>
 </ul>
 </div>
-<div id="firm-preference-over-banks" class="section level3" number="10.2.11">
-<h3><span class="header-section-number">10.2.11</span> Firm Preference over Banks</h3>
+<div id="firm-preference-over-banks" class="section level3 hasAnchor" number="10.2.11">
+<h3><span class="header-section-number">10.2.11</span> Firm Preference over Banks<a href="applications.html#firm-preference-over-banks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Firm <span class="math inline">\(i\)</span> in market <span class="math inline">\(m\)</span> in year <span class="math inline">\(t\)</span> obtains the following utility as it chooses bank <span class="math inline">\(j\)</span> as its main credit line:
 <span class="math display" id="eq:demand-utility">\[\begin{equation}
@@ -904,8 +927,8 @@ U_{ijmt}^D := \overline{\alpha}_0^D + X_{jmt}^{\prime D} \beta^D + \xi_{jmt}^D +
 <li>Let <span class="math inline">\(\alpha_{0i}^D := \overline{\alpha}_0^D + \epsilon_i^D\)</span>.</li>
 </ul>
 </div>
-<div id="required-loand-amount" class="section level3" number="10.2.12">
-<h3><span class="header-section-number">10.2.12</span> Required Loand Amount</h3>
+<div id="required-loand-amount" class="section level3 hasAnchor" number="10.2.12">
+<h3><span class="header-section-number">10.2.12</span> Required Loand Amount<a href="applications.html#required-loand-amount" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Firm <span class="math inline">\(i\)</span> in market <span class="math inline">\(m\)</span> in year <span class="math inline">\(t\)</span> borrows the following amount of loan if it chooses bank <span class="math inline">\(j\)</span> as its main line:
 <span class="math display">\[
@@ -916,8 +939,8 @@ L_{ijmt} := \alpha_0^L + X_{jmt}^{\prime L} \beta^L + \alpha^L P_{ijmt} + Y_{ijm
 <li>Notice that <strong>there is no firm-bank-specific unobserved heterogeneity</strong>; why?; we need to know how much a firm will borrow when the firm borrowed from a different bank than in the data; because a loan between a firm and a bank is observed only when the firm borrows from the bank, we need to exclude any firm-bank-specific unobserved heterogeneity in order to predict loans with hypothetical banks.</li>
 </ul>
 </div>
-<div id="default-decision" class="section level3" number="10.2.13">
-<h3><span class="header-section-number">10.2.13</span> Default Decision</h3>
+<div id="default-decision" class="section level3 hasAnchor" number="10.2.13">
+<h3><span class="header-section-number">10.2.13</span> Default Decision<a href="applications.html#default-decision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Conditional on borrowing, each firm chooses to default if its utility from doing so is greater than 0:
 <span class="math display">\[
@@ -928,8 +951,8 @@ U_{ijmt}^F := \alpha_0^F + X_{jmt}^{\prime F} \beta^F + \alpha^F P_{ijmt} + Y_{i
 <li>Notice that there is no firm-bank-specific unobserved heterogeneity for the same reason.</li>
 </ul>
 </div>
-<div id="information-structure" class="section level3" number="10.2.14">
-<h3><span class="header-section-number">10.2.14</span> Information Structure</h3>
+<div id="information-structure" class="section level3 hasAnchor" number="10.2.14">
+<h3><span class="header-section-number">10.2.14</span> Information Structure<a href="applications.html#information-structure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><span class="math inline">\(\epsilon_i^D, \epsilon_i^L\)</span>, and <span class="math inline">\(\epsilon_i^F\)</span> are assumed to be fixed at the firm level and do not vary across banks.</li>
 <li>They are assumed to follow:
@@ -941,7 +964,7 @@ U_{ijmt}^F := \alpha_0^F + X_{jmt}^{\prime F} \beta^F + \alpha^F P_{ijmt} + Y_{i
 \end{pmatrix}
 \sim
 N
-\left( 
+\left(
 \begin{pmatrix}
 0 \\
 0 \\
@@ -956,16 +979,16 @@ N
 \]</span></li>
 </ul>
 </div>
-<div id="moral-hazard" class="section level3" number="10.2.15">
-<h3><span class="header-section-number">10.2.15</span> Moral Hazard</h3>
+<div id="moral-hazard" class="section level3 hasAnchor" number="10.2.15">
+<h3><span class="header-section-number">10.2.15</span> Moral Hazard<a href="applications.html#moral-hazard" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The model allows for the presence of moral hazard.</li>
-<li><span class="citation"><a href="references.html#ref-holmstromFinancialIntermediationLoanable1997" role="doc-biblioref">Holmstrom &amp; Tirole</a> (<a href="references.html#ref-holmstromFinancialIntermediationLoanable1997" role="doc-biblioref">1997</a>)</span>: If moral hazard is present, higher repayment requirements on loans can reduce the incentives to exert efforts and increases the default probability.</li>
+<li><span class="citation">Holmstrom &amp; Tirole (<a href="#ref-holmstromFinancialIntermediationLoanable1997" role="doc-biblioref">1997</a>)</span>: If moral hazard is present, higher repayment requirements on loans can reduce the incentives to exert efforts and increases the default probability.</li>
 <li>Interpreting <span class="math inline">\(\alpha^F\)</span> a causal effect of price on default (by using an instrument), we will be able to interpret the positive <span class="math inline">\(\alpha^F\)</span> as evidence of moral hazard.</li>
 </ul>
 </div>
-<div id="bank-problem" class="section level3" number="10.2.16">
-<h3><span class="header-section-number">10.2.16</span> Bank Problem</h3>
+<div id="bank-problem" class="section level3 hasAnchor" number="10.2.16">
+<h3><span class="header-section-number">10.2.16</span> Bank Problem<a href="applications.html#bank-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The expected profit for bank <span class="math inline">\(j\)</span> from charging a price <span class="math inline">\(P_{ijmt}\)</span> offered to firm <span class="math inline">\(i\)</span> in market <span class="math inline">\(m\)</span> in year <span class="math inline">\(t\)</span> is:
 <span class="math display">\[
@@ -976,16 +999,16 @@ N
 <li><span class="math inline">\(MC_{ijmt}\)</span>: the bank’s marginal cost.</li>
 </ul>
 </div>
-<div id="the-effect-of-price-on-default-probability" class="section level3" number="10.2.17">
-<h3><span class="header-section-number">10.2.17</span> The Effect of Price on Default Probability</h3>
+<div id="the-effect-of-price-on-default-probability" class="section level3 hasAnchor" number="10.2.17">
+<h3><span class="header-section-number">10.2.17</span> The Effect of Price on Default Probability<a href="applications.html#the-effect-of-price-on-default-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>There are two channels.</li>
 <li>If <span class="math inline">\(\alpha^F\)</span> is positive, higher interest rate can increase the default probability, possibly because of moral hazard.</li>
 <li>A higher interest rate also changes the composition of borrower types; borrowing conditional on a high interest rate means that the firm has higher demand for loan; if <span class="math inline">\(\rho_{DF} &gt; 0\)</span>, this implies the firm is riskier.</li>
 </ul>
 </div>
-<div id="the-first-order-condition" class="section level3" number="10.2.18">
-<h3><span class="header-section-number">10.2.18</span> The First-Order Condition</h3>
+<div id="the-first-order-condition" class="section level3 hasAnchor" number="10.2.18">
+<h3><span class="header-section-number">10.2.18</span> The First-Order Condition<a href="applications.html#the-first-order-condition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The pricing equation is:
 <span class="math display">\[
@@ -995,8 +1018,8 @@ P_{ijmt} = \frac{MC_{ijmt}}{1 - F_{ijmt} + F_{ijmt}&#39; \mathcal{M}_{ijmt}} + \
 <li><span class="math inline">\(\mathcal{M}_{ijmt} := - Q_{ijmt} / Q_{ijmt}&#39;\)</span> is the bank <span class="math inline">\(j\)</span>’s markup on a loan to firm <span class="math inline">\(i\)</span>.</li>
 </ul>
 </div>
-<div id="the-effect-of-higher-adverse-selection" class="section level3" number="10.2.19">
-<h3><span class="header-section-number">10.2.19</span> The Effect of Higher Adverse Selection</h3>
+<div id="the-effect-of-higher-adverse-selection" class="section level3 hasAnchor" number="10.2.19">
+<h3><span class="header-section-number">10.2.19</span> The Effect of Higher Adverse Selection<a href="applications.html#the-effect-of-higher-adverse-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>As measured by the higher <span class="math inline">\(\rho_{DF}\)</span>.</li>
 <li><strong>Average borrower effect</strong>: tends to increase the price.
@@ -1016,8 +1039,8 @@ P_{ijmt} = \frac{MC_{ijmt}}{1 - F_{ijmt} + F_{ijmt}&#39; \mathcal{M}_{ijmt}} + \
 </ul></li>
 </ul>
 </div>
-<div id="estimating-equilibrium-pricing-strategy-and-augmenting-missing-price-data" class="section level3" number="10.2.20">
-<h3><span class="header-section-number">10.2.20</span> Estimating Equilibrium Pricing Strategy and Augmenting Missing Price Data</h3>
+<div id="estimating-equilibrium-pricing-strategy-and-augmenting-missing-price-data" class="section level3 hasAnchor" number="10.2.20">
+<h3><span class="header-section-number">10.2.20</span> Estimating Equilibrium Pricing Strategy and Augmenting Missing Price Data<a href="applications.html#estimating-equilibrium-pricing-strategy-and-augmenting-missing-price-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To estimate bank choice problem for a firm, we need to have price for each pair of bank and firm.</li>
 <li>However, the price is observed only between a bank and a firm that actually held a credit line.</li>
@@ -1042,12 +1065,12 @@ P_{ijmt} = \gamma_0 + \gamma_1 \mathcal{D}_{ijmt} + \gamma_2 \mathcal{L}_{ijmt} 
 <li>We predict prices offered to non-borrowing firms by propensity score matching.</li>
 </ul>
 </div>
-<div id="inserting-pricing-estimates-into-the-utility" class="section level3" number="10.2.21">
-<h3><span class="header-section-number">10.2.21</span> Inserting Pricing Estimates into the Utility</h3>
+<div id="inserting-pricing-estimates-into-the-utility" class="section level3 hasAnchor" number="10.2.21">
+<h3><span class="header-section-number">10.2.21</span> Inserting Pricing Estimates into the Utility<a href="applications.html#inserting-pricing-estimates-into-the-utility" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>We assume that firm-bank-market-year determinants of demand <span class="math inline">\(Y_{ijmt}^D\)</span> is of the following form:
 <span class="math display">\[
-Y_{ijmt}^D := \eta_1^D \mathcal{D}_{ijmt} + \eta_2^D \mathcal{L}_{ijmt} + \eta_3^D Y_i + \omega_i^D. 
+Y_{ijmt}^D := \eta_1^D \mathcal{D}_{ijmt} + \eta_2^D \mathcal{L}_{ijmt} + \eta_3^D Y_i + \omega_i^D.
 \]</span></li>
 <li><span class="math inline">\(Y_i\)</span> is the observed firm covariates.</li>
 <li><span class="math inline">\(\omega_i^D\)</span>$ is the firm covariates not observed to econometrician.</li>
@@ -1079,8 +1102,8 @@ U_{ijmt}^D &amp;= \overline{\alpha}_0^D + X_{jmt}^{\prime D} \beta^D + \xi_{jmt}
 <li><span class="math inline">\(\alpha_D\)</span> is identified in the second stage after estimating <span class="math inline">\(\tilde{\eta}^D\)</span> in the first stage.</li>
 </ul>
 </div>
-<div id="choice-probability" class="section level3" number="10.2.22">
-<h3><span class="header-section-number">10.2.22</span> Choice Probability</h3>
+<div id="choice-probability" class="section level3 hasAnchor" number="10.2.22">
+<h3><span class="header-section-number">10.2.22</span> Choice Probability<a href="applications.html#choice-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The probability that borrower <span class="math inline">\(i\)</span> in market <span class="math inline">\(m\)</span> in year <span class="math inline">\(t\)</span> chooses bank <span class="math inline">\(j\)</span> is given by:
 <span class="math display">\[
@@ -1088,8 +1111,8 @@ Pr_{ijmt}^D := \int \frac{\exp[\tilde{\delta}_{jmt}^D(X_{jmt}^D, \widetilde{P}_{
 \]</span></li>
 </ul>
 </div>
-<div id="equilibrium-loan-strategy" class="section level3" number="10.2.23">
-<h3><span class="header-section-number">10.2.23</span> Equilibrium Loan Strategy</h3>
+<div id="equilibrium-loan-strategy" class="section level3 hasAnchor" number="10.2.23">
+<h3><span class="header-section-number">10.2.23</span> Equilibrium Loan Strategy<a href="applications.html#equilibrium-loan-strategy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In the equilibrium, the probability of having loan <span class="math inline">\(L\)</span> conditional on borrowing (<span class="math inline">\(D = 1\)</span>) is:
 <span class="math display" id="eq:loan-strategy">\[\begin{equation}
@@ -1104,8 +1127,8 @@ where
 \]</span></li>
 </ul>
 </div>
-<div id="equilibrium-default-strategy" class="section level3" number="10.2.24">
-<h3><span class="header-section-number">10.2.24</span> Equilibrium Default Strategy</h3>
+<div id="equilibrium-default-strategy" class="section level3 hasAnchor" number="10.2.24">
+<h3><span class="header-section-number">10.2.24</span> Equilibrium Default Strategy<a href="applications.html#equilibrium-default-strategy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In the equilibrium, the probability of default (<span class="math inline">\(F = 1\)</span>) conditional on borrowing (<span class="math inline">\(D = 1\)</span>) is:
 <span class="math display" id="eq:default-strategy">\[\begin{equation}
@@ -1125,8 +1148,8 @@ B := \frac{-\rho_{DF} \rho_{DL} + \rho_{LF} \sigma_D^2}{\sigma_D^2 \sigma_L^2 - 
 \]</span></li>
 </ul>
 </div>
-<div id="control-function-approach-to-deal-with-endogeneity-in-loand-and-defaulty-equations" class="section level3" number="10.2.25">
-<h3><span class="header-section-number">10.2.25</span> Control Function Approach to Deal with Endogeneity in Loand and Defaulty Equations</h3>
+<div id="control-function-approach-to-deal-with-endogeneity-in-loand-and-defaulty-equations" class="section level3 hasAnchor" number="10.2.25">
+<h3><span class="header-section-number">10.2.25</span> Control Function Approach to Deal with Endogeneity in Loand and Defaulty Equations<a href="applications.html#control-function-approach-to-deal-with-endogeneity-in-loand-and-defaulty-equations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The structural parameters in loan use and default strategies are identified by using instrumental variables.</li>
 <li>Use prices in the other market as instruments (Hausman-type instruments).</li>
@@ -1141,8 +1164,8 @@ B := \frac{-\rho_{DF} \rho_{DL} + \rho_{LF} \sigma_D^2}{\sigma_D^2 \sigma_L^2 - 
 <li>These variations identify <span class="math inline">\(\alpha^L\)</span> and <span class="math inline">\(\alpha^F\)</span> in the following first-stage equation.</li>
 </ul>
 </div>
-<div id="first-stage-estimation" class="section level3" number="10.2.26">
-<h3><span class="header-section-number">10.2.26</span> First-Stage Estimation</h3>
+<div id="first-stage-estimation" class="section level3 hasAnchor" number="10.2.26">
+<h3><span class="header-section-number">10.2.26</span> First-Stage Estimation<a href="applications.html#first-stage-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In the first-stage, we identify the composite parameters in the bank choice; the coefficients consist of structural parameters and the <em>biases</em> from endogeneity.</li>
 <li>We separate structural parameters from biases in the second stage using instrumental variables.</li>
@@ -1154,8 +1177,8 @@ log L := \sum_{i} d_{ijmt} \{\log(P_{ijmt}^D) + \log (Pr_{immt}^L) + f_{ijmt} \l
 <li><span class="math inline">\(f_{ijmt}\)</span>: firm <span class="math inline">\(i\)</span> defaults from bank <span class="math inline">\(j\)</span></li>
 </ul>
 </div>
-<div id="second-stage-estimation" class="section level3" number="10.2.27">
-<h3><span class="header-section-number">10.2.27</span> Second-Stage Estimation</h3>
+<div id="second-stage-estimation" class="section level3 hasAnchor" number="10.2.27">
+<h3><span class="header-section-number">10.2.27</span> Second-Stage Estimation<a href="applications.html#second-stage-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>From the first-stage estimates, we obtain the estimate of <span class="math inline">\(\tilde{\delta}_{jmt}\)</span>, denoted by <span class="math inline">\(\hat{\tilde{\delta}_{jmt}}\)</span>.</li>
 <li>Consider a regression such as:
@@ -1168,12 +1191,12 @@ where <span class="math inline">\(\tilde{P}_{jmt}\)</span> and <span class="math
 <li>Because deposit conditions are determined in the market with households, it will be independent of loan market conditions.</li>
 </ul>
 </div>
-<div id="estimation-results" class="section level3" number="10.2.28">
-<h3><span class="header-section-number">10.2.28</span> Estimation Results</h3>
+<div id="estimation-results" class="section level3 hasAnchor" number="10.2.28">
+<h3><span class="header-section-number">10.2.28</span> Estimation Results<a href="applications.html#estimation-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/Crawford_2018_Table4.png" /></p>
 </div>
-<div id="findings-from-estimation-results" class="section level3" number="10.2.29">
-<h3><span class="header-section-number">10.2.29</span> Findings from Estimation Results</h3>
+<div id="findings-from-estimation-results" class="section level3 hasAnchor" number="10.2.29">
+<h3><span class="header-section-number">10.2.29</span> Findings from Estimation Results<a href="applications.html#findings-from-estimation-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Interest rates have negative impact on bank choice and loan amount.
 <ul>
@@ -1186,17 +1209,17 @@ where <span class="math inline">\(\tilde{P}_{jmt}\)</span> and <span class="math
 <li>Correlation between unobserved demand and loan amount shocks, and between demand and default shocks, are positive and statistically significant.</li>
 </ul>
 </div>
-<div id="fit-of-the-model" class="section level3" number="10.2.30">
-<h3><span class="header-section-number">10.2.30</span> Fit of the Model</h3>
+<div id="fit-of-the-model" class="section level3 hasAnchor" number="10.2.30">
+<h3><span class="header-section-number">10.2.30</span> Fit of the Model<a href="applications.html#fit-of-the-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/Crawford_2018_Table5.png" /></p>
 </div>
-<div id="counterfactuals" class="section level3" number="10.2.31">
-<h3><span class="header-section-number">10.2.31</span> Counterfactuals</h3>
+<div id="counterfactuals" class="section level3 hasAnchor" number="10.2.31">
+<h3><span class="header-section-number">10.2.31</span> Counterfactuals<a href="applications.html#counterfactuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/Crawford_2018_Table6.png" /></p>
 <p><img src="figuretable/Crawford_2018_Table7.png" /></p>
 </div>
-<div id="what-if-adverse-selection-got-severer" class="section level3" number="10.2.32">
-<h3><span class="header-section-number">10.2.32</span> What if Adverse Selection Got Severer?</h3>
+<div id="what-if-adverse-selection-got-severer" class="section level3 hasAnchor" number="10.2.32">
+<h3><span class="header-section-number">10.2.32</span> What if Adverse Selection Got Severer?<a href="applications.html#what-if-adverse-selection-got-severer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>A doubling in the correlations <span class="math inline">\(\rho_{DF}\)</span> and <span class="math inline">\(\rho_{LF}\)</span> causes 1.87 percent points increases in the average interest rates.</li>
 <li>This causes 1.28 percent points decrease in the share and EUR700 decrease in the loan amount.</li>
@@ -1207,8 +1230,8 @@ where <span class="math inline">\(\tilde{P}_{jmt}\)</span> and <span class="math
 </ul></li>
 </ul>
 </div>
-<div id="what-if-cost-of-capital-increased" class="section level3" number="10.2.33">
-<h3><span class="header-section-number">10.2.33</span> What if Cost of Capital Increased?</h3>
+<div id="what-if-cost-of-capital-increased" class="section level3 hasAnchor" number="10.2.33">
+<h3><span class="header-section-number">10.2.33</span> What if Cost of Capital Increased?<a href="applications.html#what-if-cost-of-capital-increased" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>5% (or 70 basis points) increase in the bank’s marginal cost leads to 1.78 percent points increase in the interest rates.</li>
 <li>The default probability increases only by 1.84 percent points in this case.
@@ -1220,14 +1243,80 @@ where <span class="math inline">\(\tilde{P}_{jmt}\)</span> and <span class="math
 <li>The effective markup of a bank is negatively correlated with the price and default changes, and positively correlated with demand and loan amount change.</li>
 </ul>
 </div>
-<div id="merger-simulation-2" class="section level3" number="10.2.34">
-<h3><span class="header-section-number">10.2.34</span> Merger Simulation</h3>
+<div id="merger-simulation-2" class="section level3 hasAnchor" number="10.2.34">
+<h3><span class="header-section-number">10.2.34</span> Merger Simulation<a href="applications.html#merger-simulation-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/Crawford_2018_Table8.png" /></p>
 <ul>
 <li>Under severe adverse selection, unilateral effects of a merger on prices is moderate.</li>
 </ul>
 
 </div>
+</div>
+</div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-acemogluInnovationReallocationGrowth2018" class="csl-entry">
+Acemoglu, D., Akcigit, U., Alp, H., Bloom, N., &amp; Kerr, W. (2018). <a href="https://doi.org/10.1257/aer.20130470">Innovation, <span>Reallocation</span>, and <span>Growth</span></a>. <em>American Economic Review</em>, <em>108</em>(11), 3450–3491.
+</div>
+<div id="ref-agarwalDemandAnalysisUsing2018" class="csl-entry">
+Agarwal, N., &amp; Somaini, P. (2018). <a href="https://doi.org/10.3982/ECTA13615">Demand <span>Analysis Using Strategic Reports</span>: <span>An Application</span> to a <span>School Choice Mechanism</span></a>. <em>Econometrica</em>, <em>86</em>(2), 391–444.
+</div>
+<div id="ref-aizawaAdvertisingRiskSelection2018" class="csl-entry">
+Aizawa, N., &amp; Kim, Y. S. (2018). <a href="https://doi.org/10.1257/aer.20151485">Advertising and <span>Risk Selection</span> in <span>Health Insurance Markets</span></a>. <em>American Economic Review</em>, <em>108</em>(3), 828–867.
+</div>
+<div id="ref-chiapporiTestingAsymmetricInformation2000" class="csl-entry">
+Chiappori, P.-A., &amp; Salanie, B. (2000). <a href="https://doi.org/10.1086/262111">Testing for <span>Asymmetric Information</span> in <span>Insurance Markets</span></a>. <em>Journal of Political Economy</em>, <em>108</em>(1), 56–78.
+</div>
+<div id="ref-crawfordWelfareEffectsVertical2018" class="csl-entry">
+Crawford, G. S., Lee, R. S., Whinston, M. D., &amp; Yurukoglu, A. (2018). <a href="https://doi.org/10.3982/ECTA14031">The <span>Welfare Effects</span> of <span>Vertical Integration</span> in <span>Multichannel Television Markets</span></a>. <em>Econometrica</em>, <em>86</em>(3), 891–954.
+</div>
+<div id="ref-crawfordAsymmetricInformationImperfect2018" class="csl-entry">
+Crawford, G. S., Pavanini, N., &amp; Schivardi, F. (2018). <a href="https://doi.org/10.1257/aer.20150487">Asymmetric <span>Information</span> and <span>Imperfect Competition</span> in <span>Lending Markets</span></a>. <em>American Economic Review</em>, <em>108</em>(7), 1659–1701.
+</div>
+<div id="ref-crawfordQualityOverprovisionCable2019" class="csl-entry">
+Crawford, G. S., Shcherbakov, O., &amp; Shum, M. (2019). <a href="https://doi.org/10.1257/aer.20151182">Quality <span>Overprovision</span> in <span>Cable Television Markets</span></a>. <em>American Economic Review</em>, <em>109</em>(3), 956–995.
+</div>
+<div id="ref-dinersteinConsumerPriceSearch2018" class="csl-entry">
+Dinerstein, M., Einav, L., Levin, J., &amp; Sundaresan, N. (2018). <a href="https://doi.org/10.1257/aer.20171218">Consumer <span>Price Search</span> and <span>Platform Design</span> in <span>Internet Commerce</span></a>. <em>American Economic Review</em>, <em>108</em>(7), 1820–1859.
+</div>
+<div id="ref-doraszelskiJustStartingOut2018" class="csl-entry">
+Doraszelski, Ulrich, Lewis, G., &amp; Pakes, A. (2018). <a href="https://doi.org/10.1257/aer.20160177">Just <span>Starting Out</span>: <span>Learning</span> and <span>Equilibrium</span> in a <span>New Market</span></a>. <em>American Economic Review</em>, <em>108</em>(3), 565–615.
+</div>
+<div id="ref-duboisIdentifyingIndustryMargins2018" class="csl-entry">
+Dubois, P., &amp; Lasio, L. (2018). <a href="https://doi.org/10.1257/aer.20140202">Identifying <span>Industry Margins</span> with <span>Price Constraints</span>: <span>Structural Estimation</span> on <span>Pharmaceuticals</span></a>. <em>American Economic Review</em>, <em>108</em>(12), 3685–3724.
+</div>
+<div id="ref-einavProviderIncentivesHealthcare2018" class="csl-entry">
+Einav, L., Finkelstein, A., &amp; Mahoney, N. (2018). <a href="https://doi.org/10.3982/ECTA15022">Provider <span>Incentives</span> and <span>Healthcare Costs</span>: <span>Evidence From Long</span>-<span>Term Care Hospitals</span></a>. <em>Econometrica</em>, <em>86</em>(6), 2161–2219.
+</div>
+<div id="ref-fackTruthTellingPreferenceEstimation2019" class="csl-entry">
+Fack, G., Grenet, J., &amp; He, Y. (2019). <a href="https://doi.org/10.1257/aer.20151422">Beyond <span>Truth</span>-<span>Telling</span>: <span>Preference Estimation</span> with <span>Centralized School Choice</span> and <span>College Admissions</span></a>. <em>American Economic Review</em>, <em>109</em>(4), 1486–1529.
+</div>
+<div id="ref-hoEquilibriumProviderNetworks2019" class="csl-entry">
+Ho, K., &amp; Lee, R. S. (2019). <a href="https://doi.org/10.1257/aer.20171288">Equilibrium <span>Provider Networks</span>: <span>Bargaining</span> and <span>Exclusion</span> in <span>Health Care Markets</span></a>. <em>American Economic Review</em>, <em>109</em>(2), 473–522.
+</div>
+<div id="ref-holmstromFinancialIntermediationLoanable1997" class="csl-entry">
+Holmstrom, B., &amp; Tirole, J. (1997). <a href="https://doi.org/10.1162/003355397555316">Financial <span>Intermediation</span>, <span>Loanable Funds</span>, and <span>The Real Sector</span></a>. <em>The Quarterly Journal of Economics</em>, <em>112</em>(3), 663–691.
+</div>
+<div id="ref-hortacsuBidShadingBidder2018" class="csl-entry">
+Hortaçsu, A., Kastl, J., &amp; Zhang, A. (2018). <a href="https://doi.org/10.1257/aer.20160675">Bid <span>Shading</span> and <span>Bidder Surplus</span> in the <span>US Treasury Auction System</span></a>. <em>American Economic Review</em>, <em>108</em>(1), 147–169.
+</div>
+<div id="ref-lesterScreeningAdverseSelection2018" class="csl-entry">
+Lester, B., Shourideh, A., Venkateswaran, V., &amp; Zetlin-Jones, A. (2018). <a href="https://doi.org/10.1086/700730">Screening and <span>Adverse Selection</span> in <span>Frictional Markets</span></a>. <em>Journal of Political Economy</em>, <em>127</em>(1), 338–377.
+</div>
+<div id="ref-mahoneyImperfectCompetitionSelection2017" class="csl-entry">
+Mahoney, N., &amp; Weyl, E. G. (2017). <a href="https://doi.org/10.1162/REST_a_00661">Imperfect <span>Competition</span> in <span>Selection Markets</span></a>. <em>The Review of Economics and Statistics</em>, <em>99</em>(4), 637–651.
+</div>
+<div id="ref-miraveteMarketPowerLaffer2018" class="csl-entry">
+Miravete, E. J., Seim, K., &amp; Thurk, J. (2018). <a href="https://doi.org/10.3982/ECTA12307">Market <span>Power</span> and the <span>Laffer Curve</span></a>. <em>Econometrica</em>, <em>86</em>(5), 1651–1687.
+</div>
+<div id="ref-stiglitzCreditRationingMarkets1981" class="csl-entry">
+Stiglitz, J. E., &amp; Weiss, A. (1981). Credit <span>Rationing</span> in <span>Markets</span> with <span>Imperfect Information</span>. <em>The American Economic Review</em>, <em>71</em>(3), 393–410.
+</div>
+<div id="ref-trebbiInsurgencySmallWars2019" class="csl-entry">
+Trebbi, F., &amp; Weese, E. (2019). <a href="https://doi.org/10.3982/ECTA14436">Insurgency and <span>Small Wars</span>: <span>Estimation</span> of <span>Unobserved Coalition Structures</span></a>. <em>Econometrica</em>, <em>87</em>(2), 463–496.
+</div>
+<div id="ref-wollmannTrucksBailoutsEquilibrium2018" class="csl-entry">
+Wollmann, T. G. (2018). <a href="https://doi.org/10.1257/aer.20160863">Trucks without <span>Bailouts</span>: <span>Equilibrium Product Characteristics</span> for <span>Commercial Vehicles</span></a>. <em>American Economic Review</em>, <em>108</em>(6), 1364–1406.
 </div>
 </div>
             </section>
@@ -1240,7 +1329,6 @@ where <span class="math inline">\(\tilde{P}_{jmt}\)</span> and <span class="math
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1259,6 +1347,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1279,6 +1368,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -1292,7 +1385,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

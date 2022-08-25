@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Merger Analysis | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Merger Analysis | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="demand.html"/>
 <link rel="next" href="entryexit.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,10 +708,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="merger" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Merger Analysis</h1>
-<div id="motivations-2" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Motivations</h2>
+<div id="merger" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Merger Analysis<a href="merger.html#merger" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="motivations-2" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Motivations<a href="merger.html#motivations-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Measuring the market power of firms and predicting the possible consequence of horizontal merger cases is one of the primary goal of empirical industrial organization.</li>
 <li>This is important for antitrust authority to review merger cases.</li>
@@ -697,23 +720,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Then, we conduct the first kind of <strong>counterfactual analysis</strong>, the <strong>merger simularion</strong>.</li>
 <li>In this exercise, we predict the market response when the ownership structure of product is changed due to a hypothetical merger.</li>
 <li>Every market institution needs its own model for merger simulation:</li>
-<li><span class="citation"><a href="references.html#ref-Gowrisankaran2015" role="doc-biblioref">Gowrisankaran, Nevo, &amp; Town</a> (<a href="references.html#ref-Gowrisankaran2015" role="doc-biblioref">2015</a>)</span>:
+<li><span class="citation">Gowrisankaran, Nevo, &amp; Town (<a href="#ref-Gowrisankaran2015" role="doc-biblioref">2015</a>)</span>:
 <ul>
 <li>In the U.S. hospitals and managed care organizations (MGO) negotiate the hospital prices and the coinsurance rates.</li>
 <li>What if hospitals are merged? How much do the hospital prices and the coinsurance rates increase?</li>
 </ul></li>
-<li><span class="citation"><a href="references.html#ref-Smith2004" role="doc-biblioref">Smith</a> (<a href="references.html#ref-Smith2004" role="doc-biblioref">2004</a>)</span>:
+<li><span class="citation">Smith (<a href="#ref-Smith2004" role="doc-biblioref">2004</a>)</span>:
 <ul>
 <li>Sometimes the same service is sold through multiple stores such as in the supermarket industry.</li>
 <li>How does this multi-store nature affect the merger effects?</li>
 </ul></li>
-<li><span class="citation"><a href="references.html#ref-Ivaldi2005" role="doc-biblioref">Ivaldi &amp; Verboven</a> (<a href="references.html#ref-Ivaldi2005" role="doc-biblioref">2005</a>)</span> reviews the cases in the European Commission.</li>
+<li><span class="citation">Ivaldi &amp; Verboven (<a href="#ref-Ivaldi2005" role="doc-biblioref">2005</a>)</span> reviews the cases in the European Commission.</li>
 </ul>
 </div>
-<div id="identification-of-conduct" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Identification of Conduct</h2>
-<div id="identification-of-conduct-1" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> Identification of Conduct</h3>
+<div id="identification-of-conduct" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Identification of Conduct<a href="merger.html#identification-of-conduct" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="identification-of-conduct-1" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Identification of Conduct<a href="merger.html#identification-of-conduct-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>So far we have been concerned with the two types of parameters:
 <ul>
@@ -725,11 +748,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Can we infer the mode of competition instead of assuming it?</li>
 </ul>
 </div>
-<div id="marginal-revenue-function" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> Marginal Revenue Function</h3>
+<div id="marginal-revenue-function" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Marginal Revenue Function<a href="merger.html#marginal-revenue-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To be specific, consider firms producing homogeneous product.</li>
-<li>Under what conditions can we distinguish across Bertrand competition, Cournot competition, and collusion? <span class="citation">(<a href="references.html#ref-Bresnahan1982a" role="doc-biblioref">Timothy F. Bresnahan, 1982</a>)</span>.</li>
+<li>Under what conditions can we distinguish across Bertrand competition, Cournot competition, and collusion? <span class="citation">(<a href="#ref-Bresnahan1982a" role="doc-biblioref">Timothy F. Bresnahan, 1982</a>)</span>.</li>
 <li>Consider the following marginal revenue function:
 <span class="math display">\[\begin{equation}
 MR(Q) \equiv \lambda Q P&#39;(Q) + P(Q),
@@ -762,8 +785,8 @@ where <span class="math inline">\(Q\)</span> is the aggregate quantity, <span cl
 <li>The identification of the mode of competition in this context is equivalent to the identification of <span class="math inline">\(\lambda\)</span>, the <strong>conduct parameter</strong>.</li>
 </ul>
 </div>
-<div id="first-order-condition" class="section level3" number="5.2.3">
-<h3><span class="header-section-number">5.2.3</span> First-Order Condition</h3>
+<div id="first-order-condition" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> First-Order Condition<a href="merger.html#first-order-condition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(MC(q_f)\)</span> be the marginal cost of firm <span class="math inline">\(f\)</span>.</li>
 <li>Given the previous general marginal revenue function, the first-order condition for profit maximization for firm <span class="math inline">\(f\)</span> is written as:
@@ -773,8 +796,8 @@ where <span class="math inline">\(Q\)</span> is the aggregate quantity, <span cl
 <li>The system of equations for <span class="math inline">\(f = 1, \cdots, F\)</span> determine the market equilibrium.</li>
 </ul>
 </div>
-<div id="linear-model" class="section level3" number="5.2.4">
-<h3><span class="header-section-number">5.2.4</span> Linear Model</h3>
+<div id="linear-model" class="section level3 hasAnchor" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> Linear Model<a href="merger.html#linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To be simple, consider a linear inverse demand function:
 <span class="math display">\[\begin{equation}
@@ -788,8 +811,8 @@ MC(q_{f}) = \beta_0 + \beta_1 q_{f} + \beta_2 W + u^S,
 where <span class="math inline">\(W\)</span> is a vector of observed cost sifters.</li>
 </ul>
 </div>
-<div id="pricing-equation" class="section level3" number="5.2.5">
-<h3><span class="header-section-number">5.2.5</span> Pricing Equation</h3>
+<div id="pricing-equation" class="section level3 hasAnchor" number="5.2.5">
+<h3><span class="header-section-number">5.2.5</span> Pricing Equation<a href="merger.html#pricing-equation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Inserting the inverse demand function and marginal cost function to the optimality condition:
 <span class="math display">\[\begin{equation}
@@ -812,8 +835,8 @@ P^S(Q) &amp;= \beta_0 + (\frac{\beta_1}{N} - \frac{\lambda}{\alpha_1})Q + \beta_
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="identification-of-inverse-demand-function-and-pricing-equation" class="section level3" number="5.2.6">
-<h3><span class="header-section-number">5.2.6</span> Identification of Inverse Demand Function and Pricing Equation</h3>
+<div id="identification-of-inverse-demand-function-and-pricing-equation" class="section level3 hasAnchor" number="5.2.6">
+<h3><span class="header-section-number">5.2.6</span> Identification of Inverse Demand Function and Pricing Equation<a href="merger.html#identification-of-inverse-demand-function-and-pricing-equation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>We have two systems of <strong>reduced-form</strong> equations:
 <span class="math display">\[\begin{equation}
@@ -828,8 +851,8 @@ P^S(Q) &amp;= \beta_0 + (\frac{\beta_1}{N} - \frac{\lambda}{\alpha_1})Q + \beta_
 <li>However, this is not enough to separately identify the <strong>structural-form parameters</strong> <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\lambda\)</span> in <span class="math inline">\(\gamma\)</span>.</li>
 </ul>
 </div>
-<div id="the-conduct-parameter-is-unidentified" class="section level3" number="5.2.7">
-<h3><span class="header-section-number">5.2.7</span> The Conduct Parameter is Unidentified</h3>
+<div id="the-conduct-parameter-is-unidentified" class="section level3 hasAnchor" number="5.2.7">
+<h3><span class="header-section-number">5.2.7</span> The Conduct Parameter is Unidentified<a href="merger.html#the-conduct-parameter-is-unidentified" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Even if the demand function and pricing equation (supply function) are identified, we still cannot identify the conduct parameter <span class="math inline">\(\lambda\)</span>.</li>
 <li>The price at a quantity may be high either because of the high marginal cost or because of the high markup.</li>
@@ -839,15 +862,15 @@ P^S(Q) &amp;= \beta_0 + (\frac{\beta_1}{N} - \frac{\lambda}{\alpha_1})Q + \beta_
 \end{equation}\]</span></li>
 <li><span class="math inline">\(\beta_1\)</span> is the derivative of the marginal cost.</li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-25"></span>
 <img src="figuretable/demandshift.png" alt="Figure 6.2 of Davis (2006)" width="80%" />
 <p class="caption">
 Figure 5.1: Figure 6.2 of Davis (2006)
 </p>
 </div>
 </div>
-<div id="identification-of-the-conduct-parameter-when-cost-data-is-available" class="section level3" number="5.2.8">
-<h3><span class="header-section-number">5.2.8</span> Identification of the Conduct Parameter: When Cost Data is Available</h3>
+<div id="identification-of-the-conduct-parameter-when-cost-data-is-available" class="section level3 hasAnchor" number="5.2.8">
+<h3><span class="header-section-number">5.2.8</span> Identification of the Conduct Parameter: When Cost Data is Available<a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-available" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>If there is reliable cost data, we can directly identify the marginal cost function:
 <span class="math display">\[\begin{equation}
@@ -860,8 +883,8 @@ and so <span class="math inline">\(\beta_1\)</span>.</li>
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="identification-of-the-conduct-parameter-when-cost-data-is-not-available" class="section level3" number="5.2.9">
-<h3><span class="header-section-number">5.2.9</span> Identification of the Conduct Parameter: When Cost Data is Not Available</h3>
+<div id="identification-of-the-conduct-parameter-when-cost-data-is-not-available" class="section level3 hasAnchor" number="5.2.9">
+<h3><span class="header-section-number">5.2.9</span> Identification of the Conduct Parameter: When Cost Data is Not Available<a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-not-available" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Remember the first-order condition:
 <span class="math display">\[\begin{equation}
@@ -872,8 +895,8 @@ where we can identify <span class="math inline">\(P^D(Q)\)</span> and <span clas
 <li>Intuition: If demand becomes more elastic, prices will decrease and quantity will increase in a market with a high degree of market power.</li>
 </ul>
 </div>
-<div id="identification-of-the-conduct-parameter-demand-rotater-is-available" class="section level3" number="5.2.10">
-<h3><span class="header-section-number">5.2.10</span> Identification of the Conduct Parameter: Demand Rotater is Available</h3>
+<div id="identification-of-the-conduct-parameter-demand-rotater-is-available" class="section level3 hasAnchor" number="5.2.10">
+<h3><span class="header-section-number">5.2.10</span> Identification of the Conduct Parameter: Demand Rotater is Available<a href="merger.html#identification-of-the-conduct-parameter-demand-rotater-is-available" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Let’s formalize the idea.</p></li>
 <li><p>To identify the conduct parameter, we needed a demand rotater:
@@ -905,10 +928,10 @@ where:
 \end{equation}\]</span></p></li>
 </ul>
 </div>
-<div id="identification-of-conduct-in-differentiated-product-market" class="section level3" number="5.2.11">
-<h3><span class="header-section-number">5.2.11</span> Identification of Conduct in Differentiated Product Market</h3>
+<div id="identification-of-conduct-in-differentiated-product-market" class="section level3 hasAnchor" number="5.2.11">
+<h3><span class="header-section-number">5.2.11</span> Identification of Conduct in Differentiated Product Market<a href="merger.html#identification-of-conduct-in-differentiated-product-market" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><p>Consider the identification of conduct when there are two differentiated substitutable products and companies compete in price <span class="citation">(<a href="references.html#ref-Nevo1998" role="doc-biblioref">Nevo, 1998</a>)</span>.</p></li>
+<li><p>Consider the identification of conduct when there are two differentiated substitutable products and companies compete in price <span class="citation">(<a href="#ref-Nevo1998" role="doc-biblioref">Nevo, 1998</a>)</span>.</p></li>
 <li><p>Are the prices determined independently or jointly?</p></li>
 <li><p>The general first-order condition is:
 <span class="math display">\[\begin{equation}
@@ -922,17 +945,17 @@ where</p></li>
 <li><p><span class="math inline">\(\Delta_{12} = \Delta_{21} = 1\)</span> if price are determined jointly.</p></li>
 <li><p>Under what conditions can we identify <span class="math inline">\(\Delta_{12}\)</span> and <span class="math inline">\(\Delta_{21}\)</span>?</p></li>
 <li><p>We will have to rotate <span class="math inline">\(\frac{\partial Q_1(p)}{\partial p_2}\)</span> and <span class="math inline">\(\frac{\partial Q_2 (p)}{\partial p_1}\)</span> while keeping the other variables at the same values.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-Miller2017" role="doc-biblioref">Miller &amp; Weinberg</a> (<a href="references.html#ref-Miller2017" role="doc-biblioref">2017</a>)</span> infers <span class="math inline">\(\Delta\)</span> after the MillerCoors, a joint venture of SABMiller PLC and Molson Coors Brewing, is formed.</p>
+<li><p><span class="citation">Miller &amp; Weinberg (<a href="#ref-Miller2017" role="doc-biblioref">2017</a>)</span> infers <span class="math inline">\(\Delta\)</span> after the MillerCoors, a joint venture of SABMiller PLC and Molson Coors Brewing, is formed.</p>
 <ul>
 <li>The unobserved year-specific and region-specific cost shocks are identified from the outsiders and the unobserved product-specific cost shocks are assumed to be the same before and after the merger.</li>
 </ul></li>
 </ul>
 </div>
 </div>
-<div id="merger-simulation" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Merger Simulation</h2>
-<div id="unilateral-and-coordinated-effects-of-a-horizontal-merger" class="section level3" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Unilateral and Coordinated Effects of a Horizontal Merger</h3>
+<div id="merger-simulation" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Merger Simulation<a href="merger.html#merger-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="unilateral-and-coordinated-effects-of-a-horizontal-merger" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Unilateral and Coordinated Effects of a Horizontal Merger<a href="merger.html#unilateral-and-coordinated-effects-of-a-horizontal-merger" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>There are two effects associated with a merge episode:</li>
 </ul>
@@ -954,12 +977,12 @@ where</p></li>
 </ul></li>
 </ol>
 </div>
-<div id="merger-simulation-1" class="section level3" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> Merger Simulation</h3>
+<div id="merger-simulation-1" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Merger Simulation<a href="merger.html#merger-simulation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In merger simulation, we compute the equilibrium under different ownership structure.</li>
 <li>This amounts to run a counterfactual simulation hypothetically changing the conduct parameter <span class="math inline">\(\Delta\)</span>.</li>
-<li>The idea stems back to <span class="citation"><a href="references.html#ref-Farrell1990" role="doc-biblioref">Farrell &amp; Shapiro</a> (<a href="references.html#ref-Farrell1990" role="doc-biblioref">1990</a>)</span>, <span class="citation"><a href="references.html#ref-Werden1994" role="doc-biblioref">Werden &amp; Frobe</a> (<a href="references.html#ref-Werden1994" role="doc-biblioref">1993</a>)</span>, <span class="citation"><a href="references.html#ref-Hausman1994" role="doc-biblioref">Hausman, Leonard, &amp; Zona</a> (<a href="references.html#ref-Hausman1994" role="doc-biblioref">1994</a>)</span>.</li>
+<li>The idea stems back to <span class="citation">Farrell &amp; Shapiro (<a href="#ref-Farrell1990" role="doc-biblioref">1990</a>)</span>, <span class="citation">Werden &amp; Frobe (<a href="#ref-Werden1994" role="doc-biblioref">1993</a>)</span>, <span class="citation">Hausman et al. (<a href="#ref-Hausman1994" role="doc-biblioref">1994</a>)</span>.</li>
 <li>Before running the simulation, you have to be very careful about the model assumptions:
 <ul>
 <li>In music industry, firms compete not in price but in advertisement.</li>
@@ -969,10 +992,10 @@ where</p></li>
 <li>The results are valid only if the modeling assumptions are correct.</li>
 </ul>
 </div>
-<div id="quantifying-the-unilateral-effect" class="section level3" number="5.3.3">
-<h3><span class="header-section-number">5.3.3</span> Quantifying the Unilateral Effect</h3>
+<div id="quantifying-the-unilateral-effect" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Quantifying the Unilateral Effect<a href="merger.html#quantifying-the-unilateral-effect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>See <span class="citation"><a href="references.html#ref-Nevo2000c" role="doc-biblioref">Nevo</a> (<a href="references.html#ref-Nevo2000c" role="doc-biblioref">2000</a>)</span> and <span class="citation"><a href="references.html#ref-Nevo2001" role="doc-biblioref">Nevo</a> (<a href="references.html#ref-Nevo2001" role="doc-biblioref">2001</a>)</span>.</li>
+<li>See <span class="citation">Nevo (<a href="#ref-Nevo2000c" role="doc-biblioref">2000</a>)</span> and <span class="citation">Nevo (<a href="#ref-Nevo2001" role="doc-biblioref">2001</a>)</span>.</li>
 <li>There are <span class="math inline">\(J\)</span> products, <span class="math inline">\(\mathcal{J} = \{1, \cdots, J\}\)</span>.</li>
 <li>We can have multiple markets but we suppress the market index.</li>
 <li>Firm <span class="math inline">\(f\)</span> produces a set of products which we denote <span class="math inline">\(\mathcal{J}_f \subset \mathcal{J}\)</span>.</li>
@@ -990,8 +1013,8 @@ where</p></li>
 where <span class="math inline">\(p_f = \{p_j\}_{j \in \mathcal{J}_f}\)</span>, <span class="math inline">\(p_{-f} = \{p_j\}_{j \in \mathcal{J} \setminus \mathcal{J}_f}\)</span>.</li>
 </ul>
 </div>
-<div id="pre-merger-equilibrium" class="section level3" number="5.3.4">
-<h3><span class="header-section-number">5.3.4</span> Pre-Merger Equilibrium</h3>
+<div id="pre-merger-equilibrium" class="section level3 hasAnchor" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Pre-Merger Equilibrium<a href="merger.html#pre-merger-equilibrium" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The first-order condition for firm <span class="math inline">\(f\)</span> is:
 <span class="math display">\[\begin{equation}
@@ -1010,8 +1033,8 @@ s_k(p) + \sum_{j \in \mathcal{J}} \Delta_{jk}^{pre}(p_j - mc_j) \frac{\partial s
 <li>At the end of the day, performing a merger simulation is to recompute the equilibrium with different ownership structure encoded in <span class="math inline">\(\Delta\)</span>.</li>
 </ul>
 </div>
-<div id="post-merger-equilibrium" class="section level3" number="5.3.5">
-<h3><span class="header-section-number">5.3.5</span> Post-Merger Equilibrium</h3>
+<div id="post-merger-equilibrium" class="section level3 hasAnchor" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> Post-Merger Equilibrium<a href="merger.html#post-merger-equilibrium" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(\Omega^{pre}(p)\)</span> is a matrix whose <span class="math inline">\((j, k)\)</span>-element is:</li>
 </ul>
@@ -1033,8 +1056,8 @@ s^{post} = s(p^{post}).
 \end{equation}\]</span></p></li>
 </ul>
 </div>
-<div id="consumer-surplus" class="section level3" number="5.3.6">
-<h3><span class="header-section-number">5.3.6</span> Consumer Surplus</h3>
+<div id="consumer-surplus" class="section level3 hasAnchor" number="5.3.6">
+<h3><span class="header-section-number">5.3.6</span> Consumer Surplus<a href="merger.html#consumer-surplus" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that the demand function is based on the mixed-logit model such that the indirect utility is:
 <span class="math display">\[\begin{equation}
@@ -1047,7 +1070,7 @@ with <span class="math inline">\(\epsilon_{ijt}\)</span> is drawn from i.i.d. Ty
 \alpha_i \\
 \beta_i
 \end{pmatrix}
-= 
+=
 \begin{pmatrix}
 \alpha\\
 \beta
@@ -1061,26 +1084,71 @@ CV_{it} = \frac{\ln (\sum_{j = 0}^J \exp(V_{ijt}^{post}) ) - \ln (\sum_{j = 0}^J
 \end{equation}\]</span>
 where <span class="math inline">\(V_{ijt}^{post}\)</span> and <span class="math inline">\(V_{ijt}^{pre}\)</span> are indirect utility for consumer <span class="math inline">\(i\)</span> to purchase good <span class="math inline">\(j\)</span> at the prices after and before the merger.</li>
 <li>This formula holds only if the price enters linearly in the indirect utility (no income effect).</li>
-<li>For general case, see <span class="citation"><a href="references.html#ref-Small1981" role="doc-biblioref">Small &amp; Rosen</a> (<a href="references.html#ref-Small1981" role="doc-biblioref">1981</a>)</span> and <span class="citation"><a href="references.html#ref-Mcfadden1995" role="doc-biblioref">D. Mcfadden et al.</a> (<a href="references.html#ref-Mcfadden1995" role="doc-biblioref">1995</a>)</span>.</li>
+<li>For general case, see <span class="citation">Small &amp; Rosen (<a href="#ref-Small1981" role="doc-biblioref">1981</a>)</span> and <span class="citation">D. Mcfadden et al. (<a href="#ref-Mcfadden1995" role="doc-biblioref">1995</a>)</span>.</li>
 </ul>
 </div>
-<div id="quantifying-the-coordinated-effect" class="section level3" number="5.3.7">
-<h3><span class="header-section-number">5.3.7</span> Quantifying the Coordinated Effect</h3>
+<div id="quantifying-the-coordinated-effect" class="section level3 hasAnchor" number="5.3.7">
+<h3><span class="header-section-number">5.3.7</span> Quantifying the Coordinated Effect<a href="merger.html#quantifying-the-coordinated-effect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The repeated-game theory suggests that a collusion is sustainable if and only if it it incentive compatible: the collusion profit is no less than the deviation profit for each member of the collusion.</li>
 <li>The theory provides a check list that affects the incentive compatibility such as the market share, cost asymmetry, and demand dynamics.</li>
 <li>But it is often hard to judge the coordinated effects from these qualitative information, because mergers simultaneously change many factors and the factors may encourage or hinder collusion.</li>
-<li><span class="citation"><a href="references.html#ref-Miller2017" role="doc-biblioref">Miller &amp; Weinberg</a> (<a href="references.html#ref-Miller2017" role="doc-biblioref">2017</a>)</span> <strong>retrospectively</strong> studies the coordinated effect of a merger.</li>
+<li><span class="citation">Miller &amp; Weinberg (<a href="#ref-Miller2017" role="doc-biblioref">2017</a>)</span> <strong>retrospectively</strong> studies the coordinated effect of a merger.</li>
 <li>Is <strong>prospective</strong> analysis of coordinated effects possible as well as the analysis of unilateral effects?</li>
 <li>If we can identify the demand and cost functions, we can calculate the collusion profits and deviation profits.</li>
 <li>If we specify the collusion strategy, we can write down the incentive compatibility.</li>
 <li>We can check how the incentive compatibility change when a hypothetical merger happens.</li>
 <li>The problem is the identification of conduct: to identify the cost function, we need to know the conduct.</li>
 <li>Thus, the stated strategy will work only if we have a data during which we are sure that there was no collusion, or there was a particular type of collusion.</li>
-<li><span class="citation"><a href="references.html#ref-Igami2018" role="doc-biblioref">Igami &amp; Sugaya</a> (<a href="references.html#ref-Igami2018" role="doc-biblioref">2018</a>)</span> use the detailed information of vitamin C cartel case and apply this approach.</li>
+<li><span class="citation">Igami &amp; Sugaya (<a href="#ref-Igami2018" role="doc-biblioref">2018</a>)</span> use the detailed information of vitamin C cartel case and apply this approach.</li>
 </ul>
 
 </div>
+</div>
+</div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-Bresnahan1982a" class="csl-entry">
+Bresnahan, Timothy F. (1982). <a href="https://doi.org/10.1016/0165-1765(82)90121-5">The oligopoly solution concept is identified</a>. <em>Economics Letters</em>, <em>10</em>(1-2), 87–92.
+</div>
+<div id="ref-Farrell1990" class="csl-entry">
+Farrell, J., &amp; Shapiro, C. (1990). American <span>Economic Association Horizontal Mergers</span>: <span>An Equilibrium Analysis</span>. <em>Source: The American Economic Review</em>, <em>80</em>(1), 107–126.
+</div>
+<div id="ref-Gowrisankaran2015" class="csl-entry">
+Gowrisankaran, G., Nevo, A., &amp; Town, R. (2015). <a href="https://doi.org/10.1257/aer.20130223">Mergers <span>When Prices Are Negotiated</span>: <span>Evidence</span> from the <span>Hospital Industry</span></a>. <em>American Economic Review</em>, <em>105</em>(1), 172–203.
+</div>
+<div id="ref-Hausman1994" class="csl-entry">
+Hausman, Leonard, &amp; Zona. (1994). <a href="https://doi.org/10.2307/20075951">Competitive <span>Analysis</span> with <span>Differenciated Products</span></a>. <em>Annales d’Économie et de Statistique</em>, (34), 159–180.
+</div>
+<div id="ref-Igami2018" class="csl-entry">
+Igami, M., &amp; Sugaya, T. (2018). <em>Measuring the <span>Incentive</span> to <span>Collude</span>: <span>The Vitamin Cartels</span>, 1990-1999</em>.
+</div>
+<div id="ref-Ivaldi2005" class="csl-entry">
+Ivaldi, M., &amp; Verboven, F. (2005). <a href="https://doi.org/10.1016/J.IJINDORG.2005.08.004">Quantifying the effects from horizontal mergers in <span>European</span> competition policy</a>. <em>International Journal of Industrial Organization</em>, <em>23</em>(9-10), 669–691.
+</div>
+<div id="ref-Mcfadden1995" class="csl-entry">
+Mcfadden, D., Geweke, J., Hajivassiliou, V., Johnson, R., Lancaster, T., Rossi, P., … Waters, S. (1995). <em>Computing <span>Willingness</span>-to-pay in <span>Random Utility Models</span></em>.
+</div>
+<div id="ref-Miller2017" class="csl-entry">
+Miller, N. H., &amp; Weinberg, M. C. (2017). <a href="https://doi.org/10.3982/ecta13333">Understanding the <span>Price Effects</span> of the <span>MillerCoors Joint Venture</span></a>. <em>Econometrica</em>, <em>85</em>(6), 1763–1791.
+</div>
+<div id="ref-Nevo1998" class="csl-entry">
+Nevo, A. (1998). <a href="https://doi.org/10.1016/S0165-1765(98)00061-5">Identification of the <span>Oligopoly Solution Concept</span> in a <span>Differentiated</span>-<span>Products Industry</span></a>. <em>Economics Letters</em>, <em>59</em>(3), 391–395.
+</div>
+<div id="ref-Nevo2000c" class="csl-entry">
+Nevo, A. (2000). <em>Mergers with differentiated products: The case of the ready-to-eat cereal industry</em> (No. 3) (Vol. 31).
+</div>
+<div id="ref-Nevo2001" class="csl-entry">
+Nevo, A. (2001). <a href="https://doi.org/10.1111/1468-0262.00194">Measuring <span>Market Power</span> in the <span>Ready</span>-to-<span>Eat Cereal Industry</span></a>. <em>Econometrica</em>, <em>69</em>(2), 307–342.
+</div>
+<div id="ref-Small1981" class="csl-entry">
+Small, K. A., &amp; Rosen, H. S. (1981). Applied <span>Welfare Economics</span> with <span>Discrete Choice Models</span>. <em>Econometrica</em>, <em>49</em>(1), 105–130.
+</div>
+<div id="ref-Smith2004" class="csl-entry">
+Smith, H. (2004). <a href="https://doi.org/10.1111/0034-6527.00283">Supermarket <span>Choice</span> and <span>Supermarket Competition</span> in <span>Market Equilibrium</span></a>. <em>Review of Economic Studies</em>, <em>71</em>(1), 235–263.
+</div>
+<div id="ref-Werden1994" class="csl-entry">
+Werden, G., &amp; Frobe, L. (1993). <a href="https://doi.org/10.1093/oxfordjournals.jleo.a036857">The <span>Effects</span> of <span>Mergers</span> in <span>Differentiated Products Industries</span> : <span>Logit Demand</span> and <span>Merger Policy</span></a>. <em>Journal of Law, Economics, and Organization</em>, <em>10</em>, 407–426.
 </div>
 </div>
             </section>
@@ -1093,7 +1161,6 @@ where <span class="math inline">\(V_{ijt}^{post}\)</span> and <span class="math 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1112,6 +1179,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1132,6 +1200,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -1145,7 +1217,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

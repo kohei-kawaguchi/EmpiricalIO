@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Auction | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Auction | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="dynamicgame.html"/>
 <link rel="next" href="applications.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,15 +708,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="auction" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Auction</h1>
-<div id="general-symmetric-information-model" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> General symmetric information model</h2>
-<div id="setting-5" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> Setting</h3>
+<div id="auction" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Auction<a href="auction.html#auction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="general-symmetric-information-model" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> General symmetric information model<a href="auction.html#general-symmetric-information-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="setting-5" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Setting<a href="auction.html#setting-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>The argument of this section is based on <span class="citation"><a href="references.html#ref-hendricksChapter32Empirical2007" role="doc-biblioref">Hendricks &amp; Porter</a> (<a href="references.html#ref-hendricksChapter32Empirical2007" role="doc-biblioref">2007</a>)</span>.</li>
-<li>General symmetric information model <span class="citation">(<a href="references.html#ref-milgromTheoryAuctionsCompetitive1982" role="doc-biblioref">Milgrom &amp; Weber, 1982</a>)</span>.</li>
+<li>The argument of this section is based on <span class="citation">Hendricks &amp; Porter (<a href="#ref-hendricksChapter32Empirical2007" role="doc-biblioref">2007</a>)</span>.</li>
+<li>General symmetric information model <span class="citation">(<a href="#ref-milgromTheoryAuctionsCompetitive1982" role="doc-biblioref">Milgrom &amp; Weber, 1982</a>)</span>.</li>
 <li>The seller has a single item.</li>
 <li>There are <span class="math inline">\(n\)</span> potential risk neutral buyers/bidders.</li>
 <li>Each bidder <span class="math inline">\(i\)</span> observes a real-valued private signal <span class="math inline">\(X_i\)</span>.</li>
@@ -712,13 +735,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Then, <span class="math inline">\((V, X_1, Y_1, \cdots, Y_{n - 1})\)</span> are also affiliated.</li>
 </ul>
 </div>
-<div id="discussion-about-the-asssumptions" class="section level3" number="9.1.2">
-<h3><span class="header-section-number">9.1.2</span> Discussion About the Asssumptions</h3>
+<div id="discussion-about-the-asssumptions" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Discussion About the Asssumptions<a href="auction.html#discussion-about-the-asssumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The private information is assumed to be single-dimensional.
 <ul>
 <li>If the private information is multi-dimensional, the identification of type requires at least as many messages.</li>
-<li>Recently, there are few empirical studies of auctions of multi-dimensional private information such as <span class="citation"><a href="references.html#ref-bajariBiddingIncompleteContracts2014" role="doc-biblioref">Bajari, Houghton, &amp; Tadelis</a> (<a href="references.html#ref-bajariBiddingIncompleteContracts2014" role="doc-biblioref">2014</a>)</span> and <span class="citation"><a href="references.html#ref-takahashiStrategicDesignUncertain2018" role="doc-biblioref">Takahashi</a> (<a href="references.html#ref-takahashiStrategicDesignUncertain2018" role="doc-biblioref">2018</a>)</span>.</li>
+<li>Recently, there are few empirical studies of auctions of multi-dimensional private information such as <span class="citation">Bajari, Houghton, &amp; Tadelis (<a href="#ref-bajariBiddingIncompleteContracts2014" role="doc-biblioref">2014</a>)</span> and <span class="citation">Takahashi (<a href="#ref-takahashiStrategicDesignUncertain2018" role="doc-biblioref">2018</a>)</span>.</li>
 </ul></li>
 <li>The distribution of the signals is assumed to be symmetric across bidders.
 <ul>
@@ -735,17 +758,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="bidding-strategy" class="section level3" number="9.1.3">
-<h3><span class="header-section-number">9.1.3</span> Bidding Strategy</h3>
+<div id="bidding-strategy" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Bidding Strategy<a href="auction.html#bidding-strategy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>A <strong>bidding strategy</strong> for bidder <span class="math inline">\(i\)</span> is a correspondence <span class="math inline">\(\beta_i: X_i \to \mathbb{R}_+\)</span>.</li>
 <li>A mapping from the private signal into a non-negative real value.</li>
-<li>Under the stated assumptions, there exists a Bayesian Nash equilibrium with non-decreasing bid functions <span class="citation">(<a href="references.html#ref-krishnaAuctionTheory2009" role="doc-biblioref">Krishna, 2009</a>)</span>.</li>
+<li>Under the stated assumptions, there exists a Bayesian Nash equilibrium with non-decreasing bid functions <span class="citation">(<a href="#ref-krishnaAuctionTheory2009" role="doc-biblioref">Krishna, 2009</a>)</span>.</li>
 <li>The following argument crucially depends on this property of the equilibrium bidding rule.</li>
 </ul>
 </div>
-<div id="special-cases" class="section level3" number="9.1.4">
-<h3><span class="header-section-number">9.1.4</span> Special Cases</h3>
+<div id="special-cases" class="section level3 hasAnchor" number="9.1.4">
+<h3><span class="header-section-number">9.1.4</span> Special Cases<a href="auction.html#special-cases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Two special cases about the payoff functions:</li>
 <li><strong>Private value (PV)</strong>: <span class="math inline">\(u_i(v, x_i, x_{-i}) = x_i\)</span>: Bidder <span class="math inline">\(i\)</span> knows his own valuation and is only uncertain about how much others value the item.</li>
@@ -774,10 +797,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 </div>
-<div id="second-price-auctions" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Second-Price Auctions</h2>
-<div id="the-button-auction" class="section level3" number="9.2.1">
-<h3><span class="header-section-number">9.2.1</span> The Button Auction</h3>
+<div id="second-price-auctions" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Second-Price Auctions<a href="auction.html#second-price-auctions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-button-auction" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> The Button Auction<a href="auction.html#the-button-auction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let:
 <span class="math display">\[
@@ -795,8 +818,8 @@ be the expected payoff of the bidder when her signal is <span class="math inline
 <li>The bidding strategy is the mapping from a price level to being active or not.</li>
 </ul>
 </div>
-<div id="equilibrium-bidding-strategies" class="section level3" number="9.2.2">
-<h3><span class="header-section-number">9.2.2</span> Equilibrium Bidding Strategies</h3>
+<div id="equilibrium-bidding-strategies" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Equilibrium Bidding Strategies<a href="auction.html#equilibrium-bidding-strategies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Case 1:
 <ul>
@@ -837,8 +860,8 @@ be the expected payoff of the bidder when her signal is <span class="math inline
 </ul></li>
 </ul>
 </div>
-<div id="reserve-price" class="section level3" number="9.2.3">
-<h3><span class="header-section-number">9.2.3</span> Reserve Price</h3>
+<div id="reserve-price" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Reserve Price<a href="auction.html#reserve-price" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The seller does not sell the item if the winning bid is below <span class="math inline">\(r &gt; 0\)</span>.</li>
 <li>The participation threshold is:
@@ -848,18 +871,18 @@ x^*(r) = \inf\left\{x: \mathbb{E}[w(x, Y_1)| X_1 = x, Y_1 &lt; x] \ge r\right\}.
 <li>That is, a bidder participates if and only if <span class="math inline">\(x \ge x^*(r)\)</span>.</li>
 </ul>
 </div>
-<div id="variations" class="section level3" number="9.2.4">
-<h3><span class="header-section-number">9.2.4</span> Variations</h3>
+<div id="variations" class="section level3 hasAnchor" number="9.2.4">
+<h3><span class="header-section-number">9.2.4</span> Variations<a href="auction.html#variations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>If PV, i.e., <span class="math inline">\(w(x, y) = x\)</span>, then, the equilibrium strategy is to participate and drop at <span class="math inline">\(\beta(x) = x\)</span> if <span class="math inline">\(x \ge r\)</span> and not to participate if <span class="math inline">\(x &lt; r\)</span>.</li>
 <li>This is the unique equilibrium with weakly dominant strategies.</li>
-<li>Under the common value assumption, there can be many asymmetric equillibria <span class="citation">(<a href="references.html#ref-bikhchandaniEquilibriaOpenCommon1991" role="doc-biblioref">Bikhchandani &amp; Riley, 1991</a>; <a href="references.html#ref-milgromRationalExpectationsInformation1981" role="doc-biblioref">Milgrom, 1981</a>)</span>.</li>
-<li>If bidders can call their bids, the game becomes more complicated because bidders can announce a “jump” bid at any time to signal their valuations <span class="citation">(<a href="references.html#ref-averyStrategicJumpBidding1998" role="doc-biblioref">Avery, 1998</a>)</span>.</li>
+<li>Under the common value assumption, there can be many asymmetric equillibria <span class="citation">(<a href="#ref-bikhchandaniEquilibriaOpenCommon1991" role="doc-biblioref">Bikhchandani &amp; Riley, 1991</a>; <a href="#ref-milgromRationalExpectationsInformation1981" role="doc-biblioref">Milgrom, 1981</a>)</span>.</li>
+<li>If bidders can call their bids, the game becomes more complicated because bidders can announce a “jump” bid at any time to signal their valuations <span class="citation">(<a href="#ref-averyStrategicJumpBidding1998" role="doc-biblioref">Avery, 1998</a>)</span>.</li>
 <li>Be aware of the complications arising in the versions of the English auction.</li>
 </ul>
 </div>
-<div id="estimation-of-a-ipv-button-auction" class="section level3" number="9.2.5">
-<h3><span class="header-section-number">9.2.5</span> Estimation of a IPV Button Auction</h3>
+<div id="estimation-of-a-ipv-button-auction" class="section level3 hasAnchor" number="9.2.5">
+<h3><span class="header-section-number">9.2.5</span> Estimation of a IPV Button Auction<a href="auction.html#estimation-of-a-ipv-button-auction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Parameters of interest is <span class="math inline">\(F\)</span>, the distribution of private signals and the payoff relevant random variable <span class="math inline">\(V\)</span>.</li>
 <li>The data consists of <span class="math inline">\(\{w_t, n_t, r_t\}_{t = 1}^T\)</span> if <span class="math inline">\(m_t \ge 1\)</span> for auction <span class="math inline">\(t = 1, \cdots, T\)</span>:
@@ -873,10 +896,10 @@ x^*(r) = \inf\left\{x: \mathbb{E}[w(x, Y_1)| X_1 = x, Y_1 &lt; x] \ge r\right\}.
 <li>The winning bid is <span class="math inline">\(w_t = \max\{x_{2:n_t}, r_t\}\)</span>, where <span class="math inline">\(x_{2:n_t}\)</span> is the second highest bid among <span class="math inline">\(n_t\)</span> bids.</li>
 </ul>
 </div>
-<div id="likelihood-of-ipv-button-auction" class="section level3" number="9.2.6">
-<h3><span class="header-section-number">9.2.6</span> Likelihood of IPV Button Auction</h3>
+<div id="likelihood-of-ipv-button-auction" class="section level3 hasAnchor" number="9.2.6">
+<h3><span class="header-section-number">9.2.6</span> Likelihood of IPV Button Auction<a href="auction.html#likelihood-of-ipv-button-auction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-donaldIdentificationEstimationTesting1996" role="doc-biblioref">Donald &amp; Paarsch</a> (<a href="references.html#ref-donaldIdentificationEstimationTesting1996" role="doc-biblioref">1996</a>)</span> estimate the model with a maximum likelihood estimator.</li>
+<li><span class="citation">Donald &amp; Paarsch (<a href="#ref-donaldIdentificationEstimationTesting1996" role="doc-biblioref">1996</a>)</span> estimate the model with a maximum likelihood estimator.</li>
 <li>Assume that <span class="math inline">\(F_X(\cdot) = F_X(\cdot; \theta)\)</span> with a finite dimensional parameter <span class="math inline">\(\theta\)</span>.</li>
 <li>The likelihood is:
 <ul>
@@ -891,8 +914,8 @@ L = \prod_{t = 1}^T \frac{h_t(w_t)^{1\{m_t &gt; 1\}} \mathbb{P}\{m_t = 1\}}{1 - 
 <li>The approach is still valid when the private signals are asymmetric and/or some bidders are not risk neutral, because <span class="math inline">\(b(x) = x\)</span> is still a dominant strategy.</li>
 </ul>
 </div>
-<div id="optimal-reserve-price" class="section level3" number="9.2.7">
-<h3><span class="header-section-number">9.2.7</span> Optimal Reserve Price</h3>
+<div id="optimal-reserve-price" class="section level3 hasAnchor" number="9.2.7">
+<h3><span class="header-section-number">9.2.7</span> Optimal Reserve Price<a href="auction.html#optimal-reserve-price" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The expected revenue to the seller who values the item as <span class="math inline">\(x_0\)</span> when setting the reserve price at <span class="math inline">\(r\)</span> is:
 <span class="math display">\[
@@ -905,8 +928,8 @@ r = x_0 + \frac{1 - F_X(r)}{f_X(r)}.
 <li>Thus, the identification of <span class="math inline">\(F_X\)</span> allows the seller to set the revenue maximizing reserve price.</li>
 </ul>
 </div>
-<div id="likelihood-of-ipv-english-auction-with-bid-data" class="section level3" number="9.2.8">
-<h3><span class="header-section-number">9.2.8</span> Likelihood of IPV English Auction with Bid Data</h3>
+<div id="likelihood-of-ipv-english-auction-with-bid-data" class="section level3 hasAnchor" number="9.2.8">
+<h3><span class="header-section-number">9.2.8</span> Likelihood of IPV English Auction with Bid Data<a href="auction.html#likelihood-of-ipv-english-auction-with-bid-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The likelihood function is:
 <span class="math display">\[
@@ -921,8 +944,8 @@ L = \prod_{t = 1}^T [1 - F_X(w_t)] \left[ \prod_{i = 2}^{m_t} f_X(b_{it}) \right
 </ul></li>
 </ul>
 </div>
-<div id="observed-heterogeneity" class="section level3" number="9.2.9">
-<h3><span class="header-section-number">9.2.9</span> Observed Heterogeneity</h3>
+<div id="observed-heterogeneity" class="section level3 hasAnchor" number="9.2.9">
+<h3><span class="header-section-number">9.2.9</span> Observed Heterogeneity<a href="auction.html#observed-heterogeneity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(z_{it}\)</span> be the observed attribute of bidder <span class="math inline">\(i\)</span> in auction <span class="math inline">\(t\)</span>.</li>
 <li>Assume that:
@@ -937,15 +960,15 @@ x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta := \
 <li>Then, the rest of the argument is the same as above by replacing <span class="math inline">\(b_{it}\)</span> with <span class="math inline">\(\tilde{b}_{it}\)</span>.</li>
 </ul>
 </div>
-<div id="identification-2" class="section level3" number="9.2.10">
-<h3><span class="header-section-number">9.2.10</span> Identification</h3>
+<div id="identification-2" class="section level3 hasAnchor" number="9.2.10">
+<h3><span class="header-section-number">9.2.10</span> Identification<a href="auction.html#identification-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-atheyIdentificationStandardAuction2002" role="doc-biblioref">Athey &amp; Haile</a> (<a href="references.html#ref-atheyIdentificationStandardAuction2002" role="doc-biblioref">2002</a>)</span> and <span class="citation"><a href="references.html#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">Athey &amp; Haile</a> (<a href="references.html#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">2007</a>)</span> synthesize and extend the identification arguments of various auction models.</li>
+<li><span class="citation">Athey &amp; Haile (<a href="#ref-atheyIdentificationStandardAuction2002" role="doc-biblioref">2002</a>)</span> and <span class="citation">Athey &amp; Haile (<a href="#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">2007</a>)</span> synthesize and extend the identification arguments of various auction models.</li>
 <li>Button auction with the symmetric IPV framework is non-parametrically identified only by the winning bid data.</li>
 <li>Button auction with the asymmetric IPV framework is non-parameterically identified by the winning bid and winner’s identity data.</li>
 <li>The non-parametric identification can fail with a common value in general.</li>
 <li>The actual English auctions can be dirty and not easy to characterize the equilibrium: they are open cry auctions that signals their values, bidders may not indicate they are inactive at every highest bid, and there may be a minimum bid increment.</li>
-<li><span class="citation"><a href="references.html#ref-haileInferenceIncompleteModel2003" role="doc-biblioref">Haile &amp; Tamer</a> (<a href="references.html#ref-haileInferenceIncompleteModel2003" role="doc-biblioref">2003</a>)</span> considers a set identification of the signal distribution:
+<li><span class="citation">Haile &amp; Tamer (<a href="#ref-haileInferenceIncompleteModel2003" role="doc-biblioref">2003</a>)</span> considers a set identification of the signal distribution:
 <ol style="list-style-type: decimal">
 <li>signal is no less than the higher bid by the bidder: <span class="math inline">\(x_i \ge b_i\)</span>.</li>
 <li>signal is no greater than the winning bid plus the minimum bid increment: <span class="math inline">\(x_i \le w + \Delta\)</span>.</li>
@@ -960,17 +983,17 @@ x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta := \
 </ul>
 </div>
 </div>
-<div id="first-price-auctions" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> First-Price Auctions</h2>
-<div id="first-price-sealed-bid-auction" class="section level3" number="9.3.1">
-<h3><span class="header-section-number">9.3.1</span> First-Price Sealed Bid Auction</h3>
+<div id="first-price-auctions" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> First-Price Auctions<a href="auction.html#first-price-auctions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="first-price-sealed-bid-auction" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> First-Price Sealed Bid Auction<a href="auction.html#first-price-sealed-bid-auction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Each bidder independently submit a bid to the auctioneer.</li>
 <li>The high bidder wins and pays his bid.</li>
 </ul>
 </div>
-<div id="equilibrium-bidding-strategies-1" class="section level3" number="9.3.2">
-<h3><span class="header-section-number">9.3.2</span> Equilibrium Bidding Strategies</h3>
+<div id="equilibrium-bidding-strategies-1" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Equilibrium Bidding Strategies<a href="auction.html#equilibrium-bidding-strategies-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Assume IPV.</p></li>
 <li><p>Then <span class="math inline">\(x^*(r) = r\)</span>.</p></li>
@@ -1057,13 +1080,13 @@ by setting <span class="math inline">\(\mu(r) = 1\)</span>.</p></li>
 \end{split}
 \]</span></p></li>
 <li><p>The term <span class="math inline">\(- \frac{\int_r^x F_X(t)^{n - 1} dt}{F_X(x)^{n - 1}}\)</span> is called the <strong>markdown factor</strong>, which is decreasing in the number of bidders <span class="math inline">\(n\)</span> and increasing in the dispersion of the value distribution.</p></li>
-<li><p>The assumption of a binding reserve price ensures that there is a unique symmetric equilibrium <span class="citation">(<a href="references.html#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">Athey &amp; Haile, 2007</a>)</span>.</p></li>
+<li><p>The assumption of a binding reserve price ensures that there is a unique symmetric equilibrium <span class="citation">(<a href="#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">Athey &amp; Haile, 2007</a>)</span>.</p></li>
 </ul>
 </div>
-<div id="maximum-likelihood-estimation-of-the-ipv-first-price-auction" class="section level3" number="9.3.3">
-<h3><span class="header-section-number">9.3.3</span> Maximum Likelihood Estimation of the IPV First-Price Auction</h3>
+<div id="maximum-likelihood-estimation-of-the-ipv-first-price-auction" class="section level3 hasAnchor" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> Maximum Likelihood Estimation of the IPV First-Price Auction<a href="auction.html#maximum-likelihood-estimation-of-the-ipv-first-price-auction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><p><span class="citation"><a href="references.html#ref-donaldPiecewisePseudoMaximumLikelihood1993" role="doc-biblioref">Donald &amp; Paarsch</a> (<a href="references.html#ref-donaldPiecewisePseudoMaximumLikelihood1993" role="doc-biblioref">1993</a>)</span> proposed a maximum likelihood estimator.</p></li>
+<li><p><span class="citation">Donald &amp; Paarsch (<a href="#ref-donaldPiecewisePseudoMaximumLikelihood1993" role="doc-biblioref">1993</a>)</span> proposed a maximum likelihood estimator.</p></li>
 <li><p>The data consists of <span class="math inline">\(\{w_t, r_t, n_t\}_{t = 1}^T\)</span> for the sample where the number of actual bidders <span class="math inline">\(m_t \ge 1\)</span>.</p></li>
 <li><p>The probability density of having <span class="math inline">\(w_t\)</span> is:
 <span class="math display">\[
@@ -1080,10 +1103,10 @@ L = \prod_{t = 1}^T \frac{h_t(w_t)}{1 - F_X(r_t)^{n_t}}.
 <li><p>To apply this approach, we may need to have a closed-form for <span class="math inline">\(\eta\)</span>, and this may require to assume a specific functional-form for <span class="math inline">\(F_X\)</span>.</p></li>
 </ul>
 </div>
-<div id="non-parametric-approach" class="section level3" number="9.3.4">
-<h3><span class="header-section-number">9.3.4</span> Non-Parametric Approach</h3>
+<div id="non-parametric-approach" class="section level3 hasAnchor" number="9.3.4">
+<h3><span class="header-section-number">9.3.4</span> Non-Parametric Approach<a href="auction.html#non-parametric-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-guerreOptimalNonparametricEstimation2000" role="doc-biblioref">Guerre, Perrigne, &amp; Vuong</a> (<a href="references.html#ref-guerreOptimalNonparametricEstimation2000" role="doc-biblioref">2000</a>)</span> proposed a non-parametric approach.</li>
+<li><span class="citation">Guerre, Perrigne, &amp; Vuong (<a href="#ref-guerreOptimalNonparametricEstimation2000" role="doc-biblioref">2000</a>)</span> proposed a non-parametric approach.</li>
 <li>The data consists of <span class="math inline">\(\{\{b_{it}\}_{i = 1}^{m_t}, n_t, r_t\}_{t = 1}^T\)</span> and some observed covariates <span class="math inline">\(z_{it}\)</span> for <span class="math inline">\(t\)</span> with <span class="math inline">\(m_t \ge 1\)</span>.</li>
 <li>Assume <span class="math inline">\(n_t = n\)</span>, or in other words, focus on the data with the same number of potential bidders and estimate separately across different <span class="math inline">\(n\)</span>.</li>
 <li>Let <span class="math inline">\(H(b)\)</span> be the distribution of the highest rival’s bid and <span class="math inline">\(h(b)\)</span> be its density.</li>
@@ -1102,8 +1125,8 @@ where the right-hand side is actually <span class="math inline">\(\eta(b)\)</spa
 <li>The idea is that <span class="math inline">\(H(b)\)</span> and <span class="math inline">\(h(b)\)</span> are directly identified from the data, and so, the value <span class="math inline">\(\eta(b)\)</span> can be computed for each bid.</li>
 </ul>
 </div>
-<div id="non-parmaetric-approach-estimation" class="section level3" number="9.3.5">
-<h3><span class="header-section-number">9.3.5</span> Non-Parmaetric Approach: Estimation</h3>
+<div id="non-parmaetric-approach-estimation" class="section level3 hasAnchor" number="9.3.5">
+<h3><span class="header-section-number">9.3.5</span> Non-Parmaetric Approach: Estimation<a href="auction.html#non-parmaetric-approach-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Note that:
 <span class="math display">\[
@@ -1140,10 +1163,58 @@ and construct:
 <ul>
 <li>For this argument to hold, it has to be that <span class="math inline">\(\eta(b)\)</span> is strictly increasing in <span class="math inline">\(b\)</span>. Otherwise, for the same <span class="math inline">\(x\)</span>, multiple <span class="math inline">\(b\)</span> can be associated.</li>
 <li>This approach can be extended to the symmetric IPV and affiliated values.</li>
-<li><span class="citation"><a href="references.html#ref-krasnokutskayaIdentificationEstimationAuction2011" role="doc-biblioref">Krasnokutskaya</a> (<a href="references.html#ref-krasnokutskayaIdentificationEstimationAuction2011" role="doc-biblioref">2011</a>)</span> considered a model with unobserved heterogeneity, in which the bidder’s cost is <span class="math inline">\(c_i = x_i v\)</span> and <span class="math inline">\(x_i\)</span> is private and independent and <span class="math inline">\(v\)</span> is known among bidders but not to econometrician.</li>
+<li><span class="citation">Krasnokutskaya (<a href="#ref-krasnokutskayaIdentificationEstimationAuction2011" role="doc-biblioref">2011</a>)</span> considered a model with unobserved heterogeneity, in which the bidder’s cost is <span class="math inline">\(c_i = x_i v\)</span> and <span class="math inline">\(x_i\)</span> is private and independent and <span class="math inline">\(v\)</span> is known among bidders but not to econometrician.</li>
 </ul>
 
 </div>
+</div>
+</div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-atheyIdentificationStandardAuction2002" class="csl-entry">
+Athey, S., &amp; Haile, P. A. (2002). <a href="https://doi.org/10.1111/j.1468-0262.2002.00435.x">Identification of <span>Standard Auction Models</span></a>. <em>Econometrica</em>, <em>70</em>(6), 2107–2140.
+</div>
+<div id="ref-atheyChapter60Nonparametric2007" class="csl-entry">
+Athey, S., &amp; Haile, P. A. (2007). <a href="https://doi.org/10.1016/S1573-4412(07)06060-6">Chapter 60 <span>Nonparametric Approaches</span> to <span>Auctions</span></a>. In J. J. Heckman &amp; E. E. Leamer (Eds.), <em>Handbook of <span>Econometrics</span></em> (Vol. 6, pp. 3847–3965). <span>Elsevier</span>.
+</div>
+<div id="ref-averyStrategicJumpBidding1998" class="csl-entry">
+Avery, C. (1998). <a href="https://doi.org/10.1111/1467-937X.00041">Strategic <span>Jump Bidding</span> in <span>English Auctions</span></a>. <em>Review of Economic Studies</em>, <em>65</em>(2), 185–210.
+</div>
+<div id="ref-bajariBiddingIncompleteContracts2014" class="csl-entry">
+Bajari, P., Houghton, S., &amp; Tadelis, S. (2014). <a href="https://doi.org/10.1257/aer.104.4.1288">Bidding for <span>Incomplete Contracts</span>: <span>An Empirical Analysis</span> of <span>Adaptation Costs</span></a>. <em>American Economic Review</em>, <em>104</em>(4), 1288–1319.
+</div>
+<div id="ref-bikhchandaniEquilibriaOpenCommon1991" class="csl-entry">
+Bikhchandani, S., &amp; Riley, J. G. (1991). <a href="https://doi.org/10.1016/0022-0531(91)90144-S">Equilibria in open common value auctions</a>. <em>Journal of Economic Theory</em>, <em>53</em>(1), 101–130.
+</div>
+<div id="ref-donaldPiecewisePseudoMaximumLikelihood1993" class="csl-entry">
+Donald, S. G., &amp; Paarsch, H. J. (1993). <a href="https://doi.org/10.2307/2526953">Piecewise <span>Pseudo</span>-<span>Maximum Likelihood Estimation</span> in <span>Empirical Models</span> of <span>Auctions</span></a>. <em>International Economic Review</em>, <em>34</em>(1), 121–148.
+</div>
+<div id="ref-donaldIdentificationEstimationTesting1996" class="csl-entry">
+Donald, S. G., &amp; Paarsch, H. J. (1996). Identification, <span>Estimation</span>, and <span>Testing</span> in <span>Parametric Empirical Models</span> of <span>Auctions</span> within the <span>Independent Private Values Paradigm</span>. <em>Econometric Theory</em>, <em>12</em>(3), 517–567.
+</div>
+<div id="ref-guerreOptimalNonparametricEstimation2000" class="csl-entry">
+Guerre, E., Perrigne, I., &amp; Vuong, Q. (2000). <a href="https://doi.org/10.1111/1468-0262.00123">Optimal <span>Nonparametric Estimation</span> of <span>First</span>-price <span>Auctions</span></a>. <em>Econometrica</em>, <em>68</em>(3), 525–574.
+</div>
+<div id="ref-haileInferenceIncompleteModel2003" class="csl-entry">
+Haile, P. A., &amp; Tamer, E. (2003). <a href="https://doi.org/10.1086/344801">Inference with an <span>Incomplete Model</span> of <span>English Auctions</span></a>. <em>Journal of Political Economy</em>, <em>111</em>(1), 1–51.
+</div>
+<div id="ref-hendricksChapter32Empirical2007" class="csl-entry">
+Hendricks, K., &amp; Porter, R. H. (2007). <a href="https://doi.org/10.1016/S1573-448X(06)03032-9">Chapter 32 <span>An Empirical Perspective</span> on <span>Auctions</span></a>. In M. Armstrong &amp; R. Porter (Eds.), <em>Handbook of <span>Industrial Organization</span></em> (Vol. 3, pp. 2073–2143). <span>Elsevier</span>.
+</div>
+<div id="ref-krasnokutskayaIdentificationEstimationAuction2011" class="csl-entry">
+Krasnokutskaya, E. (2011). <a href="https://doi.org/10.1093/restud/rdq004">Identification and <span>Estimation</span> of <span>Auction Models</span> with <span>Unobserved Heterogeneity</span></a>. <em>The Review of Economic Studies</em>, <em>78</em>(1), 293–327.
+</div>
+<div id="ref-krishnaAuctionTheory2009" class="csl-entry">
+Krishna, V. (2009). <em>Auction <span>Theory</span></em>. <span>Academic Press</span>.
+</div>
+<div id="ref-milgromRationalExpectationsInformation1981" class="csl-entry">
+Milgrom, P. R. (1981). <a href="https://doi.org/10.2307/1912511">Rational <span>Expectations</span>, <span>Information Acquisition</span>, and <span>Competitive Bidding</span></a>. <em>Econometrica</em>, <em>49</em>(4), 921–943.
+</div>
+<div id="ref-milgromTheoryAuctionsCompetitive1982" class="csl-entry">
+Milgrom, P. R., &amp; Weber, R. J. (1982). <a href="https://doi.org/10.2307/1911865">A <span>Theory</span> of <span>Auctions</span> and <span>Competitive Bidding</span></a>. <em>Econometrica</em>, <em>50</em>(5), 1089–1122.
+</div>
+<div id="ref-takahashiStrategicDesignUncertain2018" class="csl-entry">
+Takahashi, H. (2018). <a href="https://doi.org/10.1111/1756-2171.12246">Strategic design under uncertain evaluations: Structural analysis of design-build auctions</a>. <em>The RAND Journal of Economics</em>, <em>49</em>(3), 594–618.
 </div>
 </div>
             </section>
@@ -1156,7 +1227,6 @@ and construct:
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1175,6 +1245,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1195,6 +1266,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -1208,7 +1283,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Dynamic Game | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Dynamic Game | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="dynamics.html"/>
 <link rel="next" href="auction.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,16 +708,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="dynamicgame" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Dynamic Game</h1>
-<div id="multiple-agent-model" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Multiple-Agent Model</h2>
+<div id="dynamicgame" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Dynamic Game<a href="dynamicgame.html#dynamicgame" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="multiple-agent-model" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Multiple-Agent Model<a href="dynamicgame.html#multiple-agent-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>There are multiple players in an industry.</li>
 <li>There is a strategic interaction across players.</li>
 </ul>
-<div id="setting-2" class="section level3" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> Setting</h3>
+<div id="setting-2" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Setting<a href="dynamicgame.html#setting-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>There is <span class="math inline">\(i = 1, \cdots, N\)</span> players.</li>
 <li>Time is discrete <span class="math inline">\(t = 1, \cdots, \infty\)</span>.</li>
@@ -704,8 +727,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(S = \prod_{i = 1}^N S_i\)</span>. <span class="math inline">\(m_s = L^N\)</span>.</li>
 </ul>
 </div>
-<div id="timing-of-the-model-1" class="section level3" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Timing of the Model</h3>
+<div id="timing-of-the-model-1" class="section level3 hasAnchor" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> Timing of the Model<a href="dynamicgame.html#timing-of-the-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>At period <span class="math inline">\(t\)</span>:</li>
 <li>State <span class="math inline">\(s_t = (s_{t1}, \cdots, s_{tN})&#39; \in S\)</span> is publicly observed.</li>
@@ -718,7 +741,7 @@ g(a, s, s&#39;) := \mathbb{P}\{s_{t + 1} = s&#39;|s_t = s, a_t = a\},
 \end{equation}\]</span></li>
 </ul>
 <p><span class="math display">\[\begin{equation}
-G := 
+G :=
 \begin{pmatrix}
 g(1, 1, 1) &amp; \cdots &amp; g(1, 1, m_s)\\
 \vdots &amp; &amp; \vdots \\
@@ -730,8 +753,8 @@ g(m_a, m_s, 1) &amp; \cdots &amp; g(m_a, m_s, m_s)\\
 \end{pmatrix}.
 \end{equation}\]</span></p>
 </div>
-<div id="period-profit" class="section level3" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> Period Profit</h3>
+<div id="period-profit" class="section level3 hasAnchor" number="8.1.3">
+<h3><span class="header-section-number">8.1.3</span> Period Profit<a href="dynamicgame.html#period-profit" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>When the state is <span class="math inline">\(s_t\)</span>, action profile is <span class="math inline">\(a_t\)</span>, and the profitability shocks are <span class="math inline">\(\epsilon_t\)</span>, the period payoff of player <span class="math inline">\(i\)</span> is:
 <span class="math display">\[\begin{equation}
@@ -759,8 +782,8 @@ be the choice-specific profitability shock.</p></li>
 <li><p>The profit of player <span class="math inline">\(i\)</span> is the discounted sum of future payoffs with discount factor <span class="math inline">\(\beta &lt; 1\)</span>.</p></li>
 </ul>
 </div>
-<div id="belief-1" class="section level3" number="8.1.4">
-<h3><span class="header-section-number">8.1.4</span> Belief</h3>
+<div id="belief-1" class="section level3 hasAnchor" number="8.1.4">
+<h3><span class="header-section-number">8.1.4</span> Belief<a href="dynamicgame.html#belief-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(\sigma_i(a|s)\)</span> be the player <span class="math inline">\(i\)</span>’s belief about the possibility of having action profile <span class="math inline">\(a\)</span> when the realized state is <span class="math inline">\(s\)</span>, which may or may not coincide with the equilibrium probability.</li>
 <li>Let <span class="math inline">\(\sigma_i\)</span> stack them up as:
@@ -782,7 +805,7 @@ be the choice-specific profitability shock.</p></li>
 \]</span>
 and let <span class="math inline">\(\sigma\)</span> be:
 <span class="math display">\[
-\sigma = 
+\sigma =
 \begin{pmatrix}
 \sigma_1 \\
 \vdots\\
@@ -791,8 +814,8 @@ and let <span class="math inline">\(\sigma\)</span> be:
 \]</span></li>
 </ul>
 </div>
-<div id="markov-perfect-equilibrium" class="section level3" number="8.1.5">
-<h3><span class="header-section-number">8.1.5</span> Markov Perfect Equilibrium</h3>
+<div id="markov-perfect-equilibrium" class="section level3 hasAnchor" number="8.1.5">
+<h3><span class="header-section-number">8.1.5</span> Markov Perfect Equilibrium<a href="dynamicgame.html#markov-perfect-equilibrium" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>A collection <span class="math inline">\((a, \sigma) = (a_1, \cdots, a_N, \sigma_1, \cdots, \sigma_N)\)</span> is a pure-strategy <strong>Markov perfect equilibrium</strong> if:
 <ul>
@@ -802,8 +825,8 @@ and let <span class="math inline">\(\sigma\)</span> be:
 </ul></li>
 </ul>
 </div>
-<div id="ex-ante-value-function" class="section level3" number="8.1.6">
-<h3><span class="header-section-number">8.1.6</span> Ex-ante Value Function</h3>
+<div id="ex-ante-value-function" class="section level3 hasAnchor" number="8.1.6">
+<h3><span class="header-section-number">8.1.6</span> Ex-ante Value Function<a href="dynamicgame.html#ex-ante-value-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>When the belief of player <span class="math inline">\(i\)</span> about the future behavior is <span class="math inline">\(\sigma_i\)</span>, then the ex-ante value function associated with this belief is:</li>
 </ul>
@@ -820,7 +843,7 @@ V_i(\sigma_i) = \Sigma_i(\sigma_i) \Pi_i + \Sigma_i(\sigma_i) E_i(\sigma_i) + \b
 \end{equation}\]</span>
 where
 <span class="math display">\[\begin{equation}
-\Sigma_i(\sigma_i) = 
+\Sigma_i(\sigma_i) =
 \begin{pmatrix}
 \sigma_i(1)&#39; &amp; &amp; \\
 &amp; \ddots &amp; \\
@@ -842,8 +865,8 @@ V_i(\sigma_i) = [I - \beta \Sigma_i(\sigma_i)G]^{-1}[\Sigma_i(\sigma_i)\Pi_i + D
 \]</span></li>
 </ul>
 </div>
-<div id="choice-specific-value-function-1" class="section level3" number="8.1.7">
-<h3><span class="header-section-number">8.1.7</span> Choice-specific Value Function</h3>
+<div id="choice-specific-value-function-1" class="section level3 hasAnchor" number="8.1.7">
+<h3><span class="header-section-number">8.1.7</span> Choice-specific Value Function<a href="dynamicgame.html#choice-specific-value-function-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>When the state is <span class="math inline">\(s\)</span> and the belief of player <span class="math inline">\(i\)</span> is <span class="math inline">\(\sigma_i\)</span>, then the mean value of choosing action <span class="math inline">\(a_i\)</span> is:</li>
 </ul>
@@ -855,8 +878,8 @@ v_i(\sigma_i, a_i, s) &amp;= \sum_{a_{-i} \in A_{-i}} \sigma_i(a_{-i}|s)[ \pi_i(
 \end{equation}\]</span>
 - This is the choice-specific mean value function given belief <span class="math inline">\(\sigma_i\)</span>.</p>
 </div>
-<div id="optimality-condition-2" class="section level3" number="8.1.8">
-<h3><span class="header-section-number">8.1.8</span> Optimality Condition</h3>
+<div id="optimality-condition-2" class="section level3 hasAnchor" number="8.1.8">
+<h3><span class="header-section-number">8.1.8</span> Optimality Condition<a href="dynamicgame.html#optimality-condition-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>When the state is <span class="math inline">\(s\)</span> and profitability shock is <span class="math inline">\(\epsilon_i\)</span>, <span class="math inline">\(a_i\)</span> is optimal for player <span class="math inline">\(i\)</span> under belief <span class="math inline">\(\sigma_i\)</span> if and only if:
 <span class="math display">\[\begin{equation}
@@ -866,8 +889,8 @@ v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\sigma_i, a_i&#39;, s) + \eps
 <li>Only difference is that the belief is now about the others’ actions in addition to about own future behaviors.</li>
 </ul>
 </div>
-<div id="optimal-conditional-choice-probability-2" class="section level3" number="8.1.9">
-<h3><span class="header-section-number">8.1.9</span> Optimal Conditional Choice Probability</h3>
+<div id="optimal-conditional-choice-probability-2" class="section level3 hasAnchor" number="8.1.9">
+<h3><span class="header-section-number">8.1.9</span> Optimal Conditional Choice Probability<a href="dynamicgame.html#optimal-conditional-choice-probability-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Therefore, the optimal conditional choice probability of player <span class="math inline">\(i\)</span> with belief <span class="math inline">\(\sigma_i\)</span> is:</li>
 </ul>
@@ -879,8 +902,8 @@ p(a_i|s) &amp;= \mathbb{P}\{v_i(\sigma_i, a_i, s) + \epsilon_{i, a_i} \ge  v_i(\
 \end{split}
 \end{equation}\]</span></p>
 </div>
-<div id="equilibrium-condition-1" class="section level3" number="8.1.10">
-<h3><span class="header-section-number">8.1.10</span> Equilibrium Condition</h3>
+<div id="equilibrium-condition-1" class="section level3 hasAnchor" number="8.1.10">
+<h3><span class="header-section-number">8.1.10</span> Equilibrium Condition<a href="dynamicgame.html#equilibrium-condition-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let:
 <span class="math display">\[
@@ -892,7 +915,7 @@ and
 \]</span></li>
 <li>Stacking them up as:
 <span class="math display">\[
-p(s) = 
+p(s) =
 \begin{pmatrix}
 p(1|s) \\
 \vdots \\
@@ -900,7 +923,7 @@ p(m_a|s)
 \end{pmatrix},
 \]</span>
 <span class="math display">\[
-p = 
+p =
 \begin{pmatrix}
 p(1)\\
 \vdots\\
@@ -909,7 +932,7 @@ p(m_s)
 \]</span></li>
 </ul>
 <p><span class="math display">\[
-\Psi(\sigma, s) = 
+\Psi(\sigma, s) =
 \begin{pmatrix}
 \Psi(\sigma, 1, s) \\
 \vdots \\
@@ -917,7 +940,7 @@ p(m_s)
 \end{pmatrix},
 \]</span>
 <span class="math display">\[
-\Psi(\sigma) = 
+\Psi(\sigma) =
 \begin{pmatrix}
 \Psi(\sigma, 1)
 \vdots\\
@@ -925,7 +948,7 @@ p(m_s)
 \end{pmatrix}.
 \]</span></p>
 <ul>
-<li><span class="citation"><a href="references.html#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">Pesendorfer &amp; Schmidt-Dengler</a> (<a href="references.html#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">2008</a>)</span> prove the following statement:
+<li><span class="citation">Pesendorfer &amp; Schmidt-Dengler (<a href="#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">2008</a>)</span> prove the following statement:
 <span class="math display">\[\begin{equation}
 p = \Psi(p).
 \end{equation}\]</span></li>
@@ -933,10 +956,10 @@ p = \Psi(p).
 <li>Conversely, any <span class="math inline">\(p\)</span> that satisfies the equilibrium condition above can be derived as the optimal conditional choice probability of a Markov perfect equilibrium strategy profile.</li>
 </ul>
 </div>
-<div id="equilibrium-condition-2" class="section level3" number="8.1.11">
-<h3><span class="header-section-number">8.1.11</span> Equilibrium Condition</h3>
+<div id="equilibrium-condition-2" class="section level3 hasAnchor" number="8.1.11">
+<h3><span class="header-section-number">8.1.11</span> Equilibrium Condition<a href="dynamicgame.html#equilibrium-condition-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">Pesendorfer &amp; Schmidt-Dengler</a> (<a href="references.html#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">2008</a>)</span> also show the following statements.</li>
+<li><span class="citation">Pesendorfer &amp; Schmidt-Dengler (<a href="#ref-pesendorferAsymptoticLeastSquares2008" role="doc-biblioref">2008</a>)</span> also show the following statements.</li>
 <li>By Brouwer’s fixed-point theorem, a Markov perfect equilibrium exists.</li>
 <li>But Markov perfect equillibria need not be unique.</li>
 <li>Therefore, we may not be able to derive the likelihood.</li>
@@ -944,8 +967,8 @@ p = \Psi(p).
 <li>This significantly reduces the dimensionality of the problem.</li>
 </ul>
 </div>
-<div id="single-path-of-play" class="section level3" number="8.1.12">
-<h3><span class="header-section-number">8.1.12</span> Single Path of Play</h3>
+<div id="single-path-of-play" class="section level3 hasAnchor" number="8.1.12">
+<h3><span class="header-section-number">8.1.12</span> Single Path of Play<a href="dynamicgame.html#single-path-of-play" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The estimation of dynamic games is mostly based on time series data of an industry.</li>
 <li>We often assume that the data is generated from a single path of play.</li>
@@ -955,8 +978,8 @@ p = \Psi(p).
 <li>The assumption that the same equilibrium is played across markets may need further justification.</li>
 </ul>
 </div>
-<div id="identification-1" class="section level3" number="8.1.13">
-<h3><span class="header-section-number">8.1.13</span> Identification</h3>
+<div id="identification-1" class="section level3 hasAnchor" number="8.1.13">
+<h3><span class="header-section-number">8.1.13</span> Identification<a href="dynamicgame.html#identification-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The parameters of the model is <span class="math inline">\((\Pi_1, \cdots, \Pi_N, F, \beta, G)\)</span>.</li>
 <li><span class="math inline">\(G\)</span> is directly identified from data</li>
@@ -972,8 +995,8 @@ p = \Psi(p).
 <li>So, if <span class="math inline">\(L \ge K + 1\)</span>, i.e., the number of states is larger than the number of actions, at least the order condition is satisfied.</li>
 </ul>
 </div>
-<div id="estimation-ccp-approach" class="section level3" number="8.1.14">
-<h3><span class="header-section-number">8.1.14</span> Estimation: CCP Approach</h3>
+<div id="estimation-ccp-approach" class="section level3 hasAnchor" number="8.1.14">
+<h3><span class="header-section-number">8.1.14</span> Estimation: CCP Approach<a href="dynamicgame.html#estimation-ccp-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Because dynamic games often have multiple equillibria, nested-fixed point algorithm fails to pin down the likelihood of data.</li>
 <li>Instead we use CCP approach exploiting the equilibrium condition:
@@ -989,14 +1012,14 @@ where <span class="math inline">\(\theta_1\)</span> is the parameters in the mea
 where <span class="math inline">\(W\)</span> is some weighting matrix.</li>
 </ul>
 </div>
-<div id="computing-psi" class="section level3" number="8.1.15">
-<h3><span class="header-section-number">8.1.15</span> Computing <span class="math inline">\(\Psi\)</span></h3>
+<div id="computing-psi" class="section level3 hasAnchor" number="8.1.15">
+<h3><span class="header-section-number">8.1.15</span> Computing <span class="math inline">\(\Psi\)</span><a href="dynamicgame.html#computing-psi" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Mapping from conditional choice probabilities to ex-ante value function:
 <span class="math display">\[
 V_i(\hat{p}) = [I - \beta \Sigma_i(\hat{p})G]^{-1} [\Sigma_i(\hat{p})\Pi_i + D_i(\hat{p})].
 \]</span></p></li>
-<li><p>Mapping from ex-ante value function  to conditional choice probability:
+<li><p>Mapping from ex-ante value function to conditional choice probability:
 <span class="math display">\[\begin{equation}
 p_i(a_i|s) =  \mathbb{P}\{v_i(\tilde{p}, a_i, s) + \epsilon_{ia_i} \ge  v_i(\tilde{p}, a_i&#39;, s) + \epsilon_{ia_i&#39;}, \forall a_i&#39; \in A_i\},
 \end{equation}\]</span>
@@ -1008,10 +1031,10 @@ v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i
 </ul>
 </div>
 </div>
-<div id="with-continuous-dynamic-choice" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> With Continuous Dynamic Choice</h2>
-<div id="continuous-control" class="section level3" number="8.2.1">
-<h3><span class="header-section-number">8.2.1</span> Continuous Control</h3>
+<div id="with-continuous-dynamic-choice" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> With Continuous Dynamic Choice<a href="dynamicgame.html#with-continuous-dynamic-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="continuous-control" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Continuous Control<a href="dynamicgame.html#continuous-control" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>So far we have assumed that players’ actions are discrete.</li>
 <li>However, continuous controls such as investment prevails in the real world.</li>
@@ -1023,8 +1046,8 @@ v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i
 <li>Let <span class="math inline">\(\epsilon_{ti} \in \mathbb{R}^M\)</span> be profitability shocks for player <span class="math inline">\(i\)</span> in period <span class="math inline">\(t\)</span>, which are independent across players.</li>
 </ul>
 </div>
-<div id="period-payoff-1" class="section level3" number="8.2.2">
-<h3><span class="header-section-number">8.2.2</span> Period Payoff</h3>
+<div id="period-payoff-1" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> Period Payoff<a href="dynamicgame.html#period-payoff-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(\pi_i(a, s, \epsilon_{ti})\)</span> be the period payoff of player <span class="math inline">\(i\)</span> in period <span class="math inline">\(t\)</span> including the profitability shocks when the action profile is <span class="math inline">\(a\)</span>, the state is <span class="math inline">\(s\)</span>, and the profitability shocks are <span class="math inline">\(\epsilon_{ti}\)</span>.</li>
 <li>In the discrete choice framework, we assumed additive separability:
@@ -1037,8 +1060,8 @@ v_i(\tilde{p}, a_i, s) = \sum_{a_{-i} \in A_{-i}} \tilde{p}(a_{-i}|s) [\pi_i(a_i
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="policy-function-estimation-with-continuous-control" class="section level3" number="8.2.3">
-<h3><span class="header-section-number">8.2.3</span> Policy Function Estimation with Continuous Control</h3>
+<div id="policy-function-estimation-with-continuous-control" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> Policy Function Estimation with Continuous Control<a href="dynamicgame.html#policy-function-estimation-with-continuous-control" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(a_{ic}(s, \epsilon_{i}) = a_{ic}(s, \epsilon_{ic})\)</span> be the policy function of firm <span class="math inline">\(i\)</span> and suppose that it is increasing in <span class="math inline">\(\epsilon_{ic}\)</span>.</li>
 <li>Moreover, assume that we know the distribution of <span class="math inline">\(\epsilon_{ic}\)</span>, say, <span class="math inline">\(F_{\epsilon_c}(\cdot|s)\)</span>.</li>
@@ -1062,8 +1085,8 @@ a_{ic}(s, \epsilon_{ic}) &amp;= F_{a_{ic}}^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, 
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="converting-to-the-standard-discrete-choice-model" class="section level3" number="8.2.4">
-<h3><span class="header-section-number">8.2.4</span> Converting to the Standard Discrete Choice Model</h3>
+<div id="converting-to-the-standard-discrete-choice-model" class="section level3 hasAnchor" number="8.2.4">
+<h3><span class="header-section-number">8.2.4</span> Converting to the Standard Discrete Choice Model<a href="dynamicgame.html#converting-to-the-standard-discrete-choice-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Inserting the identified policy for the continuous controls, we have:</li>
 </ul>
@@ -1077,10 +1100,10 @@ a_{ic}(s, \epsilon_{ic}) &amp;= F_{a_{ic}}^{-1}\{F_c[\underbrace{a_{ic}^{-1}(s, 
 - Therefore, we can identify the optimal conditional choice probability in a reduced-form and from which we can identify the policy function for the discrete choice as well.
 - Then, we can apply the CCP approach to estimate the structural parameters.</p>
 </div>
-<div id="value-function-based-ccp-approach" class="section level3" number="8.2.5">
-<h3><span class="header-section-number">8.2.5</span> Value Function Based CCP Approach</h3>
+<div id="value-function-based-ccp-approach" class="section level3 hasAnchor" number="8.2.5">
+<h3><span class="header-section-number">8.2.5</span> Value Function Based CCP Approach<a href="dynamicgame.html#value-function-based-ccp-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-bajariEstimatingDynamicModels2007" role="doc-biblioref">Bajari, Benkard, &amp; Levin</a> (<a href="references.html#ref-bajariEstimatingDynamicModels2007" role="doc-biblioref">2007</a>)</span> proposes an alternative estimation method.</li>
+<li><span class="citation">Bajari, Benkard, &amp; Levin (<a href="#ref-bajariEstimatingDynamicModels2007" role="doc-biblioref">2007</a>)</span> proposes an alternative estimation method.</li>
 <li>The key is to characterize the equilibrium as follows.</li>
 <li>Let <span class="math inline">\(V_i^{(a_i, a_{-i})}(s)\)</span> be the ex-ante value function associated with strategy profile <span class="math inline">\((a_i, a_{-i})\)</span>.</li>
 <li>The observed <span class="math inline">\((a_i^*, a_{-i}^*)\)</span> is an equilibrium if:
@@ -1097,8 +1120,8 @@ which penalizes the parameter violating the inequality condition of the equilibr
 <li>Thus, the summation over continuous control does not cover the entire range.</li>
 </ul>
 </div>
-<div id="approximating-the-ex-ante-value-function" class="section level3" number="8.2.6">
-<h3><span class="header-section-number">8.2.6</span> Approximating the Ex-ante Value Function</h3>
+<div id="approximating-the-ex-ante-value-function" class="section level3 hasAnchor" number="8.2.6">
+<h3><span class="header-section-number">8.2.6</span> Approximating the Ex-ante Value Function<a href="dynamicgame.html#approximating-the-ex-ante-value-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Once we obtain the equilibrium policy functions, then in principle, we can compute the associated ex-ante value function, <span class="math inline">\(V_i^{(a_i, a_{-i})}\)</span>, in the equilibrium.</li>
 <li>We often use a numerical method to compute the ex-ante value function when continuous controls are relevant.</li>
@@ -1117,18 +1140,18 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 </ul>
 </div>
 </div>
-<div id="dynamic-oligopoly-model" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Dynamic Oligopoly Model</h2>
+<div id="dynamic-oligopoly-model" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Dynamic Oligopoly Model<a href="dynamicgame.html#dynamic-oligopoly-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>In the application of the dynamic game estimation to the dynamic oligopoly model, we often jointly consider entry and exit decisions and investment decisions of firms.</li>
 <li>The entry and exit decisions are the discrete decisions and the investment decision is the continuous controls.</li>
-<li>The formal models and their characterization are found in <span class="citation"><a href="references.html#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">Ericson &amp; Pakes</a> (<a href="references.html#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">1995</a>)</span> and <span class="citation"><a href="references.html#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">Ulrich Doraszelski &amp; Satterthwaite</a> (<a href="references.html#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span>.</li>
-<li><span class="citation"><a href="references.html#ref-Igami2018" role="doc-biblioref">Igami &amp; Sugaya</a> (<a href="references.html#ref-Igami2018" role="doc-biblioref">2018</a>)</span>’, the paper referred to in the introduction, falls into this category.</li>
+<li>The formal models and their characterization are found in <span class="citation">Ericson &amp; Pakes (<a href="#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">1995</a>)</span> and <span class="citation">Ulrich Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span>.</li>
+<li><span class="citation">Igami &amp; Sugaya (<a href="#ref-Igami2018" role="doc-biblioref">2018</a>)</span>’, the paper referred to in the introduction, falls into this category.</li>
 </ul>
-<div id="ryancostenvironmentregulation2012" class="section level3" number="8.3.1">
-<h3><span class="header-section-number">8.3.1</span> <span class="citation"><a href="references.html#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">Ryan</a> (<a href="references.html#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">2012</a>)</span></h3>
+<div id="ryancostenvironmentregulation2012" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> <span class="citation">Ryan (<a href="#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">2012</a>)</span><a href="dynamicgame.html#ryancostenvironmentregulation2012" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">Ryan</a> (<a href="references.html#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">2012</a>)</span> is one of the earliest applications.</li>
+<li><span class="citation">Ryan (<a href="#ref-ryanCostEnvironmentRegulation2012" role="doc-biblioref">2012</a>)</span> is one of the earliest applications.</li>
 <li>In 1990, the U.S. congress passed Amendments to the Clean Air act, adding new categories of regulated <span class="math inline">\(SO_2\)</span> and <span class="math inline">\(NO_x\)</span> emissions and requiring plants to undergo an environmental certification process.</li>
 <li>How costly is this regulation to the economy?</li>
 <li>The cost analysis is typically an engineering estimates of the expenditures on control and monitoring equipment necessary to bring a plant into compliance with the new regulation.</li>
@@ -1138,16 +1161,16 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <li>This paper quantifies the welfare cost based on an empirical dynamic oligopoly model.</li>
 </ul>
 </div>
-<div id="setting-3" class="section level3" number="8.3.2">
-<h3><span class="header-section-number">8.3.2</span> Setting</h3>
+<div id="setting-3" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Setting<a href="dynamicgame.html#setting-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>There are several regional cement markets in the U.S.</li>
 <li>Each market is described by <span class="math inline">\(\overline{N} \times 1\)</span> state vector <span class="math inline">\(s_t\)</span>, where <span class="math inline">\(s_{it}\)</span> is the capacity of the <span class="math inline">\(i\)</span>th firm at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(\overline{N}\)</span> is an exogenously imposed maximal number of active firms.</li>
 <li><span class="math inline">\(s_{it} = 0\)</span> means the firm is inactive.</li>
 </ul>
 </div>
-<div id="timing-of-the-game" class="section level3" number="8.3.3">
-<h3><span class="header-section-number">8.3.3</span> Timing of the Game</h3>
+<div id="timing-of-the-game" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Timing of the Game<a href="dynamicgame.html#timing-of-the-game" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Incumbent firms (<span class="math inline">\(s_{it} &gt; 0\)</span>) receives a private draw from the distribution of scrap values.</li>
 <li>Incumbent firms decide whether to exit.</li>
@@ -1158,8 +1181,8 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 <li>The economy moves to the next period.</li>
 </ul>
 </div>
-<div id="demand-function" class="section level3" number="8.3.4">
-<h3><span class="header-section-number">8.3.4</span> Demand Function</h3>
+<div id="demand-function" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Demand Function<a href="dynamicgame.html#demand-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In each market <span class="math inline">\(m\)</span>, firms face a constant elasticity of demand curves:
 <span class="math display">\[\begin{equation}
@@ -1168,8 +1191,8 @@ to approximate <span class="math inline">\(V_i^{(a_i^*, a_{-i}^*)}(s)\)</span>.<
 where <span class="math inline">\(Q_m\)</span> is the aggregate market quantity, <span class="math inline">\(P_m\)</span> is price, <span class="math inline">\(\alpha_{0m}\)</span> is market-specific intercept, and <span class="math inline">\(\alpha_1\)</span> is the elasticity of demand.</li>
 </ul>
 </div>
-<div id="production-cost-function" class="section level3" number="8.3.5">
-<h3><span class="header-section-number">8.3.5</span> Production Cost Function</h3>
+<div id="production-cost-function" class="section level3 hasAnchor" number="8.3.5">
+<h3><span class="header-section-number">8.3.5</span> Production Cost Function<a href="dynamicgame.html#production-cost-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The cost of output, <span class="math inline">\(q_i\)</span>, is given by:
 <span class="math display">\[\begin{equation}
@@ -1178,8 +1201,8 @@ C_i(q_i; \delta) = \delta_0 + \delta_1 q_1 + \delta_2 1\{q_i &gt; \epsilon s_i\}
 where <span class="math inline">\(q_i\)</span> is the output of firm <span class="math inline">\(i\)</span>, <span class="math inline">\(\delta_0\)</span> is the fixed cost of production, <span class="math inline">\(\delta_1\)</span> is the linear variable cost, and the last term is a quadratic cost that matters only when the output is sufficiently close to the capacity.</li>
 </ul>
 </div>
-<div id="investment-cost" class="section level3" number="8.3.6">
-<h3><span class="header-section-number">8.3.6</span> Investment Cost</h3>
+<div id="investment-cost" class="section level3 hasAnchor" number="8.3.6">
+<h3><span class="header-section-number">8.3.6</span> Investment Cost<a href="dynamicgame.html#investment-cost" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The cost of investment and disinvestment is:</li>
 </ul>
@@ -1192,8 +1215,8 @@ where <span class="math inline">\(q_i\)</span> is the output of firm <span class
 where <span class="math inline">\(x_i\)</span> is the investment of firm <span class="math inline">\(i\)</span>, and fixed investment and disinvestment costs <span class="math inline">\(\gamma_{i1}\)</span> and <span class="math inline">\(\gamma_{i4}\)</span> are drawn from distributions <span class="math inline">\(F_{\gamma}\)</span> and <span class="math inline">\(G_{\gamma}\)</span>.
 - Let <span class="math inline">\(\mu_\gamma^+\)</span> and <span class="math inline">\(\sigma_\gamma^+\)</span> be the mean and standard deviation of <span class="math inline">\(F_\gamma\)</span> and <span class="math inline">\(\mu_\gamma^-\)</span> and <span class="math inline">\(\sigma_\gamma^-\)</span> be the mean and standard deviation of <span class="math inline">\(G_\gamma\)</span>.</p>
 </div>
-<div id="entry-and-exit-costs" class="section level3" number="8.3.7">
-<h3><span class="header-section-number">8.3.7</span> Entry and Exit Costs</h3>
+<div id="entry-and-exit-costs" class="section level3 hasAnchor" number="8.3.7">
+<h3><span class="header-section-number">8.3.7</span> Entry and Exit Costs<a href="dynamicgame.html#entry-and-exit-costs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>If the firm is a new entrant, it draws entry cost <span class="math inline">\(-\kappa_i\)</span> from <span class="math inline">\(F_\kappa\)</span>.</li>
 <li>IF the firm is an incumbent, it draws scrap values <span class="math inline">\(\phi_i\)</span> from <span class="math inline">\(F_\phi\)</span>.</li>
@@ -1207,8 +1230,8 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 \end{cases}
 \end{equation}\]</span></p>
 </div>
-<div id="period-profit-function" class="section level3" number="8.3.8">
-<h3><span class="header-section-number">8.3.8</span> Period Profit Function</h3>
+<div id="period-profit-function" class="section level3 hasAnchor" number="8.3.8">
+<h3><span class="header-section-number">8.3.8</span> Period Profit Function<a href="dynamicgame.html#period-profit-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>As a consequence, the period profit function of firm <span class="math inline">\(i\)</span> is:
 <span class="math display">\[\begin{equation}
@@ -1217,8 +1240,8 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 <li>Let <span class="math inline">\(\theta\)</span> summarize the parameter regarding the period profit.</li>
 </ul>
 </div>
-<div id="transition" class="section level3" number="8.3.9">
-<h3><span class="header-section-number">8.3.9</span> Transition</h3>
+<div id="transition" class="section level3 hasAnchor" number="8.3.9">
+<h3><span class="header-section-number">8.3.9</span> Transition<a href="dynamicgame.html#transition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The transition is deterministic.</li>
 <li>The investment changes the capacity <span class="math inline">\(s_i\)</span>.</li>
@@ -1226,15 +1249,15 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 <li>As a firm enters, the capacity moves to the initial investment level.</li>
 </ul>
 </div>
-<div id="equilibrium" class="section level3" number="8.3.10">
-<h3><span class="header-section-number">8.3.10</span> Equilibrium</h3>
+<div id="equilibrium" class="section level3 hasAnchor" number="8.3.10">
+<h3><span class="header-section-number">8.3.10</span> Equilibrium<a href="dynamicgame.html#equilibrium" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(\epsilon_i\)</span> represent the firm’s private information about the cost of entry, exit, investment, and disinvestment.</li>
 <li>Each firm’s Markovian strategy <span class="math inline">\(\sigma_i(s, \epsilon_i)\)</span> is a mapping from states and shocks to actions.</li>
 </ul>
 </div>
-<div id="value-function-for-incumbents" class="section level3" number="8.3.11">
-<h3><span class="header-section-number">8.3.11</span> Value Function for Incumbents</h3>
+<div id="value-function-for-incumbents" class="section level3 hasAnchor" number="8.3.11">
+<h3><span class="header-section-number">8.3.11</span> Value Function for Incumbents<a href="dynamicgame.html#value-function-for-incumbents" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The value function for a firm with <span class="math inline">\(s_i &gt; 0\)</span> at the time of the exit decision under strategy profile <span class="math inline">\(\sigma\)</span> is:</li>
 </ul>
@@ -1249,8 +1272,8 @@ where <span class="math inline">\(x_i\)</span> is the investment of firm <span c
 where each term in the blanket represents the value of exit, staying and making investment, and staying and making disinvestment.
 - At this timing the incumbent only observes <span class="math inline">\(\phi_i\)</span>, although it is a bit confusing because the value function is written as a function of <span class="math inline">\(\epsilon_i\)</span>.</p>
 </div>
-<div id="value-function-for-entrants" class="section level3" number="8.3.12">
-<h3><span class="header-section-number">8.3.12</span> Value Function for Entrants</h3>
+<div id="value-function-for-entrants" class="section level3 hasAnchor" number="8.3.12">
+<h3><span class="header-section-number">8.3.12</span> Value Function for Entrants<a href="dynamicgame.html#value-function-for-entrants" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The value function for a firm with <span class="math inline">\(s_i = 0\)</span> at the time of entry decision under strategy profile <span class="math inline">\(\sigma\)</span> at the time of entry and investment decisions are:</li>
 </ul>
@@ -1262,8 +1285,8 @@ where each term in the blanket represents the value of exit, staying and making 
 \end{split}
 \end{equation}\]</span></p>
 </div>
-<div id="markov-perfect-equilibrium-1" class="section level3" number="8.3.13">
-<h3><span class="header-section-number">8.3.13</span> Markov Perfect Equilibrium</h3>
+<div id="markov-perfect-equilibrium-1" class="section level3 hasAnchor" number="8.3.13">
+<h3><span class="header-section-number">8.3.13</span> Markov Perfect Equilibrium<a href="dynamicgame.html#markov-perfect-equilibrium-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The strategy profile <span class="math inline">\(\sigma^*\)</span> is a Markov perfect equilibrium if:
 <span class="math display">\[\begin{equation}
@@ -1276,23 +1299,23 @@ for all <span class="math inline">\(s, \epsilon_i\)</span>, and <span class="mat
 <li>We assume that firms assume that the regulatory environment is permanent.</li>
 </ul>
 </div>
-<div id="demand-and-production-cost-estimation" class="section level3" number="8.3.14">
-<h3><span class="header-section-number">8.3.14</span> Demand and Production Cost Estimation</h3>
+<div id="demand-and-production-cost-estimation" class="section level3 hasAnchor" number="8.3.14">
+<h3><span class="header-section-number">8.3.14</span> Demand and Production Cost Estimation<a href="dynamicgame.html#demand-and-production-cost-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To estimate the demand function, Ryan uses supply-side cost shifters as the instrumental variables: coal prices, gas prices, electricity rates, and wage rates.</li>
 <li>Given the demand function, Ryan estimate the cost function from the FOC for the quantity competition.</li>
 <li>You should already know how to do this.</li>
 </ul>
 </div>
-<div id="investment-policy-function-estimation" class="section level3" number="8.3.15">
-<h3><span class="header-section-number">8.3.15</span> Investment Policy Function Estimation</h3>
+<div id="investment-policy-function-estimation" class="section level3 hasAnchor" number="8.3.15">
+<h3><span class="header-section-number">8.3.15</span> Investment Policy Function Estimation<a href="dynamicgame.html#investment-policy-function-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>With fixed costs of investment and disinvestment, investment policy function follows a so-called <span class="math inline">\((s, S)\)</span> rule, in which firms investment only when the current capacity is below a certain lower bound and makes disinvestment only when the current capacity is above a certain upper bound.</li>
 <li>The lower and upper bounds, and the adjustment level are chosen optimal as a function of the state.</li>
 </ul>
 </div>
-<div id="investment-policy-function-estimation-1" class="section level3" number="8.3.16">
-<h3><span class="header-section-number">8.3.16</span> Investment Policy Function Estimation</h3>
+<div id="investment-policy-function-estimation-1" class="section level3 hasAnchor" number="8.3.16">
+<h3><span class="header-section-number">8.3.16</span> Investment Policy Function Estimation<a href="dynamicgame.html#investment-policy-function-estimation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(s_{it}^*\)</span> be the target level of capacity, which is parameterize as:
 <span class="math display">\[\begin{equation}
@@ -1308,8 +1331,8 @@ where <span class="math inline">\(bs(\cdot)\)</span> is finite-dimensional piece
 \end{split}
 \end{equation}\]</span></p>
 </div>
-<div id="entry-and-exit-policy-functions" class="section level3" number="8.3.17">
-<h3><span class="header-section-number">8.3.17</span> Entry and Exit Policy Functions</h3>
+<div id="entry-and-exit-policy-functions" class="section level3 hasAnchor" number="8.3.17">
+<h3><span class="header-section-number">8.3.17</span> Entry and Exit Policy Functions<a href="dynamicgame.html#entry-and-exit-policy-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The probability of entry is parameterized as:
 <span class="math display">\[\begin{equation}
@@ -1322,8 +1345,8 @@ and the probability of exit is parameterized as:
 where <span class="math inline">\(\Psi\)</span> is the cumulative distribution function of the standard normal random variable.</li>
 </ul>
 </div>
-<div id="bbl-estimation" class="section level3" number="8.3.18">
-<h3><span class="header-section-number">8.3.18</span> BBL Estimation</h3>
+<div id="bbl-estimation" class="section level3 hasAnchor" number="8.3.18">
+<h3><span class="header-section-number">8.3.18</span> BBL Estimation<a href="dynamicgame.html#bbl-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Now by comparing the value function under the identified policies with value functions under alternative policies, one can estimate the structural parameters.</li>
 <li>Alternative policies can be obtained by perturbing the upper and lower bounds and the target level of investment and the thresholds for entry and exit around the equilibrium policies.</li>
@@ -1331,12 +1354,12 @@ where <span class="math inline">\(\Psi\)</span> is the cumulative distribution f
 <li>Then, Ryan finds structural parameters that minimizes the BBL objective function.</li>
 </ul>
 </div>
-<div id="structural-parameters-estimation-results" class="section level3" number="8.3.19">
-<h3><span class="header-section-number">8.3.19</span> Structural Parameters Estimation Results</h3>
+<div id="structural-parameters-estimation-results" class="section level3 hasAnchor" number="8.3.19">
+<h3><span class="header-section-number">8.3.19</span> Structural Parameters Estimation Results<a href="dynamicgame.html#structural-parameters-estimation-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/dynamic.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="counterfactual-simulation" class="section level3" number="8.3.20">
-<h3><span class="header-section-number">8.3.20</span> Counterfactual Simulation</h3>
+<div id="counterfactual-simulation" class="section level3 hasAnchor" number="8.3.20">
+<h3><span class="header-section-number">8.3.20</span> Counterfactual Simulation<a href="dynamicgame.html#counterfactual-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To asses the welfare cost of the amendment, Ryan solves the model under two sets of parameters: the actual parameters and the parameters before the regulation.</li>
 <li>In the simulation, we can set whatever initial state.</li>
@@ -1347,25 +1370,25 @@ where <span class="math inline">\(\Psi\)</span> is the cumulative distribution f
 </ul></li>
 </ul>
 </div>
-<div id="counterfactual-simulation-results" class="section level3" number="8.3.21">
-<h3><span class="header-section-number">8.3.21</span> Counterfactual Simulation Results</h3>
+<div id="counterfactual-simulation-results" class="section level3 hasAnchor" number="8.3.21">
+<h3><span class="header-section-number">8.3.21</span> Counterfactual Simulation Results<a href="dynamicgame.html#counterfactual-simulation-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/denovo.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="counterfactual-simulation-estimation-results" class="section level3" number="8.3.22">
-<h3><span class="header-section-number">8.3.22</span> Counterfactual Simulation Estimation Results</h3>
+<div id="counterfactual-simulation-estimation-results" class="section level3 hasAnchor" number="8.3.22">
+<h3><span class="header-section-number">8.3.22</span> Counterfactual Simulation Estimation Results<a href="dynamicgame.html#counterfactual-simulation-estimation-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><img src="figuretable/mature.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="dynamic-oligopoly-with-many-firms" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Dynamic Oligopoly with Many Firms</h2>
+<div id="dynamic-oligopoly-with-many-firms" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Dynamic Oligopoly with Many Firms<a href="dynamicgame.html#dynamic-oligopoly-with-many-firms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Solving a dynamic game becomes quickly intractable when the number of firms increases and hence the dimension of the state profile increases.</li>
-<li><span class="citation"><a href="references.html#ref-weintraubMarkovPerfectIndustry2008" role="doc-biblioref">Weintraub, Benkard, &amp; Roy</a> (<a href="references.html#ref-weintraubMarkovPerfectIndustry2008" role="doc-biblioref">2008</a>)</span> propose a new equilibrium concept called <strong>oblivious equilibrium</strong> that approximates a Markov perfect equilibrium when there are many firms and do not suffer from the aforementioned computational problem.</li>
+<li><span class="citation">Weintraub, Benkard, &amp; Roy (<a href="#ref-weintraubMarkovPerfectIndustry2008" role="doc-biblioref">2008</a>)</span> propose a new equilibrium concept called <strong>oblivious equilibrium</strong> that approximates a Markov perfect equilibrium when there are many firms and do not suffer from the aforementioned computational problem.</li>
 </ul>
-<div id="setting-4" class="section level3" number="8.4.1">
-<h3><span class="header-section-number">8.4.1</span> Setting</h3>
+<div id="setting-4" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> Setting<a href="dynamicgame.html#setting-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>The setting is effectively the same as <span class="citation"><a href="references.html#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">Ericson &amp; Pakes</a> (<a href="references.html#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">1995</a>)</span> and <span class="citation"><a href="references.html#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">Ulrich Doraszelski &amp; Satterthwaite</a> (<a href="references.html#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span>.</li>
+<li>The setting is effectively the same as <span class="citation">Ericson &amp; Pakes (<a href="#ref-ericsonMarkovPerfectIndustryDynamics1995" role="doc-biblioref">1995</a>)</span> and <span class="citation">Ulrich Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span>.</li>
 <li>The time is discrete and infinite <span class="math inline">\(t \in \mathbb{N}\)</span>.</li>
 <li>The information set at time <span class="math inline">\(t\)</span> is <span class="math inline">\(\mathcal{F}_t\)</span>.</li>
 <li>Each firm that enters the industry is assigned a positive integer value index <span class="math inline">\(x_{it} \in \mathbb{N}\)</span>.</li>
@@ -1390,8 +1413,8 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>They appear in the following period at state <span class="math inline">\(x^e \in \mathbb{N}\)</span>.</li>
 </ul>
 </div>
-<div id="timing-of-the-game-1" class="section level3" number="8.4.2">
-<h3><span class="header-section-number">8.4.2</span> Timing of the Game</h3>
+<div id="timing-of-the-game-1" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Timing of the Game<a href="dynamicgame.html#timing-of-the-game-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Each incumbent firm observes its sell-off value, and then makes exit and investment decisions.</li>
 <li>The number of entering firms is determined and each entrant pays an entry cost <span class="math inline">\(\kappa\)</span>.</li>
@@ -1400,8 +1423,8 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>Investment outcomes are determined, new entrants enter, and the industry takes on a new state <span class="math inline">\(s_{t + 1}\)</span>.</li>
 </ol>
 </div>
-<div id="assumptions" class="section level3" number="8.4.3">
-<h3><span class="header-section-number">8.4.3</span> Assumptions</h3>
+<div id="assumptions" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> Assumptions<a href="dynamicgame.html#assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>An industry state <span class="math inline">\(s \in \mathcal{S}\)</span> is said to dominate <span class="math inline">\(s&#39; \in \mathcal{S}\)</span> if for all <span class="math inline">\(x \in \mathbb{N}\)</span> <span class="math inline">\(\sum_{z \ge x} s(z) \ge \sum_{z \ge x} s&#39;(z)\)</span>, and the relation is denoted by <span class="math inline">\(s \succeq s&#39;\)</span>.</li>
 <li><strong>Assumptions on <span class="math inline">\(\pi\)</span></strong>:</li>
@@ -1426,7 +1449,7 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>The transitions generated by <span class="math inline">\(w(\iota, \zeta)\)</span> are <strong>unique investment choice admissible</strong>.</li>
 </ol>
 <ul>
-<li>The notion of unique investment choice admissibility is introduced by @<span class="citation"><a href="references.html#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">Ulrich Doraszelski &amp; Satterthwaite</a> (<a href="references.html#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span> and means that under the investment function firms’ investment decision problem has a unique solution.</li>
+<li>The notion of unique investment choice admissibility is introduced by @<span class="citation">Ulrich Doraszelski &amp; Satterthwaite (<a href="#ref-doraszelskiComputableMarkovperfectIndustry2010" role="doc-biblioref">2010</a>)</span> and means that under the investment function firms’ investment decision problem has a unique solution.</li>
 <li>Without this assumption, the existence of pure-strategy equilibrium is not guaranteed and the computation can become complicated.</li>
 <li><strong>Assumptions on potential entrants</strong>:</li>
 <li>When there are a large number of potential entrants who play a symmetric mixed entry strategy, the equilibrium number of entrants is well-approximated by a Poisson distribution.</li>
@@ -1440,8 +1463,8 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>Let <span class="math inline">\(\lambda(s_t)\)</span> be the expected number of firms entering at industry state, which is endogenously determined.</li>
 </ul>
 </div>
-<div id="strategy-profile" class="section level3" number="8.4.4">
-<h3><span class="header-section-number">8.4.4</span> Strategy Profile</h3>
+<div id="strategy-profile" class="section level3 hasAnchor" number="8.4.4">
+<h3><span class="header-section-number">8.4.4</span> Strategy Profile<a href="dynamicgame.html#strategy-profile" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Investment strategy <span class="math inline">\(\iota: \mathbb{N} \times \mathcal{S} \to \mathbb{R}_+\)</span> : <span class="math inline">\(\iota_{it} = \iota(x_{it}, s_{-it})\)</span>.</li>
 <li>Exit strategy <span class="math inline">\(\rho: \mathbb{N} \times \mathcal{S} \to \mathbb{R}_+\)</span> : an incumbent exits if and only if <span class="math inline">\(\phi_{it} &gt; \rho(x_{it}, s_{-it})\)</span>.</li>
@@ -1449,8 +1472,8 @@ x_{i, t + 1} = \max\{0, x_{it} + w(\iota_{it}, \zeta_{i, t + 1})\},
 <li>Entry rate <span class="math inline">\(\lambda: \mathcal{S} \to \mathbb{R}_+\)</span>, <span class="math inline">\(\lambda \in \Lambda\)</span>.</li>
 </ul>
 </div>
-<div id="value-function" class="section level3" number="8.4.5">
-<h3><span class="header-section-number">8.4.5</span> Value Function</h3>
+<div id="value-function" class="section level3 hasAnchor" number="8.4.5">
+<h3><span class="header-section-number">8.4.5</span> Value Function<a href="dynamicgame.html#value-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The expected net present value for a firm at state <span class="math inline">\(x\)</span> when its competitors state is <span class="math inline">\(s\)</span>, given that its competitors each follows a common strategy <span class="math inline">\(\mu \in \mathcal{M}\)</span>, the entry rate function is <span class="math inline">\(\lambda \in \Lambda\)</span>, and the firm itself follows strategy <span class="math inline">\(\mu&#39; \in \mathcal{M}\)</span> is:
 <span class="math display">\[
@@ -1460,8 +1483,8 @@ where <span class="math inline">\(\tau_i\)</span> is a random variable that repr
 <li>We also write as <span class="math inline">\(V(x, s|\mu, \lambda) := V(x, s|\mu, \mu, \lambda)\)</span> when all firms follow the same strategy.</li>
 </ul>
 </div>
-<div id="markov-perfect-equilibrium-2" class="section level3" number="8.4.6">
-<h3><span class="header-section-number">8.4.6</span> Markov-perfect Equilibrium</h3>
+<div id="markov-perfect-equilibrium-2" class="section level3 hasAnchor" number="8.4.6">
+<h3><span class="header-section-number">8.4.6</span> Markov-perfect Equilibrium<a href="dynamicgame.html#markov-perfect-equilibrium-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>A strategy profile <span class="math inline">\(\mu \in \mathcal{M}\)</span> and an entry rate <span class="math inline">\(\lambda \in \Lambda\)</span> is a Markov-perfect equilibrium if:</li>
 </ul>
@@ -1473,30 +1496,30 @@ where <span class="math inline">\(\tau_i\)</span> is a random variable that repr
 <li>The entry rate satisfies:
 <span class="math display">\[
 \sum_{s \in \overline{S}} \lambda(s) \{\beta \mathbb{E}_{\mu, \lambda}[V(x^e, s_{-i, t + 1}|\mu, \lambda)|s_t = s] - \kappa\}
- = 0,
- \]</span>
+= 0,
+\]</span>
 <span class="math display">\[
- \beta \mathbb{E}_{\mu, \lambda}[V(x^e, s_{-i, t + 1}|\mu, \lambda)|s_t = s] - \kappa \le 0, \forall s \in \mathcal{\overline{S}},
- \]</span>
+\beta \mathbb{E}_{\mu, \lambda}[V(x^e, s_{-i, t + 1}|\mu, \lambda)|s_t = s] - \kappa \le 0, \forall s \in \mathcal{\overline{S}},
+\]</span>
 <span class="math display">\[
- \lambda(s) \ge 0,s \in \mathcal{\overline{S}}.
- \]</span></li>
+\lambda(s) \ge 0,s \in \mathcal{\overline{S}}.
+\]</span></li>
 </ol>
 <ul>
 <li>That is, at each industry state, either the expected entry profit is zero or the entry rate is zero.</li>
 <li>The authors prove that there exists a symmetric equilibrium.</li>
 </ul>
 </div>
-<div id="oblivious-strategy" class="section level3" number="8.4.7">
-<h3><span class="header-section-number">8.4.7</span> Oblivious Strategy</h3>
+<div id="oblivious-strategy" class="section level3 hasAnchor" number="8.4.7">
+<h3><span class="header-section-number">8.4.7</span> Oblivious Strategy<a href="dynamicgame.html#oblivious-strategy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The Markov-perfect equilibrium becomes quickly computationally intractable when the number of firms increases, because firms’ strategies depends on other firms’ states.</li>
 <li>We consider a firm who is <strong>oblivious</strong> of other firms’ exact states but only cares the <strong>long-run average industry state</strong> on top of its own state.</li>
 <li>Let <span class="math inline">\(\widetilde{\mathcal{M}} \subset \mathcal{M}\)</span> and <span class="math inline">\(\widetilde{\Lambda} \subset \Lambda\)</span> be the set of <strong>oblivious strategies</strong> and the set of <strong>oblivious entry rate functions</strong> in the sense that both <span class="math inline">\(\mu \in \widetilde{\mathcal{M}}\)</span> and <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> do not depend on <span class="math inline">\(s\)</span>.</li>
 </ul>
 </div>
-<div id="long-run-average-industry-state" class="section level3" number="8.4.8">
-<h3><span class="header-section-number">8.4.8</span> Long-run Average Industry State</h3>
+<div id="long-run-average-industry-state" class="section level3 hasAnchor" number="8.4.8">
+<h3><span class="header-section-number">8.4.8</span> Long-run Average Industry State<a href="dynamicgame.html#long-run-average-industry-state" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Then, if all firms use a common strategy <span class="math inline">\(\mu \in \widetilde{\mathcal{M}} \subset \mathcal{M}\)</span>, each firm’s state evolves as an independent transient Markov chain.</li>
 <li>Let the <span class="math inline">\(k\)</span>-period transition probability of this Markov chain be denoted by <span class="math inline">\(P_{\mu}^k(x, y)\)</span>.</li>
@@ -1505,14 +1528,14 @@ where <span class="math inline">\(\tau_i\)</span> is a random variable that repr
 <li>Let <span class="math inline">\(\tilde{s}_t(x) := \mathbb{E}[s_t(x)]\)</span> be the expected number of firms at state <span class="math inline">\(x\)</span>.</li>
 <li>Under the stated assumptions, if firms make decisions according to an oblivious strategy <span class="math inline">\(\mu \in \widetilde{M}\)</span> and enter according to an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span>, and the expected time that firm spends in the industry is finite, then:
 <span class="math display">\[
- \lim_{t \to \infty} \tilde{s}_t(x) = \lambda \sum_{k = 0}^\infty P_{\mu}^k(x^e, x),
- \]</span>
+\lim_{t \to \infty} \tilde{s}_t(x) = \lambda \sum_{k = 0}^\infty P_{\mu}^k(x^e, x),
+\]</span>
 for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
 <li>We write the long-run average industry state as <span class="math inline">\(\tilde{s}_{\mu, \lambda}(x) := \lim_{t \to \infty} \tilde{s}_t(x)\)</span>.</li>
 </ul>
 </div>
-<div id="oblivious-value-function" class="section level3" number="8.4.9">
-<h3><span class="header-section-number">8.4.9</span> Oblivious Value Function</h3>
+<div id="oblivious-value-function" class="section level3 hasAnchor" number="8.4.9">
+<h3><span class="header-section-number">8.4.9</span> Oblivious Value Function<a href="dynamicgame.html#oblivious-value-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>For an oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span>, we define an <strong>oblivious value function</strong>:
 <span class="math display">\[
@@ -1523,8 +1546,8 @@ for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
 <li><p>We also write as <span class="math inline">\(\widetilde{V}(x|\mu, \lambda) := \widetilde{V}(x|\mu, \mu, \lambda)\)</span>.</p></li>
 </ul>
 </div>
-<div id="oblivious-equilibrium" class="section level3" number="8.4.10">
-<h3><span class="header-section-number">8.4.10</span> Oblivious Equilibrium</h3>
+<div id="oblivious-equilibrium" class="section level3 hasAnchor" number="8.4.10">
+<h3><span class="header-section-number">8.4.10</span> Oblivious Equilibrium<a href="dynamicgame.html#oblivious-equilibrium" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>An oblivious strategy <span class="math inline">\(\mu&#39;, \mu \in \widetilde{\mathcal{M}}\)</span> and an oblivious entry rate function <span class="math inline">\(\lambda \in \widetilde{\Lambda}\)</span> is an <strong>oblivious equilibrium</strong> if:</li>
 </ul>
@@ -1550,15 +1573,45 @@ for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
 <li>Given <span class="math inline">\(\tilde{s}_{\mu, \lambda}\)</span>, the dynamic programming is only of <span class="math inline">\(x_{it}\)</span>.</li>
 </ul>
 </div>
-<div id="asymptotic-results-and-extensions" class="section level3" number="8.4.11">
-<h3><span class="header-section-number">8.4.11</span> Asymptotic Results and Extensions</h3>
+<div id="asymptotic-results-and-extensions" class="section level3 hasAnchor" number="8.4.11">
+<h3><span class="header-section-number">8.4.11</span> Asymptotic Results and Extensions<a href="dynamicgame.html#asymptotic-results-and-extensions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The authors show that under a certain condition when the market size goes to infinity, an oblivious equilibrium approximates an Markov-perfect equilibrium in the sense that a deviation from the oblivious equilibrium to a (possibly non-oblivious) best response does not improve the value for a firm.</li>
-<li><span class="citation"><a href="references.html#ref-Benkard2015" role="doc-biblioref">Benkard, Jeziorski, &amp; Weintraub</a> (<a href="references.html#ref-Benkard2015" role="doc-biblioref">2015</a>)</span> consider an extension of the current model to the <strong>partially oblivious equlibrium</strong> in which a subset of firms follow a non-oblivious strategy and the other firms follow an oblivious strategy.</li>
-<li><span class="citation"><a href="references.html#ref-Ifrach2017" role="doc-biblioref">Ifrach &amp; Weintraub</a> (<a href="references.html#ref-Ifrach2017" role="doc-biblioref">2017</a>)</span> further extends the current model to the <strong>moment-based Markov equilibrium</strong> in which a firm’s strategy depends on some sets of moments regarding the industry state.</li>
+<li><span class="citation">Benkard, Jeziorski, &amp; Weintraub (<a href="#ref-Benkard2015" role="doc-biblioref">2015</a>)</span> consider an extension of the current model to the <strong>partially oblivious equlibrium</strong> in which a subset of firms follow a non-oblivious strategy and the other firms follow an oblivious strategy.</li>
+<li><span class="citation">Ifrach &amp; Weintraub (<a href="#ref-Ifrach2017" role="doc-biblioref">2017</a>)</span> further extends the current model to the <strong>moment-based Markov equilibrium</strong> in which a firm’s strategy depends on some sets of moments regarding the industry state.</li>
 </ul>
 
 </div>
+</div>
+</div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-bajariEstimatingDynamicModels2007" class="csl-entry">
+Bajari, P., Benkard, C. L., &amp; Levin, J. (2007). Estimating <span>Dynamic Models</span> of <span>Imperfect Competition</span>. <em>Econometrica</em>, <em>75</em>(5), 1331–1370.
+</div>
+<div id="ref-Benkard2015" class="csl-entry">
+Benkard, C. L., Jeziorski, P., &amp; Weintraub, G. Y. (2015). <a href="https://doi.org/10.1111/1756-2171.12102">Oblivious equilibrium for concentrated industries</a>. <em>The RAND Journal of Economics</em>, <em>46</em>(4), 671–708.
+</div>
+<div id="ref-doraszelskiComputableMarkovperfectIndustry2010" class="csl-entry">
+Doraszelski, Ulrich, &amp; Satterthwaite, M. (2010). Computable <span>Markov</span>-perfect industry dynamics. <em>The RAND Journal of Economics</em>, <em>41</em>(2), 215–243.
+</div>
+<div id="ref-ericsonMarkovPerfectIndustryDynamics1995" class="csl-entry">
+Ericson, R., &amp; Pakes, A. (1995). <a href="https://doi.org/10.2307/2297841">Markov-<span>Perfect Industry Dynamics</span>: <span>A Framework</span> for <span>Empirical Work</span></a>. <em>The Review of Economic Studies</em>, <em>62</em>(1), 53–82.
+</div>
+<div id="ref-Ifrach2017" class="csl-entry">
+Ifrach, B., &amp; Weintraub, G. Y. (2017). <a href="https://doi.org/10.1093/restud/rdw047">A <span>Framework</span> for <span>Dynamic Oligopoly</span> in <span>Concentrated Industries</span></a>. <em>The Review of Economic Studies</em>, <em>84</em>, 1106–1150.
+</div>
+<div id="ref-Igami2018" class="csl-entry">
+Igami, M., &amp; Sugaya, T. (2018). <em>Measuring the <span>Incentive</span> to <span>Collude</span>: <span>The Vitamin Cartels</span>, 1990-1999</em>.
+</div>
+<div id="ref-pesendorferAsymptoticLeastSquares2008" class="csl-entry">
+Pesendorfer, M., &amp; Schmidt-Dengler, P. (2008). <a href="https://doi.org/10.1111/j.1467-937X.2008.00496.x">Asymptotic <span>Least Squares Estimators</span> for <span>Dynamic Games</span></a>. <em>Review of Economic Studies</em>, <em>75</em>(3), 901–928.
+</div>
+<div id="ref-ryanCostEnvironmentRegulation2012" class="csl-entry">
+Ryan, S. P. (2012). The <span>Cost</span> of <span>Environment Regulation</span> in a <span>Concentrated Industry</span>. <em>Econometrica</em>, <em>80</em>(3), 1019–1061.
+</div>
+<div id="ref-weintraubMarkovPerfectIndustry2008" class="csl-entry">
+Weintraub, G. Y., Benkard, C. L., &amp; Roy, B. V. (2008). <a href="https://doi.org/10.3982/ECTA6158">Markov <span>Perfect Industry Dynamics With Many Firms</span></a>. <em>Econometrica</em>, <em>76</em>(6), 1375–1411.
 </div>
 </div>
             </section>
@@ -1571,7 +1624,6 @@ for all <span class="math inline">\(x \in \mathbb{N}\)</span>.</li>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1590,6 +1642,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1610,6 +1663,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -1623,7 +1680,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

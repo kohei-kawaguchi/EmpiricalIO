@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Production and Cost Function Estimation | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Production and Cost Function Estimation | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="intro.html"/>
 <link rel="next" href="demand.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,81 +708,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="production" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Production and Cost Function Estimation</h1>
-<div id="motivations" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Motivations</h2>
+<div id="production" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Production and Cost Function Estimation<a href="production.html#production" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="motivations" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Motivations<a href="production.html#motivations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Estimating <strong>production and cost functions</strong> of producers is the cornerstone of economic analysis.</li>
 <li>Estimating the functions includes to separate the contribution of observed inputs and the other factors, which is often referred to as the <strong>productivity</strong>.</li>
-<li>“What determines productivity?” <span class="citation">(<a href="references.html#ref-Syverson2011" role="doc-biblioref">Syverson, 2011</a>)</span>-type research questions naturally follow.</li>
+<li>“What determines productivity?” <span class="citation">(<a href="#ref-Syverson2011" role="doc-biblioref">Syverson, 2011</a>)</span>-type research questions naturally follow.</li>
 <li>The methods covered in this chapter are widely used across different fields.</li>
 <li>Some of them are variants from the standard methods.</li>
 </ul>
-<div id="io" class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> IO</h3>
+<div id="io" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> IO<a href="production.html#io" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes</a> (<a href="references.html#ref-Olley1996" role="doc-biblioref">1996</a>)</span>:
+<li><span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996" role="doc-biblioref">1996</a>)</span>:
 <ul>
 <li>How much did the deregulation in the U.S. telecommunication industry, in particular the divestiture of AT&amp;T in 1984, spurred the productivity growth of the incumbent, facilitated entries, and increased the aggregate productivity?</li>
 <li>To do so, the authors estimate the plant-level production functions and productivity in the telecommunication industry.</li>
 </ul></li>
-<li><span class="citation"><a href="references.html#ref-Doraszelski2013a" role="doc-biblioref">U. Doraszelski &amp; Jaumandreu</a> (<a href="references.html#ref-Doraszelski2013a" role="doc-biblioref">2013</a>)</span>:
+<li><span class="citation">U. Doraszelski &amp; Jaumandreu (<a href="#ref-Doraszelski2013a" role="doc-biblioref">2013</a>)</span>:
 <ul>
 <li>What is the role of R&amp;D in determining the differences in productivity across firms and the evolution of firm-level productivity over time?</li>
 <li>To do so, the authors estimate the firm-level production functions and productivity of Spanish manufacturing firms during 1990s in which the transition probability of a productivity is a function of the R&amp;D activities.</li>
 </ul></li>
 </ul>
 </div>
-<div id="development" class="section level3" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Development</h3>
+<div id="development" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Development<a href="production.html#development" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Hsieh2009" role="doc-biblioref">Hsieh &amp; Klenow</a> (<a href="references.html#ref-Hsieh2009" role="doc-biblioref">2009</a>)</span>:
+<li><span class="citation">Hsieh &amp; Klenow (<a href="#ref-Hsieh2009" role="doc-biblioref">2009</a>)</span>:
 <ul>
 <li>How large is the misallocation of inputs across manufacturing firms in China and India compared to the U.S? How will the aggregate productivity of China and India change if the degree of misallocation is reduced to the U.S. level?</li>
 <li>To do so, the authors measure the revenue productivity of firms, which should be the same across firms within an industry if there were no distortion, and the measurement of the revenue productivity requires to estimate the production function.</li>
 </ul></li>
-<li><span class="citation"><a href="references.html#ref-Gennaioli2013" role="doc-biblioref">Gennaioli, La Porta, Lopez-de-Silanes, &amp; Shleifer</a> (<a href="references.html#ref-Gennaioli2013" role="doc-biblioref">2013</a>)</span>:
+<li><span class="citation">Gennaioli, La Porta, Lopez-de-Silanes, &amp; Shleifer (<a href="#ref-Gennaioli2013" role="doc-biblioref">2013</a>)</span>:
 <ul>
 <li>What are the determinants of regional growth? Do geographic, institutional, cultural, and human capital factors explain the difference across regions?</li>
 <li>To do so, the authors construct the data set that covers 74% of the world’s surface and 97% of its GDP and estimate the production function in which the above mentioned factors could affect the productivity.</li>
 </ul></li>
 </ul>
 </div>
-<div id="trade" class="section level3" number="3.1.3">
-<h3><span class="header-section-number">3.1.3</span> Trade</h3>
+<div id="trade" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Trade<a href="production.html#trade" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Haskel2007" role="doc-biblioref">Haskel, Pereira, &amp; Slaughter</a> (<a href="references.html#ref-Haskel2007" role="doc-biblioref">2007</a>)</span>:
+<li><span class="citation">Haskel, Pereira, &amp; Slaughter (<a href="#ref-Haskel2007" role="doc-biblioref">2007</a>)</span>:
 <ul>
 <li>Are there spillovers from FDI to domestic firms?</li>
 <li>To do so, the authors estimate the plant-level production function of the U.K. manufacturing firms during 1973 and 1992 and study how the foreign presence in the U.K. affected the productivity.</li>
 </ul></li>
-<li><span class="citation"><a href="references.html#ref-Loecker2011" role="doc-biblioref">De Loecker</a> (<a href="references.html#ref-Loecker2011" role="doc-biblioref">2011</a>)</span>:
+<li><span class="citation">De Loecker (<a href="#ref-Loecker2011" role="doc-biblioref">2011</a>)</span>:
 <ul>
 <li>Does the removal of trade barriers induces efficiency gain for producers?</li>
 <li>To do so, the author estimate the production functions of Belgian textile industry during 1994-2002 in which the degree of trade protection can affect the productivity level.</li>
 </ul></li>
 </ul>
 </div>
-<div id="management" class="section level3" number="3.1.4">
-<h3><span class="header-section-number">3.1.4</span> Management</h3>
+<div id="management" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Management<a href="production.html#management" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Bloom2007" role="doc-biblioref">Bloom &amp; Van Reenen</a> (<a href="references.html#ref-Bloom2007" role="doc-biblioref">2007</a>)</span>:
+<li><span class="citation">Bloom &amp; Van Reenen (<a href="#ref-Bloom2007" role="doc-biblioref">2007</a>)</span>:
 <ul>
 <li>How do management practices affect the firm productivity?</li>
 <li>To do so, the authors first estimate the production function and productivity of manufacturing firms in developed countries, and then study how the independently measured management practices of the firms affect the estimated productivity.</li>
 </ul></li>
-<li><span class="citation"><a href="references.html#ref-Braguinsky2015" role="doc-biblioref">Braguinsky, Ohyama, Okazaki, &amp; Syverson</a> (<a href="references.html#ref-Braguinsky2015" role="doc-biblioref">2015</a>)</span>:
+<li><span class="citation">Braguinsky, Ohyama, Okazaki, &amp; Syverson (<a href="#ref-Braguinsky2015" role="doc-biblioref">2015</a>)</span>:
 <ul>
 <li>How do changes in ownership affect the productivity and profitability of firms?</li>
 <li>To do so, the authors estimate the production function for various outputs including the physical output, return on capital and labor, and the utilization rate, price level, using the cotton spinners data in Japan during 1896 and 1920.</li>
 </ul></li>
 </ul>
 </div>
-<div id="education" class="section level3" number="3.1.5">
-<h3><span class="header-section-number">3.1.5</span> Education</h3>
+<div id="education" class="section level3 hasAnchor" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> Education<a href="production.html#education" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Cunha2010" role="doc-biblioref">Cunha, Heckman, &amp; Schennach</a> (<a href="references.html#ref-Cunha2010" role="doc-biblioref">2010</a>)</span>:
+<li><span class="citation">Cunha, Heckman, &amp; Schennach (<a href="#ref-Cunha2010" role="doc-biblioref">2010</a>)</span>:
 <ul>
 <li>How do childhood and schooling interventions “produce” the cognitive and non-cognitive skills of children?</li>
 <li>To do so, the authors estimate the mapping from childhood and schooling interventions to children’s cognitive and non-cognitive skills, the “production function” of childhood environment and education.</li>
@@ -767,8 +790,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 </div>
-<div id="analyzing-producer-behaviors" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Analyzing Producer Behaviors</h2>
+<div id="analyzing-producer-behaviors" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Analyzing Producer Behaviors<a href="production.html#analyzing-producer-behaviors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><p>There are several levels of parameters that govern the behavior of firms:</p></li>
 <li><p><strong>Production function</strong></p>
@@ -798,8 +821,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="production-function-estimation" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Production Function Estimation</h2>
+<div id="production-function-estimation" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Production Function Estimation<a href="production.html#production-function-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <!-- ### Output, Input, and Value-Added -->
 <!-- - The __output__ is the quantity of a good produced and the __input__ is the quantity of a good consumed. -->
 <!-- - If a good is defined, defining the output and input is straightforward. -->
@@ -819,8 +842,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- - The __value-added__ is the value added by labor and capital. -->
 <!-- - For this to be well-defined, the production function satisfy some form of separability between labor and capital and other inputs. -->
 <!-- - In the following, we assume that the output, input, and value-added are well-defined and well-measured.  -->
-<div id="cobb-douglas-specification-as-a-benchmark" class="section level3" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Cobb-Douglas Specification as a Benchmark</h3>
+<div id="cobb-douglas-specification-as-a-benchmark" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Cobb-Douglas Specification as a Benchmark<a href="production.html#cobb-douglas-specification-as-a-benchmark" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Most of the following argument carries over to a general model.</li>
 <li>For firm <span class="math inline">\(j = 1, \cdots, J\)</span> and time <span class="math inline">\(t = 1, \cdots, T\)</span>, we observe output <span class="math inline">\(Y_{jt}\)</span>, labor <span class="math inline">\(L_{jt}\)</span>, and capital <span class="math inline">\(K_{jt}\)</span>.</li>
@@ -839,8 +862,8 @@ where lowercase symbols represent natural logs of variables and <span class="mat
 <li>Linear regression model! May OLS work?</li>
 </ul>
 </div>
-<div id="potential-bias-i-endogeneity" class="section level3" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> Potential Bias I: Endogeneity</h3>
+<div id="potential-bias-i-endogeneity" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Potential Bias I: Endogeneity<a href="production.html#potential-bias-i-endogeneity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><span class="math inline">\(\epsilon_{jt}\)</span> contains everything that cannot be explained by the observed inputs: better capital may be employed, a worker may have obtained better skills, etc.</li>
 <li>When the manager of a firm makes an input choice, she should have some information about the realization of <span class="math inline">\(\epsilon_{jt}\)</span>.</li>
@@ -848,22 +871,22 @@ where lowercase symbols represent natural logs of variables and <span class="mat
 <span class="math display">\[\begin{equation}
 L_{jt} = \Bigg[\frac{p_{jt}}{w_{jt}} \beta_l \exp^{\beta_0 + \epsilon_{jt}} K_{jt}^{\beta_k}\Bigg]^{\frac{1}{1 - \beta_l}}.
 \end{equation}\]</span></li>
-<li>In this case, OLS estimator for <span class="math inline">\(\beta_l\)</span> is  biased, because when <span class="math inline">\(\epsilon_{jt}\)</span> is high, <span class="math inline">\(l_{jt}\)</span> is high and thus the increase in output caused by <span class="math inline">\(\epsilon_{jt}\)</span> is captured as if caused by the increase in labor input.</li>
-<li>The endogeneity problem was already recognized by <span class="citation"><a href="references.html#ref-Marschak1944" role="doc-biblioref">Marschak &amp; Andrews</a> (<a href="references.html#ref-Marschak1944" role="doc-biblioref">1944</a>)</span>.</li>
+<li>In this case, OLS estimator for <span class="math inline">\(\beta_l\)</span> is biased, because when <span class="math inline">\(\epsilon_{jt}\)</span> is high, <span class="math inline">\(l_{jt}\)</span> is high and thus the increase in output caused by <span class="math inline">\(\epsilon_{jt}\)</span> is captured as if caused by the increase in labor input.</li>
+<li>The endogeneity problem was already recognized by <span class="citation">Marschak &amp; Andrews (<a href="#ref-Marschak1944" role="doc-biblioref">1944</a>)</span>.</li>
 </ul>
 </div>
-<div id="potential-bias-ii-selection" class="section level3" number="3.3.3">
-<h3><span class="header-section-number">3.3.3</span> Potential Bias II: Selection</h3>
+<div id="potential-bias-ii-selection" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Potential Bias II: Selection<a href="production.html#potential-bias-ii-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Firms freely enter and exit market.</li>
 <li>Therefore, a firm that had low <span class="math inline">\(\epsilon_{jt}\)</span> is likely to exit.</li>
 <li>However, if firms have high capital <span class="math inline">\(K_{jt}\)</span>, it can stay in the market even if the realization of <span class="math inline">\(\epsilon_{jt}\)</span> is very low.</li>
-<li>Therefore, conditional on being in the market, there is a  correlation between the capital <span class="math inline">\(K_{jt}\)</span> and <span class="math inline">\(\epsilon_{jt}\)</span>.</li>
+<li>Therefore, conditional on being in the market, there is a correlation between the capital <span class="math inline">\(K_{jt}\)</span> and <span class="math inline">\(\epsilon_{jt}\)</span>.</li>
 <li>This problem occurs even if the choice of <span class="math inline">\(K_{jt}\)</span> itself is not a function of <span class="math inline">\(\epsilon_{jt}\)</span>.</li>
 </ul>
 </div>
-<div id="how-to-resolve-endogeneity-bias" class="section level3" number="3.3.4">
-<h3><span class="header-section-number">3.3.4</span> How to Resolve Endogeneity Bias?</h3>
+<div id="how-to-resolve-endogeneity-bias" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> How to Resolve Endogeneity Bias?<a href="production.html#how-to-resolve-endogeneity-bias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Temporarily abstract away from entry and exit.</li>
 <li>The data is balanced.</li>
@@ -875,12 +898,12 @@ L_{jt} = \Bigg[\frac{p_{jt}}{w_{jt}} \beta_l \exp^{\beta_0 + \epsilon_{jt}} K_{j
 <li>Olley-Pakes approach and its followers/critics.</li>
 </ol>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Griliches1998" role="doc-biblioref">Griliches &amp; Mairesse</a> (<a href="references.html#ref-Griliches1998" role="doc-biblioref">1998</a>)</span> is a good survey of the history up to Olley-Pakes approach.</li>
-<li><span class="citation"><a href="references.html#ref-Ackerberg2015" role="doc-biblioref">Daniel A. Ackerberg, Caves, &amp; Frazer</a> (<a href="references.html#ref-Ackerberg2015" role="doc-biblioref">2015</a>)</span> also offer a good survey and clarify problems and implicit assumptions in Olley-Pakes approach.</li>
+<li><span class="citation">Griliches &amp; Mairesse (<a href="#ref-Griliches1998" role="doc-biblioref">1998</a>)</span> is a good survey of the history up to Olley-Pakes approach.</li>
+<li><span class="citation">Daniel A. Ackerberg, Caves, &amp; Frazer (<a href="#ref-Ackerberg2015" role="doc-biblioref">2015</a>)</span> also offer a good survey and clarify problems and implicit assumptions in Olley-Pakes approach.</li>
 </ul>
 </div>
-<div id="panel-data" class="section level3" number="3.3.5">
-<h3><span class="header-section-number">3.3.5</span> Panel Data</h3>
+<div id="panel-data" class="section level3 hasAnchor" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> Panel Data<a href="production.html#panel-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Assume that <span class="math inline">\(\epsilon_{jt} = \mu_j + \eta_{jt}\)</span>, where <span class="math inline">\(\eta_{jt}\)</span> is uncorrelated with input choices up to period <span class="math inline">\(t\)</span>:
 <span class="math display">\[\begin{equation}
@@ -898,17 +921,17 @@ y_{jt} - y_{j, t - 1}= \beta_l (l_{jt} - l_{j, t - 1}) + \beta_k (k_{jt} - k_{j,
 </ul></li>
 </ul>
 </div>
-<div id="first-order-condition-for-inputs" class="section level3" number="3.3.6">
-<h3><span class="header-section-number">3.3.6</span> First-Order Condition for Inputs</h3>
+<div id="first-order-condition-for-inputs" class="section level3 hasAnchor" number="3.3.6">
+<h3><span class="header-section-number">3.3.6</span> First-Order Condition for Inputs<a href="production.html#first-order-condition-for-inputs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Use the first-order condition for inputs as the moment condition <span class="citation">(<a href="references.html#ref-McElroy1987" role="doc-biblioref">McElroy, 1987</a>)</span>.</li>
+<li>Use the first-order condition for inputs as the moment condition <span class="citation">(<a href="#ref-McElroy1987" role="doc-biblioref">McElroy, 1987</a>)</span>.</li>
 <li>Closely related to the cost function estimation literature.</li>
 <li>Need to specify the factor market structure and the nature of the optimization problem for a firm.</li>
 <li>Recently being center of attention again as one of the solutions to the “collinearity problem” discussed below.</li>
 </ul>
 </div>
-<div id="productioniv" class="section level3" number="3.3.7">
-<h3><span class="header-section-number">3.3.7</span> Instrumental Variable</h3>
+<div id="productioniv" class="section level3 hasAnchor" number="3.3.7">
+<h3><span class="header-section-number">3.3.7</span> Instrumental Variable<a href="production.html#productioniv" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Borrow the idea from the first-order condition approach that the input choices are affected by some exogenous variables.</p></li>
 <li><p>If we have instrumental variables that affect inputs but are uncorrelated with errors <span class="math inline">\(\epsilon_{jt}\)</span>, then we can identify the parameter by an instrumental variable method.</p></li>
@@ -929,10 +952,10 @@ y_{jt} - y_{j, t - 1}= \beta_l (l_{jt} - l_{j, t - 1}) + \beta_k (k_{jt} - k_{j,
 </ul></li>
 </ul>
 </div>
-<div id="olley-pakes-approach" class="section level3" number="3.3.8">
-<h3><span class="header-section-number">3.3.8</span> Olley-Pakes Approach</h3>
+<div id="olley-pakes-approach" class="section level3 hasAnchor" number="3.3.8">
+<h3><span class="header-section-number">3.3.8</span> Olley-Pakes Approach<a href="production.html#olley-pakes-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Exploit restrictions from the economic theory <span class="citation">(<a href="references.html#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes, 1996</a>)</span>.</li>
+<li>Exploit restrictions from the economic theory <span class="citation">(<a href="#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes, 1996</a>)</span>.</li>
 <li>Write <span class="math inline">\(\epsilon_{jt} = \omega_{jt} + \eta_{jt}\)</span>, where <span class="math inline">\(\omega_{jt}\)</span> is an anticipated shock and <span class="math inline">\(\eta_{jt}\)</span> is an ex-post shock.</li>
 <li>Inputs are correlated with <span class="math inline">\(\omega_{jt}\)</span> but not with <span class="math inline">\(\eta_{jt}\)</span></li>
 <li>The model is written as:
@@ -942,19 +965,19 @@ y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}.
 <li>OP use economic theory to derive a valid proxy for the anticipated shock <span class="math inline">\(\omega_{jt}\)</span>.</li>
 </ul>
 </div>
-<div id="assumption-i-information-set" class="section level3" number="3.3.9">
-<h3><span class="header-section-number">3.3.9</span> Assumption I: Information Set</h3>
+<div id="assumption-i-information-set" class="section level3 hasAnchor" number="3.3.9">
+<h3><span class="header-section-number">3.3.9</span> Assumption I: Information Set<a href="production.html#assumption-i-information-set" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The firm’s information set at <span class="math inline">\(t\)</span>, <span class="math inline">\(I_{jt}\)</span>, includes current and past productivity shocks <span class="math inline">\(\{\omega_{j\tau}\}_{\tau = 0}^t\)</span> but does not include future productivity shocks <span class="math inline">\(\{\omega_{j\tau}\}_{\tau = t + 1}^{\infty}\)</span>.</li>
 <li>The transitory shocks <span class="math inline">\(\eta_{jt}\)</span> satisfy <span class="math inline">\(\mathbb{E}\{\eta_{jt}|I_{jt}\} = 0\)</span>.</li>
 </ul>
 </div>
-<div id="assumption-ii-first-order-markov" class="section level3" number="3.3.10">
-<h3><span class="header-section-number">3.3.10</span> Assumption II: First Order Markov</h3>
+<div id="assumption-ii-first-order-markov" class="section level3 hasAnchor" number="3.3.10">
+<h3><span class="header-section-number">3.3.10</span> Assumption II: First Order Markov<a href="production.html#assumption-ii-first-order-markov" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Productivity shocks evolve according to the distribution:
 <span class="math display">\[\begin{equation}
-p(\omega_{j, t + 1}|I_{jt}) = p(\omega_{j, t + 1}|\omega_{jt}), 
+p(\omega_{j, t + 1}|I_{jt}) = p(\omega_{j, t + 1}|\omega_{jt}),
 \end{equation}\]</span>
 and the distribution is known to firms and stochastically increasing in <span class="math inline">\(\omega_{jt}\)</span>.</li>
 <li>Then:
@@ -968,8 +991,8 @@ and:
 by construction.</li>
 </ul>
 </div>
-<div id="assumption-iii-timing-of-input-choices" class="section level3" number="3.3.11">
-<h3><span class="header-section-number">3.3.11</span> Assumption III: Timing of Input Choices</h3>
+<div id="assumption-iii-timing-of-input-choices" class="section level3 hasAnchor" number="3.3.11">
+<h3><span class="header-section-number">3.3.11</span> Assumption III: Timing of Input Choices<a href="production.html#assumption-iii-timing-of-input-choices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Firms accumulate capital according to:
 <span class="math display">\[\begin{equation}
@@ -981,8 +1004,8 @@ where investment <span class="math inline">\(i_{j, t - 1}\)</span> is chosen in 
 <li>Intuitively, it takes a full period for new capital to be ordered, delivered, and installed.</li>
 </ul>
 </div>
-<div id="assumption-iv-scalar-unobservable" class="section level3" number="3.3.12">
-<h3><span class="header-section-number">3.3.12</span> Assumption IV: Scalar Unobservable</h3>
+<div id="assumption-iv-scalar-unobservable" class="section level3 hasAnchor" number="3.3.12">
+<h3><span class="header-section-number">3.3.12</span> Assumption IV: Scalar Unobservable<a href="production.html#assumption-iv-scalar-unobservable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Firms’ investment decisions are given by:
 <span class="math display">\[\begin{equation}
@@ -995,16 +1018,16 @@ i_{jt} = f_t(k_{jt}, \omega_{jt}).
 </ul></li>
 </ul>
 </div>
-<div id="assumption-iv-strict-monotonicity" class="section level3" number="3.3.13">
-<h3><span class="header-section-number">3.3.13</span> Assumption IV: Strict Monotonicity</h3>
+<div id="assumption-iv-strict-monotonicity" class="section level3 hasAnchor" number="3.3.13">
+<h3><span class="header-section-number">3.3.13</span> Assumption IV: Strict Monotonicity<a href="production.html#assumption-iv-strict-monotonicity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The investment policy function <span class="math inline">\(f_t(k_{jt}, \omega_{jt})\)</span> is strictly increasing in <span class="math inline">\(\omega_{jt}\)</span>.</li>
 <li>This holds if the realization of higher <span class="math inline">\(\omega_{jt}\)</span> implies higher expectation for future productivity (Assumption III) and if the marginal product of capital is increasing in the expectation for future productivity.</li>
 <li>To verify the latter condition in a given game is often not easy.</li>
 </ul>
 </div>
-<div id="two-step-approach-the-first-step" class="section level3" number="3.3.14">
-<h3><span class="header-section-number">3.3.14</span> Two-step Approach: The First Step</h3>
+<div id="two-step-approach-the-first-step" class="section level3 hasAnchor" number="3.3.14">
+<h3><span class="header-section-number">3.3.14</span> Two-step Approach: The First Step<a href="production.html#two-step-approach-the-first-step" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Insert <span class="math inline">\(\omega_{jt} = h(k_{jt}, i_{jt})\)</span> to the original equation to get:
 <span class="math display">\[\begin{equation}
@@ -1013,7 +1036,7 @@ y_{jt} &amp;= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, 
 &amp; \equiv \beta_l l_{jt} + \phi(k_{jt}, i_{jt}) + \eta_{jt}.
 \end{split}
 \end{equation}\]</span></li>
-<li>This is a <strong>partially linear model</strong>: see <span class="citation"><a href="references.html#ref-Ichimura2007" role="doc-biblioref">Ichimura &amp; Todd</a> (<a href="references.html#ref-Ichimura2007" role="doc-biblioref">2007</a>)</span> for reference.</li>
+<li>This is a <strong>partially linear model</strong>: see <span class="citation">Ichimura &amp; Todd (<a href="#ref-Ichimura2007" role="doc-biblioref">2007</a>)</span> for reference.</li>
 <li>Because <span class="math inline">\(l_{jt}, k_{jt}\)</span> and <span class="math inline">\(i_{jt}\)</span> are uncorrelated with <span class="math inline">\(\eta_{jt}\)</span>, we can identify <span class="math inline">\(\beta_l\)</span> and <span class="math inline">\(\phi(\cdot)\)</span> by exploiting the moment condition:
 <span class="math display">\[\begin{equation}
 \begin{split}
@@ -1026,8 +1049,8 @@ y_{jt} &amp;= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, 
 <li>Let <span class="math inline">\(\beta_l^0\)</span> and <span class="math inline">\(\phi^0\)</span> be the identified true parameters.</li>
 </ul>
 </div>
-<div id="two-step-approach-the-second-step" class="section level3" number="3.3.15">
-<h3><span class="header-section-number">3.3.15</span> Two-step Approach: The Second Step</h3>
+<div id="two-step-approach-the-second-step" class="section level3 hasAnchor" number="3.3.15">
+<h3><span class="header-section-number">3.3.15</span> Two-step Approach: The Second Step<a href="production.html#two-step-approach-the-second-step" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Note that:
 <span class="math display">\[\begin{equation}
@@ -1043,7 +1066,7 @@ y_{jt} &amp;= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, 
 \end{split}
 \end{equation}\]</span></li>
 <li><span class="math inline">\(\nu_{jt}\)</span> and <span class="math inline">\(\eta_{jt}\)</span> are independent of the covariates.</li>
-<li>This is a <strong>multiple-index model</strong> with indices <span class="math inline">\(\beta_0 + \beta_1 k_{jt}\)</span> and <span class="math inline">\(\beta_0 + \beta_1 k_{j, t - 1}\)</span> where parameters of two indices are restricted to be the same: see <span class="citation"><a href="references.html#ref-Ichimura2007" role="doc-biblioref">Ichimura &amp; Todd</a> (<a href="references.html#ref-Ichimura2007" role="doc-biblioref">2007</a>)</span> for reference.</li>
+<li>This is a <strong>multiple-index model</strong> with indices <span class="math inline">\(\beta_0 + \beta_1 k_{jt}\)</span> and <span class="math inline">\(\beta_0 + \beta_1 k_{j, t - 1}\)</span> where parameters of two indices are restricted to be the same: see <span class="citation">Ichimura &amp; Todd (<a href="#ref-Ichimura2007" role="doc-biblioref">2007</a>)</span> for reference.</li>
 <li>We can identify <span class="math inline">\(\beta_0, \beta_k\)</span> and <span class="math inline">\(g\)</span> by exploiting the moment condition:
 <span class="math display">\[\begin{equation}
 \begin{split}
@@ -1053,8 +1076,8 @@ y_{jt} &amp;= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, 
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="identification-of-the-anticipated-shocks" class="section level3" number="3.3.16">
-<h3><span class="header-section-number">3.3.16</span> Identification of the Anticipated Shocks</h3>
+<div id="identification-of-the-anticipated-shocks" class="section level3 hasAnchor" number="3.3.16">
+<h3><span class="header-section-number">3.3.16</span> Identification of the Anticipated Shocks<a href="production.html#identification-of-the-anticipated-shocks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>If <span class="math inline">\(\phi, \beta_0, \beta_k\)</span> are identified, then <span class="math inline">\(\omega_{jt}\)</span> is also identified by:
 <span class="math display">\[\begin{equation}
@@ -1062,8 +1085,8 @@ y_{jt} &amp;= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, 
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="two-step-estimation-of-olley1996." class="section level3" number="3.3.17">
-<h3><span class="header-section-number">3.3.17</span> Two-Step Estimation of <span class="citation"><a href="references.html#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes</a> (<a href="references.html#ref-Olley1996" role="doc-biblioref">1996</a>)</span>.</h3>
+<div id="two-step-estimation-of-olley1996." class="section level3 hasAnchor" number="3.3.17">
+<h3><span class="header-section-number">3.3.17</span> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996" role="doc-biblioref">1996</a>)</span>.<a href="production.html#two-step-estimation-of-olley1996." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><strong>First step</strong>: Estimate <span class="math inline">\(\beta_L\)</span> and <span class="math inline">\(\phi\)</span> in :
 <span class="math display">\[\begin{equation}
@@ -1089,7 +1112,7 @@ where <span class="math inline">\(P \to \infty\)</span> when the sample size goe
 \end{equation}\]</span></li>
 <li>Once the basis functions are fixed, estimation is the same as the linear model.</li>
 <li>But the inference (the computation of the standard deviation) is difference, because of the approximation error.</li>
-<li>See <span class="citation"><a href="references.html#ref-Chen2007" role="doc-biblioref">Chen</a> (<a href="references.html#ref-Chen2007" role="doc-biblioref">2007</a>)</span> for reference.</li>
+<li>See <span class="citation">Chen (<a href="#ref-Chen2007" role="doc-biblioref">2007</a>)</span> for reference.</li>
 <li>Let <span class="math inline">\(\hat{\beta}_l\)</span> and <span class="math inline">\(\hat{\phi}\)</span> be the estimates from the first step.</li>
 <li><strong>Second step</strong>: Estimate <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_k\)</span>, and <span class="math inline">\(g\)</span> in:
 <span class="math display">\[\begin{equation}
@@ -1103,22 +1126,22 @@ y_{jt} - \hat{\beta}_l l_{jt}&amp; = \beta_0 + \beta_k k_{jt} + g[\hat{\phi}(k_{
 by approximating <span class="math inline">\(g\)</span> by some basis functions, say, polynomials or splines.</li>
 </ul>
 </div>
-<div id="from-an-economic-models-to-an-econometric-model" class="section level3" number="3.3.18">
-<h3><span class="header-section-number">3.3.18</span> From An Economic Models to An Econometric Model</h3>
+<div id="from-an-economic-models-to-an-econometric-model" class="section level3 hasAnchor" number="3.3.18">
+<h3><span class="header-section-number">3.3.18</span> From An Economic Models to An Econometric Model<a href="production.html#from-an-economic-models-to-an-econometric-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Starting from economic model with some unobserved heterogeneity, we reach some reduced-form model.</li>
 <li>If the resulting model belongs to a class of econometric models whose identification and estimation are established, we can simply apply the existing methods.</li>
 </ul>
 </div>
-<div id="how-to-resolve-selection-bias" class="section level3" number="3.3.19">
-<h3><span class="header-section-number">3.3.19</span> How to Resolve Selection Bias</h3>
+<div id="how-to-resolve-selection-bias" class="section level3 hasAnchor" number="3.3.19">
+<h3><span class="header-section-number">3.3.19</span> How to Resolve Selection Bias<a href="production.html#how-to-resolve-selection-bias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Use propensity score to correct selection bias: <span class="citation"><a href="references.html#ref-Ahn1993" role="doc-biblioref">Ahn &amp; Powell</a> (<a href="references.html#ref-Ahn1993" role="doc-biblioref">1993</a>)</span>.</li>
+<li>Use propensity score to correct selection bias: <span class="citation">Ahn &amp; Powell (<a href="#ref-Ahn1993" role="doc-biblioref">1993</a>)</span>.</li>
 <li>At the beginning of period <span class="math inline">\(t\)</span>, after observing <span class="math inline">\(\omega_{jt}\)</span>, firm <span class="math inline">\(j\)</span> decides whether to continue the business (<span class="math inline">\(\chi_{jt} = 1\)</span>) or exit (<span class="math inline">\(\chi_{jt} = 0)\)</span>.</li>
 <li>Assume that the difference between continuation and exit values is strictly increasing in <span class="math inline">\(\omega_{jt}\)</span>.</li>
 <li>Then, there is a threshold <span class="math inline">\(\underline{\omega}(k_{jt})\)</span> such that:
 <span class="math display">\[\begin{equation}
-\chi_{jt} = 
+\chi_{jt} =
 \begin{cases}
 1 &amp;\text{   if   } \omega_{jt} \ge \underline{\omega}(k_{jt})\\
 0 &amp;\text{   otherwise.}
@@ -1127,8 +1150,8 @@ by approximating <span class="math inline">\(g\)</span> by some basis functions,
 <li>We can only observe firms that satisfy <span class="math inline">\(\chi_{jt} = 1\)</span>.</li>
 </ul>
 </div>
-<div id="correction-in-the-first-step" class="section level3" number="3.3.20">
-<h3><span class="header-section-number">3.3.20</span> Correction in the First Step</h3>
+<div id="correction-in-the-first-step" class="section level3 hasAnchor" number="3.3.20">
+<h3><span class="header-section-number">3.3.20</span> Correction in the First Step<a href="production.html#correction-in-the-first-step" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In the first step, we need no correction because:
 <span class="math display">\[\begin{equation}
@@ -1142,8 +1165,8 @@ by approximating <span class="math inline">\(g\)</span> by some basis functions,
 Therefore, we can identify <span class="math inline">\(\beta_l\)</span> and <span class="math inline">\(\phi(\cdot)\)</span> as in the previous case.</li>
 </ul>
 </div>
-<div id="correction-in-the-second-step-i-the-source-of-bias" class="section level3" number="3.3.21">
-<h3><span class="header-section-number">3.3.21</span> Correction in the Second Step I: The Source of Bias</h3>
+<div id="correction-in-the-second-step-i-the-source-of-bias" class="section level3 hasAnchor" number="3.3.21">
+<h3><span class="header-section-number">3.3.21</span> Correction in the Second Step I: The Source of Bias<a href="production.html#correction-in-the-second-step-i-the-source-of-bias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>One the other hand, we need correction in the second step, because:
 <span class="math display">\[\begin{equation}
@@ -1162,8 +1185,8 @@ and
 since anticipated shock matters continuation/exit decision in period <span class="math inline">\(t\)</span>.</li>
 </ul>
 </div>
-<div id="correction-in-the-second-step-ii-conditional-exit-probability" class="section level3" number="3.3.22">
-<h3><span class="header-section-number">3.3.22</span> Correction in the Second Step II: Conditional Exit Probability</h3>
+<div id="correction-in-the-second-step-ii-conditional-exit-probability" class="section level3 hasAnchor" number="3.3.22">
+<h3><span class="header-section-number">3.3.22</span> Correction in the Second Step II: Conditional Exit Probability<a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let’s see that the conditional expectation:
 <span class="math display">\[\begin{equation}
@@ -1177,8 +1200,8 @@ since anticipated shock matters continuation/exit decision in period <span class
 is a function of <span class="math inline">\(\omega_{j, t - 1}\)</span> and <span class="math inline">\(\underline{\omega}(k_{jt})\)</span>.</li>
 </ul>
 </div>
-<div id="correction-in-the-second-step-iii-invertibility-in-threshold" class="section level3" number="3.3.23">
-<h3><span class="header-section-number">3.3.23</span> Correction in the Second Step III: Invertibility in Threshold</h3>
+<div id="correction-in-the-second-step-iii-invertibility-in-threshold" class="section level3 hasAnchor" number="3.3.23">
+<h3><span class="header-section-number">3.3.23</span> Correction in the Second Step III: Invertibility in Threshold<a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The propensity of continuation conditional on observed information up to period <span class="math inline">\(t - 1\)</span>:
 <span class="math display">\[\begin{equation}
@@ -1200,8 +1223,8 @@ and it is invertible in <span class="math inline">\(\underline{\omega}(k_{jt})\)
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="correction-in-the-second-step-iv-controlling-the-threshold" class="section level3" number="3.3.24">
-<h3><span class="header-section-number">3.3.24</span> Correction in the Second Step IV: Controlling the Threshold</h3>
+<div id="correction-in-the-second-step-iv-controlling-the-threshold" class="section level3 hasAnchor" number="3.3.24">
+<h3><span class="header-section-number">3.3.24</span> Correction in the Second Step IV: Controlling the Threshold<a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Now, he have:
 <span class="math display">\[\begin{equation}
@@ -1220,8 +1243,8 @@ and it is invertible in <span class="math inline">\(\underline{\omega}(k_{jt})\)
 <li>With this remaining variation, we can identify <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_k\)</span>, and <span class="math inline">\(\tilde{\tilde{g}}\)</span> by the same argument as the case without selection, for each <span class="math inline">\(P_{jt} = p\)</span>.</li>
 </ul>
 </div>
-<div id="three-step-estimation-of-olley1996" class="section level3" number="3.3.25">
-<h3><span class="header-section-number">3.3.25</span> Three Step Estimation of <span class="citation"><a href="references.html#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes</a> (<a href="references.html#ref-Olley1996" role="doc-biblioref">1996</a>)</span></h3>
+<div id="three-step-estimation-of-olley1996" class="section level3 hasAnchor" number="3.3.25">
+<h3><span class="header-section-number">3.3.25</span> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996" role="doc-biblioref">1996</a>)</span><a href="production.html#three-step-estimation-of-olley1996" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><strong>Zero step</strong>: Estimate the propensity score:
 <span class="math display">\[\begin{equation}
@@ -1231,8 +1254,8 @@ by a kernel estimator.</li>
 <li>Insert the resulting estimates <span class="math inline">\(\widehat{P}_{jt}\)</span> into the first and second steps.</li>
 </ul>
 </div>
-<div id="zero-investment-problem" class="section level3" number="3.3.26">
-<h3><span class="header-section-number">3.3.26</span> Zero Investment Problem</h3>
+<div id="zero-investment-problem" class="section level3 hasAnchor" number="3.3.26">
+<h3><span class="header-section-number">3.3.26</span> Zero Investment Problem<a href="production.html#zero-investment-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>One of the key assumptions in OP method was invertibility between anticipated shock and investment:
 <span class="math display">\[\begin{equation}
@@ -1242,8 +1265,8 @@ by a kernel estimator.</li>
 <li>Then, the invertibility does not hold globally: there are some region of the anticipated shock in which the investment takes value zero.</li>
 </ul>
 </div>
-<div id="tackle-zero-investment-problem-i-discard-some-data" class="section level3" number="3.3.27">
-<h3><span class="header-section-number">3.3.27</span> Tackle Zero Investment Problem I: Discard Some Data</h3>
+<div id="tackle-zero-investment-problem-i-discard-some-data" class="section level3 hasAnchor" number="3.3.27">
+<h3><span class="header-section-number">3.3.27</span> Tackle Zero Investment Problem I: Discard Some Data<a href="production.html#tackle-zero-investment-problem-i-discard-some-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Discard a data <span class="math inline">\((j, t)\)</span> such that <span class="math inline">\(i_{j, t - 1} = 0\)</span>.</li>
 <li>Use a data <span class="math inline">\((j, t)\)</span> such that <span class="math inline">\(i_{j, t - 1} &gt; 0\)</span>.</li>
@@ -1256,11 +1279,11 @@ is independent of the event up to <span class="math inline">\(t - 1\)</span>, in
 <li>However, this causes information loss. The loss is high if the proportion of the sample such that <span class="math inline">\(i_{j, t - 1} = 0\)</span> is high.</li>
 </ul>
 </div>
-<div id="tackle-zero-investment-problem-ii-use-another-proxy" class="section level3" number="3.3.28">
-<h3><span class="header-section-number">3.3.28</span> Tackle Zero Investment Problem II: Use Another Proxy</h3>
+<div id="tackle-zero-investment-problem-ii-use-another-proxy" class="section level3 hasAnchor" number="3.3.28">
+<h3><span class="header-section-number">3.3.28</span> Tackle Zero Investment Problem II: Use Another Proxy<a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Investment is just a possible proxy for the anticipated shock.</p></li>
-<li><p>Intermediate inputs can be used as proxies as well <span class="citation">(<a href="references.html#ref-Levinsohn2003" role="doc-biblioref">Levinsohn &amp; Petrin, 2003</a>)</span>.</p></li>
+<li><p>Intermediate inputs can be used as proxies as well <span class="citation">(<a href="#ref-Levinsohn2003" role="doc-biblioref">Levinsohn &amp; Petrin, 2003</a>)</span>.</p></li>
 <li><p>The problem is that these intermediate inputs are included in the gross production function, whereas investment is excluded.</p></li>
 <li><p>Let <span class="math inline">\(m_{jt}\)</span> be the log material input, and assume that the production function takes the form of:
 <span class="math display">\[\begin{equation}
@@ -1303,12 +1326,12 @@ if <strong>there is enough variation</strong> in <span class="math inline">\(l_{
 <li><p>The identification of <span class="math inline">\(\beta_{m}\)</span> comes from <span class="math inline">\(\beta_m m_{j, t - 1}\)</span>.</p></li>
 </ul>
 </div>
-<div id="one-step-estimation-of-olley1996-and-levinsohn2003" class="section level3" number="3.3.29">
-<h3><span class="header-section-number">3.3.29</span> One-step Estimation of <span class="citation"><a href="references.html#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes</a> (<a href="references.html#ref-Olley1996" role="doc-biblioref">1996</a>)</span> and <span class="citation"><a href="references.html#ref-Levinsohn2003" role="doc-biblioref">Levinsohn &amp; Petrin</a> (<a href="references.html#ref-Levinsohn2003" role="doc-biblioref">2003</a>)</span></h3>
+<div id="one-step-estimation-of-olley1996-and-levinsohn2003" class="section level3 hasAnchor" number="3.3.29">
+<h3><span class="header-section-number">3.3.29</span> One-step Estimation of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996" role="doc-biblioref">1996</a>)</span> and <span class="citation">Levinsohn &amp; Petrin (<a href="#ref-Levinsohn2003" role="doc-biblioref">2003</a>)</span><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><p><span class="citation"><a href="references.html#ref-Levinsohn2003" role="doc-biblioref">Levinsohn &amp; Petrin</a> (<a href="references.html#ref-Levinsohn2003" role="doc-biblioref">2003</a>)</span> can be estimated in the similar two-step method.</p></li>
-<li><p>We can jointly estimate the parameters in first and second steps to improve the efficiency <span class="citation">(<a href="references.html#ref-Wooldridge2009" role="doc-biblioref">Wooldridge, 2009</a>)</span>.</p></li>
-<li><p>We estimate under the assumptions of <span class="citation"><a href="references.html#ref-Olley1996" role="doc-biblioref">Olley &amp; Pakes</a> (<a href="references.html#ref-Olley1996" role="doc-biblioref">1996</a>)</span>:
+<li><p><span class="citation">Levinsohn &amp; Petrin (<a href="#ref-Levinsohn2003" role="doc-biblioref">2003</a>)</span> can be estimated in the similar two-step method.</p></li>
+<li><p>We can jointly estimate the parameters in first and second steps to improve the efficiency <span class="citation">(<a href="#ref-Wooldridge2009" role="doc-biblioref">Wooldridge, 2009</a>)</span>.</p></li>
+<li><p>We estimate under the assumptions of <span class="citation">Olley &amp; Pakes (<a href="#ref-Olley1996" role="doc-biblioref">1996</a>)</span>:
 <span class="math display">\[\begin{equation}
 y_{jt} = \beta_0 + \beta_1 l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt}.
 \end{equation}\]</span></p></li>
@@ -1342,10 +1365,10 @@ if we assume that lagged input are correlated with the current inputs and <span 
 <li><p>The one-step estimator can be more efficient but can be computationally heavier than the two-step estimator.</p></li>
 </ul>
 </div>
-<div id="scalar-unobservable-problem-finite-order-markov-process" class="section level3" number="3.3.30">
-<h3><span class="header-section-number">3.3.30</span> Scalar Unobservable Problem: Finite-order Markov Process</h3>
+<div id="scalar-unobservable-problem-finite-order-markov-process" class="section level3 hasAnchor" number="3.3.30">
+<h3><span class="header-section-number">3.3.30</span> Scalar Unobservable Problem: Finite-order Markov Process<a href="production.html#scalar-unobservable-problem-finite-order-markov-process" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><p>Borrow the idea of using the first-order condition to resolve the collinearity problem <span class="citation">(<a href="references.html#ref-Gandhi2017a" role="doc-biblioref">Gandhi, Navarro, &amp; Rivers, 2017</a>)</span>.</p></li>
+<li><p>Borrow the idea of using the first-order condition to resolve the collinearity problem <span class="citation">(<a href="#ref-Gandhi2017a" role="doc-biblioref">Gandhi, Navarro, &amp; Rivers, 2017</a>)</span>.</p></li>
 <li><p>We have assumed that anticipated shocks follow a first-order Markov process:
 <span class="math display">\[\begin{equation}
 \omega_{jt} = g(\omega_{j, t - 1}) + \nu_{jt}.
@@ -1357,7 +1380,7 @@ if we assume that lagged input are correlated with the current inputs and <span 
 <li><p>Then, we need proxies as many as the number of unobservables:
 <span class="math display">\[\begin{equation}
 \begin{pmatrix}
-i_{jt} \\ m_{jt} 
+i_{jt} \\ m_{jt}
 \end{pmatrix}
 = \Gamma(k_{jt}, \omega_{jt}, \omega_{j, t - 1}),
 \end{equation}\]</span>
@@ -1369,8 +1392,8 @@ such that the policy function for the proxies is a bijection in <span class="mat
 <li><p>The reminder goes as in the standard OP method.</p></li>
 </ul>
 </div>
-<div id="scalar-unobservable-problem-demand-and-productivity-shocks" class="section level3" number="3.3.31">
-<h3><span class="header-section-number">3.3.31</span> Scalar Unobservable Problem: Demand and Productivity Shocks</h3>
+<div id="scalar-unobservable-problem-demand-and-productivity-shocks" class="section level3 hasAnchor" number="3.3.31">
+<h3><span class="header-section-number">3.3.31</span> Scalar Unobservable Problem: Demand and Productivity Shocks<a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>There may be a demand shock <span class="math inline">\(\mu_{jt}\)</span> that also follows first-order Markov process.</li>
 <li>Then, the policy function depend both on <span class="math inline">\(\mu_{jt}\)</span> and <span class="math inline">\(\omega_{jt}\)</span>.</li>
@@ -1390,7 +1413,7 @@ yields:
 <li>If <span class="math inline">\(\omega_{jt}\)</span> only depends on <span class="math inline">\(\omega_{j, t - 1}\)</span> but not on <span class="math inline">\(\mu_{j, t - 1}\)</span>, then the second step of the modified OP method is to estimate:
 <span class="math display">\[\begin{equation}
 \begin{split}
-y_{jt} - \hat{\beta}_l l_{jt} 
+y_{jt} - \hat{\beta}_l l_{jt}
 &amp;= \beta_0 + \beta_k k_{jt}\\
 &amp; + g(\omega_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
 &amp;= \beta_0 + \beta_k k_{jt}\\
@@ -1401,7 +1424,7 @@ y_{jt} - \hat{\beta}_l l_{jt}
 <li>If <span class="math inline">\(\omega_{jt}\)</span> depends both on <span class="math inline">\(\omega_{j, t - 1}\)</span> and <span class="math inline">\(\mu_{j, t - 1}\)</span>, the second step regression equation will be:
 <span class="math display">\[\begin{equation}
 \begin{split}
-y_{jt} - \hat{\beta}_l l_{jt} 
+y_{jt} - \hat{\beta}_l l_{jt}
 &amp;= \beta_0 + \beta_k k_{jt}\\
 &amp; + g(\omega_{j, t - 1}, \mu_{j, t - 1}) + \nu_{jt} + \eta_{jt}\\
 &amp;= \beta_0 + \beta_k k_{jt}\\
@@ -1421,7 +1444,7 @@ and plug it into the second step regression equation to get:
 &amp;+g(\hat{\phi}_{j, t - 1} - \beta_0 - \beta_k k_{j, t - 1}, \Gamma_2^{- 1}(k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})) + \nu_{jt} + \eta_{jt}.
 \end{split}
 \end{equation}\]</span></li>
-<li>The parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_k\)</span>  be identified only with this observation, because <span class="math inline">\(\Gamma_2^{-1}\)</span> is  function: it can mean any function of <span class="math inline">\((k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})\)</span>.</li>
+<li>The parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_k\)</span> be identified only with this observation, because <span class="math inline">\(\Gamma_2^{-1}\)</span> is function: it can mean any function of <span class="math inline">\((k_{j, t - 1}, i_{j, t - 1}, p_{j, t - 1})\)</span>.</li>
 <li>To estimate such a model, we jointly estimate the demand function along with the production function.</li>
 <li>At this point, we do not investigate it further because we have not yet learned how to estimate the demand function.</li>
 <li>For now just keep in mind that:
@@ -1432,10 +1455,10 @@ and plug it into the second step regression equation to get:
 </ul></li>
 </ul>
 </div>
-<div id="collinearity-problem" class="section level3" number="3.3.32">
-<h3><span class="header-section-number">3.3.32</span> Collinearity Problem</h3>
+<div id="collinearity-problem" class="section level3 hasAnchor" number="3.3.32">
+<h3><span class="header-section-number">3.3.32</span> Collinearity Problem<a href="production.html#collinearity-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>The collinearity problem is formally pointed out by <span class="citation"><a href="references.html#ref-Ackerberg2015" role="doc-biblioref">Daniel A. Ackerberg, Caves, &amp; Frazer</a> (<a href="references.html#ref-Ackerberg2015" role="doc-biblioref">2015</a>)</span>.</li>
+<li>The collinearity problem is formally pointed out by <span class="citation">Daniel A. Ackerberg et al. (<a href="#ref-Ackerberg2015" role="doc-biblioref">2015</a>)</span>.</li>
 <li>This paper is finally published in 2015, but has been circulated since 2005.</li>
 <li>We assumed that <span class="math inline">\(k_{jt}\)</span> and <span class="math inline">\(\omega_{jt}\)</span> are state variables.</li>
 <li>Then the policy function for labor input should take the form of:
@@ -1464,8 +1487,8 @@ y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\tilde{\phi}(i_{j, t - 1}
 <li><strong><span class="math inline">\(\beta_l\)</span> cannot be identified!</strong></li>
 </ul>
 </div>
-<div id="tackle-collinearity-problem-peculiar-assumptions" class="section level3" number="3.3.33">
-<h3><span class="header-section-number">3.3.33</span> Tackle Collinearity Problem: Peculiar Assumptions</h3>
+<div id="tackle-collinearity-problem-peculiar-assumptions" class="section level3 hasAnchor" number="3.3.33">
+<h3><span class="header-section-number">3.3.33</span> Tackle Collinearity Problem: Peculiar Assumptions<a href="production.html#tackle-collinearity-problem-peculiar-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To make Olley-Pakes/Levinsohn-Petrin approach workable, we need peculiar data generating process for <span class="math inline">\(l_{jt}\)</span>.</li>
 <li>Consider Levinsohn-Petrin framework.</li>
@@ -1480,37 +1503,37 @@ y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\tilde{\phi}(i_{j, t - 1}
 <ul>
 <li>If it is not i.i.d over time, it becomes a state variable and enters to the policy for <span class="math inline">\(m_{jt}\)</span>, violating the scalar unobserved heterogeneity assumption.</li>
 </ul></li>
-<li><span class="math inline">\(k_{jt}\)</span> is realized, an unexpected shock is observed, <span class="math inline">\(l_{jt}\)</span> is determined, <span class="math inline">\(\omega_{jt}\)</span> is observed, <span class="math inline">\(m_{jt}\)</span> and <span class="math inline">\(i_{jt}\)</span> are determined, and <span class="math inline">\(\eta_{jt}\)</span> is observed (<span class="citation"><a href="references.html#ref-Ackerberg2016" role="doc-biblioref">Daniel A. Ackerberg</a> (<a href="references.html#ref-Ackerberg2016" role="doc-biblioref">2016</a>)</span> recommends this assumption).
+<li><span class="math inline">\(k_{jt}\)</span> is realized, an unexpected shock is observed, <span class="math inline">\(l_{jt}\)</span> is determined, <span class="math inline">\(\omega_{jt}\)</span> is observed, <span class="math inline">\(m_{jt}\)</span> and <span class="math inline">\(i_{jt}\)</span> are determined, and <span class="math inline">\(\eta_{jt}\)</span> is observed (<span class="citation">Daniel A. Ackerberg (<a href="#ref-Ackerberg2016" role="doc-biblioref">2016</a>)</span> recommends this assumption).
 <ul>
 <li>In this case, the unexpected shock can be serially correlated, because it suffices to know <span class="math inline">\(k_{jt}\)</span>, <span class="math inline">\(i_{jt}\)</span>, <span class="math inline">\(l_{jt}\)</span> to decide <span class="math inline">\(m_{jt}\)</span>. It does not have to predict the future unexpected shock based on the realization of the current shock because <span class="math inline">\(m_{jt}\)</span> is a static decision.</li>
 <li>This changes the optimal policy function of <span class="math inline">\(m_{jt}\)</span> <a href="production.html#eq:material">(3.1)</a> to:
 <span class="math display">\[\begin{equation}
- m_{jt} = m(k_{jt}, \omega_{jt}, l_{jt}).
- \end{equation}\]</span></li>
+m_{jt} = m(k_{jt}, \omega_{jt}, l_{jt}).
+\end{equation}\]</span></li>
 <li>The first step:
 <span class="math display">\[\begin{equation}
- \begin{split}
- y_{jt} &amp;= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + h(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}\\
- &amp;= \psi(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}.\\
- \Rightarrow &amp; \mathbb{E}\{y_{jt} - \psi(k_{jt}, m_{jt}, l_{jt})|k_{jt}, m_{jt}, l_{jt}\} = 0.
- \end{split}
- \end{equation}\]</span></li>
+\begin{split}
+y_{jt} &amp;= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + h(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}\\
+&amp;= \psi(k_{jt}, m_{jt}, l_{jt}) + \eta_{jt}.\\
+\Rightarrow &amp; \mathbb{E}\{y_{jt} - \psi(k_{jt}, m_{jt}, l_{jt})|k_{jt}, m_{jt}, l_{jt}\} = 0.
+\end{split}
+\end{equation}\]</span></li>
 <li>The second step:
 <span class="math display">\[\begin{equation}
- \begin{split}
- y_{jt} &amp;= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}] + \nu_{jt} + \eta_{jt}\\
- \Rightarrow &amp; \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \beta_k k_{jt} - g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}]|k_{j, t - 1}, i_{j, t - 1}, l_{j, t - 1}, m_{j, t - 1}\}
- \end{split}
- \end{equation}\]</span></li>
+\begin{split}
+y_{jt} &amp;= \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}] + \nu_{jt} + \eta_{jt}\\
+\Rightarrow &amp; \mathbb{E}\{y_{jt} - \beta_0 - \beta_l l_{jt} - \beta_k k_{jt} - g[\psi(k_{j, t - 1}, m_{j, t - 1}, l_{j, t - 1}) - \beta_0 - \beta_l l_{j, t - 1} - \beta_k k_{j, t - 1}]|k_{j, t - 1}, i_{j, t - 1}, l_{j, t - 1}, m_{j, t - 1}\}
+\end{split}
+\end{equation}\]</span></li>
 <li><span class="math inline">\(m_{jt}\)</span> has to be excluded from the production function, i.e., it has to be a value-added production function. Otherwise, <span class="math inline">\(\beta_m m_{jt}\)</span> and <span class="math inline">\(\beta_m m_{j, t - 1}\)</span> appear in the second step. Because <span class="math inline">\(m_{jt}\)</span> is correlated with <span class="math inline">\(\nu_{jt}\)</span>, the only hope is to vary <span class="math inline">\(m_{j, t - 1}\)</span>. But there is no additional variation in <span class="math inline">\(m_{j, t - 1}\)</span> conditional on <span class="math inline">\(k_{j, t - 1}\)</span>, <span class="math inline">\(i_{j, t - 1}\)</span>, and <span class="math inline">\(l_{j, t - 1}\)</span>.</li>
 </ul></li>
 </ol>
 </div>
-<div id="tackle-collinearity-problem-share-regression" class="section level3" number="3.3.34">
-<h3><span class="header-section-number">3.3.34</span> Tackle Collinearity Problem: Share Regression</h3>
+<div id="tackle-collinearity-problem-share-regression" class="section level3 hasAnchor" number="3.3.34">
+<h3><span class="header-section-number">3.3.34</span> Tackle Collinearity Problem: Share Regression<a href="production.html#tackle-collinearity-problem-share-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>How to avoid the peculiar assumptions on shocks and timing of decisions?</p></li>
-<li><p>How to identify gross production function avoiding the third assumption by <span class="citation"><a href="references.html#ref-Ackerberg2015" role="doc-biblioref">Daniel A. Ackerberg, Caves, &amp; Frazer</a> (<a href="references.html#ref-Ackerberg2015" role="doc-biblioref">2015</a>)</span>?</p></li>
+<li><p>How to identify gross production function avoiding the third assumption by <span class="citation">Daniel A. Ackerberg et al. (<a href="#ref-Ackerberg2015" role="doc-biblioref">2015</a>)</span>?</p></li>
 <li><p>Return to the old literature using the first-order condition.</p></li>
 <li><p>Let <span class="math inline">\(w_t\)</span> be wage and <span class="math inline">\(p_t\)</span> be the product price.</p></li>
 <li><p>Assume that the factor market is competitive.</p></li>
@@ -1537,10 +1560,10 @@ Then we can follow the standard OP method to recover other parameters.</p></li>
 </ul>
 </div>
 </div>
-<div id="cost-function-estimation" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Cost Function Estimation</h2>
-<div id="cost-function-duality" class="section level3" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Cost Function: Duality</h3>
+<div id="cost-function-estimation" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Cost Function Estimation<a href="production.html#cost-function-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="cost-function-duality" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Cost Function: Duality<a href="production.html#cost-function-duality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Given a function <span class="math inline">\(y = F(x)\)</span> such that:</p>
 <ul>
@@ -1571,11 +1594,11 @@ C(y, p) = \min_{x} p&#39;x \text{   s.t.   } F(x) \ge y.
 <li><p>The duality ensures that there is a one-to-one mapping between a class of cost function and a class of production function.</p></li>
 <li><p>If you accept competitive factor markets and cost minimization, identifying a cost function is equivalent to identifying a production function.</p></li>
 <li><p>We used this idea in the last slides to identify the parameters regarding static decision variables.</p></li>
-<li><p>See <span class="citation"><a href="references.html#ref-Jorgenson1986" role="doc-biblioref">Jorgenson</a> (<a href="references.html#ref-Jorgenson1986" role="doc-biblioref">1986</a>)</span> for the literature in this topic up to the mid 80s.</p></li>
+<li><p>See <span class="citation">Jorgenson (<a href="#ref-Jorgenson1986" role="doc-biblioref">1986</a>)</span> for the literature in this topic up to the mid 80s.</p></li>
 </ul>
 </div>
-<div id="translog-cost-function" class="section level3" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Translog Cost Function</h3>
+<div id="translog-cost-function" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Translog Cost Function<a href="production.html#translog-cost-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>One of the popular specifications:
 <span class="math display">\[\begin{equation}
@@ -1588,8 +1611,8 @@ C(y, p) = \min_{x} p&#39;x \text{   s.t.   } F(x) \ge y.
 <li>A second-order (log) Taylor approximation of a general cost function.</li>
 </ul>
 </div>
-<div id="translog-cost-function-integrability" class="section level3" number="3.4.3">
-<h3><span class="header-section-number">3.4.3</span> Translog Cost Function: Integrability</h3>
+<div id="translog-cost-function-integrability" class="section level3 hasAnchor" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> Translog Cost Function: Integrability<a href="production.html#translog-cost-function-integrability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Translog cost function is known to be integrable if the following conditions hold:</li>
 <li><strong>Homogeneity</strong>: the cost shares and the cost flexibility are homogeneity of degree zero: <span class="math inline">\(B_{pp}1 = 0\)</span>, <span class="math inline">\(\beta_{py}&#39;1 = 0\)</span>.</li>
@@ -1609,8 +1632,8 @@ B_{pp} &amp; \beta_{py}\\
 <li><strong>Monotonicity</strong>: The matrix of share elasticities <span class="math inline">\(B_{pp} + vv&#39; - diag(v)\)</span> is positive semi-definite.</li>
 </ul>
 </div>
-<div id="two-approaches" class="section level3" number="3.4.4">
-<h3><span class="header-section-number">3.4.4</span> Two Approaches</h3>
+<div id="two-approaches" class="section level3 hasAnchor" number="3.4.4">
+<h3><span class="header-section-number">3.4.4</span> Two Approaches<a href="production.html#two-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Cost data approach.
 <ul>
@@ -1629,27 +1652,27 @@ B_{pp} &amp; \beta_{py}\\
 </ul></li>
 </ol>
 </div>
-<div id="cost-data-approach" class="section level3" number="3.4.5">
-<h3><span class="header-section-number">3.4.5</span> Cost Data Approach</h3>
+<div id="cost-data-approach" class="section level3 hasAnchor" number="3.4.5">
+<h3><span class="header-section-number">3.4.5</span> Cost Data Approach<a href="production.html#cost-data-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Estimating a cost function using cost data from accounting data.</li>
-<li><span class="citation"><a href="references.html#ref-McElroy1987" role="doc-biblioref">McElroy</a> (<a href="references.html#ref-McElroy1987" role="doc-biblioref">1987</a>)</span> is one of the most flexible and robust frameworks.</li>
+<li><span class="citation">McElroy (<a href="#ref-McElroy1987" role="doc-biblioref">1987</a>)</span> is one of the most flexible and robust frameworks.</li>
 <li>The approach is somewhat getting less popular in IO researchers.</li>
 <li>Recently, the approach is not popular among IO researchers.</li>
-<li>I  one of the reasons for this is that IO researchers believe cost data taken from accounting information does not capture all the costs firms face.</li>
+<li>I one of the reasons for this is that IO researchers believe cost data taken from accounting information does not capture all the costs firms face.</li>
 <li>However, it is good to know the classical literature because it sometimes gives a new insight.</li>
-<li>cf. <span class="citation"><a href="references.html#ref-Byrne2015" role="doc-biblioref">Byrne, Imai, Jain, Sarafidis, &amp; Hirukawa</a> (<a href="references.html#ref-Byrne2015" role="doc-biblioref">2015</a>)</span> : Propose a novel method to combine accounting cost data to estimate demand and cost function jointly without using instrumental variable approach.</li>
+<li>cf. <span class="citation">Byrne, Imai, Jain, Sarafidis, &amp; Hirukawa (<a href="#ref-Byrne2015" role="doc-biblioref">2015</a>)</span> : Propose a novel method to combine accounting cost data to estimate demand and cost function jointly without using instrumental variable approach.</li>
 </ul>
 </div>
-<div id="revealed-preference-approach" class="section level3" number="3.4.6">
-<h3><span class="header-section-number">3.4.6</span> Revealed Preference Approach</h3>
+<div id="revealed-preference-approach" class="section level3 hasAnchor" number="3.4.6">
+<h3><span class="header-section-number">3.4.6</span> Revealed Preference Approach<a href="production.html#revealed-preference-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Another approach is to <strong>reveal</strong> the marginal cost from firm’s price/quantity setting behavior assuming it is maximizing profit.
 <ul>
-<li>Originates at <span class="citation"><a href="references.html#ref-rosseEstimatingCostFunction1970" role="doc-biblioref">Rosse</a> (<a href="references.html#ref-rosseEstimatingCostFunction1970" role="doc-biblioref">1970</a>)</span>.</li>
+<li>Originates at <span class="citation">Rosse (<a href="#ref-rosseEstimatingCostFunction1970" role="doc-biblioref">1970</a>)</span>.</li>
 <li>A parameter affects economic agent’s action.</li>
 <li>Therefore, economic agent’s action <strong>reveals</strong> the information about the parameter.</li>
-<li>See <span class="citation"><a href="references.html#ref-Bresnahan1981" role="doc-biblioref">Timothy F. Bresnahan</a> (<a href="references.html#ref-Bresnahan1981" role="doc-biblioref">1981</a>)</span> and <span class="citation"><a href="references.html#ref-Bresnahan1989" role="doc-biblioref">Timothy F. Bresnahan</a> (<a href="references.html#ref-Bresnahan1989" role="doc-biblioref">1989</a>)</span> for reference.</li>
+<li>See <span class="citation">Timothy F. Bresnahan (<a href="#ref-Bresnahan1981" role="doc-biblioref">1981</a>)</span> and <span class="citation">Timothy F. Bresnahan (<a href="#ref-Bresnahan1989" role="doc-biblioref">1989</a>)</span> for reference.</li>
 </ul></li>
 <li>We have shown that the assumption on the factor market and cost function minimization gives restriction on the cost parameters.</li>
 <li>We may further assume the product market structure and profit maximization to identify cost parameters.</li>
@@ -1657,8 +1680,8 @@ B_{pp} &amp; \beta_{py}\\
 <li>What if the competition is imperfect?</li>
 </ul>
 </div>
-<div id="single-product-monopolist" class="section level3" number="3.4.7">
-<h3><span class="header-section-number">3.4.7</span> Single-product Monopolist</h3>
+<div id="single-product-monopolist" class="section level3 hasAnchor" number="3.4.7">
+<h3><span class="header-section-number">3.4.7</span> Single-product Monopolist<a href="production.html#single-product-monopolist" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>This approach requires researcher to specify the decision problem of a firm.</p></li>
 <li><p>Assume that the firm is a single-product monopolist.</p></li>
@@ -1687,8 +1710,8 @@ C&#39;(D(p, z)) = \frac{D(p, z) + pD&#39;(p, z)}{D&#39;(p, z)}
 <li><p>If the equilibrium quantities cover the domain of the marginal cost function when the demand shifter <span class="math inline">\(Z\)</span> moves around, then it identifies the entire marginal cost function.</p></li>
 </ul>
 </div>
-<div id="unobserved-heterogeneity-in-the-cost-function" class="section level3" number="3.4.8">
-<h3><span class="header-section-number">3.4.8</span> Unobserved Heterogeneity in the Cost Function</h3>
+<div id="unobserved-heterogeneity-in-the-cost-function" class="section level3 hasAnchor" number="3.4.8">
+<h3><span class="header-section-number">3.4.8</span> Unobserved Heterogeneity in the Cost Function<a href="production.html#unobserved-heterogeneity-in-the-cost-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Previously we did not consider any unobserved heterogeneity in the cost function.</p></li>
 <li><p>Now suppose that the cost function is given by:
@@ -1711,12 +1734,12 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
 <li><p>If <span class="math inline">\(Z\)</span> and <span class="math inline">\(\epsilon\)</span> is independent, then the last term becomes zero and we can follow the same argument as before to trace out the marginal cost function.</p></li>
 </ul>
 </div>
-<div id="multi-product-monopolist-case" class="section level3" number="3.4.9">
-<h3><span class="header-section-number">3.4.9</span> Multi-product Monopolist Case</h3>
+<div id="multi-product-monopolist-case" class="section level3 hasAnchor" number="3.4.9">
+<h3><span class="header-section-number">3.4.9</span> Multi-product Monopolist Case<a href="production.html#multi-product-monopolist-case" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Demand for good <span class="math inline">\(j\)</span> is <span class="math inline">\(D_j(p)\)</span> given a price vector <span class="math inline">\(p\)</span>.</p></li>
 <li><p>Cost for producing a vector of good <span class="math inline">\(q\)</span> is <span class="math inline">\(C(q)\)</span>.</p></li>
-<li><p>Demand function is  but cost function is not known.</p></li>
+<li><p>Demand function is but cost function is not known.</p></li>
 <li><p>The monopolist solves:
 <span class="math display">\[\begin{equation}
 \max_{p} \sum_{j = 1}^J p_j D_j(p) - C(D_1(p), \cdots, D_J(p)).
@@ -1725,7 +1748,7 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
 <span class="math display">\[\begin{equation}
 \begin{split}
 &amp;D_i(p) +  \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_i} = \sum_{j = 1}^J \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_j} \frac{\partial D_j(p)}{\partial p_i}.\\
-&amp;= 
+&amp;=
 \begin{pmatrix}
 \frac{\partial D_1(p)}{\partial p_i} &amp; \cdots &amp; \frac{\partial D_J(p)}{\partial p_i}
 \end{pmatrix}
@@ -1740,10 +1763,10 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
 <span class="math display">\[\begin{equation}
 \begin{split}
 &amp;\begin{pmatrix}
- D_1(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_1}\\
- \vdots\\
- D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
-\end{pmatrix} 
+D_1(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_1}\\
+\vdots\\
+D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
+\end{pmatrix}
 =
 \begin{pmatrix}
 \frac{\partial D_1(p)}{\partial p_1} &amp; \cdots &amp; \frac{\partial D_J(p)}{\partial p_1}\\
@@ -1760,16 +1783,16 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
 \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_1}\\
 \vdots\\
 \frac{\partial C(D_1(p), \cdots, D_J(p))}{\partial q_J}
-\end{pmatrix} = 
+\end{pmatrix} =
 \underbrace{\begin{pmatrix}
 \frac{\partial D_1(p)}{\partial p_1} &amp; \cdots &amp; \frac{\partial D_J(p)}{\partial p_1}\\
 \vdots\\
 \frac{\partial D_1(p)}{\partial p_J} &amp; \cdots &amp; \frac{\partial D_J(p)}{\partial p_J}
 \end{pmatrix}^{-1}  
 \begin{pmatrix}
- D_1(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_1}\\
- \vdots\\
- D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
+D_1(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_1}\\
+\vdots\\
+D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
 \end{pmatrix}.}_{\text{$p$ is observed and $D(p)$s are known.}}
 \end{split}
 \end{equation}\]</span></p></li>
@@ -1777,8 +1800,8 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
 <li><p>Including unobserved heterogeneity in the cost function causes the same problem as in the previous case.</p></li>
 </ul>
 </div>
-<div id="oligopoly" class="section level3" number="3.4.10">
-<h3><span class="header-section-number">3.4.10</span> Oligopoly</h3>
+<div id="oligopoly" class="section level3 hasAnchor" number="3.4.10">
+<h3><span class="header-section-number">3.4.10</span> Oligopoly<a href="production.html#oligopoly" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>There are firm <span class="math inline">\(j = 1, \cdots, J\)</span> and they sell product <span class="math inline">\(j = 1, \cdots, J\)</span>, that is, firm = product (for simplicity).</p></li>
 <li><p>Consider a price setting game. When the price vector is <span class="math inline">\(p\)</span>, demand for product <span class="math inline">\(j\)</span> is given by <span class="math inline">\(D_j(p)\)</span>.</p></li>
@@ -1801,6 +1824,87 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
 </div>
 </div>
 </div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-Ackerberg2016" class="csl-entry">
+Ackerberg, Daniel A. (2016). <em>Timing <span>Assumptions</span> and <span>E</span> ciency: <span>Empirical Evidence</span> in a <span>Production Function Context</span></em>.
+</div>
+<div id="ref-Ackerberg2015" class="csl-entry">
+Ackerberg, Daniel A., Caves, K., &amp; Frazer, G. (2015). <a href="https://doi.org/10.3982/ECTA13408">Identification <span>Properties</span> of <span>Recent Production Function Estimators</span></a>. <em>Econometrica</em>, <em>83</em>(6), 2411–2451.
+</div>
+<div id="ref-Ahn1993" class="csl-entry">
+Ahn, H., &amp; Powell, J. L. (1993). <a href="https://doi.org/10.1016/0304-4076(93)90111-H">Semiparametric estimation of censored selection models with a nonparametric selection mechanism</a>. <em>Journal of Econometrics</em>, <em>58</em>(1-2), 3–29.
+</div>
+<div id="ref-Bloom2007" class="csl-entry">
+Bloom, N., &amp; Van Reenen, J. (2007). <a href="https://doi.org/10.1162/qjec.2007.122.4.1351">Measuring and <span>Explaining Management Practices Across Firms</span> and <span>Countries</span></a>. <em>The Quarterly Journal of Economics</em>, <em>122</em>(4), 1351–1408.
+</div>
+<div id="ref-Braguinsky2015" class="csl-entry">
+Braguinsky, S., Ohyama, A., Okazaki, T., &amp; Syverson, C. (2015). <a href="https://doi.org/10.1257/aer.20140150">Acquisitions, <span>Productivity</span>, and <span>Profitability</span>: <span>Evidence</span> from the <span>Japanese Cotton Spinning Industry</span></a>. <em>American Economic Review</em>, <em>105</em>(7), 2086–2119.
+</div>
+<div id="ref-Bresnahan1981" class="csl-entry">
+Bresnahan, Timothy F. (1981). <a href="https://doi.org/10.1016/0304-4076(81)90027-0">Departures from marginal-cost pricing in the <span>American</span> automobile industry: <span>Estimates</span> for 1977</a>. <em>Journal of Econometrics</em>, <em>17</em>(2), 201–227.
+</div>
+<div id="ref-Bresnahan1989" class="csl-entry">
+Bresnahan, Timothy F. (1989). <a href="https://doi.org/10.1016/S1573-448X(89)02005-4">Chapter 17 <span>Empirical</span> studies of industries with market power</a>. In <em>Handbook of <span>Industrial Organization</span></em> (Vol. 2, pp. 1011–1057). <span>Elsevier</span>.
+</div>
+<div id="ref-Byrne2015" class="csl-entry">
+Byrne, D. P., Imai, S., Jain, N., Sarafidis, V., &amp; Hirukawa, M. (2015). <em>Identification and <span>Estimation</span> of <span>Differentiated Products Models</span> using <span>Market Size</span> and <span>Cost Data</span></em>.
+</div>
+<div id="ref-Chen2007" class="csl-entry">
+Chen, X. (2007). <a href="https://doi.org/10.1016/S1573-4412(07)06076-X">Chapter 76 <span>Large Sample Sieve Estimation</span> of <span>Semi</span>-<span>Nonparametric Models</span></a>. <em>Handbook of Econometrics</em>, <em>6</em>, 5549–5632.
+</div>
+<div id="ref-Cunha2010" class="csl-entry">
+Cunha, F., Heckman, J. J., &amp; Schennach, S. M. (2010). <a href="https://doi.org/10.3982/ECTA6551">Estimating the <span>Technology</span> of <span>Cognitive</span> and <span>Noncognitive Skill Formation</span></a>. <em>Econometrica</em>, <em>78</em>(3), 883–931.
+</div>
+<div id="ref-Loecker2011" class="csl-entry">
+De Loecker, J. (2011). <a href="https://doi.org/10.3982/ECTA7617">Product <span>Differentiation</span>, <span>Multiproduct Firms</span>, and <span>Estimating</span> the <span>Impact</span> of <span>Trade Liberalization</span> on <span>Productivity</span></a>. <em>Econometrica</em>, <em>79</em>(5), 1407–1451.
+</div>
+<div id="ref-Doraszelski2013a" class="csl-entry">
+Doraszelski, U., &amp; Jaumandreu, J. (2013). <a href="https://doi.org/10.1093/restud/rdt011">R&amp;<span>D</span> and <span>Productivity</span>: <span>Estimating Endogenous Productivity</span></a>. <em>The Review of Economic Studies</em>, <em>80</em>(4), 1338–1383.
+</div>
+<div id="ref-Gandhi2017a" class="csl-entry">
+Gandhi, A., Navarro, S., &amp; Rivers, D. (2017). <em>On the <span>Identification</span> of <span>Gross Output Production Functions</span></em>.
+</div>
+<div id="ref-Gennaioli2013" class="csl-entry">
+Gennaioli, N., La Porta, R., Lopez-de-Silanes, F., &amp; Shleifer, A. (2013). <a href="https://doi.org/10.1093/qje/qjs050">Human <span>Capital</span> and <span>Regional Development</span></a>. <em>The Quarterly Journal of Economics</em>, <em>128</em>(1), 105–164.
+</div>
+<div id="ref-Griliches1998" class="csl-entry">
+Griliches, Z., &amp; Mairesse, J. (1998). <a href="https://doi.org/10.3386/w5067">Production <span>Functions</span>: <span>The Search</span> for <span>Identification</span></a>. In S. Strom (Ed.), <em>Econometrics and economic theory in the twentieth century: <span>The Ragnar Frisch Centennial Symposium</span></em>. <span>Cambridge, MA</span>: <span>National Bureau of Economic Research</span>; <span>Cambridge University Press</span>.
+</div>
+<div id="ref-Haskel2007" class="csl-entry">
+Haskel, J. E., Pereira, S. C., &amp; Slaughter, M. J. (2007). <a href="https://doi.org/10.1162/rest.89.3.482">Does <span>Inward Foreign Direct Investment Boost</span> the <span>Productivity</span> of <span>Domestic Firms</span>?</a> <em>Review of Economics and Statistics</em>, <em>89</em>(3), 482–496.
+</div>
+<div id="ref-Hsieh2009" class="csl-entry">
+Hsieh, C.-T., &amp; Klenow, P. J. (2009). <a href="https://doi.org/10.1162/qjec.2009.124.4.1403">Misallocation and <span>Manufacturing TFP</span> in <span>China</span> and <span>India</span></a>. <em>Quarterly Journal of Economics</em>, <em>124</em>(4), 1403–1448.
+</div>
+<div id="ref-Ichimura2007" class="csl-entry">
+Ichimura, H., &amp; Todd, P. E. (2007). <a href="https://doi.org/10.1016/S1573-4412(07)06074-6">Chapter 74 <span>Implementing Nonparametric</span> and <span>Semiparametric Estimators</span></a>. <em>Handbook of Econometrics</em>, <em>6</em>, 5369–5468.
+</div>
+<div id="ref-Jorgenson1986" class="csl-entry">
+Jorgenson, D. W. (1986). <a href="https://doi.org/10.1016/S1573-4412(86)03011-8">Chapter 31 <span>Econometric</span> methods for modeling producer behavior</a>. In <em>Handbook of <span>Econometrics</span></em> (Vol. 3, pp. 1841–1915). <span>Elsevier</span>.
+</div>
+<div id="ref-Levinsohn2003" class="csl-entry">
+Levinsohn, J., &amp; Petrin, A. (2003). <a href="https://doi.org/10.1111/1467-937X.00246">Estimating <span>Production Functions Using Inputs</span> to <span>Control</span> for <span>Unobservables</span></a>. <em>Review of Economic Studies</em>, <em>70</em>(2), 317–341.
+</div>
+<div id="ref-Marschak1944" class="csl-entry">
+Marschak, J., &amp; Andrews, W. H. (1944). <em>Random <span>Simultaneous Equations</span> and the <span>Theory</span> of <span>Production Author</span></em> (No. 4) (Vol. 12, pp. 143–205).
+</div>
+<div id="ref-McElroy1987" class="csl-entry">
+McElroy, M. B. (1987). <a href="https://doi.org/10.1086/261483">Additive <span>General Error Models</span> for <span>Production</span>, <span>Cost</span>, and <span>Derived Demand</span> or <span>Share Systems</span></a>. <em>Journal of Political Economy</em>, <em>95</em>(4), 737–757.
+</div>
+<div id="ref-Olley1996" class="csl-entry">
+Olley, G. S., &amp; Pakes, A. (1996). <em>The <span>Dynamics</span> of <span>Productivity</span> in the <span>Telecommunications Equipment Industry</span></em> (No. 6) (Vol. 64, pp. 1263–1297).
+</div>
+<div id="ref-rosseEstimatingCostFunction1970" class="csl-entry">
+Rosse, J. N. (1970). <a href="https://doi.org/10.2307/1913008">Estimating <span>Cost Function Parameters Without Using Cost Data</span>: <span>Illustrated Methodology</span></a>. <em>Econometrica</em>, <em>38</em>(2), 256–275.
+</div>
+<div id="ref-Syverson2011" class="csl-entry">
+Syverson, C. (2011). <a href="https://doi.org/10.1257/jel.49.2.326">What <span>Determines Productivity</span>?</a> <em>Journal of Economic Literature</em>, <em>49</em>(2), 326–365.
+</div>
+<div id="ref-Wooldridge2009" class="csl-entry">
+Wooldridge, J. M. (2009). <a href="https://doi.org/10.1016/j.econlet.2009.04.026">On estimating firm-level production functions using proxy variables to control for unobservables</a>. <em>Economics Letters</em>, <em>104</em>, 112–114.
+</div>
+</div>
             </section>
 
           </div>
@@ -1811,7 +1915,6 @@ and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1830,6 +1933,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1850,6 +1954,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -1863,7 +1971,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

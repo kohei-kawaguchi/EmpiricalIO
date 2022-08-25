@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Demand Function Estimation | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Demand Function Estimation | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="production.html"/>
 <link rel="next" href="merger.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,10 +708,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="demand" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Demand Function Estimation</h1>
-<div id="motivations-1" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Motivations</h2>
+<div id="demand" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Demand Function Estimation<a href="demand.html#demand" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="motivations-1" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Motivations<a href="demand.html#motivations-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><p>From demand function and utility maximization assumption, we can reveal the preference of the decision maker.</p></li>
 <li><p>Thus, estimating demand function is necessary for <strong>evaluating the consumer welfare</strong>.</p></li>
@@ -696,50 +719,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>In macroeconomics, estimating demand is in important to determine the <strong>price level</strong>, because the price level is the minimum expenditure for a consumer to achieve the certain level of utility.</p></li>
 <li><p>In marketing, estimating demand is necessary to design the optimal pricing, advertising, and all the other marketing interventions.</p></li>
 <li><p>In principle, the theory can be applied to whatever decisions other than the consumer choice.</p></li>
-<li><p><span class="citation"><a href="references.html#ref-Nevo2000c" role="doc-biblioref">Nevo</a> (<a href="references.html#ref-Nevo2000c" role="doc-biblioref">2000</a>)</span>:</p>
+<li><p><span class="citation">Nevo (<a href="#ref-Nevo2000c" role="doc-biblioref">2000</a>)</span>:</p>
 <ul>
 <li>How do the hypothetical mergers in the ready-to-eat cereal industry affect the market price, markup, and consumer surplus?</li>
 <li>To do so, the authors estimate the demand for ready-to-eat cereals and the cost functions for each product. Then, the authors conduct counterfactual simulations of mergers to quantify the effects.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Chung2002" role="doc-biblioref">Chung &amp; Alcácer</a> (<a href="references.html#ref-Chung2002" role="doc-biblioref">2002</a>)</span>:</p>
+<li><p><span class="citation">Chung &amp; Alcácer (<a href="#ref-Chung2002" role="doc-biblioref">2002</a>)</span>:</p>
 <ul>
 <li>To what extent do firms go abroad to access technology available in other locations?</li>
 <li>To study this issue, the authors estimate the firms’ locational choice when going abroad.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Rysman2004" role="doc-biblioref">Rysman</a> (<a href="references.html#ref-Rysman2004" role="doc-biblioref">2004</a>)</span>:</p>
+<li><p><span class="citation">Rysman (<a href="#ref-Rysman2004" role="doc-biblioref">2004</a>)</span>:</p>
 <ul>
 <li>In Yellow pages, how do consumers evaluate the advertisement on it, and how do advertisers value consumer usage?</li>
 <li>To study this, the author simultaneously estimate the consumer demand for usage of a directory, advertiser demand for advertising, and a publisher’s first-order condition.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Gentzkow2004" role="doc-biblioref">Gentzow</a> (<a href="references.html#ref-Gentzkow2004" role="doc-biblioref">2004</a>)</span>:</p>
+<li><p><span class="citation">Gentzow (<a href="#ref-Gentzkow2004" role="doc-biblioref">2004</a>)</span>:</p>
 <ul>
 <li>Are online and print newspapers substitutes or complements?</li>
 <li>To study this, the author estimate a demand function in which online and print newspapers can be either substitutes or complements.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Bayer2007" role="doc-biblioref">Bayer et al.</a> (<a href="references.html#ref-Bayer2007" role="doc-biblioref">2007</a>)</span>:</p>
+<li><p><span class="citation">Bayer et al. (<a href="#ref-Bayer2007" role="doc-biblioref">2007</a>)</span>:</p>
 <ul>
 <li>How is the preference of people for schools and neighborhoods? How is this capitalized into housing prices?</li>
 <li>To do so, the authors estimate the discrete choice of residents over locations. To deal with the endogeneity between the neighborhood and the unobserved attributes of the location, the authors use the discontinuity at the school attendance zone.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Archak2011" role="doc-biblioref">Archak, Ghose, &amp; Ipeirotis</a> (<a href="references.html#ref-Archak2011" role="doc-biblioref">2011</a>)</span>:</p>
+<li><p><span class="citation">Archak, Ghose, &amp; Ipeirotis (<a href="#ref-Archak2011" role="doc-biblioref">2011</a>)</span>:</p>
 <ul>
 <li>How does the information embedded in product reviews the consumer choice?</li>
 <li>To study this, the authors estimate the discrete choice model of consumers in which the text information from the product reviews are included as the product attributes.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Holmes2011" role="doc-biblioref">Holmes</a> (<a href="references.html#ref-Holmes2011" role="doc-biblioref">2011</a>)</span>:</p>
+<li><p><span class="citation">Holmes (<a href="#ref-Holmes2011" role="doc-biblioref">2011</a>)</span>:</p>
 <ul>
 <li>Wal-Mart maintain high store density. How large is the economy of density and the sales cannibalization?</li>
 <li>To study this, the author first estimate the demand function across neighborhood Wal-Mart to capture the sales cannibalization, and then estimate the cost structure from their entry and exit behaviors.</li>
 </ul></li>
-<li><p><span class="citation"><a href="references.html#ref-Handbury2014" role="doc-biblioref">Handbury &amp; Weinstein</a> (<a href="references.html#ref-Handbury2014" role="doc-biblioref">2014</a>)</span>:</p>
+<li><p><span class="citation">Handbury &amp; Weinstein (<a href="#ref-Handbury2014" role="doc-biblioref">2014</a>)</span>:</p>
 <ul>
 <li>Urban and rural areas differ in available products. How does the price difference change if the heterogeneity in the product availability is incorporated?</li>
 <li>To do so, the authors estimate the demand function at each location, and the construct the spatial price index based on the available products at each location.</li>
 </ul></li>
 </ul>
 </div>
-<div id="analyzing-consumer-behaviors" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Analyzing Consumer Behaviors</h2>
+<div id="analyzing-consumer-behaviors" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Analyzing Consumer Behaviors<a href="demand.html#analyzing-consumer-behaviors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><p><strong>Alternative set</strong>.</p></li>
 <li><p><strong>Utility function</strong>.</p>
@@ -753,14 +776,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>We can at most identify demand functions.</p></li>
 <li><p><strong>Revealed preference theory</strong>:</p>
 <ul>
-<li><span class="citation"><a href="references.html#ref-Samuelson1938" role="doc-biblioref">Samuelson</a> (<a href="references.html#ref-Samuelson1938" role="doc-biblioref">1938</a>)</span>, <span class="citation"><a href="references.html#ref-Houthakker1950" role="doc-biblioref">Houthakker</a> (<a href="references.html#ref-Houthakker1950" role="doc-biblioref">1950</a>)</span>, <span class="citation"><a href="references.html#ref-Richter1966" role="doc-biblioref">Richter</a> (<a href="references.html#ref-Richter1966" role="doc-biblioref">1966</a>)</span>, <span class="citation"><a href="references.html#ref-Afriat1967" role="doc-biblioref">Afriat</a> (<a href="references.html#ref-Afriat1967" role="doc-biblioref">1967</a>)</span>, <span class="citation"><a href="references.html#ref-Varian1982" role="doc-biblioref">Varian</a> (<a href="references.html#ref-Varian1982" role="doc-biblioref">1982</a>)</span>.</li>
+<li><span class="citation">Samuelson (<a href="#ref-Samuelson1938" role="doc-biblioref">1938</a>)</span>, <span class="citation">Houthakker (<a href="#ref-Houthakker1950" role="doc-biblioref">1950</a>)</span>, <span class="citation">Richter (<a href="#ref-Richter1966" role="doc-biblioref">1966</a>)</span>, <span class="citation">Afriat (<a href="#ref-Afriat1967" role="doc-biblioref">1967</a>)</span>, <span class="citation">Varian (<a href="#ref-Varian1982" role="doc-biblioref">1982</a>)</span>.</li>
 <li>If the demand function is derived from a preference by maximizing the preference, the demand function should satisfy some restrictions.</li>
 <li>If the assumption is true, we can recover part of the preference from the demand function.</li>
 </ul></li>
 </ul>
 </div>
-<div id="continuous-choice" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Continuous Choice</h2>
+<div id="continuous-choice" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Continuous Choice<a href="demand.html#continuous-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>The alternative set <span class="math inline">\(\mathcal{X}\)</span> is a subset of <span class="math inline">\(\mathbb{R}^J\)</span>.</li>
 <li>The utility function <span class="math inline">\(u\)</span> is rational, monotone, and continuous on <span class="math inline">\(\mathcal{X}\)</span>.</li>
@@ -770,8 +793,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \]</span></li>
 <li>If choice sets are non-linear, the following duality approach needs to be modified.</li>
 </ul>
-<div id="duality-between-utility-and-expenditure-functions" class="section level3" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> Duality between Utility and Expenditure Functions</h3>
+<div id="duality-between-utility-and-expenditure-functions" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Duality between Utility and Expenditure Functions<a href="demand.html#duality-between-utility-and-expenditure-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>It is rather a special case that we can derive a closed form solution to a utility maximization problem.</li>
 <li>We can use the first-order conditions as moment conditions for identification.
@@ -797,8 +820,8 @@ x = e(u, p).
 <li>We can start the analysis by specifying this function instead of the utility function.</li>
 </ul>
 </div>
-<div id="deriving-other-functions" class="section level3" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Deriving Other Functions</h3>
+<div id="deriving-other-functions" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Deriving Other Functions<a href="demand.html#deriving-other-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>It is easy to derive other functions from an expenditure function.</li>
 <li><strong>Indirect utility function</strong>: invert the expenditure function to get:
@@ -815,8 +838,8 @@ q_i = h_i(v(p, x), p) \equiv d_i(p, x).
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="starting-from-an-indirect-utility-function" class="section level3" number="4.3.3">
-<h3><span class="header-section-number">4.3.3</span> Starting from an Indirect Utility Function</h3>
+<div id="starting-from-an-indirect-utility-function" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Starting from an Indirect Utility Function<a href="demand.html#starting-from-an-indirect-utility-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>It is almost equivalent to start from an indirect utility function.</li>
 <li>An indirect utility function with the utility function is defined by:
@@ -829,8 +852,8 @@ q_i = \frac{- \partial v(p, x)/\partial p_i}{\partial v(p, x)/\partial x} \equiv
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="expenditure-share-equation" class="section level3" number="4.3.4">
-<h3><span class="header-section-number">4.3.4</span> Expenditure Share Equation</h3>
+<div id="expenditure-share-equation" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Expenditure Share Equation<a href="demand.html#expenditure-share-equation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let’s start from an expenditure function <span class="math inline">\(e(p, x)\)</span>.</li>
 <li>By Shepard’s lemma, we have:
@@ -841,11 +864,11 @@ q_i = \frac{- \partial v(p, x)/\partial p_i}{\partial v(p, x)/\partial x} \equiv
 <li>The estimation is based on the share equations.</li>
 </ul>
 </div>
-<div id="almost-ideal-demand-system-aids" class="section level3" number="4.3.5">
-<h3><span class="header-section-number">4.3.5</span> Almost Ideal Demand System (AIDS)</h3>
+<div id="almost-ideal-demand-system-aids" class="section level3 hasAnchor" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Almost Ideal Demand System (AIDS)<a href="demand.html#almost-ideal-demand-system-aids" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Based on <span class="citation"><a href="references.html#ref-Deaton1980" role="doc-biblioref">Deaton &amp; Muellbauer</a> (<a href="references.html#ref-Deaton1980" role="doc-biblioref">1980</a>)</span>.</li>
-<li>See <span class="citation"><a href="references.html#ref-AngusDeaton1980" role="doc-biblioref">Angus Deaton &amp; John Muellbauer</a> (<a href="references.html#ref-AngusDeaton1980" role="doc-biblioref">1980</a>)</span> for further reference.</li>
+<li>Based on <span class="citation">Deaton &amp; Muellbauer (<a href="#ref-Deaton1980" role="doc-biblioref">1980</a>)</span>.</li>
+<li>See <span class="citation">Angus Deaton &amp; John Muellbauer (<a href="#ref-AngusDeaton1980" role="doc-biblioref">1980</a>)</span> for further reference.</li>
 <li>Consider an expenditure function that satisfies the following useful conditions:
 <ul>
 <li>It allows aggregation (this motivation is less important in recent days).</li>
@@ -855,10 +878,10 @@ q_i = \frac{- \partial v(p, x)/\partial p_i}{\partial v(p, x)/\partial x} \equiv
 </ul></li>
 </ul>
 </div>
-<div id="piglog-class" class="section level3" number="4.3.6">
-<h3><span class="header-section-number">4.3.6</span> PIGLOG Class</h3>
+<div id="piglog-class" class="section level3 hasAnchor" number="4.3.6">
+<h3><span class="header-section-number">4.3.6</span> PIGLOG Class<a href="demand.html#piglog-class" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>PIGLOG (price-independent generalized logarithmic) class <span class="citation">(<a href="references.html#ref-Muellbauer1976" role="doc-biblioref">Muellbauer, 1976</a>)</span>.
+<li>PIGLOG (price-independent generalized logarithmic) class <span class="citation">(<a href="#ref-Muellbauer1976" role="doc-biblioref">Muellbauer, 1976</a>)</span>.
 <span class="math display">\[\begin{equation}
 \ln e(u, p) = (1 - u) \ln a(p) + u\ln b(p),
 \end{equation}\]</span>
@@ -875,8 +898,8 @@ where <span class="math inline">\(a(p)\)</span> and <span class="math inline">\(
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="derive-the-share-equation-i" class="section level3" number="4.3.7">
-<h3><span class="header-section-number">4.3.7</span> Derive the Share Equation I</h3>
+<div id="derive-the-share-equation-i" class="section level3 hasAnchor" number="4.3.7">
+<h3><span class="header-section-number">4.3.7</span> Derive the Share Equation I<a href="demand.html#derive-the-share-equation-i" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>By Roy’s identify, we can derive the associated share equation:
 <span class="math display">\[\begin{equation}
@@ -888,8 +911,8 @@ where
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="derive-the-share-equation-ii" class="section level3" number="4.3.8">
-<h3><span class="header-section-number">4.3.8</span> Derive the Share Equation II</h3>
+<div id="derive-the-share-equation-ii" class="section level3 hasAnchor" number="4.3.8">
+<h3><span class="header-section-number">4.3.8</span> Derive the Share Equation II<a href="demand.html#derive-the-share-equation-ii" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Insert indirect utility function <span class="math inline">\(u = v(p, x)\)</span> to this to get:
 <span class="math display">\[\begin{equation}
@@ -900,12 +923,12 @@ where
 \ln P \equiv  \alpha_0 + \sum_{k} \alpha_k \ln p_k + \frac{1}{2} \sum_{j} \sum_{k} \gamma_{kj} \ln p_k \ln p_j.
 \end{equation}\]</span></li>
 <li><span class="math inline">\(P\)</span> is a price index associated with the given preference.</li>
-<li>With the specification of <span class="citation"><a href="references.html#ref-RichardStone1954" role="doc-biblioref">Richard Stone</a> (<a href="references.html#ref-RichardStone1954" role="doc-biblioref">1954</a>)</span>, it becomes <span class="math inline">\(\ln P = \sum_{j} x_j \ln p_j\)</span>.</li>
+<li>With the specification of <span class="citation">Richard Stone (<a href="#ref-RichardStone1954" role="doc-biblioref">1954</a>)</span>, it becomes <span class="math inline">\(\ln P = \sum_{j} x_j \ln p_j\)</span>.</li>
 <li>It can be used as an approximation.</li>
 </ul>
 </div>
-<div id="specify-the-detail-ii" class="section level3" number="4.3.9">
-<h3><span class="header-section-number">4.3.9</span> Specify the Detail II</h3>
+<div id="specify-the-detail-ii" class="section level3 hasAnchor" number="4.3.9">
+<h3><span class="header-section-number">4.3.9</span> Specify the Detail II<a href="demand.html#specify-the-detail-ii" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>It can satisfy the restrictions of utility maximization.</li>
 <li>It can be used to test the restrictions of utility maximization.
@@ -925,8 +948,8 @@ where
 </ul></li>
 </ul>
 </div>
-<div id="estimation" class="section level3" number="4.3.10">
-<h3><span class="header-section-number">4.3.10</span> Estimation</h3>
+<div id="estimation" class="section level3 hasAnchor" number="4.3.10">
+<h3><span class="header-section-number">4.3.10</span> Estimation<a href="demand.html#estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>We can estimate parameters based on the share equations.</li>
 <li>If we use aggregate data, the aggregate error term is correlated with the price vector.</li>
@@ -935,8 +958,8 @@ where
 <li>If we use household-level data, the household-specific errors controlling for aggregate errors will not be correlated with the price vector if the price is determined in a competitive market.</li>
 </ul>
 </div>
-<div id="from-product-space-approach-to-characteristics-space-approach" class="section level3" number="4.3.11">
-<h3><span class="header-section-number">4.3.11</span> From Product Space Approach to Characteristics Space Approach</h3>
+<div id="from-product-space-approach-to-characteristics-space-approach" class="section level3 hasAnchor" number="4.3.11">
+<h3><span class="header-section-number">4.3.11</span> From Product Space Approach to Characteristics Space Approach<a href="demand.html#from-product-space-approach-to-characteristics-space-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The framework up to here is called <strong>product space approach</strong> because the utility has been defined over a product space.</li>
 <li>When there are <span class="math inline">\(J\)</span> goods, there are <span class="math inline">\(J^2\)</span> parameters for prices.</li>
@@ -944,7 +967,7 @@ where
 <li>For example, we can introduce a priori segmentation with separability.</li>
 <li>It is hard to evaluate the effect of introducing new product.</li>
 <li>Again, we have to a priori decide which segment/product is similar to the new product.</li>
-<li>This leads us to the <strong>characteristics space approach</strong> <span class="citation">(<a href="references.html#ref-Lancaster1966" role="doc-biblioref">Lancaster, 1966</a>; <a href="references.html#ref-Muth1966" role="doc-biblioref">Muth, 1966</a>)</span>:
+<li>This leads us to the <strong>characteristics space approach</strong> <span class="citation">(<a href="#ref-Lancaster1966" role="doc-biblioref">Lancaster, 1966</a>; <a href="#ref-Muth1966" role="doc-biblioref">Muth, 1966</a>)</span>:
 <ul>
 <li>Consumption is an activity in which goods are inputs and in which the output is a collection of characteristics.</li>
 <li>Utility ranks collections of characteristics and only to rank collections of goods indirectly through the characteristics that they possesses.</li>
@@ -963,12 +986,12 @@ s.t.
   \]</span></li>
 </ul></li>
 <li>Then, only the dimension of characteristics matters and the value of new products can be evaluated by the contribution to the production of characteristics.</li>
-<li>The early application includes <span class="citation"><a href="references.html#ref-Rosen1974" role="doc-biblioref">Rosen</a> (<a href="references.html#ref-Rosen1974" role="doc-biblioref">1974</a>)</span>, <span class="citation"><a href="references.html#ref-Muellbauer1974" role="doc-biblioref">Muellbauer</a> (<a href="references.html#ref-Muellbauer1974" role="doc-biblioref">1974</a>)</span>, <span class="citation"><a href="references.html#ref-Gorman1980" role="doc-biblioref">Gorman</a> (<a href="references.html#ref-Gorman1980" role="doc-biblioref">1980</a>)</span>.</li>
-<li>The nonparametric analysis based on the reveals preference is <span class="citation"><a href="references.html#ref-Blow2008" role="doc-biblioref">Blow, Browning, &amp; Crawford</a> (<a href="references.html#ref-Blow2008" role="doc-biblioref">2008</a>)</span>.</li>
+<li>The early application includes <span class="citation">Rosen (<a href="#ref-Rosen1974" role="doc-biblioref">1974</a>)</span>, <span class="citation">Muellbauer (<a href="#ref-Muellbauer1974" role="doc-biblioref">1974</a>)</span>, <span class="citation">Gorman (<a href="#ref-Gorman1980" role="doc-biblioref">1980</a>)</span>.</li>
+<li>The nonparametric analysis based on the reveals preference is <span class="citation">Blow, Browning, &amp; Crawford (<a href="#ref-Blow2008" role="doc-biblioref">2008</a>)</span>.</li>
 </ul>
 </div>
-<div id="from-continuous-choice-approach-to-discrete-choice-approach" class="section level3" number="4.3.12">
-<h3><span class="header-section-number">4.3.12</span> From Continuous Choice Approach to Discrete Choice Approach</h3>
+<div id="from-continuous-choice-approach-to-discrete-choice-approach" class="section level3 hasAnchor" number="4.3.12">
+<h3><span class="header-section-number">4.3.12</span> From Continuous Choice Approach to Discrete Choice Approach<a href="demand.html#from-continuous-choice-approach-to-discrete-choice-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The aggregate demand is a collection of choice across consumers and within consumers over time.</li>
 <li>It makes sense to model individual choices and then aggregate rather than directly modeling the aggregate demand.</li>
@@ -979,10 +1002,10 @@ s.t.
 </ul>
 </div>
 </div>
-<div id="discrete-choice" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Discrete Choice</h2>
-<div id="discrete-choice-approach" class="section level3" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span> Discrete Choice Approach</h3>
+<div id="discrete-choice" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Discrete Choice<a href="demand.html#discrete-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="discrete-choice-approach" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Discrete Choice Approach<a href="demand.html#discrete-choice-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(u(q, z_i)\)</span> be the utility of a consumer over <span class="math inline">\(J + 1\)</span> dimensional consumption bundle <span class="math inline">\(q\)</span> characterized by consumer characteristics <span class="math inline">\(z_i\)</span>.</li>
 <li>The consumer solves:
@@ -1001,8 +1024,8 @@ Q = \{q:&amp; q_0 \in [0, M], q_j \in \{0, 1\}, j = 1, \cdots, J,\\
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="discrete-choice-approach-1" class="section level3" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> Discrete Choice Approach</h3>
+<div id="discrete-choice-approach-1" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Discrete Choice Approach<a href="demand.html#discrete-choice-approach-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The budget constraint reduces to:
 <span class="math display">\[\begin{equation}
@@ -1017,8 +1040,8 @@ q_0 = y - \sum_{j = 1}^J p_j q_j.
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="discrete-choice-approach-2" class="section level3" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span> Discrete Choice Approach</h3>
+<div id="discrete-choice-approach-2" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Discrete Choice Approach<a href="demand.html#discrete-choice-approach-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The utility maximization problem can be written as:
 <span class="math display">\[\begin{equation}
@@ -1038,8 +1061,8 @@ u(y_i, 0, \cdots, 0, z_i) &amp;\text{   if   }j = 0,
 is called the .</li>
 </ul>
 </div>
-<div id="characteristics-space-approach" class="section level3" number="4.4.4">
-<h3><span class="header-section-number">4.4.4</span> Characteristics Space Approach</h3>
+<div id="characteristics-space-approach" class="section level3 hasAnchor" number="4.4.4">
+<h3><span class="header-section-number">4.4.4</span> Characteristics Space Approach<a href="demand.html#characteristics-space-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Preference is defined over the characteristics of alternatives, <span class="math inline">\(x_j\)</span>:</p></li>
 <li><p>Car: vehicle, engine power, model-year, car maker, etc.</p></li>
@@ -1054,8 +1077,8 @@ v_j(p_j, y_i, z_i) &amp;=u(y_i - p_j, 0, \cdots, \underbrace{1}_{q_j}, \cdots, 0
 \end{equation}\]</span></p></li>
 </ul>
 </div>
-<div id="weak-separability-and-income-effect" class="section level3" number="4.4.5">
-<h3><span class="header-section-number">4.4.5</span> Weak Separability and Income Effect</h3>
+<div id="weak-separability-and-income-effect" class="section level3 hasAnchor" number="4.4.5">
+<h3><span class="header-section-number">4.4.5</span> Weak Separability and Income Effect<a href="demand.html#weak-separability-and-income-effect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>We usually focus on a particular product category such as cars, PCs, cereals, detergents, and so on.</li>
 <li>Assume that the preference is separable between the category in question (<strong>inside goods</strong>) and other categories (<strong>outside goods</strong>).</li>
@@ -1077,8 +1100,8 @@ u\{q_I, v[q_O(y_O, p_O)]\} \equiv \tilde{u}(q_I, y_O; p_O).
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="weak-separability-and-income-effect-1" class="section level3" number="4.4.6">
-<h3><span class="header-section-number">4.4.6</span> Weak Separability and Income Effect</h3>
+<div id="weak-separability-and-income-effect-1" class="section level3 hasAnchor" number="4.4.6">
+<h3><span class="header-section-number">4.4.6</span> Weak Separability and Income Effect<a href="demand.html#weak-separability-and-income-effect-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Thus, how the preference for the outside good is modeled determines how the individual income affects the choice.
 <span class="math display">\[\begin{equation}
@@ -1092,8 +1115,8 @@ u\{q_I, v[q_O(y_O, p_O)]\} \equiv \tilde{u}(q_I, y_O; p_O).
 <li>Remember that the price of a product enters because we here consider <strong>indirect</strong> utility function.</li>
 </ul>
 </div>
-<div id="utility-function-normalization" class="section level3" number="4.4.7">
-<h3><span class="header-section-number">4.4.7</span> Utility Function Normalization</h3>
+<div id="utility-function-normalization" class="section level3 hasAnchor" number="4.4.7">
+<h3><span class="header-section-number">4.4.7</span> Utility Function Normalization<a href="demand.html#utility-function-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The <strong>location</strong> of utility function is often normalized by setting:
 <span class="math display">\[\begin{equation}
@@ -1102,8 +1125,8 @@ u(y^*, 0, \cdots, 0, z^*) = 0,
 for certain choice of <span class="math inline">\((y^*, z^*)\)</span>.</li>
 </ul>
 </div>
-<div id="aggregation-of-the-individual-demand" class="section level3" number="4.4.8">
-<h3><span class="header-section-number">4.4.8</span> Aggregation of the Individual Demand</h3>
+<div id="aggregation-of-the-individual-demand" class="section level3 hasAnchor" number="4.4.8">
+<h3><span class="header-section-number">4.4.8</span> Aggregation of the Individual Demand<a href="demand.html#aggregation-of-the-individual-demand" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(q(p, x, y_i, z_i) = \{q_j(p, x, y_i, z_i)\}_{j = 0, \cdots, J}\)</span> be the demand function of consumer <span class="math inline">\(i\)</span>, that is:
 <span class="math display">\[\begin{equation}
@@ -1117,8 +1140,8 @@ q_j(p, x, y_i, z_i) = 1 \Leftrightarrow j = \text{argmax}_{j = 0, 1, \cdots, j} 
 where <span class="math inline">\(N\)</span> is the population.</li>
 </ul>
 </div>
-<div id="horizontal-product-differentiation" class="section level3" number="4.4.9">
-<h3><span class="header-section-number">4.4.9</span> Horizontal Product Differentiation</h3>
+<div id="horizontal-product-differentiation" class="section level3 hasAnchor" number="4.4.9">
+<h3><span class="header-section-number">4.4.9</span> Horizontal Product Differentiation<a href="demand.html#horizontal-product-differentiation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><strong>horizontal product differentiation</strong>: consumers do not agree on the ranking of the choices.</li>
 <li>There are two convenience stores <span class="math inline">\(j = 1, 2\)</span> on a street <span class="math inline">\([0, 1]\)</span>.</li>
@@ -1129,8 +1152,8 @@ v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |z_i - x_j| - p_j.
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="horizontal-product-differentiation-1" class="section level3" number="4.4.10">
-<h3><span class="header-section-number">4.4.10</span> Horizontal Product Differentiation</h3>
+<div id="horizontal-product-differentiation-1" class="section level3 hasAnchor" number="4.4.10">
+<h3><span class="header-section-number">4.4.10</span> Horizontal Product Differentiation<a href="demand.html#horizontal-product-differentiation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that the prices are low enough that entire consumers on the street are willing to buy either from the stores.</li>
 <li>Consumer <span class="math inline">\(i\)</span> buys from store <span class="math inline">\(1\)</span> if and only if:
@@ -1149,11 +1172,11 @@ v_{ij} \equiv v(p_j, x_j, y_i, z_i) \equiv s - t |z_i - x_j| - p_j.
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="vertical-product-differentiation" class="section level3" number="4.4.11">
-<h3><span class="header-section-number">4.4.11</span> Vertical Product Differentiation</h3>
+<div id="vertical-product-differentiation" class="section level3 hasAnchor" number="4.4.11">
+<h3><span class="header-section-number">4.4.11</span> Vertical Product Differentiation<a href="demand.html#vertical-product-differentiation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><strong>Vertical product differentiation</strong>: Consumers agree on the ranking of the choices. Consumers can have different willingness to pay.</li>
-<li><span class="citation"><a href="references.html#ref-Bresnahan1987" role="doc-biblioref">Timothy F. Bresnahan</a> (<a href="references.html#ref-Bresnahan1987" role="doc-biblioref">1987</a>)</span> analyzed automobile demand with this framework.</li>
+<li><span class="citation">Timothy F. Bresnahan (<a href="#ref-Bresnahan1987" role="doc-biblioref">1987</a>)</span> analyzed automobile demand with this framework.</li>
 <li>There are <span class="math inline">\(J\)</span> goods and consumer <span class="math inline">\(i\)</span> has a utility such as:
 <span class="math display">\[\begin{equation}
 v_{ij} \equiv v(p_j, x_j, y_i, z_i) = z_i x_j - p_j,
@@ -1165,8 +1188,8 @@ where <span class="math inline">\(x_j\)</span> is a quality of product <span cla
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="vertical-product-differentiation-1" class="section level3" number="4.4.12">
-<h3><span class="header-section-number">4.4.12</span> Vertical Product Differentiation</h3>
+<div id="vertical-product-differentiation-1" class="section level3 hasAnchor" number="4.4.12">
+<h3><span class="header-section-number">4.4.12</span> Vertical Product Differentiation<a href="demand.html#vertical-product-differentiation-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Consumer <span class="math inline">\(i\)</span> prefers good <span class="math inline">\(j + 1\)</span> to good <span class="math inline">\(j\)</span> if and only if:
 <span class="math display">\[\begin{equation}
@@ -1186,19 +1209,19 @@ z_i \le \Delta_0 \equiv \min\{p_1/x_1, \cdots p_J/x_j\}.
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="econometric-models" class="section level3" number="4.4.13">
-<h3><span class="header-section-number">4.4.13</span> Econometric Models</h3>
+<div id="econometric-models" class="section level3 hasAnchor" number="4.4.13">
+<h3><span class="header-section-number">4.4.13</span> Econometric Models<a href="demand.html#econometric-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>So far there was no econometrics.</li>
 <li>Next we define what are observable and unobservable, and what are known and unknown.</li>
 <li>Then consider how to identify and estimate the model.</li>
 </ul>
 </div>
-<div id="multinomial-logit-model-preference-shock" class="section level3" number="4.4.14">
-<h3><span class="header-section-number">4.4.14</span> Multinomial Logit Model: Preference Shock</h3>
+<div id="multinomial-logit-model-preference-shock" class="section level3 hasAnchor" number="4.4.14">
+<h3><span class="header-section-number">4.4.14</span> Multinomial Logit Model: Preference Shock<a href="demand.html#multinomial-logit-model-preference-shock" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>This originates at <span class="citation"><a href="references.html#ref-Mcfadden1974" role="doc-biblioref">D. L. Mcfadden</a> (<a href="references.html#ref-Mcfadden1974" role="doc-biblioref">1974</a>)</span>.</li>
-<li>See <span class="citation"><a href="references.html#ref-Train2009" role="doc-biblioref">Train</a> (<a href="references.html#ref-Train2009" role="doc-biblioref">2009</a>)</span> for reference.</li>
+<li>This originates at <span class="citation">D. L. Mcfadden (<a href="#ref-Mcfadden1974" role="doc-biblioref">1974</a>)</span>.</li>
+<li>See <span class="citation">Train (<a href="#ref-Train2009" role="doc-biblioref">2009</a>)</span> for reference.</li>
 <li>Suppose that there is some unobservable component in consumer characteristics.</li>
 <li>In reality, consumers choice change somewhat randomly.</li>
 <li>Let’s capture such a <strong>preference shock</strong> by consider the following model:
@@ -1222,8 +1245,8 @@ for <span class="math inline">\(k = 0, \cdots, J\)</span>.</li>
 \]</span></li>
 </ul>
 </div>
-<div id="multinomial-logit-model-distributional-assumption" class="section level3" number="4.4.15">
-<h3><span class="header-section-number">4.4.15</span> Multinomial Logit Model: Distributional Assumption</h3>
+<div id="multinomial-logit-model-distributional-assumption" class="section level3 hasAnchor" number="4.4.15">
+<h3><span class="header-section-number">4.4.15</span> Multinomial Logit Model: Distributional Assumption<a href="demand.html#multinomial-logit-model-distributional-assumption" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Now assume the followings:</p></li>
 <li><p><span class="math inline">\(\epsilon_{ij}\)</span> are independent across <span class="math inline">\(j\)</span>: <span class="math inline">\(G(\epsilon_i) = \prod_{j = 0, \cdots, J} G_j(\epsilon_{ij})\)</span>.</p></li>
@@ -1236,10 +1259,10 @@ for <span class="math inline">\(k = 0, \cdots, J\)</span>.</li>
 <li><p>Another popular distribution assumption is to assume a multivariate normal distribution of <span class="math inline">\(\epsilon_i\)</span>. This case is called the <strong>multinomial probit model</strong>.</p></li>
 </ul>
 </div>
-<div id="multinomial-logit-model-choice-probability" class="section level3" number="4.4.16">
-<h3><span class="header-section-number">4.4.16</span> Multinomial Logit Model: Choice Probability</h3>
+<div id="multinomial-logit-model-choice-probability" class="section level3 hasAnchor" number="4.4.16">
+<h3><span class="header-section-number">4.4.16</span> Multinomial Logit Model: Choice Probability<a href="demand.html#multinomial-logit-model-choice-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>The  of consumer <span class="math inline">\(i\)</span> of good <span class="math inline">\(j\)</span> is:
+<li>The of consumer <span class="math inline">\(i\)</span> of good <span class="math inline">\(j\)</span> is:
 <span class="math display">\[\begin{equation}
 \begin{split}
 \sigma_j(p, x, y_i, z_i) &amp; \equiv \mathbb{P}\{j = \text{argmax}_{k = 0, 1, \cdots, J} v(p_k, x_k, y_i, z_i) + \epsilon_{ik}  \}\\
@@ -1258,7 +1281,7 @@ v(p_k, x_k, y_i, z_i) = \beta_i&#39;x_k + \alpha_i (y_i - p_k),
 \beta_i \\
 \alpha_i
 \end{pmatrix}
-= 
+=
 \begin{pmatrix}
 \beta_0 \\
 \alpha_0
@@ -1268,7 +1291,7 @@ v(p_k, x_k, y_i, z_i) = \beta_i&#39;x_k + \alpha_i (y_i - p_k),
 \Gamma\\
 \pi&#39;
 \end{pmatrix}
- z_i.
+z_i.
 \end{equation}\]</span>
 - Then, we have:
 <span class="math display">\[\begin{equation}
@@ -1282,8 +1305,8 @@ v(p_k, x_k, y_i, z_i) = \beta_i&#39;x_k + \alpha_i (y_i - p_k),
 \sigma_{j}(p, x, y_i, z_i) = \frac{\exp[\beta_i&#39;x_j - \alpha_i p_j]}{1 + \sum_{k = 1}^J \exp[\beta_i&#39;x_k - \alpha_i p_k]}
 \]</span></p>
 </div>
-<div id="multinomial-logit-model-inclusive-value" class="section level3" number="4.4.17">
-<h3><span class="header-section-number">4.4.17</span> Multinomial Logit Model: Inclusive Value</h3>
+<div id="multinomial-logit-model-inclusive-value" class="section level3 hasAnchor" number="4.4.17">
+<h3><span class="header-section-number">4.4.17</span> Multinomial Logit Model: Inclusive Value<a href="demand.html#multinomial-logit-model-inclusive-value" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The expected utility for consumer <span class="math inline">\(i\)</span> before the preference shocks are drawn under multinomial logit model is given by:
 <span class="math display">\[\begin{equation}
@@ -1291,13 +1314,13 @@ v(p_k, x_k, y_i, z_i) = \beta_i&#39;x_k + \alpha_i (y_i - p_k),
 &amp;\mathbb{E}\{\max_{j = 0, \cdots, J} v(p_j, x_j, y_i, z_i) + \epsilon_{ij}\} \\
 &amp;= \text{   ...after some algebra: leave as an exercise...}\\
 &amp;= \ln \Bigg\{\sum_{j = 0}^J \exp[v(p_j, x_j, y_i, z_i)] \Bigg\} + constant.
-\end{split} 
+\end{split}
 \end{equation}\]</span></li>
 <li>This is sometimes called the <strong>inclusive value</strong> of the choice set.</li>
 </ul>
 </div>
-<div id="maximum-likelihood-estimation-of-multinomial-logit-model" class="section level3" number="4.4.18">
-<h3><span class="header-section-number">4.4.18</span> Maximum Likelihood Estimation of Multinomial Logit Model</h3>
+<div id="maximum-likelihood-estimation-of-multinomial-logit-model" class="section level3 hasAnchor" number="4.4.18">
+<h3><span class="header-section-number">4.4.18</span> Maximum Likelihood Estimation of Multinomial Logit Model<a href="demand.html#maximum-likelihood-estimation-of-multinomial-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose we observe a sequence of income <span class="math inline">\(y_i\)</span>, consumer characteristics <span class="math inline">\(z_i\)</span>, choice <span class="math inline">\(q_{i}\)</span>, product characteristics <span class="math inline">\(x_j\)</span> and price <span class="math inline">\(p_j\)</span>.</li>
 <li><span class="math inline">\(q_i = (q_{i0}, \cdots, q_{iJ})&#39;\)</span> and <span class="math inline">\(q_{ij} = 1\)</span> if <span class="math inline">\(j\)</span> is chosen and <span class="math inline">\(0\)</span> otherwise.</li>
@@ -1313,8 +1336,8 @@ l(v; q, y, z, w) &amp;= \sum_{i = 1}^N \ln \mathbb{P}\{q_i = q(p, x, y_i, z_i)|p
 <li>We can estimate the parameters by finding parameters that maximize the log likelihood.</li>
 </ul>
 </div>
-<div id="nonlinear-least-square-estimation-of-multinomial-logit-model" class="section level3" number="4.4.19">
-<h3><span class="header-section-number">4.4.19</span> Nonlinear Least Square Estimation of Multinomial Logit Model</h3>
+<div id="nonlinear-least-square-estimation-of-multinomial-logit-model" class="section level3 hasAnchor" number="4.4.19">
+<h3><span class="header-section-number">4.4.19</span> Nonlinear Least Square Estimation of Multinomial Logit Model<a href="demand.html#nonlinear-least-square-estimation-of-multinomial-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>The multinomial logit model can be estimated by nonlinear least square method as well.</p></li>
 <li><p>Suppose that the share of product <span class="math inline">\(j\)</span> among consumers with characteristics <span class="math inline">\(z\)</span> and income <span class="math inline">\(y\)</span> was:
@@ -1353,12 +1376,12 @@ v(p_j, x_j, y_m) = \beta_i&#39; x_j - \alpha_i p_j.
 \ln[s_{j}(y, z)/s_{0}(y, z)] = \beta_i&#39; x_j - \alpha_i p_j.
 \end{equation}\]</span></p>
 </div>
-<div id="iia-problem" class="section level3" number="4.4.20">
-<h3><span class="header-section-number">4.4.20</span> IIA Problem</h3>
+<div id="iia-problem" class="section level3 hasAnchor" number="4.4.20">
+<h3><span class="header-section-number">4.4.20</span> IIA Problem<a href="demand.html#iia-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Multinomial logit problem is intuitive and easy to implement.</li>
 <li>However, there are several problems in the model.</li>
-<li>The most important problem is the  problem.</li>
+<li>The most important problem is the problem.</li>
 <li>Notice that:
 <span class="math display">\[\begin{equation}
 \frac{\sigma_j(p, x, y, z)}{\sigma_{k}(p, x, y, z)} = \frac{\exp[v(p_j, x_j, y, z)]}{\exp[v(p_k, x_k, y, z)]}.
@@ -1367,8 +1390,8 @@ v(p_j, x_j, y_m) = \beta_i&#39; x_j - \alpha_i p_j.
 <li>Why is this a problem?</li>
 </ul>
 </div>
-<div id="blue-bus-and-red-bus-problem" class="section level3" number="4.4.21">
-<h3><span class="header-section-number">4.4.21</span> Blue Bus and Red Bus Problem</h3>
+<div id="blue-bus-and-red-bus-problem" class="section level3 hasAnchor" number="4.4.21">
+<h3><span class="header-section-number">4.4.21</span> Blue Bus and Red Bus Problem<a href="demand.html#blue-bus-and-red-bus-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that you can go to a town by bus or by train.</li>
 <li>Half of commuters use a bus and the other half use a train.</li>
@@ -1381,8 +1404,8 @@ v(p_j, x_j, y_m) = \beta_i&#39; x_j - \alpha_i p_j.
 <li>But shouldn’t it be that train keeps half share and bus have half share in total?</li>
 </ul>
 </div>
-<div id="restrictive-price-elasticity" class="section level3" number="4.4.22">
-<h3><span class="header-section-number">4.4.22</span> Restrictive Price Elasticity</h3>
+<div id="restrictive-price-elasticity" class="section level3 hasAnchor" number="4.4.22">
+<h3><span class="header-section-number">4.4.22</span> Restrictive Price Elasticity<a href="demand.html#restrictive-price-elasticity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>IIA property restrict price elasticities in an unfavorable manner.</li>
 <li>This is a serious problem because the main purpose for us to estimate demand functions is to identify the price elasticity.</li>
@@ -1402,8 +1425,8 @@ e_{jk} =
 <li>However, according to the previous result, twice more consumers substitute to coffee rather than to Pepsi cola.</li>
 </ul>
 </div>
-<div id="monotonic-inclusive-value" class="section level3" number="4.4.23">
-<h3><span class="header-section-number">4.4.23</span> Monotonic Inclusive Value</h3>
+<div id="monotonic-inclusive-value" class="section level3 hasAnchor" number="4.4.23">
+<h3><span class="header-section-number">4.4.23</span> Monotonic Inclusive Value<a href="demand.html#monotonic-inclusive-value" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that there is a good whose mean indirect utility is <span class="math inline">\(v\)</span>.</li>
 <li>The inclusive value for this choice set is <span class="math inline">\(\ln[1 + \exp(v)]\)</span>.</li>
@@ -1412,8 +1435,8 @@ e_{jk} =
 <li>We just added the same goods. But the expected utility of consumer increases monotonically in the number of alternatives.</li>
 </ul>
 </div>
-<div id="the-source-of-the-problem" class="section level3" number="4.4.24">
-<h3><span class="header-section-number">4.4.24</span> The Source of the Problem</h3>
+<div id="the-source-of-the-problem" class="section level3 hasAnchor" number="4.4.24">
+<h3><span class="header-section-number">4.4.24</span> The Source of the Problem<a href="demand.html#the-source-of-the-problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><strong>The source of the problem is that there is no correlation in the preference shock across products</strong>.</li>
 <li>When the preference shock to coca cola is high, the preference shock to Pepsi cola should be high, while the preference shock to coffee should be relatively independent.</li>
@@ -1421,19 +1444,19 @@ e_{jk} =
 <li>However, the preference shocks should be the same for the same good. Then, the the expected value of the maximum of the preference shock should not increase even if we add the same products on the shelf.</li>
 </ul>
 </div>
-<div id="correlation-in-preference-shocks" class="section level3" number="4.4.25">
-<h3><span class="header-section-number">4.4.25</span> Correlation in Preference Shocks</h3>
+<div id="correlation-in-preference-shocks" class="section level3 hasAnchor" number="4.4.25">
+<h3><span class="header-section-number">4.4.25</span> Correlation in Preference Shocks<a href="demand.html#correlation-in-preference-shocks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Therefore, the preference shock should be such that: preference shocks between two alternative should be more correlated when they are closer in the characteristics space.</li>
 <li>So we have to allow the covariance matrix of the preference shock to be free parameters.</li>
 <li>If we allow flexible covariance matrix, the curse of dimensionality in the number of alternatives comes back: The dimensionality of the covariance matrix is <span class="math inline">\(J^2\)</span>.</li>
-<li>Another way is to remove <span class="math inline">\(\epsilon_{ij}\)</span>: it is called a <strong>pure characteristics model</strong> <span class="citation">(<a href="references.html#ref-Berry2007" role="doc-biblioref">Steven Berry &amp; Pakes, 2007</a>)</span>.</li>
+<li>Another way is to remove <span class="math inline">\(\epsilon_{ij}\)</span>: it is called a <strong>pure characteristics model</strong> <span class="citation">(<a href="#ref-Berry2007" role="doc-biblioref">Steven Berry &amp; Pakes, 2007</a>)</span>.</li>
 <li>But the pure characteristics model is computationally not straightforward.</li>
 <li>We explore the way of introducing mild correlation across similar products in the preference shocks.</li>
 </ul>
 </div>
-<div id="observed-and-unobserved-consumer-heterogeneity" class="section level3" number="4.4.26">
-<h3><span class="header-section-number">4.4.26</span> Observed and Unobserved Consumer Heterogeneity</h3>
+<div id="observed-and-unobserved-consumer-heterogeneity" class="section level3 hasAnchor" number="4.4.26">
+<h3><span class="header-section-number">4.4.26</span> Observed and Unobserved Consumer Heterogeneity<a href="demand.html#observed-and-unobserved-consumer-heterogeneity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Consider beverage demand and let <span class="math inline">\(x_j = \text{carbonated}_j\)</span> and <span class="math inline">\(z_i = \text{teenager}_i\)</span>.</li>
 <li>Suppose that the mean indirect utility is:
@@ -1459,8 +1482,8 @@ v(p_j, x_j, y_i, z_i) = \beta_i (\text{carbonated})_j - \alpha_i p_j,
 <li><p>In the above example, “<span class="math inline">\(0.2 \cdot (\text{carbonated})_i\)</span>” captures the consumer heterogeneity by observed characteristics and “<span class="math inline">\(\nu_i\)</span>” by unobserved characteristics.</p></li>
 </ul>
 </div>
-<div id="mixed-logit-model" class="section level3" number="4.4.27">
-<h3><span class="header-section-number">4.4.27</span> Mixed Logit Model</h3>
+<div id="mixed-logit-model" class="section level3 hasAnchor" number="4.4.27">
+<h3><span class="header-section-number">4.4.27</span> Mixed Logit Model<a href="demand.html#mixed-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that the mean indirect utility is:
 <span class="math display">\[\begin{equation}
@@ -1480,14 +1503,14 @@ with
 <li><span class="math inline">\(\beta_i, \alpha_i\)</span> are marginal out, because econometrician does not observe them.</li>
 </ul>
 </div>
-<div id="mixed-logit-model-parametric-assumptions" class="section level3" number="4.4.28">
-<h3><span class="header-section-number">4.4.28</span> Mixed Logit Model : Parametric Assumptions</h3>
+<div id="mixed-logit-model-parametric-assumptions" class="section level3 hasAnchor" number="4.4.28">
+<h3><span class="header-section-number">4.4.28</span> Mixed Logit Model : Parametric Assumptions<a href="demand.html#mixed-logit-model-parametric-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>It is often assumed that:
 <span class="math display">\[\begin{equation}
 v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i) = \beta_i&#39; x_j - \alpha_i p_j.
 \end{equation}\]</span></li>
-<li><span class="citation"><a href="references.html#ref-Mcfadden2000" role="doc-biblioref">McFadden &amp; Train</a> (<a href="references.html#ref-Mcfadden2000" role="doc-biblioref">2000</a>)</span> showed that any discrete choice models that are consistent with the random utility maximization can be arbitrarily closely approximated by this class of mixed-logit model.</li>
+<li><span class="citation">McFadden &amp; Train (<a href="#ref-Mcfadden2000" role="doc-biblioref">2000</a>)</span> showed that any discrete choice models that are consistent with the random utility maximization can be arbitrarily closely approximated by this class of mixed-logit model.</li>
 <li>The distribution of <span class="math inline">\(\beta_i\)</span> and <span class="math inline">\(\alpha_i\)</span> is often assumed to be:
 <span class="math display">\[\begin{equation}
 \begin{split}
@@ -1498,8 +1521,8 @@ v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i) = \beta_i&#39; x_j - \alpha_i p_j.
 where <span class="math inline">\(\nu_i\)</span> and <span class="math inline">\(\upsilon_i\)</span> are i.i.d. standard normal random vectors.</li>
 </ul>
 </div>
-<div id="mixed-logit-model-iia" class="section level3" number="4.4.29">
-<h3><span class="header-section-number">4.4.29</span> Mixed Logit Model: IIA</h3>
+<div id="mixed-logit-model-iia" class="section level3 hasAnchor" number="4.4.29">
+<h3><span class="header-section-number">4.4.29</span> Mixed Logit Model: IIA<a href="demand.html#mixed-logit-model-iia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>There is no IIA at the market-segment level:
 <span class="math display">\[\begin{equation}
@@ -1508,8 +1531,8 @@ where <span class="math inline">\(\nu_i\)</span> and <span class="math inline">\
 <li>The share ratio depends on the price and characteristics of all the other products.</li>
 </ul>
 </div>
-<div id="mixed-logit-moel-price-elasticities" class="section level3" number="4.4.30">
-<h3><span class="header-section-number">4.4.30</span> Mixed Logit Moel: Price Elasticities</h3>
+<div id="mixed-logit-moel-price-elasticities" class="section level3 hasAnchor" number="4.4.30">
+<h3><span class="header-section-number">4.4.30</span> Mixed Logit Moel: Price Elasticities<a href="demand.html#mixed-logit-moel-price-elasticities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let:
 <span class="math display">\[\begin{equation}
@@ -1517,11 +1540,11 @@ v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i) = \beta_i&#39; x_j - \alpha_i p_j.
 \end{equation}\]</span></li>
 <li>The price elasticities of the choice probabilities conditional on <span class="math inline">\(p, x, y_i, z_i\)</span> is:
 <span class="math display">\[\begin{equation}
-e_{jk} = 
+e_{jk} =
 \begin{cases}
 -\frac{p_j}{\sigma_j} \int \alpha_i \sigma_{ij}(1 - \sigma_{ij})f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i &amp;\text{   if   } j = k\\
 \frac{p_k}{\sigma_j} \int \alpha_i \sigma_{ij} \sigma_{ik} f(\beta_i, \alpha_i|y_i, z_i) d\beta_i d\alpha_i &amp;\text{   otherwise},
-\end{cases} 
+\end{cases}
 \end{equation}\]</span>
 where
 <span class="math display">\[\begin{equation}
@@ -1530,8 +1553,8 @@ where
 <li>The price elasticity depends on the density of unobserved consumer types.</li>
 </ul>
 </div>
-<div id="simulated-maximum-likelihood-estimation-of-the-mixed-logit-model" class="section level3" number="4.4.31">
-<h3><span class="header-section-number">4.4.31</span> Simulated Maximum Likelihood Estimation of the Mixed Logit Model</h3>
+<div id="simulated-maximum-likelihood-estimation-of-the-mixed-logit-model" class="section level3 hasAnchor" number="4.4.31">
+<h3><span class="header-section-number">4.4.31</span> Simulated Maximum Likelihood Estimation of the Mixed Logit Model<a href="demand.html#simulated-maximum-likelihood-estimation-of-the-mixed-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The choice probability of the mixed logit model is an integration of the multinomial logit choice probability.</li>
 <li>This is not derived analytically in general.</li>
@@ -1543,11 +1566,11 @@ where
 \sigma_{j}(p, x, y_i, z_i) \approx \hat{\sigma}_{j}(p, x, y_i, z_i) \equiv \frac{1}{R} \sum_{r = 1}^R  \frac{\exp[v(p_j, x_j, y_i, z_i, \beta^r, \alpha^r)]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i, \beta^r, \alpha^r)]}.
 \end{equation}\]</span></li>
 <li>This is one of the numerical integration: <strong>Monte Carlo integration</strong>.</li>
-<li>Another approach is to use <strong>quadrature</strong>. See <span class="citation"><a href="references.html#ref-Judd1998" role="doc-biblioref">Judd</a> (<a href="references.html#ref-Judd1998" role="doc-biblioref">1998</a>)</span> for reference.</li>
+<li>Another approach is to use <strong>quadrature</strong>. See <span class="citation">Judd (<a href="#ref-Judd1998" role="doc-biblioref">1998</a>)</span> for reference.</li>
 </ul>
 </div>
-<div id="simulated-maximum-likelihood-estimation-of-the-mixed-logit-model-1" class="section level3" number="4.4.32">
-<h3><span class="header-section-number">4.4.32</span> Simulated Maximum Likelihood Estimation of the Mixed Logit Model</h3>
+<div id="simulated-maximum-likelihood-estimation-of-the-mixed-logit-model-1" class="section level3 hasAnchor" number="4.4.32">
+<h3><span class="header-section-number">4.4.32</span> Simulated Maximum Likelihood Estimation of the Mixed Logit Model<a href="demand.html#simulated-maximum-likelihood-estimation-of-the-mixed-logit-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>There are <span class="math inline">\(t = 1, \cdots, T\)</span> markets and there <span class="math inline">\(i = 1, \cdots, N\)</span> consumers in each market.</p></li>
 <li><p>Let <span class="math inline">\(\mathcal{J}_t\)</span> be the set of products that are available in market <span class="math inline">\(t\)</span>.</p></li>
@@ -1563,8 +1586,8 @@ where
 <li><p>We find parameters that maximize the simulated conditional log likelihood.</p></li>
 </ul>
 </div>
-<div id="simulated-non-linear-least-square-estimation-of-the-mixed-logit-model" class="section level3" number="4.4.33">
-<h3><span class="header-section-number">4.4.33</span> Simulated Non-linear Least Square Estimation of the Mixed Logit Model</h3>
+<div id="simulated-non-linear-least-square-estimation-of-the-mixed-logit-model" class="section level3 hasAnchor" number="4.4.33">
+<h3><span class="header-section-number">4.4.33</span> Simulated Non-linear Least Square Estimation of the Mixed Logit Model<a href="demand.html#simulated-non-linear-least-square-estimation-of-the-mixed-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that we only know the sales or share at the market-segment level.</li>
 <li>That is, we only observe the share of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span> among consumers of characteristics <span class="math inline">\(z\)</span> and income <span class="math inline">\(y\)</span>, <span class="math inline">\(s_{jt}(y, z)\)</span>.</li>
@@ -1574,8 +1597,8 @@ where
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="nested-logit-model-a-special-case-of-mixed-logit-model" class="section level3" number="4.4.34">
-<h3><span class="header-section-number">4.4.34</span> Nested Logit Model: A Special Case of Mixed Logit Model</h3>
+<div id="nested-logit-model-a-special-case-of-mixed-logit-model" class="section level3 hasAnchor" number="4.4.34">
+<h3><span class="header-section-number">4.4.34</span> Nested Logit Model: A Special Case of Mixed Logit Model<a href="demand.html#nested-logit-model-a-special-case-of-mixed-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(w_{j1}, \cdots, w_{jG}\)</span> be the indicator of product category, i.e., <span class="math inline">\(w_{jg}\)</span> takes value 1 if good <span class="math inline">\(j\)</span> belong to category <span class="math inline">\(g\)</span> and 0 otherwise.</li>
 <li>e.g., car category = {Sports, Luxury, Large, Midsize, Small}.</li>
@@ -1587,21 +1610,21 @@ v(p, x_j, y_i, z_i) = \beta&#39;x_j - \alpha_i p_j + \sum_{g = 1}^G \zeta_{ig} w
 <li>When a product in category <span class="math inline">\(g\)</span> was not available, consumers with high <span class="math inline">\(\zeta_{ig}\)</span> will substitute more to the other products in the same category than consumers with low <span class="math inline">\(\zeta_{ig}\)</span>.</li>
 </ul>
 </div>
-<div id="nested-logit-model-distributional-assumption" class="section level3" number="4.4.35">
-<h3><span class="header-section-number">4.4.35</span> Nested Logit Model: Distributional Assumption</h3>
+<div id="nested-logit-model-distributional-assumption" class="section level3 hasAnchor" number="4.4.35">
+<h3><span class="header-section-number">4.4.35</span> Nested Logit Model: Distributional Assumption<a href="demand.html#nested-logit-model-distributional-assumption" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let
 <span class="math display">\[\begin{equation}
 \varepsilon_{ij} \equiv \sum_{g = 1}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
 \end{equation}\]</span></li>
-<li>Under certain distributional assumption on <span class="math inline">\(\zeta_{ig}\)</span> and <span class="math inline">\(\epsilon_{ij}\)</span>, the term <span class="math inline">\(\varepsilon_{ij}\)</span> have a cumulative distribution <span class="citation">(<a href="references.html#ref-Cardell1997" role="doc-biblioref">Cardell, 1997</a>)</span>:
+<li>Under certain distributional assumption on <span class="math inline">\(\zeta_{ig}\)</span> and <span class="math inline">\(\epsilon_{ij}\)</span>, the term <span class="math inline">\(\varepsilon_{ij}\)</span> have a cumulative distribution <span class="citation">(<a href="#ref-Cardell1997" role="doc-biblioref">Cardell, 1997</a>)</span>:
 <span class="math display">\[\begin{equation}
 F(\varepsilon_i) = \exp\Bigg\{- \sum_{g = 1}^G \Bigg(\sum_{j \in \text{   category   } g} \exp[-\varepsilon_{ij}/\lambda_g] \Bigg)^{\lambda_g}  \Bigg\}.
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="nested-logit-model-choice-probability" class="section level3" number="4.4.36">
-<h3><span class="header-section-number">4.4.36</span> Nested Logit Model: Choice Probability</h3>
+<div id="nested-logit-model-choice-probability" class="section level3 hasAnchor" number="4.4.36">
+<h3><span class="header-section-number">4.4.36</span> Nested Logit Model: Choice Probability<a href="demand.html#nested-logit-model-choice-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Under this distributional assumption, the choice probability is:
 <span class="math display">\[\begin{equation}
@@ -1612,8 +1635,8 @@ if good <span class="math inline">\(j\)</span> belongs to category <span class="
 <li><span class="math inline">\(\lambda_g = 1\)</span> for all <span class="math inline">\(g\)</span> coincides with the multinomial logit model.</li>
 </ul>
 </div>
-<div id="nested-logit-model-decomposition-of-the-choice-probability" class="section level3" number="4.4.37">
-<h3><span class="header-section-number">4.4.37</span> Nested Logit Model: Decomposition of the Choice Probability</h3>
+<div id="nested-logit-model-decomposition-of-the-choice-probability" class="section level3 hasAnchor" number="4.4.37">
+<h3><span class="header-section-number">4.4.37</span> Nested Logit Model: Decomposition of the Choice Probability<a href="demand.html#nested-logit-model-decomposition-of-the-choice-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The choice probability can be decomposed into two parts:
 <span class="math display">\[\begin{equation}
@@ -1630,8 +1653,8 @@ we have:
 <li>The second first term can be interpreted as the probability of choosing product <span class="math inline">\(j\)</span> conditional on choosing category <span class="math inline">\(g\)</span> and the second term as the probability of choosing category <span class="math inline">\(g\)</span>.</li>
 </ul>
 </div>
-<div id="discrete-choice-model-with-unobserved-fixed-effects" class="section level3" number="4.4.38">
-<h3><span class="header-section-number">4.4.38</span> Discrete Choice Model with Unobserved Fixed Effects</h3>
+<div id="discrete-choice-model-with-unobserved-fixed-effects" class="section level3 hasAnchor" number="4.4.38">
+<h3><span class="header-section-number">4.4.38</span> Discrete Choice Model with Unobserved Fixed Effects<a href="demand.html#discrete-choice-model-with-unobserved-fixed-effects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>We have assumed that good <span class="math inline">\(j\)</span> is characterized by a vector of observed characteristics <span class="math inline">\(x_j\)</span>.</li>
 <li>Can econometrician observe all the relevant characteristics of the products in the choice set? Maybe no. For example, econometrician may not observe brand values that are created by advertisement and recognized by consumers.</li>
@@ -1641,8 +1664,8 @@ we have:
 <li>Because we can construct the market-share level data from individual choice level data, all the arguments should go through with the individual choice level data.</li>
 </ul>
 </div>
-<div id="unobserved-fixed-effects-in-multinomial-logit-model" class="section level3" number="4.4.39">
-<h3><span class="header-section-number">4.4.39</span> Unobserved Fixed Effects in Multinomial Logit Model</h3>
+<div id="unobserved-fixed-effects-in-multinomial-logit-model" class="section level3 hasAnchor" number="4.4.39">
+<h3><span class="header-section-number">4.4.39</span> Unobserved Fixed Effects in Multinomial Logit Model<a href="demand.html#unobserved-fixed-effects-in-multinomial-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To fix the idea, let’s revisit the multinomial logit model.</li>
 <li>For now, we do not consider either observed or unobserved consumer heterogeneity.</li>
@@ -1662,8 +1685,8 @@ we have:
 \end{equation}\]</span>
 - How to deal with the endogeneity between <span class="math inline">\(p_{jt}\)</span> and <span class="math inline">\(\xi_{jt}\)</span>?</p>
 </div>
-<div id="instrumental-variables-and-inversion" class="section level3" number="4.4.40">
-<h3><span class="header-section-number">4.4.40</span> Instrumental Variables and Inversion</h3>
+<div id="instrumental-variables-and-inversion" class="section level3 hasAnchor" number="4.4.40">
+<h3><span class="header-section-number">4.4.40</span> Instrumental Variables and Inversion<a href="demand.html#instrumental-variables-and-inversion" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Suppose that we have a vector of instrumental variables <span class="math inline">\(w_{jt}\)</span> such that:
 <span class="math display">\[\begin{equation}
@@ -1685,8 +1708,8 @@ we have:
 <li>We can estimate <span class="math inline">\(\beta\)</span> by finding the value that makes the sample analogue of the above expectation zero.</li>
 </ul>
 </div>
-<div id="inversion-in-multinomial-logit-model" class="section level3" number="4.4.41">
-<h3><span class="header-section-number">4.4.41</span> Inversion in Multinomial Logit Model</h3>
+<div id="inversion-in-multinomial-logit-model" class="section level3 hasAnchor" number="4.4.41">
+<h3><span class="header-section-number">4.4.41</span> Inversion in Multinomial Logit Model<a href="demand.html#inversion-in-multinomial-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Can we invert the multinomial model for <span class="math inline">\(\xi_{jt}\)</span>?</li>
 <li>We have:
@@ -1709,8 +1732,8 @@ with the observed share <span class="math inline">\(s\)</span>.</li>
 <li>At the end, it is no different from the linear model where the dependent variable is <span class="math inline">\(\ln s_{jt}/s_{0t}\)</span>.</li>
 </ul>
 </div>
-<div id="market-invariant-product-specific-fixed-effects" class="section level3" number="4.4.42">
-<h3><span class="header-section-number">4.4.42</span> Market-invariant Product-specific Fixed Effects</h3>
+<div id="market-invariant-product-specific-fixed-effects" class="section level3 hasAnchor" number="4.4.42">
+<h3><span class="header-section-number">4.4.42</span> Market-invariant Product-specific Fixed Effects<a href="demand.html#market-invariant-product-specific-fixed-effects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Furthermore, if you can assume <span class="math inline">\(\xi_{jt} = \xi_j\)</span>, then
 <span class="math display">\[\begin{equation}
@@ -1721,8 +1744,8 @@ with the observed share <span class="math inline">\(s\)</span>.</li>
 <li>This specification is a good starting point: we better start with the simplest specification and use the estimate as the initial guess for the following specifications.</li>
 </ul>
 </div>
-<div id="unobserved-consumer-heterogeneity-and-unobserved-fixed-effects-in-mixed-logit-model" class="section level3" number="4.4.43">
-<h3><span class="header-section-number">4.4.43</span> Unobserved Consumer Heterogeneity and Unobserved Fixed Effects in Mixed-logit Model</h3>
+<div id="unobserved-consumer-heterogeneity-and-unobserved-fixed-effects-in-mixed-logit-model" class="section level3 hasAnchor" number="4.4.43">
+<h3><span class="header-section-number">4.4.43</span> Unobserved Consumer Heterogeneity and Unobserved Fixed Effects in Mixed-logit Model<a href="demand.html#unobserved-consumer-heterogeneity-and-unobserved-fixed-effects-in-mixed-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>So far we abstracted away from the unobserved consumer heterogeneity.</li>
 <li>Next, suppose that the indirect utility function of good <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is:
@@ -1740,14 +1763,14 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> is i.i.d. Type-I extrem
 <li><span class="math inline">\(\nu_i\)</span> are i.i.d. standard normal random variables.</li>
 <li>Then the indirect utility of good <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is written as:
 <span class="math display">\[\begin{equation}
-\underbrace{\beta_0&#39; x_{jt} - \alpha_0 p_{jt} + \xi_{jt}}_{\text{(conditional) mean}} + \underbrace{\nu_{it}&#39; \Sigma x_{jt} - \upsilon_{it}&#39; \Omega p_{jt}}_{\text{deviation from the mean}} 
+\underbrace{\beta_0&#39; x_{jt} - \alpha_0 p_{jt} + \xi_{jt}}_{\text{(conditional) mean}} + \underbrace{\nu_{it}&#39; \Sigma x_{jt} - \upsilon_{it}&#39; \Omega p_{jt}}_{\text{deviation from the mean}}
 \end{equation}\]</span></li>
 <li>We refer to <span class="math inline">\(\beta_0, \alpha_0\)</span> as <strong>linear parameters</strong> and <span class="math inline">\(\Sigma, \Omega\)</span> as <strong>non-linear parameters</strong>, because of the reason I explain in the subsequent section.</li>
 <li>Let <span class="math inline">\(\theta_1\)</span> be the linear parameters and <span class="math inline">\(\theta_2\)</span> the non-linear parameters and let <span class="math inline">\(\theta = (\theta_1&#39;, \theta_2&#39;)&#39;\)</span>.</li>
 </ul>
 </div>
-<div id="unobserved-fixed-effects-in-mixed-logit-model" class="section level3" number="4.4.44">
-<h3><span class="header-section-number">4.4.44</span> Unobserved Fixed Effects in Mixed-logit Model</h3>
+<div id="unobserved-fixed-effects-in-mixed-logit-model" class="section level3 hasAnchor" number="4.4.44">
+<h3><span class="header-section-number">4.4.44</span> Unobserved Fixed Effects in Mixed-logit Model<a href="demand.html#unobserved-fixed-effects-in-mixed-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The choice share of good <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span> is:
 <span class="math display">\[\begin{equation}
@@ -1759,8 +1782,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> is i.i.d. Type-I extrem
 <li>How can we represent <span class="math inline">\(\xi_{jt}\)</span> as a function of parameters of interest to exploit the moment condition?</li>
 </ul>
 </div>
-<div id="representing-xi_jt-as-a-function-of-parameters-of-interest" class="section level3" number="4.4.45">
-<h3><span class="header-section-number">4.4.45</span> Representing <span class="math inline">\(\xi_{jt}\)</span> as a Function of Parameters of Interest</h3>
+<div id="representing-xi_jt-as-a-function-of-parameters-of-interest" class="section level3 hasAnchor" number="4.4.45">
+<h3><span class="header-section-number">4.4.45</span> Representing <span class="math inline">\(\xi_{jt}\)</span> as a Function of Parameters of Interest<a href="demand.html#representing-xi_jt-as-a-function-of-parameters-of-interest" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Let <span class="math inline">\(s_{jt}\)</span> be the share of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span>.</li>
 <li>The following system of equations implicitly determines <span class="math inline">\(\xi_{jt}\)</span> as a function of parameters of interest:
@@ -1774,8 +1797,8 @@ s_{jt} = \sigma_j(p_t, x_t, \xi_t; \theta).
 <li>Is there efficient method to find the solution?</li>
 </ul>
 </div>
-<div id="summarizing-the-conditional-mean-term" class="section level3" number="4.4.46">
-<h3><span class="header-section-number">4.4.46</span> Summarizing the Conditional Mean Term</h3>
+<div id="summarizing-the-conditional-mean-term" class="section level3 hasAnchor" number="4.4.46">
+<h3><span class="header-section-number">4.4.46</span> Summarizing the Conditional Mean Term<a href="demand.html#summarizing-the-conditional-mean-term" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Now, let <span class="math inline">\(\delta_{jt}\)</span> be the conditional mean term in the indirect utility:
 <span class="math display">\[\begin{equation}
@@ -1792,8 +1815,8 @@ s_{jt} = \sigma_j(p_t, x_t, \xi_t; \theta).
 for <span class="math inline">\(j = 1, \cdots, J, t = 1, \cdots, T\)</span>.</li>
 </ul>
 </div>
-<div id="contraction-mapping-for-delta_t." class="section level3" number="4.4.47">
-<h3><span class="header-section-number">4.4.47</span> Contraction Mapping for <span class="math inline">\(\delta_t\)</span>.</h3>
+<div id="contraction-mapping-for-delta_t." class="section level3 hasAnchor" number="4.4.47">
+<h3><span class="header-section-number">4.4.47</span> Contraction Mapping for <span class="math inline">\(\delta_t\)</span>.<a href="demand.html#contraction-mapping-for-delta_t." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Now, fix <span class="math inline">\(\theta_2\)</span> and define an operator <span class="math inline">\(T\)</span> such that:
 <span class="math display">\[\begin{equation}
@@ -1806,7 +1829,7 @@ where <span class="math inline">\(\delta_t = (\delta_{1t}, \cdots, \delta_{Jt})&
 \delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{t} - \ln \sigma_{t}(\delta_t^{(r)}, \theta_2),
 \end{equation}\]</span>
 for <span class="math inline">\(r = 0, 1, \cdots\)</span>.</li>
-<li><span class="citation"><a href="references.html#ref-Berry1995a" role="doc-biblioref">Steven Berry, Levinsohn, &amp; Pakes</a> (<a href="references.html#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> proved that <span class="math inline">\(T_t\)</span> as specified above is a <strong>contraction mapping with modulus less than one</strong>.</li>
+<li><span class="citation">Steven Berry, Levinsohn, &amp; Pakes (<a href="#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> proved that <span class="math inline">\(T_t\)</span> as specified above is a <strong>contraction mapping with modulus less than one</strong>.</li>
 <li>This means that:
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(T_t\)</span> has a unique fixed point;</li>
@@ -1824,11 +1847,11 @@ for <span class="math inline">\(r = 0, 1, \cdots\)</span>.</li>
 <li>Moreover, it can be found by iterating the operator.</li>
 <li>Let <span class="math inline">\(\delta_t(\theta_2)\)</span> be the solution to this equation, i.e., the limit of this operation.</li>
 <li>The above result is useful because it ensures the inversion and provides the algorithm to find the solution.</li>
-<li>The invertibility itself holds under more general settings <span class="citation">(<a href="references.html#ref-Berry2013" role="doc-biblioref">Steven Berry, Gandhi, &amp; Haile, 2013</a>)</span>.</li>
+<li>The invertibility itself holds under more general settings <span class="citation">(<a href="#ref-Berry2013" role="doc-biblioref">Steven Berry, Gandhi, &amp; Haile, 2013</a>)</span>.</li>
 </ul>
 </div>
-<div id="solving-for-xi_jttheta" class="section level3" number="4.4.48">
-<h3><span class="header-section-number">4.4.48</span> Solving for <span class="math inline">\(\xi_{jt}(\theta)\)</span></h3>
+<div id="solving-for-xi_jttheta" class="section level3 hasAnchor" number="4.4.48">
+<h3><span class="header-section-number">4.4.48</span> Solving for <span class="math inline">\(\xi_{jt}(\theta)\)</span><a href="demand.html#solving-for-xi_jttheta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>We defined the average utility as:
 <span class="math display">\[\begin{equation}
@@ -1844,8 +1867,8 @@ s_{jt} = \sigma_{j}(p_t, x, \xi_t; \theta).
 \end{equation}\]</span></li>
 </ul>
 </div>
-<div id="solving-for-xi_jttheta-summary" class="section level3" number="4.4.49">
-<h3><span class="header-section-number">4.4.49</span> Solving for <span class="math inline">\(\xi_{jt}(\theta)\)</span>: Summary</h3>
+<div id="solving-for-xi_jttheta-summary" class="section level3 hasAnchor" number="4.4.49">
+<h3><span class="header-section-number">4.4.49</span> Solving for <span class="math inline">\(\xi_{jt}(\theta)\)</span>: Summary<a href="demand.html#solving-for-xi_jttheta-summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In summary, <span class="math inline">\(\xi_{jt}\)</span> that solves the equality exists and unique, and can be computed by:</li>
 <li>Fix <span class="math inline">\(\theta = \{\theta_1, \theta_2\}\)</span>.</li>
@@ -1863,8 +1886,8 @@ s_{jt} = \sigma_{j}(p_t, x, \xi_t; \theta).
 <li>We run this algorithm every time we evaluate the moment condition at a parameter value.</li>
 </ul>
 </div>
-<div id="gmm-objective-function" class="section level3" number="4.4.50">
-<h3><span class="header-section-number">4.4.50</span> GMM Objective Function</h3>
+<div id="gmm-objective-function" class="section level3 hasAnchor" number="4.4.50">
+<h3><span class="header-section-number">4.4.50</span> GMM Objective Function<a href="demand.html#gmm-objective-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Find <span class="math inline">\(\theta\)</span> that solves:
 <span class="math display">\[\begin{equation}
@@ -1872,7 +1895,7 @@ s_{jt} = \sigma_{j}(p_t, x, \xi_t; \theta).
 \end{equation}\]</span>
 where <span class="math inline">\(\Phi\)</span> is a weight matrix,
 <span class="math display">\[\begin{equation}
-\xi(\theta) = 
+\xi(\theta) =
 \begin{pmatrix}
 \xi_{11}(\theta)\\
 \vdots\\
@@ -1882,7 +1905,7 @@ where <span class="math inline">\(\Phi\)</span> is a weight matrix,
 \vdots\\
 \xi_{J_T T}
 \end{pmatrix},
-W = 
+W =
 \begin{pmatrix}
 w_{11}&#39; \\
 \vdots \\
@@ -1897,8 +1920,8 @@ w_{J_TT}&#39; \\
 <li><span class="math inline">\(w_{jt} = (x_{jt}&#39;, w_{jt}^*)&#39;\)</span> where <span class="math inline">\(w_{jt}^*\)</span> is an excluded instrument that is relevant to <span class="math inline">\(p_{jt}\)</span>.</li>
 </ul>
 </div>
-<div id="estimating-linear-parameters" class="section level3" number="4.4.51">
-<h3><span class="header-section-number">4.4.51</span> Estimating Linear Parameters</h3>
+<div id="estimating-linear-parameters" class="section level3 hasAnchor" number="4.4.51">
+<h3><span class="header-section-number">4.4.51</span> Estimating Linear Parameters<a href="demand.html#estimating-linear-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The first-order condition for <span class="math inline">\(\theta_1\)</span> is:
 <span class="math display">\[\begin{equation}
@@ -1906,7 +1929,7 @@ w_{J_TT}&#39; \\
 \end{equation}\]</span>
 where
 <span class="math display">\[\begin{equation}
-X_1 = 
+X_1 =
 \begin{pmatrix}
 x_{11}&#39; &amp; - p_{11}\\
 \vdots &amp; \vdots \\
@@ -1928,8 +1951,8 @@ x_{J_T T} &amp; - p_{J_T T}
 <li>This is the reason why we called <span class="math inline">\(\theta_1\)</span> linear parameters and <span class="math inline">\(\theta_2\)</span> non-linear parameters.</li>
 </ul>
 </div>
-<div id="blp-algorithm" class="section level3" number="4.4.52">
-<h3><span class="header-section-number">4.4.52</span> BLP Algorithm</h3>
+<div id="blp-algorithm" class="section level3 hasAnchor" number="4.4.52">
+<h3><span class="header-section-number">4.4.52</span> BLP Algorithm<a href="demand.html#blp-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Find <span class="math inline">\(\theta_2\)</span> that maximizes the GMM objective function.</li>
 <li>To do so:</li>
@@ -1945,8 +1968,8 @@ x_{J_T T} &amp; - p_{J_T T}
 <li>Evaluate the GMM objective function with the <span class="math inline">\(\xi(\theta)\)</span>.</li>
 </ol>
 </div>
-<div id="mathematical-program-with-equilibrium-constraints-mpec" class="section level3" number="4.4.53">
-<h3><span class="header-section-number">4.4.53</span> Mathematical Program with Equilibrium Constraints (MPEC)</h3>
+<div id="mathematical-program-with-equilibrium-constraints-mpec" class="section level3 hasAnchor" number="4.4.53">
+<h3><span class="header-section-number">4.4.53</span> Mathematical Program with Equilibrium Constraints (MPEC)<a href="demand.html#mathematical-program-with-equilibrium-constraints-mpec" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>In the BLP algorithm, for each parameter <span class="math inline">\(\theta\)</span>, find <span class="math inline">\(\xi(\theta)\)</span> that solve:
 <span class="math display">\[\begin{equation}
@@ -1955,7 +1978,7 @@ s = \sigma(p, x, \xi; \theta)
 by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <li>This inner loop takes time if the stopping criterion is tight.</li>
 <li>If the stopping criterion is loose, the loop may stop earlier but the error may be unacceptably large.</li>
-<li><span class="citation"><a href="references.html#ref-Dube2012" role="doc-biblioref">Dubé, Fox, &amp; Su</a> (<a href="references.html#ref-Dube2012" role="doc-biblioref">2012</a>)</span> suggest to minimize the GMM objective function with the above equation as the constraints.
+<li><span class="citation">Dubé, Fox, &amp; Su (<a href="#ref-Dube2012" role="doc-biblioref">2012</a>)</span> suggest to minimize the GMM objective function with the above equation as the constraints.
 <span class="math display">\[\begin{equation}
 \min_{\theta} \xi(\theta)&#39; W \Phi^{-1} W&#39; \xi(\theta) \text{   s.t.   } s = \sigma(p, x, \xi; \theta).
 \end{equation}\]</span></li>
@@ -1964,27 +1987,27 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <li>If the problem is of large scale, you may better use the MPEC approach.</li>
 </ul>
 </div>
-<div id="instrumental-variables" class="section level3" number="4.4.54">
-<h3><span class="header-section-number">4.4.54</span> Instrumental Variables</h3>
+<div id="instrumental-variables" class="section level3 hasAnchor" number="4.4.54">
+<h3><span class="header-section-number">4.4.54</span> Instrumental Variables<a href="demand.html#instrumental-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The remaining problem is how to choose the excluded instrumental variable <span class="math inline">\(w_{jt}^*\)</span> for each product/market.</li>
 <li><strong>Cost shifters</strong>:
 <ul>
 <li>Traditional instruments.</li>
 </ul></li>
-<li><strong>Hausman-type IV</strong> <span class="citation">(<a href="references.html#ref-Hausman1994" role="doc-biblioref">Hausman, Leonard, &amp; Zona, 1994</a>)</span>:
+<li><strong>Hausman-type IV</strong> <span class="citation">(<a href="#ref-Hausman1994" role="doc-biblioref">Hausman, Leonard, &amp; Zona, 1994</a>)</span>:
 <ul>
 <li>Assume that demand shocks are independent across markets, whereas the cost shocks are correlated.</li>
 <li>The latter will be true if the product is produced by the same manufacturer.</li>
 <li>Then, the price of the same product in the other markets <span class="math inline">\(p_{j, -t}\)</span> will be valid instruments for the price of the product in a given market, <span class="math inline">\(p_{jt}\)</span>.</li>
 </ul></li>
-<li><strong>BLP-type IV</strong> <span class="citation">(<a href="references.html#ref-Berry1995a" role="doc-biblioref">Steven Berry, Levinsohn, &amp; Pakes, 1995</a>)</span>:
+<li><strong>BLP-type IV</strong> <span class="citation">(<a href="#ref-Berry1995a" role="doc-biblioref">Steven Berry et al., 1995</a>)</span>:
 <ul>
 <li>In oligopoly, the price of a good in a market depends on the market structure, i.e., what kind of products are available in the market.</li>
 <li>For example, if there are similar products in the market, the price will tend to be lower.</li>
 <li>Then, the product characteristics of other products in the market , will be valid instrument for the price of goods in a given market, <span class="math inline">\(p_{jt}\)</span>.</li>
 <li>If there are multi-product firms, whether the other good is owned by the same company will also affect the price.</li>
-<li>Specifically, <span class="citation"><a href="references.html#ref-Berry1995a" role="doc-biblioref">Steven Berry, Levinsohn, &amp; Pakes</a> (<a href="references.html#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> use:</li>
+<li>Specifically, <span class="citation">Steven Berry et al. (<a href="#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> use:</li>
 </ul></li>
 </ul>
 <p><span class="math display">\[\begin{equation}
@@ -1995,7 +2018,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 \end{equation}\]</span>
 - <span class="math inline">\(f\)</span> is the firm that owns product <span class="math inline">\(j\)</span> and <span class="math inline">\(\mathcal{F}_{f}\)</span> is the set of products firm <span class="math inline">\(f\)</span> owns.</p>
 <ul>
-<li><strong>Differentiation IV</strong> <span class="citation">(<a href="references.html#ref-Gandhi2015a" role="doc-biblioref">Gandhi &amp; Houde, 2015</a>)</span>:
+<li><strong>Differentiation IV</strong> <span class="citation">(<a href="#ref-Gandhi2015a" role="doc-biblioref">Gandhi &amp; Houde, 2015</a>)</span>:
 <ul>
 <li>Let <span class="math inline">\(d_{jkt} = d(x_{jt}, x_{kt})\)</span> be some distance between product characteristics.</li>
 <li>They showed that under certain conditions the optimal BLP-type IV is a function <span class="math inline">\(d_{-jt}\{d_{jkt}\}_{k \neq j \in \mathcal{J}_t}\)</span>.</li>
@@ -2003,7 +2026,7 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 </ul></li>
 <li>Weak instruments problem of BLP-type IV:
 <ul>
-<li><span class="citation"><a href="references.html#ref-Armstrong2016b" role="doc-biblioref">Armstrong</a> (<a href="references.html#ref-Armstrong2016b" role="doc-biblioref">2016</a>)</span> argued that estimates based on BLP-type IV may be inconsistent when <span class="math inline">\(J \times \infty\)</span> asymptotics is considered, because then the market approaches the competitive market and the correlation between the markup and the product characteristics of the rivals disappear.</li>
+<li><span class="citation">Armstrong (<a href="#ref-Armstrong2016b" role="doc-biblioref">2016</a>)</span> argued that estimates based on BLP-type IV may be inconsistent when <span class="math inline">\(J \times \infty\)</span> asymptotics is considered, because then the market approaches the competitive market and the correlation between the markup and the product characteristics of the rivals disappear.</li>
 <li>Specifically, the estimator is inconsistent if all of the following conditions are met:</li>
 </ul>
 <ol style="list-style-type: decimal">
@@ -2030,6 +2053,117 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 </div>
 </div>
 </div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-Afriat1967" class="csl-entry">
+Afriat, S. N. (1967). The <span>Construction</span> of <span>Utility Functions</span> from <span>Expenditure Data</span>. <em>International Economic Review</em>, <em>8</em>(1).
+</div>
+<div id="ref-AngusDeaton1980" class="csl-entry">
+Angus Deaton, &amp; John Muellbauer. (1980). <em>Economics and <span>Consumer Behavior</span></em>. <span>New York</span>: <span>Cambridge University Press</span>.
+</div>
+<div id="ref-Archak2011" class="csl-entry">
+Archak, N., Ghose, A., &amp; Ipeirotis, P. G. (2011). <a href="https://doi.org/10.1287/mnsc.1110.1370">Deriving the <span>Pricing Power</span> of <span>Product Features</span> by <span>Mining Consumer Reviews</span></a>. <em>Management Science</em>, <em>57</em>(8), 1485–1509.
+</div>
+<div id="ref-Armstrong2016b" class="csl-entry">
+Armstrong, T. B. (2016). <a href="https://doi.org/10.3982/ECTA10600">Large <span>Market Asymptotics</span> for <span>Differentiated Product Demand Estimators</span> with <span>Economic Models</span> of <span>Supply</span></a>. <em>Econometrica</em>, <em>84</em>(5), 1961–1980.
+</div>
+<div id="ref-Bayer2007" class="csl-entry">
+Bayer, P., Ferreira, F., Mcmillan, R., Altonji, J., Bajari, P., Berry, S., … Timmins, C. (2007). <em>A <span>Unified Framework</span> for <span>Measuring Preferences</span> for <span>Schools</span> and <span>Neighborhoods</span></em> (No. 4) (Vol. 115).
+</div>
+<div id="ref-Berry2013" class="csl-entry">
+Berry, Steven, Gandhi, A., &amp; Haile, P. (2013). <a href="https://doi.org/10.3982/ECTA10135">Connected <span>Substitutes</span> and <span>Invertibility</span> of <span>Demand</span></a>. <em>Econometrica</em>, <em>81</em>(5), 2087–2111.
+</div>
+<div id="ref-Berry1995a" class="csl-entry">
+Berry, Steven, Levinsohn, J., &amp; Pakes, A. (1995). <a href="https://doi.org/10.1523/JNEUROSCI.4697-10.2011">Automobile <span>Prices</span> in <span>Market Equilibrium</span></a>. <em>Econometrica</em>, <em>63</em>(4), 841–890.
+</div>
+<div id="ref-Berry2007" class="csl-entry">
+Berry, Steven, &amp; Pakes, A. (2007). <a href="https://doi.org/10.1111/j.1468-2354.2007.00459.x">The <span>Pure Characteristics Demand Model</span></a>. <em>International Economic Review</em>, <em>48</em>(4), 1193–1225.
+</div>
+<div id="ref-Blow2008" class="csl-entry">
+Blow, L., Browning, M., &amp; Crawford, I. (2008). <em>Revealed <span>Preference Analysis</span> of <span>Characteristics Models</span></em> (Vol. 75, pp. 371–389).
+</div>
+<div id="ref-Bresnahan1987" class="csl-entry">
+Bresnahan, Timothy F. (1987). The <span>Empirical Renaissance</span> in <span>Industrial Economics</span>. <em>The Journal of Industrial Economics</em>, <em>35</em>(4), 457–482.
+</div>
+<div id="ref-Cardell1997" class="csl-entry">
+Cardell, N. S. (1997). <a href="https://doi.org/10.1017/S0266466600005727">Variance <span>Components Structures</span> for the <span>Extreme</span>-<span>Value</span> and <span>Logistic Distributions</span> with <span>Application</span> to <span>Models</span> of <span>Heterogeneity</span></a>. <em>Econometric Theory</em>, <em>13</em>, 185–213.
+</div>
+<div id="ref-Chung2002" class="csl-entry">
+Chung, W., &amp; Alcácer, J. (2002). <a href="https://doi.org/10.1287/mnsc.48.12.1534.440">Knowledge <span>Seeking</span> and <span>Location Choice</span> of <span>Foreign Direct Investment</span> in the <span>United States</span></a>. <em>Management Science</em>, <em>48</em>(12).
+</div>
+<div id="ref-Deaton1980" class="csl-entry">
+Deaton, A., &amp; Muellbauer, J. (1980). <em>An <span>Almost Ideal Demand System</span></em> (No. 3) (Vol. 70, pp. 312–326).
+</div>
+<div id="ref-Dube2012" class="csl-entry">
+Dubé, J.-P., Fox, J. T., &amp; Su, C.-L. (2012). <a href="https://doi.org/10.3982/ECTA8585">Improving the <span>Numerical Performance</span> of <span>Static</span> and <span>Dynamic Aggregate Discrete Choice Random Coefficients Demand Estimation</span></a>. <em>Econometrica</em>, <em>80</em>(5), 2231–2267.
+</div>
+<div id="ref-Gandhi2015a" class="csl-entry">
+Gandhi, A., &amp; Houde, J.-F. (2015). <em>Measuring <span>Substitution Patterns</span> in <span>Differentiated Products Industries</span></em>.
+</div>
+<div id="ref-Gentzkow2004" class="csl-entry">
+Gentzow, M. (2004). <em><a href="https://doi.org/10.1257/aer.97.3.713">Valuing new goods in a model with complementarity : <span>Online</span> newspapers</a></em> (No. 3) (Vol. 97, pp. 713–744).
+</div>
+<div id="ref-Gorman1980" class="csl-entry">
+Gorman, W. M. (1980). <em>A <span>Possible Procedure</span> for <span>Analysing Quality Differentials</span> in the <span>Egg Market</span></em> (No. 5) (Vol. 47, pp. 843–856).
+</div>
+<div id="ref-Handbury2014" class="csl-entry">
+Handbury, J., &amp; Weinstein, D. E. (2014). <a href="https://doi.org/10.1093/restud/rdu033">Goods <span>Prices</span> and <span>Availability</span> in <span>Cities</span></a>. <em>The Review of Economic Studies</em>, <em>82</em>(1), 258–296.
+</div>
+<div id="ref-Hausman1994" class="csl-entry">
+Hausman, Leonard, &amp; Zona. (1994). <a href="https://doi.org/10.2307/20075951">Competitive <span>Analysis</span> with <span>Differenciated Products</span></a>. <em>Annales d’Économie et de Statistique</em>, (34), 159–180.
+</div>
+<div id="ref-Holmes2011" class="csl-entry">
+Holmes, B. Y. T. H. J. H. (2011). <a href="https://doi.org/10.3982/ecta7699">The <span>Diffusion</span> of <span>Wal</span>-<span>Mart</span> and <span>Economies</span> of <span>Density</span></a>. <em>Econometrica</em>, <em>79</em>(1), 253–302.
+</div>
+<div id="ref-Houthakker1950" class="csl-entry">
+Houthakker, H. S. (1950). Revealed <span>Preference</span> and the <span>Utility Function Author</span>. <em>Economica</em>, <em>17</em>(66), 159–174.
+</div>
+<div id="ref-Judd1998" class="csl-entry">
+Judd, K. L. (1998). <em>Numerical methods in economics</em>. <span>MIT Press</span>.
+</div>
+<div id="ref-Lancaster1966" class="csl-entry">
+Lancaster, K. J. (1966). <a href="https://doi.org/10.1086/259131">A <span>New Approach</span> to <span>Consumer Theory</span></a>. <em>Journal of Political Economy</em>, <em>74</em>(2), 132–157.
+</div>
+<div id="ref-Mcfadden1974" class="csl-entry">
+Mcfadden, D. L. (1974). Conditional <span>Logit Analysis</span> of <span>Qualitative Choice Behavior</span>. In P. Zarembka (Ed.), <em>Frontiers in <span>Econometrics</span></em>. <span>New York</span>: <span>Academic Press</span>.
+</div>
+<div id="ref-Mcfadden2000" class="csl-entry">
+McFadden, D., &amp; Train, K. (2000). <a href="https://doi.org/10.1002/1099-1255(200009/10)15:5&lt;447::aid-jae570&gt;3.3.co;2-t">Mixed <span>MNL</span> models for discrete response</a>. <em>Journal of Applied Econometrics</em>, <em>15</em>(5), 447–470.
+</div>
+<div id="ref-Muellbauer1974" class="csl-entry">
+Muellbauer, J. (1974). Household <span>Production Theory</span>, <span>Quality</span>, and the "<span>Hedonic Technique</span>. <em>The American Economic Review</em>, <em>64</em>(6), 977–994.
+</div>
+<div id="ref-Muellbauer1976" class="csl-entry">
+Muellbauer, J. (1976). Community <span>Preferences</span> and the <span>Representative Consumer Author</span>. <em>Econometrica</em>, <em>44</em>(5), 979–999.
+</div>
+<div id="ref-Muth1966" class="csl-entry">
+Muth, R. F. (1966). <em>Household <span>Production</span> and <span>Consumer Demand Functions</span></em> (No. 3) (Vol. 34, pp. 699–708).
+</div>
+<div id="ref-Nevo2000c" class="csl-entry">
+Nevo, A. (2000). <em>Mergers with differentiated products: The case of the ready-to-eat cereal industry</em> (No. 3) (Vol. 31).
+</div>
+<div id="ref-RichardStone1954" class="csl-entry">
+Richard Stone. (1954). <em>The <span>Measurement</span> of <span>Consumers</span>’ <span>Expenditure</span> and <span>Behaviour</span> in the <span>United Kingdom</span> 1920-1938, vol. 1</em>. <span>Cambridge</span>: <span>Cambridge University Press</span>.
+</div>
+<div id="ref-Richter1966" class="csl-entry">
+Richter, M. K. (1966). Revealed <span>Preference Theory</span>. <em>Econometrica</em>, <em>34</em>(3).
+</div>
+<div id="ref-Rosen1974" class="csl-entry">
+Rosen, S. (1974). Hedonic <span>Prices</span> and <span>Implicit Markets</span>: <span>Product Differentiation</span> in <span>Pure Competition</span>. <em>Journal of Political Economy</em>, <em>82</em>(1), 34–55.
+</div>
+<div id="ref-Rysman2004" class="csl-entry">
+Rysman, M. (2004). <em>Competition <span>Between Networks</span>: <span>A Study</span> of the <span>Market</span> for <span>Yellow Pages</span></em> (Vol. 71, pp. 483–512).
+</div>
+<div id="ref-Samuelson1938" class="csl-entry">
+Samuelson, P. A. (1938). A <span>Note</span> on the <span>Pure Theory</span> of <span>Consumer</span>’s <span>Behaviour</span>. <em>Economica</em>, <em>5</em>(17), 61–71.
+</div>
+<div id="ref-Train2009" class="csl-entry">
+Train, K. (2009). <em>Discrete <span>Choice Methods</span> with <span>Simulation</span></em>. <span>Cambridge</span>: <span>Cambridge University Press</span>.
+</div>
+<div id="ref-Varian1982" class="csl-entry">
+Varian, H. R. (1982). The <span>Nonparametric Approach</span> to <span>Demand Analysis</span>. <em>Econometrica</em>, <em>50</em>(4), 945–973.
+</div>
+</div>
             </section>
 
           </div>
@@ -2040,7 +2174,6 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -2059,6 +2192,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -2079,6 +2213,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -2092,7 +2230,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
