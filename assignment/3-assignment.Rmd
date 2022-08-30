@@ -150,7 +150,7 @@ X
 M <- expand.grid(j = 1:J, t = 1:T) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
-    xi = 0 * rnorm(J*T),
+    xi = 0,
     c = exp(sd_c * rnorm(J*T)),
     p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
   ) 
@@ -393,7 +393,7 @@ foreach (i = 1:4,
 The graphs with the true shocks:
 
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 label <- c(paste("\\beta_", 1:K, sep = ""), 
            paste("\\sigma_", 1:K, sep = ""),
            "\\mu",
@@ -429,7 +429,7 @@ graph_true
 
 The graphs with the Monte Carlo shocks:
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 label <- c(paste("\\beta_", 1:K, sep = ""), 
            paste("\\sigma_", 1:K, sep = ""),
            "\\mu",
@@ -465,7 +465,7 @@ graph_mcmc
 
 8. Use `optim` to find the minimizer of the objective function using `Nelder-Mead` method. You can start from the true parameter values. Compare the estimates with the true parameters.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # find NLLS estimator
 result_NLLS <- 
   optim(par = theta, fn = NLLS_objective_A3,

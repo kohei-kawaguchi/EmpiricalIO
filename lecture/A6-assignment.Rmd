@@ -1,6 +1,13 @@
-# Assignment 6: Entry and Exit Analysis {#assignment6}
+---
+title: 'Assignment 6: Entry and Exist'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
 
-```{r assignment_6, include = FALSE}
+```{r setup, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -18,7 +25,6 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 ## Simulate data
 
 In this assignment, we consider a Berry-type entry model. Suppose that there are $M$ markets indexed by $m = 1, \cdots, M$. In each market, there are $N_m$ potential entrants such that $N_m \le \overline{N}$. Let $x_m$ be the $K$ dimensional market attributes and $z_{im}$ be the $L$ dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is $R$.
-
 
 A standard %dopar% is not replicable. Therefore, we use package doRNG to perform reproducible foreach parallel. 
 
@@ -170,7 +176,7 @@ $$
 
 1. Draw $R$ unobserved shocks:
 ```{r}
-set.seed(1)
+ set.seed(1)
 # unobserved market attributes
 EP_mc <-
   foreach (r = 1:R) %dopar% {
@@ -179,7 +185,8 @@ EP_mc <-
       nrow = M
     )
     return(EP)
-}
+  }
+
 # unobserved entrant attributes
 NU_mc <-
   foreach (r = 1:R) %dopar% {
@@ -192,7 +199,8 @@ NU_mc <-
       return(NU_m)
     }
   return(NU)
-}
+  }
+
 ```
 
 2. Write a function `compute_monte_carlo_sequential_entry(X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)` that returns the Monte Carlo simulation. Then, write function `compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta)` that calls`compute_monte_carlo_sequential_entry` and returns the value of the objective function given data and parameters under the assumption of sequential entry.
@@ -474,3 +482,6 @@ ggplot(N_df, aes(x = value, y = n, colour = parameters, fill = parameters)) +
   ylab("count") + xlab("number of entrants") + ggtitle("Simultaneous entry") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
+
+
+

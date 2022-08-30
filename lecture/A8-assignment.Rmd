@@ -1,7 +1,13 @@
-# Assignment 8: Dynamic Game {#assignment8}
+---
+title: 'Assignment 8: Dynamic Game'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  pdf_document: default
+  html_document: default
+---
 
-
-```{r assignment_8, include = FALSE}
+```{r setup, include = FALSE}
 rm(list = ls())
 library(EmpiricalIO)
 library(magrittr)
@@ -18,19 +24,19 @@ knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center")
 
 ## Simulate data
 
-Suppose that there are $m = 1, \cdots, M$ markets and in each market there are $i = 1, \cdots, N$ firms and each firm makes decisions for $t = 1, \cdots, \infty$. In the following, I suppress the index of market, $m$. We solve the model under the infinite-horizon assumption, but generate data only for $t = 1, \cdots, T$. There are $L = 3$ states $\{1, 2, 3\}$ for each firm. Each firm can choose $K + 1 = 2$ actions $\{0, 1\}$. Thus, $m_a := (K + 1)^N$ and $m_s := L^N$. Let $a_i$ and $s_i$ be firm $i$'s action and state, and $a$ and $s$ are vectors of individual actions and states. 
+Suppose that there are $m = 1, \cdots, M$ markets and in each market there are $i = 1, \cdots, N$ firms and each firm makes decisions for $t = 1, \cdots, \infty$. In the following, I suppress the index of market, $m$. We solve the model under the infinite-horizon assumption, but generate data only for $t = 1, \cdots, T$. There are $L = 3$ state $\{1, 2, 3\}$ states for each firm. Each firm can choose $K + 1 = 2$ actions $\{0, 1\}$. Thus, $m_a := (K + 1)^N$ and $m_s = L^N$. Let $a_i$ and $s_i$ be firm $i$'s action and state and $a$ and $s$ are vectors of individual actions and states. 
 
 The mean period payoff to firm $i$ is:
 $$
-\pi_i(a, s) := \tilde{\pi}(a_i, s_i, \overline{s}_{-i}) :=  \alpha \ln s_i - \eta \ln s_i \sum_{j \neq i} \ln s_j - \beta a_i,
+\pi_i(a, s) := \tilde{\pi}(a_i, s_i, \overline{s}) :=  \alpha \ln s_i - \eta \ln s_i \sum_{j \neq i} \ln s_j - \beta a_i,
 $$
 where $\alpha, \beta, \eta> 0$, and $\alpha > \eta$. The term $\eta$ means that the returns to investment decreases as rival's average state profile improves. The period payoff is:
 $$
-\tilde{\pi}(a_i, s_i, \overline{s}_{-i})+ \epsilon_i(a_i),
+\tilde{\pi}(a_i, s_i, \overline{s})+ \epsilon_i(a_i),
 $$
 and $\epsilon_i(a_i)$ is an i.i.d. type-I extreme random variable that is independent of all the other variables.
 
-At the beginning of each period, state $s$ is realized and publicly observed. Then, choice-specific shocks $\epsilon_i(a_i), a_i = 0, 1$ are realized and privately observed by firm $i = 1, \cdots, N$. Then each firm simultaneously chooses her action. Then, the game moves to next period. 
+At the beginning of each period, the state $s$ is realized and publicly observed. Then choice-specific shocks $\epsilon_i(a_i), a_i = 0, 1$ are realized and privately observed by firm $i = 1, \cdots, N$. Then each firm simultaneously chooses her action. Then, the game moves to next period. 
 
 State transition is independent across firms conditional on individual state and action.
 
@@ -429,10 +435,6 @@ compare <-
     estimate = CCP_result$par
   ); compare
 ```
-
-
-
-
 
 
 

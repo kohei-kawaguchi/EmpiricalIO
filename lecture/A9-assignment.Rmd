@@ -1,6 +1,13 @@
-# Assignment 9: Auction
+---
+title: 'Assignment 9: Auction'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
 
-```{r assignment_9, include = FALSE}
+```{r setup, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -18,7 +25,7 @@ knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center")
 
 We simulate bid data from a second- and first-price sealed bid auctions.
 
-First, we draw bid data from a second-price sealed bid auctions. Suppose that for each auction $t = 1, \cdots, T$, there are $i = 1, \cdots, n_t$ potential bidders. At each auction, an auctioneer allocates one item and sets the reserve price at $r_t$. When the signal for bidder $i$ in auction $t$ is $x_{it}$, her expected value of the item is $x_{it}$. A signal $x_{it}$ is drawn from an i.i.d. beta distribution $B(\alpha, \beta)$. Let $F_X(\cdot; \alpha, \beta)$ be its distribution and $f_X(\cdot; \alpha, \beta)$ be the density. A reserve is set at 0.2. $n_t$ is drawn from a Poisson distribution with mean $\lambda$.  An equilibrium strategy is such that a bidder participates and bids $\beta(x) = x$ if $x \ge r_t$ and does not participate otherwise.
+First, we draw bid data from a second-price sealed bid auctions. Suppose that for each auction $t = 1, \cdots, T$, there are $i = 2, \cdots, n_t$ potential bidders. At each auction, an auctioneer allocates one item and sets the reserve price at $r_t$. When the signal for bidder $i$ in auction $t$ is $x_{it}$, her expected value of the item is $x_{it}$. A signal $x_{it}$ is drawn from an i.i.d. beta distribution $B(\alpha, \beta)$. Let $F_X(\cdot; \alpha, \beta)$ be its distribution and $f_X(\cdot; \alpha, \beta)$ be the density. A reserve is set at 0.2. $n_t$ is drawn from a Poisson distribution with mean $\lambda$. If $n_t = 1$, replace with $n_t = 2$ to ensure at least two potential bidders.  An equilibrium strategy is such that a bidder participates and bids $\beta(x) = x$ if $x \ge r_t$ and does not participate otherwise.
 
 1. Set the constants and parameters as follows:
 ```{r}
@@ -38,6 +45,7 @@ lambda <- 10
 ```{r}
 # number of bidders
 N <- rpois(T, lambda)
+N <- ifelse(N == 1, 2, N)
 # draw valuations
 valuation <-
   foreach (tt = 1:T, .combine = "rbind") %do% {
@@ -68,7 +76,7 @@ Next, we simulate bid data from first-price sealed bid auctions. The setting is 
 $$
 \beta(x) = x - \frac{\int_{r_t}^x F_X(t)^{N - 1}}{F_X(x)^{N - 1}},
 $$
-if $x \ge r$ and not to participate otherwise when there are more than one active bidder. If $x \ge r$ and there is only one bidder, the bidder bids $r_t$.
+if $x \ge r$ and not to participate otherwise.
 
 4. Write a function `bid_first(x, r, alpha, beta, n)` that returns the equilibrium bid. To integrate a function, use `integrate` function in R. It returns 0 if $x < r$.
 ```{r}
@@ -107,7 +115,7 @@ ggplot(df_first_w, aes(x = w)) + geom_histogram(fill = "steelblue", alpha = 0.8)
 We first estimate the parameters from the winning bids data of second-price auctions. We estimate the parameters by maximizing a log-likelihood.
 
 $$
-l(\alpha, \beta) := \frac{1}{T} \sum_{t = 1}^T \ln\frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}^{1\{m_t = 1\}} }{1 - \mathbb{P}\{m_t = 0\}},
+l(\alpha, \beta) := \frac{1}{T} \sum_{t = 1}^T \ln\frac{h_t(w_t)^{1\{m_t > 1\}} \mathbb{P}\{m_t = 1\}^{1\{m_t = 1\}}}{1 - \mathbb{P}\{m_t = 0\}},
 $$
 where:
 $$
@@ -150,7 +158,7 @@ compute_loglikelihood_second_price_w(theta, df_second_w)
 
 3. Compare the value of objective function around the true parameters.
 
-```{r, eval = FALSE}
+```{r}
 # label
 label <- c("\\alpha", "\\beta")
 label <- paste("$", label, "$", sep = "")
@@ -160,7 +168,6 @@ graph <- foreach (i = 1:length(theta)) %do% {
   theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
   objective_i <-
     foreach (j = 1:length(theta_i_list),
-             .packages = c("EmpiricalIO", "foreach", "magrittr"),
              .combine = "rbind") %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
@@ -187,7 +194,7 @@ graph
 
 4. Estimate the parameters by maximizing the log-likelihood.
 
-```{r, eval = FALSE}
+```{r}
 result_second_parametric <-
   optim(
     par = theta,
@@ -244,6 +251,7 @@ h_t(w_t) &= n_t F_X[\eta_t(w_t)]^{n_t - 1} f_X[\eta_t(w_t)] \eta_t'(w_t)\\
 $$
 where the second equation is from the first-order condition.
 
+
 6. Write a function `compute_p_first_w(w, r, alpha, beta, n)` that returns $h_t(w)$. Remark that the equilibrium bid at specific parameters is `bid_first(1, r, alpha, beta, n)`. If the observed wining bid `w` is above the upper limit, the function will issue an error. Therefore, inside the function `compute_p_first_w(w, r, alpha, beta, n)`, check if `w` is above `bid_first(1, r, alpha, beta, n)` and if so return $10^{-6}$.
 
 ```{r}
@@ -263,7 +271,7 @@ compute_loglikelihood_first_price_w(theta, df_first_w)
 
 8. Compare the value of the objective function around the true parameters.
 
-```{r, eval = FALSE}
+```{r}
 theta <- c(alpha, beta)
 # label
 label <- c("\\alpha", "\\beta")
@@ -300,7 +308,7 @@ graph
 
 9. Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.
 
-```{r, eval = FALSE}
+```{r}
 result_first_parametric <-
   optim(
     par = theta,
@@ -349,7 +357,7 @@ $$
 h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 $$
 
-11. Write a function `H_b(b, n)` and `h_b(b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
+11. Write a function `H_b(b, n, F_b)` and `h_b(b, F_b, f_b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
 
 ```{r}
 H_b(0.4, n, F_b)

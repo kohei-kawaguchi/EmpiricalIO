@@ -162,13 +162,13 @@ value <- compute_choice_value(V, PI, G, delta); value
 s <- 1
 # draw simulation for a firm
 seed <- 1
-df <- simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed); df
+df <- simulate_dynamic_decision(p, s, G, L, K, T, delta, seed); df
 ```
 
 7. Write a function `simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
 
 ```{r, eval = FALSE}
-df <- simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)
+df <- simulate_dynamic_decision_across_firms(p, s,  G, L, K, T, N, delta)
 save(df, file = "data/A7_df.RData")
 ```
 ```{r}

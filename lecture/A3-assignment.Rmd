@@ -1,6 +1,13 @@
-# Assignment 3: Demand Function Estimation I {#assignment3}
+---
+title: 'Assignment 3: Demand Function Estimation I'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
 
-```{r assignment_3, include = FALSE}
+```{r setup, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -143,7 +150,7 @@ X
 M <- expand.grid(j = 1:J, t = 1:T) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
-    xi = 0 * rnorm(J*T),
+    xi = 0,
     c = exp(sd_c * rnorm(J*T)),
     p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
   ) 
@@ -244,8 +251,6 @@ df_share <-
 df_share
 summary(df_share)
 ```
-
-
 
 ## Estimate the parameters
 
@@ -352,7 +357,6 @@ foreach (i = 1:4) %dopar% {
 }
 ```
 
-
 In windows, you may have to explicitly pass packages, functions, and data to the worker by using `.export` and `.packages` options as follows:
 ```{r, echo = TRUE}
 temp_func <- function(x) {
@@ -368,7 +372,7 @@ foreach (i = 1:4,
 }
 ```
 
-If you have called a function in a package in this way `dplyr::mutate`, then you will not have to pass `dplyr` by `.packages` option. This is one of the reasons why I prefer to explicitly call the  every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:
+If you have called a function in a package in this way `dplyr::mutate`, then you will not have to pass `dplyr` by `.packages` option. This is one of the reasons why I prefer to explicitly call the package every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:
 ```{r, echo = TRUE}
 # this function is compiled in the package EmpiricalIO
 # temp_func <- function(x) {
@@ -481,3 +485,4 @@ result_NLLS
 result <- data.frame(true = theta, estimates = result_NLLS$par)
 result
 ```
+

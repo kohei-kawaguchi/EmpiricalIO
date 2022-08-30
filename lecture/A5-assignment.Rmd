@@ -1,6 +1,13 @@
-# Assignment 5: Merger Simulation {#assignment5}
+---
+title: 'Assignment 5: Merger Simulation'
+author: "Kohei Kawaguchi"
+date: "2019/1/29"
+output:
+  html_document: default
+  pdf_document: default
+---
 
-```{r assignment_5, include = FALSE}
+```{r setup, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -10,11 +17,9 @@ library(ggplot2)
 library(latex2exp)
 library(codetools)
 library(doParallel)
-library(doRNG)
 registerDoParallel()
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
-
 
 ## Simulate data
 
@@ -201,14 +206,9 @@ $$
 
 The returned object should be a list across markets and each element of the list should be $J_t \times J_t$ matrix whose $(j, k)$-th element is $\partial s_{jt}/\partial p_{it}$ (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE}
 derivative_share_smooth <-
   compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
-save(derivative_share_smooth, file = "data/A5_derivative_share_smooth.RData")
-```
-
-```{r}
-load(file = "data/A5_derivative_share_smooth.RData")
 derivative_share_smooth[[1]]
 derivative_share_smooth[[T]]
 ```
@@ -287,20 +287,14 @@ $$
 
 Of course, in reality, we first draw Monte Carlo shocks to approximate the share, estimate the demand parameters, and use these shocks and estimates to estimate the marginal costs. In this assignment, we check the if the estimated marginal costs coincide with the true marginal costs to confirm that the codes are correctly written.
 
-```{r}
+
+```{r, echo = TRUE}
 # load
 load(file = "data/A5_price_actual.RData")
-```
-
-```{r, echo = TRUE, eval = FALSE}
 # take the logarithm
 logp <- log(p_actual)
 # estimate the marginal cost
 marginal_cost_estimate <- estimate_marginal_cost(logp, X, M, V, beta, sigma, mu, omega, Delta)
-save(marginal_cost_estimate, file = "data/A5_marginal_cost_estimate.RData")
-```
-```{r}
-load(file = "data/A5_marginal_cost_estimate.RData")
 marginal_cost_actual <- M[M$j > 0, ]$c
 # plot the estimate vs actual marginal costs
 marginal_cost_df <-
@@ -318,7 +312,7 @@ ggplot(marginal_cost_df, aes(x = estimate, y = actual)) +
 
 ```{r}
 Delta_counterfactual <-
-  foreach (tt = 1:T) %do% {
+  foreach (tt = 1:T) %dopar% {
     # product indice
     J_t <- M %>%
       dplyr::filter(t == tt, j > 0)
