@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Assignment 2: Production Function Estimation | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Assignment 2: Production Function Estimation | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="assignment1.html"/>
 <link rel="next" href="assignment3.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,15 +48,16 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +116,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -200,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
 <li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
 <li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
-<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
 <li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
 <li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
 <li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
@@ -208,11 +231,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
 <li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
 <li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
-<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
 <li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
 <li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
 <li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
-<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation"><span>Olley &amp; Pakes</span> (<span>1996</span>)</span> and <span class="citation"><span>Levinsohn &amp; Petrin</span> (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
 <li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
 <li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
 <li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
@@ -488,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation"><span>Ryan</span> (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
 <li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
 <li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
 <li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
@@ -685,10 +708,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="assignment2" class="section level1" number="12">
-<h1><span class="header-section-number">Chapter 12</span> Assignment 2: Production Function Estimation</h1>
-<div id="simulate-data-1" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> Simulate data</h2>
+<div id="assignment2" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Assignment 2: Production Function Estimation<a href="assignment2.html#assignment2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="simulate-data-1" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Simulate data<a href="assignment2.html#simulate-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Consider the following production and investment process for <span class="math inline">\(j = 1, \cdots, 1000\)</span> firms across <span class="math inline">\(t = 1, \cdots, 10\)</span> periods.</p>
 <p>The log production function is of the form:
 <span class="math display">\[
@@ -781,7 +804,7 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 <ol start="6" style="list-style-type: decimal">
 <li>Draw <span class="math inline">\(k_{j1}\)</span> from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw <span class="math inline">\(\omega_{j1}\)</span> from its stationary distribution (check the stationary distribution of AR(1) process). Draw a wage. Before simulating the rest of the data, set the seed at 1.</li>
 </ol>
-<pre><code>## # A tibble: 1,000 x 5
+<pre><code>## # A tibble: 1,000 × 5
 ##        j     t     k   omega  wage
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1     1     1 0.687  0.795    0.5
@@ -794,42 +817,44 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 ##  8     8     1 1.37  -1.34     0.5
 ##  9     9     1 1.29  -0.873    0.5
 ## 10    10     1 0.847  0.699    0.5
-## # ... with 990 more rows</code></pre>
+## # … with 990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Draw optimization error <span class="math inline">\(\iota_{jt}\)</span> and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.</li>
 </ol>
-<pre><code>## # A tibble: 1,000 x 9
-##        j     t     k   omega  wage     iota      l l_error
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67  
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94  
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92  
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21  
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93  
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428 
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73  
-## # ... with 990 more rows, and 1 more variable: I &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 1,000 × 9
+##        j     t     k   omega  wage     iota      l l_error       I
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
+## # … with 990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error <code>y</code> and the one with optimization error <code>y_error</code>.</li>
 </ol>
-<pre><code>## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota      l l_error
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67  
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94  
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92  
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21  
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766 
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93  
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428 
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73  
-## # ... with 990 more rows, and 4 more variables: I &lt;dbl&gt;,
-## #   eta &lt;dbl&gt;, y &lt;dbl&gt;, y_error &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 1,000 × 12
+##        j     t     k   omega  wage     iota      l l_error       I     eta     y y_error
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95 
+## # … with 990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li><p>Repeat this procedure for <span class="math inline">\(t = 1, \cdots 10\)</span> by updating the capital and anticipated shocks, and name the resulting data frame <code>df_T</code>.</p></li>
 <li><p>Check the simulated data by making summary table.</p></li>
@@ -953,8 +978,8 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 </tbody>
 </table>
 </div>
-<div id="estimate-the-parameters" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Estimate the parameters</h2>
+<div id="estimate-the-parameters" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Estimate the parameters<a href="assignment2.html#estimate-the-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For now, use the labor choice with optimization error.</p>
 <ol style="list-style-type: decimal">
 <li>First, simply regress <span class="math inline">\(y_{jt}\)</span> on <span class="math inline">\(l_{jt}\)</span> and <span class="math inline">\(k_{jt}\)</span> using the least square method. This is likely to give an upwardly biased estimates on <span class="math inline">\(\beta_l\)</span> and <span class="math inline">\(\beta_k\)</span>. Why is it?</li>
@@ -973,8 +998,7 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 ## l_error     0.997913   0.002396 416.454   &lt;2e-16 ***
 ## k           0.007599   0.004503   1.688   0.0915 .  
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.2068 on 9997 degrees of freedom
 ## Multiple R-squared:  0.9657, Adjusted R-squared:  0.9657 
@@ -995,8 +1019,7 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 ## dl_error  0.9910916  0.0029548 335.413   &lt;2e-16 ***
 ## dk       -0.0009029  0.0127539  -0.071    0.944    
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.1961 on 9998 degrees of freedom
 ## Multiple R-squared:  0.9184, Adjusted R-squared:  0.9184 
@@ -1070,7 +1093,7 @@ y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{
 <p>In this model, we do not have to non-parametetrically estimate the conditional expectation of <span class="math inline">\(\omega_{jt}\)</span> on <span class="math inline">\(\omega_{j, t - 1}\)</span>, because we know that the anticipated shock follows an AR(1) process. Remark that we in general have to non-parametrically estimate it.</p>
 <p>The model is non-linear in parameters, because of the term <span class="math inline">\(\alpha \beta_0\)</span> and <span class="math inline">\(\alpha \beta_k\)</span>. We estimate <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> by a GMM estimator. The moment is:
 <span class="math display">\[
-g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}]\} 
+g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}]\}
 \begin{bmatrix}
 k_{jt} \\
 k_{j, t - 1} \\
@@ -1088,7 +1111,7 @@ and:
 \]</span>
 for each <span class="math inline">\(j\)</span> and <span class="math inline">\(t\)</span> and save it as a data frame names <code>df_T_1st</code>.</li>
 </ol>
-<pre><code>## # A tibble: 10,000 x 4
+<pre><code>## # A tibble: 10,000 × 4
 ##        j     t y_error_tilde phi_t_1[,1]
 ##    &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt;
 ##  1     1     1         2.34       NA    
@@ -1101,7 +1124,8 @@ for each <span class="math inline">\(j\)</span> and <span class="math inline">\(
 ##  8     1     8         0.684       0.439
 ##  9     1     9         0.939       0.520
 ## 10     1    10         1.49        0.836
-## # ... with 9,990 more rows</code></pre>
+## # … with 9,990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Compute a function that returns the value of <span class="math inline">\(g_{JT}(\alpha, \beta_0, \beta_k)\)</span> given parameter values, data, and <code>df_T_1st</code>, and name it <code>moment_OP_2nd</code>. Show the values of the moments evaluated at the true parameters.</li>
 </ol>
@@ -1148,7 +1172,6 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)&#39; W 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1167,6 +1190,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1187,6 +1211,10 @@ gitbook.start({
 "text": null
 },
 "download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -1200,7 +1228,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
