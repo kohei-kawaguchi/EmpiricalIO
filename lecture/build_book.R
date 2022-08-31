@@ -1,6 +1,6 @@
 # restart the session
 .rs.restartR()
-file.create("../docs/.nojekyll")
+file.create("docs/.nojekyll")
 
 # set the working directory
 setwd("lecture")
@@ -9,7 +9,11 @@ setwd("lecture")
 bookdown::serve_book(dir = ".")
 
 # render html book
-bookdown::render_book("index.Rmd", "bookdown::gitbook")
+bookdown::render_book(
+  input = "index.Rmd", 
+  output = "bookdown::gitbook",
+  clean = TRUE
+  )
 
 # render pdf book
 bookdown::render_book("index.Rmd", "bookdown::pdf_book")
