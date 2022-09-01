@@ -667,10 +667,10 @@ div.csl-indent {
 <li class="chapter" data-level="18.1" data-path="assignment8.html"><a href="assignment8.html#simulate-data-7"><i class="fa fa-check"></i><b>18.1</b> Simulate data</a></li>
 <li class="chapter" data-level="18.2" data-path="assignment8.html"><a href="assignment8.html#estimate-parameters-1"><i class="fa fa-check"></i><b>18.2</b> Estimate parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html"><i class="fa fa-check"></i><b>19</b> Assignment 9: Auction</a>
+<li class="chapter" data-level="19" data-path="assignment9.html"><a href="assignment9.html"><i class="fa fa-check"></i><b>19</b> Assignment 9: Auction</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html#simulate-data-8"><i class="fa fa-check"></i><b>19.1</b> Simulate data</a></li>
-<li class="chapter" data-level="19.2" data-path="assignment-9-auction.html"><a href="assignment-9-auction.html#estimate-the-parameters-5"><i class="fa fa-check"></i><b>19.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="19.1" data-path="assignment9.html"><a href="assignment9.html#simulate-data-8"><i class="fa fa-check"></i><b>19.1</b> Simulate data</a></li>
+<li class="chapter" data-level="19.2" data-path="assignment9.html"><a href="assignment9.html#estimate-the-parameters-5"><i class="fa fa-check"></i><b>19.2</b> Estimate the parameters</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>20</b> Integrating with C++ using Rcpp and RcppEigen</a>
 <ul>
@@ -841,20 +841,20 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 <li>Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error <code>y</code> and the one with optimization error <code>y_error</code>.</li>
 </ol>
 <pre><code>## # A tibble: 1,000 × 12
-##        j     t     k   omega  wage     iota      l l_error       I     eta     y y_error
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95 
-## # … with 990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+##        j     t     k   omega  wage     iota      l l_error       I     eta     y
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96 
+## # … with 990 more rows, and 1 more variable: y_error &lt;dbl&gt;
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li><p>Repeat this procedure for <span class="math inline">\(t = 1, \cdots 10\)</span> by updating the capital and anticipated shocks, and name the resulting data frame <code>df_T</code>.</p></li>
 <li><p>Check the simulated data by making summary table.</p></li>
@@ -1044,7 +1044,7 @@ by approximating <span class="math inline">\(\phi_t\)</span> by a kernel functio
 ## 
 ##                     x(z)           
 ## Bandwidth(s): 0.03908594 0.01191551
-##               0.01397428 3.74952954
+##               0.01397428 3.74953039
 ##               0.83529394 0.00398329
 ## 
 ##                   l_error        k        I
@@ -1058,7 +1058,7 @@ by approximating <span class="math inline">\(\phi_t\)</span> by a kernel functio
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 2</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Check that <span class="math inline">\(\beta_l\)</span> is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.</li>
 </ol>
@@ -1072,11 +1072,11 @@ by approximating <span class="math inline">\(\phi_t\)</span> by a kernel functio
 ## 
 ##                     x(z)            
 ## Bandwidth(s): 0.02960021 0.009986945
-##               0.01397428 3.749529542
+##               0.01397428 3.749530394
 ##               0.83529394 0.003983290
 ## 
 ##                        l        k         I
-## Coefficient(s): 1.180628 2.034182 0.7805077
+## Coefficient(s): 1.180628 2.034182 0.7805075
 ## 
 ## Kernel Regression Estimator: Local-Constant
 ## Bandwidth Type: Fixed
@@ -1088,12 +1088,12 @@ by approximating <span class="math inline">\(\phi_t\)</span> by a kernel functio
 ## No. Continuous Explanatory Vars.: 2</code></pre>
 <p>Then, we estimate the second stage model of Olley-Pakes method:
 <span class="math display">\[
-y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}] + \nu_{jt} + \eta_{jt}.
+y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j, t-1}] + \nu_{jt} + \eta_{jt}.
 \]</span></p>
 <p>In this model, we do not have to non-parametetrically estimate the conditional expectation of <span class="math inline">\(\omega_{jt}\)</span> on <span class="math inline">\(\omega_{j, t - 1}\)</span>, because we know that the anticipated shock follows an AR(1) process. Remark that we in general have to non-parametrically estimate it.</p>
 <p>The model is non-linear in parameters, because of the term <span class="math inline">\(\alpha \beta_0\)</span> and <span class="math inline">\(\alpha \beta_k\)</span>. We estimate <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> by a GMM estimator. The moment is:
 <span class="math display">\[
-g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j,t-1}]\}
+g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j, t-1}]\}
 \begin{bmatrix}
 k_{jt} \\
 k_{j, t - 1} \\
@@ -1141,7 +1141,7 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)&#39; W 
 ## [1,] 0.0007199336</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li><p>Draw the graph of the objective function when one of <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
-<img src="lecture_files/figure-html/unnamed-chunk-59-1.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-59-2.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-59-3.png" width="672" style="display: block; margin: auto;" /></p></li>
+<img src="lecture_files/figure-html/unnamed-chunk-61-1.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-61-2.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-61-3.png" width="672" style="display: block; margin: auto;" /></p></li>
 <li><p>Find the parameters that minimize the objective function using <code>optim</code>. You may use <code>L-BFGS-B</code> method to solve it.</p></li>
 </ol>
 <pre><code>## $par
