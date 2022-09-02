@@ -3,7 +3,15 @@
 #-------------#
 # log production function
 log_production <- 
-  function(l, k, omega, eta, beta_0, beta_l, beta_k) {
+  function(
+    l, 
+    k, 
+    omega, 
+    eta, 
+    beta_0, 
+    beta_l, 
+    beta_k
+    ) {
     y <- beta_0 + beta_l * l + beta_k * k + omega + eta
     return(y)
   }
