@@ -289,12 +289,12 @@ for (t in 2:T) {
   df_T <- dplyr::bind_rows(df_T, df)
 }
 df_T
-saveRDS(df_T, file = "data/A2_df_T.rds")
+save(df_T, file = "data/A2_df_T.RData")
 ```
 
 10. Check the simulated data by making summary table.
 ```{r}
-readRDS(file = "data/A2_df_T.rds")
+load(file = "data/A2_df_T.RData")
 df_T_summary <-
   foreach (
     i = 1:dim(df_T)[2], 
@@ -362,18 +362,6 @@ You can use `npplreg` function of `np` package to estimate a partially linear mo
 
 ```{r, eval = FALSE}
 result_1st_bw <-
-<<<<<<< HEAD
-  npplregbw(data = df_T,
-            formula = y_error ~ l_error + k + I| k + I)
-saveRDS(result_1st_bw, file = "data/A2_result_1st_bw.rds")
-```
-```{r, eval = FALSE}
-result_1st <-
-  npplreg(data = df_T,
-          formula = y_error ~ l_error + k + I| k + I,
-          bws = result_1st_bw)
-saveRDS(result_1st, file = "data/A2_result_1st.rds")
-=======
   npplregbw(
     data = df_T,
     formula = y_error ~ l_error + k + I| k + I
@@ -388,11 +376,10 @@ result_1st <-
     bws = result_1st_bw
     )
 save(result_1st, file = "data/A2_result_1st.RData")
->>>>>>> 9fb30a57b252fa4603d0f5ca367205ef51a7aa1e
 ```
 ```{r}
-readRDS(file = "data/A2_df_T.rds")
-readRDS(file = "data/A2_result_1st.rds")
+load(file = "data/A2_df_T.RData")
+load(file = "data/A2_result_1st.RData")
 summary(result_1st)
 result_1st_plot <-
   data.frame(
@@ -413,12 +400,6 @@ result_1st_plot %>%
 
 ```{r, eval = FALSE}
 result_1st_unidentified_bw <-
-<<<<<<< HEAD
-  npplregbw(data = df_T,
-          formula = y ~ l + k + I| k + I)
-saveRDS(result_1st_unidentified_bw, 
-     file = "data/A2_result_1st_unidentified_bw.rds")
-=======
   npplregbw(
     data = df_T,
     formula = y ~ l + k + I| k + I
@@ -427,18 +408,10 @@ save(
   result_1st_unidentified_bw, 
   file = "data/A2_result_1st_unidentified_bw.RData"
   )
->>>>>>> 9fb30a57b252fa4603d0f5ca367205ef51a7aa1e
 ```
 ```{r, eval = FALSE}
-readRDS(file = "data/A2_result_1st_unidentified_bw.rds")
+load(file = "data/A2_result_1st_unidentified_bw.RData")
 result_1st_unidentified <-
-<<<<<<< HEAD
-  npplreg(data = df_T,
-          formula = y ~ l + k + I| k + I,
-          bws = result_1st_unidentified_bw)
-saveRDS(result_1st_unidentified, 
-     file = "data/A2_result_1st_unidentified.rds")
-=======
   npplreg(
     data = df_T,
     formula = y ~ l + k + I| k + I,
@@ -448,10 +421,9 @@ save(
   result_1st_unidentified, 
   file = "data/A2_result_1st_unidentified.RData"
   )
->>>>>>> 9fb30a57b252fa4603d0f5ca367205ef51a7aa1e
 ```
 ```{r}
-readRDS(file = "data/A2_result_1st_unidentified.rds")
+load(file = "data/A2_result_1st_unidentified.RData")
 summary(result_1st_unidentified)
 ```
 
@@ -664,4 +636,3 @@ result_2nd <-
     )
 result_2nd
 ```
-
