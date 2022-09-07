@@ -419,10 +419,10 @@ graph_true <- foreach (i = 1:length(theta)) %do% {
     ylab("objective function") + xlab(TeX(label[i]))
   return(g)
 }
-save(graph_true, file = "data/A3_graph_true.RData")
+saveRDS(graph_true, file = "data/A3_graph_true.rds")
 ```
 ```{r}
-graph_true <- get(load(file = "data/A3_graph_true.RData"))
+graph_true <- readRDS(file = "data/A3_graph_true.rds")
 graph_true
 ```
 
@@ -455,10 +455,10 @@ graph_mcmc <- foreach (i = 1:length(theta)) %do% {
     ylab("objective function") + xlab(TeX(label[i]))
   return(g)
 }
-save(graph_mcmc, file = "data/A3_graph_mcmc.RData")
+saveRDS(graph_mcmc, file = "data/A3_graph_mcmc.rds")
 ```
 ```{r}
-graph_mcmc <- get(load(file = "data/A3_graph_mcmc.RData"))
+graph_mcmc <- readRDS(file = "data/A3_graph_mcmc.rds"))
 graph_mcmc
 ```
 
@@ -475,12 +475,12 @@ result_NLLS <-
         M = M, 
         V_mcmc = V_mcmc, 
         e_mcmc = e_mcmc)
-save(result_NLLS, file = "data/A3_result_NLLS.RData")
+saveRDS(result_NLLS, file = "data/A3_result_NLLS.rds")
 ```
 
 
 ```{r}
-result_NLLS <- get(load(file = "data/A3_result_NLLS.RData"))
+result_NLLS <- readRDS(file = "data/A3_result_NLLS.rds")
 result_NLLS
 result <- data.frame(true = theta, estimates = result_NLLS$par)
 result

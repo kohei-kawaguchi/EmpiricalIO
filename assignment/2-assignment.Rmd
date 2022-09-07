@@ -243,12 +243,12 @@ for (t in 2:T) {
   df_T <- dplyr::bind_rows(df_T, df)
 }
 df_T
-save(df_T, file = "data/A2_df_T.RData")
+saveRDS(df_T, file = "data/A2_df_T.rds")
 ```
 
 10. Check the simulated data by making summary table.
 ```{r}
-load(file = "data/A2_df_T.RData")
+readRDS(file = "data/A2_df_T.rds")
 df_T_summary <-
   foreach (i = 1:dim(df_T)[2], .combine = "rbind") %do% {
     df_T_i <- as.data.frame(df_T)[, i]
@@ -306,18 +306,18 @@ You can use `npplreg` function of `np` package to estimate a partially linear mo
 result_1st_bw <-
   npplregbw(data = df_T,
             formula = y_error ~ l_error + k + I| k + I)
-save(result_1st_bw, file = "data/A2_result_1st_bw.RData")
+saveRDS(result_1st_bw, file = "data/A2_result_1st_bw.rds")
 ```
 ```{r, eval = FALSE}
 result_1st <-
   npplreg(data = df_T,
           formula = y_error ~ l_error + k + I| k + I,
           bws = result_1st_bw)
-save(result_1st, file = "data/A2_result_1st.RData")
+saveRDS(result_1st, file = "data/A2_result_1st.rds")
 ```
 ```{r}
-load(file = "data/A2_df_T.RData")
-load(file = "data/A2_result_1st.RData")
+readRDS(file = "data/A2_df_T.rds")
+readRDS(file = "data/A2_result_1st.rds")
 summary(result_1st)
 result_1st_plot <-
   data.frame(actual = df_T$y_error,
@@ -332,20 +332,20 @@ ggplot(result_1st_plot, aes(x = fitted, y = actual)) +
 result_1st_unidentified_bw <-
   npplregbw(data = df_T,
           formula = y ~ l + k + I| k + I)
-save(result_1st_unidentified_bw, 
-     file = "data/A2_result_1st_unidentified_bw.RData")
+saveRDS(result_1st_unidentified_bw, 
+     file = "data/A2_result_1st_unidentified_bw.rds")
 ```
 ```{r, eval = FALSE}
-load(file = "data/A2_result_1st_unidentified_bw.RData")
+readRDS(file = "data/A2_result_1st_unidentified_bw.rds")
 result_1st_unidentified <-
   npplreg(data = df_T,
           formula = y ~ l + k + I| k + I,
           bws = result_1st_unidentified_bw)
-save(result_1st_unidentified, 
-     file = "data/A2_result_1st_unidentified.RData")
+saveRDS(result_1st_unidentified, 
+     file = "data/A2_result_1st_unidentified.rds")
 ```
 ```{r}
-load(file = "data/A2_result_1st_unidentified.RData")
+readRDS(file = "data/A2_result_1st_unidentified.rds")
 summary(result_1st_unidentified)
 ```
 
