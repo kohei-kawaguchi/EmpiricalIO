@@ -168,6 +168,11 @@ graph <- foreach (i = 1:length(theta)) %do% {
   theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
   objective_i <-
     foreach (j = 1:length(theta_i_list),
+             .packages = c(
+               "EmpiricalIO",
+               "foreach",
+               "magrittr"
+               ),
              .combine = "rbind") %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
@@ -282,7 +287,12 @@ graph <- foreach (i = 1:length(theta)) %do% {
   theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
   objective_i <-
     foreach (j = 1:length(theta_i_list),
-             .combine = "rbind") %do% {
+             .packages = c(
+               "EmpiricalIO",
+               "foreach",
+               "magrittr"
+               ),
+             .combine = "rbind") %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij

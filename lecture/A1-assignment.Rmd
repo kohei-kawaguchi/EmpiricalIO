@@ -1,21 +1,13 @@
----
-title: "Assignment 1: Basic Programming in R"
-author: "Kohei Kawaguchi"
-date: "2019/2/11"
-output: 
-    html_document:
-        theme: cosmo
----
+# Assignment 1: Basic Programming in R {#assignment1}
 
 ```{r setup, include=FALSE}
+library(EmpiricalIO)
 library(magrittr)
 library(foreach)
 library(ggplot2)
 library(latex2exp)
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
-The deadline is the __start time of February 18 class__. 
 
 Report the following results in html format using R markdown. In other words, replicate this document. You write functions in a separate R file and put in `R` folder in the project folder. Build the project as a package and load it from the R markdown file. The execution code sholuld be written in R markdown file. 
 
@@ -36,29 +28,39 @@ where $\epsilon_{ik}$ follows i.i.d. type-I extreme value distribution, $\beta =
 
 1. To simulate data, first make a data frame as follows:
 ```{r, echo = FALSE}
-df <- expand.grid(i = 1:1000, k = 1:2) %>%
+df <- 
+  expand.grid(
+    i = 1:1000, 
+    k = 1:2
+    ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(x = ifelse(k == 1, 0, 1)) %>%
-  dplyr::arrange(i, k)
+  dplyr::arrange(
+    i, 
+    k
+    )
 df
 ```
 2. Second, draw type-I extreme value random variables. Set the seed at 1. You can use `evd` package to draw the variables. You should get exactly the same realization if the seed is correctly set.
 ```{r, echo = FALSE}
 set.seed(1)
-df <- df %>%
+df <- 
+  df %>%
   dplyr::mutate(e = evd::rgev(dim(df)[1]))
 df
 ```
 3. Third, compute the latent value of each option to obtain the following data frame:
 ```{r, echo = FALSE}
 beta <- 0.2
-df <- df %>%
+df <- 
+  df %>%
   dplyr::mutate(latent = beta * x + e)
 df
 ```
 4. Finally, compute $y$ by comparing the latent values of $k = 1, 2$ for each $i$ to obtain the following result:
 ```{r, echo = FALSE}
-df <- df %>%
+df <- 
+  df %>%
   dplyr::group_by(i) %>%
   dplyr::mutate(y = ifelse(latent == max(latent), 1, 0)) %>%
   dplyr::ungroup()
@@ -83,16 +85,18 @@ $$
 
 1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_A1`. 
 ```{r, echo = FALSE}
-library(EmpiricalIO)
-# loglikelihood_A1 <- 
-#   function(b, df) {
-#   l <- df %>%
-#     dplyr::group_by(i) %>%
-#     dplyr::mutate(p = exp(b*x)/sum(exp(b*x))) %>%
-#     dplyr::ungroup() %>%
-#     dplyr::filter(y == 1)
-#   l <- mean(log(l$p))
-#   return(l)
+# loglikelihood_A1 <-
+#   function(
+#     b, 
+#     df
+#     ) {
+#     l <- df %>%
+#       dplyr::group_by(i) %>%
+#       dplyr::mutate(p = exp(b*x)/sum(exp(b*x))) %>%
+#       dplyr::ungroup() %>%
+#       dplyr::filter(y == 1)
+#     l <- mean(log(l$p))
+#     return(l)
 # }
 ```
 
@@ -100,26 +104,47 @@ library(EmpiricalIO)
 ```{r, echo = FALSE}
 b_seq <- seq(0, 1, 0.1)
 output <- 
-  foreach (b = b_seq,
-           .combine = "rbind") %do% {
-  l <- loglikelihood_A1(b, df)
-  return(l)
+  foreach (
+    b = b_seq,
+    .combine = "rbind"
+    ) %do% {
+      l <- 
+        loglikelihood_A1(
+          b, 
+          df
+          )
+      return(l)
 }
-output <- data.frame(x = b_seq, y = output)
-ggplot(output, aes(x = x, y = y)) +
-  geom_point() + xlab(TeX("$\\beta$")) + ylab("Loglikelihood")
+output <- 
+  data.frame(
+    x = b_seq, 
+    y = output
+    )
+output %>%
+  ggplot(
+    aes(
+      x = x, 
+      y = y
+      )
+    ) +
+  geom_point() + 
+  xlab(TeX("$\\beta$")) + 
+  ylab("Loglikelihood")
 ```
 
 
 1. Find and report $\beta$ that maximizes the log likelihood for the simulated data. You can use `optim` function to achieve this. You will use `Brent` method and set the lower bound at -1 and upper bound at 1 for the parameter search.
 ```{r, echo = FALSE}
-result <- optim(par = beta,
-                fn = loglikelihood_A1,
-                df = df,
-                method = "Brent",
-                lower = -1,
-                upper = 1,
-                control = list(fnscale = - 1))
+result <- 
+  optim(
+    par = beta,
+    fn = loglikelihood_A1,
+    df = df,
+    method = "Brent",
+    lower = -1,
+    upper = 1,
+    control = list(fnscale = - 1)
+    )
 result
 ```
 

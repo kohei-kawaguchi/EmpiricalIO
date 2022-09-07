@@ -1,13 +1,6 @@
----
-title: 'Assignment 3: Demand Function Estimation I'
-author: "Kohei Kawaguchi"
-date: "2019/1/29"
-output:
-  html_document: default
-  pdf_document: default
----
+# Assignment 3: Demand Function Estimation I {#assignment3}
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -17,6 +10,7 @@ library(ggplot2)
 library(latex2exp)
 library(doParallel)
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+dir.create("data/a3", showWarnings = FALSE)
 ```
 
 ## Simulate data
@@ -127,16 +121,29 @@ sd_p <- 0.05
 
 ```{r}
 # make product characteristics data
-X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
-X <- cbind(rep(1, J), X)
+X <- 
+  matrix(
+    sd_x * rnorm(J * (K - 1)), 
+    nrow = J
+    )
+X <- 
+  cbind(
+    rep(1, J), 
+    X
+    )
 colnames(X) <- paste("x", 1:K, sep = "_")
-X <- data.frame(j = 1:J, X) %>%
+X <- 
+  data.frame(
+    j = 1:J,
+    X
+    ) %>%
   tibble::as_tibble()
 # add outside option
-X <- rbind(
-  rep(0, dim(X)[2]),
-  X
-) 
+X <- 
+  rbind(
+    rep(0, dim(X)[2]),
+    X
+    ) 
 ```
 
 ```{r, echo = TRUE}
@@ -147,24 +154,40 @@ X
 
 ```{r}
 # make market-product data
-M <- expand.grid(j = 1:J, t = 1:T) %>%
+M <- 
+  expand.grid(
+    j = 1:J, 
+    t = 1:T
+    ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
     xi = 0,
     c = exp(sd_c * rnorm(J*T)),
     p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
   ) 
-M <- M %>%
+M <- 
+  M %>%
   dplyr::group_by(t) %>%
   dplyr::sample_frac(prop_jt) %>%
   dplyr::ungroup()
 # add outside option
-outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
-M <- rbind(
-  M,
-  outside
-) %>%
-  dplyr::arrange(t, j)
+outside <- 
+  data.frame(
+    j = 0, 
+    t = 1:T, 
+    xi = 0, 
+    c = 0, 
+    p = 0
+    )
+M <- 
+  rbind(
+    M,
+    outside
+    ) %>%
+  dplyr::arrange(
+    t, 
+    j
+    )
 ```
 
 ```{r, echo = TRUE}
@@ -176,12 +199,20 @@ M
 
 ```{r}
 # make consumer-market data
-V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
+V <- 
+  matrix(
+    rnorm(N * T * (K + 1)), 
+    nrow = N * T
+    ) 
 colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V <- data.frame(
-  expand.grid(i = 1:N, t = 1:T),
-  V
-) %>%
+V <- 
+  data.frame(
+    expand.grid(
+      i = 1:N, 
+      t = 1:T
+      ),
+    V
+    ) %>%
   tibble::as_tibble()
 ```
 
@@ -194,13 +225,31 @@ V
 
 ```{r}
 # make choice data
-df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+df <- 
+  expand.grid(
+    t = 1:T, 
+    i = 1:N, 
+    j = 0:J
+    ) %>%
   tibble::as_tibble() %>%
-  dplyr::left_join(V, by = c("i", "t")) %>%
-  dplyr::left_join(X, by = c("j")) %>%
-  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::left_join(
+    V, 
+    by = c("i", "t")
+    ) %>%
+  dplyr::left_join(
+    X, 
+    by = c("j")
+    ) %>%
+  dplyr::left_join(
+    M, 
+    by = c("j", "t")
+    ) %>%
   dplyr::filter(!is.na(p)) %>%
-  dplyr::arrange(t, i, j)
+  dplyr::arrange(
+    t, 
+    i, 
+    j
+    )
 ```
 
 ```{r, echo = TRUE}
@@ -224,8 +273,12 @@ head(e)
 # compute indirect utility
 u <- 
   compute_indirect_utility(
-    df, beta, sigma, 
-           mu, omega)
+    df, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 head(u)
 ```
 
@@ -234,8 +287,16 @@ head(u)
 ```{r, echo = TRUE}
 # compute choice
 df_choice <- 
-  compute_choice(X, M, V, e, beta, sigma, 
-                 mu, omega)
+  compute_choice(
+    X, 
+    M, 
+    V, 
+    e, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 df_choice
 summary(df_choice)
 ```
@@ -246,8 +307,16 @@ summary(df_choice)
 ```{r share, echo = TRUE}
 # compute share
 df_share <-
-  compute_share(X, M, V, e, beta, sigma, 
-                mu, omega)
+  compute_share(
+    X, 
+    M, 
+    V, 
+    e, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 df_share
 summary(df_share)
 ```
@@ -262,10 +331,11 @@ This can be implemented using `lm` function. Print out the estimate results.
 
 ```{r}
 # logit regression
-result_logit <- lm(
-  data = df_share,
-  formula = y ~ - 1 + x_1 + x_2 + x_3 + p
-)
+result_logit <- 
+  lm(
+    data = df_share,
+    formula = y ~ - 1 + x_1 + x_2 + x_3 + p
+    )
 summary(result_logit)
 ```
 
@@ -280,12 +350,20 @@ The best practice to avoid this problem is to generate the shocks outside the op
 ```{r}
 # mixed logit estimation
 ## draw mcmc V
-V_mcmc <- matrix(rnorm(L*T*(K + 1)), nrow = L*T) 
+V_mcmc <- 
+  matrix(
+    rnorm(L * T * (K + 1)), 
+    nrow = L * T
+    ) 
 colnames(V_mcmc) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V_mcmc <- data.frame(
-  expand.grid(i = 1:L, t = 1:T),
-  V_mcmc
-) %>%
+V_mcmc <- 
+  data.frame(
+    expand.grid(
+      i = 1:L, 
+      t = 1:T
+      ),
+    V_mcmc
+    ) %>%
   tibble::as_tibble() 
 ```
 
@@ -295,13 +373,31 @@ V_mcmc
 
 ```{r}
 ## draw mcmc e
-df_mcmc <- expand.grid(t = 1:T, i = 1:L, j = 0:J) %>%
+df_mcmc <- 
+  expand.grid(
+    t = 1:T, 
+    i = 1:L, 
+    j = 0:J
+    ) %>%
   tibble::as_tibble() %>%
-  dplyr::left_join(V_mcmc, by = c("i", "t")) %>%
-  dplyr::left_join(X, by = c("j")) %>%
-  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::left_join(
+    V_mcmc, 
+    by = c("i", "t")
+    ) %>%
+  dplyr::left_join(
+    X, 
+    by = c("j")
+    ) %>%
+  dplyr::left_join(
+    M, 
+    by = c("j", "t")
+    ) %>%
   dplyr::filter(!is.na(p)) %>%
-  dplyr::arrange(t, i, j)
+  dplyr::arrange(
+    t, 
+    i, 
+    j
+    )
 # draw idiosyncratic shocks
 e_mcmc <- evd::rgev(dim(df_mcmc)[1])
 ```
@@ -314,8 +410,16 @@ head(e_mcmc)
 ```{r}
 # compute predicted share
 df_share_mcmc <-
-  compute_share(X, M, V_mcmc, e_mcmc, beta, sigma, 
-                mu, omega)
+  compute_share(
+    X, 
+    M, 
+    V_mcmc, 
+    e_mcmc, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 ```
 ```{r, echo = TRUE}
 df_share_mcmc
@@ -325,18 +429,32 @@ df_share_mcmc
 
 ```{r, echo = TRUE}
 # set parameters
-theta <- c(beta, sigma, mu, omega)
+theta <- 
+  c(
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 theta
 ```
 
-6. Write a function `NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
+6. Write a function `nlls_objective_a3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
 
 ```{r}
-# NLLS objective function
-NLLS_objective <- NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)
+# nlls objective function
+nlls_objective <- 
+  nlls_objective_a3(
+    theta, 
+    df_share, 
+    X, 
+    M, 
+    V_mcmc, 
+    e_mcmc
+    )
 ```
 ```{r, echo = TRUE}
-NLLS_objective
+nlls_objective
 ```
 
 7. Draw a graph of the objective function that varies each parameter from 0.5, 0.6, $\cdots$, 1.5 of the true value. First try with the actual shocks `V` and `e` and then try with the Monte Carlo shocks `V_mcmc` and `e_mcmc`. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.
@@ -350,25 +468,30 @@ registerDoParallel()
 This automatically detect the number of cores available at your computer and registers them as the workers. Then, you only have to change `%do%` to `%dopar` in the `foreach` loop as follows:
 
 ```{r, echo = TRUE}
-foreach (i = 1:4) %dopar% {
-  # this part is parallelized
-  y <- 2 * i
-  return(y)
+foreach (
+  i = 1:4
+  ) %dopar% {
+    # this part is parallelized
+    y <- 2 * i
+    return(y)
 }
 ```
 
 In windows, you may have to explicitly pass packages, functions, and data to the worker by using `.export` and `.packages` options as follows:
 ```{r, echo = TRUE}
-temp_func <- function(x) {
-  y <- 2 * x
-  return(y)
+temp_func <- 
+  function(x) {
+    y <- 2 * x
+    return(y)
 }
-foreach (i = 1:4, 
-         .export = "temp_func",
-         .packages = "magrittr") %dopar% {
-  # this part is parallelized
-  y <- temp_func(i)
-  return(y)
+foreach (
+  i = 1:4, 
+  .export = "temp_func",
+  .packages = "magrittr"
+  ) %dopar% {
+    # this part is parallelized
+    y <- temp_func(i)
+    return(y)
 }
 ```
 
@@ -379,13 +502,15 @@ If you have called a function in a package in this way `dplyr::mutate`, then you
 #   y <- 2 * x
 #   return(y)
 # }
-foreach (i = 1:4, 
-         .packages = c(
-           "EmpiricalIO",
-           "magrittr")) %dopar% {
-  # this part is parallelized
-  y <- temp_func(i)
-  return(y)
+foreach (
+  i = 1:4, 
+  .packages = c(
+    "EmpiricalIO",
+    "magrittr")
+  ) %dopar% {
+    # this part is parallelized
+    y <- temp_func(i)
+    return(y)
 }
 ```
 
@@ -394,35 +519,64 @@ The graphs with the true shocks:
 
 
 ```{r, eval = FALSE}
-label <- c(paste("\\beta_", 1:K, sep = ""), 
-           paste("\\sigma_", 1:K, sep = ""),
-           "\\mu",
-           "\\omega")
+label <- 
+  c(
+    paste("\\beta_", 1:K, sep = ""), 
+    paste("\\sigma_", 1:K, sep = ""),
+    "\\mu",
+    "\\omega"
+    )
 label <- paste("$", label, "$", sep = "")
-graph_true <- foreach (i = 1:length(theta)) %do% {
-  theta_i <- theta[i]
-  theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
-  objective_i <- 
-    foreach (theta_ij = theta_i_list,
-             .combine = "rbind") %dopar% {
-               theta_j <- theta
-               theta_j[i] <- theta_ij
-               objective_ij <- 
-                 NLLS_objective_A3(
-                   theta_j, df_share, X, M, V, e)
-               return(objective_ij)
-             }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
-    geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
-  return(g)
+graph_true <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
+      theta_i <- theta[i]
+      theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
+      objective_i <- 
+        foreach (
+          theta_ij = theta_i_list,
+          .combine = "rbind"
+          ) %dopar% {
+            theta_j <- theta
+            theta_j[i] <- theta_ij
+            objective_ij <- 
+              nlls_objective_a3(
+                theta_j, 
+                df_share, 
+                X, 
+                M, 
+                V, 
+                e
+                )
+            return(objective_ij)
+            }
+      df_graph <- 
+        data.frame(
+          x = theta_i_list, 
+          y = objective_i
+          ) 
+      g <- 
+        df_graph %>%
+        ggplot(
+          aes(
+            x = x, 
+            y = y
+            )
+          ) + 
+        geom_point() +
+        geom_vline(
+          xintercept = theta_i, 
+          linetype = "dotted"
+          ) +
+        ylab("objective function") + 
+        xlab(TeX(label[i]))
+      return(g)
 }
-save(graph_true, file = "data/A3_graph_true.RData")
+saveRDS(graph_true, file = "data/a3/graph_true.rds")
 ```
 ```{r}
-graph_true <- get(load(file = "data/A3_graph_true.RData"))
+graph_true <- readRDS(file = "data/a3/graph_true.rds")
 graph_true
 ```
 
@@ -430,35 +584,65 @@ graph_true
 The graphs with the Monte Carlo shocks:
 
 ```{r, eval = FALSE}
-label <- c(paste("\\beta_", 1:K, sep = ""), 
-           paste("\\sigma_", 1:K, sep = ""),
-           "\\mu",
-           "\\omega")
+label <- 
+  c(
+    paste(
+      "\\beta_", 1:K, sep = ""), 
+      paste("\\sigma_", 1:K, sep = ""),
+      "\\mu",
+      "\\omega"
+    )
 label <- paste("$", label, "$", sep = "")
-graph_mcmc <- foreach (i = 1:length(theta)) %do% {
-  theta_i <- theta[i]
-  theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
-  objective_i <- 
-    foreach (theta_ij = theta_i_list,
-             .combine = "rbind") %dopar% {
-               theta_j <- theta
-               theta_j[i] <- theta_ij
-               objective_ij <- 
-                 NLLS_objective_A3(
-                   theta_j, df_share, X, M, V_mcmc, e_mcmc)
-               return(objective_ij)
-             }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
-    geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
-  return(g)
+graph_mcmc <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
+      theta_i <- theta[i]
+      theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
+      objective_i <- 
+        foreach (
+          theta_ij = theta_i_list,
+          .combine = "rbind"
+          ) %dopar% {
+            theta_j <- theta
+            theta_j[i] <- theta_ij
+            objective_ij <-
+              nlls_objective_a3(
+                theta_j, 
+                df_share, 
+                X, 
+                M, 
+                V_mcmc, 
+                e_mcmc
+                )
+            return(objective_ij)
+            }
+      df_graph <- 
+        data.frame(
+          x = theta_i_list, 
+          y = objective_i
+          ) 
+      g <- 
+        df_graph %>%
+        ggplot(
+          aes(
+            x = x, 
+            y = y
+            )
+          ) + 
+        geom_point() +
+        geom_vline(
+          xintercept = theta_i, 
+          linetype = "dotted"
+          ) +
+        ylab("objective function") + 
+        xlab(TeX(label[i]))
+      return(g)
 }
-save(graph_mcmc, file = "data/A3_graph_mcmc.RData")
+saveRDS(graph_mcmc, file = "data/a3/graph_mcmc.rds")
 ```
 ```{r}
-graph_mcmc <- get(load(file = "data/A3_graph_mcmc.RData"))
+graph_mcmc <- readRDS(file = "data/a3/graph_mcmc.rds")
 graph_mcmc
 ```
 
@@ -466,23 +650,29 @@ graph_mcmc
 8. Use `optim` to find the minimizer of the objective function using `Nelder-Mead` method. You can start from the true parameter values. Compare the estimates with the true parameters.
 
 ```{r, eval = FALSE}
-# find NLLS estimator
-result_NLLS <- 
-  optim(par = theta, fn = NLLS_objective_A3,
-        method = "Nelder-Mead",
-        df_share = df_share, 
-        X = X, 
-        M = M, 
-        V_mcmc = V_mcmc, 
-        e_mcmc = e_mcmc)
-save(result_NLLS, file = "data/A3_result_NLLS.RData")
+# find nlls estimator
+result_nlls <- 
+  optim(
+    par = theta, fn = nlls_objective_a3,
+    method = "Nelder-Mead",
+    df_share = df_share, 
+    X = X, 
+    M = M, 
+    V_mcmc = V_mcmc, 
+    e_mcmc = e_mcmc
+    )
+saveRDS(result_nlls, file = "data/a3/result_nlls.rds")
 ```
 
 
 ```{r}
-result_NLLS <- get(load(file = "data/A3_result_NLLS.RData"))
-result_NLLS
-result <- data.frame(true = theta, estimates = result_NLLS$par)
+result_nlls <- readRDS(file = "data/a3/result_nlls.rds")
+result_nlls
+result <- 
+  data.frame(
+    true = theta, 
+    estimates = result_nlls$par
+    )
 result
 ```
 
