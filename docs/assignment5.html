@@ -834,8 +834,7 @@ p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
 ##  8     2     2 -0.0297 1.04      0
 ##  9     4     2  0.382  1.00      0
 ## 10     5     2 -0.0823 1.02      0
-## # … with 686 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 686 more rows</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Generate the consumer-level heterogeneity. <code>V</code> is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, <span class="math inline">\((\nu_{i}&#39;, \upsilon_i)\)</span>. They are all i.i.d. standard normal random variables.</li>
 </ol>
@@ -853,8 +852,7 @@ p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
 ##  8     8     1 -1.65    2.10    0.726  -0.108 
 ##  9     9     1 -0.848  -0.933   2.29   -0.0195
 ## 10    10     1 -0.130  -0.897  -1.90   -0.185 
-## # … with 49,990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 49,990 more rows</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>We use <code>compute_indirect_utility(df, beta, sigma, mu, omega)</code>, <code>compute_choice_smooth(X, M, V, beta, sigma, mu, omega)</code>, and <code>compute_share_smooth(X, M, V, beta, sigma, mu, omega)</code> to compute <span class="math inline">\(s_t(p_t, x_t, \xi_t)\)</span>. On top of this, we need a function <code>compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)</code> that approximate:</li>
 </ol>
@@ -875,28 +873,28 @@ p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
 ## [3,]  0.04067066  0.06758143 -0.22465048  0.11247770
 ## [4,]  0.03615775  0.06900886  0.11247770 -0.22508246</code></pre>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="assignment5.html#cb228-1" aria-hidden="true" tabindex="-1"></a>derivative_share_smooth[[T]]</span></code></pre></div>
-<pre><code>##               [,1]         [,2]         [,3]         [,4]         [,5]         [,6]
-##  [1,] -0.096590746  0.003580709  0.003713348  0.011204782  0.012198589  0.008403911
-##  [2,]  0.003580709 -0.054948229  0.003309376  0.009438704  0.009893682  0.007465135
-##  [3,]  0.003713348  0.003309376 -0.055735044  0.009505457  0.009233146  0.007249620
-##  [4,]  0.011204782  0.009438704  0.009505457 -0.160285167  0.021922796  0.022645270
-##  [5,]  0.012198589  0.009893682  0.009233146  0.021922796 -0.136324417  0.019978806
-##  [6,]  0.008403911  0.007465135  0.007249620  0.022645270  0.019978806 -0.119320239
-##  [7,]  0.006573094  0.003856270  0.004084570  0.016649978  0.009219389  0.009873958
-##  [8,]  0.033096170  0.006496123  0.007885498  0.038995016  0.016868502  0.019723897
-##  [9,]  0.013495765  0.008866219  0.008606532  0.022541027  0.030984223  0.018980139
-## [10,]  0.003846416  0.001815922  0.001912074  0.006631000  0.005317866  0.004460069
-##               [,7]         [,8]         [,9]        [,10]
-##  [1,]  0.006573094  0.033096170  0.013495765  0.003846416
-##  [2,]  0.003856270  0.006496123  0.008866219  0.001815922
-##  [3,]  0.004084570  0.007885498  0.008606532  0.001912074
-##  [4,]  0.016649978  0.038995016  0.022541027  0.006631000
-##  [5,]  0.009219389  0.016868502  0.030984223  0.005317866
-##  [6,]  0.009873958  0.019723897  0.018980139  0.004460069
-##  [7,] -0.101062317  0.035849014  0.010662149  0.003862923
-##  [8,]  0.035849014 -0.207076797  0.027381997  0.018831945
-##  [9,]  0.010662149  0.027381997 -0.148409509  0.006094688
-## [10,]  0.003862923  0.018831945  0.006094688 -0.053007318</code></pre>
+<pre><code>##               [,1]         [,2]         [,3]         [,4]         [,5]         [,6]         [,7]         [,8]         [,9]
+##  [1,] -0.096590746  0.003580709  0.003713348  0.011204782  0.012198589  0.008403911  0.006573094  0.033096170  0.013495765
+##  [2,]  0.003580709 -0.054948229  0.003309376  0.009438704  0.009893682  0.007465135  0.003856270  0.006496123  0.008866219
+##  [3,]  0.003713348  0.003309376 -0.055735044  0.009505457  0.009233146  0.007249620  0.004084570  0.007885498  0.008606532
+##  [4,]  0.011204782  0.009438704  0.009505457 -0.160285167  0.021922796  0.022645270  0.016649978  0.038995016  0.022541027
+##  [5,]  0.012198589  0.009893682  0.009233146  0.021922796 -0.136324417  0.019978806  0.009219389  0.016868502  0.030984223
+##  [6,]  0.008403911  0.007465135  0.007249620  0.022645270  0.019978806 -0.119320239  0.009873958  0.019723897  0.018980139
+##  [7,]  0.006573094  0.003856270  0.004084570  0.016649978  0.009219389  0.009873958 -0.101062317  0.035849014  0.010662149
+##  [8,]  0.033096170  0.006496123  0.007885498  0.038995016  0.016868502  0.019723897  0.035849014 -0.207076797  0.027381997
+##  [9,]  0.013495765  0.008866219  0.008606532  0.022541027  0.030984223  0.018980139  0.010662149  0.027381997 -0.148409509
+## [10,]  0.003846416  0.001815922  0.001912074  0.006631000  0.005317866  0.004460069  0.003862923  0.018831945  0.006094688
+##              [,10]
+##  [1,]  0.003846416
+##  [2,]  0.001815922
+##  [3,]  0.001912074
+##  [4,]  0.006631000
+##  [5,]  0.005317866
+##  [6,]  0.004460069
+##  [7,]  0.003862923
+##  [8,]  0.018831945
+##  [9,]  0.006094688
+## [10,] -0.053007318</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Make a list <code>Delta</code> such that each element of the list is <span class="math inline">\(J_t \times J_t\)</span> matrix <span class="math inline">\(\Delta_t\)</span>.</li>
 </ol>
@@ -981,7 +979,7 @@ c_t = p_t - \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)
 <span id="cb235-11"><a href="assignment5.html#cb235-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">estimate =</span> marginal_cost_estimate)</span>
 <span id="cb235-12"><a href="assignment5.html#cb235-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(marginal_cost_df, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> actual)) <span class="sc">+</span></span>
 <span id="cb235-13"><a href="assignment5.html#cb235-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-155-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-152-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>(Optional) Translate <code>compute_indirect_utility</code>, <code>compute_choice_smooth</code>, <code>compute_derivative_share_smooth</code>, <code>update_price</code> into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment.</li>
 </ol>

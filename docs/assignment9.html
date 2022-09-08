@@ -744,7 +744,7 @@ div.csl-indent {
 <span id="cb468-13"><a href="assignment9.html#cb468-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">rbeta</span>(<span class="fu">length</span>(i), alpha, beta))</span>
 <span id="cb468-14"><a href="assignment9.html#cb468-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(valuation, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-242-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-239-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="assignment9.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw reserve prices</span></span>
 <span id="cb470-2"><a href="assignment9.html#cb470-2" aria-hidden="true" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
 <span id="cb470-3"><a href="assignment9.html#cb470-3" aria-hidden="true" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, <span class="at">r =</span> reserve)</span></code></pre></div>
@@ -768,11 +768,10 @@ div.csl-indent {
 ##  8     8     9     9   0.2 0.724
 ##  9     9    14    14   0.2 0.880
 ## 10    10    11     9   0.2 0.677
-## # … with 90 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 90 more rows</code></pre>
 <div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="assignment9.html#cb473-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_second_w, <span class="fu">aes</span>(<span class="at">x =</span> w)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-243-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-240-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
 <span class="math display">\[
 \beta(x) = x - \frac{\int_{r_t}^x F_X(t)^{N - 1}}{F_X(x)^{N - 1}},
@@ -815,11 +814,10 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 ##  8     1     8 0.440   0.2     8     8 0.404
 ##  9     2     1 0.449   0.2    10    10 0.420
 ## 10     2     2 0.472   0.2    10    10 0.441
-## # … with 984 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 984 more rows</code></pre>
 <div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="assignment9.html#cb489-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_first, <span class="fu">aes</span>(<span class="at">x =</span> b)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-245-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-242-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_winning_bids_first(valuation, reserve, alpha, beta)</code> that returns only the winning bids from each first-price auction. It will call <code>compute_bids_first</code> inside the function. It does not return anything when no bidder bids above the reserve price.</li>
 </ol>
@@ -840,11 +838,10 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 ##  8     8     9     9   0.2 0.753
 ##  9     9    14    14   0.2 0.849
 ## 10    10    11     9   0.2 0.803
-## # … with 90 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 90 more rows</code></pre>
 <div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="assignment9.html#cb493-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_first_w, <span class="fu">aes</span>(<span class="at">x =</span> w)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-246-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-243-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="estimate-the-parameters-5" class="section level2 hasAnchor" number="19.2">
 <h2><span class="header-section-number">19.2</span> Estimate the parameters<a href="assignment9.html#estimate-the-parameters-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -923,10 +920,10 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 <div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="assignment9.html#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">&quot;data/A9_second_parametric_graph.RData&quot;</span>)</span>
 <span id="cb502-2"><a href="assignment9.html#cb502-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-251-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-248-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-251-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-248-2.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Estimate the parameters by maximizing the log-likelihood.</li>
 </ol>
@@ -1052,10 +1049,10 @@ where the second equation is from the first-order condition.</p>
 <div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="assignment9.html#cb521-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">&quot;data/A9_first_parametric_graph.RData&quot;</span>)</span>
 <span id="cb521-2"><a href="assignment9.html#cb521-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-258-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-255-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-258-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-255-2.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="9" style="list-style-type: decimal">
 <li>Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.</li>
 </ol>
@@ -1102,7 +1099,7 @@ Also, write a function <code>f_b(b)</code> that returns an empirical probability
 <div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="assignment9.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cumulative distribution</span></span>
 <span id="cb529-2"><a href="assignment9.html#cb529-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_first, <span class="fu">aes</span>(<span class="at">x =</span> b)) <span class="sc">+</span> <span class="fu">stat_ecdf</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
 <span id="cb529-3"><a href="assignment9.html#cb529-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;bid&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;cumulative distribution&quot;</span>)</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-261-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-258-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="assignment9.html#cb530-1" aria-hidden="true" tabindex="-1"></a>F_b <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(df_first<span class="sc">$</span>b)</span>
 <span id="cb530-2"><a href="assignment9.html#cb530-2" aria-hidden="true" tabindex="-1"></a><span class="fu">F_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
 <pre><code>## [1] 0.4104628</code></pre>
@@ -1110,7 +1107,7 @@ Also, write a function <code>f_b(b)</code> that returns an empirical probability
 <pre><code>## [1] 0.7173038</code></pre>
 <div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="assignment9.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="co"># probability density</span></span>
 <span id="cb534-2"><a href="assignment9.html#cb534-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_first, <span class="fu">aes</span>(<span class="at">x =</span> b)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-261-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-258-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="assignment9.html#cb535-1" aria-hidden="true" tabindex="-1"></a>f_b <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(<span class="fu">density</span>(df_first<span class="sc">$</span>b))</span>
 <span id="cb535-2"><a href="assignment9.html#cb535-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
 <pre><code>## [1] 1.680124</code></pre>
@@ -1156,7 +1153,7 @@ x = b + \frac{H_b(b)}{h_b(b)}.
 <span id="cb545-9"><a href="assignment9.html#cb545-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;true&quot;</span>)</span>
 <span id="cb545-10"><a href="assignment9.html#cb545-10" aria-hidden="true" tabindex="-1"></a>valuation_plot <span class="ot">&lt;-</span> <span class="fu">rbind</span>(valuation_true, valuation_implied)</span>
 <span id="cb545-11"><a href="assignment9.html#cb545-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(valuation_plot, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">color =</span> type)) <span class="sc">+</span> <span class="fu">stat_ecdf</span>()</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-264-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-261-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
