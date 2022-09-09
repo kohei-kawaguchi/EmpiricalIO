@@ -75,30 +75,51 @@ delta <- 0.05
 
 2. Write a function that returns the log output given $l_{jt}$, $k_{jt}$, $\omega_{jt}$, and $\eta_{jt}$ under the given parameter values according to the above production function and name it `log_production(l, k, omega, eta, beta_0, beta_l, beta_k)`.
 ```{r}
-# # moved to R/functions.R
-# # log production function
-# log_production <-
-#   function(
-#     l, 
-#     k, 
-#     omega, 
-#     eta, 
-#     beta_0, 
-#     beta_l, 
-#     beta_k
-#     ) {
-#     y <- beta_0 + beta_l * l + beta_k * k + omega + eta
-#     return(y)
-#   }
+log_production(
+    l = 1,
+    k = 1,
+    omega = 1,
+    eta = 1,
+    beta_0 = beta_0,
+    beta_l = beta_l,
+    beta_k = beta_k
+    ) 
 ```
 
 Suppose that the labor is determined after $\omega_{jt}$ is observed, but before $\eta_{jt}$ is observed, given the log capital level $k_{jt}$. 
 
 3. Derive the optimal log labor as a function of $\omega_{jt}$, $\eta_{jt}$, $k_{jt}$, and wage. Write a function to return the optimal log labor given the variables and parameters and name it `log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)`. 
 
+```{r}
+log_labor_choice(
+  k = 1, 
+  wage = 1, 
+  omega = 1, 
+  beta_0 = beta_0, 
+  beta_l = beta_l, 
+  beta_k = beta_k, 
+  sigma_eta = sigma_eta
+  )
+```
+
 As discussed in the class, if there is no additional variation in labor, the coefficient on the labor $\beta_l$ is not identified. Thus, if we generate labor choice from the previous function, $\beta_l$ will not be identified from the simulated data. To see this, we write a modified version of the previous function in which $\omega_{jt}$ is replaced with $\omega_{jt} + \iota_{jt}$, where $\iota_{jt}$ is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is $\omega_{jt} + \iota_{jt}$, even though the true shock is $\omega_{jt}$. 
 
 4. Modify the previous function by including $\iota_{jt}$ as an additional input and name it `log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)`.
+
+```{r}
+log_labor_choice_error(
+  k = 1, 
+  wage = 1, 
+  omega = 1, 
+  beta_0 = beta_0, 
+  beta_l = beta_l, 
+  beta_k = beta_k, 
+  iota = 1, 
+  sigma_eta = sigma_eta
+  )
+```
+
+
 
 Consider an investment process such that:
 $$
@@ -109,6 +130,12 @@ where $I_{jt}$ and $K_{jt}$ are investment and capital in level. Set $\gamma = 0
 5. Define variable $\gamma$ and assign it the value. Write a function that returns the investment given $K_{jt}$,  $\omega_{jt}$, and parameter values, according to the previous equation, and name it `investment_choice(k, omega, gamma, delta)`.
 ```{r}
 gamma <- 0.1
+investment_choice(
+  k = 1, 
+  omega = 1, 
+  gamma = gamma, 
+  delta = delta
+  )
 ```
 
 Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables $k_{jt}$ and $\omega_{jt}$ as follows. 
@@ -331,7 +358,8 @@ result_1st_plot %>%
       y = actual
       )
     ) +
-  geom_point()
+  geom_point() +
+  theme_classic()
 ```
 
 4. Check that $\beta_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
@@ -424,45 +452,13 @@ df_all_1st
 
 6. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_all_1st`, and name it `moment_olleypakes_2nd`. Show the values of the moments evaluated at the true parameters.
 ```{r}
-# moment_olleypakes_2nd <- 
-#   function(
-#     alpha, 
-#     beta_0, 
-#     beta_k, 
-#     df_all, 
-#     df_all_1st
-#     ) {
-#     moment <- 
-#       df_all %>%
-#       dplyr::group_by(j) %>%
-#       dplyr::mutate(
-#         k_t_1 = dplyr::lag(k, 1),
-#         I_t_1 = dplyr::lag(inv, 1)
-#       ) %>%
-#       dplyr::ungroup() %>%
-#       dplyr::left_join(
-#         df_all_1st, 
-#         by = c("j", "t")
-#         ) %>%
-#       dplyr::filter(!is.na(phi_t_1)) %>%
-#       dplyr::mutate(
-#         g_jt = y_error_tilde - beta_0 - beta_k * k - 
-#           alpha * (phi_t_1 - beta_0 - beta_k * k_t_1)
-#       )
-#     moment <-
-#       cbind(
-#         moment$g_jt * moment$k,
-#         moment$g_jt * moment$k_t_1,
-#         moment$g_jt * moment$I_t_1
-#         )
-#     moment <- 
-#       apply(
-#         moment, 
-#         2, 
-#         mean)
-#     return(moment)
-#   }
-moment_olleypakes_2nd(alpha, beta_0, beta_k, df_all, df_all_1st)
+moment_olleypakes_2nd(
+  alpha = alpha, 
+  beta_0 = beta_0, 
+  beta_k = beta_k, 
+  df_all = df_all, 
+  df_all_1st = df_all_1st
+  )
 ```
 
 Based on the moment, we can define the objective function of a generalized method of moments estimator with a weighting matrix $W$ as:
@@ -473,24 +469,19 @@ $$
 7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_all_1st`, and name it `objective_olleypakes_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
 
 ```{r}
-# objective_olleypakes_2nd <-
-#   function(
-#     theta, 
-#     df_all, 
-#     df_all_1st, 
-#     W
-#     ) {
-#     alpha <- theta[1]
-#     beta_0 <- theta[2]
-#     beta_k <- theta[3]
-#     moment <-
-#       moment_olleypakes_2nd(alpha, beta_0, beta_k, df_all, df_all_1st)
-#     objective <- t(moment) %*% W %*% moment
-#     return(objective)
-#   }
 W <- diag(3)
-theta <- c(alpha, beta_0, beta_k)
-objective_olleypakes_2nd(theta, df_all, df_all_1st, W)
+theta <- 
+  c(
+    alpha, 
+    beta_0, 
+    beta_k
+    )
+objective_olleypakes_2nd(
+  theta = theta, 
+  df_all = df_all, 
+  df_all_1st = df_all_1st,
+  W = W
+  )
 ```
 
 8. Draw the graph of the objective function when one of $\alpha$, $\beta_0$, and $\beta_k$ are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
@@ -548,7 +539,8 @@ objective_plot %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\beta_0$")) + 
-  ylab("Objective")
+  ylab("Objective") + 
+  theme_classic()
 objective_plot %>%
   ggplot(
     aes(
@@ -558,12 +550,18 @@ objective_plot %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\beta_k$")) + 
-  ylab("Objective")
+  ylab("Objective") +
+  theme_classic()
 ```
 
 9. Find the parameters that minimize the objective function using `optim`. You may use `L-BFGS-B` method to solve it.
 ```{r}
-theta <- c(alpha, beta_0, beta_k)
+theta <- 
+  c(
+    alpha, 
+    beta_0, 
+    beta_k
+    )
 W <- diag(3)
 result_2nd <-
   optim(
