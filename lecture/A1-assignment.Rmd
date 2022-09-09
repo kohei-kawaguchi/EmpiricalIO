@@ -83,21 +83,12 @@ $$
 l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 - p_{i1}(\beta)\}.
 $$
 
-1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_A1`. 
+1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_a1`. 
 ```{r, echo = FALSE}
-# loglikelihood_A1 <-
-#   function(
-#     b, 
-#     df
-#     ) {
-#     l <- df %>%
-#       dplyr::group_by(i) %>%
-#       dplyr::mutate(p = exp(b*x)/sum(exp(b*x))) %>%
-#       dplyr::ungroup() %>%
-#       dplyr::filter(y == 1)
-#     l <- mean(log(l$p))
-#     return(l)
-# }
+loglikelihood_a1(
+    b = 1,
+    df = df
+    ) 
 ```
 
 1. Compute the value of log likelihood for $\beta = 0, 0.1, \cdots, 1$ and plot the result using `ggplot2` packages. You can use `latex2exp` package to use LaTeX math symbol in the label:
@@ -109,7 +100,7 @@ output <-
     .combine = "rbind"
     ) %do% {
       l <- 
-        loglikelihood_A1(
+        loglikelihood_a1(
           b, 
           df
           )
@@ -129,7 +120,8 @@ output %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\beta$")) + 
-  ylab("Loglikelihood")
+  ylab("Loglikelihood") +
+  theme_classic()
 ```
 
 
@@ -138,7 +130,7 @@ output %>%
 result <- 
   optim(
     par = beta,
-    fn = loglikelihood_A1,
+    fn = loglikelihood_a1,
     df = df,
     method = "Brent",
     lower = -1,

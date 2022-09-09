@@ -90,9 +90,9 @@ $$
 l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 - p_{i1}(\beta)\}.
 $$
 
-1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_A1`. 
+1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_a1`. 
 ```{r, echo = FALSE}
-# loglikelihood_A1 <-
+# loglikelihood_a1 <-
 #   function(
 #     b, 
 #     df
@@ -116,7 +116,7 @@ output <-
     .combine = "rbind"
     ) %do% {
       l <- 
-        loglikelihood_A1(
+        loglikelihood_a1(
           b, 
           df
           )
@@ -145,7 +145,7 @@ output %>%
 result <- 
   optim(
     par = beta,
-    fn = loglikelihood_A1,
+    fn = loglikelihood_a1,
     df = df,
     method = "Brent",
     lower = -1,
