@@ -778,25 +778,25 @@ PKG_CPPFLAGS = -w -std=c++11 -I../inst/include/ -O3</code></pre>
 <ol style="list-style-type: decimal">
 <li>Write a procedure in <code>main/main.R</code>.</li>
 </ol>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="rcpp.html#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb550-2"><a href="rcpp.html#cb550-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb550-3"><a href="rcpp.html#cb550-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="rcpp.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb555-2"><a href="rcpp.html#cb555-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb555-3"><a href="rcpp.html#cb555-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Rewrite the procedure to a function in <code>main/main.R</code>.</li>
 </ol>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="rcpp.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb551-2"><a href="rcpp.html#cb551-2" aria-hidden="true" tabindex="-1"></a><span class="co"># compute coefficient-wise square</span></span>
-<span id="cb551-3"><a href="rcpp.html#cb551-3" aria-hidden="true" tabindex="-1"></a>compute_square <span class="ot">&lt;-</span></span>
-<span id="cb551-4"><a href="rcpp.html#cb551-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
-<span id="cb551-5"><a href="rcpp.html#cb551-5" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb551-6"><a href="rcpp.html#cb551-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb551-7"><a href="rcpp.html#cb551-7" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="rcpp.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb556-2"><a href="rcpp.html#cb556-2" aria-hidden="true" tabindex="-1"></a><span class="co"># compute coefficient-wise square</span></span>
+<span id="cb556-3"><a href="rcpp.html#cb556-3" aria-hidden="true" tabindex="-1"></a>compute_square <span class="ot">&lt;-</span></span>
+<span id="cb556-4"><a href="rcpp.html#cb556-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
+<span id="cb556-5"><a href="rcpp.html#cb556-5" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb556-6"><a href="rcpp.html#cb556-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb556-7"><a href="rcpp.html#cb556-7" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Execute the function in <code>main/main.R</code> and check that the output is the same with the output of the original</li>
 </ol>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="rcpp.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb552-2"><a href="rcpp.html#cb552-2" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">compute_square</span>(x)</span>
-<span id="cb552-3"><a href="rcpp.html#cb552-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(y1 <span class="sc">-</span> y2))</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="rcpp.html#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb557-2"><a href="rcpp.html#cb557-2" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">compute_square</span>(x)</span>
+<span id="cb557-3"><a href="rcpp.html#cb557-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(y1 <span class="sc">-</span> y2))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Cut and paste the function to <code>R/functions.R</code>.</li>
@@ -849,9 +849,9 @@ Eigen::VectorXd compute_square_rcpp(Eigen::VectorXd x) {
 <ol start="11" style="list-style-type: decimal">
 <li>Now by calling the library, you should be able to use the function written in C++ in R. Check if it returns a valid value and if the output is the same as the output of the R function.</li>
 </ol>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="rcpp.html#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb557-2"><a href="rcpp.html#cb557-2" aria-hidden="true" tabindex="-1"></a>y3 <span class="ot">&lt;-</span> <span class="fu">compute_square_rcpp</span>(x)</span>
-<span id="cb557-3"><a href="rcpp.html#cb557-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(y2 <span class="sc">-</span> y3))</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="rcpp.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb562-2"><a href="rcpp.html#cb562-2" aria-hidden="true" tabindex="-1"></a>y3 <span class="ot">&lt;-</span> <span class="fu">compute_square_rcpp</span>(x)</span>
+<span id="cb562-3"><a href="rcpp.html#cb562-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(y2 <span class="sc">-</span> y3))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ol start="12" style="list-style-type: decimal">
 <li>If there is a run-time bug in the C++ function, you may have to use some debugger for C++ to debug the function.
@@ -956,14 +956,14 @@ and then continue the process by typing <code>c</code> in the terminal.
 <ul>
 <li>For example, a numeric vector in R is passed to <code>Rcpp::NumericVector</code> in Rcpp, an integer matrix is to <code>Rcpp::IntegerMatrix</code>, and so on.</li>
 </ul>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="rcpp.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb562-2"><a href="rcpp.html#cb562-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric vector </span></span>
-<span id="cb562-3"><a href="rcpp.html#cb562-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
-<span id="cb562-4"><a href="rcpp.html#cb562-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="rcpp.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb567-2"><a href="rcpp.html#cb567-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric vector </span></span>
+<span id="cb567-3"><a href="rcpp.html#cb567-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
+<span id="cb567-4"><a href="rcpp.html#cb567-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850</code></pre>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="rcpp.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric matrix</span></span>
-<span id="cb564-2"><a href="rcpp.html#cb564-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb564-3"><a href="rcpp.html#cb564-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="rcpp.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric matrix</span></span>
+<span id="cb569-2"><a href="rcpp.html#cb569-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb569-3"><a href="rcpp.html#cb569-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
 <pre><code>##          [,1]       [,2]       [,3]       [,4]      [,5]
 ## [1,] 2.106189 -0.2612649 -0.7788302 -0.4213451  1.218305
 ## [2,] 0.412157  2.0737836  1.1315325 -1.0217474 -1.799761</code></pre>
@@ -982,30 +982,30 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 <ul>
 <li>Check if you can pass R objects and get the right result:</li>
 </ul>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="rcpp.html#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb567-2"><a href="rcpp.html#cb567-2" aria-hidden="true" tabindex="-1"></a>x_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_numeric_vector_to_rcpp</span>(x)</span>
-<span id="cb567-3"><a href="rcpp.html#cb567-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_rcpp))</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="rcpp.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb572-2"><a href="rcpp.html#cb572-2" aria-hidden="true" tabindex="-1"></a>x_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_numeric_vector_to_rcpp</span>(x)</span>
+<span id="cb572-3"><a href="rcpp.html#cb572-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="rcpp.html#cb569-1" aria-hidden="true" tabindex="-1"></a>Y_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_numeric_matrix_to_rcpp</span>(Y)</span>
-<span id="cb569-2"><a href="rcpp.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_rcpp))</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="rcpp.html#cb574-1" aria-hidden="true" tabindex="-1"></a>Y_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_numeric_matrix_to_rcpp</span>(Y)</span>
+<span id="cb574-2"><a href="rcpp.html#cb574-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li><strong>Exercise</strong>: Write functions <code>pass_integer_vector_to_rcpp</code>, <code>pass_integer_matrix_to_rcpp</code>, <code>pass_list_to_rcpp</code>, <code>pass_data_frame_to_rcpp</code> that receive an integer vector, list, and data frame and just return themselves.</li>
 </ul>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="rcpp.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb571-2"><a href="rcpp.html#cb571-2" aria-hidden="true" tabindex="-1"></a><span class="co"># integer vector</span></span>
-<span id="cb571-3"><a href="rcpp.html#cb571-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb571-4"><a href="rcpp.html#cb571-4" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="rcpp.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb576-2"><a href="rcpp.html#cb576-2" aria-hidden="true" tabindex="-1"></a><span class="co"># integer vector</span></span>
+<span id="cb576-3"><a href="rcpp.html#cb576-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb576-4"><a href="rcpp.html#cb576-4" aria-hidden="true" tabindex="-1"></a>z</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5</code></pre>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="rcpp.html#cb573-1" aria-hidden="true" tabindex="-1"></a><span class="co"># integer matrix</span></span>
-<span id="cb573-2"><a href="rcpp.html#cb573-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb573-3"><a href="rcpp.html#cb573-3" aria-hidden="true" tabindex="-1"></a>W</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="rcpp.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="co"># integer matrix</span></span>
+<span id="cb578-2"><a href="rcpp.html#cb578-2" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb578-3"><a href="rcpp.html#cb578-3" aria-hidden="true" tabindex="-1"></a>W</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="rcpp.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list</span></span>
-<span id="cb575-2"><a href="rcpp.html#cb575-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">Y =</span> Y, <span class="at">z =</span> z)</span>
-<span id="cb575-3"><a href="rcpp.html#cb575-3" aria-hidden="true" tabindex="-1"></a>L</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="rcpp.html#cb580-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list</span></span>
+<span id="cb580-2"><a href="rcpp.html#cb580-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">Y =</span> Y, <span class="at">z =</span> z)</span>
+<span id="cb580-3"><a href="rcpp.html#cb580-3" aria-hidden="true" tabindex="-1"></a>L</span></code></pre></div>
 <pre><code>## $x
 ## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
@@ -1016,26 +1016,26 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 ## 
 ## $z
 ## [1] 1 2 3 4 5</code></pre>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="rcpp.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame</span></span>
-<span id="cb577-2"><a href="rcpp.html#cb577-2" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>), <span class="at">x2 =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>))</span>
-<span id="cb577-3"><a href="rcpp.html#cb577-3" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="rcpp.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame</span></span>
+<span id="cb582-2"><a href="rcpp.html#cb582-2" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>), <span class="at">x2 =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>))</span>
+<span id="cb582-3"><a href="rcpp.html#cb582-3" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
 <pre><code>##            x1         x2
 ## 1 -0.30824994 -1.5570357
 ## 2  0.01551524  1.9231637
 ## 3 -0.44231772 -1.8568296
 ## 4 -1.63800773 -2.1061184
 ## 5 -0.64140116  0.6976485</code></pre>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="rcpp.html#cb579-1" aria-hidden="true" tabindex="-1"></a>z_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_integer_vector_to_rcpp</span>(z)</span>
-<span id="cb579-2"><a href="rcpp.html#cb579-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(z <span class="sc">-</span> z_rcpp))</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="rcpp.html#cb584-1" aria-hidden="true" tabindex="-1"></a>z_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_integer_vector_to_rcpp</span>(z)</span>
+<span id="cb584-2"><a href="rcpp.html#cb584-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(z <span class="sc">-</span> z_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="rcpp.html#cb581-1" aria-hidden="true" tabindex="-1"></a>W_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_integer_matrix_to_rcpp</span>(W)</span>
-<span id="cb581-2"><a href="rcpp.html#cb581-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(W <span class="sc">-</span> W_rcpp))</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="rcpp.html#cb586-1" aria-hidden="true" tabindex="-1"></a>W_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_integer_matrix_to_rcpp</span>(W)</span>
+<span id="cb586-2"><a href="rcpp.html#cb586-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(W <span class="sc">-</span> W_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="rcpp.html#cb583-1" aria-hidden="true" tabindex="-1"></a>L_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_list_to_rcpp</span>(L)</span>
-<span id="cb583-2"><a href="rcpp.html#cb583-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(L) <span class="sc">-</span> <span class="fu">unlist</span>(L_rcpp)))</span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="rcpp.html#cb588-1" aria-hidden="true" tabindex="-1"></a>L_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_list_to_rcpp</span>(L)</span>
+<span id="cb588-2"><a href="rcpp.html#cb588-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(L) <span class="sc">-</span> <span class="fu">unlist</span>(L_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="rcpp.html#cb585-1" aria-hidden="true" tabindex="-1"></a>D_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_data_frame_to_rcpp</span>(D)</span>
-<span id="cb585-2"><a href="rcpp.html#cb585-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(D <span class="sc">-</span> D_rcpp))</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="rcpp.html#cb590-1" aria-hidden="true" tabindex="-1"></a>D_rcpp <span class="ot">&lt;-</span> <span class="fu">pass_data_frame_to_rcpp</span>(D)</span>
+<span id="cb590-2"><a href="rcpp.html#cb590-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(D <span class="sc">-</span> D_rcpp))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>
 <div id="passing-r-objects-as-eigen-objects" class="section level2 hasAnchor" number="20.4">
@@ -1076,22 +1076,22 @@ Eigen::VectorXd pass_numeric_vector_to_eigen(Eigen::VectorXd x) {
 Eigen::MatrixXd pass_numeric_matrix_to_eigen(Eigen::MatrixXd Y) {
   return(Y);
 }</code></pre>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="rcpp.html#cb588-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb588-2"><a href="rcpp.html#cb588-2" aria-hidden="true" tabindex="-1"></a>x_eigen <span class="ot">&lt;-</span> <span class="fu">pass_numeric_vector_to_eigen</span>(x)</span>
-<span id="cb588-3"><a href="rcpp.html#cb588-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_eigen))</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="rcpp.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb593-2"><a href="rcpp.html#cb593-2" aria-hidden="true" tabindex="-1"></a>x_eigen <span class="ot">&lt;-</span> <span class="fu">pass_numeric_vector_to_eigen</span>(x)</span>
+<span id="cb593-3"><a href="rcpp.html#cb593-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="rcpp.html#cb590-1" aria-hidden="true" tabindex="-1"></a>Y_eigen <span class="ot">&lt;-</span> <span class="fu">pass_numeric_matrix_to_eigen</span>(Y)</span>
-<span id="cb590-2"><a href="rcpp.html#cb590-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_eigen))</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="rcpp.html#cb595-1" aria-hidden="true" tabindex="-1"></a>Y_eigen <span class="ot">&lt;-</span> <span class="fu">pass_numeric_matrix_to_eigen</span>(Y)</span>
+<span id="cb595-2"><a href="rcpp.html#cb595-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li><strong>Exercise</strong>: Write functions <code>pass_integer_vector_to_rcpp</code> and <code>pass_integer_matrix_to_rcpp</code> that receive an integer vector and integer matrix and just return themselves.</li>
 </ul>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="rcpp.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb592-2"><a href="rcpp.html#cb592-2" aria-hidden="true" tabindex="-1"></a>z_eigen <span class="ot">&lt;-</span> <span class="fu">pass_integer_vector_to_eigen</span>(z)</span>
-<span id="cb592-3"><a href="rcpp.html#cb592-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(z <span class="sc">-</span> z_eigen))</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="rcpp.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb597-2"><a href="rcpp.html#cb597-2" aria-hidden="true" tabindex="-1"></a>z_eigen <span class="ot">&lt;-</span> <span class="fu">pass_integer_vector_to_eigen</span>(z)</span>
+<span id="cb597-3"><a href="rcpp.html#cb597-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(z <span class="sc">-</span> z_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="rcpp.html#cb594-1" aria-hidden="true" tabindex="-1"></a>W_eigen <span class="ot">&lt;-</span> <span class="fu">pass_integer_matrix_to_eigen</span>(W)</span>
-<span id="cb594-2"><a href="rcpp.html#cb594-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(W <span class="sc">-</span> W_eigen))</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="rcpp.html#cb599-1" aria-hidden="true" tabindex="-1"></a>W_eigen <span class="ot">&lt;-</span> <span class="fu">pass_integer_matrix_to_eigen</span>(W)</span>
+<span id="cb599-2"><a href="rcpp.html#cb599-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(W <span class="sc">-</span> W_eigen))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>If you pass a vector and matrix by <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code>, the objects are <strong>copied</strong> to the new objects. This means that the new memory is allocated. If you are going to modify the passed object inside the C++ function, the objects have to be copied. Otherwise, you can just map the objects in the following way so that the new memory is not allocated, whereas you cannot modify the objects in the C++ function.</li>
@@ -1105,12 +1105,12 @@ Eigen::VectorXd map_numeric_vector_to_eigen(Eigen::Map&lt;Eigen::VectorXd&gt; x)
 Eigen::MatrixXd map_numeric_matrix_to_eigen(Eigen::Map&lt;Eigen::MatrixXd&gt; Y) {
   return(Y);
 }</code></pre>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="rcpp.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb597-2"><a href="rcpp.html#cb597-2" aria-hidden="true" tabindex="-1"></a>x_eigen_map <span class="ot">&lt;-</span> <span class="fu">map_numeric_vector_to_eigen</span>(x)</span>
-<span id="cb597-3"><a href="rcpp.html#cb597-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_eigen_map))</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="rcpp.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb602-2"><a href="rcpp.html#cb602-2" aria-hidden="true" tabindex="-1"></a>x_eigen_map <span class="ot">&lt;-</span> <span class="fu">map_numeric_vector_to_eigen</span>(x)</span>
+<span id="cb602-3"><a href="rcpp.html#cb602-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(x <span class="sc">-</span> x_eigen_map))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="rcpp.html#cb599-1" aria-hidden="true" tabindex="-1"></a>Y_eigen_map <span class="ot">&lt;-</span> <span class="fu">map_numeric_matrix_to_eigen</span>(Y)</span>
-<span id="cb599-2"><a href="rcpp.html#cb599-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_eigen_map))</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="rcpp.html#cb604-1" aria-hidden="true" tabindex="-1"></a>Y_eigen_map <span class="ot">&lt;-</span> <span class="fu">map_numeric_matrix_to_eigen</span>(Y)</span>
+<span id="cb604-2"><a href="rcpp.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(Y <span class="sc">-</span> Y_eigen_map))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li><p>I recommend to directly pass R vectors and matrices to <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> rather than to <code>Vector</code> and <code>Matrix</code> in Rcpp, because <code>Eigen::VectorX</code> and <code>Eigen::MatrixX</code> have richer methods for linear algebra.</p></li>
@@ -1131,13 +1131,13 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
   Rcpp::List output = Rcpp::List::create(x, Y, z, W);
   return(output);
 }</code></pre>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="rcpp.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb602-2"><a href="rcpp.html#cb602-2" aria-hidden="true" tabindex="-1"></a>list_1 <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb602-3"><a href="rcpp.html#cb602-3" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> x</span>
-<span id="cb602-4"><a href="rcpp.html#cb602-4" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> Y</span>
-<span id="cb602-5"><a href="rcpp.html#cb602-5" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">3</span>]] <span class="ot">&lt;-</span> z</span>
-<span id="cb602-6"><a href="rcpp.html#cb602-6" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">4</span>]] <span class="ot">&lt;-</span> W</span>
-<span id="cb602-7"><a href="rcpp.html#cb602-7" aria-hidden="true" tabindex="-1"></a>list_1</span></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="rcpp.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb607-2"><a href="rcpp.html#cb607-2" aria-hidden="true" tabindex="-1"></a>list_1 <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb607-3"><a href="rcpp.html#cb607-3" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> x</span>
+<span id="cb607-4"><a href="rcpp.html#cb607-4" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> Y</span>
+<span id="cb607-5"><a href="rcpp.html#cb607-5" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">3</span>]] <span class="ot">&lt;-</span> z</span>
+<span id="cb607-6"><a href="rcpp.html#cb607-6" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">4</span>]] <span class="ot">&lt;-</span> W</span>
+<span id="cb607-7"><a href="rcpp.html#cb607-7" aria-hidden="true" tabindex="-1"></a>list_1</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
@@ -1153,8 +1153,8 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 ##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="rcpp.html#cb604-1" aria-hidden="true" tabindex="-1"></a>list_1_eigen <span class="ot">&lt;-</span> <span class="fu">pass_list_to_eigen</span>(list_1)</span>
-<span id="cb604-2"><a href="rcpp.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(list_1) <span class="sc">-</span> <span class="fu">unlist</span>(list_1_eigen)))</span></code></pre></div>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="rcpp.html#cb609-1" aria-hidden="true" tabindex="-1"></a>list_1_eigen <span class="ot">&lt;-</span> <span class="fu">pass_list_to_eigen</span>(list_1)</span>
+<span id="cb609-2"><a href="rcpp.html#cb609-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(list_1) <span class="sc">-</span> <span class="fu">unlist</span>(list_1_eigen)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>You can also pass a list with named arguments and return a named list as follows:</li>
@@ -1178,13 +1178,13 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
     Rcpp::Named(&quot;W&quot;) = W);
   return(output);
 }</code></pre>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="rcpp.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
-<span id="cb607-2"><a href="rcpp.html#cb607-2" aria-hidden="true" tabindex="-1"></a>list_2 <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb607-3"><a href="rcpp.html#cb607-3" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
-<span id="cb607-4"><a href="rcpp.html#cb607-4" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>Y <span class="ot">&lt;-</span> Y</span>
-<span id="cb607-5"><a href="rcpp.html#cb607-5" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>z <span class="ot">&lt;-</span> z</span>
-<span id="cb607-6"><a href="rcpp.html#cb607-6" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>W <span class="ot">&lt;-</span> W</span>
-<span id="cb607-7"><a href="rcpp.html#cb607-7" aria-hidden="true" tabindex="-1"></a>list_2</span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="rcpp.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.r</span></span>
+<span id="cb612-2"><a href="rcpp.html#cb612-2" aria-hidden="true" tabindex="-1"></a>list_2 <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb612-3"><a href="rcpp.html#cb612-3" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
+<span id="cb612-4"><a href="rcpp.html#cb612-4" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>Y <span class="ot">&lt;-</span> Y</span>
+<span id="cb612-5"><a href="rcpp.html#cb612-5" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>z <span class="ot">&lt;-</span> z</span>
+<span id="cb612-6"><a href="rcpp.html#cb612-6" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>W <span class="ot">&lt;-</span> W</span>
+<span id="cb612-7"><a href="rcpp.html#cb612-7" aria-hidden="true" tabindex="-1"></a>list_2</span></code></pre></div>
 <pre><code>## $x
 ## [1]  2.18543791 -0.01282801 -0.30530893 -0.58421346  0.77126850
 ## 
@@ -1200,8 +1200,8 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 ##      [,1] [,2]
 ## [1,]    1    1
 ## [2,]    1    1</code></pre>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="rcpp.html#cb609-1" aria-hidden="true" tabindex="-1"></a>list_2_eigen <span class="ot">&lt;-</span> <span class="fu">pass_named_list_to_eigen</span>(list_2)</span>
-<span id="cb609-2"><a href="rcpp.html#cb609-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(list_2) <span class="sc">-</span> <span class="fu">unlist</span>(list_2_eigen)))</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="rcpp.html#cb614-1" aria-hidden="true" tabindex="-1"></a>list_2_eigen <span class="ot">&lt;-</span> <span class="fu">pass_named_list_to_eigen</span>(list_2)</span>
+<span id="cb614-2"><a href="rcpp.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(list_2) <span class="sc">-</span> <span class="fu">unlist</span>(list_2_eigen)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>You can also access to the column of <code>Rcpp::DataFrame</code> in the similar way.</li>
@@ -1213,9 +1213,9 @@ Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
   Eigen::VectorXd x1(Rcpp::as&lt;Eigen::VectorXd&gt;(D[&quot;x1&quot;]));
   return(x1);
 }</code></pre>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="rcpp.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb612-2"><a href="rcpp.html#cb612-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">extract_column_from_data_frame</span>(D)</span>
-<span id="cb612-3"><a href="rcpp.html#cb612-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(D<span class="sc">$</span>x1 <span class="sc">-</span> x1))</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="rcpp.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb617-2"><a href="rcpp.html#cb617-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">extract_column_from_data_frame</span>(D)</span>
+<span id="cb617-3"><a href="rcpp.html#cb617-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(D<span class="sc">$</span>x1 <span class="sc">-</span> x1))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ul>
 <li>This allows us to pass whatever objects in R to a C++ function.</li>
@@ -1263,42 +1263,42 @@ Eigen::VectorXd extract_column_from_data_frame(Rcpp::DataFrame D) {
 </ul></li>
 <li>Following the best practice, first write R function for these operations in <code>R/functions.R</code> and run in <code>main/main.R</code>:</li>
 </ul>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="rcpp.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
-<span id="cb614-2"><a href="rcpp.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix and vector arithmetic</span></span>
-<span id="cb614-3"><a href="rcpp.html#cb614-3" aria-hidden="true" tabindex="-1"></a>matrix_vector_arithmetic <span class="ot">&lt;-</span></span>
-<span id="cb614-4"><a href="rcpp.html#cb614-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B, v, c) {</span>
-<span id="cb614-5"><a href="rcpp.html#cb614-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># addition and subtraction</span></span>
-<span id="cb614-6"><a href="rcpp.html#cb614-6" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> A <span class="sc">+</span> B</span>
-<span id="cb614-7"><a href="rcpp.html#cb614-7" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> A <span class="sc">-</span> B</span>
-<span id="cb614-8"><a href="rcpp.html#cb614-8" aria-hidden="true" tabindex="-1"></a>    X3 <span class="ot">&lt;-</span> <span class="sc">-</span>A</span>
-<span id="cb614-9"><a href="rcpp.html#cb614-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scalar multiplication and division</span></span>
-<span id="cb614-10"><a href="rcpp.html#cb614-10" aria-hidden="true" tabindex="-1"></a>    X4 <span class="ot">&lt;-</span> A <span class="sc">*</span> c</span>
-<span id="cb614-11"><a href="rcpp.html#cb614-11" aria-hidden="true" tabindex="-1"></a>    X5 <span class="ot">&lt;-</span> c <span class="sc">*</span> A</span>
-<span id="cb614-12"><a href="rcpp.html#cb614-12" aria-hidden="true" tabindex="-1"></a>    X6 <span class="ot">&lt;-</span> A <span class="sc">/</span> c</span>
-<span id="cb614-13"><a href="rcpp.html#cb614-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># transpose</span></span>
-<span id="cb614-14"><a href="rcpp.html#cb614-14" aria-hidden="true" tabindex="-1"></a>    X7 <span class="ot">&lt;-</span> <span class="fu">t</span>(A)</span>
-<span id="cb614-15"><a href="rcpp.html#cb614-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># matrix-matrix and matrix-vector multiplication</span></span>
-<span id="cb614-16"><a href="rcpp.html#cb614-16" aria-hidden="true" tabindex="-1"></a>    X8 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
-<span id="cb614-17"><a href="rcpp.html#cb614-17" aria-hidden="true" tabindex="-1"></a>    X9 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> v</span>
-<span id="cb614-18"><a href="rcpp.html#cb614-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
-<span id="cb614-19"><a href="rcpp.html#cb614-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">X1 =</span> X1,</span>
-<span id="cb614-20"><a href="rcpp.html#cb614-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">X2 =</span> X2,</span>
-<span id="cb614-21"><a href="rcpp.html#cb614-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">X3 =</span> X3,</span>
-<span id="cb614-22"><a href="rcpp.html#cb614-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">X4 =</span> X4,</span>
-<span id="cb614-23"><a href="rcpp.html#cb614-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">X5 =</span> X5,</span>
-<span id="cb614-24"><a href="rcpp.html#cb614-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">X6 =</span> X6,</span>
-<span id="cb614-25"><a href="rcpp.html#cb614-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">X7 =</span> X7,</span>
-<span id="cb614-26"><a href="rcpp.html#cb614-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">X8 =</span> X8,</span>
-<span id="cb614-27"><a href="rcpp.html#cb614-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">X9 =</span> X9))</span>
-<span id="cb614-28"><a href="rcpp.html#cb614-28" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
-<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="rcpp.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb615-2"><a href="rcpp.html#cb615-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb615-3"><a href="rcpp.html#cb615-3" aria-hidden="true" tabindex="-1"></a><span class="co"># addition subtraction</span></span>
-<span id="cb615-4"><a href="rcpp.html#cb615-4" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb615-5"><a href="rcpp.html#cb615-5" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb615-6"><a href="rcpp.html#cb615-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb615-7"><a href="rcpp.html#cb615-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
-<span id="cb615-8"><a href="rcpp.html#cb615-8" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">matrix_vector_arithmetic</span>(A, B, v, c)</span></code></pre></div>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="rcpp.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb619-2"><a href="rcpp.html#cb619-2" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix and vector arithmetic</span></span>
+<span id="cb619-3"><a href="rcpp.html#cb619-3" aria-hidden="true" tabindex="-1"></a>matrix_vector_arithmetic <span class="ot">&lt;-</span></span>
+<span id="cb619-4"><a href="rcpp.html#cb619-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B, v, c) {</span>
+<span id="cb619-5"><a href="rcpp.html#cb619-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># addition and subtraction</span></span>
+<span id="cb619-6"><a href="rcpp.html#cb619-6" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> A <span class="sc">+</span> B</span>
+<span id="cb619-7"><a href="rcpp.html#cb619-7" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> A <span class="sc">-</span> B</span>
+<span id="cb619-8"><a href="rcpp.html#cb619-8" aria-hidden="true" tabindex="-1"></a>    X3 <span class="ot">&lt;-</span> <span class="sc">-</span>A</span>
+<span id="cb619-9"><a href="rcpp.html#cb619-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scalar multiplication and division</span></span>
+<span id="cb619-10"><a href="rcpp.html#cb619-10" aria-hidden="true" tabindex="-1"></a>    X4 <span class="ot">&lt;-</span> A <span class="sc">*</span> c</span>
+<span id="cb619-11"><a href="rcpp.html#cb619-11" aria-hidden="true" tabindex="-1"></a>    X5 <span class="ot">&lt;-</span> c <span class="sc">*</span> A</span>
+<span id="cb619-12"><a href="rcpp.html#cb619-12" aria-hidden="true" tabindex="-1"></a>    X6 <span class="ot">&lt;-</span> A <span class="sc">/</span> c</span>
+<span id="cb619-13"><a href="rcpp.html#cb619-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># transpose</span></span>
+<span id="cb619-14"><a href="rcpp.html#cb619-14" aria-hidden="true" tabindex="-1"></a>    X7 <span class="ot">&lt;-</span> <span class="fu">t</span>(A)</span>
+<span id="cb619-15"><a href="rcpp.html#cb619-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># matrix-matrix and matrix-vector multiplication</span></span>
+<span id="cb619-16"><a href="rcpp.html#cb619-16" aria-hidden="true" tabindex="-1"></a>    X8 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> <span class="fu">t</span>(B)</span>
+<span id="cb619-17"><a href="rcpp.html#cb619-17" aria-hidden="true" tabindex="-1"></a>    X9 <span class="ot">&lt;-</span> A <span class="sc">%*%</span> v</span>
+<span id="cb619-18"><a href="rcpp.html#cb619-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
+<span id="cb619-19"><a href="rcpp.html#cb619-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">X1 =</span> X1,</span>
+<span id="cb619-20"><a href="rcpp.html#cb619-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">X2 =</span> X2,</span>
+<span id="cb619-21"><a href="rcpp.html#cb619-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">X3 =</span> X3,</span>
+<span id="cb619-22"><a href="rcpp.html#cb619-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">X4 =</span> X4,</span>
+<span id="cb619-23"><a href="rcpp.html#cb619-23" aria-hidden="true" tabindex="-1"></a>                <span class="at">X5 =</span> X5,</span>
+<span id="cb619-24"><a href="rcpp.html#cb619-24" aria-hidden="true" tabindex="-1"></a>                <span class="at">X6 =</span> X6,</span>
+<span id="cb619-25"><a href="rcpp.html#cb619-25" aria-hidden="true" tabindex="-1"></a>                <span class="at">X7 =</span> X7,</span>
+<span id="cb619-26"><a href="rcpp.html#cb619-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">X8 =</span> X8,</span>
+<span id="cb619-27"><a href="rcpp.html#cb619-27" aria-hidden="true" tabindex="-1"></a>                <span class="at">X9 =</span> X9))</span>
+<span id="cb619-28"><a href="rcpp.html#cb619-28" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="rcpp.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb620-2"><a href="rcpp.html#cb620-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb620-3"><a href="rcpp.html#cb620-3" aria-hidden="true" tabindex="-1"></a><span class="co"># addition subtraction</span></span>
+<span id="cb620-4"><a href="rcpp.html#cb620-4" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb620-5"><a href="rcpp.html#cb620-5" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb620-6"><a href="rcpp.html#cb620-6" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb620-7"><a href="rcpp.html#cb620-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb620-8"><a href="rcpp.html#cb620-8" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">matrix_vector_arithmetic</span>(A, B, v, c)</span></code></pre></div>
 <ul>
 <li>Next, write these operations in C++ function:</li>
 </ul>
@@ -1337,15 +1337,15 @@ Rcpp::List matrix_vector_arithmetic_rcpp(
 <ul>
 <li>Then, we can check if this yields (almost) the same result with the R function:</li>
 </ul>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="rcpp.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb617-2"><a href="rcpp.html#cb617-2" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">matrix_vector_arithmetic_rcpp</span>(A, B, v, c)</span>
-<span id="cb617-3"><a href="rcpp.html#cb617-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="rcpp.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb622-2"><a href="rcpp.html#cb622-2" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">matrix_vector_arithmetic_rcpp</span>(A, B, v, c)</span>
+<span id="cb622-3"><a href="rcpp.html#cb622-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 5.551115e-17</code></pre>
 <ul>
 <li>The output looks like:</li>
 </ul>
-<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="rcpp.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb619-2"><a href="rcpp.html#cb619-2" aria-hidden="true" tabindex="-1"></a>output_rcpp</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="rcpp.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb624-2"><a href="rcpp.html#cb624-2" aria-hidden="true" tabindex="-1"></a>output_rcpp</span></code></pre></div>
 <pre><code>## $X1
 ##             [,1]      [,2]       [,3]      [,4]
 ## [1,] -0.05067246 0.6761526 -0.2917328 1.6123600
@@ -1410,29 +1410,29 @@ Rcpp::List matrix_vector_arithmetic_rcpp(
 </ul></li>
 <li><p>Write functions in R in <code>R/functions.R</code> and run in <code>main/main.R</code>:</p></li>
 </ul>
-<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="rcpp.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
-<span id="cb621-2"><a href="rcpp.html#cb621-2" aria-hidden="true" tabindex="-1"></a>coefficientwise_operation <span class="ot">&lt;-</span></span>
-<span id="cb621-3"><a href="rcpp.html#cb621-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B, r) {</span>
-<span id="cb621-4"><a href="rcpp.html#cb621-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># coefficient-wise multiplication</span></span>
-<span id="cb621-5"><a href="rcpp.html#cb621-5" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> A <span class="sc">*</span> B</span>
-<span id="cb621-6"><a href="rcpp.html#cb621-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># other coefficient-wise math functions</span></span>
-<span id="cb621-7"><a href="rcpp.html#cb621-7" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> <span class="fu">abs</span>(A)</span>
-<span id="cb621-8"><a href="rcpp.html#cb621-8" aria-hidden="true" tabindex="-1"></a>    X3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(A)</span>
-<span id="cb621-9"><a href="rcpp.html#cb621-9" aria-hidden="true" tabindex="-1"></a>    X4 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">abs</span>(A))</span>
-<span id="cb621-10"><a href="rcpp.html#cb621-10" aria-hidden="true" tabindex="-1"></a>    X5 <span class="ot">&lt;-</span> A<span class="sc">^</span>r</span>
-<span id="cb621-11"><a href="rcpp.html#cb621-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
-<span id="cb621-12"><a href="rcpp.html#cb621-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(</span>
-<span id="cb621-13"><a href="rcpp.html#cb621-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">X1 =</span> X1,</span>
-<span id="cb621-14"><a href="rcpp.html#cb621-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">X2 =</span> X2,</span>
-<span id="cb621-15"><a href="rcpp.html#cb621-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">X3 =</span> X3,</span>
-<span id="cb621-16"><a href="rcpp.html#cb621-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">X4 =</span> X4,</span>
-<span id="cb621-17"><a href="rcpp.html#cb621-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">X5 =</span> X5</span>
-<span id="cb621-18"><a href="rcpp.html#cb621-18" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb621-19"><a href="rcpp.html#cb621-19" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="rcpp.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb622-2"><a href="rcpp.html#cb622-2" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficient-wise operations</span></span>
-<span id="cb622-3"><a href="rcpp.html#cb622-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb622-4"><a href="rcpp.html#cb622-4" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">coefficientwise_operation</span>(A, B, r)</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="rcpp.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb626-2"><a href="rcpp.html#cb626-2" aria-hidden="true" tabindex="-1"></a>coefficientwise_operation <span class="ot">&lt;-</span></span>
+<span id="cb626-3"><a href="rcpp.html#cb626-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B, r) {</span>
+<span id="cb626-4"><a href="rcpp.html#cb626-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># coefficient-wise multiplication</span></span>
+<span id="cb626-5"><a href="rcpp.html#cb626-5" aria-hidden="true" tabindex="-1"></a>    X1 <span class="ot">&lt;-</span> A <span class="sc">*</span> B</span>
+<span id="cb626-6"><a href="rcpp.html#cb626-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># other coefficient-wise math functions</span></span>
+<span id="cb626-7"><a href="rcpp.html#cb626-7" aria-hidden="true" tabindex="-1"></a>    X2 <span class="ot">&lt;-</span> <span class="fu">abs</span>(A)</span>
+<span id="cb626-8"><a href="rcpp.html#cb626-8" aria-hidden="true" tabindex="-1"></a>    X3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(A)</span>
+<span id="cb626-9"><a href="rcpp.html#cb626-9" aria-hidden="true" tabindex="-1"></a>    X4 <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">abs</span>(A))</span>
+<span id="cb626-10"><a href="rcpp.html#cb626-10" aria-hidden="true" tabindex="-1"></a>    X5 <span class="ot">&lt;-</span> A<span class="sc">^</span>r</span>
+<span id="cb626-11"><a href="rcpp.html#cb626-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
+<span id="cb626-12"><a href="rcpp.html#cb626-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(</span>
+<span id="cb626-13"><a href="rcpp.html#cb626-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">X1 =</span> X1,</span>
+<span id="cb626-14"><a href="rcpp.html#cb626-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">X2 =</span> X2,</span>
+<span id="cb626-15"><a href="rcpp.html#cb626-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">X3 =</span> X3,</span>
+<span id="cb626-16"><a href="rcpp.html#cb626-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">X4 =</span> X4,</span>
+<span id="cb626-17"><a href="rcpp.html#cb626-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">X5 =</span> X5</span>
+<span id="cb626-18"><a href="rcpp.html#cb626-18" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb626-19"><a href="rcpp.html#cb626-19" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="rcpp.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb627-2"><a href="rcpp.html#cb627-2" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficient-wise operations</span></span>
+<span id="cb627-3"><a href="rcpp.html#cb627-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb627-4"><a href="rcpp.html#cb627-4" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">coefficientwise_operation</span>(A, B, r)</span></code></pre></div>
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call from <code>main/main.R</code>:</li>
 </ul>
@@ -1461,10 +1461,10 @@ Rcpp::List coefficientwise_operation_rcpp(
     );
   return(output);
 }</code></pre>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="rcpp.html#cb624-1" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">coefficientwise_operation_rcpp</span>(A, B, r)</span>
-<span id="cb624-2"><a href="rcpp.html#cb624-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="rcpp.html#cb629-1" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">coefficientwise_operation_rcpp</span>(A, B, r)</span>
+<span id="cb629-2"><a href="rcpp.html#cb629-2" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 2.220446e-16</code></pre>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="rcpp.html#cb626-1" aria-hidden="true" tabindex="-1"></a>output_rcpp</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="rcpp.html#cb631-1" aria-hidden="true" tabindex="-1"></a>output_rcpp</span></code></pre></div>
 <pre><code>## $X1
 ##             [,1]       [,2]       [,3]        [,4]
 ## [1,] -0.36070042 -1.2632876 -0.2047036  0.54832401
@@ -1504,17 +1504,17 @@ Rcpp::List coefficientwise_operation_rcpp(
 <ul>
 <li>Write R function in <code>R/functions.R</code> and run in <code>main/main.R</code>:</li>
 </ul>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="rcpp.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
-<span id="cb630-2"><a href="rcpp.html#cb630-2" aria-hidden="true" tabindex="-1"></a>solve_least_squares <span class="ot">&lt;-</span></span>
-<span id="cb630-3"><a href="rcpp.html#cb630-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B) {</span>
-<span id="cb630-4"><a href="rcpp.html#cb630-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, B)</span>
-<span id="cb630-5"><a href="rcpp.html#cb630-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x)</span>
-<span id="cb630-6"><a href="rcpp.html#cb630-6" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="rcpp.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb631-2"><a href="rcpp.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb631-3"><a href="rcpp.html#cb631-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
-<span id="cb631-4"><a href="rcpp.html#cb631-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
-<span id="cb631-5"><a href="rcpp.html#cb631-5" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">solve_least_squares</span>(A, B)</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="rcpp.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb635-2"><a href="rcpp.html#cb635-2" aria-hidden="true" tabindex="-1"></a>solve_least_squares <span class="ot">&lt;-</span></span>
+<span id="cb635-3"><a href="rcpp.html#cb635-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, B) {</span>
+<span id="cb635-4"><a href="rcpp.html#cb635-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">solve</span>(A, B)</span>
+<span id="cb635-5"><a href="rcpp.html#cb635-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x)</span>
+<span id="cb635-6"><a href="rcpp.html#cb635-6" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="rcpp.html#cb636-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb636-2"><a href="rcpp.html#cb636-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb636-3"><a href="rcpp.html#cb636-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb636-4"><a href="rcpp.html#cb636-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span>), <span class="at">nrow =</span> <span class="dv">4</span>)</span>
+<span id="cb636-5"><a href="rcpp.html#cb636-5" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">solve_least_squares</span>(A, B)</span></code></pre></div>
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call in <code>main/main.R</code>:</li>
 </ul>
@@ -1537,20 +1537,20 @@ Eigen::MatrixXd solve_least_squares_qr(
   Eigen::MatrixXd x = A.colPivHouseholderQr().solve(B);
   return(x);
 }</code></pre>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="rcpp.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb633-2"><a href="rcpp.html#cb633-2" aria-hidden="true" tabindex="-1"></a>output_svd <span class="ot">&lt;-</span> <span class="fu">solve_least_squares_svd</span>(A, B)</span>
-<span id="cb633-3"><a href="rcpp.html#cb633-3" aria-hidden="true" tabindex="-1"></a>output_qr <span class="ot">&lt;-</span> <span class="fu">solve_least_squares_qr</span>(A, B)</span>
-<span id="cb633-4"><a href="rcpp.html#cb633-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(output <span class="sc">-</span> output_svd))</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="rcpp.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb638-2"><a href="rcpp.html#cb638-2" aria-hidden="true" tabindex="-1"></a>output_svd <span class="ot">&lt;-</span> <span class="fu">solve_least_squares_svd</span>(A, B)</span>
+<span id="cb638-3"><a href="rcpp.html#cb638-3" aria-hidden="true" tabindex="-1"></a>output_qr <span class="ot">&lt;-</span> <span class="fu">solve_least_squares_qr</span>(A, B)</span>
+<span id="cb638-4"><a href="rcpp.html#cb638-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(output <span class="sc">-</span> output_svd))</span></code></pre></div>
 <pre><code>## [1] 8.881784e-16</code></pre>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="rcpp.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(output <span class="sc">-</span> output_qr))</span></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="rcpp.html#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(output <span class="sc">-</span> output_qr))</span></code></pre></div>
 <pre><code>## [1] 1.554312e-15</code></pre>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="rcpp.html#cb637-1" aria-hidden="true" tabindex="-1"></a>output_svd</span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="rcpp.html#cb642-1" aria-hidden="true" tabindex="-1"></a>output_svd</span></code></pre></div>
 <pre><code>##             [,1]       [,2]       [,3]       [,4]
 ## [1,]  0.65530863 -1.2441297 -1.0799835  0.5926519
 ## [2,] -1.34801870  0.1453720  0.7313845 -2.2353988
 ## [3,]  1.38750763 -0.3405502 -0.7649107  1.5987206
 ## [4,] -0.06376266 -0.4632165 -0.2296862  0.4681169</code></pre>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="rcpp.html#cb639-1" aria-hidden="true" tabindex="-1"></a>output_qr</span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="rcpp.html#cb644-1" aria-hidden="true" tabindex="-1"></a>output_qr</span></code></pre></div>
 <pre><code>##             [,1]       [,2]       [,3]       [,4]
 ## [1,]  0.65530863 -1.2441297 -1.0799835  0.5926519
 ## [2,] -1.34801870  0.1453720  0.7313845 -2.2353988
@@ -1566,26 +1566,26 @@ Eigen::MatrixXd solve_least_squares_qr(
 <li><p>Rows and columns: <code>A.row(i)</code> for <span class="math inline">\(i + 1\)</span>-th row and <code>A.col(j)</code> for <span class="math inline">\(j + 1\)</span>-th column.</p></li>
 <li><p>Write R function in <code>R/functions.R</code> and run in <code>main/main.R</code>:</p></li>
 </ul>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="rcpp.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
-<span id="cb641-2"><a href="rcpp.html#cb641-2" aria-hidden="true" tabindex="-1"></a>access <span class="ot">&lt;-</span> </span>
-<span id="cb641-3"><a href="rcpp.html#cb641-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, i, j) {</span>
-<span id="cb641-4"><a href="rcpp.html#cb641-4" aria-hidden="true" tabindex="-1"></a>    I <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A)</span>
-<span id="cb641-5"><a href="rcpp.html#cb641-5" aria-hidden="true" tabindex="-1"></a>    J <span class="ot">&lt;-</span> <span class="fu">ncol</span>(A)</span>
-<span id="cb641-6"><a href="rcpp.html#cb641-6" aria-hidden="true" tabindex="-1"></a>    a_ij <span class="ot">&lt;-</span> A[i, j]</span>
-<span id="cb641-7"><a href="rcpp.html#cb641-7" aria-hidden="true" tabindex="-1"></a>    a_i <span class="ot">&lt;-</span> A[i, ]</span>
-<span id="cb641-8"><a href="rcpp.html#cb641-8" aria-hidden="true" tabindex="-1"></a>    a_j <span class="ot">&lt;-</span> A[, j]</span>
-<span id="cb641-9"><a href="rcpp.html#cb641-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(</span>
-<span id="cb641-10"><a href="rcpp.html#cb641-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
-<span id="cb641-11"><a href="rcpp.html#cb641-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">I =</span> I,</span>
-<span id="cb641-12"><a href="rcpp.html#cb641-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">J =</span> J,</span>
-<span id="cb641-13"><a href="rcpp.html#cb641-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_ij =</span> a_ij,</span>
-<span id="cb641-14"><a href="rcpp.html#cb641-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_i =</span> a_i,</span>
-<span id="cb641-15"><a href="rcpp.html#cb641-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_j =</span> a_j</span>
-<span id="cb641-16"><a href="rcpp.html#cb641-16" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb641-17"><a href="rcpp.html#cb641-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb641-18"><a href="rcpp.html#cb641-18" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
-<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="rcpp.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb642-2"><a href="rcpp.html#cb642-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">access</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="rcpp.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R/functions.R</span></span>
+<span id="cb646-2"><a href="rcpp.html#cb646-2" aria-hidden="true" tabindex="-1"></a>access <span class="ot">&lt;-</span> </span>
+<span id="cb646-3"><a href="rcpp.html#cb646-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(A, i, j) {</span>
+<span id="cb646-4"><a href="rcpp.html#cb646-4" aria-hidden="true" tabindex="-1"></a>    I <span class="ot">&lt;-</span> <span class="fu">nrow</span>(A)</span>
+<span id="cb646-5"><a href="rcpp.html#cb646-5" aria-hidden="true" tabindex="-1"></a>    J <span class="ot">&lt;-</span> <span class="fu">ncol</span>(A)</span>
+<span id="cb646-6"><a href="rcpp.html#cb646-6" aria-hidden="true" tabindex="-1"></a>    a_ij <span class="ot">&lt;-</span> A[i, j]</span>
+<span id="cb646-7"><a href="rcpp.html#cb646-7" aria-hidden="true" tabindex="-1"></a>    a_i <span class="ot">&lt;-</span> A[i, ]</span>
+<span id="cb646-8"><a href="rcpp.html#cb646-8" aria-hidden="true" tabindex="-1"></a>    a_j <span class="ot">&lt;-</span> A[, j]</span>
+<span id="cb646-9"><a href="rcpp.html#cb646-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(</span>
+<span id="cb646-10"><a href="rcpp.html#cb646-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
+<span id="cb646-11"><a href="rcpp.html#cb646-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">I =</span> I,</span>
+<span id="cb646-12"><a href="rcpp.html#cb646-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">J =</span> J,</span>
+<span id="cb646-13"><a href="rcpp.html#cb646-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_ij =</span> a_ij,</span>
+<span id="cb646-14"><a href="rcpp.html#cb646-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_i =</span> a_i,</span>
+<span id="cb646-15"><a href="rcpp.html#cb646-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">a_j =</span> a_j</span>
+<span id="cb646-16"><a href="rcpp.html#cb646-16" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb646-17"><a href="rcpp.html#cb646-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb646-18"><a href="rcpp.html#cb646-18" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="rcpp.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb647-2"><a href="rcpp.html#cb647-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">access</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span></code></pre></div>
 <ul>
 <li>Write C++ function in <code>src/functions.cpp</code> and call in <code>main/main.R</code>:</li>
 </ul>
@@ -1611,11 +1611,11 @@ Rcpp::List access_rcpp(
       );
     return(output);
   }</code></pre>
-<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="rcpp.html#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
-<span id="cb644-2"><a href="rcpp.html#cb644-2" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">access_rcpp</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb644-3"><a href="rcpp.html#cb644-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="rcpp.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="co"># main/main.R</span></span>
+<span id="cb649-2"><a href="rcpp.html#cb649-2" aria-hidden="true" tabindex="-1"></a>output_rcpp <span class="ot">&lt;-</span> <span class="fu">access_rcpp</span>(A, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb649-3"><a href="rcpp.html#cb649-3" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(output) <span class="sc">-</span> <span class="fu">unlist</span>(output_rcpp)))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="rcpp.html#cb646-1" aria-hidden="true" tabindex="-1"></a>output_rcpp </span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="rcpp.html#cb651-1" aria-hidden="true" tabindex="-1"></a>output_rcpp </span></code></pre></div>
 <pre><code>## $I
 ## [1] 4
 ## 

@@ -740,7 +740,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1
 ##  9     5     1     0
 ## 10     5     2     1
-## # … with 1,990 more rows</code></pre>
+## # … with 1,990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Second, draw type-I extreme value random variables. Set the seed at 1. You can use <code>evd</code> package to draw the variables. You should get exactly the same realization if the seed is correctly set.</li>
 </ol>
@@ -757,7 +758,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1  0.617 
 ##  9     5     1     0  0.0444
 ## 10     5     2     1  1.92  
-## # … with 1,990 more rows</code></pre>
+## # … with 1,990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Third, compute the latent value of each option to obtain the following data frame:</li>
 </ol>
@@ -774,7 +776,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1  0.617   0.817 
 ##  9     5     1     0  0.0444  0.0444
 ## 10     5     2     1  1.92    2.12  
-## # … with 1,990 more rows</code></pre>
+## # … with 1,990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Finally, compute <span class="math inline">\(y\)</span> by comparing the latent values of <span class="math inline">\(k = 1, 2\)</span> for each <span class="math inline">\(i\)</span> to obtain the following result:</li>
 </ol>
@@ -791,7 +794,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1  0.617   0.817      1
 ##  9     5     1     0  0.0444  0.0444     0
 ## 10     5     2     1  1.92    2.12       1
-## # … with 1,990 more rows</code></pre>
+## # … with 1,990 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div id="estimate-the-parameter" class="section level2 hasAnchor" number="11.2">
 <h2><span class="header-section-number">11.2</span> Estimate the parameter<a href="assignment1.html#estimate-the-parameter" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -808,7 +812,10 @@ and the log likelihood is:
 l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 - p_{i1}(\beta)\}.
 \]</span></p>
 <ol style="list-style-type: decimal">
-<li><p>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood_A1</code>.</p></li>
+<li>Write a function to compute the livelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>loglikelihood_a1</code>.</li>
+</ol>
+<pre><code>## [1] -0.7542617</code></pre>
+<ol style="list-style-type: decimal">
 <li><p>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label:
 <img src="lecture_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p></li>
 <li><p>Find and report <span class="math inline">\(\beta\)</span> that maximizes the log likelihood for the simulated data. You can use <code>optim</code> function to achieve this. You will use <code>Brent</code> method and set the lower bound at -1 and upper bound at 1 for the parameter search.</p></li>

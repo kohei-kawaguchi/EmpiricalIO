@@ -16,5 +16,9 @@ bookdown::render_book(
   )
 
 # render pdf book
-bookdown::render_book("index.Rmd", "bookdown::pdf_book")
+bookdown::render_book(
+  input = "index.Rmd", 
+  output = "bookdown::pdf_book",
+  clean = TRUE
+  )
 
