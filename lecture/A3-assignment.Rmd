@@ -439,12 +439,12 @@ theta <-
 theta
 ```
 
-6. Write a function `nlls_objective_a3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
+6. Write a function `compute_nlls_objective_a3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
 
 ```{r}
 # nlls objective function
 nlls_objective <- 
-  nlls_objective_a3(
+  compute_nlls_objective_a3(
     theta, 
     df_share, 
     X, 
@@ -541,7 +541,7 @@ graph_true <-
             theta_j <- theta
             theta_j[i] <- theta_ij
             objective_ij <- 
-              nlls_objective_a3(
+              compute_nlls_objective_a3(
                 theta_j, 
                 df_share, 
                 X, 
@@ -570,7 +570,8 @@ graph_true <-
           linetype = "dotted"
           ) +
         ylab("objective function") + 
-        xlab(TeX(label[i]))
+        xlab(TeX(label[i])) +
+        theme_classic()
       return(g)
 }
 saveRDS(graph_true, file = "data/a3/graph_true.rds")
@@ -607,7 +608,7 @@ graph_mcmc <-
             theta_j <- theta
             theta_j[i] <- theta_ij
             objective_ij <-
-              nlls_objective_a3(
+              compute_nlls_objective_a3(
                 theta_j, 
                 df_share, 
                 X, 
@@ -636,7 +637,8 @@ graph_mcmc <-
           linetype = "dotted"
           ) +
         ylab("objective function") + 
-        xlab(TeX(label[i]))
+        xlab(TeX(label[i])) +
+        theme_classic()
       return(g)
 }
 saveRDS(graph_mcmc, file = "data/a3/graph_mcmc.rds")
@@ -653,7 +655,7 @@ graph_mcmc
 # find nlls estimator
 result_nlls <- 
   optim(
-    par = theta, fn = nlls_objective_a3,
+    par = theta, fn = compute_nlls_objective_a3,
     method = "Nelder-Mead",
     df_share = df_share, 
     X = X, 

@@ -319,7 +319,7 @@ M_no <- M %>%
 ```{r, eval = TRUE}
 # find NLLS estimator
 result_NLLS <- 
-  optim(par = theta, fn = NLLS_objective_A3,
+  optim(par = theta, fn = compute_nlls_objective_a3,
         method = "Nelder-Mead",
         df_share = df_share_smooth, 
         X = X, 
@@ -494,7 +494,7 @@ summary(xi_true - xi_new)
 ```
 
 
-11. Write a function `GMM_objective_A4(theta_nonlinear, delta, df_share_smooth, Psi, X, M, V_mcmc, kappa, lambda)` that returns the value of the GMM objective function as a function of non-linear parameters `mu`, `omega`, and `sigma`:
+11. Write a function `compute_gmm_objective_a4(theta_nonlinear, delta, df_share_smooth, Psi, X, M, V_mcmc, kappa, lambda)` that returns the value of the GMM objective function as a function of non-linear parameters `mu`, `omega`, and `sigma`:
 $$
 \min_{\theta} \xi(\theta)' W \Phi^{-1} W' \xi(\theta),
 $$
@@ -513,7 +513,7 @@ theta_nonlinear <- c(mu, omega, sigma)
 ```{r, echo = TRUE, eval = TRUE}
 # compute GMM objective function
 objective <-
-  GMM_objective_A4(theta_nonlinear, delta, df_share_smooth, Psi, 
+  compute_gmm_objective_a4(theta_nonlinear, delta, df_share_smooth, Psi, 
                    X, M, V_mcmc, kappa, lambda) 
 save(objective, file = "data/A4_objective.RData")
 ```
@@ -546,7 +546,7 @@ graph_true <- foreach (i = 1:length(theta_nonlinear)) %do% {
                theta_nonlinear_j <- theta_nonlinear
                theta_nonlinear_j[i] <- theta_nonlinear_ij
                objective_ij <-
-                 GMM_objective_A4(theta_nonlinear_j, delta, df_share_smooth, Psi, 
+                 compute_gmm_objective_a4(theta_nonlinear_j, delta, df_share_smooth, Psi, 
                                   X, M, V, kappa, lambda) 
                return(objective_ij)
              }
@@ -571,7 +571,7 @@ graph_true
 ```{r, eval = TRUE}
 result <-
   optim(par = theta_nonlinear,
-        fn = GMM_objective_A4,
+        fn = compute_gmm_objective_a4,
         method = "BFGS",
         delta = delta, 
         df_share_smooth = df_share_smooth, 

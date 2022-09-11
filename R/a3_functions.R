@@ -153,7 +153,7 @@ compute_share <-
   }
 
 # nlls objective function
-nlls_objective_a3 <-
+compute_nlls_objective_a3 <-
   function(
     theta, 
     df_share, 

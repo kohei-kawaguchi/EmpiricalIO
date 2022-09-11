@@ -329,11 +329,11 @@ theta <- c(beta, sigma, mu, omega)
 theta
 ```
 
-6. Write a function `NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
+6. Write a function `compute_nlls_objective_a3(theta, df_share, X, M, V_mcmc, e_mcmc)` that first computes the simulated share and then compute the mean-squared error between the share data.
 
 ```{r}
 # NLLS objective function
-NLLS_objective <- NLLS_objective_A3(theta, df_share, X, M, V_mcmc, e_mcmc)
+NLLS_objective <- compute_nlls_objective_a3(theta, df_share, X, M, V_mcmc, e_mcmc)
 ```
 ```{r, echo = TRUE}
 NLLS_objective
@@ -408,7 +408,7 @@ graph_true <- foreach (i = 1:length(theta)) %do% {
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 NLLS_objective_A3(
+                 compute_nlls_objective_a3(
                    theta_j, df_share, X, M, V, e)
                return(objective_ij)
              }
@@ -444,7 +444,7 @@ graph_mcmc <- foreach (i = 1:length(theta)) %do% {
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 NLLS_objective_A3(
+                 compute_nlls_objective_a3(
                    theta_j, df_share, X, M, V_mcmc, e_mcmc)
                return(objective_ij)
              }
@@ -468,7 +468,7 @@ graph_mcmc
 ```{r, eval = FALSE}
 # find NLLS estimator
 result_NLLS <- 
-  optim(par = theta, fn = NLLS_objective_A3,
+  optim(par = theta, fn = compute_nlls_objective_a3,
         method = "Nelder-Mead",
         df_share = df_share, 
         X = X, 
