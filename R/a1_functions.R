@@ -2,7 +2,7 @@
 # assignment 1
 #-------------#
 # log likelihood function
-loglikelihood_a1 <- 
+compute_loglikelihood_a1 <- 
   function(
     b, 
     df
