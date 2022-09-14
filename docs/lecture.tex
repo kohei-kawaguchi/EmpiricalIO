@@ -10544,6 +10544,12 @@ where \(\epsilon_{ik}\) follows i.i.d. type-I extreme value distribution, \(\bet
   To simulate data, first make a data frame as follows:
 \end{enumerate}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 ## # A tibble: 2,000 x 3
 ##        i     k     x
@@ -10569,6 +10575,12 @@ where \(\epsilon_{ik}\) follows i.i.d. type-I extreme value distribution, \(\bet
 \item
   Second, draw type-I extreme value random variables. Set the seed at 1. You can use \texttt{evd} package to draw the variables. You should get exactly the same realization if the seed is correctly set.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2,000 x 4
@@ -10596,6 +10608,18 @@ where \(\epsilon_{ik}\) follows i.i.d. type-I extreme value distribution, \(\bet
   Third, compute the latent value of each option to obtain the following data frame:
 \end{enumerate}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta }\OtherTok{\textless{}{-}} \FloatTok{0.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 ## # A tibble: 2,000 x 5
 ##        i     k     x       e  latent
@@ -10621,6 +10645,12 @@ where \(\epsilon_{ik}\) follows i.i.d. type-I extreme value distribution, \(\bet
 \item
   Finally, compute \(y\) by comparing the latent values of \(k = 1, 2\) for each \(i\) to obtain the following result:
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 2,000 x 6
@@ -10664,6 +10694,15 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
   Write a function to compute the livelihood for a given \(\beta\) and data and name the function \texttt{loglikelihood\_a1(b,\ df)}.
 \end{enumerate}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{loglikelihood\_a1}\NormalTok{(}
+    \AttributeTok{b =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{df =}\NormalTok{ df}
+\NormalTok{    ) }
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 ## [1] -0.7542617
 \end{verbatim}
@@ -10675,7 +10714,41 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
   Compute the value of log likelihood for \(\beta = 0, 0.1, \cdots, 1\) and plot the result using \texttt{ggplot2} packages. You can use \texttt{latex2exp} package to use LaTeX math symbol in the label:
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-42-1} \end{center}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\NormalTok{output }\OtherTok{\textless{}{-}} 
+  \FunctionTok{foreach}\NormalTok{ (}
+    \AttributeTok{b =}\NormalTok{ b\_seq,}
+    \AttributeTok{.combine =} \StringTok{"rbind"}
+\NormalTok{    ) }\SpecialCharTok{\%do\%}\NormalTok{ \{}
+\NormalTok{      l }\OtherTok{\textless{}{-}} 
+        \FunctionTok{loglikelihood\_a1}\NormalTok{(}
+\NormalTok{          b, }
+\NormalTok{          df}
+\NormalTok{          )}
+      \FunctionTok{return}\NormalTok{(l)}
+\NormalTok{\}}
+\NormalTok{output }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ b\_seq, }
+    \AttributeTok{y =}\NormalTok{ output}
+\NormalTok{    )}
+\NormalTok{output }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ x, }
+      \AttributeTok{y =}\NormalTok{ y}
+\NormalTok{      )}
+\NormalTok{    ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{xlab}\NormalTok{(}\FunctionTok{TeX}\NormalTok{(}\StringTok{"$}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{beta$"}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Loglikelihood"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -11034,7 +11107,7 @@ You can use \texttt{npplreg} function of \texttt{np} package to estimate a parti
 ## No. Continuous Explanatory Vars.: 2
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-59-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -11160,11 +11233,11 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
   Draw the graph of the objective function when one of \(\alpha\), \(\beta_0\), and \(\beta_k\) are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-66-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-67-1} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-66-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-67-2} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-66-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-67-3} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -11949,56 +12022,56 @@ The graphs with the true shocks:
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-6} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[7]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-7} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-7} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[8]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-99-8} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-100-8} \end{center}
 
 The graphs with the Monte Carlo shocks:
 
@@ -12006,56 +12079,56 @@ The graphs with the Monte Carlo shocks:
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-6} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[7]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-7} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-7} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[8]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-101-8} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-102-8} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13216,35 +13289,35 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and \(W\) does 
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-143-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-144-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-143-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-144-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-143-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-144-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-143-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-144-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-143-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-144-5} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}

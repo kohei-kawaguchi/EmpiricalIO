@@ -1,11 +1,12 @@
 # Assignment 1: Basic Programming in R {#assignment1}
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(foreach)
 library(ggplot2)
 library(latex2exp)
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
 Report the following results in html format using R markdown. In other words, replicate this document. You write functions in a separate R file and put in `R` folder in the project folder. Build the project as a package and load it from the R markdown file. The execution code sholuld be written in R markdown file. 
@@ -26,7 +27,7 @@ $$
 where $\epsilon_{ik}$ follows i.i.d. type-I extreme value distribution, $\beta = 0.2$,  $x_1 = 0$ and $x_2 = 1$.
 
 1. To simulate data, first make a data frame as follows:
-```{r, echo = FALSE}
+```{r}
 df <- 
   expand.grid(
     i = 1:1000, 
@@ -39,7 +40,7 @@ df <-
     k
     )
 ```
-```{r}
+```{r, echo = TRUE}
 df
 ```
 2. Second, draw type-I extreme value random variables. Set the seed at 1. You can use `evd` package to draw the variables. You should get exactly the same realization if the seed is correctly set.
@@ -47,36 +48,36 @@ df
 set.seed(1)
 ```
 
-```{r, echo = FALSE}
+```{r}
 df <- 
   df %>%
   dplyr::mutate(e = evd::rgev(dim(df)[1]))
 ```
-```{r}
+```{r, echo = TRUE}
 df
 ```
 3. Third, compute the latent value of each option to obtain the following data frame:
-```{r}
+```{r, echo = TRUE}
 beta <- 0.2
 ```
 
-```{r, echo = FALSE}
+```{r}
 df <- 
   df %>%
   dplyr::mutate(latent = beta * x + e)
 ```
-```{r}
+```{r, echo = TRUE}
 df
 ```
 4. Finally, compute $y$ by comparing the latent values of $k = 1, 2$ for each $i$ to obtain the following result:
-```{r, echo = FALSE}
+```{r}
 df <- 
   df %>%
   dplyr::group_by(i) %>%
   dplyr::mutate(y = ifelse(latent == max(latent), 1, 0)) %>%
   dplyr::ungroup()
 ```
-```{r}
+```{r, echo = TRUE}
 df
 ```
 
@@ -97,7 +98,7 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 $$
 
 1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_a1(b, df)`. 
-```{r}
+```{r, echo = TRUE}
 loglikelihood_a1(
     b = 1,
     df = df
@@ -105,7 +106,7 @@ loglikelihood_a1(
 ```
 
 1. Compute the value of log likelihood for $\beta = 0, 0.1, \cdots, 1$ and plot the result using `ggplot2` packages. You can use `latex2exp` package to use LaTeX math symbol in the label:
-```{r, echo = FALSE}
+```{r, echo = TRUE}
 b_seq <- seq(0, 1, 0.1)
 output <- 
   foreach (
@@ -139,7 +140,7 @@ output %>%
 
 
 1. Find and report $\beta$ that maximizes the log likelihood for the simulated data. You can use `optim` function to achieve this. You will use `Brent` method and set the lower bound at -1 and upper bound at 1 for the parameter search.
-```{r, echo = FALSE}
+```{r}
 result <- 
   optim(
     par = beta,
