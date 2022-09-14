@@ -831,20 +831,20 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 </ol>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="assignment4.html#cb125-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 316,500 × 13
-##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1    x_2     x_3      xi     c     p
-##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     1     0 -1.37   0.211   1.65  0.0141     0  0      0       0      0      0   
-##  2     1     1     1 -1.37   0.211   1.65  0.0141     1  0.975 -0.0324 -0.0156 0.604  1.58
-##  3     1     1     4 -1.37   0.211   1.65  0.0141     1 -0.611  1.19    0.0418 1.30   2.35
-##  4     1     2     0  1.37   0.378   1.35  0.387      0  0      0       0      0      0   
-##  5     1     2     1  1.37   0.378   1.35  0.387      1  0.975 -0.0324 -0.0156 0.604  1.58
-##  6     1     2     4  1.37   0.378   1.35  0.387      1 -0.611  1.19    0.0418 1.30   2.35
-##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0  0      0       0      0      0   
-##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1  0.975 -0.0324 -0.0156 0.604  1.58
-##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1 -0.611  1.19    0.0418 1.30   2.35
-## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0  0      0       0      0      0   
-## # … with 316,490 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1    x_2     x_3      xi     c
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     0 -1.37   0.211   1.65  0.0141     0  0      0       0      0    
+##  2     1     1     1 -1.37   0.211   1.65  0.0141     1  0.975 -0.0324 -0.0156 0.604
+##  3     1     1     4 -1.37   0.211   1.65  0.0141     1 -0.611  1.19    0.0418 1.30 
+##  4     1     2     0  1.37   0.378   1.35  0.387      0  0      0       0      0    
+##  5     1     2     1  1.37   0.378   1.35  0.387      1  0.975 -0.0324 -0.0156 0.604
+##  6     1     2     4  1.37   0.378   1.35  0.387      1 -0.611  1.19    0.0418 1.30 
+##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0  0      0       0      0    
+##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1  0.975 -0.0324 -0.0156 0.604
+##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1 -0.611  1.19    0.0418 1.30 
+## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0  0      0       0      0    
+## # … with 316,490 more rows, and 1 more variable: p &lt;dbl&gt;
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Draw a vector of preference shocks <code>e</code> whose length is the same as the number of rows of <code>df</code>.</li>
 </ol>
@@ -899,27 +899,34 @@ but
 <span id="cb131-9"><a href="assignment4.html#cb131-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">omega =</span> omega</span>
 <span id="cb131-10"><a href="assignment4.html#cb131-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb131-11"><a href="assignment4.html#cb131-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_choice_smooth)</span></code></pre></div>
-<pre><code>##        t                i               j             v_x_1               v_x_2          
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00   Min.   :-4.302781   Min.   :-4.542122  
-##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00   1st Qu.:-0.685539   1st Qu.:-0.679702  
-##  Median : 48.00   Median :250.5   Median : 4.00   Median : 0.001041   Median : 0.000935  
-##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49   Mean   :-0.002541   Mean   : 0.000478  
-##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00   3rd Qu.: 0.673061   3rd Qu.: 0.673109  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.00   Max.   : 3.809895   Max.   : 4.313621  
-##      v_x_3                v_p                 x_1             x_2               x_3         
-##  Min.   :-3.957618   Min.   :-4.218131   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.:-0.672701   1st Qu.:-0.669446   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median : 0.003104   Median : 0.001976   Median :1.000   Median : 0.7797   Median : 1.1878  
-##  Mean   : 0.003428   Mean   : 0.000017   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.: 0.678344   3rd Qu.: 0.670699   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   : 4.244194   Max.   : 4.074300   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p               u                  q           
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :-345.287   Min.   :0.000000  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.:  -3.030   1st Qu.:0.001435  
-##  Median : 0.0000000   Median :0.8775   Median :1.916   Median :   0.000   Median :0.030121  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   :  -1.869   Mean   :0.157978  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:   1.559   3rd Qu.:0.161379  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :  22.434   Max.   :1.000000</code></pre>
+<pre><code>##        t                i               j             v_x_1          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00   Min.   :-4.302781  
+##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00   1st Qu.:-0.685539  
+##  Median : 48.00   Median :250.5   Median : 4.00   Median : 0.001041  
+##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49   Mean   :-0.002541  
+##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00   3rd Qu.: 0.673061  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.00   Max.   : 3.809895  
+##      v_x_2               v_x_3                v_p                 x_1       
+##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131   Min.   :0.000  
+##  1st Qu.:-0.679702   1st Qu.:-0.672701   1st Qu.:-0.669446   1st Qu.:1.000  
+##  Median : 0.000935   Median : 0.003104   Median : 0.001976   Median :1.000  
+##  Mean   : 0.000478   Mean   : 0.003428   Mean   : 0.000017   Mean   :0.842  
+##  3rd Qu.: 0.673109   3rd Qu.: 0.678344   3rd Qu.: 0.670699   3rd Qu.:1.000  
+##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300   Max.   :1.000  
+##       x_2               x_3                xi                   c         
+##  Min.   :-4.4294   Min.   :-3.9787   Min.   :-0.2996949   Min.   :0.0000  
+##  1st Qu.:-0.6108   1st Qu.: 0.0000   1st Qu.:-0.0527368   1st Qu.:0.5250  
+##  Median : 0.7797   Median : 1.1878   Median : 0.0000000   Median :0.8775  
+##  Mean   : 0.3015   Mean   : 0.5034   Mean   :-0.0005149   Mean   :0.9507  
+##  3rd Qu.: 1.4766   3rd Qu.: 1.6424   3rd Qu.: 0.0556663   3rd Qu.:1.3203  
+##  Max.   : 3.0236   Max.   : 1.8877   Max.   : 0.3810277   Max.   :4.3043  
+##        p               u                  q           
+##  Min.   :0.000   Min.   :-345.287   Min.   :0.000000  
+##  1st Qu.:1.516   1st Qu.:  -3.030   1st Qu.:0.001435  
+##  Median :1.916   Median :   0.000   Median :0.030121  
+##  Mean   :1.797   Mean   :  -1.869   Mean   :0.157978  
+##  3rd Qu.:2.336   3rd Qu.:   1.559   3rd Qu.:0.161379  
+##  Max.   :5.513   Max.   :  22.434   Max.   :1.000000</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Next, write a function <code>compute_share_smooth(X, M, V, beta, sigma, mu, omega)</code> that calls <code>compute_choice_smooth</code> and then returns the share based on above <span class="math inline">\(\tilde{q}_{ijt}\)</span>. If we use these functions with the Monte Carlo shocks, it gives us the predicted share of the products.</li>
 </ol>
@@ -934,27 +941,27 @@ but
 <span id="cb133-9"><a href="assignment4.html#cb133-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">omega =</span> omega</span>
 <span id="cb133-10"><a href="assignment4.html#cb133-10" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb133-11"><a href="assignment4.html#cb133-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_share_smooth)</span></code></pre></div>
-<pre><code>##        t                j              x_1             x_2               x_3         
-##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median : 48.00   Median : 4.00   Median :1.000   Median : 0.7797   Median : 1.1878  
-##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   :100.00   Max.   :10.00   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p               q                 s           
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :  1.748   Min.   :0.003497  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.: 17.982   1st Qu.:0.035964  
-##  Median : 0.0000000   Median :0.8775   Median :1.916   Median : 40.241   Median :0.080483  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   : 78.989   Mean   :0.157978  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:123.006   3rd Qu.:0.246011  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :325.631   Max.   :0.651262  
-##        y           
-##  Min.   :-4.23971  
-##  1st Qu.:-1.95098  
-##  Median :-1.22808  
-##  Mean   :-1.15979  
-##  3rd Qu.:-0.03626  
-##  Max.   : 1.26578</code></pre>
+<pre><code>##        t                j              x_1             x_2         
+##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000   Min.   :-4.4294  
+##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000   1st Qu.:-0.6108  
+##  Median : 48.00   Median : 4.00   Median :1.000   Median : 0.7797  
+##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842   Mean   : 0.3015  
+##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000   3rd Qu.: 1.4766  
+##  Max.   :100.00   Max.   :10.00   Max.   :1.000   Max.   : 3.0236  
+##       x_3                xi                   c                p        
+##  Min.   :-3.9787   Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.: 0.0000   1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516  
+##  Median : 1.1878   Median : 0.0000000   Median :0.8775   Median :1.916  
+##  Mean   : 0.5034   Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797  
+##  3rd Qu.: 1.6424   3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336  
+##  Max.   : 1.8877   Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513  
+##        q                 s                  y           
+##  Min.   :  1.748   Min.   :0.003497   Min.   :-4.23971  
+##  1st Qu.: 17.982   1st Qu.:0.035964   1st Qu.:-1.95098  
+##  Median : 40.241   Median :0.080483   Median :-1.22808  
+##  Mean   : 78.989   Mean   :0.157978   Mean   :-1.15979  
+##  3rd Qu.:123.006   3rd Qu.:0.246011   3rd Qu.:-0.03626  
+##  Max.   :325.631   Max.   :0.651262   Max.   : 1.26578</code></pre>
 <p>Use this <code>df_share_smooth</code> as the data to estimate the parameters in the following section.</p>
 </div>
 <div id="estimate-the-parameters-2" class="section level2 hasAnchor" number="14.2">
@@ -992,7 +999,8 @@ but
 <span id="cb139-7"><a href="assignment4.html#cb139-7" aria-hidden="true" tabindex="-1"></a>    omega</span>
 <span id="cb139-8"><a href="assignment4.html#cb139-8" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb139-9"><a href="assignment4.html#cb139-9" aria-hidden="true" tabindex="-1"></a>theta</span></code></pre></div>
-<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684  0.5000000  1.0000000</code></pre>
+<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684  0.5000000
+## [8]  1.0000000</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Estimate the parameters assuming there is no product-specific unobserved fixed effects <span class="math inline">\(\xi_{jt}\)</span>, i.e., using the functions in assignment 3. To do so, first modify <code>M</code> to <code>M_no</code> in which <code>xi</code> is replaced with 0 and estimate the model with <code>M_no</code>. Otherwise, your function will compute the share with the true <code>xi</code>.</li>
 </ol>
@@ -1000,7 +1008,8 @@ but
 <span id="cb141-2"><a href="assignment4.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  M <span class="sc">%&gt;%</span></span>
 <span id="cb141-3"><a href="assignment4.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">xi =</span> <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## $par
-## [1]  4.0467164  0.1707430 -0.8092369  1.8086380  0.3718435  0.7275257  0.4892642  1.0453963
+## [1]  4.0467164  0.1707430 -0.8092369  1.8086380  0.3718435  0.7275257  0.4892642
+## [8]  1.0453963
 ## 
 ## $value
 ## [1] 0.0003270119
@@ -1090,42 +1099,49 @@ but
 <span id="cb150-11"><a href="assignment4.html#cb150-11" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb150-12"><a href="assignment4.html#cb150-12" aria-hidden="true" tabindex="-1"></a>df_choice_smooth_delta</span></code></pre></div>
 <pre><code>## # A tibble: 316,500 × 15
-##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1    x_2     x_3      xi     c     p      u
-##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-##  1     1     1     0 -1.37   0.211   1.65  0.0141     0  0      0       0      0      0     0    
-##  2     1     1     1 -1.37   0.211   1.65  0.0141     1  0.975 -0.0324 -0.0156 0.604  1.58 -0.624
-##  3     1     1     4 -1.37   0.211   1.65  0.0141     1 -0.611  1.19    0.0418 1.30   2.35 -1.62 
-##  4     1     2     0  1.37   0.378   1.35  0.387      0  0      0       0      0      0     0    
-##  5     1     2     1  1.37   0.378   1.35  0.387      1  0.975 -0.0324 -0.0156 0.604  1.58  2.62 
-##  6     1     2     4  1.37   0.378   1.35  0.387      1 -0.611  1.19    0.0418 1.30   2.35  0.649
-##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0  0      0       0      0      0     0    
-##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1  0.975 -0.0324 -0.0156 0.604  1.58  0.138
-##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1 -0.611  1.19    0.0418 1.30   2.35 -3.92 
-## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0  0      0       0      0      0     0    
-## # … with 316,490 more rows, and 1 more variable: q &lt;dbl&gt;
+##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1    x_2     x_3      xi     c
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     0 -1.37   0.211   1.65  0.0141     0  0      0       0      0    
+##  2     1     1     1 -1.37   0.211   1.65  0.0141     1  0.975 -0.0324 -0.0156 0.604
+##  3     1     1     4 -1.37   0.211   1.65  0.0141     1 -0.611  1.19    0.0418 1.30 
+##  4     1     2     0  1.37   0.378   1.35  0.387      0  0      0       0      0    
+##  5     1     2     1  1.37   0.378   1.35  0.387      1  0.975 -0.0324 -0.0156 0.604
+##  6     1     2     4  1.37   0.378   1.35  0.387      1 -0.611  1.19    0.0418 1.30 
+##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0  0      0       0      0    
+##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1  0.975 -0.0324 -0.0156 0.604
+##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1 -0.611  1.19    0.0418 1.30 
+## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0  0      0       0      0    
+## # … with 316,490 more rows, and 3 more variables: p &lt;dbl&gt;, u &lt;dbl&gt;, q &lt;dbl&gt;
 ## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="assignment4.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_choice_smooth_delta)</span></code></pre></div>
-<pre><code>##        t                i               j             v_x_1               v_x_2          
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00   Min.   :-4.302781   Min.   :-4.542122  
-##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00   1st Qu.:-0.685539   1st Qu.:-0.679702  
-##  Median : 48.00   Median :250.5   Median : 4.00   Median : 0.001041   Median : 0.000935  
-##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49   Mean   :-0.002541   Mean   : 0.000478  
-##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00   3rd Qu.: 0.673061   3rd Qu.: 0.673109  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.00   Max.   : 3.809895   Max.   : 4.313621  
-##      v_x_3                v_p                 x_1             x_2               x_3         
-##  Min.   :-3.957618   Min.   :-4.218131   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.:-0.672701   1st Qu.:-0.669446   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median : 0.003104   Median : 0.001976   Median :1.000   Median : 0.7797   Median : 1.1878  
-##  Mean   : 0.003428   Mean   : 0.000017   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.: 0.678344   3rd Qu.: 0.670699   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   : 4.244194   Max.   : 4.074300   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p               u                  q           
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :-345.287   Min.   :0.000000  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.:  -3.030   1st Qu.:0.001435  
-##  Median : 0.0000000   Median :0.8775   Median :1.916   Median :   0.000   Median :0.030121  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   :  -1.869   Mean   :0.157978  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:   1.559   3rd Qu.:0.161379  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :  22.434   Max.   :1.000000</code></pre>
+<pre><code>##        t                i               j             v_x_1          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00   Min.   :-4.302781  
+##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00   1st Qu.:-0.685539  
+##  Median : 48.00   Median :250.5   Median : 4.00   Median : 0.001041  
+##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49   Mean   :-0.002541  
+##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00   3rd Qu.: 0.673061  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.00   Max.   : 3.809895  
+##      v_x_2               v_x_3                v_p                 x_1       
+##  Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131   Min.   :0.000  
+##  1st Qu.:-0.679702   1st Qu.:-0.672701   1st Qu.:-0.669446   1st Qu.:1.000  
+##  Median : 0.000935   Median : 0.003104   Median : 0.001976   Median :1.000  
+##  Mean   : 0.000478   Mean   : 0.003428   Mean   : 0.000017   Mean   :0.842  
+##  3rd Qu.: 0.673109   3rd Qu.: 0.678344   3rd Qu.: 0.670699   3rd Qu.:1.000  
+##  Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.074300   Max.   :1.000  
+##       x_2               x_3                xi                   c         
+##  Min.   :-4.4294   Min.   :-3.9787   Min.   :-0.2996949   Min.   :0.0000  
+##  1st Qu.:-0.6108   1st Qu.: 0.0000   1st Qu.:-0.0527368   1st Qu.:0.5250  
+##  Median : 0.7797   Median : 1.1878   Median : 0.0000000   Median :0.8775  
+##  Mean   : 0.3015   Mean   : 0.5034   Mean   :-0.0005149   Mean   :0.9507  
+##  3rd Qu.: 1.4766   3rd Qu.: 1.6424   3rd Qu.: 0.0556663   3rd Qu.:1.3203  
+##  Max.   : 3.0236   Max.   : 1.8877   Max.   : 0.3810277   Max.   :4.3043  
+##        p               u                  q           
+##  Min.   :0.000   Min.   :-345.287   Min.   :0.000000  
+##  1st Qu.:1.516   1st Qu.:  -3.030   1st Qu.:0.001435  
+##  Median :1.916   Median :   0.000   Median :0.030121  
+##  Mean   :1.797   Mean   :  -1.869   Mean   :0.157978  
+##  3rd Qu.:2.336   3rd Qu.:   1.559   3rd Qu.:0.161379  
+##  Max.   :5.513   Max.   :  22.434   Max.   :1.000000</code></pre>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="assignment4.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_choice_smooth<span class="sc">$</span>q <span class="sc">-</span> df_choice_smooth_delta<span class="sc">$</span>q)</span></code></pre></div>
 <pre><code>##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 ## -9.437e-16 -6.939e-18  0.000e+00 -1.050e-19  1.843e-18  9.992e-16</code></pre>
@@ -1160,27 +1176,27 @@ but
 ## # … with 623 more rows
 ## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="assignment4.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_share_smooth_delta)</span></code></pre></div>
-<pre><code>##        t                j              x_1             x_2               x_3         
-##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median : 48.00   Median : 4.00   Median :1.000   Median : 0.7797   Median : 1.1878  
-##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   :100.00   Max.   :10.00   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p               q                 s           
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :  1.748   Min.   :0.003497  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.: 17.982   1st Qu.:0.035964  
-##  Median : 0.0000000   Median :0.8775   Median :1.916   Median : 40.241   Median :0.080483  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   : 78.989   Mean   :0.157978  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:123.006   3rd Qu.:0.246011  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :325.631   Max.   :0.651262  
-##        y           
-##  Min.   :-4.23971  
-##  1st Qu.:-1.95098  
-##  Median :-1.22808  
-##  Mean   :-1.15979  
-##  3rd Qu.:-0.03626  
-##  Max.   : 1.26578</code></pre>
+<pre><code>##        t                j              x_1             x_2         
+##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000   Min.   :-4.4294  
+##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000   1st Qu.:-0.6108  
+##  Median : 48.00   Median : 4.00   Median :1.000   Median : 0.7797  
+##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842   Mean   : 0.3015  
+##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000   3rd Qu.: 1.4766  
+##  Max.   :100.00   Max.   :10.00   Max.   :1.000   Max.   : 3.0236  
+##       x_3                xi                   c                p        
+##  Min.   :-3.9787   Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.: 0.0000   1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516  
+##  Median : 1.1878   Median : 0.0000000   Median :0.8775   Median :1.916  
+##  Mean   : 0.5034   Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797  
+##  3rd Qu.: 1.6424   3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336  
+##  Max.   : 1.8877   Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513  
+##        q                 s                  y           
+##  Min.   :  1.748   Min.   :0.003497   Min.   :-4.23971  
+##  1st Qu.: 17.982   1st Qu.:0.035964   1st Qu.:-1.95098  
+##  Median : 40.241   Median :0.080483   Median :-1.22808  
+##  Mean   : 78.989   Mean   :0.157978   Mean   :-1.15979  
+##  3rd Qu.:123.006   3rd Qu.:0.246011   3rd Qu.:-0.03626  
+##  Max.   :325.631   Max.   :0.651262   Max.   : 1.26578</code></pre>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="assignment4.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_share_smooth<span class="sc">$</span>s <span class="sc">-</span> df_share_smooth_delta<span class="sc">$</span>s)</span></code></pre></div>
 <pre><code>##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 ## -1.665e-16 -1.388e-17  0.000e+00  5.549e-20  6.939e-18  2.220e-16</code></pre>
@@ -1380,19 +1396,19 @@ given parameters <span class="math inline">\(\theta\)</span>. Note that the row 
 <li>Draw a graph of the objective function that varies each non-linear parameter from 0, 0.2, <span class="math inline">\(\cdots\)</span>, 2.0 of the true value. Try with the actual shocks <code>V</code>.</li>
 </ol>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-157-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-143-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-157-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-143-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[3]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-157-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-143-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[4]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-157-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-143-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[5]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-157-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-143-5.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="13" style="list-style-type: decimal">
 <li>Find non-linear parameters that minimize the GMM objective function. Because standard deviations of the same absolute value with positive and negative values have almost the same implication for the data, you can take the absolute value if the estimates of the standard deviations happened to be negative (Another way is to set the non-negativity constraints on the standard deviations).</li>
 </ol>
