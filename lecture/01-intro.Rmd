@@ -355,6 +355,66 @@ install.packages("rmarkdown")
 - Refer to the [help page](https://rmarkdown.rstudio.com/lesson-1.html) for further information.
 
 
+### Coding rule
+
+- Use verb in the file name, section name, and function name
+    - `8_entry_model` to `8_estimate_entry_model`
+    - `# travel frequency to adjecent mesh` to `# make travel frequency to adjecent mesh`
+- Do not use `.` in the file, object, and variable names. Use `_` instead.
+    - `_` works in C/C++ but `.` does not. Write object names robust to translation into C/C++.
+- Use Ctrl+Shift+R to make a section.
+    - By doing so, the table of contents are automatically generated in RStudio.
+    - When making a subsection, add one `#` and remove one `-`.
+- Put a space after `,`, `)`, `}` and so on. Put spaces before and after `=`.
+- Break lines when there are more than one arguments in a function-like:
+
+```r
+gpu_output <-
+  foreach (
+    i = 1:nrow(gpu),
+    .combine = "rbind"
+    ) %dopar% {
+    model_i <- 
+			gpu[i, ] %>% 
+			dplyr::pull(model)
+    release_i <- 
+			gpu[i, ] %>% 
+			dplyr::pull(release) 
+    time_i <- paste(release_i, current_date)
+    trend_i <- 
+      gtrendsR::gtrends(
+        keyword = model_i,
+        time = time_i
+      )
+    trend_i <- trend_i$interest_over_time
+    return(trend_i)
+  }
+```
+
+- Call a function in a library in `dplyr::mutate` format.
+    - To avoid name space conflictions.
+    - To make the dependence on library explicit.
+    - To make it compatible with a multi-node parallelization.
+    - Exceptions are `magrittr` for `%>%` and `foreach` for `%do%` and `%dopar%`, and packages for reporting such as `ggplot2`, `modelsummary`, etc.
+- Avoid using an upper case letter in the function name and variable names.
+    - Exceptions are a single letter variable for constant and matrix/dataframe to make the notations the same with the model.
+- Pipe `%>%` should be used only for a sequence of operations comprising a single meaningful task.
+    - For example, if you drop rows including NA and/or outliers and then construct some new variables, you should separate these two tasks, and should not connect with `%>%`.
+- When we join data frames, only use `dplyr::left_join`. Never use other joins such as `dplyr::full_join` and `dplyr::inner_join`.
+    - You have a list of observations on the left data frame. We never change this list by a join operation.
+    - If you need to join and drop rows with some NA, do this explicitly by `dplyr::left_join` followed by `dplyr::filter`.
+    - No operation that mystifies changes the list of observations is allowed.
+- When obtaining multiple results, standardize the format of the result and hold them as elements of a list. Write a function applicable to the standard and happy to each element of the list by `purrr::map`.
+    - For example, when running multiple regressions, prepare a list of formulas and pass it to `purrrr::map` to run multiple regressions and obtain the results in another list.
+- The file names of the same category should have the same format.
+    - For example, if there is a figure for a long window and a short window, the file name should be `figure_long.png` and `figure_short.png`. They should not be like `figure.png` and `figure_short.png`. If you added `figure_short.png` later, make sure to rename `figure.png` to `figure_long.png`.
+- Do not ignore any warnings.
+    - If you ignore "ignorable" warnings, you will also ignore dangerous warnings.
+    - Warnings are often signals of unexpected behavior or a bug.
+- Do not access columns of dataframe by index. It is not robust to the change in column structure. They should be accessed by the column name. Access by an index is in principle only allowed for the elements of a list which does not depend on the order of elements.
+- Save and read files by `saveRDS` and `readRDS` using `.rds` extension.  Do not use `save` and `load`, because the object names become unknown.
+
+
 ### GitHub and GitHub Classroom
 
 

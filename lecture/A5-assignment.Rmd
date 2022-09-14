@@ -199,9 +199,25 @@ $$
 
 The returned object should be a list across markets and each element of the list should be $J_t \times J_t$ matrix whose $(j, k)$-th element is $\partial s_{jt}/\partial p_{it}$ (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval = FALSE}
 derivative_share_smooth <-
   compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+```
+```{r, eval = FALSE}
+saveRDS(
+  derivative_share_smooth,
+  file = "data/a5/derivative_share_smooth.rds"
+)
+```
+```{r}
+derivative_share_smooth <-
+  readRDS(
+    file = "data/a5/derivative_share_smooth.rds"
+  )
+```
+
+
+```{r, echo = TRUE}
 derivative_share_smooth[[1]]
 derivative_share_smooth[[T]]
 ```
