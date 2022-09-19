@@ -117,7 +117,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2022-09-15}
+\date{Last updated: 2022-09-19}
 
 \begin{document}
 \maketitle
@@ -751,9 +751,8 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 100 101 102 103 104 105 106 107 108 109 110 111
-## [13] 112 113 114 115 116 117 118 119 120 121 122 123
-## [25] 124 125 126 127 128 129 130
+##  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121
+## [23] 122 123 124 125 126 127 128 129 130
 \end{verbatim}
 
 \begin{itemize}
@@ -883,8 +882,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19
-## [18] 20
+##  [1]  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
 \end{verbatim}
 
 \begin{Shaded}
@@ -1956,6 +1954,8 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \begin{itemize}
 \tightlist
 \item
+  In the following, I suppress the index of \(t\) from unknown functions for notational simplicity.
+\item
   Insert \(\omega_{jt} = h(k_{jt}, i_{jt})\) to the original equation to get:
   \begin{equation}
   \begin{split}
@@ -2009,7 +2009,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \begin{equation}
   \begin{split}
   & \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0\\
-  & \Leftrightarrow \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0.
+  & \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_l^0 l_{jt} -  \beta_0 - \beta_k k_{jt} - g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] |k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0.
   \end{split}
   \end{equation}
 \end{itemize}
@@ -2182,7 +2182,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \begin{split}
   P_{jt} &\equiv \mathbb{P}\{\chi_{jt} = 1|\mathcal{I}_{j, t - 1}\}\\
   &= \mathbb{P}\{\omega_{jt} \ge \underline{\omega}(k_{jt}) |\mathcal{I}_{j, t - 1}\}\\
-  &= \mathbb{P}\{g(\omega_{j, t - 1}) + \nu_{jt} \ge \underline{\omega}[(1 - \delta) k_{j, t - 1} + i_{j, t - 1}]|\mathcal{I}_{j, t - 1} \}\\
+  &= \mathbb{P}\{g(\omega_{j, t - 1}) + \nu_{jt} \ge \underline{\omega}[\kappa(k_{j, t - 1}, i_{j, t - 1})]|\mathcal{I}_{j, t - 1} \}\\
   &= \mathbb{P}\{ \chi_{jt} = 1| i_{j, t - 1}, k_{j, t - 1}\}.
   \end{split}
   \end{equation}
@@ -11175,21 +11175,20 @@ Simulate the data first using the labor choice without optimization error and se
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 9
-##        j     t     k   omega  wage     iota      l
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74 
-## # ... with 990 more rows, and 2 more variables:
-## #   l_error <dbl>, inv <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        j     t     k   omega  wage     iota      l l_error     inv
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
+## # ... with 990 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{enumerate}
@@ -11202,22 +11201,20 @@ Simulate the data first using the labor choice without optimization error and se
 
 \begin{verbatim}
 ## # A tibble: 1,000 x 12
-##        j     t     k   omega  wage     iota      l
-##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74 
-## # ... with 990 more rows, and 5 more variables:
-## #   l_error <dbl>, inv <dbl>, eta <dbl>, y <dbl>,
-## #   y_error <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        j     t     k   omega  wage     iota      l l_error     inv     eta     y y_error
+##    <int> <dbl> <dbl>   <dbl> <dbl>    <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl>   <dbl>
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95 
+## # ... with 990 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{enumerate}
@@ -11288,8 +11285,7 @@ For now, use the labor choice with optimization error.
 ## l_error     0.997913   0.002396 416.454   <2e-16 ***
 ## k           0.007599   0.004503   1.688   0.0915 .  
 ## ---
-## Signif. codes:  
-## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.2068 on 9997 degrees of freedom
 ## Multiple R-squared:  0.9657, Adjusted R-squared:  0.9657 
@@ -11318,8 +11314,7 @@ For now, use the labor choice with optimization error.
 ## dl_error  0.9910916  0.0029548 335.413   <2e-16 ***
 ## dk       -0.0009029  0.0127539  -0.071    0.944    
 ## ---
-## Signif. codes:  
-## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.1961 on 9998 degrees of freedom
 ## Multiple R-squared:  0.9184, Adjusted R-squared:  0.9184 
@@ -11775,21 +11770,20 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 350,000 x 13
-##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1
-##    <int> <int> <dbl> <dbl>   <dbl>  <dbl>   <dbl> <dbl>
-##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0
-##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1
-##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1
-##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1
-##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1
-##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1
-##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1
-##  8     1     2     0 0.930  1.34    1.16   0.0684     0
-##  9     1     2     2 0.930  1.34    1.16   0.0684     1
-## 10     1     2     3 0.930  1.34    1.16   0.0684     1
-## # ... with 349,990 more rows, and 5 more variables:
-## #   x_2 <dbl>, x_3 <dbl>, xi <dbl>, c <dbl>, p <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1    x_2     x_3    xi     c     p
+##    <int> <int> <dbl> <dbl>   <dbl>  <dbl>   <dbl> <dbl>  <dbl>   <dbl> <dbl> <dbl> <dbl>
+##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0  0      0          0 0      0   
+##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1  0.369  0.472      0 0.929  1.97
+##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1  0.288  0.411      0 0.976  1.91
+##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1 -0.153  0.297      0 1.02   2.05
+##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1  0.195  0.391      0 0.995  1.98
+##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1 -0.311  0.0373     0 1.02   1.98
+##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1 -1.11  -0.995      0 0.997  1.99
+##  8     1     2     0 0.930  1.34    1.16   0.0684     0  0      0          0 0      0   
+##  9     1     2     2 0.930  1.34    1.16   0.0684     1  0.369  0.472      0 0.929  1.97
+## 10     1     2     3 0.930  1.34    1.16   0.0684     1  0.288  0.411      0 0.976  1.91
+## # ... with 349,990 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{enumerate}
@@ -11807,8 +11801,7 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.32969177 -1.03771238  1.41496338  5.02048718
-## [5] -0.01302806  0.57956001
+## [1]  0.32969177 -1.03771238  1.41496338  5.02048718 -0.01302806  0.57956001
 \end{verbatim}
 
 \begin{enumerate}
@@ -11872,21 +11865,19 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 350,000 x 16
-##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1
-##    <int> <int> <dbl> <dbl>   <dbl>  <dbl>   <dbl> <dbl>
-##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0
-##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1
-##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1
-##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1
-##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1
-##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1
-##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1
-##  8     1     2     0 0.930  1.34    1.16   0.0684     0
-##  9     1     2     2 0.930  1.34    1.16   0.0684     1
-## 10     1     2     3 0.930  1.34    1.16   0.0684     1
-## # ... with 349,990 more rows, and 8 more variables:
-## #   x_2 <dbl>, x_3 <dbl>, xi <dbl>, c <dbl>, p <dbl>,
-## #   u <dbl>, e <dbl>, q <dbl>
+##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1    x_2     x_3    xi     c     p     u
+##    <int> <int> <dbl> <dbl>   <dbl>  <dbl>   <dbl> <dbl>  <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0  0      0          0 0      0     0   
+##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1  0.369  0.472      0 0.929  1.97  3.68
+##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1  0.288  0.411      0 0.976  1.91  3.81
+##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1 -0.153  0.297      0 1.02   2.05  3.78
+##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1  0.195  0.391      0 0.995  1.98  3.76
+##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1 -0.311  0.0373     0 1.02   1.98  4.19
+##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1 -1.11  -0.995      0 0.997  1.99  5.56
+##  8     1     2     0 0.930  1.34    1.16   0.0684     0  0      0          0 0      0     0   
+##  9     1     2     2 0.930  1.34    1.16   0.0684     1  0.369  0.472      0 0.929  1.97  2.30
+## 10     1     2     3 0.930  1.34    1.16   0.0684     1  0.288  0.411      0 0.976  1.91  2.33
+## # ... with 349,990 more rows, and 2 more variables: e <dbl>, q <dbl>
 ## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 \end{verbatim}
 
@@ -11897,48 +11888,34 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-##        t                i               j         
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000  
-##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000  
-##  Median : 50.50   Median :250.5   Median : 5.000  
-##  Mean   : 50.50   Mean   :250.5   Mean   : 4.791  
-##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.000  
-##      v_x_1               v_x_2          
-##  Min.   :-4.302781   Min.   :-4.542122  
-##  1st Qu.:-0.683141   1st Qu.:-0.680086  
-##  Median : 0.001562   Median : 0.002374  
-##  Mean   :-0.002669   Mean   :-0.000890  
-##  3rd Qu.: 0.669657   3rd Qu.: 0.673194  
-##  Max.   : 3.809895   Max.   : 4.313621  
-##      v_x_3                v_p           
-##  Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.673321   1st Qu.:-0.671449  
-##  Median : 0.004941   Median : 0.001083  
-##  Mean   : 0.003589   Mean   :-0.002011  
-##  3rd Qu.: 0.676967   3rd Qu.: 0.671318  
-##  Max.   : 4.244194   Max.   : 4.017246  
-##       x_1              x_2                x_3         
-##  Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947  
-##  1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000  
-##  Median :1.0000   Median : 0.19492   Median : 0.2970  
-##  Mean   :0.8571   Mean   : 0.05989   Mean   : 0.1128  
-##  3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.3911  
-##  Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719  
-##        xi          c                p        
-##  Min.   :0   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:0   1st Qu.:0.9404   1st Qu.:1.913  
-##  Median :0   Median :0.9841   Median :1.981  
-##  Mean   :0   Mean   :0.8560   Mean   :1.712  
-##  3rd Qu.:0   3rd Qu.:1.0260   3rd Qu.:2.039  
-##  Max.   :0   Max.   :1.2099   Max.   :2.293  
-##        u                  e                 q         
-##  Min.   :-190.479   Min.   :-2.6364   Min.   :0.0000  
-##  1st Qu.:  -2.177   1st Qu.:-0.3301   1st Qu.:0.0000  
-##  Median :   0.000   Median : 0.3635   Median :0.0000  
-##  Mean   :  -1.291   Mean   : 0.5763   Mean   :0.1429  
-##  3rd Qu.:   1.978   3rd Qu.: 1.2418   3rd Qu.:0.0000  
-##  Max.   :  10.909   Max.   :14.0966   Max.   :1.0000
+##        t                i               j              v_x_1               v_x_2          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781   Min.   :-4.542122  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.683141   1st Qu.:-0.680086  
+##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.001562   Median : 0.002374  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.791   Mean   :-0.002669   Mean   :-0.000890  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.669657   3rd Qu.: 0.673194  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895   Max.   : 4.313621  
+##      v_x_3                v_p                 x_1              x_2          
+##  Min.   :-3.957618   Min.   :-4.218131   Min.   :0.0000   Min.   :-1.10735  
+##  1st Qu.:-0.673321   1st Qu.:-0.671449   1st Qu.:1.0000   1st Qu.:-0.15269  
+##  Median : 0.004941   Median : 0.001083   Median :1.0000   Median : 0.19492  
+##  Mean   : 0.003589   Mean   :-0.002011   Mean   :0.8571   Mean   : 0.05989  
+##  3rd Qu.: 0.676967   3rd Qu.: 0.671318   3rd Qu.:1.0000   3rd Qu.: 0.36916  
+##  Max.   : 4.244194   Max.   : 4.017246   Max.   :1.0000   Max.   : 0.75589  
+##       x_3                xi          c                p               u           
+##  Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000   Min.   :-190.479  
+##  1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9404   1st Qu.:1.913   1st Qu.:  -2.177  
+##  Median : 0.2970   Median :0   Median :0.9841   Median :1.981   Median :   0.000  
+##  Mean   : 0.1128   Mean   :0   Mean   :0.8560   Mean   :1.712   Mean   :  -1.291  
+##  3rd Qu.: 0.3911   3rd Qu.:0   3rd Qu.:1.0260   3rd Qu.:2.039   3rd Qu.:   1.978  
+##  Max.   : 0.4719   Max.   :0   Max.   :1.2099   Max.   :2.293   Max.   :  10.909  
+##        e                 q         
+##  Min.   :-2.6364   Min.   :0.0000  
+##  1st Qu.:-0.3301   1st Qu.:0.0000  
+##  Median : 0.3635   Median :0.0000  
+##  Mean   : 0.5763   Mean   :0.1429  
+##  3rd Qu.: 1.2418   3rd Qu.:0.0000  
+##  Max.   :14.0966   Max.   :1.0000
 \end{verbatim}
 
 \begin{enumerate}
@@ -11969,21 +11946,20 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 700 x 11
-##        t     j   x_1    x_2      x_3    xi     c     p
-##    <int> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl> <dbl>
-##  1     1     0     0  0      0           0 0      0   
-##  2     1     2     1  0.369  0.472       0 0.929  1.97
-##  3     1     3     1  0.288  0.411       0 0.976  1.91
-##  4     1     4     1 -0.153  0.297       0 1.02   2.05
-##  5     1     6     1  0.195  0.391       0 0.995  1.98
-##  6     1     7     1 -0.311  0.0373      0 1.02   1.98
-##  7     1     8     1 -1.11  -0.995       0 0.997  1.99
-##  8     2     0     0  0      0           0 0      0   
-##  9     2     1     1  0.244 -0.00810     0 0.980  1.97
-## 10     2     4     1 -0.153  0.297       0 1.04   2.04
-## # ... with 690 more rows, and 3 more variables:
-## #   q <dbl>, s <dbl>, y <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        t     j   x_1    x_2      x_3    xi     c     p     q     s       y
+##    <int> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>   <dbl>
+##  1     1     0     0  0      0           0 0      0      144 0.288  0     
+##  2     1     2     1  0.369  0.472       0 0.929  1.97    47 0.094 -1.12  
+##  3     1     3     1  0.288  0.411       0 0.976  1.91    37 0.074 -1.36  
+##  4     1     4     1 -0.153  0.297       0 1.02   2.05    35 0.07  -1.41  
+##  5     1     6     1  0.195  0.391       0 0.995  1.98    60 0.12  -0.875 
+##  6     1     7     1 -0.311  0.0373      0 1.02   1.98    44 0.088 -1.19  
+##  7     1     8     1 -1.11  -0.995       0 0.997  1.99   133 0.266 -0.0795
+##  8     2     0     0  0      0           0 0      0      170 0.34   0     
+##  9     2     1     1  0.244 -0.00810     0 0.980  1.97    84 0.168 -0.705 
+## 10     2     4     1 -0.153  0.297       0 1.04   2.04    35 0.07  -1.58  
+## # ... with 690 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -11993,34 +11969,27 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-##        t                j               x_1        
-##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000  
-##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000  
-##  Median : 50.50   Median : 5.000   Median :1.0000  
-##  Mean   : 50.50   Mean   : 4.791   Mean   :0.8571  
-##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000  
-##  Max.   :100.00   Max.   :10.000   Max.   :1.0000  
-##       x_2                x_3                xi   
-##  Min.   :-1.10735   Min.   :-0.9947   Min.   :0  
-##  1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:0  
-##  Median : 0.19492   Median : 0.2970   Median :0  
-##  Mean   : 0.05989   Mean   : 0.1128   Mean   :0  
-##  3rd Qu.: 0.36916   3rd Qu.: 0.3911   3rd Qu.:0  
-##  Max.   : 0.75589   Max.   : 0.4719   Max.   :0  
-##        c                p               q         
-##  Min.   :0.0000   Min.   :0.000   Min.   : 26.00  
-##  1st Qu.:0.9404   1st Qu.:1.913   1st Qu.: 43.00  
-##  Median :0.9841   Median :1.981   Median : 52.00  
-##  Mean   :0.8560   Mean   :1.712   Mean   : 71.43  
-##  3rd Qu.:1.0260   3rd Qu.:2.039   3rd Qu.: 73.00  
-##  Max.   :1.2099   Max.   :2.293   Max.   :195.00  
-##        s                y           
-##  Min.   :0.0520   Min.   :-1.89354  
-##  1st Qu.:0.0860   1st Qu.:-1.35812  
-##  Median :0.1040   Median :-1.16644  
-##  Mean   :0.1429   Mean   :-0.99214  
-##  3rd Qu.:0.1460   3rd Qu.:-0.81801  
-##  Max.   :0.3900   Max.   : 0.05196
+##        t                j               x_1              x_2                x_3         
+##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947  
+##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000  
+##  Median : 50.50   Median : 5.000   Median :1.0000   Median : 0.19492   Median : 0.2970  
+##  Mean   : 50.50   Mean   : 4.791   Mean   :0.8571   Mean   : 0.05989   Mean   : 0.1128  
+##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.3911  
+##  Max.   :100.00   Max.   :10.000   Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719  
+##        xi          c                p               q                s         
+##  Min.   :0   Min.   :0.0000   Min.   :0.000   Min.   : 26.00   Min.   :0.0520  
+##  1st Qu.:0   1st Qu.:0.9404   1st Qu.:1.913   1st Qu.: 43.00   1st Qu.:0.0860  
+##  Median :0   Median :0.9841   Median :1.981   Median : 52.00   Median :0.1040  
+##  Mean   :0   Mean   :0.8560   Mean   :1.712   Mean   : 71.43   Mean   :0.1429  
+##  3rd Qu.:0   3rd Qu.:1.0260   3rd Qu.:2.039   3rd Qu.: 73.00   3rd Qu.:0.1460  
+##  Max.   :0   Max.   :1.2099   Max.   :2.293   Max.   :195.00   Max.   :0.3900  
+##        y           
+##  Min.   :-1.89354  
+##  1st Qu.:-1.35812  
+##  Median :-1.16644  
+##  Mean   :-0.99214  
+##  3rd Qu.:-0.81801  
+##  Max.   : 0.05196
 \end{verbatim}
 
 \hypertarget{estimate-the-parameters-1}{%
@@ -12053,8 +12022,7 @@ The value of the auxiliary parameters are set as follows:
 ## x_3 -0.92818    0.03364 -27.589  < 2e-16 ***
 ## p   -1.12982    0.09086 -12.435  < 2e-16 ***
 ## ---
-## Signif. codes:  
-## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.1677 on 696 degrees of freedom
 ## Multiple R-squared:  0.9778, Adjusted R-squared:  0.9777 
@@ -12106,8 +12074,7 @@ The best practice to avoid this problem is to generate the shocks outside the op
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.265602821  0.652183731 -0.006127627 -0.317288366
-## [5]  3.145022297 -1.277026910
+## [1]  0.265602821  0.652183731 -0.006127627 -0.317288366  3.145022297 -1.277026910
 \end{verbatim}
 
 \begin{enumerate}
@@ -12126,21 +12093,20 @@ The best practice to avoid this problem is to generate the shocks outside the op
 
 \begin{verbatim}
 ## # A tibble: 700 x 11
-##        t     j   x_1    x_2      x_3    xi     c     p
-##    <int> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl> <dbl>
-##  1     1     0     0  0      0           0 0      0   
-##  2     1     2     1  0.369  0.472       0 0.929  1.97
-##  3     1     3     1  0.288  0.411       0 0.976  1.91
-##  4     1     4     1 -0.153  0.297       0 1.02   2.05
-##  5     1     6     1  0.195  0.391       0 0.995  1.98
-##  6     1     7     1 -0.311  0.0373      0 1.02   1.98
-##  7     1     8     1 -1.11  -0.995       0 0.997  1.99
-##  8     2     0     0  0      0           0 0      0   
-##  9     2     1     1  0.244 -0.00810     0 0.980  1.97
-## 10     2     4     1 -0.153  0.297       0 1.04   2.04
-## # ... with 690 more rows, and 3 more variables:
-## #   q <dbl>, s <dbl>, y <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        t     j   x_1    x_2      x_3    xi     c     p     q     s      y
+##    <int> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
+##  1     1     0     0  0      0           0 0      0      171 0.342  0    
+##  2     1     2     1  0.369  0.472       0 0.929  1.97    46 0.092 -1.31 
+##  3     1     3     1  0.288  0.411       0 0.976  1.91    37 0.074 -1.53 
+##  4     1     4     1 -0.153  0.297       0 1.02   2.05    38 0.076 -1.50 
+##  5     1     6     1  0.195  0.391       0 0.995  1.98    38 0.076 -1.50 
+##  6     1     7     1 -0.311  0.0373      0 1.02   1.98    52 0.104 -1.19 
+##  7     1     8     1 -1.11  -0.995       0 0.997  1.99   118 0.236 -0.371
+##  8     2     0     0  0      0           0 0      0      194 0.388  0    
+##  9     2     1     1  0.244 -0.00810     0 0.980  1.97    62 0.124 -1.14 
+## 10     2     4     1 -0.153  0.297       0 1.04   2.04    37 0.074 -1.66 
+## # ... with 690 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{enumerate}
@@ -12166,8 +12132,7 @@ The best practice to avoid this problem is to generate the shocks outside the op
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  4.0000000  0.1836433 -0.8356286  1.5952808
-## [5]  0.3295078  0.8204684  0.5000000  1.0000000
+## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684  0.5000000  1.0000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -12254,8 +12219,8 @@ In windows, you may have to explicitly pass packages, functions, and data to the
 \end{Shaded}
 
 \begin{verbatim}
-## Warning in e$fun(obj, substitute(ex), parent.frame(),
-## e$data): already exporting variable(s): temp_func
+## Warning in e$fun(obj, substitute(ex), parent.frame(), e$data): already exporting variable(s):
+## temp_func
 \end{verbatim}
 
 \begin{verbatim}
@@ -12432,8 +12397,7 @@ The graphs with the Monte Carlo shocks:
 
 \begin{verbatim}
 ## $par
-## [1]  3.9907237  0.1778582 -0.8244977  1.5326774
-## [5]  0.3602383  0.9336009  0.4883030  1.0462494
+## [1]  3.9907237  0.1778582 -0.8244977  1.5326774  0.3602383  0.9336009  0.4883030  1.0462494
 ## 
 ## $value
 ## [1] 0.0004678286
@@ -12709,21 +12673,20 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{verbatim}
 ## # A tibble: 316,500 x 13
-##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1
-##    <int> <int> <dbl>  <dbl>   <dbl> <dbl>   <dbl> <dbl>
-##  1     1     1     0 -1.37   0.211   1.65  0.0141     0
-##  2     1     1     1 -1.37   0.211   1.65  0.0141     1
-##  3     1     1     4 -1.37   0.211   1.65  0.0141     1
-##  4     1     2     0  1.37   0.378   1.35  0.387      0
-##  5     1     2     1  1.37   0.378   1.35  0.387      1
-##  6     1     2     4  1.37   0.378   1.35  0.387      1
-##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0
-##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1
-##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1
-## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0
-## # ... with 316,490 more rows, and 5 more variables:
-## #   x_2 <dbl>, x_3 <dbl>, xi <dbl>, c <dbl>, p <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1    x_2     x_3      xi     c     p
+##    <int> <int> <dbl>  <dbl>   <dbl> <dbl>   <dbl> <dbl>  <dbl>   <dbl>   <dbl> <dbl> <dbl>
+##  1     1     1     0 -1.37   0.211   1.65  0.0141     0  0      0       0      0      0   
+##  2     1     1     1 -1.37   0.211   1.65  0.0141     1  0.975 -0.0324 -0.0156 0.604  1.58
+##  3     1     1     4 -1.37   0.211   1.65  0.0141     1 -0.611  1.19    0.0418 1.30   2.35
+##  4     1     2     0  1.37   0.378   1.35  0.387      0  0      0       0      0      0   
+##  5     1     2     1  1.37   0.378   1.35  0.387      1  0.975 -0.0324 -0.0156 0.604  1.58
+##  6     1     2     4  1.37   0.378   1.35  0.387      1 -0.611  1.19    0.0418 1.30   2.35
+##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0  0      0       0      0      0   
+##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1  0.975 -0.0324 -0.0156 0.604  1.58
+##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1 -0.611  1.19    0.0418 1.30   2.35
+## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0  0      0       0      0      0   
+## # ... with 316,490 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{enumerate}
@@ -12741,8 +12704,7 @@ The value of the auxiliary parameters are set as follows:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.1917775 -0.3312816  0.2428217  1.0164097
-## [5]  1.4761643  2.8297340
+## [1]  0.1917775 -0.3312816  0.2428217  1.0164097  1.4761643  2.8297340
 \end{verbatim}
 
 \begin{enumerate}
@@ -12819,48 +12781,27 @@ and the predicted share by:
 \end{Shaded}
 
 \begin{verbatim}
-##        t                i               j        
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00  
-##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00  
-##  Median : 48.00   Median :250.5   Median : 4.00  
-##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49  
-##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.00  
-##      v_x_1               v_x_2          
-##  Min.   :-4.302781   Min.   :-4.542122  
-##  1st Qu.:-0.685539   1st Qu.:-0.679702  
-##  Median : 0.001041   Median : 0.000935  
-##  Mean   :-0.002541   Mean   : 0.000478  
-##  3rd Qu.: 0.673061   3rd Qu.: 0.673109  
-##  Max.   : 3.809895   Max.   : 4.313621  
-##      v_x_3                v_p           
-##  Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.672701   1st Qu.:-0.669446  
-##  Median : 0.003104   Median : 0.001976  
-##  Mean   : 0.003428   Mean   : 0.000017  
-##  3rd Qu.: 0.678344   3rd Qu.: 0.670699  
-##  Max.   : 4.244194   Max.   : 4.074300  
-##       x_1             x_2               x_3         
-##  Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median :1.000   Median : 0.7797   Median : 1.1878  
-##  Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p        
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516  
-##  Median : 0.0000000   Median :0.8775   Median :1.916  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513  
-##        u                  q           
-##  Min.   :-345.287   Min.   :0.000000  
-##  1st Qu.:  -3.030   1st Qu.:0.001435  
-##  Median :   0.000   Median :0.030121  
-##  Mean   :  -1.869   Mean   :0.157978  
-##  3rd Qu.:   1.559   3rd Qu.:0.161379  
-##  Max.   :  22.434   Max.   :1.000000
+##        t                i               j             v_x_1               v_x_2          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00   Min.   :-4.302781   Min.   :-4.542122  
+##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00   1st Qu.:-0.685539   1st Qu.:-0.679702  
+##  Median : 48.00   Median :250.5   Median : 4.00   Median : 0.001041   Median : 0.000935  
+##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49   Mean   :-0.002541   Mean   : 0.000478  
+##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00   3rd Qu.: 0.673061   3rd Qu.: 0.673109  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.00   Max.   : 3.809895   Max.   : 4.313621  
+##      v_x_3                v_p                 x_1             x_2               x_3         
+##  Min.   :-3.957618   Min.   :-4.218131   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
+##  1st Qu.:-0.672701   1st Qu.:-0.669446   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
+##  Median : 0.003104   Median : 0.001976   Median :1.000   Median : 0.7797   Median : 1.1878  
+##  Mean   : 0.003428   Mean   : 0.000017   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
+##  3rd Qu.: 0.678344   3rd Qu.: 0.670699   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
+##  Max.   : 4.244194   Max.   : 4.074300   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
+##        xi                   c                p               u                  q           
+##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :-345.287   Min.   :0.000000  
+##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.:  -3.030   1st Qu.:0.001435  
+##  Median : 0.0000000   Median :0.8775   Median :1.916   Median :   0.000   Median :0.030121  
+##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   :  -1.869   Mean   :0.157978  
+##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:   1.559   3rd Qu.:0.161379  
+##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :  22.434   Max.   :1.000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -12888,34 +12829,20 @@ and the predicted share by:
 \end{Shaded}
 
 \begin{verbatim}
-##        t                j              x_1       
-##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000  
-##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000  
-##  Median : 48.00   Median : 4.00   Median :1.000  
-##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842  
-##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000  
-##  Max.   :100.00   Max.   :10.00   Max.   :1.000  
-##       x_2               x_3         
-##  Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median : 0.7797   Median : 1.1878  
-##  Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p        
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516  
-##  Median : 0.0000000   Median :0.8775   Median :1.916  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513  
-##        q                 s           
-##  Min.   :  1.748   Min.   :0.003497  
-##  1st Qu.: 17.982   1st Qu.:0.035964  
-##  Median : 40.241   Median :0.080483  
-##  Mean   : 78.989   Mean   :0.157978  
-##  3rd Qu.:123.006   3rd Qu.:0.246011  
-##  Max.   :325.631   Max.   :0.651262  
+##        t                j              x_1             x_2               x_3         
+##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
+##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
+##  Median : 48.00   Median : 4.00   Median :1.000   Median : 0.7797   Median : 1.1878  
+##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
+##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
+##  Max.   :100.00   Max.   :10.00   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
+##        xi                   c                p               q                 s           
+##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :  1.748   Min.   :0.003497  
+##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.: 17.982   1st Qu.:0.035964  
+##  Median : 0.0000000   Median :0.8775   Median :1.916   Median : 40.241   Median :0.080483  
+##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   : 78.989   Mean   :0.157978  
+##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:123.006   3rd Qu.:0.246011  
+##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :325.631   Max.   :0.651262  
 ##        y           
 ##  Min.   :-4.23971  
 ##  1st Qu.:-1.95098  
@@ -12968,8 +12895,7 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.1006013  2.7039824  1.0540278  2.4697389
-## [5]  1.6721181 -1.0283872
+## [1]  0.1006013  2.7039824  1.0540278  2.4697389  1.6721181 -1.0283872
 \end{verbatim}
 
 \begin{enumerate}
@@ -12995,8 +12921,7 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  4.0000000  0.1836433 -0.8356286  1.5952808
-## [5]  0.3295078  0.8204684  0.5000000  1.0000000
+## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684  0.5000000  1.0000000
 \end{verbatim}
 
 \begin{enumerate}
@@ -13017,8 +12942,7 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 
 \begin{verbatim}
 ## $par
-## [1]  4.0467164  0.1707430 -0.8092369  1.8086380
-## [5]  0.3718435  0.7275257  0.4892642  1.0453963
+## [1]  4.0467164  0.1707430 -0.8092369  1.8086380  0.3718435  0.7275257  0.4892642  1.0453963
 ## 
 ## $value
 ## [1] 0.0003270119
@@ -13159,21 +13083,19 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 
 \begin{verbatim}
 ## # A tibble: 316,500 x 15
-##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1
-##    <int> <int> <dbl>  <dbl>   <dbl> <dbl>   <dbl> <dbl>
-##  1     1     1     0 -1.37   0.211   1.65  0.0141     0
-##  2     1     1     1 -1.37   0.211   1.65  0.0141     1
-##  3     1     1     4 -1.37   0.211   1.65  0.0141     1
-##  4     1     2     0  1.37   0.378   1.35  0.387      0
-##  5     1     2     1  1.37   0.378   1.35  0.387      1
-##  6     1     2     4  1.37   0.378   1.35  0.387      1
-##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0
-##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1
-##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1
-## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0
-## # ... with 316,490 more rows, and 7 more variables:
-## #   x_2 <dbl>, x_3 <dbl>, xi <dbl>, c <dbl>, p <dbl>,
-## #   u <dbl>, q <dbl>
+##        t     i     j  v_x_1   v_x_2 v_x_3     v_p   x_1    x_2     x_3      xi     c     p
+##    <int> <int> <dbl>  <dbl>   <dbl> <dbl>   <dbl> <dbl>  <dbl>   <dbl>   <dbl> <dbl> <dbl>
+##  1     1     1     0 -1.37   0.211   1.65  0.0141     0  0      0       0      0      0   
+##  2     1     1     1 -1.37   0.211   1.65  0.0141     1  0.975 -0.0324 -0.0156 0.604  1.58
+##  3     1     1     4 -1.37   0.211   1.65  0.0141     1 -0.611  1.19    0.0418 1.30   2.35
+##  4     1     2     0  1.37   0.378   1.35  0.387      0  0      0       0      0      0   
+##  5     1     2     1  1.37   0.378   1.35  0.387      1  0.975 -0.0324 -0.0156 0.604  1.58
+##  6     1     2     4  1.37   0.378   1.35  0.387      1 -0.611  1.19    0.0418 1.30   2.35
+##  7     1     3     0 -2.06  -0.0662 -2.45 -1.17       0  0      0       0      0      0   
+##  8     1     3     1 -2.06  -0.0662 -2.45 -1.17       1  0.975 -0.0324 -0.0156 0.604  1.58
+##  9     1     3     4 -2.06  -0.0662 -2.45 -1.17       1 -0.611  1.19    0.0418 1.30   2.35
+## 10     1     4     0 -0.992 -0.727  -1.33 -1.42       0  0      0       0      0      0   
+## # ... with 316,490 more rows, and 2 more variables: u <dbl>, q <dbl>
 ## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 \end{verbatim}
 
@@ -13184,48 +13106,27 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 \end{Shaded}
 
 \begin{verbatim}
-##        t                i               j        
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00  
-##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00  
-##  Median : 48.00   Median :250.5   Median : 4.00  
-##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49  
-##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.00  
-##      v_x_1               v_x_2          
-##  Min.   :-4.302781   Min.   :-4.542122  
-##  1st Qu.:-0.685539   1st Qu.:-0.679702  
-##  Median : 0.001041   Median : 0.000935  
-##  Mean   :-0.002541   Mean   : 0.000478  
-##  3rd Qu.: 0.673061   3rd Qu.: 0.673109  
-##  Max.   : 3.809895   Max.   : 4.313621  
-##      v_x_3                v_p           
-##  Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.672701   1st Qu.:-0.669446  
-##  Median : 0.003104   Median : 0.001976  
-##  Mean   : 0.003428   Mean   : 0.000017  
-##  3rd Qu.: 0.678344   3rd Qu.: 0.670699  
-##  Max.   : 4.244194   Max.   : 4.074300  
-##       x_1             x_2               x_3         
-##  Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median :1.000   Median : 0.7797   Median : 1.1878  
-##  Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p        
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516  
-##  Median : 0.0000000   Median :0.8775   Median :1.916  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513  
-##        u                  q           
-##  Min.   :-345.287   Min.   :0.000000  
-##  1st Qu.:  -3.030   1st Qu.:0.001435  
-##  Median :   0.000   Median :0.030121  
-##  Mean   :  -1.869   Mean   :0.157978  
-##  3rd Qu.:   1.559   3rd Qu.:0.161379  
-##  Max.   :  22.434   Max.   :1.000000
+##        t                i               j             v_x_1               v_x_2          
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.00   Min.   :-4.302781   Min.   :-4.542122  
+##  1st Qu.: 23.00   1st Qu.:125.8   1st Qu.: 2.00   1st Qu.:-0.685539   1st Qu.:-0.679702  
+##  Median : 48.00   Median :250.5   Median : 4.00   Median : 0.001041   Median : 0.000935  
+##  Mean   : 49.67   Mean   :250.5   Mean   : 4.49   Mean   :-0.002541   Mean   : 0.000478  
+##  3rd Qu.: 77.00   3rd Qu.:375.2   3rd Qu.: 7.00   3rd Qu.: 0.673061   3rd Qu.: 0.673109  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.00   Max.   : 3.809895   Max.   : 4.313621  
+##      v_x_3                v_p                 x_1             x_2               x_3         
+##  Min.   :-3.957618   Min.   :-4.218131   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
+##  1st Qu.:-0.672701   1st Qu.:-0.669446   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
+##  Median : 0.003104   Median : 0.001976   Median :1.000   Median : 0.7797   Median : 1.1878  
+##  Mean   : 0.003428   Mean   : 0.000017   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
+##  3rd Qu.: 0.678344   3rd Qu.: 0.670699   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
+##  Max.   : 4.244194   Max.   : 4.074300   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
+##        xi                   c                p               u                  q           
+##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :-345.287   Min.   :0.000000  
+##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.:  -3.030   1st Qu.:0.001435  
+##  Median : 0.0000000   Median :0.8775   Median :1.916   Median :   0.000   Median :0.030121  
+##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   :  -1.869   Mean   :0.157978  
+##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:   1.559   3rd Qu.:0.161379  
+##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :  22.434   Max.   :1.000000
 \end{verbatim}
 
 \begin{Shaded}
@@ -13235,10 +13136,8 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 \end{Shaded}
 
 \begin{verbatim}
-##       Min.    1st Qu.     Median       Mean    3rd Qu. 
-## -9.437e-16 -6.939e-18  0.000e+00 -1.050e-19  1.843e-18 
-##       Max. 
-##  9.992e-16
+##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+## -9.437e-16 -6.939e-18  0.000e+00 -1.050e-19  1.843e-18  9.992e-16
 \end{verbatim}
 
 \begin{enumerate}
@@ -13268,21 +13167,20 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 
 \begin{verbatim}
 ## # A tibble: 633 x 11
-##        t     j   x_1    x_2     x_3      xi     c     p
-##    <int> <dbl> <dbl>  <dbl>   <dbl>   <dbl> <dbl> <dbl>
-##  1     1     0     0  0      0       0      0      0   
-##  2     1     1     1  0.975 -0.0324 -0.0156 0.604  1.58
-##  3     1     4     1 -0.611  1.19    0.0418 1.30   2.35
-##  4     2     0     0  0      0       0      0      0   
-##  5     2     1     1  0.975 -0.0324 -0.0394 0.890  1.87
-##  6     2     3     1  1.15   1.64    0.110  2.29   3.40
-##  7     2     4     1 -0.611  1.19    0.0763 0.997  2.09
-##  8     2     6     1  0.780  1.56   -0.0253 1.15   2.13
-##  9     2     7     1 -1.24   0.149   0.0697 0.613  1.68
-## 10     2     8     1 -4.43  -3.98    0.0557 0.629  1.67
-## # ... with 623 more rows, and 3 more variables:
-## #   q <dbl>, s <dbl>, y <dbl>
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+##        t     j   x_1    x_2     x_3      xi     c     p      q      s      y
+##    <int> <dbl> <dbl>  <dbl>   <dbl>   <dbl> <dbl> <dbl>  <dbl>  <dbl>  <dbl>
+##  1     1     0     0  0      0       0      0      0    199.   0.398   0    
+##  2     1     1     1  0.975 -0.0324 -0.0156 0.604  1.58 260.   0.521   0.270
+##  3     1     4     1 -0.611  1.19    0.0418 1.30   2.35  40.8  0.0816 -1.58 
+##  4     2     0     0  0      0       0      0      0    106.   0.211   0    
+##  5     2     1     1  0.975 -0.0324 -0.0394 0.890  1.87  32.9  0.0658 -1.17 
+##  6     2     3     1  1.15   1.64    0.110  2.29   3.40   6.78 0.0136 -2.75 
+##  7     2     4     1 -0.611  1.19    0.0763 0.997  2.09  14.1  0.0282 -2.01 
+##  8     2     6     1  0.780  1.56   -0.0253 1.15   2.13  17.4  0.0347 -1.81 
+##  9     2     7     1 -1.24   0.149   0.0697 0.613  1.68  25.2  0.0504 -1.43 
+## 10     2     8     1 -4.43  -3.98    0.0557 0.629  1.67 290.   0.580   1.01 
+## # ... with 623 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -13292,34 +13190,20 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 \end{Shaded}
 
 \begin{verbatim}
-##        t                j              x_1       
-##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000  
-##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000  
-##  Median : 48.00   Median : 4.00   Median :1.000  
-##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842  
-##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000  
-##  Max.   :100.00   Max.   :10.00   Max.   :1.000  
-##       x_2               x_3         
-##  Min.   :-4.4294   Min.   :-3.9787  
-##  1st Qu.:-0.6108   1st Qu.: 0.0000  
-##  Median : 0.7797   Median : 1.1878  
-##  Mean   : 0.3015   Mean   : 0.5034  
-##  3rd Qu.: 1.4766   3rd Qu.: 1.6424  
-##  Max.   : 3.0236   Max.   : 1.8877  
-##        xi                   c                p        
-##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516  
-##  Median : 0.0000000   Median :0.8775   Median :1.916  
-##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797  
-##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336  
-##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513  
-##        q                 s           
-##  Min.   :  1.748   Min.   :0.003497  
-##  1st Qu.: 17.982   1st Qu.:0.035964  
-##  Median : 40.241   Median :0.080483  
-##  Mean   : 78.989   Mean   :0.157978  
-##  3rd Qu.:123.006   3rd Qu.:0.246011  
-##  Max.   :325.631   Max.   :0.651262  
+##        t                j              x_1             x_2               x_3         
+##  Min.   :  1.00   Min.   : 0.00   Min.   :0.000   Min.   :-4.4294   Min.   :-3.9787  
+##  1st Qu.: 23.00   1st Qu.: 2.00   1st Qu.:1.000   1st Qu.:-0.6108   1st Qu.: 0.0000  
+##  Median : 48.00   Median : 4.00   Median :1.000   Median : 0.7797   Median : 1.1878  
+##  Mean   : 49.67   Mean   : 4.49   Mean   :0.842   Mean   : 0.3015   Mean   : 0.5034  
+##  3rd Qu.: 77.00   3rd Qu.: 7.00   3rd Qu.:1.000   3rd Qu.: 1.4766   3rd Qu.: 1.6424  
+##  Max.   :100.00   Max.   :10.00   Max.   :1.000   Max.   : 3.0236   Max.   : 1.8877  
+##        xi                   c                p               q                 s           
+##  Min.   :-0.2996949   Min.   :0.0000   Min.   :0.000   Min.   :  1.748   Min.   :0.003497  
+##  1st Qu.:-0.0527368   1st Qu.:0.5250   1st Qu.:1.516   1st Qu.: 17.982   1st Qu.:0.035964  
+##  Median : 0.0000000   Median :0.8775   Median :1.916   Median : 40.241   Median :0.080483  
+##  Mean   :-0.0005149   Mean   :0.9507   Mean   :1.797   Mean   : 78.989   Mean   :0.157978  
+##  3rd Qu.: 0.0556663   3rd Qu.:1.3203   3rd Qu.:2.336   3rd Qu.:123.006   3rd Qu.:0.246011  
+##  Max.   : 0.3810277   Max.   :4.3043   Max.   :5.513   Max.   :325.631   Max.   :0.651262  
 ##        y           
 ##  Min.   :-4.23971  
 ##  1st Qu.:-1.95098  
@@ -13336,10 +13220,8 @@ Next, we estimate the model allowing for the product-market-specific unobserved 
 \end{Shaded}
 
 \begin{verbatim}
-##       Min.    1st Qu.     Median       Mean    3rd Qu. 
-## -1.665e-16 -1.388e-17  0.000e+00  5.549e-20  6.939e-18 
-##       Max. 
-##  2.220e-16
+##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+## -1.665e-16 -1.388e-17  0.000e+00  5.549e-20  6.939e-18  2.220e-16
 \end{verbatim}
 
 \begin{enumerate}
@@ -13396,10 +13278,8 @@ Start the algorithm with the true \(\delta_{jt}\) and check if the algorithm ret
 \end{Shaded}
 
 \begin{verbatim}
-##       Min.    1st Qu.     Median       Mean    3rd Qu. 
-## -1.776e-15 -2.220e-16  0.000e+00 -1.193e-17  0.000e+00 
-##       Max. 
-##  1.776e-15
+##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+## -1.776e-15 -2.220e-16  0.000e+00 -1.193e-17  0.000e+00  1.776e-15
 \end{verbatim}
 
 \begin{enumerate}
@@ -14119,8 +13999,7 @@ R & Rcpp \\
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069
-## [5]  1.4381007
+## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
 \end{verbatim}
 
 \begin{Shaded}
@@ -14132,12 +14011,9 @@ R & Rcpp \\
 \end{Shaded}
 
 \begin{verbatim}
-##            [,1]       [,2]       [,3]        [,4]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335
-##           [,5]
-## [1,] -0.385846
-## [2,]  1.290173
+##            [,1]       [,2]       [,3]        [,4]      [,5]
+## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
+## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
 \end{verbatim}
 
 \begin{itemize}
@@ -14230,16 +14106,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 
 \begin{verbatim}
 ## $x
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069
-## [5]  1.4381007
+## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
 ## 
 ## $Y
-##            [,1]       [,2]       [,3]        [,4]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335
-##           [,5]
-## [1,] -0.385846
-## [2,]  1.290173
+##            [,1]       [,2]       [,3]        [,4]      [,5]
+## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
+## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
 ## 
 ## $z
 ## [1] 1 2 3 4 5
@@ -14481,16 +14353,12 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069
-## [5]  1.4381007
+## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
 ## 
 ## [[2]]
-##            [,1]       [,2]       [,3]        [,4]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335
-##           [,5]
-## [1,] -0.385846
-## [2,]  1.290173
+##            [,1]       [,2]       [,3]        [,4]      [,5]
+## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
+## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -14554,16 +14422,12 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## $x
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069
-## [5]  1.4381007
+## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
 ## 
 ## $Y
-##            [,1]       [,2]       [,3]        [,4]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335
-##           [,5]
-## [1,] -0.385846
-## [2,]  1.290173
+##            [,1]       [,2]       [,3]        [,4]      [,5]
+## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
+## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
 ## 
 ## $z
 ## [1] 1 2 3 4 5

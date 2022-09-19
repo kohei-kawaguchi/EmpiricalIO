@@ -1003,6 +1003,7 @@ i_{jt} = f_t(k_{jt}, \omega_{jt}).
 <div id="two-step-approach-the-first-step" class="section level3 hasAnchor" number="3.3.14">
 <h3><span class="header-section-number">3.3.14</span> Two-step Approach: The First Step<a href="production.html#two-step-approach-the-first-step" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
+<li>In the following, I suppress the index of <span class="math inline">\(t\)</span> from unknown functions for notational simplicity.</li>
 <li>Insert <span class="math inline">\(\omega_{jt} = h(k_{jt}, i_{jt})\)</span> to the original equation to get:
 <span class="math display">\[\begin{equation}
 \begin{split}
@@ -1045,7 +1046,7 @@ y_{jt} &amp;= \beta_l l_{jt} + \underbrace{\beta_0 + \beta_k k_{jt} + h(k_{jt}, 
 <span class="math display">\[\begin{equation}
 \begin{split}
 &amp; \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0\\
-&amp; \Leftrightarrow \mathbb{E}\{\nu_{jt} + \eta_{jt}|k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0.
+&amp; \Leftrightarrow \mathbb{E}\{y_{jt} - \beta_l^0 l_{jt} -  \beta_0 - \beta_k k_{jt} - g[\phi^0(k_{j, t - 1}, i_{j, t - 1}) - (\beta_0 + \beta_k k_{j, t - 1})] |k_{jt}, k_{j, t - 1}, i_{j, t - 1}\} = 0.
 \end{split}
 \end{equation}\]</span></li>
 </ul>
@@ -1182,7 +1183,7 @@ is a function of <span class="math inline">\(\omega_{j, t - 1}\)</span> and <spa
 \begin{split}
 P_{jt} &amp;\equiv \mathbb{P}\{\chi_{jt} = 1|\mathcal{I}_{j, t - 1}\}\\
 &amp;= \mathbb{P}\{\omega_{jt} \ge \underline{\omega}(k_{jt}) |\mathcal{I}_{j, t - 1}\}\\
-&amp;= \mathbb{P}\{g(\omega_{j, t - 1}) + \nu_{jt} \ge \underline{\omega}[(1 - \delta) k_{j, t - 1} + i_{j, t - 1}]|\mathcal{I}_{j, t - 1} \}\\
+&amp;= \mathbb{P}\{g(\omega_{j, t - 1}) + \nu_{jt} \ge \underline{\omega}[\kappa(k_{j, t - 1}, i_{j, t - 1})]|\mathcal{I}_{j, t - 1} \}\\
 &amp;= \mathbb{P}\{ \chi_{jt} = 1| i_{j, t - 1}, k_{j, t - 1}\}.
 \end{split}
 \end{equation}\]</span></li>
