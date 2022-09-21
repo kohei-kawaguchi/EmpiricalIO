@@ -74,7 +74,7 @@ delta <- 0.05
 ```
 
 2. Write a function that returns the log output given $l_{jt}$, $k_{jt}$, $\omega_{jt}$, and $\eta_{jt}$ under the given parameter values according to the above production function and name it `log_production(l, k, omega, eta, beta_0, beta_l, beta_k)`.
-```{r}
+```{r, echo = TRUE}
 log_production(
     l = 1,
     k = 1,
@@ -90,7 +90,7 @@ Suppose that the labor is determined after $\omega_{jt}$ is observed, but before
 
 3. Derive the optimal log labor as a function of $\omega_{jt}$, $\eta_{jt}$, $k_{jt}$, and wage. Write a function to return the optimal log labor given the variables and parameters and name it `log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)`. 
 
-```{r}
+```{r, echo = TRUE}
 log_labor_choice(
   k = 1, 
   wage = 1, 
@@ -106,7 +106,7 @@ As discussed in the class, if there is no additional variation in labor, the coe
 
 4. Modify the previous function by including $\iota_{jt}$ as an additional input and name it `log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)`.
 
-```{r}
+```{r, echo = TRUE}
 log_labor_choice_error(
   k = 1, 
   wage = 1, 
@@ -128,7 +128,7 @@ $$
 where $I_{jt}$ and $K_{jt}$ are investment and capital in level. Set $\gamma = 0.1$, i.e., the investment is strictly increasing in $\omega_{jt}$. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.
 
 5. Define variable $\gamma$ and assign it the value. Write a function that returns the investment given $K_{jt}$,  $\omega_{jt}$, and parameter values, according to the previous equation, and name it `investment_choice(k, omega, gamma, delta)`.
-```{r}
+```{r, echo = TRUE}
 gamma <- 0.1
 investment_choice(
   k = 1, 
@@ -166,6 +166,8 @@ df <-
     omega = rnorm(J, 0, sigma_v_initial),
     wage = wage
   )
+```
+```{r, echo = TRUE}
 df
 ```
 
@@ -184,6 +186,8 @@ df <-
     inv = investment_choice(k, omega, gamma, delta)
   ) %>%
   dplyr::ungroup()
+```
+```{r, echo = TRUE}
 df
 ```
 
@@ -253,13 +257,20 @@ for (t in 2:T) {
   # append
   df_all <- dplyr::bind_rows(df_all, df)
 }
-df_all
 saveRDS(df_all, file = "data/a2/df_all.rds")
 ```
 
-10. Check the simulated data by making summary table.
 ```{r}
 df_all <- readRDS(file = "data/a2/df_all.rds")
+```
+```{r, echo = TRUE}
+df_all
+```
+
+
+
+10. Check the simulated data by making summary table.
+```{r}
 df_all_summary <-
   foreach (
     i = 1:dim(df_all)[2], 
@@ -284,7 +295,7 @@ kable(df_all_summary)
 
 For now, use the labor choice with optimization error. 
 
-1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. This is likely to give an upwardly biased estimates on $\beta_l$ and $\beta_k$. Why is it?
+1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. 
 ```{r}
 result_ols <-
   lm(
@@ -435,7 +446,7 @@ df_all_1st <-
     )
 phi <- fitted(result_1st) - 
   result_1st$xcoef["l_error"] * df_all$l_error
-df_all_1st$phi_t <- phi
+df_all_1st$phi_t <- phi %>% as.numeric()
 df_all_1st <- 
   df_all_1st %>%
   dplyr::arrange(
@@ -446,12 +457,14 @@ df_all_1st <-
   dplyr::mutate(phi_t_1 = dplyr::lag(phi_t, 1)) %>%
   dplyr::ungroup() %>%
   dplyr::select(-phi_t)
+```
+```{r, echo = TRUE}
 df_all_1st
 ```
 
 
 6. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_all_1st`, and name it `moment_olleypakes_2nd`. Show the values of the moments evaluated at the true parameters.
-```{r}
+```{r, echo = TRUE}
 moment_olleypakes_2nd(
   alpha = alpha, 
   beta_0 = beta_0, 
@@ -468,7 +481,7 @@ $$
 
 7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_all_1st`, and name it `objective_olleypakes_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
 
-```{r}
+```{r, echo = TRUE}
 W <- diag(3)
 theta <- 
   c(
@@ -529,7 +542,8 @@ objective_plot %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\alpha$")) + 
-  ylab("Objective")
+  ylab("Objective") +
+  theme_classic()
 objective_plot %>%
   ggplot(
     aes(
