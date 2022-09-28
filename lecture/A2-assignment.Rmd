@@ -207,7 +207,7 @@ df
 ```
 
 9. Repeat this procedure for $t = 1, \cdots 10$ by updating the capital and anticipated shocks, and name the resulting data frame `df_all`. Use the previously generated `df` as the data for `t = 1`. In each perio, generate `nu`, `iota`, and `eta` in this order, if you want to match the realization of the random variables.
-```{r, eval  = FALSE}
+```{r, eval = FALSE}
 df_all <- df
 for (t in 2:T) {
   # change time index
@@ -336,19 +336,19 @@ You can use `npplreg` function of `np` package to estimate a partially linear mo
 
 3. Return the summary of the first stage estimation and plot the fitted values against the data points.
 
-```{r, eval  = FALSE}
+```{r, eval = FALSE}
 result_1st_bw <-
   np::npplregbw(
     data = df_all,
-    formula = y_error ~ l_error + k + inv| k + inv
+    formula = y_error ~ l_error | k + inv
     )
 saveRDS(result_1st_bw, file = "data/a2/result_1st_bw.RData")
 ```
-```{r, eval  = FALSE}
+```{r, eval = FALSE}
 result_1st <-
   np::npplreg(
     data = df_all,
-    formula = y_error ~ l_error + k + inv| k + inv,
+    formula = y_error ~ l_error | k + inv,
     bws = result_1st_bw
     )
 saveRDS(result_1st, file = "data/a2/result_1st.rds")
@@ -375,24 +375,24 @@ result_1st_plot %>%
 
 4. Check that $\beta_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
 
-```{r, eval  = FALSE}
+```{r, eval = FALSE}
 result_1st_unidentified_bw <-
   np::npplregbw(
     data = df_all,
-    formula = y ~ l + k + inv| k + inv
+    formula = y ~ l | k + inv
     )
 saveRDS(
   result_1st_unidentified_bw, 
   file = "data/a2/result_1st_unidentified_bw.rds"
   )
 ```
-```{r, eval  = FALSE}
+```{r, eval = FALSE}
 result_1st_unidentified_bw <-
   readRDS(file = "data/a2/result_1st_unidentified_bw.rds")
 result_1st_unidentified <-
   np::npplreg(
     data = df_all,
-    formula = y ~ l + k + inv| k + inv,
+    formula = y ~ l | k + inv,
     bws = result_1st_unidentified_bw
     )
 saveRDS(
