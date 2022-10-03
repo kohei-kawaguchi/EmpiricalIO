@@ -179,13 +179,11 @@ df <-
   dplyr::mutate(
     iota = rnorm(J, 0, sigma_iota)
     ) %>%
-  dplyr::rowwise() %>%
   dplyr::mutate(
     l = log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta),
     l_error = log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta),
     inv = investment_choice(k, omega, gamma, delta)
-  ) %>%
-  dplyr::ungroup()
+  ) 
 ```
 ```{r, echo = TRUE}
 df
@@ -197,12 +195,10 @@ df
 df <- 
   df %>%
   dplyr::mutate(eta = rnorm(J, 0, sigma_eta)) %>%
-  dplyr::rowwise() %>%
   dplyr::mutate(
     y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k),
     y_error = log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k) 
-  ) %>%
-  dplyr::ungroup()
+  ) 
 df
 ```
 
@@ -236,23 +232,19 @@ for (t in 2:T) {
   df <- 
     df %>%
     dplyr::mutate(iota = rnorm(J, 0, sigma_iota)) %>%
-    dplyr::rowwise() %>%
     dplyr::mutate(
       l = log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta),
       l_error = log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta),
       inv = investment_choice(k, omega, gamma, delta)
-    ) %>%
-    dplyr::ungroup()
+    ) 
   # compute output
   df <- 
     df %>%
     dplyr::mutate(eta = rnorm(J, 0, sigma_eta)) %>%
-    dplyr::rowwise() %>%
     dplyr::mutate(
       y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k),
       y_error = log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k) 
-    ) %>%
-    dplyr::ungroup()
+    ) 
   
   # append
   df_all <- dplyr::bind_rows(df_all, df)

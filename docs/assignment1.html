@@ -701,7 +701,7 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 <ol style="list-style-type: decimal">
 <li>To simulate data, first make a data frame as follows:</li>
 </ol>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="assignment1.html#cb60-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="assignment1.html#cb27-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 2,000 × 3
 ##        i     k     x
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -720,8 +720,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 <ol start="2" style="list-style-type: decimal">
 <li>Second, draw type-I extreme value random variables. Set the seed at 1. You can use <code>evd</code> package to draw the variables. You should get exactly the same realization if the seed is correctly set.</li>
 </ol>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="assignment1.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="assignment1.html#cb63-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="assignment1.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="assignment1.html#cb30-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 2,000 × 4
 ##        i     k     x       e
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -740,8 +740,8 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 <ol start="3" style="list-style-type: decimal">
 <li>Third, compute the latent value of each option to obtain the following data frame:</li>
 </ol>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="assignment1.html#cb65-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.2</span></span></code></pre></div>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="assignment1.html#cb66-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="assignment1.html#cb32-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.2</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="assignment1.html#cb33-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 2,000 × 5
 ##        i     k     x       e  latent
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -760,7 +760,7 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 <ol start="4" style="list-style-type: decimal">
 <li>Finally, compute <span class="math inline">\(y\)</span> by comparing the latent values of <span class="math inline">\(k = 1, 2\)</span> for each <span class="math inline">\(i\)</span> to obtain the following result:</li>
 </ol>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="assignment1.html#cb68-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="assignment1.html#cb35-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 2,000 × 6
 ##        i     k     x       e  latent     y
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -794,44 +794,44 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 <ol style="list-style-type: decimal">
 <li>Write a function to compute the likelihood for a given <span class="math inline">\(\beta\)</span> and data and name the function <code>compute_loglikelihood_a1(b, df)</code>.</li>
 </ol>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="assignment1.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_loglikelihood_a1</span>(</span>
-<span id="cb70-2"><a href="assignment1.html#cb70-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> <span class="dv">1</span>,</span>
-<span id="cb70-3"><a href="assignment1.html#cb70-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">df =</span> df</span>
-<span id="cb70-4"><a href="assignment1.html#cb70-4" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="assignment1.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_loglikelihood_a1</span>(</span>
+<span id="cb37-2"><a href="assignment1.html#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> <span class="dv">1</span>,</span>
+<span id="cb37-3"><a href="assignment1.html#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">df =</span> df</span>
+<span id="cb37-4"><a href="assignment1.html#cb37-4" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
 <pre><code>## [1] -0.7542617</code></pre>
 <ol style="list-style-type: decimal">
 <li>Compute the value of log likelihood for <span class="math inline">\(\beta = 0, 0.1, \cdots, 1\)</span> and plot the result using <code>ggplot2</code> packages. You can use <code>latex2exp</code> package to use LaTeX math symbol in the label:</li>
 </ol>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="assignment1.html#cb72-1" aria-hidden="true" tabindex="-1"></a>b_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)</span>
-<span id="cb72-2"><a href="assignment1.html#cb72-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
-<span id="cb72-3"><a href="assignment1.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb72-4"><a href="assignment1.html#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> b_seq,</span>
-<span id="cb72-5"><a href="assignment1.html#cb72-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb72-6"><a href="assignment1.html#cb72-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb72-7"><a href="assignment1.html#cb72-7" aria-hidden="true" tabindex="-1"></a>      l <span class="ot">&lt;-</span> </span>
-<span id="cb72-8"><a href="assignment1.html#cb72-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">compute_loglikelihood_a1</span>(</span>
-<span id="cb72-9"><a href="assignment1.html#cb72-9" aria-hidden="true" tabindex="-1"></a>          b, </span>
-<span id="cb72-10"><a href="assignment1.html#cb72-10" aria-hidden="true" tabindex="-1"></a>          df</span>
-<span id="cb72-11"><a href="assignment1.html#cb72-11" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb72-12"><a href="assignment1.html#cb72-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(l)</span>
-<span id="cb72-13"><a href="assignment1.html#cb72-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb72-14"><a href="assignment1.html#cb72-14" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
-<span id="cb72-15"><a href="assignment1.html#cb72-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb72-16"><a href="assignment1.html#cb72-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> b_seq, </span>
-<span id="cb72-17"><a href="assignment1.html#cb72-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> output</span>
-<span id="cb72-18"><a href="assignment1.html#cb72-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb72-19"><a href="assignment1.html#cb72-19" aria-hidden="true" tabindex="-1"></a>output <span class="sc">%&gt;%</span></span>
-<span id="cb72-20"><a href="assignment1.html#cb72-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb72-21"><a href="assignment1.html#cb72-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb72-22"><a href="assignment1.html#cb72-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, </span>
-<span id="cb72-23"><a href="assignment1.html#cb72-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> y</span>
-<span id="cb72-24"><a href="assignment1.html#cb72-24" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb72-25"><a href="assignment1.html#cb72-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb72-26"><a href="assignment1.html#cb72-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb72-27"><a href="assignment1.html#cb72-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">TeX</span>(<span class="st">&quot;$</span><span class="sc">\\</span><span class="st">beta$&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb72-28"><a href="assignment1.html#cb72-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Loglikelihood&quot;</span>) <span class="sc">+</span></span>
-<span id="cb72-29"><a href="assignment1.html#cb72-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<p><img src="lecture_files/figure-html/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="assignment1.html#cb39-1" aria-hidden="true" tabindex="-1"></a>b_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)</span>
+<span id="cb39-2"><a href="assignment1.html#cb39-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
+<span id="cb39-3"><a href="assignment1.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb39-4"><a href="assignment1.html#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> b_seq,</span>
+<span id="cb39-5"><a href="assignment1.html#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb39-6"><a href="assignment1.html#cb39-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb39-7"><a href="assignment1.html#cb39-7" aria-hidden="true" tabindex="-1"></a>      l <span class="ot">&lt;-</span> </span>
+<span id="cb39-8"><a href="assignment1.html#cb39-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">compute_loglikelihood_a1</span>(</span>
+<span id="cb39-9"><a href="assignment1.html#cb39-9" aria-hidden="true" tabindex="-1"></a>          b, </span>
+<span id="cb39-10"><a href="assignment1.html#cb39-10" aria-hidden="true" tabindex="-1"></a>          df</span>
+<span id="cb39-11"><a href="assignment1.html#cb39-11" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb39-12"><a href="assignment1.html#cb39-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(l)</span>
+<span id="cb39-13"><a href="assignment1.html#cb39-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-14"><a href="assignment1.html#cb39-14" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
+<span id="cb39-15"><a href="assignment1.html#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb39-16"><a href="assignment1.html#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> b_seq, </span>
+<span id="cb39-17"><a href="assignment1.html#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> output</span>
+<span id="cb39-18"><a href="assignment1.html#cb39-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb39-19"><a href="assignment1.html#cb39-19" aria-hidden="true" tabindex="-1"></a>output <span class="sc">%&gt;%</span></span>
+<span id="cb39-20"><a href="assignment1.html#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
+<span id="cb39-21"><a href="assignment1.html#cb39-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb39-22"><a href="assignment1.html#cb39-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, </span>
+<span id="cb39-23"><a href="assignment1.html#cb39-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> y</span>
+<span id="cb39-24"><a href="assignment1.html#cb39-24" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb39-25"><a href="assignment1.html#cb39-25" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb39-26"><a href="assignment1.html#cb39-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb39-27"><a href="assignment1.html#cb39-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">TeX</span>(<span class="st">&quot;$</span><span class="sc">\\</span><span class="st">beta$&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb39-28"><a href="assignment1.html#cb39-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Loglikelihood&quot;</span>) <span class="sc">+</span></span>
+<span id="cb39-29"><a href="assignment1.html#cb39-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-69-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol style="list-style-type: decimal">
 <li>Find and report <span class="math inline">\(\beta\)</span> that maximizes the log likelihood for the simulated data. You can use <code>optim</code> function to achieve this. You will use <code>Brent</code> method and set the lower bound at -1 and upper bound at 1 for the parameter search.</li>
 </ol>
