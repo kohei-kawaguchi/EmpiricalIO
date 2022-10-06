@@ -1082,7 +1082,7 @@ where $\delta_t = (\delta_{1t}, \cdots, \delta_{Jt})'$,  $s_t = (s_{1t}, \cdots,
 \delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{t} - \ln \sigma_{t}(\delta_t^{(r)}, \theta_2),
 \end{equation}
 for $r = 0, 1, \cdots$.
-- @Berry1995a proved that $T_t$ as specified above is a __contraction mapping with modulus less than one__.
+- @berryAutomobilePricesMarket1995 proved that $T_t$ as specified above is a __contraction mapping with modulus less than one__.
 - This means that:
     1. $T_t$ has a unique fixed point;
     1. For arbitrary $\delta_t^{(r)}$, $\lim_{r \to \infty} T_t^r(\delta_t^{(0)})$ is the unique fixed point.
@@ -1279,12 +1279,12 @@ p_{jt} = \beta x_{jt} + \gamma w_{jt} + \nu_{jt}.
     - The latter will be true if the product is produced by the same manufacturer.
     - Then, the price of the same product in the other markets $p_{j, -t}$ will be valid instruments for the price of the product in a given market, $p_{jt}$. 
     
-- __BLP-type IV__ [@Berry1995a]:
+- __BLP-type IV__ [@berryAutomobilePricesMarket1995]:
     - In oligopoly, the price of a good in a market depends on the market structure, i.e., what kind of products are available in the market.
     - For example, if there are similar products in the market, the price will tend to be lower.
     - Then, the product characteristics of other products in the market , will be valid instrument for the price of goods in a given market, $p_{jt}$.
     - If there are multi-product firms, whether the other good is owned by the same company will also affect the price.
-    - Specifically, @Berry1995a use:
+    - Specifically, @berryAutomobilePricesMarket1995 use:
 
 \begin{equation}
 \sum_{k \neq j \in \mathcal{J}_t \cap \mathcal{F}_{f}} x_{kt},
@@ -1305,6 +1305,11 @@ p_{jt} = \beta x_{jt} + \gamma w_{jt} + \nu_{jt}.
     1. $J \to \infty$ but $T$ is fixed;
     1. The demand/cost functions are such that the correlation between markups and characteristics of other products decreases quickly enough as $J \to \infty$.
     1. There is no cost instruments or other sources of identification.
+    
+### PyBLP
+
+- @conlonBestPracticesDifferentiated2020 summarized the best practice for the BLP and implemented them in a Python packages [`PyBLP`](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjF0JvLlsv6AhXWP3AKHZEuCOkQFnoECBkQAQ&url=https%3A%2F%2Fpyblp.readthedocs.io%2F&usg=AOvVaw2N7G6WXZyh5rKPfD653rgI).
+- From R, we can use [`reticulate`](https://rstudio.github.io/reticulate/) to call Python functions.
 
 
 

@@ -334,6 +334,7 @@ div.csl-indent {
 <li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#control-function-approach"><i class="fa fa-check"></i><b>4.4.54</b> Control Function Approach</a></li>
 <li class="chapter" data-level="4.4.55" data-path="demand.html"><a href="demand.html#control-function-approach-1"><i class="fa fa-check"></i><b>4.4.55</b> Control Function Approach</a></li>
 <li class="chapter" data-level="4.4.56" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.56</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.4.57" data-path="demand.html"><a href="demand.html#pyblp"><i class="fa fa-check"></i><b>4.4.57</b> PyBLP</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a>
@@ -1805,7 +1806,7 @@ where <span class="math inline">\(\delta_t = (\delta_{1t}, \cdots, \delta_{Jt})&
 \delta_{t}^{(r + 1)} = T_t(\delta_{t}^{(r)}) = \delta_t^{(r)} + \ln s_{t} - \ln \sigma_{t}(\delta_t^{(r)}, \theta_2),
 \end{equation}\]</span>
 for <span class="math inline">\(r = 0, 1, \cdots\)</span>.</li>
-<li><span class="citation">Steven Berry, Levinsohn, &amp; Pakes (<a href="#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> proved that <span class="math inline">\(T_t\)</span> as specified above is a <strong>contraction mapping with modulus less than one</strong>.</li>
+<li><span class="citation">Steven Berry, Levinsohn, &amp; Pakes (<a href="#ref-berryAutomobilePricesMarket1995" role="doc-biblioref">1995</a>)</span> proved that <span class="math inline">\(T_t\)</span> as specified above is a <strong>contraction mapping with modulus less than one</strong>.</li>
 <li>This means that:
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(T_t\)</span> has a unique fixed point;</li>
@@ -2017,13 +2018,13 @@ p_{jt} = \beta x_{jt} + \gamma w_{jt} + \nu_{jt}.
 <li>The latter will be true if the product is produced by the same manufacturer.</li>
 <li>Then, the price of the same product in the other markets <span class="math inline">\(p_{j, -t}\)</span> will be valid instruments for the price of the product in a given market, <span class="math inline">\(p_{jt}\)</span>.</li>
 </ul></li>
-<li><strong>BLP-type IV</strong> <span class="citation">(<a href="#ref-Berry1995a" role="doc-biblioref">Steven Berry et al., 1995</a>)</span>:
+<li><strong>BLP-type IV</strong> <span class="citation">(<a href="#ref-berryAutomobilePricesMarket1995" role="doc-biblioref">Steven Berry et al., 1995</a>)</span>:
 <ul>
 <li>In oligopoly, the price of a good in a market depends on the market structure, i.e., what kind of products are available in the market.</li>
 <li>For example, if there are similar products in the market, the price will tend to be lower.</li>
 <li>Then, the product characteristics of other products in the market , will be valid instrument for the price of goods in a given market, <span class="math inline">\(p_{jt}\)</span>.</li>
 <li>If there are multi-product firms, whether the other good is owned by the same company will also affect the price.</li>
-<li>Specifically, <span class="citation">Steven Berry et al. (<a href="#ref-Berry1995a" role="doc-biblioref">1995</a>)</span> use:</li>
+<li>Specifically, <span class="citation">Steven Berry et al. (<a href="#ref-berryAutomobilePricesMarket1995" role="doc-biblioref">1995</a>)</span> use:</li>
 </ul></li>
 </ul>
 <p><span class="math display">\[\begin{equation}
@@ -2051,6 +2052,13 @@ p_{jt} = \beta x_{jt} + \gamma w_{jt} + \nu_{jt}.
 <li>There is no cost instruments or other sources of identification.</li>
 </ol></li>
 </ul>
+</div>
+<div id="pyblp" class="section level3 hasAnchor" number="4.4.57">
+<h3><span class="header-section-number">4.4.57</span> PyBLP<a href="demand.html#pyblp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><span class="citation">Conlon &amp; Gortmaker (<a href="#ref-conlonBestPracticesDifferentiated2020" role="doc-biblioref">2020</a>)</span> summarized the best practice for the BLP and implemented them in a Python packages <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwjF0JvLlsv6AhXWP3AKHZEuCOkQFnoECBkQAQ&amp;url=https%3A%2F%2Fpyblp.readthedocs.io%2F&amp;usg=AOvVaw2N7G6WXZyh5rKPfD653rgI"><code>PyBLP</code></a>.</li>
+<li>From R, we can use <a href="https://rstudio.github.io/reticulate/"><code>reticulate</code></a> to call Python functions.</li>
+</ul>
 
 </div>
 </div>
@@ -2075,8 +2083,8 @@ Bayer, P., Ferreira, F., Mcmillan, R., Altonji, J., Bajari, P., Berry, S., … T
 <div id="ref-Berry2013" class="csl-entry">
 Berry, Steven, Gandhi, A., &amp; Haile, P. (2013). <a href="https://doi.org/10.3982/ECTA10135">Connected <span>Substitutes</span> and <span>Invertibility</span> of <span>Demand</span></a>. <em>Econometrica</em>, <em>81</em>(5), 2087–2111.
 </div>
-<div id="ref-Berry1995a" class="csl-entry">
-Berry, Steven, Levinsohn, J., &amp; Pakes, A. (1995). <a href="https://doi.org/10.1523/JNEUROSCI.4697-10.2011">Automobile <span>Prices</span> in <span>Market Equilibrium</span></a>. <em>Econometrica</em>, <em>63</em>(4), 841–890.
+<div id="ref-berryAutomobilePricesMarket1995" class="csl-entry">
+Berry, Steven, Levinsohn, J., &amp; Pakes, A. (1995). <a href="https://doi.org/10.2307/2171802">Automobile <span>Prices</span> in <span>Market Equilibrium</span></a>. <em>Econometrica</em>, <em>63</em>(4), 841–890.
 </div>
 <div id="ref-Berry2007" class="csl-entry">
 Berry, Steven, &amp; Pakes, A. (2007). <a href="https://doi.org/10.1111/j.1468-2354.2007.00459.x">The <span>Pure Characteristics Demand Model</span></a>. <em>International Economic Review</em>, <em>48</em>(4), 1193–1225.
@@ -2088,10 +2096,13 @@ Blow, L., Browning, M., &amp; Crawford, I. (2008). <em>Revealed <span>Preference
 Bresnahan, Timothy F. (1987). The <span>Empirical Renaissance</span> in <span>Industrial Economics</span>. <em>The Journal of Industrial Economics</em>, <em>35</em>(4), 457–482.
 </div>
 <div id="ref-Cardell1997" class="csl-entry">
-Cardell, N. S. (1997). <a href="https://doi.org/10.1017/S0266466600005727">Variance <span>Components Structures</span> for the <span>Extreme</span>-<span>Value</span> and <span>Logistic Distributions</span> with <span>Application</span> to <span>Models</span> of <span>Heterogeneity</span></a>. <em>Econometric Theory</em>, <em>13</em>, 185–213.
+Cardell, N. S. (1997). <a href="https://doi.org/10.1017/S0266466600005727">Variance <span>Components Structures</span> for the <span>Extreme-Value</span> and <span>Logistic Distributions</span> with <span>Application</span> to <span>Models</span> of <span>Heterogeneity</span></a>. <em>Econometric Theory</em>, <em>13</em>, 185–213.
 </div>
 <div id="ref-Chung2002" class="csl-entry">
 Chung, W., &amp; Alcácer, J. (2002). <a href="https://doi.org/10.1287/mnsc.48.12.1534.440">Knowledge <span>Seeking</span> and <span>Location Choice</span> of <span>Foreign Direct Investment</span> in the <span>United States</span></a>. <em>Management Science</em>, <em>48</em>(12).
+</div>
+<div id="ref-conlonBestPracticesDifferentiated2020" class="csl-entry">
+Conlon, C., &amp; Gortmaker, J. (2020). <a href="https://doi.org/10.1111/1756-2171.12352">Best practices for differentiated products demand estimation with <span>PyBLP</span></a>. <em>The RAND Journal of Economics</em>, <em>51</em>(4), 1108–1161.
 </div>
 <div id="ref-Deaton1980" class="csl-entry">
 Deaton, A., &amp; Muellbauer, J. (1980). <em>An <span>Almost Ideal Demand System</span></em> (No. 3) (Vol. 70, pp. 312–326).
@@ -2115,7 +2126,7 @@ Handbury, J., &amp; Weinstein, D. E. (2014). <a href="https://doi.org/10.1093/re
 Hausman, Leonard, &amp; Zona. (1994). <a href="https://doi.org/10.2307/20075951">Competitive <span>Analysis</span> with <span>Differenciated Products</span></a>. <em>Annales d’Économie et de Statistique</em>, (34), 159–180.
 </div>
 <div id="ref-Holmes2011" class="csl-entry">
-Holmes, B. Y. T. H. J. H. (2011). <a href="https://doi.org/10.3982/ecta7699">The <span>Diffusion</span> of <span>Wal</span>-<span>Mart</span> and <span>Economies</span> of <span>Density</span></a>. <em>Econometrica</em>, <em>79</em>(1), 253–302.
+Holmes, B. Y. T. H. J. H. (2011). <a href="https://doi.org/10.3982/ecta7699">The <span>Diffusion</span> of <span>Wal-Mart</span> and <span>Economies</span> of <span>Density</span></a>. <em>Econometrica</em>, <em>79</em>(1), 253–302.
 </div>
 <div id="ref-Houthakker1950" class="csl-entry">
 Houthakker, H. S. (1950). Revealed <span>Preference</span> and the <span>Utility Function Author</span>. <em>Economica</em>, <em>17</em>(66), 159–174.
