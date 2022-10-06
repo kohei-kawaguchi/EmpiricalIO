@@ -331,7 +331,9 @@ div.csl-indent {
 <li class="chapter" data-level="4.4.51" data-path="demand.html"><a href="demand.html#estimating-linear-parameters"><i class="fa fa-check"></i><b>4.4.51</b> Estimating Linear Parameters</a></li>
 <li class="chapter" data-level="4.4.52" data-path="demand.html"><a href="demand.html#blp-algorithm"><i class="fa fa-check"></i><b>4.4.52</b> BLP Algorithm</a></li>
 <li class="chapter" data-level="4.4.53" data-path="demand.html"><a href="demand.html#mathematical-program-with-equilibrium-constraints-mpec"><i class="fa fa-check"></i><b>4.4.53</b> Mathematical Program with Equilibrium Constraints (MPEC)</a></li>
-<li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.54</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#control-function-approach"><i class="fa fa-check"></i><b>4.4.54</b> Control Function Approach</a></li>
+<li class="chapter" data-level="4.4.55" data-path="demand.html"><a href="demand.html#control-function-approach-1"><i class="fa fa-check"></i><b>4.4.55</b> Control Function Approach</a></li>
+<li class="chapter" data-level="4.4.56" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.56</b> Instrumental Variables</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a>
@@ -758,44 +760,44 @@ K_{j, t + 1} = (1 - \delta) K_{jt} + I_{jt}.
 <li><p>Define the parameter variables as above.</p></li>
 <li><p>Write a function that returns the log output given <span class="math inline">\(l_{jt}\)</span>, <span class="math inline">\(k_{jt}\)</span>, <span class="math inline">\(\omega_{jt}\)</span>, and <span class="math inline">\(\eta_{jt}\)</span> under the given parameter values according to the above production function and name it <code>log_production(l, k, omega, eta, beta_0, beta_l, beta_k)</code>.</p></li>
 </ol>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="assignment2.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_production</span>(</span>
-<span id="cb41-2"><a href="assignment2.html#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">l =</span> <span class="dv">1</span>,</span>
-<span id="cb41-3"><a href="assignment2.html#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">1</span>,</span>
-<span id="cb41-4"><a href="assignment2.html#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">omega =</span> <span class="dv">1</span>,</span>
-<span id="cb41-5"><a href="assignment2.html#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">eta =</span> <span class="dv">1</span>,</span>
-<span id="cb41-6"><a href="assignment2.html#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_0 =</span> beta_0,</span>
-<span id="cb41-7"><a href="assignment2.html#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_l =</span> beta_l,</span>
-<span id="cb41-8"><a href="assignment2.html#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_k =</span> beta_k</span>
-<span id="cb41-9"><a href="assignment2.html#cb41-9" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="assignment2.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_production</span>(</span>
+<span id="cb74-2"><a href="assignment2.html#cb74-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">l =</span> <span class="dv">1</span>,</span>
+<span id="cb74-3"><a href="assignment2.html#cb74-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">1</span>,</span>
+<span id="cb74-4"><a href="assignment2.html#cb74-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">omega =</span> <span class="dv">1</span>,</span>
+<span id="cb74-5"><a href="assignment2.html#cb74-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">eta =</span> <span class="dv">1</span>,</span>
+<span id="cb74-6"><a href="assignment2.html#cb74-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_0 =</span> beta_0,</span>
+<span id="cb74-7"><a href="assignment2.html#cb74-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_l =</span> beta_l,</span>
+<span id="cb74-8"><a href="assignment2.html#cb74-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_k =</span> beta_k</span>
+<span id="cb74-9"><a href="assignment2.html#cb74-9" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
 <pre><code>## [1] 3.9</code></pre>
 <p>Suppose that the labor is determined after <span class="math inline">\(\omega_{jt}\)</span> is observed, but before <span class="math inline">\(\eta_{jt}\)</span> is observed, given the log capital level <span class="math inline">\(k_{jt}\)</span>.</p>
 <ol start="3" style="list-style-type: decimal">
 <li>Derive the optimal log labor as a function of <span class="math inline">\(\omega_{jt}\)</span>, <span class="math inline">\(\eta_{jt}\)</span>, <span class="math inline">\(k_{jt}\)</span>, and wage. Write a function to return the optimal log labor given the variables and parameters and name it <code>log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)</code>.</li>
 </ol>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="assignment2.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_labor_choice</span>(</span>
-<span id="cb43-2"><a href="assignment2.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
-<span id="cb43-3"><a href="assignment2.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wage =</span> <span class="dv">1</span>, </span>
-<span id="cb43-4"><a href="assignment2.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
-<span id="cb43-5"><a href="assignment2.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
-<span id="cb43-6"><a href="assignment2.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_l =</span> beta_l, </span>
-<span id="cb43-7"><a href="assignment2.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
-<span id="cb43-8"><a href="assignment2.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma_eta =</span> sigma_eta</span>
-<span id="cb43-9"><a href="assignment2.html#cb43-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="assignment2.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_labor_choice</span>(</span>
+<span id="cb76-2"><a href="assignment2.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
+<span id="cb76-3"><a href="assignment2.html#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wage =</span> <span class="dv">1</span>, </span>
+<span id="cb76-4"><a href="assignment2.html#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
+<span id="cb76-5"><a href="assignment2.html#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
+<span id="cb76-6"><a href="assignment2.html#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_l =</span> beta_l, </span>
+<span id="cb76-7"><a href="assignment2.html#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
+<span id="cb76-8"><a href="assignment2.html#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma_eta =</span> sigma_eta</span>
+<span id="cb76-9"><a href="assignment2.html#cb76-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 1.388203</code></pre>
 <p>As discussed in the class, if there is no additional variation in labor, the coefficient on the labor <span class="math inline">\(\beta_l\)</span> is not identified. Thus, if we generate labor choice from the previous function, <span class="math inline">\(\beta_l\)</span> will not be identified from the simulated data. To see this, we write a modified version of the previous function in which <span class="math inline">\(\omega_{jt}\)</span> is replaced with <span class="math inline">\(\omega_{jt} + \iota_{jt}\)</span>, where <span class="math inline">\(\iota_{jt}\)</span> is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is <span class="math inline">\(\omega_{jt} + \iota_{jt}\)</span>, even though the true shock is <span class="math inline">\(\omega_{jt}\)</span>.</p>
 <ol start="4" style="list-style-type: decimal">
 <li>Modify the previous function by including <span class="math inline">\(\iota_{jt}\)</span> as an additional input and name it <code>log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)</code>.</li>
 </ol>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="assignment2.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_labor_choice_error</span>(</span>
-<span id="cb45-2"><a href="assignment2.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
-<span id="cb45-3"><a href="assignment2.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wage =</span> <span class="dv">1</span>, </span>
-<span id="cb45-4"><a href="assignment2.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
-<span id="cb45-5"><a href="assignment2.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
-<span id="cb45-6"><a href="assignment2.html#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_l =</span> beta_l, </span>
-<span id="cb45-7"><a href="assignment2.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
-<span id="cb45-8"><a href="assignment2.html#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">iota =</span> <span class="dv">1</span>, </span>
-<span id="cb45-9"><a href="assignment2.html#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma_eta =</span> sigma_eta</span>
-<span id="cb45-10"><a href="assignment2.html#cb45-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="assignment2.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_labor_choice_error</span>(</span>
+<span id="cb78-2"><a href="assignment2.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
+<span id="cb78-3"><a href="assignment2.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wage =</span> <span class="dv">1</span>, </span>
+<span id="cb78-4"><a href="assignment2.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
+<span id="cb78-5"><a href="assignment2.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
+<span id="cb78-6"><a href="assignment2.html#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_l =</span> beta_l, </span>
+<span id="cb78-7"><a href="assignment2.html#cb78-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
+<span id="cb78-8"><a href="assignment2.html#cb78-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">iota =</span> <span class="dv">1</span>, </span>
+<span id="cb78-9"><a href="assignment2.html#cb78-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma_eta =</span> sigma_eta</span>
+<span id="cb78-10"><a href="assignment2.html#cb78-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 2.638203</code></pre>
 <p>Consider an investment process such that:
 <span class="math display">\[
@@ -805,19 +807,19 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 <ol start="5" style="list-style-type: decimal">
 <li>Define variable <span class="math inline">\(\gamma\)</span> and assign it the value. Write a function that returns the investment given <span class="math inline">\(K_{jt}\)</span>, <span class="math inline">\(\omega_{jt}\)</span>, and parameter values, according to the previous equation, and name it <code>investment_choice(k, omega, gamma, delta)</code>.</li>
 </ol>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="assignment2.html#cb47-1" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb47-2"><a href="assignment2.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">investment_choice</span>(</span>
-<span id="cb47-3"><a href="assignment2.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
-<span id="cb47-4"><a href="assignment2.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
-<span id="cb47-5"><a href="assignment2.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gamma =</span> gamma, </span>
-<span id="cb47-6"><a href="assignment2.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
-<span id="cb47-7"><a href="assignment2.html#cb47-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="assignment2.html#cb80-1" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb80-2"><a href="assignment2.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">investment_choice</span>(</span>
+<span id="cb80-3"><a href="assignment2.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
+<span id="cb80-4"><a href="assignment2.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
+<span id="cb80-5"><a href="assignment2.html#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gamma =</span> gamma, </span>
+<span id="cb80-6"><a href="assignment2.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
+<span id="cb80-7"><a href="assignment2.html#cb80-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.4077423</code></pre>
 <p>Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables <span class="math inline">\(k_{jt}\)</span> and <span class="math inline">\(\omega_{jt}\)</span> as follows.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Draw <span class="math inline">\(k_{j1}\)</span> from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw <span class="math inline">\(\omega_{j1}\)</span> from its stationary distribution (check the stationary distribution of AR(1) process). Draw a wage. Before simulating the rest of the data, set the seed at 1.</li>
 </ol>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="assignment2.html#cb49-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="assignment2.html#cb82-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 × 5
 ##        j     t     k   omega  wage
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -831,12 +833,11 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 ##  8     8     1 1.37  -1.34     0.5
 ##  9     9     1 1.29  -0.873    0.5
 ## 10    10     1 0.847  0.699    0.5
-## # … with 990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 990 more rows</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Draw optimization error <span class="math inline">\(\iota_{jt}\)</span> and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.</li>
 </ol>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="assignment2.html#cb51-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="assignment2.html#cb84-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 1,000 × 9
 ##        j     t     k   omega  wage     iota      l l_error     inv
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -850,45 +851,42 @@ where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">
 ##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
 ##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
 ## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
-## # … with 990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 990 more rows</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error <code>y</code> and the one with optimization error <code>y_error</code>.</li>
 </ol>
 <pre><code>## # A tibble: 1,000 × 12
-##        j     t     k   omega  wage     iota      l l_error     inv     eta     y
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96 
-## # … with 990 more rows, and 1 more variable: y_error &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+##        j     t     k   omega  wage     iota      l l_error     inv     eta     y y_error
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95 
+## # … with 990 more rows</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Repeat this procedure for <span class="math inline">\(t = 1, \cdots 10\)</span> by updating the capital and anticipated shocks, and name the resulting data frame <code>df_all</code>. Use the previously generated <code>df</code> as the data for <code>t = 1</code>. In each perio, generate <code>nu</code>, <code>iota</code>, and <code>eta</code> in this order, if you want to match the realization of the random variables.</li>
 </ol>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="assignment2.html#cb54-1" aria-hidden="true" tabindex="-1"></a>df_all</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="assignment2.html#cb87-1" aria-hidden="true" tabindex="-1"></a>df_all</span></code></pre></div>
 <pre><code>## # A tibble: 10,000 × 13
-##        j     t     k   omega  wage     iota      l l_error     inv     eta     y
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77 
-##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03 
-##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03 
-##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62 
-##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79 
-##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274
-##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19 
-##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539
-##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44 
-## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96 
-## # … with 9,990 more rows, and 2 more variables: y_error &lt;dbl&gt;, nu &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+##        j     t     k   omega  wage     iota      l l_error     inv     eta     y y_error    nu
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76     NA
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01     NA
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05     NA
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63     NA
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78     NA
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282    NA
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19     NA
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523    NA
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41     NA
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95     NA
+## # … with 9,990 more rows</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>Check the simulated data by making summary table.</li>
 </ol>
@@ -1089,7 +1087,7 @@ by approximating <span class="math inline">\(\phi_t\)</span> by a kernel functio
 ## 
 ## Continuous Kernel Type: Second-Order Gaussian
 ## No. Continuous Explanatory Vars.: 2</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-90-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-64-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Check that <span class="math inline">\(\beta_l\)</span> is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.</li>
 </ol>
@@ -1140,7 +1138,7 @@ and:
 \]</span>
 for each <span class="math inline">\(j\)</span> and <span class="math inline">\(t\)</span> and save it as a data frame names <code>df_all_1st</code>.</li>
 </ol>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="assignment2.html#cb60-1" aria-hidden="true" tabindex="-1"></a>df_all_1st</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="assignment2.html#cb93-1" aria-hidden="true" tabindex="-1"></a>df_all_1st</span></code></pre></div>
 <pre><code>## # A tibble: 10,000 × 4
 ##        j     t y_error_tilde phi_t_1
 ##    &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;
@@ -1154,18 +1152,17 @@ for each <span class="math inline">\(j\)</span> and <span class="math inline">\(
 ##  8     1     8         0.684   0.439
 ##  9     1     9         0.939   0.525
 ## 10     1    10         1.49    0.838
-## # … with 9,990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 9,990 more rows</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Compute a function that returns the value of <span class="math inline">\(g_{JT}(\alpha, \beta_0, \beta_k)\)</span> given parameter values, data, and <code>df_all_1st</code>, and name it <code>moment_olleypakes_2nd</code>. Show the values of the moments evaluated at the true parameters.</li>
 </ol>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="assignment2.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moment_olleypakes_2nd</span>(</span>
-<span id="cb62-2"><a href="assignment2.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb62-3"><a href="assignment2.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
-<span id="cb62-4"><a href="assignment2.html#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
-<span id="cb62-5"><a href="assignment2.html#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all =</span> df_all, </span>
-<span id="cb62-6"><a href="assignment2.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all_1st =</span> df_all_1st</span>
-<span id="cb62-7"><a href="assignment2.html#cb62-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="assignment2.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moment_olleypakes_2nd</span>(</span>
+<span id="cb95-2"><a href="assignment2.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb95-3"><a href="assignment2.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
+<span id="cb95-4"><a href="assignment2.html#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
+<span id="cb95-5"><a href="assignment2.html#cb95-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all =</span> df_all, </span>
+<span id="cb95-6"><a href="assignment2.html#cb95-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all_1st =</span> df_all_1st</span>
+<span id="cb95-7"><a href="assignment2.html#cb95-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] -0.018459481 -0.019010969 -0.003815687</code></pre>
 <p>Based on the moment, we can define the objective function of a generalized method of moments estimator with a weighting matrix <span class="math inline">\(W\)</span> as:
 <span class="math display">\[
@@ -1174,24 +1171,24 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)&#39; W 
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function that returns the value of <span class="math inline">\(Q_{JT}(\alpha, \beta_0, \beta_k)\)</span> given the vector of parameter values, data, and <code>df_all_1st</code>, and name it <code>objective_olleypakes_2nd</code>. Setting <span class="math inline">\(W\)</span> at the identity matrix, show the value of the objective function evaluated at the true parameters.</li>
 </ol>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="assignment2.html#cb64-1" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">3</span>)</span>
-<span id="cb64-2"><a href="assignment2.html#cb64-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb64-3"><a href="assignment2.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb64-4"><a href="assignment2.html#cb64-4" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb64-5"><a href="assignment2.html#cb64-5" aria-hidden="true" tabindex="-1"></a>    beta_0, </span>
-<span id="cb64-6"><a href="assignment2.html#cb64-6" aria-hidden="true" tabindex="-1"></a>    beta_k</span>
-<span id="cb64-7"><a href="assignment2.html#cb64-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb64-8"><a href="assignment2.html#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="fu">objective_olleypakes_2nd</span>(</span>
-<span id="cb64-9"><a href="assignment2.html#cb64-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
-<span id="cb64-10"><a href="assignment2.html#cb64-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all =</span> df_all, </span>
-<span id="cb64-11"><a href="assignment2.html#cb64-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all_1st =</span> df_all_1st,</span>
-<span id="cb64-12"><a href="assignment2.html#cb64-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> W</span>
-<span id="cb64-13"><a href="assignment2.html#cb64-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="assignment2.html#cb97-1" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">3</span>)</span>
+<span id="cb97-2"><a href="assignment2.html#cb97-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb97-3"><a href="assignment2.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb97-4"><a href="assignment2.html#cb97-4" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb97-5"><a href="assignment2.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    beta_0, </span>
+<span id="cb97-6"><a href="assignment2.html#cb97-6" aria-hidden="true" tabindex="-1"></a>    beta_k</span>
+<span id="cb97-7"><a href="assignment2.html#cb97-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb97-8"><a href="assignment2.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="fu">objective_olleypakes_2nd</span>(</span>
+<span id="cb97-9"><a href="assignment2.html#cb97-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
+<span id="cb97-10"><a href="assignment2.html#cb97-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all =</span> df_all, </span>
+<span id="cb97-11"><a href="assignment2.html#cb97-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all_1st =</span> df_all_1st,</span>
+<span id="cb97-12"><a href="assignment2.html#cb97-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> W</span>
+<span id="cb97-13"><a href="assignment2.html#cb97-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##              [,1]
 ## [1,] 0.0007167288</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li><p>Draw the graph of the objective function when one of <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
-<img src="lecture_files/figure-html/unnamed-chunk-98-1.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-98-2.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-98-3.png" width="672" style="display: block; margin: auto;" /></p></li>
+<img src="lecture_files/figure-html/unnamed-chunk-72-1.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-72-2.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-72-3.png" width="672" style="display: block; margin: auto;" /></p></li>
 <li><p>Find the parameters that minimize the objective function using <code>optim</code>. You may use <code>L-BFGS-B</code> method to solve it.</p></li>
 </ol>
 <pre><code>## $par

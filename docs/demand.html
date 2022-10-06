@@ -331,7 +331,9 @@ div.csl-indent {
 <li class="chapter" data-level="4.4.51" data-path="demand.html"><a href="demand.html#estimating-linear-parameters"><i class="fa fa-check"></i><b>4.4.51</b> Estimating Linear Parameters</a></li>
 <li class="chapter" data-level="4.4.52" data-path="demand.html"><a href="demand.html#blp-algorithm"><i class="fa fa-check"></i><b>4.4.52</b> BLP Algorithm</a></li>
 <li class="chapter" data-level="4.4.53" data-path="demand.html"><a href="demand.html#mathematical-program-with-equilibrium-constraints-mpec"><i class="fa fa-check"></i><b>4.4.53</b> Mathematical Program with Equilibrium Constraints (MPEC)</a></li>
-<li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.54</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#control-function-approach"><i class="fa fa-check"></i><b>4.4.54</b> Control Function Approach</a></li>
+<li class="chapter" data-level="4.4.55" data-path="demand.html"><a href="demand.html#control-function-approach-1"><i class="fa fa-check"></i><b>4.4.55</b> Control Function Approach</a></li>
+<li class="chapter" data-level="4.4.56" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.56</b> Instrumental Variables</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a>
@@ -1961,8 +1963,48 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <li>If the problem is of large scale, you may better use the MPEC approach.</li>
 </ul>
 </div>
-<div id="instrumental-variables" class="section level3 hasAnchor" number="4.4.54">
-<h3><span class="header-section-number">4.4.54</span> Instrumental Variables<a href="demand.html#instrumental-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="control-function-approach" class="section level3 hasAnchor" number="4.4.54">
+<h3><span class="header-section-number">4.4.54</span> Control Function Approach<a href="demand.html#control-function-approach" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>The BLP method requires a share data. It does not work when each consumer face different choice set.</li>
+<li>How to deal with the endogeneity between the price and unobserved fixed effect in such a case?</li>
+<li>The equilibrium price vector in a market is determined by product characteristics, and productivity and demand conditions.</li>
+<li>It will depends on the unobserved product characteristics <span class="math inline">\(\xi_{jt}\)</span>.</li>
+<li>Suppose that the equilibrium price vector in a market is determined by:
+<span class="math display">\[\begin{equation}
+p_{t} = P(x_t, w_t, \xi_t),
+\end{equation}\]</span>
+where <span class="math inline">\(w_t\)</span> is a vector of variables that affect the price but are excluded from the indirect utility function.</li>
+<li>If we can estimate it and it is invertible in <span class="math inline">\(\xi_t\)</span>, then, we can have a proxy for <span class="math inline">\(\xi_t\)</span> such as:
+<span class="math display">\[\begin{equation}
+\hat{\xi}_t = \hat{P}^{-1}(x_t, z_t).
+\end{equation}\]</span></li>
+<li>If we insert this into the previous models, <span class="math inline">\(\xi_{jt}\)</span> is no longer <strong>unobserved</strong> product characteristics.</li>
+</ul>
+</div>
+<div id="control-function-approach-1" class="section level3 hasAnchor" number="4.4.55">
+<h3><span class="header-section-number">4.4.55</span> Control Function Approach<a href="demand.html#control-function-approach-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>For example, suppose that <span class="math inline">\(\xi_{jt}\)</span> is decomposed into anticipated shock <span class="math inline">\(\nu_{jt}\)</span> and ex-post shock <span class="math inline">\(\eta_{jt}\)</span> as
+<span class="math display">\[\begin{equation}
+\xi_{jt} = \rho \nu_{jt} + \eta_{jt}.
+\end{equation}\]</span></li>
+<li>Then, the equilibrium price should only depend on the anticpated shock as
+<span class="math display">\[\begin{equation}
+p_{jt} = \beta x_{jt} + \gamma w_{jt} + \nu_{jt}.
+\end{equation}\]</span></li>
+<li><span class="math inline">\(p_{jt}\)</span> and <span class="math inline">\(\xi_{jt}\)</span> are correlated due to ex-ante shock <span class="math inline">\(\nu_{jt}\)</span>.</li>
+<li>In the first stage, regress <span class="math inline">\(p_{jt}\)</span> on <span class="math inline">\(x_{jt}\)</span> and <span class="math inline">\(w_{jt}\)</span> to obtain <span class="math inline">\(\hat{\beta}\)</span> and <span class="math inline">\(\hat{\gamma}\)</span>.</li>
+<li>Then, construct <span class="math inline">\(\hat{\nu}_{jt} = p_{jt} - \hat{\beta} x_{jt} - \hat{\gamma} w_{jt}\)</span>.</li>
+<li>Then, we have <span class="math inline">\(\xi_{jt} = \rho \hat{\nu}_{jt} + \eta_{jt}\)</span>.</li>
+<li>In the second stage, insert this into the choice probability.</li>
+<li><span class="math inline">\(\eta_{jt}\)</span> is an unobserved <strong>random</strong> shock.</li>
+<li>We integrate <span class="math inline">\(\eta_{jt}\)</span> to calculate the likelihood.</li>
+<li>The instrument <span class="math inline">\(w_{jt}\)</span> is necessary, because, otherwise, <span class="math inline">\(\nu_{jt}\)</span> has no variation conditional on <span class="math inline">\(p_{jt}\)</span> and <span class="math inline">\(x_{jt}\)</span> and <span class="math inline">\(\rho\)</span> cannot be identified.</li>
+</ul>
+</div>
+<div id="instrumental-variables" class="section level3 hasAnchor" number="4.4.56">
+<h3><span class="header-section-number">4.4.56</span> Instrumental Variables<a href="demand.html#instrumental-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>The remaining problem is how to choose the excluded instrumental variable <span class="math inline">\(w_{jt}^*\)</span> for each product/market.</li>
 <li><strong>Cost shifters</strong>:
@@ -2009,20 +2051,6 @@ by the fixed-point algorithm and then evaluate the GMM objective function.</li>
 <li>There is no cost instruments or other sources of identification.</li>
 </ol></li>
 </ul>
-<!-- ### Control Function Approach -->
-<!-- - The equilibrium price vector in a market is determined by product characteristics, and productivity and demand conditions. -->
-<!-- - It will depends on the unobserved product characteristics $\xi_{jt}$. -->
-<!-- - Suppose that the equilibrium price vector in a market is determined by: -->
-<!-- \begin{equation} -->
-<!-- p_{t} = P(x_t, w_t, \xi_t), -->
-<!-- \end{equation} -->
-<!-- where $w_t$ is a vector of variables that affect the price but are excluded from the indirect utility function. -->
-<!-- - If we can estimate it and it is invertible in $\xi_t$, then, we can have a proxy for $\xi_t$ such as: -->
-<!-- \begin{equation} -->
-<!-- \hat{\xi}_t = \hat{P}^{-1}(x_t, z_t). -->
-<!-- \end{equation} -->
-<!-- - If we insert this into the previous models, $\xi_{jt}$ is no longer __unobserved__ product characteristics. -->
-<!-- - This approach is similar to Olley and Pakes method for production function estimation. -->
 
 </div>
 </div>

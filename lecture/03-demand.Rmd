@@ -1233,6 +1233,42 @@ by the fixed-point algorithm and then evaluate the GMM objective function.
 - If the problem is of large scale, you may better use the MPEC approach.
 
 
+### Control Function Approach
+
+- The BLP method requires a share data. It does not work when each consumer face different choice set.
+- How to deal with the endogeneity between the price and unobserved fixed effect in such a case?
+- The equilibrium price vector in a market is determined by product characteristics, and productivity and demand conditions.
+- It will depends on the unobserved product characteristics $\xi_{jt}$.
+- Suppose that the equilibrium price vector in a market is determined by:
+\begin{equation}
+p_{t} = P(x_t, w_t, \xi_t),
+\end{equation}
+where $w_t$ is a vector of variables that affect the price but are excluded from the indirect utility function.
+- If we can estimate it and it is invertible in $\xi_t$, then, we can have a proxy for $\xi_t$ such as:
+\begin{equation}
+\hat{\xi}_t = \hat{P}^{-1}(x_t, z_t).
+\end{equation}
+- If we insert this into the previous models, $\xi_{jt}$ is no longer __unobserved__ product characteristics.
+
+### Control Function Approach
+
+- For example, suppose that $\xi_{jt}$ is decomposed into anticipated shock $\nu_{jt}$ and ex-post shock $\eta_{jt}$ as
+\begin{equation}
+\xi_{jt} = \rho \nu_{jt} + \eta_{jt}.
+\end{equation}
+- Then, the equilibrium price should only depend on the anticpated shock as
+\begin{equation}
+p_{jt} = \beta x_{jt} + \gamma w_{jt} + \nu_{jt}.
+\end{equation}
+- $p_{jt}$ and $\xi_{jt}$ are correlated due to ex-ante shock $\nu_{jt}$. 
+- In the first stage, regress $p_{jt}$ on $x_{jt}$ and $w_{jt}$ to obtain $\hat{\beta}$ and $\hat{\gamma}$. 
+- Then, construct $\hat{\nu}_{jt} = p_{jt} - \hat{\beta} x_{jt} - \hat{\gamma} w_{jt}$.
+- Then, we have $\xi_{jt} = \rho \hat{\nu}_{jt} + \eta_{jt}$.
+- In the second stage, insert this into the choice probability.
+- $\eta_{jt}$ is an unobserved __random__ shock.
+- We integrate $\eta_{jt}$ to calculate the likelihood.
+- The instrument $w_{jt}$ is necessary, because, otherwise, $\nu_{jt}$ has no variation conditional on $p_{jt}$ and $x_{jt}$ and $\rho$ cannot be identified.
+
 ### Instrumental Variables
 
 - The remaining problem is how to choose the excluded instrumental variable $w_{jt}^*$ for each product/market.
@@ -1270,19 +1306,5 @@ by the fixed-point algorithm and then evaluate the GMM objective function.
     1. The demand/cost functions are such that the correlation between markups and characteristics of other products decreases quickly enough as $J \to \infty$.
     1. There is no cost instruments or other sources of identification.
 
-<!-- ### Control Function Approach -->
 
-<!-- - The equilibrium price vector in a market is determined by product characteristics, and productivity and demand conditions. -->
-<!-- - It will depends on the unobserved product characteristics $\xi_{jt}$. -->
-<!-- - Suppose that the equilibrium price vector in a market is determined by: -->
-<!-- \begin{equation} -->
-<!-- p_{t} = P(x_t, w_t, \xi_t), -->
-<!-- \end{equation} -->
-<!-- where $w_t$ is a vector of variables that affect the price but are excluded from the indirect utility function. -->
-<!-- - If we can estimate it and it is invertible in $\xi_t$, then, we can have a proxy for $\xi_t$ such as: -->
-<!-- \begin{equation} -->
-<!-- \hat{\xi}_t = \hat{P}^{-1}(x_t, z_t). -->
-<!-- \end{equation} -->
-<!-- - If we insert this into the previous models, $\xi_{jt}$ is no longer __unobserved__ product characteristics. -->
-<!-- - This approach is similar to Olley and Pakes method for production function estimation. -->
 
