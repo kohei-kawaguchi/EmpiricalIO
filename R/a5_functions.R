@@ -1,17 +1,42 @@
 # compute the derivatives of the smooth share
 compute_derivative_share_smooth <-
-  function(X, M, V, beta, sigma, mu, omega) {
-    df_choice_smooth <- compute_choice_smooth(X, M, V, beta, sigma, mu, omega)
+  function(
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
+    df_choice_smooth <- 
+      compute_choice_smooth(
+        X,
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     derivative_choice_smooth <-
-      foreach (tt = unique(df_choice_smooth$t),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        tt = unique(df_choice_smooth$t),
+        .packages = c(
+          "foreach",
+          "magrittr",
+          "EmpiricalIO"
+          )
+        ) %dopar% {
         # extract data for market t
-        df_choice_smooth_t <- df_choice_smooth %>%
+        df_choice_smooth_t <- 
+          df_choice_smooth %>%
           dplyr::filter(t == tt)
         # compute the derivative matrix for each market
         derivative_choice_smooth_t <-
-          foreach (ii = unique(df_choice_smooth_t$i)) %do% {
+          foreach (
+            ii = unique(df_choice_smooth_t$i)
+            ) %do% {
             # extract data for consumer i
             df_choice_smooth_ti <-
               df_choice_smooth_t %>%
@@ -51,18 +76,52 @@ compute_derivative_share_smooth <-
 
 # evaluate the equilibrium condition
 update_price <-
-  function(logp, X, M, V, beta, sigma, mu, omega, Delta) {
+  function(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta
+    ) {
     # replace the price in M
     p <- exp(logp)
     M[M$j > 0, "p"] <- p
     # compute the share and the derivative
-    share <- compute_share_smooth(X, M, V, beta, sigma, mu, omega)
-    ds <- compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+    share <- 
+      compute_share_smooth(
+        X,
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
+    ds <- 
+      compute_derivative_share_smooth(
+        X, 
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     # evaluate equilibrium condition
     p_new <-
-      foreach (tt = 1:length(ds),
-               .packages = c("foreach", "magrittr", "EmpiricalIO"),
-               .combine = "rbind") %dopar% {
+      foreach (
+        tt = 1:length(ds),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          ),
+        .combine = "rbind"
+        ) %dopar% {
                  print(tt)
                  # extract
                  share_t <- share %>%
@@ -73,7 +132,11 @@ update_price <-
                  # make Omega in market t
                  Omega_t <- - Delta[[tt]] * ds[[tt]]
                  # markup
-                 markup_t <- solve(Omega_t, s_t)
+                 markup_t <- 
+                   solve(
+                     Omega_t, 
+                     s_t
+                     )
                  # equilibrium condition
                  p_new_t <- c_t + markup_t
                  # return
@@ -85,18 +148,52 @@ update_price <-
 
 # evaluate the equilibrium condition
 compute_equilibrium_condition <-
-  function(logp, X, M, V, beta, sigma, mu, omega, Delta) {
+  function(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta
+    ) {
     # replace the price in M
     p <- exp(logp)
     M[M$j > 0, "p"] <- p
     # compute the share and the derivative
-    share <- compute_share_smooth(X, M, V, beta, sigma, mu, omega)
-    ds <- compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+    share <- 
+      compute_share_smooth(
+        X, 
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
+    ds <- 
+      compute_derivative_share_smooth(
+        X, 
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     # evaluate equilibrium condition
     equilibrium_condition <-
-      foreach (tt = 1:length(ds),
-               .packages = c("foreach", "magrittr", "EmpiricalIO"),
-               .combine = "rbind") %dopar% {
+      foreach (
+        tt = 1:length(ds),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          ),
+        .combine = "rbind"
+        ) %dopar% {
                  print(tt)
                  # extract
                  share_t <- share %>%
@@ -120,7 +217,17 @@ compute_equilibrium_condition <-
 
 # compute the equilibrium price
 compute_equilibrium_price <-
-  function(logp, X, M, V, beta, sigma, mu, omega, Delta) {
+  function(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta
+    ) {
     result <-
       nleqslv::nleqslv(
         x = logp,
@@ -141,18 +248,52 @@ compute_equilibrium_price <-
 
 # estimate marginal cost
 estimate_marginal_cost <-
-  function(logp, X, M, V, beta, sigma, mu, omega, Delta) {
+  function(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta
+    ) {
     # replace the price in M
     p <- exp(logp)
     M[M$j > 0, "p"] <- p
     # compute the share and the derivative
-    share <- compute_share_smooth(X, M, V, beta, sigma, mu, omega)
-    ds <- compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+    share <- 
+      compute_share_smooth(
+        X, 
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
+    ds <- 
+      compute_derivative_share_smooth(
+        X, 
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     # estimate the marginal cost
     marginal_cost_estimate <-
-      foreach (tt = 1:length(ds),
-               .packages = c("foreach", "magrittr", "EmpiricalIO"),
-               .combine = "rbind") %dopar% {
+      foreach (
+        tt = 1:length(ds),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          ),
+        .combine = "rbind"
+        ) %dopar% {
                  print(tt)
                  # extract
                  share_t <- share %>%
@@ -173,11 +314,30 @@ estimate_marginal_cost <-
 
 # compute producer surplus
 compute_producer_surplus <-
-  function(p, marginal_cost, X, M, V, beta, sigma, mu, omega) {
+  function(
+    p, 
+    marginal_cost, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
     # set the price
     M[M$j > 0, "p"] <- p
     # compute the share
-    share <- compute_share_smooth(X, M, V, beta, sigma, mu, omega)
+    share <- 
+      compute_share_smooth(
+        X, 
+        M, 
+        V, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     share <- share[share$j > 0, "s"]
     # compute the producer surplus
     producer_surplus <- share * (p - marginal_cost)
@@ -187,7 +347,16 @@ compute_producer_surplus <-
 
 # compute consumer surplus
 compute_consumer_surplus <-
-  function(p, X, M, V, beta, sigma, mu, omega) {
+  function(
+    p, 
+    X,
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
     # constants
     T <- max(M$t)
     N <- max(V$i)
@@ -195,26 +364,59 @@ compute_consumer_surplus <-
     # make choice data
     M_changed <- M
     M_changed[M_changed$j > 0, "p"] <- p
-    df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+    df <- 
+      expand.grid(
+        t = 1:T, 
+        i = 1:N, 
+        j = 0:J
+        ) %>%
       tibble::as_tibble() %>%
-      dplyr::left_join(V, by = c("i", "t")) %>%
-      dplyr::left_join(X, by = c("j")) %>%
-      dplyr::left_join(M_changed, by = c("j", "t")) %>%
+      dplyr::left_join(
+        V, 
+        by = c("i", "t")
+        ) %>%
+      dplyr::left_join(
+        X, 
+        by = c("j")
+        ) %>%
+      dplyr::left_join(
+        M_changed, 
+        by = c("j", "t")
+        ) %>%
       dplyr::filter(!is.na(p)) %>%
-      dplyr::arrange(t, i, j)
+      dplyr::arrange(
+        t, 
+        i, 
+        j
+        )
     # compute indirect utility
-    u <- compute_indirect_utility(df, beta, sigma, 
-                                  mu, omega)
+    u <- 
+      compute_indirect_utility(
+      df, 
+      beta, 
+      sigma, 
+      mu, 
+      omega
+      )
     # add as a column
-    df <- df %>%
+    df <- 
+      df %>%
       dplyr::mutate(u = as.numeric(u))
     # compute the inclusive value
-    consumer_surplus <- df %>%
+    consumer_surplus <- 
+      df %>%
       dplyr::mutate(alpha_i = - exp(mu + omega * v_p)) %>%
-      dplyr::group_by(t, i) %>%
+      dplyr::group_by(
+        t, 
+        i
+        ) %>%
       dplyr::mutate(consumer_surplus = log(sum(exp(u))) / abs(alpha_i)) %>%
       dplyr::ungroup() %>%
-      dplyr::distinct(t, i, .keep_all = TRUE)
+      dplyr::distinct(
+        t, 
+        i, 
+        .keep_all = TRUE
+        )
     # return
     return(consumer_surplus$consumer_surplus)
   }
@@ -222,13 +424,26 @@ compute_consumer_surplus <-
 
 # compute indirect utility
 compute_indirect_utility_matrix <- 
-  function(df_list, beta, sigma, mu, omega) {
+  function(
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
     value <-
-      foreach (t = 1:length(df_list),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        t = 1:length(df_list),
+        .packages = c(
+          "foreach", 
+          "magrittr",
+          "EmpiricalIO"
+          )
+        ) %dopar% {
         value_t <- 
-          foreach (i = 1:length(df_list[[t]])) %do% {
+          foreach (
+            i = 1:length(df_list[[t]])
+            ) %do% {
             # extrast matrices
             XX <- df_list[[t]][[i]]$XX
             p <- df_list[[t]][[i]]$p
@@ -236,7 +451,8 @@ compute_indirect_utility_matrix <-
             v_p <- df_list[[t]][[i]]$v_p
             xi <- df_list[[t]][[i]]$xi
             # random coefficients
-            beta_i <- as.matrix(rep(1, dim(v_x)[1])) %*% t(as.matrix(beta)) + v_x %*% diag(sigma) 
+            beta_i <- as.matrix(rep(1, dim(v_x)[1])) %*% t(as.matrix(beta)) +
+              v_x %*% diag(sigma) 
             alpha_i <- - exp(mu + omega * v_p)
             # conditional mean indirect utility
             value_ti <- as.matrix(rowSums(beta_i * XX) + p * alpha_i + xi) 
@@ -251,18 +467,36 @@ compute_indirect_utility_matrix <-
 
 # compute choice
 compute_choice_smooth_matrix <-
-  function(df_list, beta, sigma, 
-           mu, omega) {
+  function(
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
     # compute indirect utility
-    u <- compute_indirect_utility_matrix(
-      df_list, beta, sigma, mu, omega)
+    u <- 
+      compute_indirect_utility_matrix(
+      df_list, 
+      beta, 
+      sigma, 
+      mu, 
+      omega
+      )
     # make choice
     q <-
-      foreach (t = 1:length(u),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        t = 1:length(u),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          )
+        ) %dopar% {
         q_t <-
-          foreach (i = 1:length(u[[t]])) %do% {
+          foreach (
+            i = 1:length(u[[t]])
+            ) %do% {
             u_ti <- u[[t]][[i]]
             q_ti <- exp(u_ti) / sum(exp(u_ti))
             return(q_ti)
@@ -275,17 +509,37 @@ compute_choice_smooth_matrix <-
 
 # compute the derivatives of the smooth share
 compute_derivative_share_smooth_matrix <-
-  function(df_list, beta, sigma, mu, omega) {
-    q <- compute_choice_smooth_matrix(df_list, beta, sigma, mu, omega)
+  function(
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
+    q <- 
+      compute_choice_smooth_matrix(
+        df_list, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     derivative_choice_smooth <-
-      foreach (t = 1:length(q),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        t = 1:length(q),
+        .packages = c(
+          "foreach",
+          "magrittr", 
+          "EmpiricalIO"
+          )
+        ) %dopar% {
         # extract data for market t
         q_t <- q[[t]]
         # compute the derivative matrix for each market
         derivative_choice_smooth_t <-
-          foreach (i = 1:length(q_t)) %do% {
+          foreach (
+            i = 1:length(q_t)
+            ) %do% {
             # extract data for consumer i
             q_ti <- q_t[[i]]
             # drop the outside option
@@ -323,17 +577,32 @@ compute_derivative_share_smooth_matrix <-
 
 # compute share
 compute_share_smooth_matrix <-
-  function(df_list, beta, sigma, 
-           mu, omega) {
+  function(
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    ) {
     # compute choice
     df_choice <- 
-      compute_choice_smooth_matrix(df_list, beta, sigma, 
-                            mu, omega)
+      compute_choice_smooth_matrix(
+        df_list, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     # make share data
     df_share_smooth <-
-      foreach (t = 1:length(df_choice),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        t = 1:length(df_choice),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          )
+        ) %dopar% {
         q_t <- df_choice[[t]]
         q_t <- q_t %>%
           purrr::reduce(`+`)
@@ -346,15 +615,30 @@ compute_share_smooth_matrix <-
 
 # evaluate the equilibrium condition
 update_price_matrix <-
-  function(logp, df_list, beta, sigma, mu, omega, Delta) {
+  function(
+    logp, 
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta
+    ) {
     # replace the price in M
     p <- exp(logp)
     df_list <-
-      foreach (t = 1:length(df_list),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        t = 1:length(df_list),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          )
+        ) %dopar% {
         df_list_t <- 
-          foreach (i = 1:length(df_list[[t]])) %do% {
+          foreach (
+            i = 1:length(df_list[[t]])
+            ) %do% {
             df_list_ti <- df_list[[t]][[i]]
             j <- df_list_ti$j
             p_j <- p[j]
@@ -366,13 +650,32 @@ update_price_matrix <-
         return(df_list_t)
       }
     # compute the share and the derivative
-    share <- compute_share_smooth_matrix(df_list, beta, sigma, mu, omega)
-    ds <- compute_derivative_share_smooth_matrix(df_list, beta, sigma, mu, omega)
+    share <- 
+      compute_share_smooth_matrix(
+        df_list, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
+    ds <- 
+      compute_derivative_share_smooth_matrix(
+        df_list, 
+        beta, 
+        sigma, 
+        mu, 
+        omega
+        )
     # evaluate equilibrium condition
     p_new <-
-      foreach (tt = 1:length(ds),
-               .packages = c("foreach", "magrittr", "EmpiricalIO")
-               ) %dopar% {
+      foreach (
+        tt = 1:length(ds),
+        .packages = c(
+          "foreach", 
+          "magrittr", 
+          "EmpiricalIO"
+          )
+        ) %dopar% {
                  print(tt)
                  # extract
                  s_t <- share[[tt]] 

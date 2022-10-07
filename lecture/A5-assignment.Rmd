@@ -126,16 +126,26 @@ sd_p <- 0.05
 
 ```{r}
 # make product characteristics data
-X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
-X <- cbind(rep(1, J), X)
+X <- 
+  matrix(
+       sd_x * rnorm(J * (K - 1)), 
+       nrow = J
+       )
+X <- 
+  cbind(
+       rep(1, J),
+       X
+       )
 colnames(X) <- paste("x", 1:K, sep = "_")
-X <- data.frame(j = 1:J, X) %>%
+X <- 
+  data.frame(j = 1:J, X) %>%
   tibble::as_tibble()
 # add outside option
-X <- rbind(
+X <- 
+  rbind(
   rep(0, dim(X)[2]),
   X
-) 
+  ) 
 ```
 
 ```{r, echo = TRUE}
@@ -146,24 +156,40 @@ X
 
 ```{r}
 # make market-product data
-M <- expand.grid(j = 1:J, t = 1:T) %>%
+M <- 
+  expand.grid(
+    j = 1:J, 
+    t = 1:T
+    ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
     xi = sd_xi * rnorm(J*T),
     c = exp(sd_c * rnorm(J*T)),
     p = 0
   ) 
-M <- M %>%
+M <- 
+  M %>%
   dplyr::group_by(t) %>%
   dplyr::sample_frac(size = purrr::rdunif(1, J)/J) %>%
   dplyr::ungroup()
 # add outside option
-outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
-M <- rbind(
-  M,
-  outside
-) %>%
-  dplyr::arrange(t, j)
+outside <- 
+  data.frame(
+    j = 0, 
+    t = 1:T, 
+    xi = 0, 
+    c = 0, 
+    p = 0
+    )
+M <- 
+  rbind(
+    M,
+    outside
+    ) %>%
+  dplyr::arrange(
+    t, 
+    j
+    )
 ```
 
 ```{r, echo = TRUE}
@@ -174,12 +200,24 @@ M
 
 ```{r}
 # make consumer-market data
-V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
-colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V <- data.frame(
-  expand.grid(i = 1:N, t = 1:T),
+V <- 
+  matrix(
+    rnorm(N * T * (K + 1)), 
+    nrow = N * T
+    ) 
+colnames(V) <- 
+  c(
+    paste("v_x", 1:K, sep = "_"), 
+    "v_p"
+    )
+V <- 
+  data.frame(
+  expand.grid(
+    i = 1:N, 
+    t = 1:T
+    ),
   V
-) %>%
+  ) %>%
   tibble::as_tibble()
 ```
 
@@ -201,7 +239,15 @@ The returned object should be a list across markets and each element of the list
 
 ```{r, echo = TRUE, eval = FALSE}
 derivative_share_smooth <-
-  compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+  compute_derivative_share_smooth(
+    X,
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 ```
 ```{r, eval = FALSE}
 saveRDS(
@@ -225,8 +271,11 @@ derivative_share_smooth[[T]]
 6. Make a list `Delta` such that each element of the list is $J_t \times J_t$ matrix $\Delta_t$.
 ```{r}
 Delta <- 
-  foreach (tt = 1:T) %do% {
-    J_t <- M %>%
+  foreach (
+    tt = 1:T
+    ) %do% {
+    J_t <- 
+      M %>%
       dplyr::filter(t == tt) %>%
       dplyr::filter(j > 0) 
     J_t <- dim(J_t)[1]
@@ -252,18 +301,43 @@ lambda <- 1e-6
 # set the initial price
 p <- M[M$j > 0, "p"]
 logp <- log(rep(1, dim(p)[1]))
-p_new <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)
+p_new <- 
+  update_price(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta
+    )
 # iterate
 distance <- 10000
 while (distance > lambda) {
   p_old <- p_new
-  p_new <- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta)
+  p_new <- 
+    update_price(
+      log(p_old), 
+      X, 
+      M, 
+      V, 
+      beta, 
+      sigma, 
+      mu, 
+      omega, 
+      Delta
+      )
   distance <- max(abs(p_new - p_old))
   print(distance)
 }
 # save
 p_actual <- p_new
-save(p_actual, file = "data/A5_price_actual.RData")
+saveRDS(
+  p_actual, 
+  file = "data/A5_price_actual.rds"
+  )
 ```
 
 
@@ -299,17 +373,36 @@ Of course, in reality, we first draw Monte Carlo shocks to approximate the share
 
 ```{r, echo = TRUE}
 # load
-load(file = "data/A5_price_actual.RData")
+p_actual <- 
+  readRDS(file = "data/A5_price_actual.RData")
 # take the logarithm
 logp <- log(p_actual)
 # estimate the marginal cost
-marginal_cost_estimate <- estimate_marginal_cost(logp, X, M, V, beta, sigma, mu, omega, Delta)
+marginal_cost_estimate <- 
+  estimate_marginal_cost(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta)
 marginal_cost_actual <- M[M$j > 0, ]$c
 # plot the estimate vs actual marginal costs
 marginal_cost_df <-
-  data.frame(actual = marginal_cost_actual,
-             estimate = marginal_cost_estimate)
-ggplot(marginal_cost_df, aes(x = estimate, y = actual)) +
+  data.frame(
+    actual = marginal_cost_actual,
+    estimate = marginal_cost_estimate
+    )
+ggplot(
+  marginal_cost_df, 
+  aes(
+    x = estimate, 
+    y = actual
+    )
+  ) +
   geom_point()
 ```
 
@@ -321,9 +414,12 @@ ggplot(marginal_cost_df, aes(x = estimate, y = actual)) +
 
 ```{r}
 Delta_counterfactual <-
-  foreach (tt = 1:T) %dopar% {
+  foreach (
+    tt = 1:T
+    ) %dopar% {
     # product indice
-    J_t <- M %>%
+    J_t <- 
+      M %>%
       dplyr::filter(t == tt, j > 0)
     J_t <- J_t$j
     # baseline ownership
@@ -332,10 +428,12 @@ Delta_counterfactual <-
     merged <- which(J_t %in% c(1, 2, 3))
     # change ownership
     if (length(merged) > 1) {
-      merged <- gtools::permutations(
+      merged <- 
+        gtools::permutations(
         n = length(merged), 
         v = merged, 
-        r = 2)
+        r = 2
+        )
       Delta_counterfactual_t[merged] <- 1
     }
     # return
@@ -352,28 +450,55 @@ Delta_counterfactual[[T]]
 
 ```{r, echo = TRUE, eval = FALSE}
 logp <- log(p_actual)
-p_new <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
+p_new <- 
+  update_price(
+    logp, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    Delta_counterfactual
+    )
 distance <- 10000
 while (distance > lambda) {
   p_old <- p_new
-  p_new <- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
+  p_new <- 
+    update_price(
+      log(p_old), 
+      X, 
+      M, 
+      V, 
+      beta, 
+      sigma, 
+      mu, 
+      omega, 
+      Delta_counterfactual
+      )
   distance <- max(abs(p_new - p_old))
   print(distance)
 }
 p_counterfactual <- p_new
-save(p_counterfactual, file = "data/A5_price_counterfactual.RData")
+saveRDS(
+  p_counterfactual, 
+  file = "data/A5_price_counterfactual.rds"
+  )
 ```
 
 ```{r}
 # load
-load(file = "data/A5_price_counterfactual.RData")
+p_counterfactual <- 
+  readRDS(file = "data/A5_price_counterfactual.rds")
 # make new data frame
 M_counterfactual <- M 
 M_counterfactual[, "p_actual"] <- 0
 M_counterfactual[M_counterfactual$j > 0, "p_actual"] <- p_actual
 M_counterfactual[, "p_counterfactual"] <- 0
 M_counterfactual[M_counterfactual$j > 0, "p_counterfactual"] <- p_counterfactual
-p_change <- M_counterfactual %>%
+p_change <- 
+  M_counterfactual %>%
   dplyr::filter(j > 0) %>%
   dplyr::mutate(p_change = (p_counterfactual - p_actual) / p_actual) %>%
   dplyr::group_by(j) %>%
@@ -389,11 +514,31 @@ kable(p_change)
 ```{r, echo = TRUE}
 # compute actual producer surplus
 producer_surplus_actual <-
-  compute_producer_surplus(p_actual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)
+  compute_producer_surplus(
+    p_actual, 
+    marginal_cost_estimate, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 summary(producer_surplus_actual)
 # compute counterfactual producer surplus
 producer_surplus_counterfactual <-
-  compute_producer_surplus(p_counterfactual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)
+  compute_producer_surplus(
+    p_counterfactual, 
+    marginal_cost_estimate, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 summary(producer_surplus_counterfactual)
 ```
 ```{r}
@@ -403,7 +548,8 @@ M_counterfactual[M_counterfactual$j > 0, "producer_surplus_actual"] <-
 M_counterfactual[, "producer_surplus_counterfactual"] <- 0
 M_counterfactual[M_counterfactual$j > 0, "producer_surplus_counterfactual"] <- 
   producer_surplus_counterfactual
-producer_surplus_change <- M_counterfactual %>%
+producer_surplus_change <- 
+  M_counterfactual %>%
   dplyr::filter(j > 0) %>%
   dplyr::mutate(producer_surplus_change = 
                   (producer_surplus_counterfactual - producer_surplus_actual) /
@@ -421,11 +567,29 @@ kable(producer_surplus_change)
 ```{r, echo = TRUE}
 # compute actual consumer surplus
 consumer_surplus_actual <- 
-  compute_consumer_surplus(p_actual, X, M, V, beta, sigma, mu, omega)
+  compute_consumer_surplus(
+    p_actual, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 summary(consumer_surplus_actual)
 # compute counterfactual consumer surplus
 consumer_surplus_counterfactual <- 
-  compute_consumer_surplus(p_counterfactual, X, M, V, beta, sigma, mu, omega)
+  compute_consumer_surplus(
+    p_counterfactual, 
+    X, 
+    M, 
+    V, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 summary(consumer_surplus_counterfactual)
 ```
 
