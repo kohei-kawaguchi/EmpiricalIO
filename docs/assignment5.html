@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | ECON5630 Topics in Empirical Industrial Organization</title>
+  <title>Chapter 15 Assignment 5: Merger Simulation | ECON5630 Topics in Empirical Industrial Organization</title>
   <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | ECON5630 Topics in Empirical Industrial Organization" />
+  <meta property="og:title" content="Chapter 15 Assignment 5: Merger Simulation | ECON5630 Topics in Empirical Industrial Organization" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | ECON5630 Topics in Empirical Industrial Organization" />
+  <meta name="twitter:title" content="Chapter 15 Assignment 5: Merger Simulation | ECON5630 Topics in Empirical Industrial Organization" />
   
   <meta name="twitter:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="assignment4.html"/>
+<link rel="next" href="rcpp.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -692,19 +692,590 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="assignment5" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Assignment 5: Merger Simulation<a href="assignment5.html#assignment5" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="simulate-data-4" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Simulate data<a href="assignment5.html#simulate-data-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We simulate data from a discrete choice model that is the same with in assignment 4 <strong>except for that the price is derived from the Nash equlibrium</strong>. There are <span class="math inline">\(T\)</span> markets and each market has <span class="math inline">\(N\)</span> consumers. There are <span class="math inline">\(J\)</span> products and the indirect utility of consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> for product <span class="math inline">\(j\)</span> is:
+<span class="math display">\[
+u_{itj} = \beta_{it}&#39; x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+\]</span>
+where <span class="math inline">\(\epsilon_{ijt}\)</span> is an i.i.d. type-I extreme random variable. <span class="math inline">\(x_j\)</span> is <span class="math inline">\(K\)</span>-dimensional observed characteristics of the product. <span class="math inline">\(p_{jt}\)</span> is the retail price of the product in the market.</p>
+<p><span class="math inline">\(\xi_{jt}\)</span> is product-market specific fixed effect. <span class="math inline">\(p_{jt}\)</span> can be correlated with <span class="math inline">\(\xi_{jt}\)</span> but <span class="math inline">\(x_{jt}\)</span>s are independent of <span class="math inline">\(\xi_{jt}\)</span>. <span class="math inline">\(j = 0\)</span> is an outside option whose indirect utility is:
+<span class="math display">\[
+u_{it0} = \epsilon_{i0t},
+\]</span>
+where <span class="math inline">\(\epsilon_{i0t}\)</span> is an i.i.d. type-I extreme random variable.</p>
+<p><span class="math inline">\(\beta_{it}\)</span> and <span class="math inline">\(\alpha_{it}\)</span> are different across consumers, and they are distributed as:
+<span class="math display">\[
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+\]</span>
+<span class="math display">\[
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+\]</span>
+where <span class="math inline">\(\nu_{itk}\)</span> for <span class="math inline">\(k = 1, \cdots, K\)</span> and <span class="math inline">\(\upsilon_{it}\)</span> are i.i.d. standard normal random variables. <span class="math inline">\(\alpha_0\)</span> is the mean of <span class="math inline">\(\alpha_i\)</span> and <span class="math inline">\(\tilde{\alpha}_i\)</span> is the deviation from the mean.</p>
+<p>Given a choice set in the market, <span class="math inline">\(\mathcal{J}_t \cup \{0\}\)</span>, a consumer chooses the alternative that maximizes her utility:
+<span class="math display">\[
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]</span>
+The choice probability of product <span class="math inline">\(j\)</span> for consumer <span class="math inline">\(i\)</span> in market <span class="math inline">\(t\)</span> is:
+<span class="math display">\[
+\sigma_{ijt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]</span></p>
+<p>Suppose that we only observe the (smooth) share data:
+<span class="math display">\[
+s_{jt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \sigma_{ijt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \frac{\exp(u_{ijt})}{1 + \sum_{k \in \mathcal{J}_t \cup \{0\}} \exp(u_{ikt})}. 
+\]</span>
+along with the product-market characteristics <span class="math inline">\(x_{jt}\)</span> and the retail prices <span class="math inline">\(p_{jt}\)</span> for <span class="math inline">\(j \in \mathcal{J}_t \cup \{0\}\)</span> for <span class="math inline">\(t = 1, \cdots, T\)</span>. We do not observe the choice data <span class="math inline">\(q_{ijt}\)</span> nor shocks <span class="math inline">\(\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}\)</span>.</p>
+<p>We draw <span class="math inline">\(\xi_{jt}\)</span> from i.i.d. normal distribution with mean 0 and standard deviation <span class="math inline">\(\sigma_{\xi}\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li>Set the seed, constants, and parameters of interest as follows.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="assignment5.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
+<span id="cb1-2"><a href="assignment5.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="assignment5.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># number of products</span></span>
+<span id="cb1-4"><a href="assignment5.html#cb1-4" aria-hidden="true" tabindex="-1"></a>J <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-5"><a href="assignment5.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dimension of product characteristics including the intercept</span></span>
+<span id="cb1-6"><a href="assignment5.html#cb1-6" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb1-7"><a href="assignment5.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># number of markets</span></span>
+<span id="cb1-8"><a href="assignment5.html#cb1-8" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-9"><a href="assignment5.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># number of consumers per market</span></span>
+<span id="cb1-10"><a href="assignment5.html#cb1-10" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb1-11"><a href="assignment5.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># number of Monte Carlo</span></span>
+<span id="cb1-12"><a href="assignment5.html#cb1-12" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">500</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="assignment5.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set parameters of interests</span></span>
+<span id="cb2-2"><a href="assignment5.html#cb2-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(K); </span>
+<span id="cb2-3"><a href="assignment5.html#cb2-3" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb2-4"><a href="assignment5.html#cb2-4" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<pre><code>## [1]  4.0000000  0.1836433 -0.8356286</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="assignment5.html#cb4-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(K)); sigma</span></code></pre></div>
+<pre><code>## [1] 1.5952808 0.3295078 0.8204684</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="assignment5.html#cb6-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb6-2"><a href="assignment5.html#cb6-2" aria-hidden="true" tabindex="-1"></a>omega <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<p>Generate the covariates as follows.</p>
+<p>The product-market characteristics:
+<span class="math display">\[
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+\]</span>
+where <span class="math inline">\(\sigma_x\)</span> is referred to as <code>sd_x</code> in the code.</p>
+<p>The product-market-specific unobserved fixed effect:
+<span class="math display">\[
+\xi_{jt} \sim N(0, \sigma_\xi),
+\]</span>
+where <span class="math inline">\(\sigma_xi\)</span> is referred to as <code>sd_xi</code> in the code.</p>
+<p>The marginal cost of product <span class="math inline">\(j\)</span> in market <span class="math inline">\(t\)</span>:
+<span class="math display">\[
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+\]</span>
+where <span class="math inline">\(\sigma_c\)</span> is referred to as <code>sd_c</code> in the code.</p>
+<p>The price is determined by a Nash equilibrium. Let <span class="math inline">\(\Delta_t\)</span> be the <span class="math inline">\(J_t \times J_t\)</span> ownership matrix in which the <span class="math inline">\((j, k)\)</span>-th element <span class="math inline">\(\delta_{tjk}\)</span> is equal to 1 if product <span class="math inline">\(j\)</span> and <span class="math inline">\(k\)</span> are owned by the same firm and 0 otherwise. Assume that <span class="math inline">\(\delta_{tjk} = 1\)</span> if and only if <span class="math inline">\(j = k\)</span> for all <span class="math inline">\(t = 1, \cdots, T\)</span>, i.e., each firm owns only one product. Next, define <span class="math inline">\(\Omega_t\)</span> be <span class="math inline">\(J_t \times J_t\)</span> matrix such that whose <span class="math inline">\((j, k)\)</span>-the element <span class="math inline">\(\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t)\)</span> is:
+<span class="math display">\[
+\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t) = - \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} \delta_{tjk}.
+\]</span>
+Then, the equilibrium price vector <span class="math inline">\(p_t\)</span> is determined by solving the following equilibrium condition:
+<span class="math display">\[
+p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
+\]</span></p>
+<p>The value of the auxiliary parameters are set as follows:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="assignment5.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set auxiliary parameters</span></span>
+<span id="cb7-2"><a href="assignment5.html#cb7-2" aria-hidden="true" tabindex="-1"></a>price_xi <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb7-3"><a href="assignment5.html#cb7-3" aria-hidden="true" tabindex="-1"></a>sd_x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb7-4"><a href="assignment5.html#cb7-4" aria-hidden="true" tabindex="-1"></a>sd_xi <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb7-5"><a href="assignment5.html#cb7-5" aria-hidden="true" tabindex="-1"></a>sd_c <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb7-6"><a href="assignment5.html#cb7-6" aria-hidden="true" tabindex="-1"></a>sd_p <span class="ot">&lt;-</span> <span class="fl">0.05</span></span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><code>X</code> is the data frame such that a row contains the characteristics vector <span class="math inline">\(x_{j}\)</span> of a product and columns are product index and observed product characteristics. The dimension of the characteristics <span class="math inline">\(K\)</span> is specified above. Add the row of the outside option whose index is <span class="math inline">\(0\)</span> and all the characteristics are zero.</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="assignment5.html#cb8-1" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 4
+##        j   x_1     x_2     x_3
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     0     0  0       0     
+##  2     1     1  0.975  -0.0324
+##  3     2     1  1.48    1.89  
+##  4     3     1  1.15    1.64  
+##  5     4     1 -0.611   1.19  
+##  6     5     1  3.02    1.84  
+##  7     6     1  0.780   1.56  
+##  8     7     1 -1.24    0.149 
+##  9     8     1 -4.43   -3.98  
+## 10     9     1  2.25    1.24  
+## 11    10     1 -0.0899 -0.112</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><code>M</code> is the data frame such that a row contains the price <span class="math inline">\(\xi_{jt}\)</span>, marginal cost <span class="math inline">\(c_{jt}\)</span>, and price <span class="math inline">\(p_{jt}\)</span>. For now, set <span class="math inline">\(p_{jt} = 0\)</span> and fill the equilibrium price later. After generating the variables, drop some products in each market. In order to change the number of available products in each market, for each market, first draw <span class="math inline">\(J_t\)</span> from a discrete uniform distribution between <span class="math inline">\(1\)</span> and <span class="math inline">\(J\)</span>. Then, drop products from each market using <code>dplyr::sample_frac</code> function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is <span class="math inline">\(0\)</span> and all the variables take value zero.</li>
+</ol>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="assignment5.html#cb10-1" aria-hidden="true" tabindex="-1"></a>M</span></code></pre></div>
+<pre><code>## # A tibble: 696 × 5
+##        j     t      xi     c     p
+##    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     0     1  0      0         0
+##  2     2     1 -0.735  1.04      0
+##  3     6     1 -0.0514 0.980     0
+##  4     7     1  0.194  0.961     0
+##  5     8     1 -0.0269 0.989     0
+##  6     0     2  0      0         0
+##  7     1     2 -0.197  0.988     0
+##  8     2     2 -0.0297 1.04      0
+##  9     4     2  0.382  1.00      0
+## 10     5     2 -0.0823 1.02      0
+## # … with 686 more rows</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Generate the consumer-level heterogeneity. <code>V</code> is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, <span class="math inline">\((\nu_{i}&#39;, \upsilon_i)\)</span>. They are all i.i.d. standard normal random variables.</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="assignment5.html#cb12-1" aria-hidden="true" tabindex="-1"></a>V</span></code></pre></div>
+<pre><code>## # A tibble: 50,000 × 6
+##        i     t   v_x_1   v_x_2   v_x_3     v_p
+##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1  0.448   0.985   0.611   0.408 
+##  2     2     1 -0.386  -0.389  -1.11   -0.667 
+##  3     3     1  0.0567  0.0510  0.0329 -0.119 
+##  4     4     1  0.585   0.303   0.860  -1.20  
+##  5     5     1 -0.449  -1.17    0.599   0.212 
+##  6     6     1 -0.782   0.0596  1.30    0.485 
+##  7     7     1  1.60   -1.62   -1.91    0.669 
+##  8     8     1 -1.65    2.10    0.726  -0.108 
+##  9     9     1 -0.848  -0.933   2.29   -0.0195
+## 10    10     1 -0.130  -0.897  -1.90   -0.185 
+## # … with 49,990 more rows</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>We use <code>compute_indirect_utility(df, beta, sigma, mu, omega)</code>, <code>compute_choice_smooth(X, M, V, beta, sigma, mu, omega)</code>, and <code>compute_share_smooth(X, M, V, beta, sigma, mu, omega)</code> to compute <span class="math inline">\(s_t(p_t, x_t, \xi_t)\)</span>. On top of this, we need a function <code>compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)</code> that approximate:</li>
+</ol>
+<p><span class="math display">\[
+\frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
+\begin{cases}
+\frac{1}{N} \sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)[1 - \sigma_{ijt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)\sigma_{ikt}(p_t, x_t, \xi_t)] &amp;\text{   if   } j \neq k.
+\end{cases}
+\]</span></p>
+<p>The returned object should be a list across markets and each element of the list should be <span class="math inline">\(J_t \times J_t\)</span> matrix whose <span class="math inline">\((j, k)\)</span>-th element is <span class="math inline">\(\partial s_{jt}/\partial p_{it}\)</span> (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="assignment5.html#cb14-1" aria-hidden="true" tabindex="-1"></a>derivative_share_smooth <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="assignment5.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_derivative_share_smooth</span>(</span>
+<span id="cb14-3"><a href="assignment5.html#cb14-3" aria-hidden="true" tabindex="-1"></a>    X,</span>
+<span id="cb14-4"><a href="assignment5.html#cb14-4" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb14-5"><a href="assignment5.html#cb14-5" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb14-6"><a href="assignment5.html#cb14-6" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb14-7"><a href="assignment5.html#cb14-7" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb14-8"><a href="assignment5.html#cb14-8" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb14-9"><a href="assignment5.html#cb14-9" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb14-10"><a href="assignment5.html#cb14-10" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="assignment5.html#cb15-1" aria-hidden="true" tabindex="-1"></a>derivative_share_smooth[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>##             [,1]        [,2]        [,3]        [,4]
+## [1,] -0.15195456  0.07243405  0.04067066  0.03615775
+## [2,]  0.07243405 -0.21334454  0.06758143  0.06900886
+## [3,]  0.04067066  0.06758143 -0.22465048  0.11247770
+## [4,]  0.03615775  0.06900886  0.11247770 -0.22508246</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="assignment5.html#cb17-1" aria-hidden="true" tabindex="-1"></a>derivative_share_smooth[[T]]</span></code></pre></div>
+<pre><code>##               [,1]         [,2]         [,3]         [,4]         [,5]
+##  [1,] -0.096590746  0.003580709  0.003713348  0.011204782  0.012198589
+##  [2,]  0.003580709 -0.054948229  0.003309376  0.009438704  0.009893682
+##  [3,]  0.003713348  0.003309376 -0.055735044  0.009505457  0.009233146
+##  [4,]  0.011204782  0.009438704  0.009505457 -0.160285167  0.021922796
+##  [5,]  0.012198589  0.009893682  0.009233146  0.021922796 -0.136324417
+##  [6,]  0.008403911  0.007465135  0.007249620  0.022645270  0.019978806
+##  [7,]  0.006573094  0.003856270  0.004084570  0.016649978  0.009219389
+##  [8,]  0.033096170  0.006496123  0.007885498  0.038995016  0.016868502
+##  [9,]  0.013495765  0.008866219  0.008606532  0.022541027  0.030984223
+## [10,]  0.003846416  0.001815922  0.001912074  0.006631000  0.005317866
+##               [,6]         [,7]         [,8]         [,9]        [,10]
+##  [1,]  0.008403911  0.006573094  0.033096170  0.013495765  0.003846416
+##  [2,]  0.007465135  0.003856270  0.006496123  0.008866219  0.001815922
+##  [3,]  0.007249620  0.004084570  0.007885498  0.008606532  0.001912074
+##  [4,]  0.022645270  0.016649978  0.038995016  0.022541027  0.006631000
+##  [5,]  0.019978806  0.009219389  0.016868502  0.030984223  0.005317866
+##  [6,] -0.119320239  0.009873958  0.019723897  0.018980139  0.004460069
+##  [7,]  0.009873958 -0.101062317  0.035849014  0.010662149  0.003862923
+##  [8,]  0.019723897  0.035849014 -0.207076797  0.027381997  0.018831945
+##  [9,]  0.018980139  0.010662149  0.027381997 -0.148409509  0.006094688
+## [10,]  0.004460069  0.003862923  0.018831945  0.006094688 -0.053007318</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Make a list <code>Delta</code> such that each element of the list is <span class="math inline">\(J_t \times J_t\)</span> matrix <span class="math inline">\(\Delta_t\)</span>.</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="assignment5.html#cb19-1" aria-hidden="true" tabindex="-1"></a>Delta[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="assignment5.html#cb21-1" aria-hidden="true" tabindex="-1"></a>Delta[[T]]</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    1    0    0    0    0    0    0    0    0     0
+##  [2,]    0    1    0    0    0    0    0    0    0     0
+##  [3,]    0    0    1    0    0    0    0    0    0     0
+##  [4,]    0    0    0    1    0    0    0    0    0     0
+##  [5,]    0    0    0    0    1    0    0    0    0     0
+##  [6,]    0    0    0    0    0    1    0    0    0     0
+##  [7,]    0    0    0    0    0    0    1    0    0     0
+##  [8,]    0    0    0    0    0    0    0    1    0     0
+##  [9,]    0    0    0    0    0    0    0    0    1     0
+## [10,]    0    0    0    0    0    0    0    0    0     1</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Write a function <code>update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)</code> that receives a price vector <span class="math inline">\(p_t^{(r)}\)</span> and returns <span class="math inline">\(p_t^{(r + 1)}\)</span> by:
+<span class="math display">\[
+p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
+\]</span>
+The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector, we pass log price and exponentiate inside the function. Iterate this until <span class="math inline">\(\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| &lt; \lambda\)</span>, for example with <span class="math inline">\(\lambda = 10^{-6}\)</span>. This iteration may or may not converge. The convergence depends on the parameters and the realization of the shocks. If the algorithm does not converge, first check the code.</li>
+</ol>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="assignment5.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the threshold</span></span>
+<span id="cb23-2"><a href="assignment5.html#cb23-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">1e-6</span></span>
+<span id="cb23-3"><a href="assignment5.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set the initial price</span></span>
+<span id="cb23-4"><a href="assignment5.html#cb23-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> M[M<span class="sc">$</span>j <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;p&quot;</span>]</span>
+<span id="cb23-5"><a href="assignment5.html#cb23-5" aria-hidden="true" tabindex="-1"></a>logp <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">dim</span>(p)[<span class="dv">1</span>]))</span>
+<span id="cb23-6"><a href="assignment5.html#cb23-6" aria-hidden="true" tabindex="-1"></a>p_new <span class="ot">&lt;-</span> </span>
+<span id="cb23-7"><a href="assignment5.html#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_price</span>(</span>
+<span id="cb23-8"><a href="assignment5.html#cb23-8" aria-hidden="true" tabindex="-1"></a>    logp, </span>
+<span id="cb23-9"><a href="assignment5.html#cb23-9" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb23-10"><a href="assignment5.html#cb23-10" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb23-11"><a href="assignment5.html#cb23-11" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb23-12"><a href="assignment5.html#cb23-12" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb23-13"><a href="assignment5.html#cb23-13" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb23-14"><a href="assignment5.html#cb23-14" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb23-15"><a href="assignment5.html#cb23-15" aria-hidden="true" tabindex="-1"></a>    omega, </span>
+<span id="cb23-16"><a href="assignment5.html#cb23-16" aria-hidden="true" tabindex="-1"></a>    Delta</span>
+<span id="cb23-17"><a href="assignment5.html#cb23-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-18"><a href="assignment5.html#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate</span></span>
+<span id="cb23-19"><a href="assignment5.html#cb23-19" aria-hidden="true" tabindex="-1"></a>distance <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb23-20"><a href="assignment5.html#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (distance <span class="sc">&gt;</span> lambda) {</span>
+<span id="cb23-21"><a href="assignment5.html#cb23-21" aria-hidden="true" tabindex="-1"></a>  p_old <span class="ot">&lt;-</span> p_new</span>
+<span id="cb23-22"><a href="assignment5.html#cb23-22" aria-hidden="true" tabindex="-1"></a>  p_new <span class="ot">&lt;-</span> </span>
+<span id="cb23-23"><a href="assignment5.html#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">update_price</span>(</span>
+<span id="cb23-24"><a href="assignment5.html#cb23-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">log</span>(p_old), </span>
+<span id="cb23-25"><a href="assignment5.html#cb23-25" aria-hidden="true" tabindex="-1"></a>      X, </span>
+<span id="cb23-26"><a href="assignment5.html#cb23-26" aria-hidden="true" tabindex="-1"></a>      M, </span>
+<span id="cb23-27"><a href="assignment5.html#cb23-27" aria-hidden="true" tabindex="-1"></a>      V, </span>
+<span id="cb23-28"><a href="assignment5.html#cb23-28" aria-hidden="true" tabindex="-1"></a>      beta, </span>
+<span id="cb23-29"><a href="assignment5.html#cb23-29" aria-hidden="true" tabindex="-1"></a>      sigma, </span>
+<span id="cb23-30"><a href="assignment5.html#cb23-30" aria-hidden="true" tabindex="-1"></a>      mu, </span>
+<span id="cb23-31"><a href="assignment5.html#cb23-31" aria-hidden="true" tabindex="-1"></a>      omega, </span>
+<span id="cb23-32"><a href="assignment5.html#cb23-32" aria-hidden="true" tabindex="-1"></a>      Delta</span>
+<span id="cb23-33"><a href="assignment5.html#cb23-33" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb23-34"><a href="assignment5.html#cb23-34" aria-hidden="true" tabindex="-1"></a>  distance <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">abs</span>(p_new <span class="sc">-</span> p_old))</span>
+<span id="cb23-35"><a href="assignment5.html#cb23-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(distance)</span>
+<span id="cb23-36"><a href="assignment5.html#cb23-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-37"><a href="assignment5.html#cb23-37" aria-hidden="true" tabindex="-1"></a><span class="co"># save</span></span>
+<span id="cb23-38"><a href="assignment5.html#cb23-38" aria-hidden="true" tabindex="-1"></a>p_actual <span class="ot">&lt;-</span> p_new</span>
+<span id="cb23-39"><a href="assignment5.html#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb23-40"><a href="assignment5.html#cb23-40" aria-hidden="true" tabindex="-1"></a>  p_actual, </span>
+<span id="cb23-41"><a href="assignment5.html#cb23-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a5/A5_price_actual.rds&quot;</span></span>
+<span id="cb23-42"><a href="assignment5.html#cb23-42" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<!-- 10. Write a function `compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta)` that computes: -->
+<!-- $$ -->
+<!-- p_t - [c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)]. -->
+<!-- $$ -->
+<!-- mainly as a function of $p_t$. The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector in the following optimization problem, we pass log price and exponentiate inside the function. -->
+<!-- ```{r, echo = TRUE} -->
+<!-- equilibrium_condition <- compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta) -->
+<!-- head(equilibrium_condition) -->
+<!-- summary(equilibrium_condition) -->
+<!-- ``` -->
+<!-- 11. Write a function `compute_equilibrium_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that find a price vector that makes the `compute_equilibrium_condition` zero. To solve a system of non-linear equations, you can call `nleqslv::nleqslv` inside `compute_equilibrium_price`. If `update_price` converged, use the limit as the initial price vector. Even if `update_price` did not converge, use a price vcector after several iterations for the initial price vector. -->
+<!-- ```{r, echo = TRUE} -->
+<!-- load(file = "data/A4_price_iteration.RData") -->
+<!-- p_equilibrium_2 <- compute_equilibrium_price(log(p_new), X, M, V, beta, sigma, mu, omega, Delta) -->
+<!-- save(p_equilibrium_2, file = "data/A5_price_nleqslv.RData") -->
+<!-- ``` -->
+</div>
+<div id="estimate-the-parameters-3" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Estimate the parameters<a href="assignment5.html#estimate-the-parameters-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Write a function <code>estimate_marginal_cost()</code> that estimate <span class="math inline">\(c_t\)</span> by the equilibrium condition as:
+<span class="math display">\[
+c_t = p_t - \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)
+\]</span></li>
+</ol>
+<p>Of course, in reality, we first draw Monte Carlo shocks to approximate the share, estimate the demand parameters, and use these shocks and estimates to estimate the marginal costs. In this assignment, we check the if the estimated marginal costs coincide with the true marginal costs to confirm that the codes are correctly written.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="assignment5.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load</span></span>
+<span id="cb24-2"><a href="assignment5.html#cb24-2" aria-hidden="true" tabindex="-1"></a>p_actual <span class="ot">&lt;-</span> </span>
+<span id="cb24-3"><a href="assignment5.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a5/A5_price_actual.rds&quot;</span>)</span>
+<span id="cb24-4"><a href="assignment5.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># take the logarithm</span></span>
+<span id="cb24-5"><a href="assignment5.html#cb24-5" aria-hidden="true" tabindex="-1"></a>logp <span class="ot">&lt;-</span> <span class="fu">log</span>(p_actual)</span>
+<span id="cb24-6"><a href="assignment5.html#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the marginal cost</span></span>
+<span id="cb24-7"><a href="assignment5.html#cb24-7" aria-hidden="true" tabindex="-1"></a>marginal_cost_estimate <span class="ot">&lt;-</span> </span>
+<span id="cb24-8"><a href="assignment5.html#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">estimate_marginal_cost</span>(</span>
+<span id="cb24-9"><a href="assignment5.html#cb24-9" aria-hidden="true" tabindex="-1"></a>    logp, </span>
+<span id="cb24-10"><a href="assignment5.html#cb24-10" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb24-11"><a href="assignment5.html#cb24-11" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb24-12"><a href="assignment5.html#cb24-12" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb24-13"><a href="assignment5.html#cb24-13" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb24-14"><a href="assignment5.html#cb24-14" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb24-15"><a href="assignment5.html#cb24-15" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb24-16"><a href="assignment5.html#cb24-16" aria-hidden="true" tabindex="-1"></a>    omega, </span>
+<span id="cb24-17"><a href="assignment5.html#cb24-17" aria-hidden="true" tabindex="-1"></a>    Delta)</span>
+<span id="cb24-18"><a href="assignment5.html#cb24-18" aria-hidden="true" tabindex="-1"></a>marginal_cost_actual <span class="ot">&lt;-</span> M[M<span class="sc">$</span>j <span class="sc">&gt;</span> <span class="dv">0</span>, ]<span class="sc">$</span>c</span>
+<span id="cb24-19"><a href="assignment5.html#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the estimate vs actual marginal costs</span></span>
+<span id="cb24-20"><a href="assignment5.html#cb24-20" aria-hidden="true" tabindex="-1"></a>marginal_cost_df <span class="ot">&lt;-</span></span>
+<span id="cb24-21"><a href="assignment5.html#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb24-22"><a href="assignment5.html#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual =</span> marginal_cost_actual,</span>
+<span id="cb24-23"><a href="assignment5.html#cb24-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> marginal_cost_estimate</span>
+<span id="cb24-24"><a href="assignment5.html#cb24-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-25"><a href="assignment5.html#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb24-26"><a href="assignment5.html#cb24-26" aria-hidden="true" tabindex="-1"></a>  marginal_cost_df, </span>
+<span id="cb24-27"><a href="assignment5.html#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb24-28"><a href="assignment5.html#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> estimate, </span>
+<span id="cb24-29"><a href="assignment5.html#cb24-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> actual</span>
+<span id="cb24-30"><a href="assignment5.html#cb24-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-31"><a href="assignment5.html#cb24-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb24-32"><a href="assignment5.html#cb24-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="lecture_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>(Optional) Translate <code>compute_indirect_utility</code>, <code>compute_choice_smooth</code>, <code>compute_derivative_share_smooth</code>, <code>update_price</code> into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment.</li>
+</ol>
+</div>
+<div id="conduct-counterfactual-simulation" class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> Conduct counterfactual simulation<a href="assignment5.html#conduct-counterfactual-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let <code>Delta_counterfactual</code> be the relevant ownership matrix. Make <code>Delta_counterfactual</code>.</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="assignment5.html#cb25-1" aria-hidden="true" tabindex="-1"></a>Delta_counterfactual[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="assignment5.html#cb27-1" aria-hidden="true" tabindex="-1"></a>Delta_counterfactual[[T]]</span></code></pre></div>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    1    1    1    0    0    0    0    0    0     0
+##  [2,]    1    1    1    0    0    0    0    0    0     0
+##  [3,]    1    1    1    0    0    0    0    0    0     0
+##  [4,]    0    0    0    1    0    0    0    0    0     0
+##  [5,]    0    0    0    0    1    0    0    0    0     0
+##  [6,]    0    0    0    0    0    1    0    0    0     0
+##  [7,]    0    0    0    0    0    0    1    0    0     0
+##  [8,]    0    0    0    0    0    0    0    1    0     0
+##  [9,]    0    0    0    0    0    0    0    0    1     0
+## [10,]    0    0    0    0    0    0    0    0    0     1</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Compute the counterfactual price using the iteration with <code>update_price</code>. You can start the iteration from the equilibrium price. Show the average percentage change in the price for each product. In theory, the price of any product should not drop. But some prices can slightly drop because of the numerical errors.</li>
+</ol>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="assignment5.html#cb29-1" aria-hidden="true" tabindex="-1"></a>logp <span class="ot">&lt;-</span> <span class="fu">log</span>(p_actual)</span>
+<span id="cb29-2"><a href="assignment5.html#cb29-2" aria-hidden="true" tabindex="-1"></a>p_new <span class="ot">&lt;-</span> </span>
+<span id="cb29-3"><a href="assignment5.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_price</span>(</span>
+<span id="cb29-4"><a href="assignment5.html#cb29-4" aria-hidden="true" tabindex="-1"></a>    logp, </span>
+<span id="cb29-5"><a href="assignment5.html#cb29-5" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb29-6"><a href="assignment5.html#cb29-6" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb29-7"><a href="assignment5.html#cb29-7" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb29-8"><a href="assignment5.html#cb29-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb29-9"><a href="assignment5.html#cb29-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb29-10"><a href="assignment5.html#cb29-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb29-11"><a href="assignment5.html#cb29-11" aria-hidden="true" tabindex="-1"></a>    omega, </span>
+<span id="cb29-12"><a href="assignment5.html#cb29-12" aria-hidden="true" tabindex="-1"></a>    Delta_counterfactual</span>
+<span id="cb29-13"><a href="assignment5.html#cb29-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-14"><a href="assignment5.html#cb29-14" aria-hidden="true" tabindex="-1"></a>distance <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb29-15"><a href="assignment5.html#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (distance <span class="sc">&gt;</span> lambda) {</span>
+<span id="cb29-16"><a href="assignment5.html#cb29-16" aria-hidden="true" tabindex="-1"></a>  p_old <span class="ot">&lt;-</span> p_new</span>
+<span id="cb29-17"><a href="assignment5.html#cb29-17" aria-hidden="true" tabindex="-1"></a>  p_new <span class="ot">&lt;-</span> </span>
+<span id="cb29-18"><a href="assignment5.html#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">update_price</span>(</span>
+<span id="cb29-19"><a href="assignment5.html#cb29-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">log</span>(p_old), </span>
+<span id="cb29-20"><a href="assignment5.html#cb29-20" aria-hidden="true" tabindex="-1"></a>      X, </span>
+<span id="cb29-21"><a href="assignment5.html#cb29-21" aria-hidden="true" tabindex="-1"></a>      M, </span>
+<span id="cb29-22"><a href="assignment5.html#cb29-22" aria-hidden="true" tabindex="-1"></a>      V, </span>
+<span id="cb29-23"><a href="assignment5.html#cb29-23" aria-hidden="true" tabindex="-1"></a>      beta, </span>
+<span id="cb29-24"><a href="assignment5.html#cb29-24" aria-hidden="true" tabindex="-1"></a>      sigma, </span>
+<span id="cb29-25"><a href="assignment5.html#cb29-25" aria-hidden="true" tabindex="-1"></a>      mu, </span>
+<span id="cb29-26"><a href="assignment5.html#cb29-26" aria-hidden="true" tabindex="-1"></a>      omega, </span>
+<span id="cb29-27"><a href="assignment5.html#cb29-27" aria-hidden="true" tabindex="-1"></a>      Delta_counterfactual</span>
+<span id="cb29-28"><a href="assignment5.html#cb29-28" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb29-29"><a href="assignment5.html#cb29-29" aria-hidden="true" tabindex="-1"></a>  distance <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">abs</span>(p_new <span class="sc">-</span> p_old))</span>
+<span id="cb29-30"><a href="assignment5.html#cb29-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(distance)</span>
+<span id="cb29-31"><a href="assignment5.html#cb29-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-32"><a href="assignment5.html#cb29-32" aria-hidden="true" tabindex="-1"></a>p_counterfactual <span class="ot">&lt;-</span> p_new</span>
+<span id="cb29-33"><a href="assignment5.html#cb29-33" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb29-34"><a href="assignment5.html#cb29-34" aria-hidden="true" tabindex="-1"></a>  p_counterfactual, </span>
+<span id="cb29-35"><a href="assignment5.html#cb29-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a5/A5_price_counterfactual.rds&quot;</span></span>
+<span id="cb29-36"><a href="assignment5.html#cb29-36" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">j</th>
+<th align="right">p_change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.0501744</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.1179955</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.1479700</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0013059</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">0.0004309</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-0.0002448</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">0.0008458</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">-0.0033448</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">0.0004042</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0.0015040</td>
+</tr>
+</tbody>
+</table>
+<ol start="3" style="list-style-type: decimal">
+<li>Write a function <code>compute_producer_surplus(p, marginal_cost, X, M, V, beta, sigma, mu, omega)</code> that returns the producer surplus for each product in each market. Compute the actual and counterfactual producer surplus under the estimated marginal costs. Show the average percentage change in the producer surplus for each product.</li>
+</ol>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="assignment5.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute actual producer surplus</span></span>
+<span id="cb30-2"><a href="assignment5.html#cb30-2" aria-hidden="true" tabindex="-1"></a>producer_surplus_actual <span class="ot">&lt;-</span></span>
+<span id="cb30-3"><a href="assignment5.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_producer_surplus</span>(</span>
+<span id="cb30-4"><a href="assignment5.html#cb30-4" aria-hidden="true" tabindex="-1"></a>    p_actual, </span>
+<span id="cb30-5"><a href="assignment5.html#cb30-5" aria-hidden="true" tabindex="-1"></a>    marginal_cost_estimate, </span>
+<span id="cb30-6"><a href="assignment5.html#cb30-6" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb30-7"><a href="assignment5.html#cb30-7" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb30-8"><a href="assignment5.html#cb30-8" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb30-9"><a href="assignment5.html#cb30-9" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb30-10"><a href="assignment5.html#cb30-10" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb30-11"><a href="assignment5.html#cb30-11" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb30-12"><a href="assignment5.html#cb30-12" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb30-13"><a href="assignment5.html#cb30-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-14"><a href="assignment5.html#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(producer_surplus_actual)</span></code></pre></div>
+<pre><code>##        s           
+##  Min.   :0.008247  
+##  1st Qu.:0.041636  
+##  Median :0.071153  
+##  Mean   :0.168761  
+##  3rd Qu.:0.150643  
+##  Max.   :1.607658</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="assignment5.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute counterfactual producer surplus</span></span>
+<span id="cb32-2"><a href="assignment5.html#cb32-2" aria-hidden="true" tabindex="-1"></a>producer_surplus_counterfactual <span class="ot">&lt;-</span></span>
+<span id="cb32-3"><a href="assignment5.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_producer_surplus</span>(</span>
+<span id="cb32-4"><a href="assignment5.html#cb32-4" aria-hidden="true" tabindex="-1"></a>    p_counterfactual, </span>
+<span id="cb32-5"><a href="assignment5.html#cb32-5" aria-hidden="true" tabindex="-1"></a>    marginal_cost_estimate, </span>
+<span id="cb32-6"><a href="assignment5.html#cb32-6" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb32-7"><a href="assignment5.html#cb32-7" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb32-8"><a href="assignment5.html#cb32-8" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb32-9"><a href="assignment5.html#cb32-9" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb32-10"><a href="assignment5.html#cb32-10" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb32-11"><a href="assignment5.html#cb32-11" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb32-12"><a href="assignment5.html#cb32-12" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb32-13"><a href="assignment5.html#cb32-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-14"><a href="assignment5.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(producer_surplus_counterfactual)</span></code></pre></div>
+<pre><code>##        s           
+##  Min.   :0.008212  
+##  1st Qu.:0.042687  
+##  Median :0.073644  
+##  Mean   :0.171809  
+##  3rd Qu.:0.153746  
+##  Max.   :1.607658</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">j</th>
+<th align="right">producer_surplus_change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.0231358</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.0131566</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.0073846</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0534174</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">0.0449804</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">0.0563809</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">0.0372859</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">0.0072057</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">0.0421801</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0.0385013</td>
+</tr>
+</tbody>
+</table>
+<ol start="4" style="list-style-type: decimal">
+<li>Write a function <code>compute_consumer_surplus(p, X, M, V, beta, sigma, mu, omega)</code> that returns the consumer surplus for each consumer in each market. Compute the actual and counterfactual consumer surplus under the estimated marginal costs. Show the percentage change in the total consumer surplus.</li>
+</ol>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="assignment5.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute actual consumer surplus</span></span>
+<span id="cb34-2"><a href="assignment5.html#cb34-2" aria-hidden="true" tabindex="-1"></a>consumer_surplus_actual <span class="ot">&lt;-</span> </span>
+<span id="cb34-3"><a href="assignment5.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_consumer_surplus</span>(</span>
+<span id="cb34-4"><a href="assignment5.html#cb34-4" aria-hidden="true" tabindex="-1"></a>    p_actual, </span>
+<span id="cb34-5"><a href="assignment5.html#cb34-5" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb34-6"><a href="assignment5.html#cb34-6" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb34-7"><a href="assignment5.html#cb34-7" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb34-8"><a href="assignment5.html#cb34-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb34-9"><a href="assignment5.html#cb34-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb34-10"><a href="assignment5.html#cb34-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb34-11"><a href="assignment5.html#cb34-11" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb34-12"><a href="assignment5.html#cb34-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-13"><a href="assignment5.html#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(consumer_surplus_actual)</span></code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   0.00000   0.03447   1.10805   4.33269   4.65720 230.98190</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="assignment5.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute counterfactual consumer surplus</span></span>
+<span id="cb36-2"><a href="assignment5.html#cb36-2" aria-hidden="true" tabindex="-1"></a>consumer_surplus_counterfactual <span class="ot">&lt;-</span> </span>
+<span id="cb36-3"><a href="assignment5.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_consumer_surplus</span>(</span>
+<span id="cb36-4"><a href="assignment5.html#cb36-4" aria-hidden="true" tabindex="-1"></a>    p_counterfactual, </span>
+<span id="cb36-5"><a href="assignment5.html#cb36-5" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb36-6"><a href="assignment5.html#cb36-6" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb36-7"><a href="assignment5.html#cb36-7" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb36-8"><a href="assignment5.html#cb36-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb36-9"><a href="assignment5.html#cb36-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb36-10"><a href="assignment5.html#cb36-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb36-11"><a href="assignment5.html#cb36-11" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb36-12"><a href="assignment5.html#cb36-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb36-13"><a href="assignment5.html#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(consumer_surplus_counterfactual)</span></code></pre></div>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   0.00000   0.03054   1.07265   4.31048   4.61989 231.02355</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="assignment5.html#cb38-1" aria-hidden="true" tabindex="-1"></a>consumer_surplus_change <span class="ot">&lt;-</span> </span>
+<span id="cb38-2"><a href="assignment5.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">sum</span>(consumer_surplus_counterfactual) <span class="sc">-</span> </span>
+<span id="cb38-3"><a href="assignment5.html#cb38-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">sum</span>(consumer_surplus_actual)) <span class="sc">/</span></span>
+<span id="cb38-4"><a href="assignment5.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(consumer_surplus_actual)</span>
+<span id="cb38-5"><a href="assignment5.html#cb38-5" aria-hidden="true" tabindex="-1"></a>consumer_surplus_change</span></code></pre></div>
+<pre><code>## [1] -0.005127025</code></pre>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="assignment4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rcpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
