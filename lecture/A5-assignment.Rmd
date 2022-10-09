@@ -138,10 +138,7 @@ X <-
        )
 colnames(X) <- paste("x", 1:K, sep = "_")
 X <- 
-  data.frame(
-    j = 1:J, 
-    X
-    ) %>%
+  data.frame(j = 1:J, X) %>%
   tibble::as_tibble()
 # add outside option
 X <- 
@@ -316,38 +313,21 @@ p_new <-
     omega = omega, 
     Delta = Delta
     )
-saveRDS(
-  p_new,
-  file = "data/a5/p_new.rds"
-)
-```
-
-```{r, echo = TRUE}
-p_new <- 
-  readRDS(
-    file = "data/a5/p_new.rds"
-  )
-p_new %>% head()
-```
-
-
-
-```{r, echo = TRUE, eval = FALSE}
 # iterate
 distance <- 10000
 while (distance > lambda) {
   p_old <- p_new
   p_new <- 
     update_price(
-      logp = log(p_old), 
-      X = X, 
-      M = M, 
-      V = V, 
-      beta = beta, 
-      sigma = sigma, 
-      mu = mu, 
-      omega = omega, 
-      Delta = Delta
+      log(p_old), 
+      X, 
+      M, 
+      V, 
+      beta, 
+      sigma, 
+      mu, 
+      omega, 
+      Delta
       )
   distance <- max(abs(p_new - p_old))
   print(distance)
@@ -390,13 +370,11 @@ $$
 
 Of course, in reality, we first draw Monte Carlo shocks to approximate the share, estimate the demand parameters, and use these shocks and estimates to estimate the marginal costs. In this assignment, we check the if the estimated marginal costs coincide with the true marginal costs to confirm that the codes are correctly written.
 
+
 ```{r, echo = TRUE}
 # load
 p_actual <- 
   readRDS(file = "data/a5/A5_price_actual.rds")
-```
-
-```{r, echo = TRUE, eval = FALSE}
 # take the logarithm
 logp <- log(p_actual)
 # estimate the marginal cost
@@ -410,19 +388,7 @@ marginal_cost_estimate <-
     sigma = sigma, 
     mu = mu, 
     omega = omega, 
-    Delta = Delta
-    )
-saveRDS(
-  marginal_cost_estimate,
-  file = "data/a5/marginal_cost_estimate.rds"
-)
-```
-```{r, echo = TRUE}
-marginal_cost_estimate <-
-  readRDS(
-    file = "data/a5/marginal_cost_estimate.rds"
-  )
-marginal_cost_estimate %>% head()
+    Delta = Delta)
 marginal_cost_actual <- M[M$j > 0, ]$c
 # plot the estimate vs actual marginal costs
 marginal_cost_df <-
@@ -437,11 +403,11 @@ ggplot(
     y = actual
     )
   ) +
-  geom_point() +
+  geom_point() + 
   theme_classic()
 ```
 
-<!-- 2. (Optional) Translate `compute_indirect_utility`, `compute_choice_smooth`, `compute_derivative_share_smooth`, `update_price` into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment. -->
+2. (Optional) Translate `compute_indirect_utility`, `compute_choice_smooth`, `compute_derivative_share_smooth`, `update_price` into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment.
 
 ## Conduct counterfactual simulation
 
@@ -450,12 +416,7 @@ ggplot(
 ```{r}
 Delta_counterfactual <-
   foreach (
-    tt = 1:T,
-    .packages = c(
-      "EmpiricalIO",
-      "foreach",
-      "magrittr"
-    )
+    tt = 1:T
     ) %dopar% {
     # product indice
     J_t <- 
@@ -492,15 +453,15 @@ Delta_counterfactual[[T]]
 logp <- log(p_actual)
 p_new <- 
   update_price(
-    logp, 
-    X, 
-    M, 
-    V, 
-    beta, 
-    sigma, 
-    mu, 
-    omega, 
-    Delta_counterfactual
+    logp = logp, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega, 
+    Delta = Delta_counterfactual
     )
 distance <- 10000
 while (distance > lambda) {
@@ -556,29 +517,29 @@ kable(p_change)
 # compute actual producer surplus
 producer_surplus_actual <-
   compute_producer_surplus(
-    p_actual, 
-    marginal_cost_estimate, 
-    X, 
-    M, 
-    V, 
-    beta, 
-    sigma, 
-    mu, 
-    omega
+    p = p_actual, 
+    marginal_cost = marginal_cost_estimate, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
     )
 summary(producer_surplus_actual)
 # compute counterfactual producer surplus
 producer_surplus_counterfactual <-
   compute_producer_surplus(
-    p_counterfactual, 
-    marginal_cost_estimate, 
-    X, 
-    M, 
-    V, 
-    beta, 
-    sigma, 
-    mu, 
-    omega
+    p = p_counterfactual, 
+    marginal_cost = marginal_cost_estimate, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
     )
 summary(producer_surplus_counterfactual)
 ```
@@ -609,27 +570,27 @@ kable(producer_surplus_change)
 # compute actual consumer surplus
 consumer_surplus_actual <- 
   compute_consumer_surplus(
-    p_actual, 
-    X, 
-    M, 
-    V, 
-    beta, 
-    sigma, 
-    mu, 
-    omega
+    p = p_actual, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
     )
 summary(consumer_surplus_actual)
 # compute counterfactual consumer surplus
 consumer_surplus_counterfactual <- 
   compute_consumer_surplus(
-    p_counterfactual, 
-    X, 
-    M, 
-    V, 
-    beta, 
-    sigma, 
-    mu, 
-    omega
+    p = p_counterfactual, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
     )
 summary(consumer_surplus_counterfactual)
 ```
