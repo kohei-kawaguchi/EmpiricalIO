@@ -85,7 +85,7 @@ update_price <-
     sigma, 
     mu, 
     omega, 
-    Delta
+    delta
     ) {
     # replace the price in M
     p <- exp(logp)
@@ -130,7 +130,7 @@ update_price <-
                  c_t <- as.matrix(share_t$c)
                  p_t <- as.matrix(share_t$p)
                  # make Omega in market t
-                 Omega_t <- - Delta[[tt]] * ds[[tt]]
+                 Omega_t <- - delta[[tt]] * ds[[tt]]
                  # markup
                  markup_t <- 
                    solve(
@@ -157,7 +157,7 @@ compute_equilibrium_condition <-
     sigma, 
     mu, 
     omega, 
-    Delta
+    delta
     ) {
     # replace the price in M
     p <- exp(logp)
@@ -202,7 +202,7 @@ compute_equilibrium_condition <-
                  c_t <- as.matrix(share_t$c)
                  p_t <- as.matrix(share_t$p)
                  # make Omega in market t
-                 Omega_t <- - Delta[[tt]] * ds[[tt]]
+                 Omega_t <- - delta[[tt]] * ds[[tt]]
                  # markup
                  markup_t <- solve(Omega_t, s_t)
                  # equilibrium condition
@@ -226,7 +226,7 @@ compute_equilibrium_price <-
     sigma, 
     mu, 
     omega, 
-    Delta
+    delta
     ) {
     result <-
       nleqslv::nleqslv(
@@ -239,7 +239,7 @@ compute_equilibrium_price <-
         sigma = sigma, 
         mu = mu, 
         omega = omega, 
-        Delta = Delta
+        delta = delta
       )
     logp <- as.matrix(result$x)
     p <- exp(logp)
@@ -257,7 +257,7 @@ estimate_marginal_cost <-
     sigma, 
     mu, 
     omega, 
-    Delta
+    delta
     ) {
     # replace the price in M
     p <- exp(logp)
@@ -301,7 +301,7 @@ estimate_marginal_cost <-
                  s_t <- as.matrix(share_t$s)
                  p_t <- as.matrix(share_t$p)
                  # make Omega in market t
-                 Omega_t <- - Delta[[tt]] * ds[[tt]]
+                 Omega_t <- - delta[[tt]] * ds[[tt]]
                  # markup
                  markup_t <- solve(Omega_t, s_t)
                  # marginal cost
@@ -622,7 +622,7 @@ update_price_matrix <-
     sigma, 
     mu, 
     omega, 
-    Delta
+    delta
     ) {
     # replace the price in M
     p <- exp(logp)
@@ -685,7 +685,7 @@ update_price_matrix <-
                  c_t <- c_t[2:length(c_t)]
                  p_t <- p_t[2:length(p_t)]
                  # make Omega in market t
-                 Omega_t <- - Delta[[tt]] * ds[[tt]]
+                 Omega_t <- - delta[[tt]] * ds[[tt]]
                  # markup
                  markup_t <- solve(Omega_t, s_t)
                  # equilibrium condition

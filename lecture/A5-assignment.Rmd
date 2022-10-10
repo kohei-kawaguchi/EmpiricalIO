@@ -268,9 +268,9 @@ derivative_share_smooth[[1]]
 derivative_share_smooth[[T]]
 ```
 
-6. Make a list `Delta` such that each element of the list is $J_t \times J_t$ matrix $\Delta_t$.
+6. Make a list `delta` such that each element of the list is $J_t \times J_t$ matrix $\delta_t$.
 ```{r}
-Delta <- 
+delta <- 
   foreach (
     tt = 1:T
     ) %do% {
@@ -279,17 +279,17 @@ Delta <-
       dplyr::filter(t == tt) %>%
       dplyr::filter(j > 0) 
     J_t <- dim(J_t)[1]
-    Delta_t <- diag(rep(1, J_t))
-    return(Delta_t)
+    delta_t <- diag(rep(1, J_t))
+    return(delta_t)
   }
 ```
 
 ```{r, echo = TRUE}
-Delta[[1]]
-Delta[[T]]
+delta[[1]]
+delta[[T]]
 ```
 
-7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
+7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
 $$
 p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
 $$
@@ -311,7 +311,7 @@ p_new <-
     sigma = sigma, 
     mu = mu, 
     omega = omega, 
-    Delta = Delta
+    delta = delta
     )
 # iterate
 distance <- 10000
@@ -327,7 +327,7 @@ while (distance > lambda) {
       sigma, 
       mu, 
       omega, 
-      Delta
+      delta
       )
   distance <- max(abs(p_new - p_old))
   print(distance)
@@ -388,7 +388,7 @@ marginal_cost_estimate <-
     sigma = sigma, 
     mu = mu, 
     omega = omega, 
-    Delta = Delta)
+    delta = delta)
 marginal_cost_actual <- M[M$j > 0, ]$c
 # plot the estimate vs actual marginal costs
 marginal_cost_df <-
@@ -411,10 +411,10 @@ ggplot(
 
 ## Conduct counterfactual simulation
 
-1. Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let `Delta_counterfactual` be the relevant ownership matrix. Make `Delta_counterfactual`.
+1. Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let `delta_counterfactual` be the relevant ownership matrix. Make `delta_counterfactual`.
 
 ```{r}
-Delta_counterfactual <-
+delta_counterfactual <-
   foreach (
     tt = 1:T
     ) %dopar% {
@@ -424,7 +424,7 @@ Delta_counterfactual <-
       dplyr::filter(t == tt, j > 0)
     J_t <- J_t$j
     # baseline ownership
-    Delta_counterfactual_t <- diag(rep(1, length(J_t)))
+    delta_counterfactual_t <- diag(rep(1, length(J_t)))
     # merged product indice
     merged <- which(J_t %in% c(1, 2, 3))
     # change ownership
@@ -435,16 +435,16 @@ Delta_counterfactual <-
         v = merged, 
         r = 2
         )
-      Delta_counterfactual_t[merged] <- 1
+      delta_counterfactual_t[merged] <- 1
     }
     # return
-    return(Delta_counterfactual_t)
+    return(delta_counterfactual_t)
   }
 ```
 
 ```{r, echo = TRUE}
-Delta_counterfactual[[1]]
-Delta_counterfactual[[T]]
+delta_counterfactual[[1]]
+delta_counterfactual[[T]]
 ```
 
 2. Compute the counterfactual price using the iteration with `update_price`. You can start the iteration from the equilibrium price. Show the average percentage change in the price for each product. In theory, the price of any product should not drop. But some prices can slightly drop because of the numerical errors.
@@ -461,7 +461,7 @@ p_new <-
     sigma = sigma, 
     mu = mu, 
     omega = omega, 
-    Delta = Delta_counterfactual
+    delta = delta_counterfactual
     )
 distance <- 10000
 while (distance > lambda) {
@@ -476,7 +476,7 @@ while (distance > lambda) {
       sigma, 
       mu, 
       omega, 
-      Delta_counterfactual
+      delta_counterfactual
       )
   distance <- max(abs(p_new - p_old))
   print(distance)
