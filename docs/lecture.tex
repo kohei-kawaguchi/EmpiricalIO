@@ -117,7 +117,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2022-10-06}
+\date{Last updated: 2022-10-11}
 
 \begin{document}
 \maketitle
@@ -11862,6 +11862,35 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# make product characteristics data}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{matrix}\NormalTok{(}
+\NormalTok{    sd\_x }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J }\SpecialCharTok{*}\NormalTok{ (K }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)), }
+    \AttributeTok{nrow =}\NormalTok{ J}
+\NormalTok{    )}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{cbind}\NormalTok{(}
+    \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, J), }
+\NormalTok{    X}
+\NormalTok{    )}
+\FunctionTok{colnames}\NormalTok{(X) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{)}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{J,}
+\NormalTok{    X}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{()}
+\CommentTok{\# add outside option}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{rbind}\NormalTok{(}
+    \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{dim}\NormalTok{(X)[}\DecValTok{2}\NormalTok{]),}
+\NormalTok{    X}
+\NormalTok{    ) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{X}
 \end{Highlighting}
 \end{Shaded}
@@ -11890,6 +11919,46 @@ The value of the auxiliary parameters are set as follows:
 \item
   \texttt{M} is the data frame such that a row contains the price \(\xi_{jt}\), marginal cost \(c_{jt}\), and price \(p_{jt}\). After generating the variables, drop \texttt{1\ -\ prop\_jt} products from each market using \texttt{dplyr::sample\_frac} function. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is \(0\) and all the variables take value zero.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make market{-}product data}
+\NormalTok{M }\OtherTok{\textless{}{-}} 
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{J, }
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{xi =} \DecValTok{0}\NormalTok{,}
+    \AttributeTok{c =} \FunctionTok{exp}\NormalTok{(sd\_c }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J}\SpecialCharTok{*}\NormalTok{T)),}
+    \AttributeTok{p =} \FunctionTok{exp}\NormalTok{(price\_xi }\SpecialCharTok{*}\NormalTok{ xi }\SpecialCharTok{+}\NormalTok{ sd\_p }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J}\SpecialCharTok{*}\NormalTok{T)) }\SpecialCharTok{+}\NormalTok{ c}
+\NormalTok{  ) }
+\NormalTok{M }\OtherTok{\textless{}{-}} 
+\NormalTok{  M }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(t) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{sample\_frac}\NormalTok{(prop\_jt) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{ungroup}\NormalTok{()}
+\CommentTok{\# add outside option}
+\NormalTok{outside }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{j =} \DecValTok{0}\NormalTok{, }
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T, }
+    \AttributeTok{xi =} \DecValTok{0}\NormalTok{, }
+    \AttributeTok{c =} \DecValTok{0}\NormalTok{, }
+    \AttributeTok{p =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{M }\OtherTok{\textless{}{-}} 
+  \FunctionTok{rbind}\NormalTok{(}
+\NormalTok{    M,}
+\NormalTok{    outside}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}
+\NormalTok{    t, }
+\NormalTok{    j}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11924,6 +11993,27 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# make consumer{-}market data}
+\NormalTok{V }\OtherTok{\textless{}{-}} 
+  \FunctionTok{matrix}\NormalTok{(}
+    \FunctionTok{rnorm}\NormalTok{(N }\SpecialCharTok{*}\NormalTok{ T }\SpecialCharTok{*}\NormalTok{ (K }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)), }
+    \AttributeTok{nrow =}\NormalTok{ N }\SpecialCharTok{*}\NormalTok{ T}
+\NormalTok{    ) }
+\FunctionTok{colnames}\NormalTok{(V) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"v\_x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{), }\StringTok{"v\_p"}\NormalTok{)}
+\NormalTok{V }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \FunctionTok{expand.grid}\NormalTok{(}
+      \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N, }
+      \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T}
+\NormalTok{      ),}
+\NormalTok{    V}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{V}
 \end{Highlighting}
 \end{Shaded}
@@ -11955,6 +12045,37 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# make choice data}
+\NormalTok{df }\OtherTok{\textless{}{-}} 
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T, }
+    \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N, }
+    \AttributeTok{j =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{J}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    V, }
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"i"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    X, }
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    M, }
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(p)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}
+\NormalTok{    t, }
+\NormalTok{    i, }
+\NormalTok{    j}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{df}
 \end{Highlighting}
 \end{Shaded}
@@ -11983,6 +12104,13 @@ The value of the auxiliary parameters are set as follows:
 \item
   Draw a vector of preference shocks \texttt{e} whose length is the same as the number of rows of \texttt{df}.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# draw idiosyncratic shocks}
+\NormalTok{e }\OtherTok{\textless{}{-}}\NormalTok{ evd}\SpecialCharTok{::}\FunctionTok{rgev}\NormalTok{(}\FunctionTok{dim}\NormalTok{(df)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12219,6 +12347,28 @@ The best practice to avoid this problem is to generate the shocks outside the op
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# mixed logit estimation}
+\DocumentationTok{\#\# draw mcmc V}
+\NormalTok{V\_mcmc }\OtherTok{\textless{}{-}} 
+  \FunctionTok{matrix}\NormalTok{(}
+    \FunctionTok{rnorm}\NormalTok{(L }\SpecialCharTok{*}\NormalTok{ T }\SpecialCharTok{*}\NormalTok{ (K }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)), }
+    \AttributeTok{nrow =}\NormalTok{ L }\SpecialCharTok{*}\NormalTok{ T}
+\NormalTok{    ) }
+\FunctionTok{colnames}\NormalTok{(V\_mcmc) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"v\_x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{), }\StringTok{"v\_p"}\NormalTok{)}
+\NormalTok{V\_mcmc }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \FunctionTok{expand.grid}\NormalTok{(}
+      \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{L, }
+      \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T}
+\NormalTok{      ),}
+\NormalTok{    V\_mcmc}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{V\_mcmc}
 \end{Highlighting}
 \end{Shaded}
@@ -12239,6 +12389,39 @@ The best practice to avoid this problem is to generate the shocks outside the op
 ## 10    10     1 -1.00   -0.413  0.0542 -0.469
 ## # ... with 49,990 more rows
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# draw mcmc e}
+\NormalTok{df\_mcmc }\OtherTok{\textless{}{-}} 
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T, }
+    \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{L, }
+    \AttributeTok{j =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{J}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    V\_mcmc, }
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"i"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    X, }
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{    M, }
+    \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(p)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}
+\NormalTok{    t, }
+\NormalTok{    i, }
+\NormalTok{    j}
+\NormalTok{    )}
+\CommentTok{\# draw idiosyncratic shocks}
+\NormalTok{e\_mcmc }\OtherTok{\textless{}{-}}\NormalTok{ evd}\SpecialCharTok{::}\FunctionTok{rgev}\NormalTok{(}\FunctionTok{dim}\NormalTok{(df\_mcmc)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12744,6 +12927,32 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# make product characteristics data}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{matrix}\NormalTok{(}
+\NormalTok{    sd\_x }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J }\SpecialCharTok{*}\NormalTok{ (K }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)), }
+    \AttributeTok{nrow =}\NormalTok{ J}
+\NormalTok{    )}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{cbind}\NormalTok{(}
+    \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, J), }
+\NormalTok{    X}
+\NormalTok{    )}
+\FunctionTok{colnames}\NormalTok{(X) }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{)}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{J, X) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{()}
+\CommentTok{\# add outside option}
+\NormalTok{X }\OtherTok{\textless{}{-}} 
+  \FunctionTok{rbind}\NormalTok{(}
+    \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{dim}\NormalTok{(X)[}\DecValTok{2}\NormalTok{]),}
+\NormalTok{    X}
+\NormalTok{    ) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{X}
 \end{Highlighting}
 \end{Shaded}
@@ -12772,6 +12981,46 @@ The value of the auxiliary parameters are set as follows:
 \item
   \texttt{M} is the data frame such that a row contains the price \(\xi_{jt}\), marginal cost \(c_{jt}\), and price \(p_{jt}\). After generating the variables, drop some products in each market. \textbf{In this assignment, we drop products in a different way from the last assignment}. In order to change the number of available products in each market, for each market, first draw \(J_t\) from a discrete uniform distribution between \(1\) and \(J\). Then, drop products from each market using \texttt{dplyr::sample\_frac} function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is \(0\) and all the variables take value zero.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make market{-}product data}
+\NormalTok{M }\OtherTok{\textless{}{-}} 
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{j =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{J, }
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}
+      \AttributeTok{xi =}\NormalTok{ sd\_xi }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J }\SpecialCharTok{*}\NormalTok{ T),}
+      \AttributeTok{c =} \FunctionTok{exp}\NormalTok{(sd\_c }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J }\SpecialCharTok{*}\NormalTok{ T)),}
+      \AttributeTok{p =} \FunctionTok{exp}\NormalTok{(price\_xi }\SpecialCharTok{*}\NormalTok{ xi }\SpecialCharTok{+}\NormalTok{ sd\_p }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(J }\SpecialCharTok{*}\NormalTok{ T)) }\SpecialCharTok{+}\NormalTok{ c}
+\NormalTok{    ) }
+\NormalTok{M }\OtherTok{\textless{}{-}} 
+\NormalTok{  M }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(t) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{sample\_frac}\NormalTok{(}\AttributeTok{size =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{rdunif}\NormalTok{(}\DecValTok{1}\NormalTok{, J) }\SpecialCharTok{/}\NormalTok{ J) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{ungroup}\NormalTok{()}
+\CommentTok{\# add outside option}
+\NormalTok{outside }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{j =} \DecValTok{0}\NormalTok{, }
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T, }
+    \AttributeTok{xi =} \DecValTok{0}\NormalTok{, }
+    \AttributeTok{c =} \DecValTok{0}\NormalTok{, }
+    \AttributeTok{p =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{M }\OtherTok{\textless{}{-}} 
+  \FunctionTok{rbind}\NormalTok{(}
+\NormalTok{    M,}
+\NormalTok{    outside}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}
+\NormalTok{    t, }
+\NormalTok{    j}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -12806,6 +13055,31 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# make consumer{-}market data}
+\NormalTok{V }\OtherTok{\textless{}{-}} 
+  \FunctionTok{matrix}\NormalTok{(}
+    \FunctionTok{rnorm}\NormalTok{(N }\SpecialCharTok{*}\NormalTok{ T }\SpecialCharTok{*}\NormalTok{ (K }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)), }
+    \AttributeTok{nrow =}\NormalTok{ N }\SpecialCharTok{*}\NormalTok{ T}
+\NormalTok{    ) }
+\FunctionTok{colnames}\NormalTok{(V) }\OtherTok{\textless{}{-}} 
+  \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{paste}\NormalTok{(}\StringTok{"v\_x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{), }
+    \StringTok{"v\_p"}
+\NormalTok{    )}
+\NormalTok{V }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+    \FunctionTok{expand.grid}\NormalTok{(}
+      \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N, }
+      \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T}
+\NormalTok{      ),}
+\NormalTok{    V}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{V}
 \end{Highlighting}
 \end{Shaded}
@@ -12837,6 +13111,37 @@ The value of the auxiliary parameters are set as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# make choice data}
+\NormalTok{df }\OtherTok{\textless{}{-}} 
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T, }
+    \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N, }
+    \AttributeTok{j =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{J}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{      V, }
+      \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"i"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{      X, }
+      \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{      M, }
+      \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(p)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}
+\NormalTok{      t, }
+\NormalTok{      i, }
+\NormalTok{      j}
+\NormalTok{      )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{df}
 \end{Highlighting}
 \end{Shaded}
@@ -12865,6 +13170,13 @@ The value of the auxiliary parameters are set as follows:
 \item
   Draw a vector of preference shocks \texttt{e} whose length is the same as the number of rows of \texttt{df}.
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# draw idiosyncratic shocks}
+\NormalTok{e }\OtherTok{\textless{}{-}}\NormalTok{ evd}\SpecialCharTok{::}\FunctionTok{rgev}\NormalTok{(}\FunctionTok{dim}\NormalTok{(df)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13035,6 +13347,32 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# mixed logit estimation}
+\DocumentationTok{\#\# draw mcmc V}
+\NormalTok{V\_mcmc }\OtherTok{\textless{}{-}} 
+  \FunctionTok{matrix}\NormalTok{(}
+    \FunctionTok{rnorm}\NormalTok{(L }\SpecialCharTok{*}\NormalTok{ T }\SpecialCharTok{*}\NormalTok{ (K }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)), }
+    \AttributeTok{nrow =}\NormalTok{ L }\SpecialCharTok{*}\NormalTok{ T}
+\NormalTok{    ) }
+\FunctionTok{colnames}\NormalTok{(V\_mcmc) }\OtherTok{\textless{}{-}} 
+  \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{paste}\NormalTok{(}\StringTok{"v\_x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{), }
+    \StringTok{"v\_p"}
+\NormalTok{    )}
+\NormalTok{V\_mcmc }\OtherTok{\textless{}{-}} 
+  \FunctionTok{data.frame}\NormalTok{(}
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{L, }
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T}
+\NormalTok{    ),}
+\NormalTok{  V\_mcmc}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{V\_mcmc}
 \end{Highlighting}
 \end{Shaded}
@@ -13055,6 +13393,39 @@ Use this \texttt{df\_share\_smooth} as the data to estimate the parameters in th
 ## 10    10     1 -0.358   0.272 -0.650  -2.09 
 ## # ... with 49,990 more rows
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# draw mcmc e}
+\NormalTok{df\_mcmc }\OtherTok{\textless{}{-}} 
+  \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{t =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{T, }
+    \AttributeTok{i =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{L, }
+    \AttributeTok{j =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{J}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    tibble}\SpecialCharTok{::}\FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{      V\_mcmc, }
+      \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"i"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{      X, }
+      \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{left\_join}\NormalTok{(}
+\NormalTok{      M, }
+      \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"j"}\NormalTok{, }\StringTok{"t"}\NormalTok{)}
+\NormalTok{      ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(p)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}
+\NormalTok{      t, }
+\NormalTok{      i, }
+\NormalTok{      j}
+\NormalTok{      )}
+\CommentTok{\# draw idiosyncratic shocks}
+\NormalTok{e\_mcmc }\OtherTok{\textless{}{-}}\NormalTok{ evd}\SpecialCharTok{::}\FunctionTok{rgev}\NormalTok{(}\FunctionTok{dim}\NormalTok{(df\_mcmc)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13759,6 +14130,760 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and \(W\) does 
 ## [5,] 0.8204684 0.8707353
 \end{verbatim}
 
+\hypertarget{assignment5}{%
+\chapter{Assignment 5: Merger Simulation}\label{assignment5}}
+
+\hypertarget{simulate-data-4}{%
+\section{Simulate data}\label{simulate-data-4}}
+
+We simulate data from a discrete choice model that is the same with in assignment 4 \textbf{except for that the price is derived from the Nash equlibrium}. There are \(T\) markets and each market has \(N\) consumers. There are \(J\) products and the indirect utility of consumer \(i\) in market \(t\) for product \(j\) is:
+\[
+u_{itj} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt},
+\]
+where \(\epsilon_{ijt}\) is an i.i.d. type-I extreme random variable. \(x_j\) is \(K\)-dimensional observed characteristics of the product. \(p_{jt}\) is the retail price of the product in the market.
+
+\(\xi_{jt}\) is product-market specific fixed effect. \(p_{jt}\) can be correlated with \(\xi_{jt}\) but \(x_{jt}\)s are independent of \(\xi_{jt}\). \(j = 0\) is an outside option whose indirect utility is:
+\[
+u_{it0} = \epsilon_{i0t},
+\]
+where \(\epsilon_{i0t}\) is an i.i.d. type-I extreme random variable.
+
+\(\beta_{it}\) and \(\alpha_{it}\) are different across consumers, and they are distributed as:
+\[
+\beta_{itk} = \beta_{0k} + \sigma_k \nu_{itk},
+\]
+\[
+\alpha_{it} = - \exp(\mu + \omega \upsilon_{it}) = - \exp(\mu + \frac{\omega^2}{2}) + [- \exp(\mu + \omega \upsilon_{it}) + \exp(\mu + \frac{\omega^2}{2})] \equiv \alpha_0 + \tilde{\alpha}_{it},
+\]
+where \(\nu_{itk}\) for \(k = 1, \cdots, K\) and \(\upsilon_{it}\) are i.i.d. standard normal random variables. \(\alpha_0\) is the mean of \(\alpha_i\) and \(\tilde{\alpha}_i\) is the deviation from the mean.
+
+Given a choice set in the market, \(\mathcal{J}_t \cup \{0\}\), a consumer chooses the alternative that maximizes her utility:
+\[
+q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]
+The choice probability of product \(j\) for consumer \(i\) in market \(t\) is:
+\[
+\sigma_{ijt}(p_t, x_t, \xi_t) = \mathbb{P}\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\}.
+\]
+
+Suppose that we only observe the (smooth) share data:
+\[
+s_{jt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \sigma_{ijt}(p_t, x_t, \xi_t) = \frac{1}{N} \sum_{i = 1}^N \frac{\exp(u_{ijt})}{1 + \sum_{k \in \mathcal{J}_t \cup \{0\}} \exp(u_{ikt})}. 
+\]
+along with the product-market characteristics \(x_{jt}\) and the retail prices \(p_{jt}\) for \(j \in \mathcal{J}_t \cup \{0\}\) for \(t = 1, \cdots, T\). We do not observe the choice data \(q_{ijt}\) nor shocks \(\xi_{jt}, \nu_{it}, \upsilon_{it}, \epsilon_{ijt}\).
+
+We draw \(\xi_{jt}\) from i.i.d. normal distribution with mean 0 and standard deviation \(\sigma_{\xi}\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set the seed, constants, and parameters of interest as follows.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set the seed}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\CommentTok{\# number of products}
+\NormalTok{J }\OtherTok{\textless{}{-}} \DecValTok{10}
+\CommentTok{\# dimension of product characteristics including the intercept}
+\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{3}
+\CommentTok{\# number of markets}
+\NormalTok{T }\OtherTok{\textless{}{-}} \DecValTok{100}
+\CommentTok{\# number of consumers per market}
+\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{500}
+\CommentTok{\# number of Monte Carlo}
+\NormalTok{L }\OtherTok{\textless{}{-}} \DecValTok{500}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set parameters of interests}
+\NormalTok{beta }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(K); }
+\NormalTok{beta[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{4}
+\NormalTok{beta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4.0000000  0.1836433 -0.8356286
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sigma }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(K)); sigma}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.5952808 0.3295078 0.8204684
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\NormalTok{omega }\OtherTok{\textless{}{-}} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+Generate the covariates as follows.
+
+The product-market characteristics:
+\[
+x_{j1} = 1, x_{jk} \sim N(0, \sigma_x), k = 2, \cdots, K,
+\]
+where \(\sigma_x\) is referred to as \texttt{sd\_x} in the code.
+
+The product-market-specific unobserved fixed effect:
+\[
+\xi_{jt} \sim N(0, \sigma_\xi),
+\]
+where \(\sigma_xi\) is referred to as \texttt{sd\_xi} in the code.
+
+The marginal cost of product \(j\) in market \(t\):
+\[
+c_{jt} \sim \text{logNormal}(0, \sigma_c),
+\]
+where \(\sigma_c\) is referred to as \texttt{sd\_c} in the code.
+
+The price is determined by a Nash equilibrium. Let \(\Delta_t\) be the \(J_t \times J_t\) ownership matrix in which the \((j, k)\)-th element \(\delta_{tjk}\) is equal to 1 if product \(j\) and \(k\) are owned by the same firm and 0 otherwise. Assume that \(\delta_{tjk} = 1\) if and only if \(j = k\) for all \(t = 1, \cdots, T\), i.e., each firm owns only one product. Next, define \(\Omega_t\) be \(J_t \times J_t\) matrix such that whose \((j, k)\)-the element \(\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t)\) is:
+\[
+\omega_{tjk}(p_t, x_t, \xi_t, \Delta_t) = - \frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} \delta_{tjk}.
+\]
+Then, the equilibrium price vector \(p_t\) is determined by solving the following equilibrium condition:
+\[
+p_t = c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t).
+\]
+
+The value of the auxiliary parameters are set as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set auxiliary parameters}
+\NormalTok{price\_xi }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{sd\_x }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{sd\_xi }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\NormalTok{sd\_c }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\NormalTok{sd\_p }\OtherTok{\textless{}{-}} \FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \texttt{X} is the data frame such that a row contains the characteristics vector \(x_{j}\) of a product and columns are product index and observed product characteristics. The dimension of the characteristics \(K\) is specified above. Add the row of the outside option whose index is \(0\) and all the characteristics are zero.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 11 x 4
+##        j   x_1     x_2     x_3
+##    <dbl> <dbl>   <dbl>   <dbl>
+##  1     0     0  0       0     
+##  2     1     1  0.975  -0.0324
+##  3     2     1  1.48    1.89  
+##  4     3     1  1.15    1.64  
+##  5     4     1 -0.611   1.19  
+##  6     5     1  3.02    1.84  
+##  7     6     1  0.780   1.56  
+##  8     7     1 -1.24    0.149 
+##  9     8     1 -4.43   -3.98  
+## 10     9     1  2.25    1.24  
+## 11    10     1 -0.0899 -0.112
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \texttt{M} is the data frame such that a row contains the price \(\xi_{jt}\), marginal cost \(c_{jt}\), and price \(p_{jt}\). For now, set \(p_{jt} = 0\) and fill the equilibrium price later. After generating the variables, drop some products in each market. In order to change the number of available products in each market, for each market, first draw \(J_t\) from a discrete uniform distribution between \(1\) and \(J\). Then, drop products from each market using \texttt{dplyr::sample\_frac} function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is \(0\) and all the variables take value zero.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 696 x 5
+##        j     t      xi     c     p
+##    <dbl> <int>   <dbl> <dbl> <dbl>
+##  1     0     1  0      0         0
+##  2     2     1 -0.735  1.04      0
+##  3     6     1 -0.0514 0.980     0
+##  4     7     1  0.194  0.961     0
+##  5     8     1 -0.0269 0.989     0
+##  6     0     2  0      0         0
+##  7     1     2 -0.197  0.988     0
+##  8     2     2 -0.0297 1.04      0
+##  9     4     2  0.382  1.00      0
+## 10     5     2 -0.0823 1.02      0
+## # ... with 686 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Generate the consumer-level heterogeneity. \texttt{V} is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, \((\nu_{i}', \upsilon_i)\). They are all i.i.d. standard normal random variables.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50,000 x 6
+##        i     t   v_x_1   v_x_2   v_x_3     v_p
+##    <int> <int>   <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1     1  0.448   0.985   0.611   0.408 
+##  2     2     1 -0.386  -0.389  -1.11   -0.667 
+##  3     3     1  0.0567  0.0510  0.0329 -0.119 
+##  4     4     1  0.585   0.303   0.860  -1.20  
+##  5     5     1 -0.449  -1.17    0.599   0.212 
+##  6     6     1 -0.782   0.0596  1.30    0.485 
+##  7     7     1  1.60   -1.62   -1.91    0.669 
+##  8     8     1 -1.65    2.10    0.726  -0.108 
+##  9     9     1 -0.848  -0.933   2.29   -0.0195
+## 10    10     1 -0.130  -0.897  -1.90   -0.185 
+## # ... with 49,990 more rows
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  We use \texttt{compute\_indirect\_utility(df,\ beta,\ sigma,\ mu,\ omega)}, \texttt{compute\_choice\_smooth(X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)}, and \texttt{compute\_share\_smooth(X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)} to compute \(s_t(p_t, x_t, \xi_t)\). On top of this, we need a function \texttt{compute\_derivative\_share\_smooth(X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)} that approximate:
+\end{enumerate}
+
+\[
+\frac{\partial s_{jt}(p_t, x_t, \xi_t)}{\partial p_{kt}} = 
+\begin{cases}
+\frac{1}{N} \sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)[1 - \sigma_{ijt}(p_t, x_t, \xi_t)] &\text{   if   } j = k\\
+- \frac{1}{N}\sum_{i = 1}^N \alpha_i \sigma_{ijt}(p_t, x_t, \xi_t)\sigma_{ikt}(p_t, x_t, \xi_t)] &\text{   if   } j \neq k.
+\end{cases}
+\]
+
+The returned object should be a list across markets and each element of the list should be \(J_t \times J_t\) matrix whose \((j, k)\)-th element is \(\partial s_{jt}/\partial p_{it}\) (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{derivative\_share\_smooth }\OtherTok{\textless{}{-}}
+  \FunctionTok{compute\_derivative\_share\_smooth}\NormalTok{(}
+    \AttributeTok{X =}\NormalTok{ X,}
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{derivative\_share\_smooth[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]        [,2]        [,3]        [,4]
+## [1,] -0.15195456  0.07243405  0.04067066  0.03615775
+## [2,]  0.07243405 -0.21334454  0.06758143  0.06900886
+## [3,]  0.04067066  0.06758143 -0.22465048  0.11247770
+## [4,]  0.03615775  0.06900886  0.11247770 -0.22508246
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{derivative\_share\_smooth[[T]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               [,1]         [,2]         [,3]         [,4]         [,5]         [,6]         [,7]
+##  [1,] -0.096590746  0.003580709  0.003713348  0.011204782  0.012198589  0.008403911  0.006573094
+##  [2,]  0.003580709 -0.054948229  0.003309376  0.009438704  0.009893682  0.007465135  0.003856270
+##  [3,]  0.003713348  0.003309376 -0.055735044  0.009505457  0.009233146  0.007249620  0.004084570
+##  [4,]  0.011204782  0.009438704  0.009505457 -0.160285167  0.021922796  0.022645270  0.016649978
+##  [5,]  0.012198589  0.009893682  0.009233146  0.021922796 -0.136324417  0.019978806  0.009219389
+##  [6,]  0.008403911  0.007465135  0.007249620  0.022645270  0.019978806 -0.119320239  0.009873958
+##  [7,]  0.006573094  0.003856270  0.004084570  0.016649978  0.009219389  0.009873958 -0.101062317
+##  [8,]  0.033096170  0.006496123  0.007885498  0.038995016  0.016868502  0.019723897  0.035849014
+##  [9,]  0.013495765  0.008866219  0.008606532  0.022541027  0.030984223  0.018980139  0.010662149
+## [10,]  0.003846416  0.001815922  0.001912074  0.006631000  0.005317866  0.004460069  0.003862923
+##               [,8]         [,9]        [,10]
+##  [1,]  0.033096170  0.013495765  0.003846416
+##  [2,]  0.006496123  0.008866219  0.001815922
+##  [3,]  0.007885498  0.008606532  0.001912074
+##  [4,]  0.038995016  0.022541027  0.006631000
+##  [5,]  0.016868502  0.030984223  0.005317866
+##  [6,]  0.019723897  0.018980139  0.004460069
+##  [7,]  0.035849014  0.010662149  0.003862923
+##  [8,] -0.207076797  0.027381997  0.018831945
+##  [9,]  0.027381997 -0.148409509  0.006094688
+## [10,]  0.018831945  0.006094688 -0.053007318
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Make a list \texttt{delta} such that each element of the list is \(J_t \times J_t\) matrix \(\delta_t\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delta[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delta[[T]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    1    0    0    0    0    0    0    0    0     0
+##  [2,]    0    1    0    0    0    0    0    0    0     0
+##  [3,]    0    0    1    0    0    0    0    0    0     0
+##  [4,]    0    0    0    1    0    0    0    0    0     0
+##  [5,]    0    0    0    0    1    0    0    0    0     0
+##  [6,]    0    0    0    0    0    1    0    0    0     0
+##  [7,]    0    0    0    0    0    0    1    0    0     0
+##  [8,]    0    0    0    0    0    0    0    1    0     0
+##  [9,]    0    0    0    0    0    0    0    0    1     0
+## [10,]    0    0    0    0    0    0    0    0    0     1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Write a function \texttt{update\_price(logp,\ X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega,\ delta)} that receives a price vector \(p_t^{(r)}\) and returns \(p_t^{(r + 1)}\) by:
+  \[
+  p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
+  \]
+  The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector, we pass log price and exponentiate inside the function. Iterate this until \(\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| < \lambda\), for example with \(\lambda = 10^{-6}\). This iteration may or may not converge. The convergence depends on the parameters and the realization of the shocks. If the algorithm does not converge, first check the code.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set the threshold}
+\NormalTok{lambda }\OtherTok{\textless{}{-}} \FloatTok{1e{-}6}
+\CommentTok{\# set the initial price}
+\NormalTok{p }\OtherTok{\textless{}{-}}\NormalTok{ M[M}\SpecialCharTok{$}\NormalTok{j }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, }\StringTok{"p"}\NormalTok{]}
+\NormalTok{logp }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{dim}\NormalTok{(p)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{p\_new }\OtherTok{\textless{}{-}} 
+  \FunctionTok{update\_price}\NormalTok{(}
+    \AttributeTok{logp =}\NormalTok{ logp, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega, }
+    \AttributeTok{delta =}\NormalTok{ delta}
+\NormalTok{    )}
+\CommentTok{\# iterate}
+\NormalTok{distance }\OtherTok{\textless{}{-}} \DecValTok{10000}
+\ControlFlowTok{while}\NormalTok{ (distance }\SpecialCharTok{\textgreater{}}\NormalTok{ lambda) \{}
+\NormalTok{  p\_old }\OtherTok{\textless{}{-}}\NormalTok{ p\_new}
+\NormalTok{  p\_new }\OtherTok{\textless{}{-}} 
+    \FunctionTok{update\_price}\NormalTok{(}
+      \FunctionTok{log}\NormalTok{(p\_old), }
+\NormalTok{      X, }
+\NormalTok{      M, }
+\NormalTok{      V, }
+\NormalTok{      beta, }
+\NormalTok{      sigma, }
+\NormalTok{      mu, }
+\NormalTok{      omega, }
+\NormalTok{      delta}
+\NormalTok{      )}
+\NormalTok{  distance }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(p\_new }\SpecialCharTok{{-}}\NormalTok{ p\_old))}
+  \FunctionTok{print}\NormalTok{(distance)}
+\NormalTok{\}}
+\CommentTok{\# save}
+\NormalTok{p\_actual }\OtherTok{\textless{}{-}}\NormalTok{ p\_new}
+\FunctionTok{saveRDS}\NormalTok{(}
+\NormalTok{  p\_actual, }
+  \AttributeTok{file =} \StringTok{"data/a5/A5\_price\_actual.rds"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{estimate-the-parameters-3}{%
+\section{Estimate the parameters}\label{estimate-the-parameters-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Write a function \texttt{estimate\_marginal\_cost()} that estimate \(c_t\) by the equilibrium condition as:
+  \[
+  c_t = p_t - \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)
+  \]
+\end{enumerate}
+
+Of course, in reality, we first draw Monte Carlo shocks to approximate the share, estimate the demand parameters, and use these shocks and estimates to estimate the marginal costs. In this assignment, we check the if the estimated marginal costs coincide with the true marginal costs to confirm that the codes are correctly written.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# load}
+\NormalTok{p\_actual }\OtherTok{\textless{}{-}} 
+  \FunctionTok{readRDS}\NormalTok{(}\AttributeTok{file =} \StringTok{"data/a5/A5\_price\_actual.rds"}\NormalTok{)}
+\CommentTok{\# take the logarithm}
+\NormalTok{logp }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(p\_actual)}
+\CommentTok{\# estimate the marginal cost}
+\NormalTok{marginal\_cost\_estimate }\OtherTok{\textless{}{-}} 
+  \FunctionTok{estimate\_marginal\_cost}\NormalTok{(}
+    \AttributeTok{logp =}\NormalTok{ logp, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega, }
+    \AttributeTok{delta =}\NormalTok{ delta)}
+\NormalTok{marginal\_cost\_actual }\OtherTok{\textless{}{-}}\NormalTok{ M[M}\SpecialCharTok{$}\NormalTok{j }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, ]}\SpecialCharTok{$}\NormalTok{c}
+\CommentTok{\# plot the estimate vs actual marginal costs}
+\NormalTok{marginal\_cost\_df }\OtherTok{\textless{}{-}}
+  \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{actual =}\NormalTok{ marginal\_cost\_actual,}
+    \AttributeTok{estimate =}\NormalTok{ marginal\_cost\_estimate}
+\NormalTok{    )}
+\FunctionTok{ggplot}\NormalTok{(}
+\NormalTok{  marginal\_cost\_df, }
+  \FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{x =}\NormalTok{ estimate, }
+    \AttributeTok{y =}\NormalTok{ actual}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-169-1} \end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  (Optional) Translate \texttt{compute\_indirect\_utility}, \texttt{compute\_choice\_smooth}, \texttt{compute\_derivative\_share\_smooth}, \texttt{update\_price} into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment.
+\end{enumerate}
+
+\hypertarget{conduct-counterfactual-simulation}{%
+\section{Conduct counterfactual simulation}\label{conduct-counterfactual-simulation}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let \texttt{delta\_counterfactual} be the relevant ownership matrix. Make \texttt{delta\_counterfactual}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delta\_counterfactual[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delta\_counterfactual[[T]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    1    1    1    0    0    0    0    0    0     0
+##  [2,]    1    1    1    0    0    0    0    0    0     0
+##  [3,]    1    1    1    0    0    0    0    0    0     0
+##  [4,]    0    0    0    1    0    0    0    0    0     0
+##  [5,]    0    0    0    0    1    0    0    0    0     0
+##  [6,]    0    0    0    0    0    1    0    0    0     0
+##  [7,]    0    0    0    0    0    0    1    0    0     0
+##  [8,]    0    0    0    0    0    0    0    1    0     0
+##  [9,]    0    0    0    0    0    0    0    0    1     0
+## [10,]    0    0    0    0    0    0    0    0    0     1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Compute the counterfactual price using the iteration with \texttt{update\_price}. You can start the iteration from the equilibrium price. Show the average percentage change in the price for each product. In theory, the price of any product should not drop. But some prices can slightly drop because of the numerical errors.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logp }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(p\_actual)}
+\NormalTok{p\_new }\OtherTok{\textless{}{-}} 
+  \FunctionTok{update\_price}\NormalTok{(}
+    \AttributeTok{logp =}\NormalTok{ logp, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega, }
+    \AttributeTok{delta =}\NormalTok{ delta\_counterfactual}
+\NormalTok{    )}
+\NormalTok{distance }\OtherTok{\textless{}{-}} \DecValTok{10000}
+\ControlFlowTok{while}\NormalTok{ (distance }\SpecialCharTok{\textgreater{}}\NormalTok{ lambda) \{}
+\NormalTok{  p\_old }\OtherTok{\textless{}{-}}\NormalTok{ p\_new}
+\NormalTok{  p\_new }\OtherTok{\textless{}{-}} 
+    \FunctionTok{update\_price}\NormalTok{(}
+      \FunctionTok{log}\NormalTok{(p\_old), }
+\NormalTok{      X, }
+\NormalTok{      M, }
+\NormalTok{      V, }
+\NormalTok{      beta, }
+\NormalTok{      sigma, }
+\NormalTok{      mu, }
+\NormalTok{      omega, }
+\NormalTok{      delta\_counterfactual}
+\NormalTok{      )}
+\NormalTok{  distance }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{abs}\NormalTok{(p\_new }\SpecialCharTok{{-}}\NormalTok{ p\_old))}
+  \FunctionTok{print}\NormalTok{(distance)}
+\NormalTok{\}}
+\NormalTok{p\_counterfactual }\OtherTok{\textless{}{-}}\NormalTok{ p\_new}
+\FunctionTok{saveRDS}\NormalTok{(}
+\NormalTok{  p\_counterfactual, }
+  \AttributeTok{file =} \StringTok{"data/a5/A5\_price\_counterfactual.rds"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r}
+\hline
+j & p\_change\\
+\hline
+1 & 0.0501744\\
+\hline
+2 & 0.1179955\\
+\hline
+3 & 0.1479700\\
+\hline
+4 & 0.0013059\\
+\hline
+5 & 0.0004309\\
+\hline
+6 & -0.0002448\\
+\hline
+7 & 0.0008458\\
+\hline
+8 & -0.0033448\\
+\hline
+9 & 0.0004042\\
+\hline
+10 & 0.0015040\\
+\hline
+\end{tabular}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Write a function \texttt{compute\_producer\_surplus(p,\ marginal\_cost,\ X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)} that returns the producer surplus for each product in each market. Compute the actual and counterfactual producer surplus under the estimated marginal costs. Show the average percentage change in the producer surplus for each product.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute actual producer surplus}
+\NormalTok{producer\_surplus\_actual }\OtherTok{\textless{}{-}}
+  \FunctionTok{compute\_producer\_surplus}\NormalTok{(}
+    \AttributeTok{p =}\NormalTok{ p\_actual, }
+    \AttributeTok{marginal\_cost =}\NormalTok{ marginal\_cost\_estimate, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega}
+\NormalTok{    )}
+\FunctionTok{summary}\NormalTok{(producer\_surplus\_actual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        s           
+##  Min.   :0.008247  
+##  1st Qu.:0.041636  
+##  Median :0.071153  
+##  Mean   :0.168761  
+##  3rd Qu.:0.150643  
+##  Max.   :1.607658
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute counterfactual producer surplus}
+\NormalTok{producer\_surplus\_counterfactual }\OtherTok{\textless{}{-}}
+  \FunctionTok{compute\_producer\_surplus}\NormalTok{(}
+    \AttributeTok{p =}\NormalTok{ p\_counterfactual, }
+    \AttributeTok{marginal\_cost =}\NormalTok{ marginal\_cost\_estimate, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega}
+\NormalTok{    )}
+\FunctionTok{summary}\NormalTok{(producer\_surplus\_counterfactual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        s           
+##  Min.   :0.008212  
+##  1st Qu.:0.042687  
+##  Median :0.073644  
+##  Mean   :0.171809  
+##  3rd Qu.:0.153746  
+##  Max.   :1.607658
+\end{verbatim}
+
+\begin{tabular}{r|r}
+\hline
+j & producer\_surplus\_change\\
+\hline
+1 & 0.0231358\\
+\hline
+2 & 0.0131566\\
+\hline
+3 & 0.0073846\\
+\hline
+4 & 0.0534174\\
+\hline
+5 & 0.0449804\\
+\hline
+6 & 0.0563809\\
+\hline
+7 & 0.0372859\\
+\hline
+8 & 0.0072057\\
+\hline
+9 & 0.0421801\\
+\hline
+10 & 0.0385013\\
+\hline
+\end{tabular}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Write a function \texttt{compute\_consumer\_surplus(p,\ X,\ M,\ V,\ beta,\ sigma,\ mu,\ omega)} that returns the consumer surplus for each consumer in each market. Compute the actual and counterfactual consumer surplus under the estimated marginal costs. Show the percentage change in the total consumer surplus.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute actual consumer surplus}
+\NormalTok{consumer\_surplus\_actual }\OtherTok{\textless{}{-}} 
+  \FunctionTok{compute\_consumer\_surplus}\NormalTok{(}
+    \AttributeTok{p =}\NormalTok{ p\_actual, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega}
+\NormalTok{    )}
+\FunctionTok{summary}\NormalTok{(consumer\_surplus\_actual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   0.00000   0.03447   1.10805   4.33269   4.65720 230.98190
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute counterfactual consumer surplus}
+\NormalTok{consumer\_surplus\_counterfactual }\OtherTok{\textless{}{-}} 
+  \FunctionTok{compute\_consumer\_surplus}\NormalTok{(}
+    \AttributeTok{p =}\NormalTok{ p\_counterfactual, }
+    \AttributeTok{X =}\NormalTok{ X, }
+    \AttributeTok{M =}\NormalTok{ M, }
+    \AttributeTok{V =}\NormalTok{ V, }
+    \AttributeTok{beta =}\NormalTok{ beta, }
+    \AttributeTok{sigma =}\NormalTok{ sigma, }
+    \AttributeTok{mu =}\NormalTok{ mu, }
+    \AttributeTok{omega =}\NormalTok{ omega}
+\NormalTok{    )}
+\FunctionTok{summary}\NormalTok{(consumer\_surplus\_counterfactual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##   0.00000   0.03054   1.07265   4.31048   4.61989 231.02355
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{consumer\_surplus\_change }\OtherTok{\textless{}{-}} 
+\NormalTok{  (}\FunctionTok{sum}\NormalTok{(consumer\_surplus\_counterfactual) }\SpecialCharTok{{-}} 
+     \FunctionTok{sum}\NormalTok{(consumer\_surplus\_actual)) }\SpecialCharTok{/}
+  \FunctionTok{sum}\NormalTok{(consumer\_surplus\_actual)}
+\NormalTok{consumer\_surplus\_change}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.005127025
+\end{verbatim}
+
 \hypertarget{rcpp}{%
 \chapter{Integrating with C++ using Rcpp and RcppEigen}\label{rcpp}}
 
@@ -14164,7 +15289,7 @@ R & Rcpp \\
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
+## [1]  0.4719031  0.5797099  0.1728610 -1.0534362 -0.2527136
 \end{verbatim}
 
 \begin{Shaded}
@@ -14176,9 +15301,9 @@ R & Rcpp \\
 \end{Shaded}
 
 \begin{verbatim}
-##            [,1]       [,2]       [,3]        [,4]      [,5]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
+##           [,1]       [,2]       [,3]      [,4]     [,5]
+## [1,] 0.4645368 -0.8492838  0.5765778 0.2681390 1.059965
+## [2,] 0.7205249 -1.5866628 -0.5665128 0.3031468 1.040199
 \end{verbatim}
 
 \begin{itemize}
@@ -14271,12 +15396,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 
 \begin{verbatim}
 ## $x
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
+## [1]  0.4719031  0.5797099  0.1728610 -1.0534362 -0.2527136
 ## 
 ## $Y
-##            [,1]       [,2]       [,3]        [,4]      [,5]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
+##           [,1]       [,2]       [,3]      [,4]     [,5]
+## [1,] 0.4645368 -0.8492838  0.5765778 0.2681390 1.059965
+## [2,] 0.7205249 -1.5866628 -0.5665128 0.3031468 1.040199
 ## 
 ## $z
 ## [1] 1 2 3 4 5
@@ -14291,12 +15416,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 \end{Shaded}
 
 \begin{verbatim}
-##           x1         x2
-## 1  0.5748044 -1.6756308
-## 2  0.7165467  0.5184281
-## 3 -2.4101662 -0.3616578
-## 4  0.7351807 -2.0892525
-## 5  1.3282053  0.5471699
+##           x1        x2
+## 1 -0.1936151 0.7739181
+## 2  0.3964482 0.8468554
+## 3 -0.3278809 1.3319153
+## 4  0.3769386 0.2699024
+## 5  2.1131827 0.9294629
 \end{verbatim}
 
 \begin{Shaded}
@@ -14518,12 +15643,12 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## [[1]]
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
+## [1]  0.4719031  0.5797099  0.1728610 -1.0534362 -0.2527136
 ## 
 ## [[2]]
-##            [,1]       [,2]       [,3]        [,4]      [,5]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
+##           [,1]       [,2]       [,3]      [,4]     [,5]
+## [1,] 0.4645368 -0.8492838  0.5765778 0.2681390 1.059965
+## [2,] 0.7205249 -1.5866628 -0.5665128 0.3031468 1.040199
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -14587,12 +15712,12 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 
 \begin{verbatim}
 ## $x
-## [1] -0.3069932 -0.5508142  0.4642737 -0.7123069  1.4381007
+## [1]  0.4719031  0.5797099  0.1728610 -1.0534362 -0.2527136
 ## 
 ## $Y
-##            [,1]       [,2]       [,3]        [,4]      [,5]
-## [1,] -0.6159179 -0.3978828  1.4930227  0.69351947 -0.385846
-## [2,]  0.3277788 -0.5641928 -0.3177628 -0.08362335  1.290173
+##           [,1]       [,2]       [,3]      [,4]     [,5]
+## [1,] 0.4645368 -0.8492838  0.5765778 0.2681390 1.059965
+## [2,] 0.7205249 -1.5866628 -0.5665128 0.3031468 1.040199
 ## 
 ## $z
 ## [1] 1 2 3 4 5

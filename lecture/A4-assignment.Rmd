@@ -122,7 +122,7 @@ sd_p <- 0.01
 2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
 
 
-```{r}
+```{r, echo = TRUE}
 # make product characteristics data
 X <- 
   matrix(
@@ -152,7 +152,7 @@ X
 
 3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. After generating the variables, drop some products in each market. __In this assignment, we drop products in a different way from the last assignment__. In order to change the number of available products in each market, for each market, first draw $J_t$ from a discrete uniform distribution between $1$ and $J$. Then, drop products from each market using `dplyr::sample_frac` function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
 
-```{r}
+```{r, echo = TRUE}
 # make market-product data
 M <- 
   expand.grid(
@@ -197,7 +197,7 @@ M
 4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
 
 
-```{r}
+```{r, echo = TRUE}
 # make consumer-market data
 V <- 
   matrix(
@@ -227,7 +227,7 @@ V
 5. Join `X`, `M`, `V` using `dplyr::left_join` and name it `df`. `df` is the data frame such that a row contains variables for a consumer about a product that is available in a market.
 
 
-```{r}
+```{r, echo = TRUE}
 # make choice data
 df <- 
   expand.grid(
@@ -262,7 +262,7 @@ df
 
 6. Draw a vector of preference shocks `e` whose length is the same as the number of rows of `df`.
 
-```{r}
+```{r, echo = TRUE}
 # draw idiosyncratic shocks
 e <- evd::rgev(dim(df)[1])
 ```
@@ -340,7 +340,7 @@ Use this `df_share_smooth` as the data to estimate the parameters in the followi
 
 1. First draw Monte Carlo consumer-level heterogeneity `V_mcmc` and Monte Carlo preference shocks `e_mcmc`. The number of simulations is `L`. This does not have to be the same with the actual number of consumers `N`. 
 
-```{r}
+```{r, echo = TRUE}
 # mixed logit estimation
 ## draw mcmc V
 V_mcmc <- 
@@ -368,7 +368,7 @@ V_mcmc <-
 V_mcmc
 ```
 
-```{r}
+```{r, echo = TRUE}
 ## draw mcmc e
 df_mcmc <- 
   expand.grid(
