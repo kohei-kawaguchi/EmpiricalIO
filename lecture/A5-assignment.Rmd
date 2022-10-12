@@ -124,7 +124,7 @@ sd_p <- 0.05
 2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
 
 
-```{r}
+```{r, echo = TRUE}
 # make product characteristics data
 X <- 
   matrix(
@@ -154,7 +154,7 @@ X
 
 3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. For now, set $p_{jt} = 0$ and fill the equilibrium price later. After generating the variables, drop some products in each market. In order to change the number of available products in each market, for each market, first draw $J_t$ from a discrete uniform distribution between $1$ and $J$. Then, drop products from each market using `dplyr::sample_frac` function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
 
-```{r}
+```{r, echo = TRUE}
 # make market-product data
 M <- 
   expand.grid(
@@ -198,7 +198,7 @@ M
 
 4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
 
-```{r}
+```{r, echo = TRUE}
 # make consumer-market data
 V <- 
   matrix(
