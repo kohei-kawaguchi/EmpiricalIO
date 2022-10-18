@@ -49,10 +49,14 @@ where $y_{im} \in \{0, 1\}$ is the indicator for entrant $i$ in market $m$ to en
 2. Set the parameters as follows:
 ```{r}
 # parameters of interest
-beta <- abs(rnorm(K)); beta
-alpha <- abs(rnorm(L)); alpha
-delta <- 1; delta
-rho <- abs(rnorm(1)); rho
+beta <- abs(rnorm(K)); 
+beta
+alpha <- abs(rnorm(L)); 
+alpha
+delta <- 1; 
+delta
+rho <- abs(rnorm(1)); 
+rho
 # auxiliary parameters
 x_mu <- 1
 x_sd <- 3
@@ -62,21 +66,39 @@ z_sd <- 4
 
 
 3. Draw exogenous variables as follows:
-```{r}
+```{r, echo = TRUE}
 # number of potential entrants
-E <- purrr::rdunif(M, 1, N); E
+E <- 
+  purrr::rdunif(
+    M, 
+    1, 
+    N
+    ); 
+E
 # market attributes
-X <- matrix(
-  rnorm(M * K, x_mu, x_sd),
+X <- 
+  matrix(
+  rnorm(
+    M * K, 
+    x_mu, 
+    x_sd
+    ),
   nrow = M
-)
+  )
 colnames(X) <- paste("x", 1:K, sep = "_")
-X
+X[1:10, ]
 # entrant attributes
 Z <-
-  foreach (m = 1:M) %dopar% {
-    Z_m <- matrix(
-      rnorm(E[m] * L, z_mu, z_sd),
+  foreach (
+    m = 1:M
+    ) %dopar% {
+    Z_m <- 
+      matrix(
+      rnorm(
+        E[m] * L, 
+        z_mu, 
+        z_sd
+        ),
       nrow = E[m]
     )
     colnames(Z_m) <- paste("z", 1:L, sep = "_")
@@ -84,15 +106,19 @@ Z <-
   }
 Z[[1]]
 # unobserved market attributes
-EP <- matrix(
+EP <- 
+  matrix(
   rnorm(M),
   nrow = M
-)
-EP
+  )
+EP[1:10, ]
 # unobserved entrant attributes
 NU <-
-  foreach (m = 1:M) %dopar% {
-    NU_m <- matrix(
+  foreach (
+    m = 1:M
+    ) %dopar% {
+    NU_m <- 
+      matrix(
       rnorm(E[m]),
       nrow = E[m]
     )
@@ -112,7 +138,17 @@ X_m <- X[m, , drop = FALSE]
 Z_m <- Z[[m]]
 EP_m <- EP[m, , drop = FALSE]
 NU_m <- NU[[m]]
-compute_payoff(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)
+compute_payoff(
+  y_m = y_m, 
+  X_m = X_m, 
+  Z_m = Z_m, 
+  EP_m = EP_m, 
+  NU_m = NU_m, 
+  beta = beta, 
+  alpha = alpha, 
+  delta = delta, 
+  rho = rho
+  )
 ```
 
 5. Assume that the order of entry is predetermined. Assume that the potential entrants sequentially decide entry according to the order of the payoff excluding the competitive effects, i.e.:
@@ -122,22 +158,58 @@ $$
 Write a function `compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the equilibrium vector of entry at a market.
 
 ```{r}
-compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)
+compute_sequential_entry(
+  X_m = X_m, 
+  Z_m = Z_m, 
+  EP_m = EP_m, 
+  NU_m = NU_m, 
+  beta = beta, 
+  alpha = alpha, 
+  delta = delta, 
+  rho = rho
+  )
 ```
 
 6. Next, assume $\rho = 0$. Assume that potential entrants simultaneously decide entry. Write a function `compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)` that returns the equilibrium vector of entry at a market.
 ```{r}
-compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)
+compute_simultaneous_entry(
+  X_m = X_m, 
+  Z_m = Z_m, 
+  EP_m = EP_m, 
+  NU_m = NU_m, 
+  beta = beta, 
+  alpha = alpha,
+  delta = delta
+  )
 ```
 
 7. Write a function `compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)` compute the equilibrium entry vectors under the assumption of sequential entry. The output should be a list of entry vectors across markets. Write a function to compute the equilibrium payoffs across markets, `compute_payoff_across_markets(Y, X, Z, EP, NU, beta, alpha, delta, rho)` and check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code.
 ```{r}
 Y_sequential <-
-  compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)
+  compute_sequential_entry_across_markets(
+    X = X, 
+    Z = Z, 
+    EP = EP, 
+    NU = NU, 
+    beta = beta, 
+    alpha = alpha, 
+    delta = delta, 
+    rho = rho
+    )
 Y_sequential[[1]]
 Y_sequential[[M]]
 payoff_sequential <-
-  compute_payoff_across_markets(Y_sequential, X, Z, EP, NU, beta, alpha, delta, rho)
+  compute_payoff_across_markets(
+    Y = Y_sequential, 
+    X = X, 
+    Z = Z, 
+    EP = EP, 
+    NU = NU, 
+    beta = beta, 
+    alpha = alpha, 
+    delta = delta, 
+    rho = rho
+    )
 min(unlist(payoff_sequential))
 ```
 
@@ -146,11 +218,28 @@ min(unlist(payoff_sequential))
 ```{r}
 # compute simultaneous entry across markets
 Y_simultaneous <-
-  compute_simultaneous_entry_across_markets(X, Z, EP, NU, beta, alpha, delta)
+  compute_simultaneous_entry_across_markets(
+    X = X, 
+    Z = Z, 
+    EP = EP, 
+    NU = NU, 
+    beta = beta, 
+    alpha = alpha, 
+    delta = delta)
 Y_simultaneous[[1]]
 Y_simultaneous[[M]]
 payoff_simultaneous <-
-  compute_payoff_across_markets(Y_simultaneous, X, Z, EP, NU, beta, alpha, delta, rho = 0)
+  compute_payoff_across_markets(
+    Y = Y_simultaneous, 
+    X = X, 
+    Z = Z, 
+    EP = EP, 
+    NU = NU, 
+    beta = beta, 
+    alpha = alpha, 
+    delta = delta, 
+    rho = 0
+    )
 min(unlist(payoff_simultaneous))
 ```
 
@@ -168,27 +257,35 @@ $$
 $$
 
 1. Draw $R$ unobserved shocks:
-```{r}
+```{r, echo = TRUE}
  set.seed(1)
 # unobserved market attributes
 EP_mc <-
-  foreach (r = 1:R) %dopar% {
-    EP <- matrix(
+  foreach (
+    r = 1:R
+    ) %dopar% {
+    EP <- 
+      matrix(
       rnorm(M),
       nrow = M
-    )
+      )
     return(EP)
   }
 
 # unobserved entrant attributes
 NU_mc <-
-  foreach (r = 1:R) %dopar% {
+  foreach (
+    r = 1:R
+    ) %dopar% {
   NU <-
-    foreach (m = 1:M) %do% {
-      NU_m <- matrix(
+    foreach (
+      m = 1:M
+      ) %do% {
+      NU_m <- 
+        matrix(
         rnorm(E[m]),
         nrow = E[m]
-      )
+        )
       return(NU_m)
     }
   return(NU)
@@ -200,30 +297,72 @@ NU_mc <-
 
 ```{r}
 # sequential entry
-theta <- theta_sequential <-
-  c(beta, alpha, delta, rho)
+theta <- 
+  theta_sequential <-
+  c(
+    beta, 
+    alpha, 
+    delta, 
+    rho
+    )
 Y <- Y_sequential
 # compute monte carlo simulations 
 Y_mc <- 
   compute_monte_carlo_sequential_entry(
-    X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)
+    X = X, 
+    Z = Z, 
+    EP_mc = EP_mc, 
+    NU_mc = NU_mc, 
+    beta = beta, 
+    alpha = alpha, 
+    delta = delta, 
+    rho = rho
+    )
 Y_mc[[1]][[1]]
 # compute objective function
-compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta)
+compute_objective_sequential_entry(
+  Y = Y, 
+  X = X, 
+  Z = Z, 
+  EP_mc = EP_mc, 
+  NU_mc = NU_mc, 
+  theta = theta
+  )
 ```
 
 3. Write a function `compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)` that returns the value of the objective function given data and parameters under the assumption of simultaneous entry.
 
 ```{r}
 # simultaneous entry
-theta <- theta_simultaneous <-
-  c(beta, alpha, delta)
+theta <- 
+  theta_simultaneous <-
+  c(
+    beta, 
+    alpha, 
+    delta
+    )
 Y <- Y_simultaneous
 # compute monte carlo simulations
-Y_mc <- compute_monte_carlo_simultaneous_entry(X, Z, EP_mc, NU_mc, beta, alpha, delta)
+Y_mc <- 
+  compute_monte_carlo_simultaneous_entry(
+  X = X, 
+  Z = Z, 
+  EP_mc = EP_mc, 
+  NU_mc = NU_mc, 
+  beta = beta, 
+  alpha = alpha, 
+  delta = delta
+  )
 Y_mc[[1]][[1]]
 # compute objective function
-compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)
+compute_objective_simultaneous_entry(
+  Y = Y, 
+  X = X, 
+  Z = Z, 
+  EP_mc = EP_mc, 
+  NU_mc = NU_mc, 
+  theta = theta
+  )
 ```
 
 
@@ -231,40 +370,79 @@ compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)
 
 ```{r, eval = FALSE}
 # sequential entry
-theta <- theta_sequential <-
-  c(beta, alpha, delta, rho)
+theta <- 
+  theta_sequential <-
+  c(
+    beta, 
+    alpha, 
+    delta, 
+    rho
+    )
 Y <- Y_sequential
 model <- compute_sequential_entry_across_markets
-label <- c(paste("\\beta_", 1:K, sep = ""), 
+label <- c(
+           paste("\\beta_", 1:K, sep = ""), 
            paste("\\alpha_", 1:L, sep = ""),
            "\\delta",
-           "\\rho")
+           "\\rho"
+           )
 label <- paste("$", label, "$", sep = "")
 # compute the graph
-graph <- foreach (i = 1:length(theta)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
   theta_i <- theta[i]
   theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
   objective_i <- 
-    foreach (j = 1:length(theta_i_list),
-             .combine = "rbind") %do% {
+    foreach (
+              j = 1:length(theta_i_list),
+             .combine = "rbind"
+             ) %do% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta_j)
+                 compute_objective_sequential_entry(
+                   Y, 
+                   X, 
+                   Z, 
+                   EP_mc, 
+                   NU_mc, 
+                   theta_j
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+  df_graph <- 
+    data.frame(
+      x = theta_i_list, 
+      y = objective_i
+      ) 
+  g <- 
+    ggplot(
+      data = df_graph, 
+      aes(
+        x = x, 
+        y = y
+        )
+      ) + 
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i, 
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i])) + 
+    theme_classic()
   return(g)
 }
-save(graph, file = "data/A6_graph_sequential.RData")
+saveRDS(
+  graph, 
+  file = "data/a6/A6_graph_sequential.rds"
+  )
 ```
 ```{r}
-load(file = "data/A6_graph_sequential.RData")
+graph <- readRDS(file = "data/a6/A6_graph_sequential.rds")
 graph
 ```
 
@@ -272,39 +450,77 @@ graph
 
 ```{r, eval = FALSE}
 # simultaneous entry
-theta <- theta_simultaneous <-
-  c(beta, alpha, delta)
+theta <- 
+  theta_simultaneous <-
+  c(
+    beta, 
+    alpha, 
+    delta
+    )
 Y <- Y_simultaneous
 model <- compute_simultaneous_entry_across_markets
-label <- c(paste("\\beta_", 1:K, sep = ""), 
+label <- c(
+           paste("\\beta_", 1:K, sep = ""), 
            paste("\\alpha_", 1:L, sep = ""),
-           "\\delta")
+           "\\delta"
+           )
 label <- paste("$", label, "$", sep = "")
 # compute the graph
-graph <- foreach (i = 1:length(theta)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
   theta_i <- theta[i]
   theta_i_list <- theta_i * seq(0.5, 1.5, by = 0.1)
   objective_i <- 
-    foreach (j = 1:length(theta_i_list),
-             .combine = "rbind") %do% {
+    foreach (
+              j = 1:length(theta_i_list),
+              .combine = "rbind"
+             ) %do% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta_j)
+                 compute_objective_simultaneous_entry(
+                   Y, 
+                   X, 
+                   Z, 
+                   EP_mc, 
+                   NU_mc, 
+                   theta_j
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+  df_graph <- 
+    data.frame(
+      x = theta_i_list, 
+      y = objective_i
+      ) 
+  g <- 
+    ggplot(
+    data = df_graph, 
+    aes(
+      x = x, 
+      y = y
+      )
+    ) + 
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i, 
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i])) + 
+    theme_classic()
   return(g)
 }
-save(graph, file = "data/A6_graph_simultaneous.RData")
+saveRDS(
+  graph, 
+  file = "data/a6/A6_graph_simultaneous.rds"
+  )
 ```
 ```{r}
-load(file = "data/A6_graph_simultaneous.RData")
+graph <- readRDS(file = "data/a6/A6_graph_simultaneous.rds")
 graph
 ```
 
@@ -312,25 +528,36 @@ graph
 
 ```{r}
 # sequential entry
-theta <- theta_sequential <-
-  c(beta, alpha, delta, rho)
+theta <- 
+  theta_sequential <-
+  c(
+    beta, 
+    alpha, 
+    delta, 
+    rho
+    )
 ```
 
 ```{r, eval = FALSE}
 Y <- Y_sequential
 result_sequential <-
-  optim(par = theta,
+  optim(
+        par = theta,
         fn = compute_objective_sequential_entry,
         method = "Nelder-Mead",
         Y = Y,
         X = X,
         Z = Z,
         EP_mc = EP_mc,
-        NU_mc = NU_mc)
-save(result_sequential, file = "data/A6_estimate_sequential.RData")
+        NU_mc = NU_mc
+        )
+saveRDS(
+  result_sequential, 
+  file = "data/a6/A6_estimate_sequential.rds"
+  )
 ```
 ```{r}
-load(file = "data/A6_estimate_sequential.RData")
+result_sequential <- readRDS(file = "data/a6/A6_estimate_sequential.rds")
 result_sequential
 comparison <-
   data.frame(
@@ -345,14 +572,20 @@ comparison
 
 ```{r}
 # simultaneous entry
-theta <- theta_simultaneous <-
-  c(beta, alpha, delta)
+theta <- 
+  theta_simultaneous <-
+  c(
+    beta, 
+    alpha, 
+    delta
+    )
 ```
 
 ```{r, eval = FALSE}
 Y <- Y_simultaneous
 result_simultaneous <-
-  optim(par = theta,
+  optim(
+        par = theta,
         fn = compute_objective_simultaneous_entry,
         method = "Nelder-Mead",
         Y = Y,
@@ -360,10 +593,13 @@ result_simultaneous <-
         Z = Z,
         EP_mc = EP_mc,
         NU_mc = NU_mc)
-save(result_simultaneous, file = "data/A6_estimate_simultaneous.RData")
+saveRDS(
+  result_simultaneous, 
+  file = "data/a6/A6_estimate_simultaneous.rds"
+  )
 ```
 ```{r}
-load(file = "data/A6_estimate_simultaneous.RData")
+result_simultaneous <- readRDS(file = "data/a6/A6_estimate_simultaneous.rds")
 result_simultaneous
 comparison <-
   data.frame(
@@ -391,13 +627,29 @@ rho <- theta[K + L + 2]
 # monte carlo simulations under the actual parameters
 Y_actual <- 
   compute_monte_carlo_sequential_entry(
-    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta, rho)
+    X, 
+    Z, 
+    EP_mc[1], 
+    NU_mc[1], 
+    beta, 
+    alpha, 
+    delta, 
+    rho
+    )
 Y_actual <- Y_actual[[1]]
 # monte carlo simulations under the counterfactual parameters
 delta_count <- 0.5
 Y_count <- 
   compute_monte_carlo_sequential_entry(
-    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta_count, rho)
+    X,
+    Z, 
+    EP_mc[1], 
+    NU_mc[1], 
+    beta, 
+    alpha, 
+    delta_count, 
+    rho
+    )
 Y_count <- Y_count[[1]]
 # histogram
 N_actual <-
@@ -417,14 +669,35 @@ N_df <- data.frame(
 ) %>%
   reshape2::melt(id.vars = "m") %>%
   dplyr::rename(parameters = variable) %>%
-  dplyr::group_by(parameters, value) %>%
+  dplyr::group_by(
+    parameters, 
+    value
+    ) %>%
   dplyr::summarise(n = length(m)) %>%
   dplyr::ungroup() %>%
-  tidyr::complete(parameters, value, fill = list(n = 0))
-ggplot(N_df, aes(x = value, y = n, colour = parameters, fill = parameters)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  ylab("count") + xlab("number of entrants") + ggtitle("Sequential entry") +
-  theme(plot.title = element_text(hjust = 0.5))
+  tidyr::complete(
+    parameters, 
+    value, 
+    fill = list(n = 0)
+    )
+ggplot(
+  N_df, 
+  aes(
+    x = value, 
+    y = n, 
+    colour = parameters, 
+    fill = parameters
+    )
+  ) +
+  geom_bar(
+    stat = "identity", 
+    position = "dodge"
+    ) +
+  ylab("count") + 
+  xlab("number of entrants") + 
+  ggtitle("Sequential entry") +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme_classic()
 ```
 
 
@@ -440,13 +713,27 @@ delta <- theta[K + L + 1]
 # monte carlo simulations under the actual parameters
 Y_actual <- 
   compute_monte_carlo_simultaneous_entry(
-    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta)
+    X, 
+    Z, 
+    EP_mc[1], 
+    NU_mc[1], 
+    beta, 
+    alpha, 
+    delta
+    )
 Y_actual <- Y_actual[[1]]
 # monte carlo simulations under the counterfactual parameters
 delta_count <- 0.5
 Y_count <- 
   compute_monte_carlo_simultaneous_entry(
-    X, Z, EP_mc[1], NU_mc[1], beta, alpha, delta_count)
+    X,
+    Z, 
+    EP_mc[1], 
+    NU_mc[1], 
+    beta, 
+    alpha, 
+    delta_count
+    )
 Y_count <- Y_count[[1]]
 # histogram
 N_actual <-
@@ -466,14 +753,35 @@ N_df <- data.frame(
 ) %>%
   reshape2::melt(id.vars = "m") %>%
   dplyr::rename(parameters = variable) %>%
-  dplyr::group_by(parameters, value) %>%
+  dplyr::group_by(
+    parameters, 
+    value
+    ) %>%
   dplyr::summarise(n = length(m)) %>%
   dplyr::ungroup() %>%
-  tidyr::complete(parameters, value, fill = list(n = 0))
-ggplot(N_df, aes(x = value, y = n, colour = parameters, fill = parameters)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  ylab("count") + xlab("number of entrants") + ggtitle("Simultaneous entry") +
-  theme(plot.title = element_text(hjust = 0.5))
+  tidyr::complete(
+    parameters, 
+    value, 
+    fill = list(n = 0)
+    )
+ggplot(
+  N_df, 
+  aes(
+    x = value, 
+    y = n, 
+    colour = parameters, 
+    fill = parameters
+    )
+  ) +
+  geom_bar(
+    stat = "identity", 
+    position = "dodge"
+    ) +
+  ylab("count") + 
+  xlab("number of entrants") + 
+  ggtitle("Simultaneous entry") +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme_classic()
 ```
 
 
