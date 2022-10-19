@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 In this assignment, we consider a Berry-type entry model. Suppose that there are $M$ markets indexed by $m = 1, \cdots, M$. In each market, there are $N_m$ potential entrants such that $N_m \le \overline{N}$. Let $x_m$ be the $K$ dimensional market attributes and $z_{im}$ be the $L$ dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is $R$.
 
-A standard %dopar% is not replicable. Therefore, we use package doRNG to perform reproducible foreach parallel. 
+A random number generation inside `%dorng%` is not reproducible. Therefore, we use package `doRNG` to perform reproducible foreach parallel. 
 
 1. Set the constants as follows:
 
@@ -91,7 +91,7 @@ X[1:10, ]
 Z <-
   foreach (
     m = 1:M
-    ) %dopar% {
+    ) %dorng% {
     Z_m <- 
       matrix(
       rnorm(
@@ -116,7 +116,7 @@ EP[1:10, ]
 NU <-
   foreach (
     m = 1:M
-    ) %dopar% {
+    ) %dorng% {
     NU_m <- 
       matrix(
       rnorm(E[m]),
@@ -263,7 +263,7 @@ $$
 EP_mc <-
   foreach (
     r = 1:R
-    ) %dopar% {
+    ) %dorng% {
     EP <- 
       matrix(
       rnorm(M),
@@ -276,7 +276,7 @@ EP_mc <-
 NU_mc <-
   foreach (
     r = 1:R
-    ) %dopar% {
+    ) %dorng% {
   NU <-
     foreach (
       m = 1:M
@@ -368,7 +368,7 @@ compute_objective_simultaneous_entry(
 
 4. Check the value of the objective function around the true parameter under the assumption of the sequential entry.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 # sequential entry
 theta <- 
   theta_sequential <-
@@ -448,7 +448,7 @@ graph
 
 5. Check the value of the objective function around the true parameter under the assumption of the simultaneous entry.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 # simultaneous entry
 theta <- 
   theta_simultaneous <-
@@ -538,7 +538,7 @@ theta <-
     )
 ```
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 Y <- Y_sequential
 result_sequential <-
   optim(
@@ -581,7 +581,7 @@ theta <-
     )
 ```
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 Y <- Y_simultaneous
 result_simultaneous <-
   optim(
