@@ -155,7 +155,7 @@ compute_payoff(
 $$
 x_m'\beta + z_{im}'\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m}.
 $$
-Write a function `compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the equilibrium vector of entry at a market.
+Write a function `compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the equilibrium vector of entry at a market. To do so, you must find at which entrant the payoff becomes negative for the first time.
 
 ```{r}
 compute_sequential_entry(
@@ -170,7 +170,8 @@ compute_sequential_entry(
   )
 ```
 
-6. Next, assume $\rho = 0$. Assume that potential entrants simultaneously decide entry. Write a function `compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)` that returns the equilibrium vector of entry at a market.
+6. Next, assume $\rho = 0$. Assume that potential entrants simultaneously decide entry. Write a function `compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)` that returns the equilibrium vector of entry at a market. To do so, you need to compute the best response given other firm's entry decisions, and iterate the best response mapping until convergence. 
+
 ```{r}
 compute_simultaneous_entry(
   X_m = X_m, 
@@ -693,6 +694,8 @@ ggplot(
     stat = "identity", 
     position = "dodge"
     ) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
   ylab("count") + 
   xlab("number of entrants") + 
   ggtitle("Sequential entry") +
@@ -777,6 +780,8 @@ ggplot(
     stat = "identity", 
     position = "dodge"
     ) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
   ylab("count") + 
   xlab("number of entrants") + 
   ggtitle("Simultaneous entry") +
