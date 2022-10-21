@@ -340,6 +340,14 @@ saveRDS(
   )
 ```
 
+```{r, echo = TRUE}
+# load
+p_actual <- 
+  readRDS(file = "data/a5/A5_price_actual.rds")
+p_actual %>% head()
+```
+
+
 
 <!-- 10. Write a function `compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta)` that computes: -->
 <!-- $$ -->
@@ -372,9 +380,6 @@ Of course, in reality, we first draw Monte Carlo shocks to approximate the share
 
 
 ```{r, echo = TRUE}
-# load
-p_actual <- 
-  readRDS(file = "data/a5/A5_price_actual.rds")
 # take the logarithm
 logp <- log(p_actual)
 # estimate the marginal cost
