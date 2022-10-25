@@ -139,7 +139,9 @@ X_m <- X[m, , drop = FALSE]
 Z_m <- Z[[m]]
 EP_m <- EP[m, , drop = FALSE]
 NU_m <- NU[[m]]
-compute_payoff(
+
+payoff_m <-
+  compute_payoff(
   y_m = y_m, 
   X_m = X_m, 
   Z_m = Z_m, 
@@ -150,15 +152,21 @@ compute_payoff(
   delta = delta, 
   rho = rho
   )
+
+payoff_m
 ```
 
 5. Assume that the order of entry is predetermined. Assume that the potential entrants sequentially decide entry according to the order of the payoff excluding the competitive effects, i.e.:
 $$
 x_m'\beta + z_{im}'\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m}.
 $$
-Write a function `compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the equilibrium vector of entry at a market. To do so, you must find at which entrant the payoff becomes negative for the first time.
+Write a function `compute_order_sequential_entry(payoff_m)` that returns the order of entry of the potential entrants given the payoff. Note that if the less profitable entrant finds it profitable to enter then the more profitable entrant still finds it profitable to enter. Then write a function `compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)` that returns the equilibrium vector of entry at a market. To do so, you must find at which entrant the payoff becomes negative for the first time.
 
 ```{r}
+
+compute_order_sequential_entry(payoff_m)
+
+
 compute_sequential_entry(
   X_m = X_m, 
   Z_m = Z_m, 
@@ -171,9 +179,26 @@ compute_sequential_entry(
   )
 ```
 
-6. Next, assume $\rho = 0$. Assume that potential entrants simultaneously decide entry. Write a function `compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)` that returns the equilibrium vector of entry at a market. To do so, you need to compute the best response given other firm's entry decisions, and iterate the best response mapping until convergence. 
+
+
+
+
+
+
+6. Next, assume $\rho = 0$. Assume that potential entrants simultaneously decide entry. Write a function `compute_best_response_simultaneous_entry` that returns the best response function of the potential participant given an entry decision. Then, write a function `compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)` that returns the equilibrium vector of entry at a market. To do so, you need to compute the best response given other firm's entry decisions, and iterate the best response mapping until convergence. 
 
 ```{r}
+
+compute_best_response_simultaneous_entry(
+    y_m,
+    X_m, 
+    Z_m, 
+    EP_m, 
+    NU_m, 
+    beta, 
+    alpha, 
+    delta
+    ) 
 compute_simultaneous_entry(
   X_m = X_m, 
   Z_m = Z_m, 

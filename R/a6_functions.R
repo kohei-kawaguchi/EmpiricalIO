@@ -24,6 +24,19 @@ compute_payoff <-
     return(payoff_m)
   }
 
+
+# compute the rank of potential entrants by baseline payofff
+
+compute_order_sequential_entry <- 
+  function(payoff_m)
+    {
+    ranking <- rank(-payoff_m) 
+    return(ranking)
+    }
+
+
+
+
 # compute sequential entry
 compute_sequential_entry <-
   function(
@@ -45,7 +58,7 @@ compute_sequential_entry <-
       (X_m %*% beta + rho * EP_m) + 
       Z_m %*% alpha + sqrt(1 - rho^2) * NU_m 
     # baseline payoff ranking
-    ranking <- rank(-payoff_baseline)
+    ranking <- compute_order_sequential_entry(payoff_baseline)
     # initial y_m
     y_m <- rep(0, N_m)
     for (index in 1:N_m) {
@@ -71,6 +84,61 @@ compute_sequential_entry <-
     return(y_m)
   }
 
+
+# compute the best response function for simultaneous entry
+
+compute_best_response_simultaneous_entry <-
+  function(
+    y_m,
+    X_m, 
+    Z_m, 
+    EP_m, 
+    NU_m, 
+    beta, 
+    alpha, 
+    delta
+  ) {
+    N_m <- dim(Z_m)[1]
+    for (i in 1:N_m) {
+      # counterfactual choice
+      y_m0 <- y_m
+      y_m0[i] <- 1 - y_m0[i]
+      # payoffs
+      payoff <- 
+        compute_payoff(
+          y_m, 
+          X_m, 
+          Z_m, 
+          EP_m, 
+          NU_m, 
+          beta, 
+          alpha, 
+          delta, 
+          rho = 0
+        )
+      payoff0 <- 
+        compute_payoff(
+          y_m0, 
+          X_m, 
+          Z_m, 
+          EP_m, 
+          NU_m, 
+          beta, 
+          alpha, 
+          delta, 
+          rho = 0
+        )
+      payoff_i <- payoff[i]
+      payoff_i0 <- payoff0[i]
+      # check improvement
+      if (payoff_i0 > payoff_i) {
+        y_m <- y_m0
+      }
+    }
+    return(y_m)
+  }
+  
+
 # compute simultaneous entry
 compute_simultaneous_entry <-
   function(
@@ -87,43 +155,18 @@ compute_simultaneous_entry <-
     y_m_old <- rep(0, N_m)
     while (!identical(y_m, y_m_old)) {
       y_m_old <- y_m
-      for (i in 1:N_m) {
-        # counterfactual choice
-        y_m0 <- y_m
-        y_m0[i] <- 1 - y_m0[i]
-        # payoffs
-        payoff <- 
-          compute_payoff(
-            y_m, 
-            X_m, 
-            Z_m, 
-            EP_m, 
-            NU_m, 
-            beta, 
-            alpha, 
-            delta, 
-            rho = 0
-            )
-        payoff0 <- 
-          compute_payoff(
-            y_m0, 
-            X_m, 
-            Z_m, 
-            EP_m, 
-            NU_m, 
-            beta, 
-            alpha, 
-            delta, 
-            rho = 0
-            )
-        payoff_i <- payoff[i]
-        payoff_i0 <- payoff0[i]
-        # check improvement
-        if (payoff_i0 > payoff_i) {
-          y_m <- y_m0
-        }
+      y_m <- 
+        compute_best_response_simultaneous_entry(
+           y_m,
+           X_m, 
+           Z_m, 
+           EP_m, 
+           NU_m, 
+           beta, 
+           alpha, 
+           delta
+            ) 
       }
-    }
     y_m <- as.matrix(y_m)
     return(y_m)
   }
