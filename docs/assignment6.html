@@ -352,8 +352,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.2.8" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-available"><i class="fa fa-check"></i><b>5.2.8</b> Identification of the Conduct Parameter: When Cost Data is Available</a></li>
 <li class="chapter" data-level="5.2.9" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-not-available"><i class="fa fa-check"></i><b>5.2.9</b> Identification of the Conduct Parameter: When Cost Data is Not Available</a></li>
 <li class="chapter" data-level="5.2.10" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.10</b> Identification of the Conduct Parameter: Demand Rotater is Available</a></li>
-<li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameters-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.11</b> Identification of the Conduct Parameters: Demand Rotater is Available</a></li>
-<li class="chapter" data-level="5.2.12" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.12</b> Identification of Conduct in Differentiated Product Market</a></li>
+<li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.11</b> Identification of Conduct in Differentiated Product Market</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a>
 <ul>
@@ -703,24 +702,24 @@ div.csl-indent {
 <div id="simulate-data-5" class="section level2 hasAnchor" number="16.1">
 <h2><span class="header-section-number">16.1</span> Simulate data<a href="assignment6.html#simulate-data-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this assignment, we consider a Berry-type entry model. Suppose that there are <span class="math inline">\(M\)</span> markets indexed by <span class="math inline">\(m = 1, \cdots, M\)</span>. In each market, there are <span class="math inline">\(N_m\)</span> potential entrants such that <span class="math inline">\(N_m \le \overline{N}\)</span>. Let <span class="math inline">\(x_m\)</span> be the <span class="math inline">\(K\)</span> dimensional market attributes and <span class="math inline">\(z_{im}\)</span> be the <span class="math inline">\(L\)</span> dimensional potential entrant attributes. The size of Monte Carlo simulations in the estimation is <span class="math inline">\(R\)</span>.</p>
-<p>A random number generation inside <code>%dorng%</code> is not reproducible. Therefore, we use package <code>doRNG</code> to perform reproducible foreach parallel.</p>
+<p>A random number generation inside <code>%dopar%</code> is not reproducible. Therefore, we use package <code>doRNG</code> to perform reproducible <code>foreach</code> parallel.</p>
 <ol style="list-style-type: decimal">
 <li>Set the constants as follows:</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="assignment6.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># register doRNG backend</span></span>
-<span id="cb1-2"><a href="assignment6.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoRNG</span>()</span>
-<span id="cb1-3"><a href="assignment6.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
-<span id="cb1-4"><a href="assignment6.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1-5"><a href="assignment6.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># number of markets</span></span>
-<span id="cb1-6"><a href="assignment6.html#cb1-6" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb1-7"><a href="assignment6.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the upper bound of the number of potential entrants</span></span>
-<span id="cb1-8"><a href="assignment6.html#cb1-8" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb1-9"><a href="assignment6.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the dimension of market attributes</span></span>
-<span id="cb1-10"><a href="assignment6.html#cb1-10" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-11"><a href="assignment6.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># the dimension of potential entrant attributes</span></span>
-<span id="cb1-12"><a href="assignment6.html#cb1-12" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb1-13"><a href="assignment6.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of Monte Carlo simulations</span></span>
-<span id="cb1-14"><a href="assignment6.html#cb1-14" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="assignment6.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># register doRNG backend</span></span>
+<span id="cb297-2"><a href="assignment6.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoRNG</span>()</span>
+<span id="cb297-3"><a href="assignment6.html#cb297-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
+<span id="cb297-4"><a href="assignment6.html#cb297-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb297-5"><a href="assignment6.html#cb297-5" aria-hidden="true" tabindex="-1"></a><span class="co"># number of markets</span></span>
+<span id="cb297-6"><a href="assignment6.html#cb297-6" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb297-7"><a href="assignment6.html#cb297-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the upper bound of the number of potential entrants</span></span>
+<span id="cb297-8"><a href="assignment6.html#cb297-8" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb297-9"><a href="assignment6.html#cb297-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the dimension of market attributes</span></span>
+<span id="cb297-10"><a href="assignment6.html#cb297-10" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb297-11"><a href="assignment6.html#cb297-11" aria-hidden="true" tabindex="-1"></a><span class="co"># the dimension of potential entrant attributes</span></span>
+<span id="cb297-12"><a href="assignment6.html#cb297-12" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb297-13"><a href="assignment6.html#cb297-13" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of Monte Carlo simulations</span></span>
+<span id="cb297-14"><a href="assignment6.html#cb297-14" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">100</span></span></code></pre></div>
 <p>The payoff of entrant <span class="math inline">\(i\)</span> in market <span class="math inline">\(m\)</span> is:
 <span class="math display">\[
 \pi_{im}(y_m) = x_m&#39;\beta - \delta \ln \left(\sum_{i = 1}^{N_m} y_{im}\right) + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m},
@@ -729,51 +728,51 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <ol start="2" style="list-style-type: decimal">
 <li>Set the parameters as follows:</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="assignment6.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters of interest</span></span>
-<span id="cb2-2"><a href="assignment6.html#cb2-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(K)); </span>
-<span id="cb2-3"><a href="assignment6.html#cb2-3" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="assignment6.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters of interest</span></span>
+<span id="cb298-2"><a href="assignment6.html#cb298-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(K)); </span>
+<span id="cb298-3"><a href="assignment6.html#cb298-3" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
 <pre><code>## [1] 0.6264538 0.1836433</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="assignment6.html#cb4-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(L)); </span>
-<span id="cb4-2"><a href="assignment6.html#cb4-2" aria-hidden="true" tabindex="-1"></a>alpha</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="assignment6.html#cb300-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(L)); </span>
+<span id="cb300-2"><a href="assignment6.html#cb300-2" aria-hidden="true" tabindex="-1"></a>alpha</span></code></pre></div>
 <pre><code>## [1] 0.8356286 1.5952808</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="assignment6.html#cb6-1" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="dv">1</span>; </span>
-<span id="cb6-2"><a href="assignment6.html#cb6-2" aria-hidden="true" tabindex="-1"></a>delta</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="assignment6.html#cb302-1" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="dv">1</span>; </span>
+<span id="cb302-2"><a href="assignment6.html#cb302-2" aria-hidden="true" tabindex="-1"></a>delta</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="assignment6.html#cb8-1" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>)); </span>
-<span id="cb8-2"><a href="assignment6.html#cb8-2" aria-hidden="true" tabindex="-1"></a>rho</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="assignment6.html#cb304-1" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>)); </span>
+<span id="cb304-2"><a href="assignment6.html#cb304-2" aria-hidden="true" tabindex="-1"></a>rho</span></code></pre></div>
 <pre><code>## [1] 0.3295078</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="assignment6.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># auxiliary parameters</span></span>
-<span id="cb10-2"><a href="assignment6.html#cb10-2" aria-hidden="true" tabindex="-1"></a>x_mu <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb10-3"><a href="assignment6.html#cb10-3" aria-hidden="true" tabindex="-1"></a>x_sd <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb10-4"><a href="assignment6.html#cb10-4" aria-hidden="true" tabindex="-1"></a>z_mu <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb10-5"><a href="assignment6.html#cb10-5" aria-hidden="true" tabindex="-1"></a>z_sd <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="assignment6.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="co"># auxiliary parameters</span></span>
+<span id="cb306-2"><a href="assignment6.html#cb306-2" aria-hidden="true" tabindex="-1"></a>x_mu <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb306-3"><a href="assignment6.html#cb306-3" aria-hidden="true" tabindex="-1"></a>x_sd <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb306-4"><a href="assignment6.html#cb306-4" aria-hidden="true" tabindex="-1"></a>z_mu <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb306-5"><a href="assignment6.html#cb306-5" aria-hidden="true" tabindex="-1"></a>z_sd <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Draw exogenous variables as follows:</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="assignment6.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of potential entrants</span></span>
-<span id="cb11-2"><a href="assignment6.html#cb11-2" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> </span>
-<span id="cb11-3"><a href="assignment6.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">rdunif</span>(</span>
-<span id="cb11-4"><a href="assignment6.html#cb11-4" aria-hidden="true" tabindex="-1"></a>    M, </span>
-<span id="cb11-5"><a href="assignment6.html#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, </span>
-<span id="cb11-6"><a href="assignment6.html#cb11-6" aria-hidden="true" tabindex="-1"></a>    N</span>
-<span id="cb11-7"><a href="assignment6.html#cb11-7" aria-hidden="true" tabindex="-1"></a>    ); </span>
-<span id="cb11-8"><a href="assignment6.html#cb11-8" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
-<pre><code>##   [1]  3  1  5  5 10  6 10  7  9  5  5  9  9  5  5  2 10  9  1  4  3  6 10 10  6
-##  [26]  4  4 10  9  7  6  9  8  9  7  8  6 10  7  3 10  6  8  2  2  6  6  1  3  3
-##  [51]  8  6  7  6  8  7  1  4  8  9  9  7  4  7  6  1  5  6  1  9  7  7  3  6  2
-##  [76] 10 10  7  3  2 10  1 10 10  8 10  5  7  8  5  6  8  1  3 10  3  1  6  6  4</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="assignment6.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># market attributes</span></span>
-<span id="cb13-2"><a href="assignment6.html#cb13-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
-<span id="cb13-3"><a href="assignment6.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
-<span id="cb13-4"><a href="assignment6.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(</span>
-<span id="cb13-5"><a href="assignment6.html#cb13-5" aria-hidden="true" tabindex="-1"></a>    M <span class="sc">*</span> K, </span>
-<span id="cb13-6"><a href="assignment6.html#cb13-6" aria-hidden="true" tabindex="-1"></a>    x_mu, </span>
-<span id="cb13-7"><a href="assignment6.html#cb13-7" aria-hidden="true" tabindex="-1"></a>    x_sd</span>
-<span id="cb13-8"><a href="assignment6.html#cb13-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb13-9"><a href="assignment6.html#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> M</span>
-<span id="cb13-10"><a href="assignment6.html#cb13-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-11"><a href="assignment6.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb13-12"><a href="assignment6.html#cb13-12" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="assignment6.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of potential entrants</span></span>
+<span id="cb307-2"><a href="assignment6.html#cb307-2" aria-hidden="true" tabindex="-1"></a>E <span class="ot">&lt;-</span> </span>
+<span id="cb307-3"><a href="assignment6.html#cb307-3" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">rdunif</span>(</span>
+<span id="cb307-4"><a href="assignment6.html#cb307-4" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb307-5"><a href="assignment6.html#cb307-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, </span>
+<span id="cb307-6"><a href="assignment6.html#cb307-6" aria-hidden="true" tabindex="-1"></a>    N</span>
+<span id="cb307-7"><a href="assignment6.html#cb307-7" aria-hidden="true" tabindex="-1"></a>    ); </span>
+<span id="cb307-8"><a href="assignment6.html#cb307-8" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
+<pre><code>##   [1]  3  1  5  5 10  6 10  7  9  5  5  9  9  5  5  2 10  9  1  4  3  6 10 10  6  4  4 10  9  7  6  9
+##  [33]  8  9  7  8  6 10  7  3 10  6  8  2  2  6  6  1  3  3  8  6  7  6  8  7  1  4  8  9  9  7  4  7
+##  [65]  6  1  5  6  1  9  7  7  3  6  2 10 10  7  3  2 10  1 10 10  8 10  5  7  8  5  6  8  1  3 10  3
+##  [97]  1  6  6  4</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="assignment6.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="co"># market attributes</span></span>
+<span id="cb309-2"><a href="assignment6.html#cb309-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
+<span id="cb309-3"><a href="assignment6.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
+<span id="cb309-4"><a href="assignment6.html#cb309-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(</span>
+<span id="cb309-5"><a href="assignment6.html#cb309-5" aria-hidden="true" tabindex="-1"></a>    M <span class="sc">*</span> K, </span>
+<span id="cb309-6"><a href="assignment6.html#cb309-6" aria-hidden="true" tabindex="-1"></a>    x_mu, </span>
+<span id="cb309-7"><a href="assignment6.html#cb309-7" aria-hidden="true" tabindex="-1"></a>    x_sd</span>
+<span id="cb309-8"><a href="assignment6.html#cb309-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb309-9"><a href="assignment6.html#cb309-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> M</span>
+<span id="cb309-10"><a href="assignment6.html#cb309-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb309-11"><a href="assignment6.html#cb309-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb309-12"><a href="assignment6.html#cb309-12" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code></pre></div>
 <pre><code>##               x_1        x_2
 ##  [1,] -0.70600620 -2.6939703
 ##  [2,]  0.59446415  3.9516867
@@ -785,50 +784,50 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 ##  [8,]  0.08744823 -1.2982460
 ##  [9,]  2.11005643 -0.2906353
 ## [10,]  1.80129637 -1.7783285</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="assignment6.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># entrant attributes</span></span>
-<span id="cb15-2"><a href="assignment6.html#cb15-2" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span></span>
-<span id="cb15-3"><a href="assignment6.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb15-4"><a href="assignment6.html#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span>M</span>
-<span id="cb15-5"><a href="assignment6.html#cb15-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
-<span id="cb15-6"><a href="assignment6.html#cb15-6" aria-hidden="true" tabindex="-1"></a>    Z_m <span class="ot">&lt;-</span> </span>
-<span id="cb15-7"><a href="assignment6.html#cb15-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(</span>
-<span id="cb15-8"><a href="assignment6.html#cb15-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(</span>
-<span id="cb15-9"><a href="assignment6.html#cb15-9" aria-hidden="true" tabindex="-1"></a>        E[m] <span class="sc">*</span> L, </span>
-<span id="cb15-10"><a href="assignment6.html#cb15-10" aria-hidden="true" tabindex="-1"></a>        z_mu, </span>
-<span id="cb15-11"><a href="assignment6.html#cb15-11" aria-hidden="true" tabindex="-1"></a>        z_sd</span>
-<span id="cb15-12"><a href="assignment6.html#cb15-12" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb15-13"><a href="assignment6.html#cb15-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> E[m]</span>
-<span id="cb15-14"><a href="assignment6.html#cb15-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb15-15"><a href="assignment6.html#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(Z_m) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;z&quot;</span>, <span class="dv">1</span><span class="sc">:</span>L, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb15-16"><a href="assignment6.html#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(Z_m)</span>
-<span id="cb15-17"><a href="assignment6.html#cb15-17" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb15-18"><a href="assignment6.html#cb15-18" aria-hidden="true" tabindex="-1"></a>Z[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="assignment6.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="co"># entrant attributes</span></span>
+<span id="cb311-2"><a href="assignment6.html#cb311-2" aria-hidden="true" tabindex="-1"></a>Z <span class="ot">&lt;-</span></span>
+<span id="cb311-3"><a href="assignment6.html#cb311-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb311-4"><a href="assignment6.html#cb311-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span>M</span>
+<span id="cb311-5"><a href="assignment6.html#cb311-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
+<span id="cb311-6"><a href="assignment6.html#cb311-6" aria-hidden="true" tabindex="-1"></a>    Z_m <span class="ot">&lt;-</span> </span>
+<span id="cb311-7"><a href="assignment6.html#cb311-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(</span>
+<span id="cb311-8"><a href="assignment6.html#cb311-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(</span>
+<span id="cb311-9"><a href="assignment6.html#cb311-9" aria-hidden="true" tabindex="-1"></a>        E[m] <span class="sc">*</span> L, </span>
+<span id="cb311-10"><a href="assignment6.html#cb311-10" aria-hidden="true" tabindex="-1"></a>        z_mu, </span>
+<span id="cb311-11"><a href="assignment6.html#cb311-11" aria-hidden="true" tabindex="-1"></a>        z_sd</span>
+<span id="cb311-12"><a href="assignment6.html#cb311-12" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb311-13"><a href="assignment6.html#cb311-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> E[m]</span>
+<span id="cb311-14"><a href="assignment6.html#cb311-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb311-15"><a href="assignment6.html#cb311-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(Z_m) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;z&quot;</span>, <span class="dv">1</span><span class="sc">:</span>L, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb311-16"><a href="assignment6.html#cb311-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(Z_m)</span>
+<span id="cb311-17"><a href="assignment6.html#cb311-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb311-18"><a href="assignment6.html#cb311-18" aria-hidden="true" tabindex="-1"></a>Z[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##             z_1       z_2
 ## [1,] -2.3581574 -7.334507
 ## [2,] -0.4604547  3.771050
 ## [3,]  2.7599294  4.610126</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="assignment6.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved market attributes</span></span>
-<span id="cb17-2"><a href="assignment6.html#cb17-2" aria-hidden="true" tabindex="-1"></a>EP <span class="ot">&lt;-</span> </span>
-<span id="cb17-3"><a href="assignment6.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
-<span id="cb17-4"><a href="assignment6.html#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(M),</span>
-<span id="cb17-5"><a href="assignment6.html#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> M</span>
-<span id="cb17-6"><a href="assignment6.html#cb17-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-7"><a href="assignment6.html#cb17-7" aria-hidden="true" tabindex="-1"></a>EP[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code></pre></div>
-<pre><code>##  [1] -1.1131230  0.6169665  0.5134937  0.3694591  1.7238941 -0.2061446
-##  [7] -1.3141951  0.0634741 -0.2319775  0.6350603</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="assignment6.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved entrant attributes</span></span>
-<span id="cb19-2"><a href="assignment6.html#cb19-2" aria-hidden="true" tabindex="-1"></a>NU <span class="ot">&lt;-</span></span>
-<span id="cb19-3"><a href="assignment6.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb19-4"><a href="assignment6.html#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span>M</span>
-<span id="cb19-5"><a href="assignment6.html#cb19-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
-<span id="cb19-6"><a href="assignment6.html#cb19-6" aria-hidden="true" tabindex="-1"></a>    NU_m <span class="ot">&lt;-</span> </span>
-<span id="cb19-7"><a href="assignment6.html#cb19-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(</span>
-<span id="cb19-8"><a href="assignment6.html#cb19-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(E[m]),</span>
-<span id="cb19-9"><a href="assignment6.html#cb19-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> E[m]</span>
-<span id="cb19-10"><a href="assignment6.html#cb19-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-11"><a href="assignment6.html#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(NU_m)</span>
-<span id="cb19-12"><a href="assignment6.html#cb19-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb19-13"><a href="assignment6.html#cb19-13" aria-hidden="true" tabindex="-1"></a>NU[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="assignment6.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved market attributes</span></span>
+<span id="cb313-2"><a href="assignment6.html#cb313-2" aria-hidden="true" tabindex="-1"></a>EP <span class="ot">&lt;-</span> </span>
+<span id="cb313-3"><a href="assignment6.html#cb313-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
+<span id="cb313-4"><a href="assignment6.html#cb313-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(M),</span>
+<span id="cb313-5"><a href="assignment6.html#cb313-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> M</span>
+<span id="cb313-6"><a href="assignment6.html#cb313-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb313-7"><a href="assignment6.html#cb313-7" aria-hidden="true" tabindex="-1"></a>EP[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code></pre></div>
+<pre><code>##  [1] -1.1131230  0.6169665  0.5134937  0.3694591  1.7238941 -0.2061446 -1.3141951  0.0634741
+##  [9] -0.2319775  0.6350603</code></pre>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="assignment6.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved entrant attributes</span></span>
+<span id="cb315-2"><a href="assignment6.html#cb315-2" aria-hidden="true" tabindex="-1"></a>NU <span class="ot">&lt;-</span></span>
+<span id="cb315-3"><a href="assignment6.html#cb315-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb315-4"><a href="assignment6.html#cb315-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span>M</span>
+<span id="cb315-5"><a href="assignment6.html#cb315-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
+<span id="cb315-6"><a href="assignment6.html#cb315-6" aria-hidden="true" tabindex="-1"></a>    NU_m <span class="ot">&lt;-</span> </span>
+<span id="cb315-7"><a href="assignment6.html#cb315-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(</span>
+<span id="cb315-8"><a href="assignment6.html#cb315-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(E[m]),</span>
+<span id="cb315-9"><a href="assignment6.html#cb315-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> E[m]</span>
+<span id="cb315-10"><a href="assignment6.html#cb315-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb315-11"><a href="assignment6.html#cb315-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(NU_m)</span>
+<span id="cb315-12"><a href="assignment6.html#cb315-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb315-13"><a href="assignment6.html#cb315-13" aria-hidden="true" tabindex="-1"></a>NU[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##            [,1]
 ## [1,]  0.3934210
 ## [2,]  0.2303175
@@ -836,27 +835,27 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>compute_payoff(y_m, X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code> that returns the vector of payoffs of the potential entrants when the vector of entry decisions is <code>y_m</code>.</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="assignment6.html#cb21-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb21-2"><a href="assignment6.html#cb21-2" aria-hidden="true" tabindex="-1"></a>N_m <span class="ot">&lt;-</span> <span class="fu">dim</span>(Z[[m]])[<span class="dv">1</span>]</span>
-<span id="cb21-3"><a href="assignment6.html#cb21-3" aria-hidden="true" tabindex="-1"></a>y_m <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span>, N_m))</span>
-<span id="cb21-4"><a href="assignment6.html#cb21-4" aria-hidden="true" tabindex="-1"></a>y_m[<span class="fu">length</span>(y_m)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb21-5"><a href="assignment6.html#cb21-5" aria-hidden="true" tabindex="-1"></a>X_m <span class="ot">&lt;-</span> X[m, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb21-6"><a href="assignment6.html#cb21-6" aria-hidden="true" tabindex="-1"></a>Z_m <span class="ot">&lt;-</span> Z[[m]]</span>
-<span id="cb21-7"><a href="assignment6.html#cb21-7" aria-hidden="true" tabindex="-1"></a>EP_m <span class="ot">&lt;-</span> EP[m, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb21-8"><a href="assignment6.html#cb21-8" aria-hidden="true" tabindex="-1"></a>NU_m <span class="ot">&lt;-</span> NU[[m]]</span>
-<span id="cb21-9"><a href="assignment6.html#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="assignment6.html#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="assignment6.html#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_payoff</span>(</span>
-<span id="cb21-12"><a href="assignment6.html#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_m =</span> y_m, </span>
-<span id="cb21-13"><a href="assignment6.html#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">X_m =</span> X_m, </span>
-<span id="cb21-14"><a href="assignment6.html#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_m =</span> Z_m, </span>
-<span id="cb21-15"><a href="assignment6.html#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_m =</span> EP_m, </span>
-<span id="cb21-16"><a href="assignment6.html#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_m =</span> NU_m, </span>
-<span id="cb21-17"><a href="assignment6.html#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb21-18"><a href="assignment6.html#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb21-19"><a href="assignment6.html#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta, </span>
-<span id="cb21-20"><a href="assignment6.html#cb21-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">rho =</span> rho</span>
-<span id="cb21-21"><a href="assignment6.html#cb21-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="assignment6.html#cb317-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb317-2"><a href="assignment6.html#cb317-2" aria-hidden="true" tabindex="-1"></a>N_m <span class="ot">&lt;-</span> <span class="fu">dim</span>(Z[[m]])[<span class="dv">1</span>]</span>
+<span id="cb317-3"><a href="assignment6.html#cb317-3" aria-hidden="true" tabindex="-1"></a>y_m <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">rep</span>(<span class="dv">1</span>, N_m))</span>
+<span id="cb317-4"><a href="assignment6.html#cb317-4" aria-hidden="true" tabindex="-1"></a>y_m[<span class="fu">length</span>(y_m)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb317-5"><a href="assignment6.html#cb317-5" aria-hidden="true" tabindex="-1"></a>X_m <span class="ot">&lt;-</span> X[m, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb317-6"><a href="assignment6.html#cb317-6" aria-hidden="true" tabindex="-1"></a>Z_m <span class="ot">&lt;-</span> Z[[m]]</span>
+<span id="cb317-7"><a href="assignment6.html#cb317-7" aria-hidden="true" tabindex="-1"></a>EP_m <span class="ot">&lt;-</span> EP[m, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb317-8"><a href="assignment6.html#cb317-8" aria-hidden="true" tabindex="-1"></a>NU_m <span class="ot">&lt;-</span> NU[[m]]</span>
+<span id="cb317-9"><a href="assignment6.html#cb317-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb317-10"><a href="assignment6.html#cb317-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb317-11"><a href="assignment6.html#cb317-11" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_payoff</span>(</span>
+<span id="cb317-12"><a href="assignment6.html#cb317-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_m =</span> y_m, </span>
+<span id="cb317-13"><a href="assignment6.html#cb317-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">X_m =</span> X_m, </span>
+<span id="cb317-14"><a href="assignment6.html#cb317-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_m =</span> Z_m, </span>
+<span id="cb317-15"><a href="assignment6.html#cb317-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_m =</span> EP_m, </span>
+<span id="cb317-16"><a href="assignment6.html#cb317-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_m =</span> NU_m, </span>
+<span id="cb317-17"><a href="assignment6.html#cb317-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb317-18"><a href="assignment6.html#cb317-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb317-19"><a href="assignment6.html#cb317-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta, </span>
+<span id="cb317-20"><a href="assignment6.html#cb317-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">rho =</span> rho</span>
+<span id="cb317-21"><a href="assignment6.html#cb317-21" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##            [,1]
 ## [1,] -15.296633
 ## [2,]   3.851629
@@ -866,28 +865,28 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <span class="math display">\[
 x_m&#39;\beta + z_{im}&#39;\alpha + \sqrt{1 - \rho^2} \nu_{im} + \rho \epsilon_{m}.
 \]</span>
-Write a function <code>compute_order_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, rho)</code> that returns the order of entry of the potential entrants given the payoff. Note that if the less profitable entrant finds it profitable to enter then the more profitable entrant still finds it profitable to enter. Then write a function <code>compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code> that returns the equilibrium vector of entry at a market. To do so, you must find at which entrant the payoff becomes negative for the first time.</li>
+Write a function <code>compute_order_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, rho)</code> that returns the order of entry of the potential entrants by the baseline payoff. Note that if the less profitable entrant finds it profitable to enter then the more profitable entrant still finds it profitable to enter. Then write a function <code>compute_sequential_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta, rho)</code> that returns the equilibrium vector of entry at a market. To do so, you must find at which entrant the payoff becomes negative for the first time.</li>
 </ol>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="assignment6.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_order_sequential_entry</span>(</span>
-<span id="cb23-2"><a href="assignment6.html#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">X_m =</span> X_m,</span>
-<span id="cb23-3"><a href="assignment6.html#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z_m =</span> Z_m, </span>
-<span id="cb23-4"><a href="assignment6.html#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP_m =</span> EP_m, </span>
-<span id="cb23-5"><a href="assignment6.html#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU_m =</span> NU_m, </span>
-<span id="cb23-6"><a href="assignment6.html#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb23-7"><a href="assignment6.html#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb23-8"><a href="assignment6.html#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
-<span id="cb23-9"><a href="assignment6.html#cb23-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="assignment6.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_order_sequential_entry</span>(</span>
+<span id="cb319-2"><a href="assignment6.html#cb319-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">X_m =</span> X_m,</span>
+<span id="cb319-3"><a href="assignment6.html#cb319-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z_m =</span> Z_m, </span>
+<span id="cb319-4"><a href="assignment6.html#cb319-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP_m =</span> EP_m, </span>
+<span id="cb319-5"><a href="assignment6.html#cb319-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU_m =</span> NU_m, </span>
+<span id="cb319-6"><a href="assignment6.html#cb319-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb319-7"><a href="assignment6.html#cb319-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb319-8"><a href="assignment6.html#cb319-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
+<span id="cb319-9"><a href="assignment6.html#cb319-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <pre><code>## [1] 3 2 1</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="assignment6.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_sequential_entry</span>(</span>
-<span id="cb25-2"><a href="assignment6.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X_m =</span> X_m, </span>
-<span id="cb25-3"><a href="assignment6.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_m =</span> Z_m, </span>
-<span id="cb25-4"><a href="assignment6.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_m =</span> EP_m, </span>
-<span id="cb25-5"><a href="assignment6.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_m =</span> NU_m, </span>
-<span id="cb25-6"><a href="assignment6.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb25-7"><a href="assignment6.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb25-8"><a href="assignment6.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta, </span>
-<span id="cb25-9"><a href="assignment6.html#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">rho =</span> rho</span>
-<span id="cb25-10"><a href="assignment6.html#cb25-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="assignment6.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_sequential_entry</span>(</span>
+<span id="cb321-2"><a href="assignment6.html#cb321-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X_m =</span> X_m, </span>
+<span id="cb321-3"><a href="assignment6.html#cb321-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_m =</span> Z_m, </span>
+<span id="cb321-4"><a href="assignment6.html#cb321-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_m =</span> EP_m, </span>
+<span id="cb321-5"><a href="assignment6.html#cb321-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_m =</span> NU_m, </span>
+<span id="cb321-6"><a href="assignment6.html#cb321-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb321-7"><a href="assignment6.html#cb321-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb321-8"><a href="assignment6.html#cb321-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta, </span>
+<span id="cb321-9"><a href="assignment6.html#cb321-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">rho =</span> rho</span>
+<span id="cb321-10"><a href="assignment6.html#cb321-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
@@ -895,29 +894,29 @@ Write a function <code>compute_order_sequential_entry(X_m, Z_m, EP_m, NU_m, beta
 <ol start="6" style="list-style-type: decimal">
 <li>Next, assume <span class="math inline">\(\rho = 0\)</span>. Assume that potential entrants simultaneously decide entry. Write a function <code>compute_best_response_simultaneous_entry</code> that returns the best response function of the potential participant given an entry decision. Then, write a function <code>compute_simultaneous_entry(X_m, Z_m, EP_m, NU_m, beta, alpha, delta)</code> that returns the equilibrium vector of entry at a market. To do so, you need to compute the best response given other firm’s entry decisions, and iterate the best response mapping until convergence.</li>
 </ol>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="assignment6.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_best_response_simultaneous_entry</span>(</span>
-<span id="cb27-2"><a href="assignment6.html#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_m =</span> y_m,</span>
-<span id="cb27-3"><a href="assignment6.html#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X_m =</span> X_m, </span>
-<span id="cb27-4"><a href="assignment6.html#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z_m =</span> Z_m, </span>
-<span id="cb27-5"><a href="assignment6.html#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP_m =</span> EP_m, </span>
-<span id="cb27-6"><a href="assignment6.html#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU_m =</span> NU_m, </span>
-<span id="cb27-7"><a href="assignment6.html#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb27-8"><a href="assignment6.html#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb27-9"><a href="assignment6.html#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
-<span id="cb27-10"><a href="assignment6.html#cb27-10" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="assignment6.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_best_response_simultaneous_entry</span>(</span>
+<span id="cb323-2"><a href="assignment6.html#cb323-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_m =</span> y_m,</span>
+<span id="cb323-3"><a href="assignment6.html#cb323-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X_m =</span> X_m, </span>
+<span id="cb323-4"><a href="assignment6.html#cb323-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z_m =</span> Z_m, </span>
+<span id="cb323-5"><a href="assignment6.html#cb323-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP_m =</span> EP_m, </span>
+<span id="cb323-6"><a href="assignment6.html#cb323-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU_m =</span> NU_m, </span>
+<span id="cb323-7"><a href="assignment6.html#cb323-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb323-8"><a href="assignment6.html#cb323-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb323-9"><a href="assignment6.html#cb323-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
+<span id="cb323-10"><a href="assignment6.html#cb323-10" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="assignment6.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_simultaneous_entry</span>(</span>
-<span id="cb29-2"><a href="assignment6.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X_m =</span> X_m, </span>
-<span id="cb29-3"><a href="assignment6.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_m =</span> Z_m, </span>
-<span id="cb29-4"><a href="assignment6.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_m =</span> EP_m, </span>
-<span id="cb29-5"><a href="assignment6.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_m =</span> NU_m, </span>
-<span id="cb29-6"><a href="assignment6.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb29-7"><a href="assignment6.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha,</span>
-<span id="cb29-8"><a href="assignment6.html#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
-<span id="cb29-9"><a href="assignment6.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="assignment6.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_simultaneous_entry</span>(</span>
+<span id="cb325-2"><a href="assignment6.html#cb325-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X_m =</span> X_m, </span>
+<span id="cb325-3"><a href="assignment6.html#cb325-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z_m =</span> Z_m, </span>
+<span id="cb325-4"><a href="assignment6.html#cb325-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_m =</span> EP_m, </span>
+<span id="cb325-5"><a href="assignment6.html#cb325-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_m =</span> NU_m, </span>
+<span id="cb325-6"><a href="assignment6.html#cb325-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb325-7"><a href="assignment6.html#cb325-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha,</span>
+<span id="cb325-8"><a href="assignment6.html#cb325-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
+<span id="cb325-9"><a href="assignment6.html#cb325-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
@@ -925,79 +924,79 @@ Write a function <code>compute_order_sequential_entry(X_m, Z_m, EP_m, NU_m, beta
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_sequential_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho)</code> compute the equilibrium entry vectors under the assumption of sequential entry. The output should be a list of entry vectors across markets. Write a function to compute the equilibrium payoffs across markets, <code>compute_payoff_across_markets(Y, X, Z, EP, NU, beta, alpha, delta, rho)</code> and check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code.</li>
 </ol>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="assignment6.html#cb31-1" aria-hidden="true" tabindex="-1"></a>Y_sequential <span class="ot">&lt;-</span></span>
-<span id="cb31-2"><a href="assignment6.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_sequential_entry_across_markets</span>(</span>
-<span id="cb31-3"><a href="assignment6.html#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
-<span id="cb31-4"><a href="assignment6.html#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
-<span id="cb31-5"><a href="assignment6.html#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
-<span id="cb31-6"><a href="assignment6.html#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
-<span id="cb31-7"><a href="assignment6.html#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb31-8"><a href="assignment6.html#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb31-9"><a href="assignment6.html#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb31-10"><a href="assignment6.html#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
-<span id="cb31-11"><a href="assignment6.html#cb31-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb31-12"><a href="assignment6.html#cb31-12" aria-hidden="true" tabindex="-1"></a>Y_sequential[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="assignment6.html#cb327-1" aria-hidden="true" tabindex="-1"></a>Y_sequential <span class="ot">&lt;-</span></span>
+<span id="cb327-2"><a href="assignment6.html#cb327-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_sequential_entry_across_markets</span>(</span>
+<span id="cb327-3"><a href="assignment6.html#cb327-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
+<span id="cb327-4"><a href="assignment6.html#cb327-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
+<span id="cb327-5"><a href="assignment6.html#cb327-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
+<span id="cb327-6"><a href="assignment6.html#cb327-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
+<span id="cb327-7"><a href="assignment6.html#cb327-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb327-8"><a href="assignment6.html#cb327-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb327-9"><a href="assignment6.html#cb327-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb327-10"><a href="assignment6.html#cb327-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
+<span id="cb327-11"><a href="assignment6.html#cb327-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb327-12"><a href="assignment6.html#cb327-12" aria-hidden="true" tabindex="-1"></a>Y_sequential[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="assignment6.html#cb33-1" aria-hidden="true" tabindex="-1"></a>Y_sequential[[M]]</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="assignment6.html#cb329-1" aria-hidden="true" tabindex="-1"></a>Y_sequential[[M]]</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    1
 ## [2,]    1
 ## [3,]    1
 ## [4,]    0</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="assignment6.html#cb35-1" aria-hidden="true" tabindex="-1"></a>payoff_sequential <span class="ot">&lt;-</span></span>
-<span id="cb35-2"><a href="assignment6.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_payoff_across_markets</span>(</span>
-<span id="cb35-3"><a href="assignment6.html#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> Y_sequential, </span>
-<span id="cb35-4"><a href="assignment6.html#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
-<span id="cb35-5"><a href="assignment6.html#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
-<span id="cb35-6"><a href="assignment6.html#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
-<span id="cb35-7"><a href="assignment6.html#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
-<span id="cb35-8"><a href="assignment6.html#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb35-9"><a href="assignment6.html#cb35-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb35-10"><a href="assignment6.html#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb35-11"><a href="assignment6.html#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
-<span id="cb35-12"><a href="assignment6.html#cb35-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-13"><a href="assignment6.html#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">unlist</span>(payoff_sequential))</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="assignment6.html#cb331-1" aria-hidden="true" tabindex="-1"></a>payoff_sequential <span class="ot">&lt;-</span></span>
+<span id="cb331-2"><a href="assignment6.html#cb331-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_payoff_across_markets</span>(</span>
+<span id="cb331-3"><a href="assignment6.html#cb331-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> Y_sequential, </span>
+<span id="cb331-4"><a href="assignment6.html#cb331-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
+<span id="cb331-5"><a href="assignment6.html#cb331-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
+<span id="cb331-6"><a href="assignment6.html#cb331-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
+<span id="cb331-7"><a href="assignment6.html#cb331-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
+<span id="cb331-8"><a href="assignment6.html#cb331-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb331-9"><a href="assignment6.html#cb331-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb331-10"><a href="assignment6.html#cb331-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb331-11"><a href="assignment6.html#cb331-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
+<span id="cb331-12"><a href="assignment6.html#cb331-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb331-13"><a href="assignment6.html#cb331-13" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">unlist</span>(payoff_sequential))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Write a function <code>compute_simultaneous_entry_across_markets(X, Z, EP, NU, beta, alpha, delta, rho = 0)</code> compute the equilibrium entry vectors under the assumption of simultaneous entry. The output should be a list of entry vectors across markets. Check that the payoffs under the equilibrium entry vectors are non-negative. Otherwise, there are some bugs in the code. I also recommend to write this function with</li>
 </ol>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="assignment6.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute simultaneous entry across markets</span></span>
-<span id="cb37-2"><a href="assignment6.html#cb37-2" aria-hidden="true" tabindex="-1"></a>Y_simultaneous <span class="ot">&lt;-</span></span>
-<span id="cb37-3"><a href="assignment6.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_simultaneous_entry_across_markets</span>(</span>
-<span id="cb37-4"><a href="assignment6.html#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
-<span id="cb37-5"><a href="assignment6.html#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
-<span id="cb37-6"><a href="assignment6.html#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
-<span id="cb37-7"><a href="assignment6.html#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
-<span id="cb37-8"><a href="assignment6.html#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb37-9"><a href="assignment6.html#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb37-10"><a href="assignment6.html#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta)</span>
-<span id="cb37-11"><a href="assignment6.html#cb37-11" aria-hidden="true" tabindex="-1"></a>Y_simultaneous[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="assignment6.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute simultaneous entry across markets</span></span>
+<span id="cb333-2"><a href="assignment6.html#cb333-2" aria-hidden="true" tabindex="-1"></a>Y_simultaneous <span class="ot">&lt;-</span></span>
+<span id="cb333-3"><a href="assignment6.html#cb333-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_simultaneous_entry_across_markets</span>(</span>
+<span id="cb333-4"><a href="assignment6.html#cb333-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
+<span id="cb333-5"><a href="assignment6.html#cb333-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
+<span id="cb333-6"><a href="assignment6.html#cb333-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
+<span id="cb333-7"><a href="assignment6.html#cb333-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
+<span id="cb333-8"><a href="assignment6.html#cb333-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb333-9"><a href="assignment6.html#cb333-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb333-10"><a href="assignment6.html#cb333-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta)</span>
+<span id="cb333-11"><a href="assignment6.html#cb333-11" aria-hidden="true" tabindex="-1"></a>Y_simultaneous[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="assignment6.html#cb39-1" aria-hidden="true" tabindex="-1"></a>Y_simultaneous[[M]]</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="assignment6.html#cb335-1" aria-hidden="true" tabindex="-1"></a>Y_simultaneous[[M]]</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    1
 ## [2,]    1
 ## [3,]    1
 ## [4,]    0</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="assignment6.html#cb41-1" aria-hidden="true" tabindex="-1"></a>payoff_simultaneous <span class="ot">&lt;-</span></span>
-<span id="cb41-2"><a href="assignment6.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_payoff_across_markets</span>(</span>
-<span id="cb41-3"><a href="assignment6.html#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> Y_simultaneous, </span>
-<span id="cb41-4"><a href="assignment6.html#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
-<span id="cb41-5"><a href="assignment6.html#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
-<span id="cb41-6"><a href="assignment6.html#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
-<span id="cb41-7"><a href="assignment6.html#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
-<span id="cb41-8"><a href="assignment6.html#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb41-9"><a href="assignment6.html#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb41-10"><a href="assignment6.html#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb41-11"><a href="assignment6.html#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> <span class="dv">0</span></span>
-<span id="cb41-12"><a href="assignment6.html#cb41-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb41-13"><a href="assignment6.html#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">unlist</span>(payoff_simultaneous))</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="assignment6.html#cb337-1" aria-hidden="true" tabindex="-1"></a>payoff_simultaneous <span class="ot">&lt;-</span></span>
+<span id="cb337-2"><a href="assignment6.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_payoff_across_markets</span>(</span>
+<span id="cb337-3"><a href="assignment6.html#cb337-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> Y_simultaneous, </span>
+<span id="cb337-4"><a href="assignment6.html#cb337-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
+<span id="cb337-5"><a href="assignment6.html#cb337-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
+<span id="cb337-6"><a href="assignment6.html#cb337-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP =</span> EP, </span>
+<span id="cb337-7"><a href="assignment6.html#cb337-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU =</span> NU, </span>
+<span id="cb337-8"><a href="assignment6.html#cb337-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb337-9"><a href="assignment6.html#cb337-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb337-10"><a href="assignment6.html#cb337-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb337-11"><a href="assignment6.html#cb337-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> <span class="dv">0</span></span>
+<span id="cb337-12"><a href="assignment6.html#cb337-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb337-13"><a href="assignment6.html#cb337-13" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">unlist</span>(payoff_simultaneous))</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>
 <div id="estimate-the-parameters-4" class="section level2 hasAnchor" number="16.2">
@@ -1014,327 +1013,327 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 <ol style="list-style-type: decimal">
 <li>Draw <span class="math inline">\(R\)</span> unobserved shocks:</li>
 </ol>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="assignment6.html#cb43-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb43-2"><a href="assignment6.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved market attributes</span></span>
-<span id="cb43-3"><a href="assignment6.html#cb43-3" aria-hidden="true" tabindex="-1"></a>EP_mc <span class="ot">&lt;-</span></span>
-<span id="cb43-4"><a href="assignment6.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb43-5"><a href="assignment6.html#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="dv">1</span><span class="sc">:</span>R</span>
-<span id="cb43-6"><a href="assignment6.html#cb43-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
-<span id="cb43-7"><a href="assignment6.html#cb43-7" aria-hidden="true" tabindex="-1"></a>    EP <span class="ot">&lt;-</span> </span>
-<span id="cb43-8"><a href="assignment6.html#cb43-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(</span>
-<span id="cb43-9"><a href="assignment6.html#cb43-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(M),</span>
-<span id="cb43-10"><a href="assignment6.html#cb43-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> M</span>
-<span id="cb43-11"><a href="assignment6.html#cb43-11" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb43-12"><a href="assignment6.html#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(EP)</span>
-<span id="cb43-13"><a href="assignment6.html#cb43-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb43-14"><a href="assignment6.html#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-15"><a href="assignment6.html#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved entrant attributes</span></span>
-<span id="cb43-16"><a href="assignment6.html#cb43-16" aria-hidden="true" tabindex="-1"></a>NU_mc <span class="ot">&lt;-</span></span>
-<span id="cb43-17"><a href="assignment6.html#cb43-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb43-18"><a href="assignment6.html#cb43-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="dv">1</span><span class="sc">:</span>R</span>
-<span id="cb43-19"><a href="assignment6.html#cb43-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
-<span id="cb43-20"><a href="assignment6.html#cb43-20" aria-hidden="true" tabindex="-1"></a>  NU <span class="ot">&lt;-</span></span>
-<span id="cb43-21"><a href="assignment6.html#cb43-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb43-22"><a href="assignment6.html#cb43-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span>M</span>
-<span id="cb43-23"><a href="assignment6.html#cb43-23" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%do%</span> {</span>
-<span id="cb43-24"><a href="assignment6.html#cb43-24" aria-hidden="true" tabindex="-1"></a>      NU_m <span class="ot">&lt;-</span> </span>
-<span id="cb43-25"><a href="assignment6.html#cb43-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">matrix</span>(</span>
-<span id="cb43-26"><a href="assignment6.html#cb43-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rnorm</span>(E[m]),</span>
-<span id="cb43-27"><a href="assignment6.html#cb43-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">nrow =</span> E[m]</span>
-<span id="cb43-28"><a href="assignment6.html#cb43-28" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb43-29"><a href="assignment6.html#cb43-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(NU_m)</span>
-<span id="cb43-30"><a href="assignment6.html#cb43-30" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb43-31"><a href="assignment6.html#cb43-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(NU)</span>
-<span id="cb43-32"><a href="assignment6.html#cb43-32" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="assignment6.html#cb339-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb339-2"><a href="assignment6.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved market attributes</span></span>
+<span id="cb339-3"><a href="assignment6.html#cb339-3" aria-hidden="true" tabindex="-1"></a>EP_mc <span class="ot">&lt;-</span></span>
+<span id="cb339-4"><a href="assignment6.html#cb339-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb339-5"><a href="assignment6.html#cb339-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="dv">1</span><span class="sc">:</span>R</span>
+<span id="cb339-6"><a href="assignment6.html#cb339-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
+<span id="cb339-7"><a href="assignment6.html#cb339-7" aria-hidden="true" tabindex="-1"></a>    EP <span class="ot">&lt;-</span> </span>
+<span id="cb339-8"><a href="assignment6.html#cb339-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(</span>
+<span id="cb339-9"><a href="assignment6.html#cb339-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(M),</span>
+<span id="cb339-10"><a href="assignment6.html#cb339-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">nrow =</span> M</span>
+<span id="cb339-11"><a href="assignment6.html#cb339-11" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb339-12"><a href="assignment6.html#cb339-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(EP)</span>
+<span id="cb339-13"><a href="assignment6.html#cb339-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb339-14"><a href="assignment6.html#cb339-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb339-15"><a href="assignment6.html#cb339-15" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved entrant attributes</span></span>
+<span id="cb339-16"><a href="assignment6.html#cb339-16" aria-hidden="true" tabindex="-1"></a>NU_mc <span class="ot">&lt;-</span></span>
+<span id="cb339-17"><a href="assignment6.html#cb339-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb339-18"><a href="assignment6.html#cb339-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="dv">1</span><span class="sc">:</span>R</span>
+<span id="cb339-19"><a href="assignment6.html#cb339-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%dorng%</span> {</span>
+<span id="cb339-20"><a href="assignment6.html#cb339-20" aria-hidden="true" tabindex="-1"></a>  NU <span class="ot">&lt;-</span></span>
+<span id="cb339-21"><a href="assignment6.html#cb339-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb339-22"><a href="assignment6.html#cb339-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span>M</span>
+<span id="cb339-23"><a href="assignment6.html#cb339-23" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%do%</span> {</span>
+<span id="cb339-24"><a href="assignment6.html#cb339-24" aria-hidden="true" tabindex="-1"></a>      NU_m <span class="ot">&lt;-</span> </span>
+<span id="cb339-25"><a href="assignment6.html#cb339-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">matrix</span>(</span>
+<span id="cb339-26"><a href="assignment6.html#cb339-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rnorm</span>(E[m]),</span>
+<span id="cb339-27"><a href="assignment6.html#cb339-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">nrow =</span> E[m]</span>
+<span id="cb339-28"><a href="assignment6.html#cb339-28" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb339-29"><a href="assignment6.html#cb339-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(NU_m)</span>
+<span id="cb339-30"><a href="assignment6.html#cb339-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb339-31"><a href="assignment6.html#cb339-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(NU)</span>
+<span id="cb339-32"><a href="assignment6.html#cb339-32" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a function <code>compute_monte_carlo_sequential_entry(X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)</code> that returns the Monte Carlo simulation. Then, write function <code>compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta)</code> that calls<code>compute_monte_carlo_sequential_entry</code> and returns the value of the objective function given data and parameters under the assumption of sequential entry.</li>
 </ol>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="assignment6.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequential entry</span></span>
-<span id="cb44-2"><a href="assignment6.html#cb44-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb44-3"><a href="assignment6.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  theta_sequential <span class="ot">&lt;-</span></span>
-<span id="cb44-4"><a href="assignment6.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb44-5"><a href="assignment6.html#cb44-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb44-6"><a href="assignment6.html#cb44-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb44-7"><a href="assignment6.html#cb44-7" aria-hidden="true" tabindex="-1"></a>    delta, </span>
-<span id="cb44-8"><a href="assignment6.html#cb44-8" aria-hidden="true" tabindex="-1"></a>    rho</span>
-<span id="cb44-9"><a href="assignment6.html#cb44-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb44-10"><a href="assignment6.html#cb44-10" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_sequential</span>
-<span id="cb44-11"><a href="assignment6.html#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute monte carlo simulations </span></span>
-<span id="cb44-12"><a href="assignment6.html#cb44-12" aria-hidden="true" tabindex="-1"></a>Y_mc <span class="ot">&lt;-</span> </span>
-<span id="cb44-13"><a href="assignment6.html#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_monte_carlo_sequential_entry</span>(</span>
-<span id="cb44-14"><a href="assignment6.html#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
-<span id="cb44-15"><a href="assignment6.html#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
-<span id="cb44-16"><a href="assignment6.html#cb44-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP_mc =</span> EP_mc, </span>
-<span id="cb44-17"><a href="assignment6.html#cb44-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU_mc =</span> NU_mc, </span>
-<span id="cb44-18"><a href="assignment6.html#cb44-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb44-19"><a href="assignment6.html#cb44-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb44-20"><a href="assignment6.html#cb44-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb44-21"><a href="assignment6.html#cb44-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
-<span id="cb44-22"><a href="assignment6.html#cb44-22" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb44-23"><a href="assignment6.html#cb44-23" aria-hidden="true" tabindex="-1"></a>Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="assignment6.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequential entry</span></span>
+<span id="cb340-2"><a href="assignment6.html#cb340-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb340-3"><a href="assignment6.html#cb340-3" aria-hidden="true" tabindex="-1"></a>  theta_sequential <span class="ot">&lt;-</span></span>
+<span id="cb340-4"><a href="assignment6.html#cb340-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb340-5"><a href="assignment6.html#cb340-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb340-6"><a href="assignment6.html#cb340-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb340-7"><a href="assignment6.html#cb340-7" aria-hidden="true" tabindex="-1"></a>    delta, </span>
+<span id="cb340-8"><a href="assignment6.html#cb340-8" aria-hidden="true" tabindex="-1"></a>    rho</span>
+<span id="cb340-9"><a href="assignment6.html#cb340-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb340-10"><a href="assignment6.html#cb340-10" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_sequential</span>
+<span id="cb340-11"><a href="assignment6.html#cb340-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute monte carlo simulations </span></span>
+<span id="cb340-12"><a href="assignment6.html#cb340-12" aria-hidden="true" tabindex="-1"></a>Y_mc <span class="ot">&lt;-</span> </span>
+<span id="cb340-13"><a href="assignment6.html#cb340-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_monte_carlo_sequential_entry</span>(</span>
+<span id="cb340-14"><a href="assignment6.html#cb340-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X, </span>
+<span id="cb340-15"><a href="assignment6.html#cb340-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Z =</span> Z, </span>
+<span id="cb340-16"><a href="assignment6.html#cb340-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">EP_mc =</span> EP_mc, </span>
+<span id="cb340-17"><a href="assignment6.html#cb340-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">NU_mc =</span> NU_mc, </span>
+<span id="cb340-18"><a href="assignment6.html#cb340-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb340-19"><a href="assignment6.html#cb340-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb340-20"><a href="assignment6.html#cb340-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb340-21"><a href="assignment6.html#cb340-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">rho =</span> rho</span>
+<span id="cb340-22"><a href="assignment6.html#cb340-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb340-23"><a href="assignment6.html#cb340-23" aria-hidden="true" tabindex="-1"></a>Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="assignment6.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute objective function</span></span>
-<span id="cb46-2"><a href="assignment6.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_objective_sequential_entry</span>(</span>
-<span id="cb46-3"><a href="assignment6.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> Y, </span>
-<span id="cb46-4"><a href="assignment6.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X, </span>
-<span id="cb46-5"><a href="assignment6.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> Z, </span>
-<span id="cb46-6"><a href="assignment6.html#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_mc =</span> EP_mc, </span>
-<span id="cb46-7"><a href="assignment6.html#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_mc =</span> NU_mc, </span>
-<span id="cb46-8"><a href="assignment6.html#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta</span>
-<span id="cb46-9"><a href="assignment6.html#cb46-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="assignment6.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute objective function</span></span>
+<span id="cb342-2"><a href="assignment6.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_objective_sequential_entry</span>(</span>
+<span id="cb342-3"><a href="assignment6.html#cb342-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> Y, </span>
+<span id="cb342-4"><a href="assignment6.html#cb342-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X, </span>
+<span id="cb342-5"><a href="assignment6.html#cb342-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> Z, </span>
+<span id="cb342-6"><a href="assignment6.html#cb342-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_mc =</span> EP_mc, </span>
+<span id="cb342-7"><a href="assignment6.html#cb342-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_mc =</span> NU_mc, </span>
+<span id="cb342-8"><a href="assignment6.html#cb342-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta</span>
+<span id="cb342-9"><a href="assignment6.html#cb342-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.34</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Write a function <code>compute_objective_simultaneous_entry(Y, X, Z, EP_mc, NU_mc, theta)</code> that returns the value of the objective function given data and parameters under the assumption of simultaneous entry.</li>
 </ol>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="assignment6.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simultaneous entry</span></span>
-<span id="cb48-2"><a href="assignment6.html#cb48-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb48-3"><a href="assignment6.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  theta_simultaneous <span class="ot">&lt;-</span></span>
-<span id="cb48-4"><a href="assignment6.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb48-5"><a href="assignment6.html#cb48-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb48-6"><a href="assignment6.html#cb48-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb48-7"><a href="assignment6.html#cb48-7" aria-hidden="true" tabindex="-1"></a>    delta</span>
-<span id="cb48-8"><a href="assignment6.html#cb48-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb48-9"><a href="assignment6.html#cb48-9" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_simultaneous</span>
-<span id="cb48-10"><a href="assignment6.html#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="co"># compute monte carlo simulations</span></span>
-<span id="cb48-11"><a href="assignment6.html#cb48-11" aria-hidden="true" tabindex="-1"></a>Y_mc <span class="ot">&lt;-</span> </span>
-<span id="cb48-12"><a href="assignment6.html#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_monte_carlo_simultaneous_entry</span>(</span>
-<span id="cb48-13"><a href="assignment6.html#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X, </span>
-<span id="cb48-14"><a href="assignment6.html#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> Z, </span>
-<span id="cb48-15"><a href="assignment6.html#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_mc =</span> EP_mc, </span>
-<span id="cb48-16"><a href="assignment6.html#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_mc =</span> NU_mc, </span>
-<span id="cb48-17"><a href="assignment6.html#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb48-18"><a href="assignment6.html#cb48-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb48-19"><a href="assignment6.html#cb48-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
-<span id="cb48-20"><a href="assignment6.html#cb48-20" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb48-21"><a href="assignment6.html#cb48-21" aria-hidden="true" tabindex="-1"></a>Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="assignment6.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simultaneous entry</span></span>
+<span id="cb344-2"><a href="assignment6.html#cb344-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb344-3"><a href="assignment6.html#cb344-3" aria-hidden="true" tabindex="-1"></a>  theta_simultaneous <span class="ot">&lt;-</span></span>
+<span id="cb344-4"><a href="assignment6.html#cb344-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb344-5"><a href="assignment6.html#cb344-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb344-6"><a href="assignment6.html#cb344-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb344-7"><a href="assignment6.html#cb344-7" aria-hidden="true" tabindex="-1"></a>    delta</span>
+<span id="cb344-8"><a href="assignment6.html#cb344-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb344-9"><a href="assignment6.html#cb344-9" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_simultaneous</span>
+<span id="cb344-10"><a href="assignment6.html#cb344-10" aria-hidden="true" tabindex="-1"></a><span class="co"># compute monte carlo simulations</span></span>
+<span id="cb344-11"><a href="assignment6.html#cb344-11" aria-hidden="true" tabindex="-1"></a>Y_mc <span class="ot">&lt;-</span> </span>
+<span id="cb344-12"><a href="assignment6.html#cb344-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_monte_carlo_simultaneous_entry</span>(</span>
+<span id="cb344-13"><a href="assignment6.html#cb344-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X, </span>
+<span id="cb344-14"><a href="assignment6.html#cb344-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> Z, </span>
+<span id="cb344-15"><a href="assignment6.html#cb344-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_mc =</span> EP_mc, </span>
+<span id="cb344-16"><a href="assignment6.html#cb344-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_mc =</span> NU_mc, </span>
+<span id="cb344-17"><a href="assignment6.html#cb344-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb344-18"><a href="assignment6.html#cb344-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb344-19"><a href="assignment6.html#cb344-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
+<span id="cb344-20"><a href="assignment6.html#cb344-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb344-21"><a href="assignment6.html#cb344-21" aria-hidden="true" tabindex="-1"></a>Y_mc[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    0
 ## [2,]    1
 ## [3,]    1</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="assignment6.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute objective function</span></span>
-<span id="cb50-2"><a href="assignment6.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_objective_simultaneous_entry</span>(</span>
-<span id="cb50-3"><a href="assignment6.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> Y, </span>
-<span id="cb50-4"><a href="assignment6.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X, </span>
-<span id="cb50-5"><a href="assignment6.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> Z, </span>
-<span id="cb50-6"><a href="assignment6.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_mc =</span> EP_mc, </span>
-<span id="cb50-7"><a href="assignment6.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_mc =</span> NU_mc, </span>
-<span id="cb50-8"><a href="assignment6.html#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta</span>
-<span id="cb50-9"><a href="assignment6.html#cb50-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="assignment6.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute objective function</span></span>
+<span id="cb346-2"><a href="assignment6.html#cb346-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compute_objective_simultaneous_entry</span>(</span>
+<span id="cb346-3"><a href="assignment6.html#cb346-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> Y, </span>
+<span id="cb346-4"><a href="assignment6.html#cb346-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> X, </span>
+<span id="cb346-5"><a href="assignment6.html#cb346-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> Z, </span>
+<span id="cb346-6"><a href="assignment6.html#cb346-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">EP_mc =</span> EP_mc, </span>
+<span id="cb346-7"><a href="assignment6.html#cb346-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">NU_mc =</span> NU_mc, </span>
+<span id="cb346-8"><a href="assignment6.html#cb346-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta</span>
+<span id="cb346-9"><a href="assignment6.html#cb346-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.2456</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Check the value of the objective function around the true parameter under the assumption of the sequential entry.</li>
 </ol>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="assignment6.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequential entry</span></span>
-<span id="cb52-2"><a href="assignment6.html#cb52-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb52-3"><a href="assignment6.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  theta_sequential <span class="ot">&lt;-</span></span>
-<span id="cb52-4"><a href="assignment6.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb52-5"><a href="assignment6.html#cb52-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb52-6"><a href="assignment6.html#cb52-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb52-7"><a href="assignment6.html#cb52-7" aria-hidden="true" tabindex="-1"></a>    delta, </span>
-<span id="cb52-8"><a href="assignment6.html#cb52-8" aria-hidden="true" tabindex="-1"></a>    rho</span>
-<span id="cb52-9"><a href="assignment6.html#cb52-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb52-10"><a href="assignment6.html#cb52-10" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_sequential</span>
-<span id="cb52-11"><a href="assignment6.html#cb52-11" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> compute_sequential_entry_across_markets</span>
-<span id="cb52-12"><a href="assignment6.html#cb52-12" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb52-13"><a href="assignment6.html#cb52-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>), </span>
-<span id="cb52-14"><a href="assignment6.html#cb52-14" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>L, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb52-15"><a href="assignment6.html#cb52-15" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;</span><span class="sc">\\</span><span class="st">delta&quot;</span>,</span>
-<span id="cb52-16"><a href="assignment6.html#cb52-16" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;</span><span class="sc">\\</span><span class="st">rho&quot;</span></span>
-<span id="cb52-17"><a href="assignment6.html#cb52-17" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb52-18"><a href="assignment6.html#cb52-18" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb52-19"><a href="assignment6.html#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the graph</span></span>
-<span id="cb52-20"><a href="assignment6.html#cb52-20" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb52-21"><a href="assignment6.html#cb52-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb52-22"><a href="assignment6.html#cb52-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
-<span id="cb52-23"><a href="assignment6.html#cb52-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb52-24"><a href="assignment6.html#cb52-24" aria-hidden="true" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
-<span id="cb52-25"><a href="assignment6.html#cb52-25" aria-hidden="true" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> theta_i <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb52-26"><a href="assignment6.html#cb52-26" aria-hidden="true" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
-<span id="cb52-27"><a href="assignment6.html#cb52-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb52-28"><a href="assignment6.html#cb52-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
-<span id="cb52-29"><a href="assignment6.html#cb52-29" aria-hidden="true" tabindex="-1"></a>             <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb52-30"><a href="assignment6.html#cb52-30" aria-hidden="true" tabindex="-1"></a>             ) <span class="sc">%do%</span> {</span>
-<span id="cb52-31"><a href="assignment6.html#cb52-31" aria-hidden="true" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
-<span id="cb52-32"><a href="assignment6.html#cb52-32" aria-hidden="true" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
-<span id="cb52-33"><a href="assignment6.html#cb52-33" aria-hidden="true" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
-<span id="cb52-34"><a href="assignment6.html#cb52-34" aria-hidden="true" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
-<span id="cb52-35"><a href="assignment6.html#cb52-35" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">compute_objective_sequential_entry</span>(</span>
-<span id="cb52-36"><a href="assignment6.html#cb52-36" aria-hidden="true" tabindex="-1"></a>                   Y, </span>
-<span id="cb52-37"><a href="assignment6.html#cb52-37" aria-hidden="true" tabindex="-1"></a>                   X, </span>
-<span id="cb52-38"><a href="assignment6.html#cb52-38" aria-hidden="true" tabindex="-1"></a>                   Z, </span>
-<span id="cb52-39"><a href="assignment6.html#cb52-39" aria-hidden="true" tabindex="-1"></a>                   EP_mc, </span>
-<span id="cb52-40"><a href="assignment6.html#cb52-40" aria-hidden="true" tabindex="-1"></a>                   NU_mc, </span>
-<span id="cb52-41"><a href="assignment6.html#cb52-41" aria-hidden="true" tabindex="-1"></a>                   theta_j</span>
-<span id="cb52-42"><a href="assignment6.html#cb52-42" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb52-43"><a href="assignment6.html#cb52-43" aria-hidden="true" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
-<span id="cb52-44"><a href="assignment6.html#cb52-44" aria-hidden="true" tabindex="-1"></a>             }</span>
-<span id="cb52-45"><a href="assignment6.html#cb52-45" aria-hidden="true" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
-<span id="cb52-46"><a href="assignment6.html#cb52-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb52-47"><a href="assignment6.html#cb52-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
-<span id="cb52-48"><a href="assignment6.html#cb52-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
-<span id="cb52-49"><a href="assignment6.html#cb52-49" aria-hidden="true" tabindex="-1"></a>      ) </span>
-<span id="cb52-50"><a href="assignment6.html#cb52-50" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
-<span id="cb52-51"><a href="assignment6.html#cb52-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb52-52"><a href="assignment6.html#cb52-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
-<span id="cb52-53"><a href="assignment6.html#cb52-53" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
-<span id="cb52-54"><a href="assignment6.html#cb52-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> x, </span>
-<span id="cb52-55"><a href="assignment6.html#cb52-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y</span>
-<span id="cb52-56"><a href="assignment6.html#cb52-56" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb52-57"><a href="assignment6.html#cb52-57" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span> </span>
-<span id="cb52-58"><a href="assignment6.html#cb52-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb52-59"><a href="assignment6.html#cb52-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb52-60"><a href="assignment6.html#cb52-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
-<span id="cb52-61"><a href="assignment6.html#cb52-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
-<span id="cb52-62"><a href="assignment6.html#cb52-62" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb52-63"><a href="assignment6.html#cb52-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb52-64"><a href="assignment6.html#cb52-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
-<span id="cb52-65"><a href="assignment6.html#cb52-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb52-66"><a href="assignment6.html#cb52-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
-<span id="cb52-67"><a href="assignment6.html#cb52-67" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb52-68"><a href="assignment6.html#cb52-68" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb52-69"><a href="assignment6.html#cb52-69" aria-hidden="true" tabindex="-1"></a>  graph, </span>
-<span id="cb52-70"><a href="assignment6.html#cb52-70" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_sequential.rds&quot;</span></span>
-<span id="cb52-71"><a href="assignment6.html#cb52-71" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="assignment6.html#cb53-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_sequential.rds&quot;</span>)</span>
-<span id="cb53-2"><a href="assignment6.html#cb53-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="assignment6.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequential entry</span></span>
+<span id="cb348-2"><a href="assignment6.html#cb348-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb348-3"><a href="assignment6.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  theta_sequential <span class="ot">&lt;-</span></span>
+<span id="cb348-4"><a href="assignment6.html#cb348-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb348-5"><a href="assignment6.html#cb348-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb348-6"><a href="assignment6.html#cb348-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb348-7"><a href="assignment6.html#cb348-7" aria-hidden="true" tabindex="-1"></a>    delta, </span>
+<span id="cb348-8"><a href="assignment6.html#cb348-8" aria-hidden="true" tabindex="-1"></a>    rho</span>
+<span id="cb348-9"><a href="assignment6.html#cb348-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb348-10"><a href="assignment6.html#cb348-10" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_sequential</span>
+<span id="cb348-11"><a href="assignment6.html#cb348-11" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> compute_sequential_entry_across_markets</span>
+<span id="cb348-12"><a href="assignment6.html#cb348-12" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb348-13"><a href="assignment6.html#cb348-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>), </span>
+<span id="cb348-14"><a href="assignment6.html#cb348-14" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>L, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb348-15"><a href="assignment6.html#cb348-15" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;</span><span class="sc">\\</span><span class="st">delta&quot;</span>,</span>
+<span id="cb348-16"><a href="assignment6.html#cb348-16" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;</span><span class="sc">\\</span><span class="st">rho&quot;</span></span>
+<span id="cb348-17"><a href="assignment6.html#cb348-17" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb348-18"><a href="assignment6.html#cb348-18" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb348-19"><a href="assignment6.html#cb348-19" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the graph</span></span>
+<span id="cb348-20"><a href="assignment6.html#cb348-20" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb348-21"><a href="assignment6.html#cb348-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb348-22"><a href="assignment6.html#cb348-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
+<span id="cb348-23"><a href="assignment6.html#cb348-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb348-24"><a href="assignment6.html#cb348-24" aria-hidden="true" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
+<span id="cb348-25"><a href="assignment6.html#cb348-25" aria-hidden="true" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> theta_i <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb348-26"><a href="assignment6.html#cb348-26" aria-hidden="true" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
+<span id="cb348-27"><a href="assignment6.html#cb348-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb348-28"><a href="assignment6.html#cb348-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
+<span id="cb348-29"><a href="assignment6.html#cb348-29" aria-hidden="true" tabindex="-1"></a>             <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb348-30"><a href="assignment6.html#cb348-30" aria-hidden="true" tabindex="-1"></a>             ) <span class="sc">%do%</span> {</span>
+<span id="cb348-31"><a href="assignment6.html#cb348-31" aria-hidden="true" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
+<span id="cb348-32"><a href="assignment6.html#cb348-32" aria-hidden="true" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
+<span id="cb348-33"><a href="assignment6.html#cb348-33" aria-hidden="true" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
+<span id="cb348-34"><a href="assignment6.html#cb348-34" aria-hidden="true" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
+<span id="cb348-35"><a href="assignment6.html#cb348-35" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">compute_objective_sequential_entry</span>(</span>
+<span id="cb348-36"><a href="assignment6.html#cb348-36" aria-hidden="true" tabindex="-1"></a>                   Y, </span>
+<span id="cb348-37"><a href="assignment6.html#cb348-37" aria-hidden="true" tabindex="-1"></a>                   X, </span>
+<span id="cb348-38"><a href="assignment6.html#cb348-38" aria-hidden="true" tabindex="-1"></a>                   Z, </span>
+<span id="cb348-39"><a href="assignment6.html#cb348-39" aria-hidden="true" tabindex="-1"></a>                   EP_mc, </span>
+<span id="cb348-40"><a href="assignment6.html#cb348-40" aria-hidden="true" tabindex="-1"></a>                   NU_mc, </span>
+<span id="cb348-41"><a href="assignment6.html#cb348-41" aria-hidden="true" tabindex="-1"></a>                   theta_j</span>
+<span id="cb348-42"><a href="assignment6.html#cb348-42" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb348-43"><a href="assignment6.html#cb348-43" aria-hidden="true" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
+<span id="cb348-44"><a href="assignment6.html#cb348-44" aria-hidden="true" tabindex="-1"></a>             }</span>
+<span id="cb348-45"><a href="assignment6.html#cb348-45" aria-hidden="true" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
+<span id="cb348-46"><a href="assignment6.html#cb348-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb348-47"><a href="assignment6.html#cb348-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
+<span id="cb348-48"><a href="assignment6.html#cb348-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
+<span id="cb348-49"><a href="assignment6.html#cb348-49" aria-hidden="true" tabindex="-1"></a>      ) </span>
+<span id="cb348-50"><a href="assignment6.html#cb348-50" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
+<span id="cb348-51"><a href="assignment6.html#cb348-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb348-52"><a href="assignment6.html#cb348-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
+<span id="cb348-53"><a href="assignment6.html#cb348-53" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
+<span id="cb348-54"><a href="assignment6.html#cb348-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> x, </span>
+<span id="cb348-55"><a href="assignment6.html#cb348-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y</span>
+<span id="cb348-56"><a href="assignment6.html#cb348-56" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb348-57"><a href="assignment6.html#cb348-57" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span> </span>
+<span id="cb348-58"><a href="assignment6.html#cb348-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb348-59"><a href="assignment6.html#cb348-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb348-60"><a href="assignment6.html#cb348-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
+<span id="cb348-61"><a href="assignment6.html#cb348-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
+<span id="cb348-62"><a href="assignment6.html#cb348-62" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb348-63"><a href="assignment6.html#cb348-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb348-64"><a href="assignment6.html#cb348-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
+<span id="cb348-65"><a href="assignment6.html#cb348-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb348-66"><a href="assignment6.html#cb348-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb348-67"><a href="assignment6.html#cb348-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb348-68"><a href="assignment6.html#cb348-68" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb348-69"><a href="assignment6.html#cb348-69" aria-hidden="true" tabindex="-1"></a>  graph, </span>
+<span id="cb348-70"><a href="assignment6.html#cb348-70" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_sequential.rds&quot;</span></span>
+<span id="cb348-71"><a href="assignment6.html#cb348-71" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="assignment6.html#cb349-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_sequential.rds&quot;</span>)</span>
+<span id="cb349-2"><a href="assignment6.html#cb349-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-194-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-194-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[3]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-14-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-194-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[4]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-14-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-194-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[5]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-14-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-194-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[6]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-14-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-194-6.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>Check the value of the objective function around the true parameter under the assumption of the simultaneous entry.</li>
 </ol>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="assignment6.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simultaneous entry</span></span>
-<span id="cb60-2"><a href="assignment6.html#cb60-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb60-3"><a href="assignment6.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  theta_simultaneous <span class="ot">&lt;-</span></span>
-<span id="cb60-4"><a href="assignment6.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb60-5"><a href="assignment6.html#cb60-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb60-6"><a href="assignment6.html#cb60-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb60-7"><a href="assignment6.html#cb60-7" aria-hidden="true" tabindex="-1"></a>    delta</span>
-<span id="cb60-8"><a href="assignment6.html#cb60-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb60-9"><a href="assignment6.html#cb60-9" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_simultaneous</span>
-<span id="cb60-10"><a href="assignment6.html#cb60-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> compute_simultaneous_entry_across_markets</span>
-<span id="cb60-11"><a href="assignment6.html#cb60-11" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb60-12"><a href="assignment6.html#cb60-12" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>), </span>
-<span id="cb60-13"><a href="assignment6.html#cb60-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>L, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb60-14"><a href="assignment6.html#cb60-14" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;</span><span class="sc">\\</span><span class="st">delta&quot;</span></span>
-<span id="cb60-15"><a href="assignment6.html#cb60-15" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb60-16"><a href="assignment6.html#cb60-16" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb60-17"><a href="assignment6.html#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the graph</span></span>
-<span id="cb60-18"><a href="assignment6.html#cb60-18" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb60-19"><a href="assignment6.html#cb60-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb60-20"><a href="assignment6.html#cb60-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
-<span id="cb60-21"><a href="assignment6.html#cb60-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb60-22"><a href="assignment6.html#cb60-22" aria-hidden="true" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
-<span id="cb60-23"><a href="assignment6.html#cb60-23" aria-hidden="true" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> theta_i <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb60-24"><a href="assignment6.html#cb60-24" aria-hidden="true" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
-<span id="cb60-25"><a href="assignment6.html#cb60-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb60-26"><a href="assignment6.html#cb60-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
-<span id="cb60-27"><a href="assignment6.html#cb60-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb60-28"><a href="assignment6.html#cb60-28" aria-hidden="true" tabindex="-1"></a>             ) <span class="sc">%do%</span> {</span>
-<span id="cb60-29"><a href="assignment6.html#cb60-29" aria-hidden="true" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
-<span id="cb60-30"><a href="assignment6.html#cb60-30" aria-hidden="true" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
-<span id="cb60-31"><a href="assignment6.html#cb60-31" aria-hidden="true" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
-<span id="cb60-32"><a href="assignment6.html#cb60-32" aria-hidden="true" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
-<span id="cb60-33"><a href="assignment6.html#cb60-33" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">compute_objective_simultaneous_entry</span>(</span>
-<span id="cb60-34"><a href="assignment6.html#cb60-34" aria-hidden="true" tabindex="-1"></a>                   Y, </span>
-<span id="cb60-35"><a href="assignment6.html#cb60-35" aria-hidden="true" tabindex="-1"></a>                   X, </span>
-<span id="cb60-36"><a href="assignment6.html#cb60-36" aria-hidden="true" tabindex="-1"></a>                   Z, </span>
-<span id="cb60-37"><a href="assignment6.html#cb60-37" aria-hidden="true" tabindex="-1"></a>                   EP_mc, </span>
-<span id="cb60-38"><a href="assignment6.html#cb60-38" aria-hidden="true" tabindex="-1"></a>                   NU_mc, </span>
-<span id="cb60-39"><a href="assignment6.html#cb60-39" aria-hidden="true" tabindex="-1"></a>                   theta_j</span>
-<span id="cb60-40"><a href="assignment6.html#cb60-40" aria-hidden="true" tabindex="-1"></a>                   )</span>
-<span id="cb60-41"><a href="assignment6.html#cb60-41" aria-hidden="true" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
-<span id="cb60-42"><a href="assignment6.html#cb60-42" aria-hidden="true" tabindex="-1"></a>             }</span>
-<span id="cb60-43"><a href="assignment6.html#cb60-43" aria-hidden="true" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
-<span id="cb60-44"><a href="assignment6.html#cb60-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb60-45"><a href="assignment6.html#cb60-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
-<span id="cb60-46"><a href="assignment6.html#cb60-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
-<span id="cb60-47"><a href="assignment6.html#cb60-47" aria-hidden="true" tabindex="-1"></a>      ) </span>
-<span id="cb60-48"><a href="assignment6.html#cb60-48" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
-<span id="cb60-49"><a href="assignment6.html#cb60-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb60-50"><a href="assignment6.html#cb60-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_graph, </span>
-<span id="cb60-51"><a href="assignment6.html#cb60-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb60-52"><a href="assignment6.html#cb60-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, </span>
-<span id="cb60-53"><a href="assignment6.html#cb60-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> y</span>
-<span id="cb60-54"><a href="assignment6.html#cb60-54" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb60-55"><a href="assignment6.html#cb60-55" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb60-56"><a href="assignment6.html#cb60-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb60-57"><a href="assignment6.html#cb60-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb60-58"><a href="assignment6.html#cb60-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
-<span id="cb60-59"><a href="assignment6.html#cb60-59" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
-<span id="cb60-60"><a href="assignment6.html#cb60-60" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb60-61"><a href="assignment6.html#cb60-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb60-62"><a href="assignment6.html#cb60-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
-<span id="cb60-63"><a href="assignment6.html#cb60-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb60-64"><a href="assignment6.html#cb60-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
-<span id="cb60-65"><a href="assignment6.html#cb60-65" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb60-66"><a href="assignment6.html#cb60-66" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb60-67"><a href="assignment6.html#cb60-67" aria-hidden="true" tabindex="-1"></a>  graph, </span>
-<span id="cb60-68"><a href="assignment6.html#cb60-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_simultaneous.rds&quot;</span></span>
-<span id="cb60-69"><a href="assignment6.html#cb60-69" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="assignment6.html#cb61-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_simultaneous.rds&quot;</span>)</span>
-<span id="cb61-2"><a href="assignment6.html#cb61-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="assignment6.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simultaneous entry</span></span>
+<span id="cb356-2"><a href="assignment6.html#cb356-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb356-3"><a href="assignment6.html#cb356-3" aria-hidden="true" tabindex="-1"></a>  theta_simultaneous <span class="ot">&lt;-</span></span>
+<span id="cb356-4"><a href="assignment6.html#cb356-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb356-5"><a href="assignment6.html#cb356-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb356-6"><a href="assignment6.html#cb356-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb356-7"><a href="assignment6.html#cb356-7" aria-hidden="true" tabindex="-1"></a>    delta</span>
+<span id="cb356-8"><a href="assignment6.html#cb356-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb356-9"><a href="assignment6.html#cb356-9" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_simultaneous</span>
+<span id="cb356-10"><a href="assignment6.html#cb356-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> compute_simultaneous_entry_across_markets</span>
+<span id="cb356-11"><a href="assignment6.html#cb356-11" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb356-12"><a href="assignment6.html#cb356-12" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>), </span>
+<span id="cb356-13"><a href="assignment6.html#cb356-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha_&quot;</span>, <span class="dv">1</span><span class="sc">:</span>L, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb356-14"><a href="assignment6.html#cb356-14" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;</span><span class="sc">\\</span><span class="st">delta&quot;</span></span>
+<span id="cb356-15"><a href="assignment6.html#cb356-15" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb356-16"><a href="assignment6.html#cb356-16" aria-hidden="true" tabindex="-1"></a>label <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;$&quot;</span>, label, <span class="st">&quot;$&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb356-17"><a href="assignment6.html#cb356-17" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the graph</span></span>
+<span id="cb356-18"><a href="assignment6.html#cb356-18" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb356-19"><a href="assignment6.html#cb356-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb356-20"><a href="assignment6.html#cb356-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
+<span id="cb356-21"><a href="assignment6.html#cb356-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb356-22"><a href="assignment6.html#cb356-22" aria-hidden="true" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
+<span id="cb356-23"><a href="assignment6.html#cb356-23" aria-hidden="true" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> theta_i <span class="sc">*</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb356-24"><a href="assignment6.html#cb356-24" aria-hidden="true" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
+<span id="cb356-25"><a href="assignment6.html#cb356-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb356-26"><a href="assignment6.html#cb356-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
+<span id="cb356-27"><a href="assignment6.html#cb356-27" aria-hidden="true" tabindex="-1"></a>              <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb356-28"><a href="assignment6.html#cb356-28" aria-hidden="true" tabindex="-1"></a>             ) <span class="sc">%do%</span> {</span>
+<span id="cb356-29"><a href="assignment6.html#cb356-29" aria-hidden="true" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
+<span id="cb356-30"><a href="assignment6.html#cb356-30" aria-hidden="true" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
+<span id="cb356-31"><a href="assignment6.html#cb356-31" aria-hidden="true" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
+<span id="cb356-32"><a href="assignment6.html#cb356-32" aria-hidden="true" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
+<span id="cb356-33"><a href="assignment6.html#cb356-33" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">compute_objective_simultaneous_entry</span>(</span>
+<span id="cb356-34"><a href="assignment6.html#cb356-34" aria-hidden="true" tabindex="-1"></a>                   Y, </span>
+<span id="cb356-35"><a href="assignment6.html#cb356-35" aria-hidden="true" tabindex="-1"></a>                   X, </span>
+<span id="cb356-36"><a href="assignment6.html#cb356-36" aria-hidden="true" tabindex="-1"></a>                   Z, </span>
+<span id="cb356-37"><a href="assignment6.html#cb356-37" aria-hidden="true" tabindex="-1"></a>                   EP_mc, </span>
+<span id="cb356-38"><a href="assignment6.html#cb356-38" aria-hidden="true" tabindex="-1"></a>                   NU_mc, </span>
+<span id="cb356-39"><a href="assignment6.html#cb356-39" aria-hidden="true" tabindex="-1"></a>                   theta_j</span>
+<span id="cb356-40"><a href="assignment6.html#cb356-40" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb356-41"><a href="assignment6.html#cb356-41" aria-hidden="true" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
+<span id="cb356-42"><a href="assignment6.html#cb356-42" aria-hidden="true" tabindex="-1"></a>             }</span>
+<span id="cb356-43"><a href="assignment6.html#cb356-43" aria-hidden="true" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
+<span id="cb356-44"><a href="assignment6.html#cb356-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb356-45"><a href="assignment6.html#cb356-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
+<span id="cb356-46"><a href="assignment6.html#cb356-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
+<span id="cb356-47"><a href="assignment6.html#cb356-47" aria-hidden="true" tabindex="-1"></a>      ) </span>
+<span id="cb356-48"><a href="assignment6.html#cb356-48" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
+<span id="cb356-49"><a href="assignment6.html#cb356-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb356-50"><a href="assignment6.html#cb356-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> df_graph, </span>
+<span id="cb356-51"><a href="assignment6.html#cb356-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb356-52"><a href="assignment6.html#cb356-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> x, </span>
+<span id="cb356-53"><a href="assignment6.html#cb356-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> y</span>
+<span id="cb356-54"><a href="assignment6.html#cb356-54" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb356-55"><a href="assignment6.html#cb356-55" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb356-56"><a href="assignment6.html#cb356-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb356-57"><a href="assignment6.html#cb356-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb356-58"><a href="assignment6.html#cb356-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
+<span id="cb356-59"><a href="assignment6.html#cb356-59" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
+<span id="cb356-60"><a href="assignment6.html#cb356-60" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb356-61"><a href="assignment6.html#cb356-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb356-62"><a href="assignment6.html#cb356-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
+<span id="cb356-63"><a href="assignment6.html#cb356-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb356-64"><a href="assignment6.html#cb356-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb356-65"><a href="assignment6.html#cb356-65" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb356-66"><a href="assignment6.html#cb356-66" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb356-67"><a href="assignment6.html#cb356-67" aria-hidden="true" tabindex="-1"></a>  graph, </span>
+<span id="cb356-68"><a href="assignment6.html#cb356-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_simultaneous.rds&quot;</span></span>
+<span id="cb356-69"><a href="assignment6.html#cb356-69" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="assignment6.html#cb357-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_graph_simultaneous.rds&quot;</span>)</span>
+<span id="cb357-2"><a href="assignment6.html#cb357-2" aria-hidden="true" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-196-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[2]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-196-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[3]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-196-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[4]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-196-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
 ## [[5]]</code></pre>
-<p><img src="lecture_files/figure-html/unnamed-chunk-16-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-196-5.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Estimate the parameters under the assumption of the sequential entry.</li>
 </ol>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="assignment6.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequential entry</span></span>
-<span id="cb67-2"><a href="assignment6.html#cb67-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb67-3"><a href="assignment6.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  theta_sequential <span class="ot">&lt;-</span></span>
-<span id="cb67-4"><a href="assignment6.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb67-5"><a href="assignment6.html#cb67-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb67-6"><a href="assignment6.html#cb67-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb67-7"><a href="assignment6.html#cb67-7" aria-hidden="true" tabindex="-1"></a>    delta, </span>
-<span id="cb67-8"><a href="assignment6.html#cb67-8" aria-hidden="true" tabindex="-1"></a>    rho</span>
-<span id="cb67-9"><a href="assignment6.html#cb67-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="assignment6.html#cb68-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_sequential</span>
-<span id="cb68-2"><a href="assignment6.html#cb68-2" aria-hidden="true" tabindex="-1"></a>result_sequential <span class="ot">&lt;-</span></span>
-<span id="cb68-3"><a href="assignment6.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
-<span id="cb68-4"><a href="assignment6.html#cb68-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">par =</span> theta,</span>
-<span id="cb68-5"><a href="assignment6.html#cb68-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">fn =</span> compute_objective_sequential_entry,</span>
-<span id="cb68-6"><a href="assignment6.html#cb68-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
-<span id="cb68-7"><a href="assignment6.html#cb68-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">Y =</span> Y,</span>
-<span id="cb68-8"><a href="assignment6.html#cb68-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">X =</span> X,</span>
-<span id="cb68-9"><a href="assignment6.html#cb68-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">Z =</span> Z,</span>
-<span id="cb68-10"><a href="assignment6.html#cb68-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">EP_mc =</span> EP_mc,</span>
-<span id="cb68-11"><a href="assignment6.html#cb68-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">NU_mc =</span> NU_mc</span>
-<span id="cb68-12"><a href="assignment6.html#cb68-12" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb68-13"><a href="assignment6.html#cb68-13" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb68-14"><a href="assignment6.html#cb68-14" aria-hidden="true" tabindex="-1"></a>  result_sequential, </span>
-<span id="cb68-15"><a href="assignment6.html#cb68-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_sequential.rds&quot;</span></span>
-<span id="cb68-16"><a href="assignment6.html#cb68-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="assignment6.html#cb69-1" aria-hidden="true" tabindex="-1"></a>result_sequential <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_sequential.rds&quot;</span>)</span>
-<span id="cb69-2"><a href="assignment6.html#cb69-2" aria-hidden="true" tabindex="-1"></a>result_sequential</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="assignment6.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequential entry</span></span>
+<span id="cb363-2"><a href="assignment6.html#cb363-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb363-3"><a href="assignment6.html#cb363-3" aria-hidden="true" tabindex="-1"></a>  theta_sequential <span class="ot">&lt;-</span></span>
+<span id="cb363-4"><a href="assignment6.html#cb363-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb363-5"><a href="assignment6.html#cb363-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb363-6"><a href="assignment6.html#cb363-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb363-7"><a href="assignment6.html#cb363-7" aria-hidden="true" tabindex="-1"></a>    delta, </span>
+<span id="cb363-8"><a href="assignment6.html#cb363-8" aria-hidden="true" tabindex="-1"></a>    rho</span>
+<span id="cb363-9"><a href="assignment6.html#cb363-9" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="assignment6.html#cb364-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_sequential</span>
+<span id="cb364-2"><a href="assignment6.html#cb364-2" aria-hidden="true" tabindex="-1"></a>result_sequential <span class="ot">&lt;-</span></span>
+<span id="cb364-3"><a href="assignment6.html#cb364-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
+<span id="cb364-4"><a href="assignment6.html#cb364-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">par =</span> theta,</span>
+<span id="cb364-5"><a href="assignment6.html#cb364-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">fn =</span> compute_objective_sequential_entry,</span>
+<span id="cb364-6"><a href="assignment6.html#cb364-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
+<span id="cb364-7"><a href="assignment6.html#cb364-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">Y =</span> Y,</span>
+<span id="cb364-8"><a href="assignment6.html#cb364-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">X =</span> X,</span>
+<span id="cb364-9"><a href="assignment6.html#cb364-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">Z =</span> Z,</span>
+<span id="cb364-10"><a href="assignment6.html#cb364-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">EP_mc =</span> EP_mc,</span>
+<span id="cb364-11"><a href="assignment6.html#cb364-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">NU_mc =</span> NU_mc</span>
+<span id="cb364-12"><a href="assignment6.html#cb364-12" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb364-13"><a href="assignment6.html#cb364-13" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb364-14"><a href="assignment6.html#cb364-14" aria-hidden="true" tabindex="-1"></a>  result_sequential, </span>
+<span id="cb364-15"><a href="assignment6.html#cb364-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_sequential.rds&quot;</span></span>
+<span id="cb364-16"><a href="assignment6.html#cb364-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="assignment6.html#cb365-1" aria-hidden="true" tabindex="-1"></a>result_sequential <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_sequential.rds&quot;</span>)</span>
+<span id="cb365-2"><a href="assignment6.html#cb365-2" aria-hidden="true" tabindex="-1"></a>result_sequential</span></code></pre></div>
 <pre><code>## $par
 ## [1] 0.7761887 0.2204343 1.0747480 2.0150864 0.9116741 0.2875538
 ## 
@@ -1350,12 +1349,12 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 ## 
 ## $message
 ## NULL</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="assignment6.html#cb71-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
-<span id="cb71-2"><a href="assignment6.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb71-3"><a href="assignment6.html#cb71-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual =</span> theta,</span>
-<span id="cb71-4"><a href="assignment6.html#cb71-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> result_sequential<span class="sc">$</span>par</span>
-<span id="cb71-5"><a href="assignment6.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb71-6"><a href="assignment6.html#cb71-6" aria-hidden="true" tabindex="-1"></a>comparison</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="assignment6.html#cb367-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
+<span id="cb367-2"><a href="assignment6.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb367-3"><a href="assignment6.html#cb367-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual =</span> theta,</span>
+<span id="cb367-4"><a href="assignment6.html#cb367-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> result_sequential<span class="sc">$</span>par</span>
+<span id="cb367-5"><a href="assignment6.html#cb367-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb367-6"><a href="assignment6.html#cb367-6" aria-hidden="true" tabindex="-1"></a>comparison</span></code></pre></div>
 <pre><code>##      actual  estimate
 ## 1 0.6264538 0.7761887
 ## 2 0.1836433 0.2204343
@@ -1366,31 +1365,31 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 <ol start="7" style="list-style-type: decimal">
 <li>Estimate the parameters under the assumption of the simultaneous entry. Set the lower bound for <span class="math inline">\(\delta\)</span> at 0.</li>
 </ol>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="assignment6.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simultaneous entry</span></span>
-<span id="cb73-2"><a href="assignment6.html#cb73-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb73-3"><a href="assignment6.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  theta_simultaneous <span class="ot">&lt;-</span></span>
-<span id="cb73-4"><a href="assignment6.html#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb73-5"><a href="assignment6.html#cb73-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb73-6"><a href="assignment6.html#cb73-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
-<span id="cb73-7"><a href="assignment6.html#cb73-7" aria-hidden="true" tabindex="-1"></a>    delta</span>
-<span id="cb73-8"><a href="assignment6.html#cb73-8" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="assignment6.html#cb74-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_simultaneous</span>
-<span id="cb74-2"><a href="assignment6.html#cb74-2" aria-hidden="true" tabindex="-1"></a>result_simultaneous <span class="ot">&lt;-</span></span>
-<span id="cb74-3"><a href="assignment6.html#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
-<span id="cb74-4"><a href="assignment6.html#cb74-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">par =</span> theta,</span>
-<span id="cb74-5"><a href="assignment6.html#cb74-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">fn =</span> compute_objective_simultaneous_entry,</span>
-<span id="cb74-6"><a href="assignment6.html#cb74-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
-<span id="cb74-7"><a href="assignment6.html#cb74-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">Y =</span> Y,</span>
-<span id="cb74-8"><a href="assignment6.html#cb74-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">X =</span> X,</span>
-<span id="cb74-9"><a href="assignment6.html#cb74-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">Z =</span> Z,</span>
-<span id="cb74-10"><a href="assignment6.html#cb74-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">EP_mc =</span> EP_mc,</span>
-<span id="cb74-11"><a href="assignment6.html#cb74-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">NU_mc =</span> NU_mc)</span>
-<span id="cb74-12"><a href="assignment6.html#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb74-13"><a href="assignment6.html#cb74-13" aria-hidden="true" tabindex="-1"></a>  result_simultaneous, </span>
-<span id="cb74-14"><a href="assignment6.html#cb74-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_simultaneous.rds&quot;</span></span>
-<span id="cb74-15"><a href="assignment6.html#cb74-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="assignment6.html#cb75-1" aria-hidden="true" tabindex="-1"></a>result_simultaneous <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_simultaneous.rds&quot;</span>)</span>
-<span id="cb75-2"><a href="assignment6.html#cb75-2" aria-hidden="true" tabindex="-1"></a>result_simultaneous</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="assignment6.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simultaneous entry</span></span>
+<span id="cb369-2"><a href="assignment6.html#cb369-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb369-3"><a href="assignment6.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  theta_simultaneous <span class="ot">&lt;-</span></span>
+<span id="cb369-4"><a href="assignment6.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb369-5"><a href="assignment6.html#cb369-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb369-6"><a href="assignment6.html#cb369-6" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb369-7"><a href="assignment6.html#cb369-7" aria-hidden="true" tabindex="-1"></a>    delta</span>
+<span id="cb369-8"><a href="assignment6.html#cb369-8" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="assignment6.html#cb370-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> Y_simultaneous</span>
+<span id="cb370-2"><a href="assignment6.html#cb370-2" aria-hidden="true" tabindex="-1"></a>result_simultaneous <span class="ot">&lt;-</span></span>
+<span id="cb370-3"><a href="assignment6.html#cb370-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
+<span id="cb370-4"><a href="assignment6.html#cb370-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">par =</span> theta,</span>
+<span id="cb370-5"><a href="assignment6.html#cb370-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">fn =</span> compute_objective_simultaneous_entry,</span>
+<span id="cb370-6"><a href="assignment6.html#cb370-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
+<span id="cb370-7"><a href="assignment6.html#cb370-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">Y =</span> Y,</span>
+<span id="cb370-8"><a href="assignment6.html#cb370-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">X =</span> X,</span>
+<span id="cb370-9"><a href="assignment6.html#cb370-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">Z =</span> Z,</span>
+<span id="cb370-10"><a href="assignment6.html#cb370-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">EP_mc =</span> EP_mc,</span>
+<span id="cb370-11"><a href="assignment6.html#cb370-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">NU_mc =</span> NU_mc)</span>
+<span id="cb370-12"><a href="assignment6.html#cb370-12" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb370-13"><a href="assignment6.html#cb370-13" aria-hidden="true" tabindex="-1"></a>  result_simultaneous, </span>
+<span id="cb370-14"><a href="assignment6.html#cb370-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_simultaneous.rds&quot;</span></span>
+<span id="cb370-15"><a href="assignment6.html#cb370-15" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="assignment6.html#cb371-1" aria-hidden="true" tabindex="-1"></a>result_simultaneous <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_simultaneous.rds&quot;</span>)</span>
+<span id="cb371-2"><a href="assignment6.html#cb371-2" aria-hidden="true" tabindex="-1"></a>result_simultaneous</span></code></pre></div>
 <pre><code>## $par
 ## [1] 0.7347919 0.2151107 0.9427083 1.7495325 0.9448480
 ## 
@@ -1406,12 +1405,12 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 ## 
 ## $message
 ## NULL</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="assignment6.html#cb77-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
-<span id="cb77-2"><a href="assignment6.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb77-3"><a href="assignment6.html#cb77-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual =</span> theta,</span>
-<span id="cb77-4"><a href="assignment6.html#cb77-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> result_simultaneous<span class="sc">$</span>par</span>
-<span id="cb77-5"><a href="assignment6.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb77-6"><a href="assignment6.html#cb77-6" aria-hidden="true" tabindex="-1"></a>comparison</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="assignment6.html#cb373-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
+<span id="cb373-2"><a href="assignment6.html#cb373-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb373-3"><a href="assignment6.html#cb373-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual =</span> theta,</span>
+<span id="cb373-4"><a href="assignment6.html#cb373-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> result_simultaneous<span class="sc">$</span>par</span>
+<span id="cb373-5"><a href="assignment6.html#cb373-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb373-6"><a href="assignment6.html#cb373-6" aria-hidden="true" tabindex="-1"></a>comparison</span></code></pre></div>
 <pre><code>##      actual  estimate
 ## 1 0.6264538 0.7347919
 ## 2 0.1836433 0.2151107
@@ -1424,8 +1423,8 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 <ol style="list-style-type: decimal">
 <li>Fix the first draw of the Monte Carlo shocks. Suppose that the competitive effect becomes mild, i.e. <span class="math inline">\(\delta\)</span> is changed to 0.5. Under these shocks, compute the equilibrium number of entrants across markets and plot the histogram with the estimated and counterfactual parameters. Conduct this analysis under the assumptions of sequential and simultaneous entry.</li>
 </ol>
-<p><img src="lecture_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><img src="lecture_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="lecture_files/figure-html/unnamed-chunk-204-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
