@@ -17,8 +17,8 @@ compute_derivative_share_smooth_matrix_rcpp <- function(df_list, beta, sigma, mu
     .Call('_EmpiricalIO_compute_derivative_share_smooth_matrix_rcpp', PACKAGE = 'EmpiricalIO', df_list, beta, sigma, mu, omega)
 }
 
-update_price_matrix_rcpp <- function(logp, df_list, beta, sigma, mu, omega, Delta) {
-    .Call('_EmpiricalIO_update_price_matrix_rcpp', PACKAGE = 'EmpiricalIO', logp, df_list, beta, sigma, mu, omega, Delta)
+update_price_matrix_rcpp <- function(logp, df_list, beta, sigma, mu, omega, detla) {
+    .Call('_EmpiricalIO_update_price_matrix_rcpp', PACKAGE = 'EmpiricalIO', logp, df_list, beta, sigma, mu, omega, detla)
 }
 
 compute_square_rcpp2 <- function(x) {

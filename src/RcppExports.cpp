@@ -72,8 +72,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // update_price_matrix_rcpp
-Rcpp::List update_price_matrix_rcpp(Eigen::VectorXd logp, Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega, Rcpp::List Delta);
-RcppExport SEXP _EmpiricalIO_update_price_matrix_rcpp(SEXP logpSEXP, SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP, SEXP DeltaSEXP) {
+Rcpp::List update_price_matrix_rcpp(Eigen::VectorXd logp, Rcpp::List df_list, Eigen::VectorXd beta, Eigen::VectorXd sigma, double mu, double omega, Rcpp::List detla);
+RcppExport SEXP _EmpiricalIO_update_price_matrix_rcpp(SEXP logpSEXP, SEXP df_listSEXP, SEXP betaSEXP, SEXP sigmaSEXP, SEXP muSEXP, SEXP omegaSEXP, SEXP detlaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -83,8 +83,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::VectorXd >::type sigma(sigmaSEXP);
     Rcpp::traits::input_parameter< double >::type mu(muSEXP);
     Rcpp::traits::input_parameter< double >::type omega(omegaSEXP);
-    Rcpp::traits::input_parameter< Rcpp::List >::type Delta(DeltaSEXP);
-    rcpp_result_gen = Rcpp::wrap(update_price_matrix_rcpp(logp, df_list, beta, sigma, mu, omega, Delta));
+    Rcpp::traits::input_parameter< Rcpp::List >::type detla(detlaSEXP);
+    rcpp_result_gen = Rcpp::wrap(update_price_matrix_rcpp(logp, df_list, beta, sigma, mu, omega, detla));
     return rcpp_result_gen;
 END_RCPP
 }
