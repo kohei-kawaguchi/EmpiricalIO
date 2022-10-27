@@ -305,6 +305,8 @@ EP_mc <-
     return(EP)
   }
 
+
+head(EP_mc[[1]])
 # unobserved entrant attributes
 NU_mc <-
   foreach (
@@ -324,6 +326,7 @@ NU_mc <-
   return(NU)
   }
 
+NU_mc[[1]][[1]]
 ```
 
 2. Write a function `compute_monte_carlo_sequential_entry(X, Z, EP_mc, NU_mc, beta, alpha, delta, rho)` that returns the Monte Carlo simulation. Then, write function `compute_objective_sequential_entry(Y, X, Z, EP_mc, NU_mc, theta)` that calls`compute_monte_carlo_sequential_entry` and returns the value of the objective function given data and parameters under the assumption of sequential entry.
