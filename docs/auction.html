@@ -700,19 +700,13 @@ div.csl-indent {
 <h3><span class="header-section-number">9.1.4</span> Special Cases<a href="auction.html#special-cases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Two special cases about the payoff functions:</li>
-<li><strong>Private value (PV)</strong>: <span class="math inline">\(u_i(v, x_i, x_{-i}) = x_i\)</span>: Bidder <span class="math inline">\(i\)</span> knows his own valuation and is only uncertain about how much others value the item.</li>
-<li><strong>Pure common values (PCV)</strong>: <span class="math inline">\(u_i(v, x_i, x_{-i}) = v\)</span>: All buyers have the same valuation, which is unknown to them when they bid, and only learned though the private signals.</li>
-<li>A remark on the private value assumption:
+<li><strong>Private value (PV)</strong>: <span class="math inline">\(u_i(v, x_i, x_{-i}) = x_i\)</span>: Bidder <span class="math inline">\(i\)</span> knows his own valuation and is only uncertain about how much others value the item.
 <ul>
 <li>The assumption holds in more general settings than we may think.</li>
-<li>Suppose that <span class="math inline">\(u_k(v, x_i, x_{-i})\)</span> depends on <span class="math inline">\(v, x_i, x_{-i}\)</span>.</li>
-<li>Suppose that bidder <span class="math inline">\(i\)</span> is uncertain about <span class="math inline">\(V\)</span> and the distribution of <span class="math inline">\(V\)</span> conditional on <span class="math inline">\(x_i\)</span> is independent of <span class="math inline">\(x_{-i}\)</span>.</li>
-<li>Suppose that <span class="math inline">\(u_i(v, x_i, x_{-i}) = u(v, x_i)\)</span>.</li>
-<li>Then, <span class="math inline">\(\mathbb{E}\{u(v, x_i)|X_i = x_i, X_{-i} = x_{-i}\} = f(x_i)\)</span> for some monotone increasing function <span class="math inline">\(f\)</span>.</li>
-<li>This is still a private value model.</li>
-<li>If the distribution of <span class="math inline">\(V\)</span> is not independent of some <span class="math inline">\(x_i\)</span>, it is no longer a private value model.</li>
-<li>The last case is referred to as the <strong>common values (CV)</strong> model.</li>
+<li>If <span class="math inline">\(\mathbb{E}\{u(v, x_i, x_{-i})|X_i = x_i, X_{-i} = x_{-i}\} = f(x_i)\)</span> for some monotone increasing function <span class="math inline">\(f\)</span>, then we can redefine <span class="math inline">\(x&#39;_i = f(x_i)\)</span> as the private signal.</li>
+<li>In general, <span class="math inline">\(\mathbb{E}\{u(v, x_i, x_{-i})|X_i = x_i, X_{-i} = x_{-i}\} \neq f(x_i)\)</span> for any monnotone increasing function <span class="math inline">\(f\)</span>. Then, it is referred to as the <strong>common value (CV)</strong> model.</li>
 </ul></li>
+<li><strong>Pure common values (PCV)</strong>: <span class="math inline">\(u_i(v, x_i, x_{-i}) = v\)</span>: All buyers have the same valuation, which is unknown to them when they bid, and only learned though the private signals.</li>
 <li>Two special cases about the signals:</li>
 <li><strong>Independent signals (IPV, ICV)</strong>: Signals <span class="math inline">\(X_1, \cdots, X_n\)</span> are independent.</li>
 <li><strong>Affiliated signals (APV, ACV)</strong>: Signals <span class="math inline">\(X_1, \cdots, X_n\)</span> are affiliated.</li>
@@ -736,6 +730,7 @@ div.csl-indent {
 w(x, y) := \mathbb{E}\{u(V, x)|X_1 = x_1, Y_1 = y_1\},
 \]</span>
 be the expected payoff of the bidder when her signal is <span class="math inline">\(x\)</span> and the highest rival’s signals is <span class="math inline">\(y_1\)</span>.</li>
+<li>Affilication implies that <span class="math inline">\(w(x, y)\)</span> is increasing in <span class="math inline">\(x\)</span>.</li>
 <li>Let <span class="math inline">\(\underline{x}\)</span> is the lower bound of the support of <span class="math inline">\(X\)</span>.</li>
 <li><strong>Button auction</strong>:
 <ul>
@@ -753,16 +748,17 @@ be the expected payoff of the bidder when her signal is <span class="math inline
 <li>Case 1:
 <ul>
 <li>A bidder cannot observe the prices at which the other bidders take fingers off.</li>
-<li>The equilibrium strategy is to take the fingers off at the threshold:
+<li>We guess that the equilibrium strategy is to take the fingers off at the threshold:
 <span class="math display">\[
-  \beta(x) = w(x, x).
-  \]</span></li>
+  \beta(x) = w(x, x)
+  \]</span>
+and verify this.</li>
 <li>Suppose that the other bidders follow the bidding strategy and the price level is <span class="math inline">\(b\)</span> and the auction does not yet end.</li>
 <li>Suppose that I win at this moment.</li>
 <li>This means that there is at least one other bidder that has signal <span class="math inline">\(y = \beta^{-1}(b)\)</span>.</li>
 <li>Then, the payoff to me is <span class="math inline">\(w(x, y) - b = w(x, y) - w(y, y)\)</span>.</li>
 <li>It is positive if and only if <span class="math inline">\(x &gt; y\)</span>, because affiliation implies that the expected payoff is increasing in the own signal.</li>
-<li>Thus, <span class="math inline">\(\beta(x) = w(x, x)\)</span> is the best response.</li>
+<li>Thus, <span class="math inline">\(b = \beta(x) = w(x, x)\)</span> is the best response.</li>
 </ul></li>
 <li>Case 2:
 <ul>
@@ -770,10 +766,11 @@ be the expected payoff of the bidder when her signal is <span class="math inline
 <li>No bidder who drops out can become active again.</li>
 <li>The bidding strategy is the mapping from the number of rivals who dropped out and the prices at which they dropped out.</li>
 <li>Let <span class="math inline">\(\beta_k(x)\)</span> be the price at which a bidder drops out when <span class="math inline">\(k\)</span> rivals dropped out at prices <span class="math inline">\(b_1, \cdots, b_k\)</span>.</li>
-<li>At the equilibrium it should be:
+<li>We guess that the equilibrium strategy is:
 <span class="math display">\[
   \beta_k(x) = \mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = x, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}
-  \]</span></li>
+  \]</span>
+and verify this.</li>
 <li>Suppose that the other bidders follow the bidding strategy and the price level is <span class="math inline">\(b\)</span> and <span class="math inline">\(k\)</span> bidders dropped at <span class="math inline">\(b_1, \cdots, b_k\)</span>.</li>
 <li>Suppose that I win at this moment.</li>
 <li>This means there are <span class="math inline">\(n - k - 1\)</span> bidders with signals <span class="math inline">\(y = \beta_k^{-1}(b)\)</span>.</li>
@@ -781,6 +778,8 @@ be the expected payoff of the bidder when her signal is <span class="math inline
 <span class="math display">\[\begin{equation}
   \begin{split}
   &amp;\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
+  &amp;- b\\
+  &amp;=\mathbb{E}\{u(V, x)| X_1 = x, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}\\
   &amp;- \mathbb{E}\{u(V, x)| X_1 = y, Y_1 = \cdots = Y_{n - k - 1} = y, Y_{n - k} = \beta_{k - 1}^{-1}(b_k), \cdots, Y_{n - 1} = \beta_0^{-1}(b_1)\}.
   \end{split}
   \end{equation}\]</span></li>
@@ -867,8 +866,8 @@ L = \prod_{t = 1}^T [1 - F_X(w_t)] \left[ \prod_{i = 2}^{m_t} f_X(b_{it}) \right
 <li><span class="math inline">\(b_{1t} \ge b_{2t} \ge \cdots \ge b_{m_t} \ge r\)</span>.</li>
 <li>If <span class="math inline">\(n_t\)</span> is not observed to econometrician, the econometrician can:
 <ul>
-<li>assume <span class="math inline">\(n_t = n\)</span> and estimate <span class="math inline">\(n\)</span> as a parameter;</li>
 <li>assume <span class="math inline">\(n = \max_{t = 1, \cdots, T} \{m_t\}\)</span>;</li>
+<li>assume <span class="math inline">\(n_t = n\)</span> and estimate <span class="math inline">\(n\)</span> as a parameter;</li>
 <li>assume <span class="math inline">\(n_t\)</span> is drawn from a parametric distribution and estimate the parameters.</li>
 </ul></li>
 </ul>
@@ -927,6 +926,7 @@ x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta := \
 <li><p>Assume IPV.</p></li>
 <li><p>Then <span class="math inline">\(x^*(r) = r\)</span>.</p></li>
 <li><p>Let <span class="math inline">\(\beta\)</span> be the bid function that is increasing in the signal and <span class="math inline">\(\eta\)</span> is the inverse of <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p>Assume <span class="math inline">\(\beta(r) = r\)</span> and <span class="math inline">\(\beta(x) = 0\)</span> for <span class="math inline">\(x &lt; r\)</span> (this is a restriction).</p></li>
 <li><p>Suppose that the other bidders follow strategy <span class="math inline">\(\beta\)</span>.</p></li>
 <li><p>The expected profit when a bidder with signal <span class="math inline">\(x\)</span> submits a bid <span class="math inline">\(b\)</span> is:
 <span class="math display">\[
@@ -940,7 +940,7 @@ x_{it} \ge b_{it} \Leftrightarrow u_{it} \ge b_{it} - \alpha - z_{it} \beta := \
 <span class="math display">\[
 [x - \beta(x)] (n - 1) F_X(x)^{n - 2} f_X(x) - \beta&#39;(x) F_X(x)^{n - 1} = 0.
 \]</span></p></li>
-<li><p>Let <span class="math inline">\(G(x) = F_X(x)^{n - 1}\)</span> for <span class="math inline">\(x \ge r\)</span> and <span class="math inline">\(G(r) = 0\)</span> and <span class="math inline">\(g(x) = G&#39;(x)\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(G(x) = F_X(x)^{n - 1}\)</span> and <span class="math inline">\(g(x) = G&#39;(x)\)</span>.</p></li>
 <li><p>Then, we have:
 <span class="math display">\[
 [x - \beta(x)] g(x) - \beta&#39;(x) G(x) = 0.
@@ -1000,16 +1000,16 @@ by setting <span class="math inline">\(\mu(r) = 1\)</span>.</p></li>
 <li><p>Inserting these results gives:
 <span class="math display">\[
 \begin{split}
-\beta(x) &amp;= \frac{\int_r^x \mu(t) q(t) dt}{\mu(x)}\\
-&amp;= \frac{\int_r^x G(t) t \frac{g(t)}{G(t)} dt}{G(x)}\\
-&amp;= \frac{\int_r^x t g(t) dt}{G(x)}\\
-&amp;= \frac{[t G(t)]_r^t - \int_{r}^x G(t) dt }{G(x)}\\
+\beta(x) &amp;= \frac{\beta(r)\mu(r) + \int_r^x \mu(t) q(t) dt}{\mu(x)}\\
+&amp;= \frac{rG(r) + \int_r^x G(t) t \frac{g(t)}{G(t)} dt}{G(x)}\\
+&amp;= \frac{rG(r) + \int_r^x t g(t) dt}{G(x)}\\
+&amp;= \frac{[t G(t)]_r^x + rG(r) - \int_{r}^x G(t) dt }{G(x)}\\
 &amp;= x - \frac{\int_r^x G(t) dt}{G(x)}\\
 &amp;= x - \frac{\int_r^x F_X(t)^{n - 1} dt}{F_X(x)^{n - 1}}.
 \end{split}
 \]</span></p></li>
 <li><p>The term <span class="math inline">\(- \frac{\int_r^x F_X(t)^{n - 1} dt}{F_X(x)^{n - 1}}\)</span> is called the <strong>markdown factor</strong>, which is decreasing in the number of bidders <span class="math inline">\(n\)</span> and increasing in the dispersion of the value distribution.</p></li>
-<li><p>The assumption of a binding reserve price ensures that there is a unique symmetric equilibrium <span class="citation">(<a href="#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">Athey &amp; Haile, 2007</a>)</span>.</p></li>
+<li><p>The assumption of a binding reserve price (<span class="math inline">\(\beta(r) = r\)</span> and <span class="math inline">\(\beta(x) = 0\)</span> for <span class="math inline">\(x &lt; r\)</span>) ensures that there is a unique symmetric equilibrium <span class="citation">(<a href="#ref-atheyChapter60Nonparametric2007" role="doc-biblioref">Athey &amp; Haile, 2007</a>)</span>.</p></li>
 </ul>
 </div>
 <div id="maximum-likelihood-estimation-of-the-ipv-first-price-auction" class="section level3 hasAnchor" number="9.3.3">
