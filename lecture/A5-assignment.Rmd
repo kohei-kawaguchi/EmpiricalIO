@@ -348,27 +348,6 @@ p_actual %>% head()
 ```
 
 
-
-<!-- 10. Write a function `compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta)` that computes: -->
-<!-- $$ -->
-<!-- p_t - [c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)]. -->
-<!-- $$ -->
-<!-- mainly as a function of $p_t$. The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector in the following optimization problem, we pass log price and exponentiate inside the function. -->
-
-<!-- ```{r, echo = TRUE} -->
-<!-- equilibrium_condition <- compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta) -->
-<!-- head(equilibrium_condition) -->
-<!-- summary(equilibrium_condition) -->
-<!-- ``` -->
-
-<!-- 11. Write a function `compute_equilibrium_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that find a price vector that makes the `compute_equilibrium_condition` zero. To solve a system of non-linear equations, you can call `nleqslv::nleqslv` inside `compute_equilibrium_price`. If `update_price` converged, use the limit as the initial price vector. Even if `update_price` did not converge, use a price vcector after several iterations for the initial price vector. -->
-
-<!-- ```{r, echo = TRUE} -->
-<!-- load(file = "data/A4_price_iteration.RData") -->
-<!-- p_equilibrium_2 <- compute_equilibrium_price(log(p_new), X, M, V, beta, sigma, mu, omega, Delta) -->
-<!-- save(p_equilibrium_2, file = "data/A5_price_nleqslv.RData") -->
-<!-- ``` -->
-
 ## Estimate the parameters
 
 1. Write a function `estimate_marginal_cost()` that estimate $c_t$ by the equilibrium condition as:

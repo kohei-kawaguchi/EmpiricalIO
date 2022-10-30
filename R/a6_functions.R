@@ -25,12 +25,25 @@ compute_payoff <-
   }
 
 
-# compute the rank of potential entrants by baseline payofff
-
+# compute the rank of potential entrants by baseline payoff
 compute_order_sequential_entry <- 
-  function(payoff_m)
-    {
-    ranking <- rank(-payoff_m) 
+  function(
+    X_m, 
+    Z_m, 
+    EP_m, 
+    NU_m, 
+    beta, 
+    alpha, 
+    rho
+    ){
+    N_m <- dim(Z_m)[1]
+    # compute the baseline payoff
+    payoff_baseline <- 
+      matrix(rep(1, N_m)) %*% 
+      (X_m %*% beta + rho * EP_m) + 
+      Z_m %*% alpha + sqrt(1 - rho^2) * NU_m 
+    # compute ranking based on baseline payoff
+    ranking <- rank(-payoff_baseline) 
     return(ranking)
     }
 
@@ -52,13 +65,17 @@ compute_sequential_entry <-
     N_m <- dim(Z_m)[1]
     y_m <- rep(0, N_m)
     N_m <- dim(Z_m)[1]
-    # compute the baseline payoff
-    payoff_baseline <- 
-      matrix(rep(1, N_m)) %*% 
-      (X_m %*% beta + rho * EP_m) + 
-      Z_m %*% alpha + sqrt(1 - rho^2) * NU_m 
     # baseline payoff ranking
-    ranking <- compute_order_sequential_entry(payoff_baseline)
+    ranking <- 
+      compute_order_sequential_entry(
+      X_m, 
+      Z_m, 
+      EP_m, 
+      NU_m, 
+      beta, 
+      alpha, 
+      rho
+    )
     # initial y_m
     y_m <- rep(0, N_m)
     for (index in 1:N_m) {
@@ -97,7 +114,7 @@ compute_best_response_simultaneous_entry <-
     beta, 
     alpha, 
     delta
-  ) {
+    ) {
     N_m <- dim(Z_m)[1]
     for (i in 1:N_m) {
       # counterfactual choice
@@ -165,7 +182,7 @@ compute_simultaneous_entry <-
            beta, 
            alpha, 
            delta
-            ) 
+           ) 
       }
     y_m <- as.matrix(y_m)
     return(y_m)

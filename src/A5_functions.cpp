@@ -159,7 +159,7 @@ Rcpp::List update_price_matrix_rcpp(
   Eigen::VectorXd sigma,
   double mu,
   double omega,
-  Rcpp::List Delta
+  Rcpp::List detla
 ) {
   // exponentiate
   Eigen::VectorXd p = logp.array().exp();
@@ -195,9 +195,9 @@ Rcpp::List update_price_matrix_rcpp(
     Eigen::VectorXd c_t0 = c_t.segment(1, c_t.size() - 1);
     Eigen::VectorXd p_t0 = p_t.segment(1, p_t.size() - 1);
     // make Omega in market t
-    Eigen::MatrixXd Delta_t(Rcpp::as<Eigen::MatrixXd>(Delta[t]));
+    Eigen::MatrixXd detla_t(Rcpp::as<Eigen::MatrixXd>(detla[t]));
     Eigen::MatrixXd ds_t(Rcpp::as<Eigen::MatrixXd>(ds[t]));
-    Eigen::MatrixXd Omega_t = - Delta_t.array() * ds_t.array();
+    Eigen::MatrixXd Omega_t = - detla_t.array() * ds_t.array();
     // markup
     Eigen::VectorXd markup_t = Omega_t.colPivHouseholderQr().solve(s_t0);
     // equilibrium condition
