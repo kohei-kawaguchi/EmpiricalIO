@@ -545,7 +545,8 @@ $$
 \end{split}
 \end{equation} where $x_i$ is the investment of firm $i$, and fixed
 investment and disinvestment costs $\gamma_{i1}$ and $\gamma_{i4}$ are
-drawn from distributions $F_{\gamma}$ and $G_{\gamma}$. - Let
+drawn from distributions $F_{\gamma}$ and $G_{\gamma}$. 
+- Let
 $\mu_\gamma^+$ and $\sigma_\gamma^+$ be the mean and standard deviation
 of $F_\gamma$ and $\mu_\gamma^-$ and $\sigma_\gamma^-$ be the mean and
 standard deviation of $G_\gamma$.
@@ -580,7 +581,7 @@ standard deviation of $G_\gamma$.
 -   The transition is deterministic.
 -   The investment changes the capacity $s_i$.
 -   As a firm exits, the capacity moves to 0.
--   As a firm enters, the capacity moves to the initial investment
+-   As a firm enters, the capacity moves to the chosen investment level.
     level.
 
 ### Equilibrium
@@ -599,8 +600,8 @@ standard deviation of $G_\gamma$.
 \begin{split}
 &V_i(s; \sigma(s), \theta, \epsilon_i)\\
 &=\tilde{\pi}_i(s; \theta) + \max\Bigg\{\phi_i,\\
-& \mathbb{E}_{\epsilon_i}\max_{x_i^* \ge 0}  \Bigg[ - \gamma_{i1} - \gamma_{2} x_i^* - \gamma_3 x_i^{*2} + \beta \int \mathbb{E}_{\epsilon_i} V_i(s'; \sigma(s'), \theta, \epsilon_i) dP(s_i + x^*, s'_{-i}; s, \sigma(s))\Bigg],\\
-&\max_{x_i^* < 0} \Bigg[- \gamma_{i4} - \gamma_5 x_i^* - \gamma_6 x_i^{*2} + \beta \int \mathbb{E}_{\epsilon_i} V_i(s'; \sigma(s'), \theta, \epsilon_i) dP(s_i + x^*, s'_{-i}; s, \sigma(s))  \Bigg]\Bigg\},
+& \mathbb{E}_{\epsilon_i} \max_{x_i^* \ge 0}  \Bigg[ - \gamma_{i1} - \gamma_{2} x_i^* - \gamma_3 x_i^{*2} + \beta \int \mathbb{E}_{\epsilon_i'} V_i(s'; \sigma(s'), \theta, \epsilon_i') dP(s_i + x^*, s'_{-i}; s, \sigma(s))\Bigg],\\
+&\mathbb{E}_{\epsilon_i} \max_{x_i^* < 0} \Bigg[- \gamma_{i4} - \gamma_5 x_i^* - \gamma_6 x_i^{*2} + \beta \int \mathbb{E}_{\epsilon_i'} V_i(s'; \sigma(s'), \theta, \epsilon_i') dP(s_i + x^*, s'_{-i}; s, \sigma(s))  \Bigg]\Bigg\},
 \end{split}
 \end{equation} where each term in the blanket represents the value of
 exit, staying and making investment, and staying and making
@@ -615,15 +616,16 @@ a function of $\epsilon_i$.
     decision under strategy profile $\sigma$ at the time of entry and
     investment decisions are:
 
-```{=tex}
+
 \begin{equation}
 \begin{split}
 &V_i(s; \sigma(s), \theta, \epsilon_i)\\
 &=\max\Bigg\{0, \\
-&\max_{x_i^* > 0} \Bigg[ - \gamma_{1i} - \gamma_2 x_i^* - \gamma_3 x_i^2 + \beta \int \mathbb{E}_{\epsilon_i} V_i(s'; \sigma(s'), \theta, \epsilon_i) dP(s_i + x_i^*, s'_{-i}; s, \sigma(s))\Bigg] - \kappa_i\Bigg\}.
+&\mathbb{E}_{\epsilon_i} \max_{x_i^* > 0} \Bigg[ - \gamma_{1i} - \gamma_2 x_i^* - \gamma_3 x_i^2 + \beta \int \mathbb{E}_{\epsilon_i'} V_i(s'; \sigma(s'), \theta, \epsilon_i') dP(s_i + x_i^*, s'_{-i}; s, \sigma(s))\Bigg] - \kappa_i\Bigg\}.
 \end{split}
 \end{equation}
-```
+
+
 ### Markov Perfect Equilibrium
 
 -   The strategy profile $\sigma^*$ is a Markov perfect equilibrium if:
@@ -666,21 +668,21 @@ a function of $\epsilon_i$.
     cubic b-splines.
 -   The upper and lower bounds are parameterized as:
 
-```{=tex}
 \begin{equation}
 \begin{split}
 &\overline{s}_{it} = s_{it}^* + \exp\Bigg(\lambda_3' bs_1(s_{it}) + \lambda_4' bs_2\Bigg(\sum_{j \neq i} s_{jt} \Bigg) + \overline{u}_{it}^b \Bigg),\\
 &\underline{s}_{it} = s_{it}^* - \exp\Bigg(\lambda_3' bs_1(s_{it}) + \lambda_4' bs_2\Bigg(\sum_{j \neq i} s_{jt} \Bigg) + \underline{u}_{it}^b \Bigg).
 \end{split}
 \end{equation}
-```
+
+
 ### Entry and Exit Policy Functions
 
 -   The probability of entry is parameterized as: \begin{equation}
-    \mathbb{P}\{\chi_i = 1; s_i = 0, s\} = \Phi\Bigg(\psi_1 + \psi_2\Bigg(\sum_{j \neq i}\Bigg) + \psi_3 1(t > 1990) \Bigg),
+    \mathbb{P}\{\chi_i = 1; s_i = 0, s\} = \Phi\Bigg(\psi_1 + \psi_2\Bigg(\sum_{j \neq i} s_{jt}\Bigg) + \psi_3 1(t > 1990) \Bigg),
     \end{equation} and the probability of exit is parameterized as:
     \begin{equation}
-    \mathbb{P}\{\chi_i = 0; s_i > 0, s\} = \Phi\Bigg(\psi_4 + \psi_5 s_{it} + \psi_6 \Bigg(\sum_{j \neq i}\Bigg) + \psi_7 1(t > 1990) \Bigg),
+    \mathbb{P}\{\chi_i = 0; s_i > 0, s\} = \Phi\Bigg(\psi_4 + \psi_5 s_{it} + \psi_6 \Bigg(\sum_{j \neq i} s_{jt}\Bigg) + \psi_7 1(t > 1990) \Bigg),
     \end{equation} where $\Psi$ is the cumulative distribution function
     of the standard normal random variable.
 
