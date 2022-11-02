@@ -208,7 +208,7 @@ value <-
 value
 ```
 
-6. Write a function `simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)` that simulate the data for a single firm starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
+6. Write a function `simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)` that simulate the data for a single firm starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using `rmultinom` and then state using `rmultinom`.
 
 ```{r}
 # set initial value
