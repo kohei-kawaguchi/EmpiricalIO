@@ -741,27 +741,27 @@ along with the product-market characteristics <span class="math inline">\(x_{jt}
 <ol style="list-style-type: decimal">
 <li>Set the seed, constants, and parameters of interest as follows.</li>
 </ol>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="assignment3.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
-<span id="cb101-2"><a href="assignment3.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb101-3"><a href="assignment3.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="co"># number of products</span></span>
-<span id="cb101-4"><a href="assignment3.html#cb101-4" aria-hidden="true" tabindex="-1"></a>J <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb101-5"><a href="assignment3.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dimension of product characteristics including the intercept</span></span>
-<span id="cb101-6"><a href="assignment3.html#cb101-6" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb101-7"><a href="assignment3.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="co"># number of markets</span></span>
-<span id="cb101-8"><a href="assignment3.html#cb101-8" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb101-9"><a href="assignment3.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="co"># number of consumers per market</span></span>
-<span id="cb101-10"><a href="assignment3.html#cb101-10" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb101-11"><a href="assignment3.html#cb101-11" aria-hidden="true" tabindex="-1"></a><span class="co"># number of Monte Carlo</span></span>
-<span id="cb101-12"><a href="assignment3.html#cb101-12" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">500</span></span></code></pre></div>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="assignment3.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set parameters of interests</span></span>
-<span id="cb102-2"><a href="assignment3.html#cb102-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(K); </span>
-<span id="cb102-3"><a href="assignment3.html#cb102-3" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb102-4"><a href="assignment3.html#cb102-4" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="assignment3.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed</span></span>
+<span id="cb100-2"><a href="assignment3.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb100-3"><a href="assignment3.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="co"># number of products</span></span>
+<span id="cb100-4"><a href="assignment3.html#cb100-4" aria-hidden="true" tabindex="-1"></a>J <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb100-5"><a href="assignment3.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dimension of product characteristics including the intercept</span></span>
+<span id="cb100-6"><a href="assignment3.html#cb100-6" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb100-7"><a href="assignment3.html#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="co"># number of markets</span></span>
+<span id="cb100-8"><a href="assignment3.html#cb100-8" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb100-9"><a href="assignment3.html#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="co"># number of consumers per market</span></span>
+<span id="cb100-10"><a href="assignment3.html#cb100-10" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb100-11"><a href="assignment3.html#cb100-11" aria-hidden="true" tabindex="-1"></a><span class="co"># number of Monte Carlo</span></span>
+<span id="cb100-12"><a href="assignment3.html#cb100-12" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">500</span></span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="assignment3.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set parameters of interests</span></span>
+<span id="cb101-2"><a href="assignment3.html#cb101-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(K); </span>
+<span id="cb101-3"><a href="assignment3.html#cb101-3" aria-hidden="true" tabindex="-1"></a>beta[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb101-4"><a href="assignment3.html#cb101-4" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
 <pre><code>## [1]  4.0000000  0.1836433 -0.8356286</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="assignment3.html#cb104-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(K)); sigma</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="assignment3.html#cb103-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(K)); sigma</span></code></pre></div>
 <pre><code>## [1] 1.5952808 0.3295078 0.8204684</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="assignment3.html#cb106-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb106-2"><a href="assignment3.html#cb106-2" aria-hidden="true" tabindex="-1"></a>omega <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="assignment3.html#cb105-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb105-2"><a href="assignment3.html#cb105-2" aria-hidden="true" tabindex="-1"></a>omega <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
 <p>Generate the covariates as follows.</p>
 <p>The product-market characteristics:
 <span class="math display">\[
@@ -783,40 +783,40 @@ p_{jt} - c_{jt} \sim \text{logNorm}(\gamma \xi_{jt}, \sigma_p),
 \]</span>
 where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_xi</code> and <span class="math inline">\(\sigma_p\)</span> as <code>sd_p</code> in the code. This price is not the equilibrium price. We will revisit this point in a subsequent assignment.</p>
 <p>The value of the auxiliary parameters are set as follows:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="assignment3.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set auxiliary parameters</span></span>
-<span id="cb107-2"><a href="assignment3.html#cb107-2" aria-hidden="true" tabindex="-1"></a>price_xi <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb107-3"><a href="assignment3.html#cb107-3" aria-hidden="true" tabindex="-1"></a>prop_jt <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb107-4"><a href="assignment3.html#cb107-4" aria-hidden="true" tabindex="-1"></a>sd_x <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb107-5"><a href="assignment3.html#cb107-5" aria-hidden="true" tabindex="-1"></a>sd_c <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb107-6"><a href="assignment3.html#cb107-6" aria-hidden="true" tabindex="-1"></a>sd_p <span class="ot">&lt;-</span> <span class="fl">0.05</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="assignment3.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set auxiliary parameters</span></span>
+<span id="cb106-2"><a href="assignment3.html#cb106-2" aria-hidden="true" tabindex="-1"></a>price_xi <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb106-3"><a href="assignment3.html#cb106-3" aria-hidden="true" tabindex="-1"></a>prop_jt <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb106-4"><a href="assignment3.html#cb106-4" aria-hidden="true" tabindex="-1"></a>sd_x <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb106-5"><a href="assignment3.html#cb106-5" aria-hidden="true" tabindex="-1"></a>sd_c <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb106-6"><a href="assignment3.html#cb106-6" aria-hidden="true" tabindex="-1"></a>sd_p <span class="ot">&lt;-</span> <span class="fl">0.05</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li><code>X</code> is the data frame such that a row contains the characteristics vector <span class="math inline">\(x_{j}\)</span> of a product and columns are product index and observed product characteristics. The dimension of the characteristics <span class="math inline">\(K\)</span> is specified above. Add the row of the outside option whose index is <span class="math inline">\(0\)</span> and all the characteristics are zero.</li>
 </ol>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="assignment3.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make product characteristics data</span></span>
-<span id="cb108-2"><a href="assignment3.html#cb108-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
-<span id="cb108-3"><a href="assignment3.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
-<span id="cb108-4"><a href="assignment3.html#cb108-4" aria-hidden="true" tabindex="-1"></a>    sd_x <span class="sc">*</span> <span class="fu">rnorm</span>(J <span class="sc">*</span> (K <span class="sc">-</span> <span class="dv">1</span>)), </span>
-<span id="cb108-5"><a href="assignment3.html#cb108-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> J</span>
-<span id="cb108-6"><a href="assignment3.html#cb108-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb108-7"><a href="assignment3.html#cb108-7" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
-<span id="cb108-8"><a href="assignment3.html#cb108-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(</span>
-<span id="cb108-9"><a href="assignment3.html#cb108-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="dv">1</span>, J), </span>
-<span id="cb108-10"><a href="assignment3.html#cb108-10" aria-hidden="true" tabindex="-1"></a>    X</span>
-<span id="cb108-11"><a href="assignment3.html#cb108-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb108-12"><a href="assignment3.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb108-13"><a href="assignment3.html#cb108-13" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
-<span id="cb108-14"><a href="assignment3.html#cb108-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb108-15"><a href="assignment3.html#cb108-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span>J,</span>
-<span id="cb108-16"><a href="assignment3.html#cb108-16" aria-hidden="true" tabindex="-1"></a>    X</span>
-<span id="cb108-17"><a href="assignment3.html#cb108-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb108-18"><a href="assignment3.html#cb108-18" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span>
-<span id="cb108-19"><a href="assignment3.html#cb108-19" aria-hidden="true" tabindex="-1"></a><span class="co"># add outside option</span></span>
-<span id="cb108-20"><a href="assignment3.html#cb108-20" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
-<span id="cb108-21"><a href="assignment3.html#cb108-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
-<span id="cb108-22"><a href="assignment3.html#cb108-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">dim</span>(X)[<span class="dv">2</span>]),</span>
-<span id="cb108-23"><a href="assignment3.html#cb108-23" aria-hidden="true" tabindex="-1"></a>    X</span>
-<span id="cb108-24"><a href="assignment3.html#cb108-24" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="assignment3.html#cb109-1" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="assignment3.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make product characteristics data</span></span>
+<span id="cb107-2"><a href="assignment3.html#cb107-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
+<span id="cb107-3"><a href="assignment3.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
+<span id="cb107-4"><a href="assignment3.html#cb107-4" aria-hidden="true" tabindex="-1"></a>    sd_x <span class="sc">*</span> <span class="fu">rnorm</span>(J <span class="sc">*</span> (K <span class="sc">-</span> <span class="dv">1</span>)), </span>
+<span id="cb107-5"><a href="assignment3.html#cb107-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> J</span>
+<span id="cb107-6"><a href="assignment3.html#cb107-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb107-7"><a href="assignment3.html#cb107-7" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
+<span id="cb107-8"><a href="assignment3.html#cb107-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(</span>
+<span id="cb107-9"><a href="assignment3.html#cb107-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="dv">1</span>, J), </span>
+<span id="cb107-10"><a href="assignment3.html#cb107-10" aria-hidden="true" tabindex="-1"></a>    X</span>
+<span id="cb107-11"><a href="assignment3.html#cb107-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb107-12"><a href="assignment3.html#cb107-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb107-13"><a href="assignment3.html#cb107-13" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
+<span id="cb107-14"><a href="assignment3.html#cb107-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb107-15"><a href="assignment3.html#cb107-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span>J,</span>
+<span id="cb107-16"><a href="assignment3.html#cb107-16" aria-hidden="true" tabindex="-1"></a>    X</span>
+<span id="cb107-17"><a href="assignment3.html#cb107-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb107-18"><a href="assignment3.html#cb107-18" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span>
+<span id="cb107-19"><a href="assignment3.html#cb107-19" aria-hidden="true" tabindex="-1"></a><span class="co"># add outside option</span></span>
+<span id="cb107-20"><a href="assignment3.html#cb107-20" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
+<span id="cb107-21"><a href="assignment3.html#cb107-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
+<span id="cb107-22"><a href="assignment3.html#cb107-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">dim</span>(X)[<span class="dv">2</span>]),</span>
+<span id="cb107-23"><a href="assignment3.html#cb107-23" aria-hidden="true" tabindex="-1"></a>    X</span>
+<span id="cb107-24"><a href="assignment3.html#cb107-24" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="assignment3.html#cb108-1" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
 <pre><code>## # A tibble: 11 × 4
 ##        j   x_1     x_2      x_3
 ##    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
@@ -834,42 +834,42 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 <ol start="3" style="list-style-type: decimal">
 <li><code>M</code> is the data frame such that a row contains the price <span class="math inline">\(\xi_{jt}\)</span>, marginal cost <span class="math inline">\(c_{jt}\)</span>, and price <span class="math inline">\(p_{jt}\)</span>. After generating the variables, drop <code>1 - prop_jt</code> products from each market using <code>dplyr::sample_frac</code> function. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is <span class="math inline">\(0\)</span> and all the variables take value zero.</li>
 </ol>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="assignment3.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make market-product data</span></span>
-<span id="cb111-2"><a href="assignment3.html#cb111-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> </span>
-<span id="cb111-3"><a href="assignment3.html#cb111-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
-<span id="cb111-4"><a href="assignment3.html#cb111-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span>J, </span>
-<span id="cb111-5"><a href="assignment3.html#cb111-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T</span>
-<span id="cb111-6"><a href="assignment3.html#cb111-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb111-7"><a href="assignment3.html#cb111-7" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb111-8"><a href="assignment3.html#cb111-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb111-9"><a href="assignment3.html#cb111-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xi =</span> <span class="dv">0</span>,</span>
-<span id="cb111-10"><a href="assignment3.html#cb111-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">c =</span> <span class="fu">exp</span>(sd_c <span class="sc">*</span> <span class="fu">rnorm</span>(J<span class="sc">*</span>T)),</span>
-<span id="cb111-11"><a href="assignment3.html#cb111-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">exp</span>(price_xi <span class="sc">*</span> xi <span class="sc">+</span> sd_p <span class="sc">*</span> <span class="fu">rnorm</span>(J<span class="sc">*</span>T)) <span class="sc">+</span> c</span>
-<span id="cb111-12"><a href="assignment3.html#cb111-12" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb111-13"><a href="assignment3.html#cb111-13" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> </span>
-<span id="cb111-14"><a href="assignment3.html#cb111-14" aria-hidden="true" tabindex="-1"></a>  M <span class="sc">%&gt;%</span></span>
-<span id="cb111-15"><a href="assignment3.html#cb111-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(t) <span class="sc">%&gt;%</span></span>
-<span id="cb111-16"><a href="assignment3.html#cb111-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_frac</span>(prop_jt) <span class="sc">%&gt;%</span></span>
-<span id="cb111-17"><a href="assignment3.html#cb111-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
-<span id="cb111-18"><a href="assignment3.html#cb111-18" aria-hidden="true" tabindex="-1"></a><span class="co"># add outside option</span></span>
-<span id="cb111-19"><a href="assignment3.html#cb111-19" aria-hidden="true" tabindex="-1"></a>outside <span class="ot">&lt;-</span> </span>
-<span id="cb111-20"><a href="assignment3.html#cb111-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb111-21"><a href="assignment3.html#cb111-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">0</span>, </span>
-<span id="cb111-22"><a href="assignment3.html#cb111-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
-<span id="cb111-23"><a href="assignment3.html#cb111-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">xi =</span> <span class="dv">0</span>, </span>
-<span id="cb111-24"><a href="assignment3.html#cb111-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">c =</span> <span class="dv">0</span>, </span>
-<span id="cb111-25"><a href="assignment3.html#cb111-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="dv">0</span></span>
-<span id="cb111-26"><a href="assignment3.html#cb111-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb111-27"><a href="assignment3.html#cb111-27" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> </span>
-<span id="cb111-28"><a href="assignment3.html#cb111-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
-<span id="cb111-29"><a href="assignment3.html#cb111-29" aria-hidden="true" tabindex="-1"></a>    M,</span>
-<span id="cb111-30"><a href="assignment3.html#cb111-30" aria-hidden="true" tabindex="-1"></a>    outside</span>
-<span id="cb111-31"><a href="assignment3.html#cb111-31" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb111-32"><a href="assignment3.html#cb111-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(</span>
-<span id="cb111-33"><a href="assignment3.html#cb111-33" aria-hidden="true" tabindex="-1"></a>    t, </span>
-<span id="cb111-34"><a href="assignment3.html#cb111-34" aria-hidden="true" tabindex="-1"></a>    j</span>
-<span id="cb111-35"><a href="assignment3.html#cb111-35" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="assignment3.html#cb112-1" aria-hidden="true" tabindex="-1"></a>M</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="assignment3.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make market-product data</span></span>
+<span id="cb110-2"><a href="assignment3.html#cb110-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> </span>
+<span id="cb110-3"><a href="assignment3.html#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
+<span id="cb110-4"><a href="assignment3.html#cb110-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span>J, </span>
+<span id="cb110-5"><a href="assignment3.html#cb110-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T</span>
+<span id="cb110-6"><a href="assignment3.html#cb110-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb110-7"><a href="assignment3.html#cb110-7" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb110-8"><a href="assignment3.html#cb110-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb110-9"><a href="assignment3.html#cb110-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xi =</span> <span class="dv">0</span>,</span>
+<span id="cb110-10"><a href="assignment3.html#cb110-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">c =</span> <span class="fu">exp</span>(sd_c <span class="sc">*</span> <span class="fu">rnorm</span>(J<span class="sc">*</span>T)),</span>
+<span id="cb110-11"><a href="assignment3.html#cb110-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="fu">exp</span>(price_xi <span class="sc">*</span> xi <span class="sc">+</span> sd_p <span class="sc">*</span> <span class="fu">rnorm</span>(J<span class="sc">*</span>T)) <span class="sc">+</span> c</span>
+<span id="cb110-12"><a href="assignment3.html#cb110-12" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb110-13"><a href="assignment3.html#cb110-13" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> </span>
+<span id="cb110-14"><a href="assignment3.html#cb110-14" aria-hidden="true" tabindex="-1"></a>  M <span class="sc">%&gt;%</span></span>
+<span id="cb110-15"><a href="assignment3.html#cb110-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(t) <span class="sc">%&gt;%</span></span>
+<span id="cb110-16"><a href="assignment3.html#cb110-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">sample_frac</span>(prop_jt) <span class="sc">%&gt;%</span></span>
+<span id="cb110-17"><a href="assignment3.html#cb110-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb110-18"><a href="assignment3.html#cb110-18" aria-hidden="true" tabindex="-1"></a><span class="co"># add outside option</span></span>
+<span id="cb110-19"><a href="assignment3.html#cb110-19" aria-hidden="true" tabindex="-1"></a>outside <span class="ot">&lt;-</span> </span>
+<span id="cb110-20"><a href="assignment3.html#cb110-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb110-21"><a href="assignment3.html#cb110-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">0</span>, </span>
+<span id="cb110-22"><a href="assignment3.html#cb110-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
+<span id="cb110-23"><a href="assignment3.html#cb110-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">xi =</span> <span class="dv">0</span>, </span>
+<span id="cb110-24"><a href="assignment3.html#cb110-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">c =</span> <span class="dv">0</span>, </span>
+<span id="cb110-25"><a href="assignment3.html#cb110-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">p =</span> <span class="dv">0</span></span>
+<span id="cb110-26"><a href="assignment3.html#cb110-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb110-27"><a href="assignment3.html#cb110-27" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> </span>
+<span id="cb110-28"><a href="assignment3.html#cb110-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
+<span id="cb110-29"><a href="assignment3.html#cb110-29" aria-hidden="true" tabindex="-1"></a>    M,</span>
+<span id="cb110-30"><a href="assignment3.html#cb110-30" aria-hidden="true" tabindex="-1"></a>    outside</span>
+<span id="cb110-31"><a href="assignment3.html#cb110-31" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb110-32"><a href="assignment3.html#cb110-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(</span>
+<span id="cb110-33"><a href="assignment3.html#cb110-33" aria-hidden="true" tabindex="-1"></a>    t, </span>
+<span id="cb110-34"><a href="assignment3.html#cb110-34" aria-hidden="true" tabindex="-1"></a>    j</span>
+<span id="cb110-35"><a href="assignment3.html#cb110-35" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="assignment3.html#cb111-1" aria-hidden="true" tabindex="-1"></a>M</span></code></pre></div>
 <pre><code>## # A tibble: 700 × 5
 ##        j     t    xi     c     p
 ##    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -883,28 +883,27 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 ##  8     0     2     0 0      0   
 ##  9     1     2     0 0.980  1.97
 ## 10     4     2     0 1.04   2.04
-## # … with 690 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 690 more rows</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Generate the consumer-level heterogeneity. <code>V</code> is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, <span class="math inline">\((\nu_{i}&#39;, \upsilon_i)\)</span>. They are all i.i.d. standard normal random variables.</li>
 </ol>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="assignment3.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make consumer-market data</span></span>
-<span id="cb114-2"><a href="assignment3.html#cb114-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> </span>
-<span id="cb114-3"><a href="assignment3.html#cb114-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
-<span id="cb114-4"><a href="assignment3.html#cb114-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(N <span class="sc">*</span> T <span class="sc">*</span> (K <span class="sc">+</span> <span class="dv">1</span>)), </span>
-<span id="cb114-5"><a href="assignment3.html#cb114-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> N <span class="sc">*</span> T</span>
-<span id="cb114-6"><a href="assignment3.html#cb114-6" aria-hidden="true" tabindex="-1"></a>    ) </span>
-<span id="cb114-7"><a href="assignment3.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(V) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;v_x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>), <span class="st">&quot;v_p&quot;</span>)</span>
-<span id="cb114-8"><a href="assignment3.html#cb114-8" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> </span>
-<span id="cb114-9"><a href="assignment3.html#cb114-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb114-10"><a href="assignment3.html#cb114-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand.grid</span>(</span>
-<span id="cb114-11"><a href="assignment3.html#cb114-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>N, </span>
-<span id="cb114-12"><a href="assignment3.html#cb114-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T</span>
-<span id="cb114-13"><a href="assignment3.html#cb114-13" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb114-14"><a href="assignment3.html#cb114-14" aria-hidden="true" tabindex="-1"></a>    V</span>
-<span id="cb114-15"><a href="assignment3.html#cb114-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb114-16"><a href="assignment3.html#cb114-16" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="assignment3.html#cb115-1" aria-hidden="true" tabindex="-1"></a>V</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="assignment3.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make consumer-market data</span></span>
+<span id="cb113-2"><a href="assignment3.html#cb113-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> </span>
+<span id="cb113-3"><a href="assignment3.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
+<span id="cb113-4"><a href="assignment3.html#cb113-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(N <span class="sc">*</span> T <span class="sc">*</span> (K <span class="sc">+</span> <span class="dv">1</span>)), </span>
+<span id="cb113-5"><a href="assignment3.html#cb113-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> N <span class="sc">*</span> T</span>
+<span id="cb113-6"><a href="assignment3.html#cb113-6" aria-hidden="true" tabindex="-1"></a>    ) </span>
+<span id="cb113-7"><a href="assignment3.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(V) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;v_x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>), <span class="st">&quot;v_p&quot;</span>)</span>
+<span id="cb113-8"><a href="assignment3.html#cb113-8" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> </span>
+<span id="cb113-9"><a href="assignment3.html#cb113-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb113-10"><a href="assignment3.html#cb113-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand.grid</span>(</span>
+<span id="cb113-11"><a href="assignment3.html#cb113-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>N, </span>
+<span id="cb113-12"><a href="assignment3.html#cb113-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T</span>
+<span id="cb113-13"><a href="assignment3.html#cb113-13" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb113-14"><a href="assignment3.html#cb113-14" aria-hidden="true" tabindex="-1"></a>    V</span>
+<span id="cb113-15"><a href="assignment3.html#cb113-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb113-16"><a href="assignment3.html#cb113-16" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="assignment3.html#cb114-1" aria-hidden="true" tabindex="-1"></a>V</span></code></pre></div>
 <pre><code>## # A tibble: 50,000 × 6
 ##        i     t  v_x_1   v_x_2  v_x_3     v_p
 ##    &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
@@ -918,75 +917,71 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 ##  8     8     1 -0.932 -0.780   1.49  -0.362 
 ##  9     9     1  1.37  -0.205   0.594 -0.998 
 ## 10    10     1 -0.461 -0.834   0.221 -1.62  
-## # … with 49,990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
+## # … with 49,990 more rows</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Join <code>X</code>, <code>M</code>, <code>V</code> using <code>dplyr::left_join</code> and name it <code>df</code>. <code>df</code> is the data frame such that a row contains variables for a consumer about a product that is available in a market.</li>
 </ol>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="assignment3.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make choice data</span></span>
-<span id="cb117-2"><a href="assignment3.html#cb117-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
-<span id="cb117-3"><a href="assignment3.html#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
-<span id="cb117-4"><a href="assignment3.html#cb117-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
-<span id="cb117-5"><a href="assignment3.html#cb117-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>N, </span>
-<span id="cb117-6"><a href="assignment3.html#cb117-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">0</span><span class="sc">:</span>J</span>
-<span id="cb117-7"><a href="assignment3.html#cb117-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb117-8"><a href="assignment3.html#cb117-8" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb117-9"><a href="assignment3.html#cb117-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb117-10"><a href="assignment3.html#cb117-10" aria-hidden="true" tabindex="-1"></a>    V, </span>
-<span id="cb117-11"><a href="assignment3.html#cb117-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
-<span id="cb117-12"><a href="assignment3.html#cb117-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb117-13"><a href="assignment3.html#cb117-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb117-14"><a href="assignment3.html#cb117-14" aria-hidden="true" tabindex="-1"></a>    X, </span>
-<span id="cb117-15"><a href="assignment3.html#cb117-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>)</span>
-<span id="cb117-16"><a href="assignment3.html#cb117-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb117-17"><a href="assignment3.html#cb117-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb117-18"><a href="assignment3.html#cb117-18" aria-hidden="true" tabindex="-1"></a>    M, </span>
-<span id="cb117-19"><a href="assignment3.html#cb117-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
-<span id="cb117-20"><a href="assignment3.html#cb117-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb117-21"><a href="assignment3.html#cb117-21" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(p)) <span class="sc">%&gt;%</span></span>
-<span id="cb117-22"><a href="assignment3.html#cb117-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(</span>
-<span id="cb117-23"><a href="assignment3.html#cb117-23" aria-hidden="true" tabindex="-1"></a>    t, </span>
-<span id="cb117-24"><a href="assignment3.html#cb117-24" aria-hidden="true" tabindex="-1"></a>    i, </span>
-<span id="cb117-25"><a href="assignment3.html#cb117-25" aria-hidden="true" tabindex="-1"></a>    j</span>
-<span id="cb117-26"><a href="assignment3.html#cb117-26" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="assignment3.html#cb118-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="assignment3.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make choice data</span></span>
+<span id="cb116-2"><a href="assignment3.html#cb116-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
+<span id="cb116-3"><a href="assignment3.html#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
+<span id="cb116-4"><a href="assignment3.html#cb116-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
+<span id="cb116-5"><a href="assignment3.html#cb116-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>N, </span>
+<span id="cb116-6"><a href="assignment3.html#cb116-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">0</span><span class="sc">:</span>J</span>
+<span id="cb116-7"><a href="assignment3.html#cb116-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb116-8"><a href="assignment3.html#cb116-8" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb116-9"><a href="assignment3.html#cb116-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb116-10"><a href="assignment3.html#cb116-10" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb116-11"><a href="assignment3.html#cb116-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
+<span id="cb116-12"><a href="assignment3.html#cb116-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb116-13"><a href="assignment3.html#cb116-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb116-14"><a href="assignment3.html#cb116-14" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb116-15"><a href="assignment3.html#cb116-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>)</span>
+<span id="cb116-16"><a href="assignment3.html#cb116-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb116-17"><a href="assignment3.html#cb116-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb116-18"><a href="assignment3.html#cb116-18" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb116-19"><a href="assignment3.html#cb116-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
+<span id="cb116-20"><a href="assignment3.html#cb116-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb116-21"><a href="assignment3.html#cb116-21" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(p)) <span class="sc">%&gt;%</span></span>
+<span id="cb116-22"><a href="assignment3.html#cb116-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(</span>
+<span id="cb116-23"><a href="assignment3.html#cb116-23" aria-hidden="true" tabindex="-1"></a>    t, </span>
+<span id="cb116-24"><a href="assignment3.html#cb116-24" aria-hidden="true" tabindex="-1"></a>    i, </span>
+<span id="cb116-25"><a href="assignment3.html#cb116-25" aria-hidden="true" tabindex="-1"></a>    j</span>
+<span id="cb116-26"><a href="assignment3.html#cb116-26" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="assignment3.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 350,000 × 13
-##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1
-##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0
-##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1
-##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1
-##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1
-##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1
-##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1
-##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1
-##  8     1     2     0 0.930  1.34    1.16   0.0684     0
-##  9     1     2     2 0.930  1.34    1.16   0.0684     1
-## 10     1     2     3 0.930  1.34    1.16   0.0684     1
-## # … with 349,990 more rows, and 5 more variables:
-## #   x_2 &lt;dbl&gt;, x_3 &lt;dbl&gt;, xi &lt;dbl&gt;, c &lt;dbl&gt;, p &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1    x_2     x_3    xi     c     p
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0  0      0          0 0      0   
+##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1  0.369  0.472      0 0.929  1.97
+##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1  0.288  0.411      0 0.976  1.91
+##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1 -0.153  0.297      0 1.02   2.05
+##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1  0.195  0.391      0 0.995  1.98
+##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1 -0.311  0.0373     0 1.02   1.98
+##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1 -1.11  -0.995      0 0.997  1.99
+##  8     1     2     0 0.930  1.34    1.16   0.0684     0  0      0          0 0      0   
+##  9     1     2     2 0.930  1.34    1.16   0.0684     1  0.369  0.472      0 0.929  1.97
+## 10     1     2     3 0.930  1.34    1.16   0.0684     1  0.288  0.411      0 0.976  1.91
+## # … with 349,990 more rows</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Draw a vector of preference shocks <code>e</code> whose length is the same as the number of rows of <code>df</code>.</li>
 </ol>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="assignment3.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw idiosyncratic shocks</span></span>
-<span id="cb120-2"><a href="assignment3.html#cb120-2" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> evd<span class="sc">::</span><span class="fu">rgev</span>(<span class="fu">dim</span>(df)[<span class="dv">1</span>])</span></code></pre></div>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="assignment3.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(e)</span></code></pre></div>
-<pre><code>## [1]  0.32969177 -1.03771238  1.41496338  5.02048718
-## [5] -0.01302806  0.57956001</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="assignment3.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw idiosyncratic shocks</span></span>
+<span id="cb119-2"><a href="assignment3.html#cb119-2" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> evd<span class="sc">::</span><span class="fu">rgev</span>(<span class="fu">dim</span>(df)[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="assignment3.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(e)</span></code></pre></div>
+<pre><code>## [1]  0.32969177 -1.03771238  1.41496338  5.02048718 -0.01302806  0.57956001</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_indirect_utility(df, beta, sigma, mu, omega)</code> that returns a vector whose element is the mean indirect utility of a product for a consumer in a market. The output should have the same length with <span class="math inline">\(e\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="assignment3.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute indirect utility</span></span>
-<span id="cb123-2"><a href="assignment3.html#cb123-2" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> </span>
-<span id="cb123-3"><a href="assignment3.html#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_indirect_utility</span>(</span>
-<span id="cb123-4"><a href="assignment3.html#cb123-4" aria-hidden="true" tabindex="-1"></a>    df, </span>
-<span id="cb123-5"><a href="assignment3.html#cb123-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb123-6"><a href="assignment3.html#cb123-6" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
-<span id="cb123-7"><a href="assignment3.html#cb123-7" aria-hidden="true" tabindex="-1"></a>    mu, </span>
-<span id="cb123-8"><a href="assignment3.html#cb123-8" aria-hidden="true" tabindex="-1"></a>    omega</span>
-<span id="cb123-9"><a href="assignment3.html#cb123-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb123-10"><a href="assignment3.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(u)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="assignment3.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute indirect utility</span></span>
+<span id="cb122-2"><a href="assignment3.html#cb122-2" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> </span>
+<span id="cb122-3"><a href="assignment3.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_indirect_utility</span>(</span>
+<span id="cb122-4"><a href="assignment3.html#cb122-4" aria-hidden="true" tabindex="-1"></a>    df, </span>
+<span id="cb122-5"><a href="assignment3.html#cb122-5" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb122-6"><a href="assignment3.html#cb122-6" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb122-7"><a href="assignment3.html#cb122-7" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb122-8"><a href="assignment3.html#cb122-8" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb122-9"><a href="assignment3.html#cb122-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb122-10"><a href="assignment3.html#cb122-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(u)</span></code></pre></div>
 <pre><code>##             u
 ## [1,] 0.000000
 ## [2,] 3.681882
@@ -997,140 +992,100 @@ where <span class="math inline">\(\gamma\)</span> is referred to as <code>price_
 <ol start="8" style="list-style-type: decimal">
 <li>Write a function <code>compute_choice(X, M, V, e, beta, sigma, mu, omega)</code> that first construct <code>df</code> from <code>X</code>, <code>M</code>, <code>V</code>, second call <code>compute_indirect_utility</code> to obtain the vector of mean indirect utilities <code>u</code>, third compute the choice vector <code>q</code> based on the vector of mean indirect utilities and <code>e</code>, and finally return the data frame to which <code>u</code> and <code>q</code> are added as columns.</li>
 </ol>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="assignment3.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute choice</span></span>
-<span id="cb125-2"><a href="assignment3.html#cb125-2" aria-hidden="true" tabindex="-1"></a>df_choice <span class="ot">&lt;-</span> </span>
-<span id="cb125-3"><a href="assignment3.html#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_choice</span>(</span>
-<span id="cb125-4"><a href="assignment3.html#cb125-4" aria-hidden="true" tabindex="-1"></a>    X, </span>
-<span id="cb125-5"><a href="assignment3.html#cb125-5" aria-hidden="true" tabindex="-1"></a>    M, </span>
-<span id="cb125-6"><a href="assignment3.html#cb125-6" aria-hidden="true" tabindex="-1"></a>    V, </span>
-<span id="cb125-7"><a href="assignment3.html#cb125-7" aria-hidden="true" tabindex="-1"></a>    e, </span>
-<span id="cb125-8"><a href="assignment3.html#cb125-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb125-9"><a href="assignment3.html#cb125-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
-<span id="cb125-10"><a href="assignment3.html#cb125-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
-<span id="cb125-11"><a href="assignment3.html#cb125-11" aria-hidden="true" tabindex="-1"></a>    omega</span>
-<span id="cb125-12"><a href="assignment3.html#cb125-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb125-13"><a href="assignment3.html#cb125-13" aria-hidden="true" tabindex="-1"></a>df_choice</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="assignment3.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute choice</span></span>
+<span id="cb124-2"><a href="assignment3.html#cb124-2" aria-hidden="true" tabindex="-1"></a>df_choice <span class="ot">&lt;-</span> </span>
+<span id="cb124-3"><a href="assignment3.html#cb124-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_choice</span>(</span>
+<span id="cb124-4"><a href="assignment3.html#cb124-4" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb124-5"><a href="assignment3.html#cb124-5" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb124-6"><a href="assignment3.html#cb124-6" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb124-7"><a href="assignment3.html#cb124-7" aria-hidden="true" tabindex="-1"></a>    e, </span>
+<span id="cb124-8"><a href="assignment3.html#cb124-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb124-9"><a href="assignment3.html#cb124-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb124-10"><a href="assignment3.html#cb124-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb124-11"><a href="assignment3.html#cb124-11" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb124-12"><a href="assignment3.html#cb124-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb124-13"><a href="assignment3.html#cb124-13" aria-hidden="true" tabindex="-1"></a>df_choice</span></code></pre></div>
 <pre><code>## # A tibble: 350,000 × 16
-##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1
-##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0
-##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1
-##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1
-##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1
-##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1
-##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1
-##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1
-##  8     1     2     0 0.930  1.34    1.16   0.0684     0
-##  9     1     2     2 0.930  1.34    1.16   0.0684     1
-## 10     1     2     3 0.930  1.34    1.16   0.0684     1
-## # … with 349,990 more rows, and 8 more variables:
-## #   x_2 &lt;dbl&gt;, x_3 &lt;dbl&gt;, xi &lt;dbl&gt;, c &lt;dbl&gt;, p &lt;dbl&gt;,
-## #   u &lt;dbl&gt;, e &lt;dbl&gt;, q &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="assignment3.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_choice)</span></code></pre></div>
-<pre><code>##        t                i               j         
-##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000  
-##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000  
-##  Median : 50.50   Median :250.5   Median : 5.000  
-##  Mean   : 50.50   Mean   :250.5   Mean   : 4.791  
-##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000  
-##  Max.   :100.00   Max.   :500.0   Max.   :10.000  
-##      v_x_1               v_x_2          
-##  Min.   :-4.302781   Min.   :-4.542122  
-##  1st Qu.:-0.683141   1st Qu.:-0.680086  
-##  Median : 0.001562   Median : 0.002374  
-##  Mean   :-0.002669   Mean   :-0.000890  
-##  3rd Qu.: 0.669657   3rd Qu.: 0.673194  
-##  Max.   : 3.809895   Max.   : 4.313621  
-##      v_x_3                v_p           
-##  Min.   :-3.957618   Min.   :-4.218131  
-##  1st Qu.:-0.673321   1st Qu.:-0.671449  
-##  Median : 0.004941   Median : 0.001083  
-##  Mean   : 0.003589   Mean   :-0.002011  
-##  3rd Qu.: 0.676967   3rd Qu.: 0.671318  
-##  Max.   : 4.244194   Max.   : 4.017246  
-##       x_1              x_2                x_3         
-##  Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947  
-##  1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000  
-##  Median :1.0000   Median : 0.19492   Median : 0.2970  
-##  Mean   :0.8571   Mean   : 0.05989   Mean   : 0.1128  
-##  3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.3911  
-##  Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719  
-##        xi          c                p        
-##  Min.   :0   Min.   :0.0000   Min.   :0.000  
-##  1st Qu.:0   1st Qu.:0.9404   1st Qu.:1.913  
-##  Median :0   Median :0.9841   Median :1.981  
-##  Mean   :0   Mean   :0.8560   Mean   :1.712  
-##  3rd Qu.:0   3rd Qu.:1.0260   3rd Qu.:2.039  
-##  Max.   :0   Max.   :1.2099   Max.   :2.293  
-##        u                  e                 q         
-##  Min.   :-190.479   Min.   :-2.6364   Min.   :0.0000  
-##  1st Qu.:  -2.177   1st Qu.:-0.3301   1st Qu.:0.0000  
-##  Median :   0.000   Median : 0.3635   Median :0.0000  
-##  Mean   :  -1.291   Mean   : 0.5763   Mean   :0.1429  
-##  3rd Qu.:   1.978   3rd Qu.: 1.2418   3rd Qu.:0.0000  
-##  Max.   :  10.909   Max.   :14.0966   Max.   :1.0000</code></pre>
+##        t     i     j v_x_1   v_x_2  v_x_3     v_p   x_1    x_2     x_3    xi     c     p     u       e     q
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     0 1.32  -0.0670 -0.758 -0.590      0  0      0          0 0      0     0     0.330      0
+##  2     1     1     2 1.32  -0.0670 -0.758 -0.590      1  0.369  0.472      0 0.929  1.97  3.68 -1.04       0
+##  3     1     1     3 1.32  -0.0670 -0.758 -0.590      1  0.288  0.411      0 0.976  1.91  3.81  1.41       0
+##  4     1     1     4 1.32  -0.0670 -0.758 -0.590      1 -0.153  0.297      0 1.02   2.05  3.78  5.02       1
+##  5     1     1     6 1.32  -0.0670 -0.758 -0.590      1  0.195  0.391      0 0.995  1.98  3.76 -0.0130     0
+##  6     1     1     7 1.32  -0.0670 -0.758 -0.590      1 -0.311  0.0373     0 1.02   1.98  4.19  0.580      0
+##  7     1     1     8 1.32  -0.0670 -0.758 -0.590      1 -1.11  -0.995      0 0.997  1.99  5.56  0.515      0
+##  8     1     2     0 0.930  1.34    1.16   0.0684     0  0      0          0 0      0     0    -1.20       0
+##  9     1     2     2 0.930  1.34    1.16   0.0684     1  0.369  0.472      0 0.929  1.97  2.30  0.0510     0
+## 10     1     2     3 0.930  1.34    1.16   0.0684     1  0.288  0.411      0 0.976  1.91  2.33  1.86       0
+## # … with 349,990 more rows</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="assignment3.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_choice)</span></code></pre></div>
+<pre><code>##        t                i               j              v_x_1               v_x_2               v_x_3                v_p           
+##  Min.   :  1.00   Min.   :  1.0   Min.   : 0.000   Min.   :-4.302781   Min.   :-4.542122   Min.   :-3.957618   Min.   :-4.218131  
+##  1st Qu.: 25.75   1st Qu.:125.8   1st Qu.: 2.000   1st Qu.:-0.683141   1st Qu.:-0.680086   1st Qu.:-0.673321   1st Qu.:-0.671449  
+##  Median : 50.50   Median :250.5   Median : 5.000   Median : 0.001562   Median : 0.002374   Median : 0.004941   Median : 0.001083  
+##  Mean   : 50.50   Mean   :250.5   Mean   : 4.791   Mean   :-0.002669   Mean   :-0.000890   Mean   : 0.003589   Mean   :-0.002011  
+##  3rd Qu.: 75.25   3rd Qu.:375.2   3rd Qu.: 8.000   3rd Qu.: 0.669657   3rd Qu.: 0.673194   3rd Qu.: 0.676967   3rd Qu.: 0.671318  
+##  Max.   :100.00   Max.   :500.0   Max.   :10.000   Max.   : 3.809895   Max.   : 4.313621   Max.   : 4.244194   Max.   : 4.017246  
+##       x_1              x_2                x_3                xi          c                p               u                  e          
+##  Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000   Min.   :-190.479   Min.   :-2.6364  
+##  1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9404   1st Qu.:1.913   1st Qu.:  -2.177   1st Qu.:-0.3301  
+##  Median :1.0000   Median : 0.19492   Median : 0.2970   Median :0   Median :0.9841   Median :1.981   Median :   0.000   Median : 0.3635  
+##  Mean   :0.8571   Mean   : 0.05989   Mean   : 0.1128   Mean   :0   Mean   :0.8560   Mean   :1.712   Mean   :  -1.291   Mean   : 0.5763  
+##  3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.3911   3rd Qu.:0   3rd Qu.:1.0260   3rd Qu.:2.039   3rd Qu.:   1.978   3rd Qu.: 1.2418  
+##  Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719   Max.   :0   Max.   :1.2099   Max.   :2.293   Max.   :  10.909   Max.   :14.0966  
+##        q         
+##  Min.   :0.0000  
+##  1st Qu.:0.0000  
+##  Median :0.0000  
+##  Mean   :0.1429  
+##  3rd Qu.:0.0000  
+##  Max.   :1.0000</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Write a function <code>compute_share(X, M, V, e, beta, sigma, mu, omega)</code> that first construct <code>df</code> from <code>X</code>, <code>M</code>, <code>V</code>, second call <code>compute_choice</code> to obtain a data frame with <code>u</code> and <code>q</code>, third compute the share of each product at each market <code>s</code> and the log difference in the share from the outside option, <span class="math inline">\(\ln(s_{jt}/s_{0t})\)</span>, denoted by <code>y</code>, and finally return the data frame that is summarized at the product-market level, dropped consumer-level variables, and added <code>s</code> and <code>y</code>.</li>
 </ol>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="assignment3.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute share</span></span>
-<span id="cb129-2"><a href="assignment3.html#cb129-2" aria-hidden="true" tabindex="-1"></a>df_share <span class="ot">&lt;-</span></span>
-<span id="cb129-3"><a href="assignment3.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_share</span>(</span>
-<span id="cb129-4"><a href="assignment3.html#cb129-4" aria-hidden="true" tabindex="-1"></a>    X, </span>
-<span id="cb129-5"><a href="assignment3.html#cb129-5" aria-hidden="true" tabindex="-1"></a>    M, </span>
-<span id="cb129-6"><a href="assignment3.html#cb129-6" aria-hidden="true" tabindex="-1"></a>    V, </span>
-<span id="cb129-7"><a href="assignment3.html#cb129-7" aria-hidden="true" tabindex="-1"></a>    e, </span>
-<span id="cb129-8"><a href="assignment3.html#cb129-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb129-9"><a href="assignment3.html#cb129-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
-<span id="cb129-10"><a href="assignment3.html#cb129-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
-<span id="cb129-11"><a href="assignment3.html#cb129-11" aria-hidden="true" tabindex="-1"></a>    omega</span>
-<span id="cb129-12"><a href="assignment3.html#cb129-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb129-13"><a href="assignment3.html#cb129-13" aria-hidden="true" tabindex="-1"></a>df_share</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="assignment3.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute share</span></span>
+<span id="cb128-2"><a href="assignment3.html#cb128-2" aria-hidden="true" tabindex="-1"></a>df_share <span class="ot">&lt;-</span></span>
+<span id="cb128-3"><a href="assignment3.html#cb128-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compute_share</span>(</span>
+<span id="cb128-4"><a href="assignment3.html#cb128-4" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb128-5"><a href="assignment3.html#cb128-5" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb128-6"><a href="assignment3.html#cb128-6" aria-hidden="true" tabindex="-1"></a>    V, </span>
+<span id="cb128-7"><a href="assignment3.html#cb128-7" aria-hidden="true" tabindex="-1"></a>    e, </span>
+<span id="cb128-8"><a href="assignment3.html#cb128-8" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb128-9"><a href="assignment3.html#cb128-9" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb128-10"><a href="assignment3.html#cb128-10" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb128-11"><a href="assignment3.html#cb128-11" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb128-12"><a href="assignment3.html#cb128-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb128-13"><a href="assignment3.html#cb128-13" aria-hidden="true" tabindex="-1"></a>df_share</span></code></pre></div>
 <pre><code>## # A tibble: 700 × 11
-##        t     j   x_1    x_2      x_3    xi     c     p
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     0     0  0      0           0 0      0   
-##  2     1     2     1  0.369  0.472       0 0.929  1.97
-##  3     1     3     1  0.288  0.411       0 0.976  1.91
-##  4     1     4     1 -0.153  0.297       0 1.02   2.05
-##  5     1     6     1  0.195  0.391       0 0.995  1.98
-##  6     1     7     1 -0.311  0.0373      0 1.02   1.98
-##  7     1     8     1 -1.11  -0.995       0 0.997  1.99
-##  8     2     0     0  0      0           0 0      0   
-##  9     2     1     1  0.244 -0.00810     0 0.980  1.97
-## 10     2     4     1 -0.153  0.297       0 1.04   2.04
-## # … with 690 more rows, and 3 more variables: q &lt;dbl&gt;,
-## #   s &lt;dbl&gt;, y &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="assignment3.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_share)</span></code></pre></div>
-<pre><code>##        t                j               x_1        
-##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000  
-##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000  
-##  Median : 50.50   Median : 5.000   Median :1.0000  
-##  Mean   : 50.50   Mean   : 4.791   Mean   :0.8571  
-##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000  
-##  Max.   :100.00   Max.   :10.000   Max.   :1.0000  
-##       x_2                x_3                xi   
-##  Min.   :-1.10735   Min.   :-0.9947   Min.   :0  
-##  1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:0  
-##  Median : 0.19492   Median : 0.2970   Median :0  
-##  Mean   : 0.05989   Mean   : 0.1128   Mean   :0  
-##  3rd Qu.: 0.36916   3rd Qu.: 0.3911   3rd Qu.:0  
-##  Max.   : 0.75589   Max.   : 0.4719   Max.   :0  
-##        c                p               q         
-##  Min.   :0.0000   Min.   :0.000   Min.   : 26.00  
-##  1st Qu.:0.9404   1st Qu.:1.913   1st Qu.: 43.00  
-##  Median :0.9841   Median :1.981   Median : 52.00  
-##  Mean   :0.8560   Mean   :1.712   Mean   : 71.43  
-##  3rd Qu.:1.0260   3rd Qu.:2.039   3rd Qu.: 73.00  
-##  Max.   :1.2099   Max.   :2.293   Max.   :195.00  
-##        s                y           
-##  Min.   :0.0520   Min.   :-1.89354  
-##  1st Qu.:0.0860   1st Qu.:-1.35812  
-##  Median :0.1040   Median :-1.16644  
-##  Mean   :0.1429   Mean   :-0.99214  
-##  3rd Qu.:0.1460   3rd Qu.:-0.81801  
-##  Max.   :0.3900   Max.   : 0.05196</code></pre>
+##        t     j   x_1    x_2      x_3    xi     c     p     q     s       y
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     0     0  0      0           0 0      0      144 0.288  0     
+##  2     1     2     1  0.369  0.472       0 0.929  1.97    47 0.094 -1.12  
+##  3     1     3     1  0.288  0.411       0 0.976  1.91    37 0.074 -1.36  
+##  4     1     4     1 -0.153  0.297       0 1.02   2.05    35 0.07  -1.41  
+##  5     1     6     1  0.195  0.391       0 0.995  1.98    60 0.12  -0.875 
+##  6     1     7     1 -0.311  0.0373      0 1.02   1.98    44 0.088 -1.19  
+##  7     1     8     1 -1.11  -0.995       0 0.997  1.99   133 0.266 -0.0795
+##  8     2     0     0  0      0           0 0      0      170 0.34   0     
+##  9     2     1     1  0.244 -0.00810     0 0.980  1.97    84 0.168 -0.705 
+## 10     2     4     1 -0.153  0.297       0 1.04   2.04    35 0.07  -1.58  
+## # … with 690 more rows</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="assignment3.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_share)</span></code></pre></div>
+<pre><code>##        t                j               x_1              x_2                x_3                xi          c                p        
+##  Min.   :  1.00   Min.   : 0.000   Min.   :0.0000   Min.   :-1.10735   Min.   :-0.9947   Min.   :0   Min.   :0.0000   Min.   :0.000  
+##  1st Qu.: 25.75   1st Qu.: 2.000   1st Qu.:1.0000   1st Qu.:-0.15269   1st Qu.: 0.0000   1st Qu.:0   1st Qu.:0.9404   1st Qu.:1.913  
+##  Median : 50.50   Median : 5.000   Median :1.0000   Median : 0.19492   Median : 0.2970   Median :0   Median :0.9841   Median :1.981  
+##  Mean   : 50.50   Mean   : 4.791   Mean   :0.8571   Mean   : 0.05989   Mean   : 0.1128   Mean   :0   Mean   :0.8560   Mean   :1.712  
+##  3rd Qu.: 75.25   3rd Qu.: 8.000   3rd Qu.:1.0000   3rd Qu.: 0.36916   3rd Qu.: 0.3911   3rd Qu.:0   3rd Qu.:1.0260   3rd Qu.:2.039  
+##  Max.   :100.00   Max.   :10.000   Max.   :1.0000   Max.   : 0.75589   Max.   : 0.4719   Max.   :0   Max.   :1.2099   Max.   :2.293  
+##        q                s                y           
+##  Min.   : 26.00   Min.   :0.0520   Min.   :-1.89354  
+##  1st Qu.: 43.00   1st Qu.:0.0860   1st Qu.:-1.35812  
+##  Median : 52.00   Median :0.1040   Median :-1.16644  
+##  Mean   : 71.43   Mean   :0.1429   Mean   :-0.99214  
+##  3rd Qu.: 73.00   3rd Qu.:0.1460   3rd Qu.:-0.81801  
+##  Max.   :195.00   Max.   :0.3900   Max.   : 0.05196</code></pre>
 </div>
 <div id="estimate-the-parameters-1" class="section level2 hasAnchor" number="13.2">
 <h2><span class="header-section-number">13.2</span> Estimate the parameters<a href="assignment3.html#estimate-the-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1156,8 +1111,7 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 ## x_3 -0.92818    0.03364 -27.589  &lt; 2e-16 ***
 ## p   -1.12982    0.09086 -12.435  &lt; 2e-16 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.1677 on 696 degrees of freedom
 ## Multiple R-squared:  0.9778, Adjusted R-squared:  0.9777 
@@ -1168,24 +1122,24 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 <ol start="2" style="list-style-type: decimal">
 <li>For this reason, we first draw Monte Carlo consumer-level heterogeneity <code>V_mcmc</code> and Monte Carlo preference shocks <code>e_mcmc</code>. The number of simulations is <code>L</code>. This does not have to be the same with the actual number of consumers <code>N</code>.</li>
 </ol>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="assignment3.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mixed logit estimation</span></span>
-<span id="cb134-2"><a href="assignment3.html#cb134-2" aria-hidden="true" tabindex="-1"></a><span class="do">## draw mcmc V</span></span>
-<span id="cb134-3"><a href="assignment3.html#cb134-3" aria-hidden="true" tabindex="-1"></a>V_mcmc <span class="ot">&lt;-</span> </span>
-<span id="cb134-4"><a href="assignment3.html#cb134-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
-<span id="cb134-5"><a href="assignment3.html#cb134-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(L <span class="sc">*</span> T <span class="sc">*</span> (K <span class="sc">+</span> <span class="dv">1</span>)), </span>
-<span id="cb134-6"><a href="assignment3.html#cb134-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> L <span class="sc">*</span> T</span>
-<span id="cb134-7"><a href="assignment3.html#cb134-7" aria-hidden="true" tabindex="-1"></a>    ) </span>
-<span id="cb134-8"><a href="assignment3.html#cb134-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(V_mcmc) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;v_x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>), <span class="st">&quot;v_p&quot;</span>)</span>
-<span id="cb134-9"><a href="assignment3.html#cb134-9" aria-hidden="true" tabindex="-1"></a>V_mcmc <span class="ot">&lt;-</span> </span>
-<span id="cb134-10"><a href="assignment3.html#cb134-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb134-11"><a href="assignment3.html#cb134-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand.grid</span>(</span>
-<span id="cb134-12"><a href="assignment3.html#cb134-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>L, </span>
-<span id="cb134-13"><a href="assignment3.html#cb134-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T</span>
-<span id="cb134-14"><a href="assignment3.html#cb134-14" aria-hidden="true" tabindex="-1"></a>      ),</span>
-<span id="cb134-15"><a href="assignment3.html#cb134-15" aria-hidden="true" tabindex="-1"></a>    V_mcmc</span>
-<span id="cb134-16"><a href="assignment3.html#cb134-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb134-17"><a href="assignment3.html#cb134-17" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() </span></code></pre></div>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="assignment3.html#cb135-1" aria-hidden="true" tabindex="-1"></a>V_mcmc</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="assignment3.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mixed logit estimation</span></span>
+<span id="cb133-2"><a href="assignment3.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="do">## draw mcmc V</span></span>
+<span id="cb133-3"><a href="assignment3.html#cb133-3" aria-hidden="true" tabindex="-1"></a>V_mcmc <span class="ot">&lt;-</span> </span>
+<span id="cb133-4"><a href="assignment3.html#cb133-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
+<span id="cb133-5"><a href="assignment3.html#cb133-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(L <span class="sc">*</span> T <span class="sc">*</span> (K <span class="sc">+</span> <span class="dv">1</span>)), </span>
+<span id="cb133-6"><a href="assignment3.html#cb133-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> L <span class="sc">*</span> T</span>
+<span id="cb133-7"><a href="assignment3.html#cb133-7" aria-hidden="true" tabindex="-1"></a>    ) </span>
+<span id="cb133-8"><a href="assignment3.html#cb133-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(V_mcmc) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;v_x&quot;</span>, <span class="dv">1</span><span class="sc">:</span>K, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>), <span class="st">&quot;v_p&quot;</span>)</span>
+<span id="cb133-9"><a href="assignment3.html#cb133-9" aria-hidden="true" tabindex="-1"></a>V_mcmc <span class="ot">&lt;-</span> </span>
+<span id="cb133-10"><a href="assignment3.html#cb133-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb133-11"><a href="assignment3.html#cb133-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand.grid</span>(</span>
+<span id="cb133-12"><a href="assignment3.html#cb133-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>L, </span>
+<span id="cb133-13"><a href="assignment3.html#cb133-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T</span>
+<span id="cb133-14"><a href="assignment3.html#cb133-14" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb133-15"><a href="assignment3.html#cb133-15" aria-hidden="true" tabindex="-1"></a>    V_mcmc</span>
+<span id="cb133-16"><a href="assignment3.html#cb133-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb133-17"><a href="assignment3.html#cb133-17" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="assignment3.html#cb134-1" aria-hidden="true" tabindex="-1"></a>V_mcmc</span></code></pre></div>
 <pre><code>## # A tibble: 50,000 × 6
 ##        i     t   v_x_1  v_x_2   v_x_3    v_p
 ##    &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -1199,91 +1153,86 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 ##  8     8     1  1.11    0.571  1.77    0.497
 ##  9     9     1  1.45    0.154  1.96    0.740
 ## 10    10     1 -1.00   -0.413  0.0542 -0.469
-## # … with 49,990 more rows
-## # ℹ Use `print(n = ...)` to see more rows</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="assignment3.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="do">## draw mcmc e</span></span>
-<span id="cb137-2"><a href="assignment3.html#cb137-2" aria-hidden="true" tabindex="-1"></a>df_mcmc <span class="ot">&lt;-</span> </span>
-<span id="cb137-3"><a href="assignment3.html#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
-<span id="cb137-4"><a href="assignment3.html#cb137-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
-<span id="cb137-5"><a href="assignment3.html#cb137-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>L, </span>
-<span id="cb137-6"><a href="assignment3.html#cb137-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">0</span><span class="sc">:</span>J</span>
-<span id="cb137-7"><a href="assignment3.html#cb137-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb137-8"><a href="assignment3.html#cb137-8" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb137-9"><a href="assignment3.html#cb137-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb137-10"><a href="assignment3.html#cb137-10" aria-hidden="true" tabindex="-1"></a>    V_mcmc, </span>
-<span id="cb137-11"><a href="assignment3.html#cb137-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
-<span id="cb137-12"><a href="assignment3.html#cb137-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb137-13"><a href="assignment3.html#cb137-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb137-14"><a href="assignment3.html#cb137-14" aria-hidden="true" tabindex="-1"></a>    X, </span>
-<span id="cb137-15"><a href="assignment3.html#cb137-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>)</span>
-<span id="cb137-16"><a href="assignment3.html#cb137-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb137-17"><a href="assignment3.html#cb137-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
-<span id="cb137-18"><a href="assignment3.html#cb137-18" aria-hidden="true" tabindex="-1"></a>    M, </span>
-<span id="cb137-19"><a href="assignment3.html#cb137-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
-<span id="cb137-20"><a href="assignment3.html#cb137-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb137-21"><a href="assignment3.html#cb137-21" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(p)) <span class="sc">%&gt;%</span></span>
-<span id="cb137-22"><a href="assignment3.html#cb137-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(</span>
-<span id="cb137-23"><a href="assignment3.html#cb137-23" aria-hidden="true" tabindex="-1"></a>    t, </span>
-<span id="cb137-24"><a href="assignment3.html#cb137-24" aria-hidden="true" tabindex="-1"></a>    i, </span>
-<span id="cb137-25"><a href="assignment3.html#cb137-25" aria-hidden="true" tabindex="-1"></a>    j</span>
-<span id="cb137-26"><a href="assignment3.html#cb137-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb137-27"><a href="assignment3.html#cb137-27" aria-hidden="true" tabindex="-1"></a><span class="co"># draw idiosyncratic shocks</span></span>
-<span id="cb137-28"><a href="assignment3.html#cb137-28" aria-hidden="true" tabindex="-1"></a>e_mcmc <span class="ot">&lt;-</span> evd<span class="sc">::</span><span class="fu">rgev</span>(<span class="fu">dim</span>(df_mcmc)[<span class="dv">1</span>])</span></code></pre></div>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="assignment3.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(e_mcmc)</span></code></pre></div>
-<pre><code>## [1]  0.265602821  0.652183731 -0.006127627 -0.317288366
-## [5]  3.145022297 -1.277026910</code></pre>
+## # … with 49,990 more rows</code></pre>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="assignment3.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="do">## draw mcmc e</span></span>
+<span id="cb136-2"><a href="assignment3.html#cb136-2" aria-hidden="true" tabindex="-1"></a>df_mcmc <span class="ot">&lt;-</span> </span>
+<span id="cb136-3"><a href="assignment3.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
+<span id="cb136-4"><a href="assignment3.html#cb136-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
+<span id="cb136-5"><a href="assignment3.html#cb136-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>L, </span>
+<span id="cb136-6"><a href="assignment3.html#cb136-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">j =</span> <span class="dv">0</span><span class="sc">:</span>J</span>
+<span id="cb136-7"><a href="assignment3.html#cb136-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb136-8"><a href="assignment3.html#cb136-8" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb136-9"><a href="assignment3.html#cb136-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb136-10"><a href="assignment3.html#cb136-10" aria-hidden="true" tabindex="-1"></a>    V_mcmc, </span>
+<span id="cb136-11"><a href="assignment3.html#cb136-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;i&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
+<span id="cb136-12"><a href="assignment3.html#cb136-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb136-13"><a href="assignment3.html#cb136-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb136-14"><a href="assignment3.html#cb136-14" aria-hidden="true" tabindex="-1"></a>    X, </span>
+<span id="cb136-15"><a href="assignment3.html#cb136-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>)</span>
+<span id="cb136-16"><a href="assignment3.html#cb136-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb136-17"><a href="assignment3.html#cb136-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb136-18"><a href="assignment3.html#cb136-18" aria-hidden="true" tabindex="-1"></a>    M, </span>
+<span id="cb136-19"><a href="assignment3.html#cb136-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;j&quot;</span>, <span class="st">&quot;t&quot;</span>)</span>
+<span id="cb136-20"><a href="assignment3.html#cb136-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb136-21"><a href="assignment3.html#cb136-21" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(p)) <span class="sc">%&gt;%</span></span>
+<span id="cb136-22"><a href="assignment3.html#cb136-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(</span>
+<span id="cb136-23"><a href="assignment3.html#cb136-23" aria-hidden="true" tabindex="-1"></a>    t, </span>
+<span id="cb136-24"><a href="assignment3.html#cb136-24" aria-hidden="true" tabindex="-1"></a>    i, </span>
+<span id="cb136-25"><a href="assignment3.html#cb136-25" aria-hidden="true" tabindex="-1"></a>    j</span>
+<span id="cb136-26"><a href="assignment3.html#cb136-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb136-27"><a href="assignment3.html#cb136-27" aria-hidden="true" tabindex="-1"></a><span class="co"># draw idiosyncratic shocks</span></span>
+<span id="cb136-28"><a href="assignment3.html#cb136-28" aria-hidden="true" tabindex="-1"></a>e_mcmc <span class="ot">&lt;-</span> evd<span class="sc">::</span><span class="fu">rgev</span>(<span class="fu">dim</span>(df_mcmc)[<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="assignment3.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(e_mcmc)</span></code></pre></div>
+<pre><code>## [1]  0.265602821  0.652183731 -0.006127627 -0.317288366  3.145022297 -1.277026910</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Use <code>compute_share</code> to check the simulated share at the true parameter using the Monte Carlo shocks. Remember that the number of consumers should be set at <code>L</code> instead of <code>N</code>.</li>
 </ol>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="assignment3.html#cb140-1" aria-hidden="true" tabindex="-1"></a>df_share_mcmc</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="assignment3.html#cb139-1" aria-hidden="true" tabindex="-1"></a>df_share_mcmc</span></code></pre></div>
 <pre><code>## # A tibble: 700 × 11
-##        t     j   x_1    x_2      x_3    xi     c     p
-##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1     1     0     0  0      0           0 0      0   
-##  2     1     2     1  0.369  0.472       0 0.929  1.97
-##  3     1     3     1  0.288  0.411       0 0.976  1.91
-##  4     1     4     1 -0.153  0.297       0 1.02   2.05
-##  5     1     6     1  0.195  0.391       0 0.995  1.98
-##  6     1     7     1 -0.311  0.0373      0 1.02   1.98
-##  7     1     8     1 -1.11  -0.995       0 0.997  1.99
-##  8     2     0     0  0      0           0 0      0   
-##  9     2     1     1  0.244 -0.00810     0 0.980  1.97
-## 10     2     4     1 -0.153  0.297       0 1.04   2.04
-## # … with 690 more rows, and 3 more variables: q &lt;dbl&gt;,
-## #   s &lt;dbl&gt;, y &lt;dbl&gt;
-## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
+##        t     j   x_1    x_2      x_3    xi     c     p     q     s      y
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1     0     0  0      0           0 0      0      171 0.342  0    
+##  2     1     2     1  0.369  0.472       0 0.929  1.97    46 0.092 -1.31 
+##  3     1     3     1  0.288  0.411       0 0.976  1.91    37 0.074 -1.53 
+##  4     1     4     1 -0.153  0.297       0 1.02   2.05    38 0.076 -1.50 
+##  5     1     6     1  0.195  0.391       0 0.995  1.98    38 0.076 -1.50 
+##  6     1     7     1 -0.311  0.0373      0 1.02   1.98    52 0.104 -1.19 
+##  7     1     8     1 -1.11  -0.995       0 0.997  1.99   118 0.236 -0.371
+##  8     2     0     0  0      0           0 0      0      194 0.388  0    
+##  9     2     1     1  0.244 -0.00810     0 0.980  1.97    62 0.124 -1.14 
+## 10     2     4     1 -0.153  0.297       0 1.04   2.04    37 0.074 -1.66 
+## # … with 690 more rows</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Vectorize the parameters to a vector <code>theta</code> because <code>optim</code> requires the maximiand to be a vector.</li>
 </ol>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="assignment3.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set parameters</span></span>
-<span id="cb142-2"><a href="assignment3.html#cb142-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb142-3"><a href="assignment3.html#cb142-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb142-4"><a href="assignment3.html#cb142-4" aria-hidden="true" tabindex="-1"></a>    beta, </span>
-<span id="cb142-5"><a href="assignment3.html#cb142-5" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
-<span id="cb142-6"><a href="assignment3.html#cb142-6" aria-hidden="true" tabindex="-1"></a>    mu, </span>
-<span id="cb142-7"><a href="assignment3.html#cb142-7" aria-hidden="true" tabindex="-1"></a>    omega</span>
-<span id="cb142-8"><a href="assignment3.html#cb142-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb142-9"><a href="assignment3.html#cb142-9" aria-hidden="true" tabindex="-1"></a>theta</span></code></pre></div>
-<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808
-## [5]  0.3295078  0.8204684  0.5000000  1.0000000</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="assignment3.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set parameters</span></span>
+<span id="cb141-2"><a href="assignment3.html#cb141-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb141-3"><a href="assignment3.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb141-4"><a href="assignment3.html#cb141-4" aria-hidden="true" tabindex="-1"></a>    beta, </span>
+<span id="cb141-5"><a href="assignment3.html#cb141-5" aria-hidden="true" tabindex="-1"></a>    sigma, </span>
+<span id="cb141-6"><a href="assignment3.html#cb141-6" aria-hidden="true" tabindex="-1"></a>    mu, </span>
+<span id="cb141-7"><a href="assignment3.html#cb141-7" aria-hidden="true" tabindex="-1"></a>    omega</span>
+<span id="cb141-8"><a href="assignment3.html#cb141-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb141-9"><a href="assignment3.html#cb141-9" aria-hidden="true" tabindex="-1"></a>theta</span></code></pre></div>
+<pre><code>## [1]  4.0000000  0.1836433 -0.8356286  1.5952808  0.3295078  0.8204684  0.5000000  1.0000000</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_nlls_objective_a3(theta, df_share, X, M, V_mcmc, e_mcmc)</code> that first computes the simulated share and then compute the mean-squared error between the share data.</li>
 </ol>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="assignment3.html#cb144-1" aria-hidden="true" tabindex="-1"></a>nlls_objective</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="assignment3.html#cb143-1" aria-hidden="true" tabindex="-1"></a>nlls_objective</span></code></pre></div>
 <pre><code>## [1] 0.0004815657</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Draw a graph of the objective function that varies each parameter from 0.5, 0.6, <span class="math inline">\(\cdots\)</span>, 1.5 of the true value. First try with the actual shocks <code>V</code> and <code>e</code> and then try with the Monte Carlo shocks <code>V_mcmc</code> and <code>e_mcmc</code>. You will some of the graph does not look good with the Monte Carlo shocks. It will cause the approximation error.</li>
 </ol>
 <p>Because this takes time, you may want to parallelize the computation using <code>%dopar</code> functionality of <code>foreach</code> loop. To do so, first install <code>doParallel</code> package and then load it and register the workers as follows:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="assignment3.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="assignment3.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>()</span></code></pre></div>
 <p>This automatically detect the number of cores available at your computer and registers them as the workers. Then, you only have to change <code>%do%</code> to <code>%dopar</code> in the <code>foreach</code> loop as follows:</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="assignment3.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">foreach</span> (</span>
-<span id="cb147-2"><a href="assignment3.html#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb147-3"><a href="assignment3.html#cb147-3" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
-<span id="cb147-4"><a href="assignment3.html#cb147-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
-<span id="cb147-5"><a href="assignment3.html#cb147-5" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> i</span>
-<span id="cb147-6"><a href="assignment3.html#cb147-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb147-7"><a href="assignment3.html#cb147-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="assignment3.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">foreach</span> (</span>
+<span id="cb146-2"><a href="assignment3.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb146-3"><a href="assignment3.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
+<span id="cb146-4"><a href="assignment3.html#cb146-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
+<span id="cb146-5"><a href="assignment3.html#cb146-5" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> i</span>
+<span id="cb146-6"><a href="assignment3.html#cb146-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb146-7"><a href="assignment3.html#cb146-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] 2
 ## 
@@ -1296,22 +1245,21 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 ## [[4]]
 ## [1] 8</code></pre>
 <p>In windows, you may have to explicitly pass packages, functions, and data to the worker by using <code>.export</code> and <code>.packages</code> options as follows:</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="assignment3.html#cb149-1" aria-hidden="true" tabindex="-1"></a>temp_func <span class="ot">&lt;-</span> </span>
-<span id="cb149-2"><a href="assignment3.html#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
-<span id="cb149-3"><a href="assignment3.html#cb149-3" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x</span>
-<span id="cb149-4"><a href="assignment3.html#cb149-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb149-5"><a href="assignment3.html#cb149-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb149-6"><a href="assignment3.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="fu">foreach</span> (</span>
-<span id="cb149-7"><a href="assignment3.html#cb149-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
-<span id="cb149-8"><a href="assignment3.html#cb149-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">.export =</span> <span class="st">&quot;temp_func&quot;</span>,</span>
-<span id="cb149-9"><a href="assignment3.html#cb149-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">.packages =</span> <span class="st">&quot;magrittr&quot;</span></span>
-<span id="cb149-10"><a href="assignment3.html#cb149-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
-<span id="cb149-11"><a href="assignment3.html#cb149-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
-<span id="cb149-12"><a href="assignment3.html#cb149-12" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
-<span id="cb149-13"><a href="assignment3.html#cb149-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb149-14"><a href="assignment3.html#cb149-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>## Warning in e$fun(obj, substitute(ex), parent.frame(),
-## e$data): already exporting variable(s): temp_func</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="assignment3.html#cb148-1" aria-hidden="true" tabindex="-1"></a>temp_func <span class="ot">&lt;-</span> </span>
+<span id="cb148-2"><a href="assignment3.html#cb148-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
+<span id="cb148-3"><a href="assignment3.html#cb148-3" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x</span>
+<span id="cb148-4"><a href="assignment3.html#cb148-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb148-5"><a href="assignment3.html#cb148-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb148-6"><a href="assignment3.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="fu">foreach</span> (</span>
+<span id="cb148-7"><a href="assignment3.html#cb148-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb148-8"><a href="assignment3.html#cb148-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">.export =</span> <span class="st">&quot;temp_func&quot;</span>,</span>
+<span id="cb148-9"><a href="assignment3.html#cb148-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">.packages =</span> <span class="st">&quot;magrittr&quot;</span></span>
+<span id="cb148-10"><a href="assignment3.html#cb148-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
+<span id="cb148-11"><a href="assignment3.html#cb148-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
+<span id="cb148-12"><a href="assignment3.html#cb148-12" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
+<span id="cb148-13"><a href="assignment3.html#cb148-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb148-14"><a href="assignment3.html#cb148-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## Warning in e$fun(obj, substitute(ex), parent.frame(), e$data): already exporting variable(s): temp_func</code></pre>
 <pre><code>## [[1]]
 ## [1] 2
 ## 
@@ -1324,21 +1272,21 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 ## [[4]]
 ## [1] 8</code></pre>
 <p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the package every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="assignment3.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this function is compiled in the package EmpiricalIO</span></span>
-<span id="cb152-2"><a href="assignment3.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="co"># temp_func &lt;- function(x) {</span></span>
-<span id="cb152-3"><a href="assignment3.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   y &lt;- 2 * x</span></span>
-<span id="cb152-4"><a href="assignment3.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   return(y)</span></span>
-<span id="cb152-5"><a href="assignment3.html#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
-<span id="cb152-6"><a href="assignment3.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="fu">foreach</span> (</span>
-<span id="cb152-7"><a href="assignment3.html#cb152-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
-<span id="cb152-8"><a href="assignment3.html#cb152-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">.packages =</span> <span class="fu">c</span>(</span>
-<span id="cb152-9"><a href="assignment3.html#cb152-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
-<span id="cb152-10"><a href="assignment3.html#cb152-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;magrittr&quot;</span>)</span>
-<span id="cb152-11"><a href="assignment3.html#cb152-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
-<span id="cb152-12"><a href="assignment3.html#cb152-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
-<span id="cb152-13"><a href="assignment3.html#cb152-13" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
-<span id="cb152-14"><a href="assignment3.html#cb152-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb152-15"><a href="assignment3.html#cb152-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="assignment3.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this function is compiled in the package EmpiricalIO</span></span>
+<span id="cb151-2"><a href="assignment3.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="co"># temp_func &lt;- function(x) {</span></span>
+<span id="cb151-3"><a href="assignment3.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   y &lt;- 2 * x</span></span>
+<span id="cb151-4"><a href="assignment3.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   return(y)</span></span>
+<span id="cb151-5"><a href="assignment3.html#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb151-6"><a href="assignment3.html#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="fu">foreach</span> (</span>
+<span id="cb151-7"><a href="assignment3.html#cb151-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb151-8"><a href="assignment3.html#cb151-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">.packages =</span> <span class="fu">c</span>(</span>
+<span id="cb151-9"><a href="assignment3.html#cb151-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
+<span id="cb151-10"><a href="assignment3.html#cb151-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;magrittr&quot;</span>)</span>
+<span id="cb151-11"><a href="assignment3.html#cb151-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
+<span id="cb151-12"><a href="assignment3.html#cb151-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
+<span id="cb151-13"><a href="assignment3.html#cb151-13" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
+<span id="cb151-14"><a href="assignment3.html#cb151-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb151-15"><a href="assignment3.html#cb151-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] 2
 ## 
@@ -1402,8 +1350,7 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 <li>Use <code>optim</code> to find the minimizer of the objective function using <code>Nelder-Mead</code> method. You can start from the true parameter values. Compare the estimates with the true parameters.</li>
 </ol>
 <pre><code>## $par
-## [1]  3.9907237  0.1778582 -0.8244977  1.5326774
-## [5]  0.3602383  0.9336009  0.4883030  1.0462494
+## [1]  3.9907237  0.1778582 -0.8244977  1.5326774  0.3602383  0.9336009  0.4883030  1.0462494
 ## 
 ## $value
 ## [1] 0.0004678286
