@@ -117,7 +117,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2022-11-02}
+\date{Last updated: 2022-11-03}
 
 \begin{document}
 \maketitle
@@ -16520,7 +16520,7 @@ Note that \(\gamma\) in the formula of \(E(p)\) refers to the Euler constant, no
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{2}
+\setcounter{enumi}{3}
 \tightlist
 \item
   Write a function \texttt{compute\_exante\_value(p,\ PI,\ G,\ L,\ K,\ delta)} that returns the exante value function given a conditional choice probability. Don't use methods in \texttt{dplyr} and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of \(E(p)\) can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in \(E(p)\) does not affect the result.
@@ -16583,7 +16583,7 @@ where \(V\) is an exante value function.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{3}
+\setcounter{enumi}{4}
 \tightlist
 \item
   Write a function \texttt{compute\_ccp(V,\ PI,\ G,\ L,\ K,\ delta)} that returns the optimal conditional choice probability given an exante value function. Don't use methods in \texttt{dplyr} and deal with matrix operations. To do so, write a function \texttt{compute\_choice\_value(V,\ PI,\ G,\ delta)} that returns the choice-specific value function. Use this for debugging by checking if the results are intuitive.
@@ -16647,7 +16647,7 @@ where \(V\) is an exante value function.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{4}
+\setcounter{enumi}{5}
 \tightlist
 \item
   Write a function that find the equilibrium conditional choice probability and ex-ante value function by iterating the update of an exante value function and an optimal conditional choice probability. The iteration should stop when \(\max_s|V^{(r + 1)}(s) - V^{(r)}(s)| < \lambda\) with \(\lambda = 10^{-10}\).
@@ -16722,7 +16722,7 @@ where \(V\) is an exante value function.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{5}
+\setcounter{enumi}{6}
 \tightlist
 \item
   Write a function \texttt{simulate\_dynamic\_decision(p,\ s,\ PI,\ G,\ L,\ K,\ T,\ delta,\ seed)} that simulate the data for a single firm starting from an initial state for \(T\) periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using \texttt{rmultinom} and then state using \texttt{rmultinom}.
@@ -16768,7 +16768,7 @@ where \(V\) is an exante value function.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{6}
+\setcounter{enumi}{7}
 \tightlist
 \item
   Write a function \texttt{simulate\_dynamic\_decision\_across\_firms(p,\ s,\ PI,\ G,\ L,\ K,\ T,\ N,\ delta)} that returns simulation data for \(N\) firm. For firm \(i\), set the seed at \(i\)
@@ -16820,7 +16820,7 @@ where \(V\) is an exante value function.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{7}
+\setcounter{enumi}{8}
 \tightlist
 \item
   Write a function \texttt{estimate\_ccp(df)} that returns a non-parametric estimate of the conditional choice probability in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.
@@ -16864,7 +16864,7 @@ where \(V\) is an exante value function.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{8}
+\setcounter{enumi}{9}
 \tightlist
 \item
   Write a function \texttt{estimate\_G(df)} that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.

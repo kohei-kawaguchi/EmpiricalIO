@@ -830,7 +830,7 @@ E(p) =
 \gamma - \ln p.
 \]</span>
 Note that <span class="math inline">\(\gamma\)</span> in the formula of <span class="math inline">\(E(p)\)</span> refers to the Euler constant, not the parameter defined before.</p>
-<ol start="3" style="list-style-type: decimal">
+<ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>compute_exante_value(p, PI, G, L, K, delta)</code> that returns the exante value function given a conditional choice probability. Don’t use methods in <code>dplyr</code> and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of <span class="math inline">\(E(p)\)</span> can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in <span class="math inline">\(E(p)\)</span> does not affect the result.</li>
 </ol>
 <div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="assignment7.html#cb382-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> </span>
@@ -871,7 +871,7 @@ Note that <span class="math inline">\(\gamma\)</span> in the formula of <span cl
 \Lambda^{(\theta_1, \theta_2)}(V)(a, s) := \frac{\exp[\pi(a, s) + \delta \sum_{s&#39;}V(s&#39;)g(a, s, s&#39;)]}{\sum_{a&#39;}\exp[\pi(a&#39;, s) + \delta \sum_{s&#39;}V(s&#39;)g(a&#39;, s, s&#39;)]},
 \]</span>
 where <span class="math inline">\(V\)</span> is an exante value function.</p>
-<ol start="4" style="list-style-type: decimal">
+<ol start="5" style="list-style-type: decimal">
 <li>Write a function <code>compute_ccp(V, PI, G, L, K, delta)</code> that returns the optimal conditional choice probability given an exante value function. Don’t use methods in <code>dplyr</code> and deal with matrix operations. To do so, write a function <code>compute_choice_value(V, PI, G, delta)</code> that returns the choice-specific value function. Use this for debugging by checking if the results are intuitive.</li>
 </ol>
 <div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="assignment7.html#cb386-1" aria-hidden="true" tabindex="-1"></a>value <span class="ot">&lt;-</span> </span>
@@ -914,7 +914,7 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ## k1_l4 0.06136768
 ## k0_l5 0.95257413
 ## k1_l5 0.04742587</code></pre>
-<ol start="5" style="list-style-type: decimal">
+<ol start="6" style="list-style-type: decimal">
 <li>Write a function that find the equilibrium conditional choice probability and ex-ante value function by iterating the update of an exante value function and an optimal conditional choice probability. The iteration should stop when <span class="math inline">\(\max_s|V^{(r + 1)}(s) - V^{(r)}(s)| &lt; \lambda\)</span> with <span class="math inline">\(\lambda = 10^{-10}\)</span>.</li>
 </ol>
 <div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="assignment7.html#cb390-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
@@ -968,7 +968,7 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ## k1_l4 20.66511
 ## k0_l5 24.52976
 ## k1_l5 21.52976</code></pre>
-<ol start="6" style="list-style-type: decimal">
+<ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)</code> that simulate the data for a single firm starting from an initial state for <span class="math inline">\(T\)</span> periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using <code>rmultinom</code> and then state using <code>rmultinom</code>.</li>
 </ol>
 <div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="assignment7.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set initial value</span></span>
@@ -1001,7 +1001,7 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ##  9     9     1     0
 ## 10    10     1     0
 ## # … with 90 more rows</code></pre>
-<ol start="7" style="list-style-type: decimal">
+<ol start="8" style="list-style-type: decimal">
 <li>Write a function <code>simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)</code> that returns simulation data for <span class="math inline">\(N\)</span> firm. For firm <span class="math inline">\(i\)</span>, set the seed at <span class="math inline">\(i\)</span></li>
 </ol>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="assignment7.html#cb396-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
@@ -1035,7 +1035,7 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ##  9     1     9     1     0
 ## 10     1    10     1     0
 ## # … with 99,990 more rows</code></pre>
-<ol start="8" style="list-style-type: decimal">
+<ol start="9" style="list-style-type: decimal">
 <li>Write a function <code>estimate_ccp(df)</code> that returns a non-parametric estimate of the conditional choice probability in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.</li>
 </ol>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="assignment7.html#cb399-1" aria-hidden="true" tabindex="-1"></a>p_est <span class="ot">&lt;-</span> <span class="fu">estimate_ccp</span>(<span class="at">df =</span> df)</span>
@@ -1068,7 +1068,7 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 <span id="cb399-28"><a href="assignment7.html#cb399-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;action/state&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb399-29"><a href="assignment7.html#cb399-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;probability&quot;</span>)</span></code></pre></div>
 <p><img src="lecture_files/figure-html/unnamed-chunk-215-1.png" width="672" style="display: block; margin: auto;" /></p>
-<ol start="9" style="list-style-type: decimal">
+<ol start="10" style="list-style-type: decimal">
 <li>Write a function <code>estimate_G(df)</code> that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.</li>
 </ol>
 <div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="assignment7.html#cb400-1" aria-hidden="true" tabindex="-1"></a>G_est <span class="ot">&lt;-</span> <span class="fu">estimate_G</span>(<span class="at">df =</span> df); </span>
