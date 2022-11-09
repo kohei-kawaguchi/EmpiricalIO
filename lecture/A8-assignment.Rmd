@@ -332,7 +332,7 @@ p_marginal
 
 11. Write a function `solve_dynamic_game(PI, G, L, K, delta, lambda, A, S)` that find the equilibrium conditional choice probability and ex-ante value function by iterating the update of an ex-ante value function and a best-response conditional choice probability. The iteration should stop when $\max_s|V^{(r + 1)}(s) - V^{(r)}(s)| < \lambda$ with $\lambda = 10^{-10}$. There is no theoretical guarantee for the convergence.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # solve the dynamic game model
 output <-
   solve_dynamic_game(
@@ -368,7 +368,7 @@ p_joint <-
 head(p_joint)
 ```
 
-12. Write a function `simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)` that simulate the data for a market starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
+12. Write a function `simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)` that simulate the data for a market starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using `dplyr::sample_n` and then state using `rmultinom`.
 
 ```{r}
 # simulate a dynamic game
@@ -392,7 +392,7 @@ df
 
 13. Write a function `simulate_dynamic_decision_across_firms(p_joint, l, G, N, T, M, S, A, seed)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # simulate data across markets
 df <- 
   simulate_dynamic_decision_across_markets(
@@ -539,7 +539,7 @@ where $\hat{p}_i$ is the non-parametric estimate of the marginal conditional cho
 2. Write a function `compute_CCP_objective_game(theta_1, theta_2, p_est, L, K, delta)` that returns the objective function of the above minimum distance estimator given a non-parametric estimate of the conditional choice probability and $\theta_1$ and $\theta_2$.
 
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # compute the objective function of the minimum distance estimator based on the CCP approach
 objective <- 
   compute_CCP_objective_game(
@@ -557,14 +557,14 @@ saveRDS(
   )
 ```
 ```{r}
-ovjective <- 
+objective <- 
   readRDS(file = "data/a8/A8_objective.rds")
 objective
 ```
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # label
 label <- 
   c(
@@ -646,7 +646,7 @@ graph
 
 4. Estimate the parameters by minimizing the objective function. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5], \delta \in [0, 1]$.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 lower <- 
   rep(
     0, 
