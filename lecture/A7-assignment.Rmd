@@ -232,7 +232,7 @@ df
 
 8. Write a function `simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 df <- 
   simulate_dynamic_decision_across_firms(
     p = p, 
@@ -381,7 +381,7 @@ loglikelihood
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # label
 label <- 
   c(
@@ -463,7 +463,7 @@ graph
 
 4. Estiamte the parameters by maximizing the loglikelihood. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5], \kappa \in [0, 0.2], \gamma \in [0, 0.7]$.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 lower <- rep(0, length(theta))
 upper <- c(1, 5, 0.2, 0.7)
 NFP_result <-
@@ -526,7 +526,7 @@ compute_CCP_objective(
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # label
 label <- 
   c(
@@ -604,7 +604,7 @@ graph
 
 4. Estiamte the parameters by minimizing the objective function. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5]$.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 lower <- rep(0, length(theta_1))
 upper <- c(1, 5)
 CCP_result <-
