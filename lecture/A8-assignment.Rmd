@@ -97,7 +97,12 @@ delta <- 0.95
 2. Write a function `compute_action_state_space(K, L, N)` that returns a data frame for action and state space. Returned objects are list of data frame `A` and `S`. In `A`, column `k` is the index of an action profile, `i` is the index of a firm, and `a` is the action of the firm. In `S`, column `l` is the index of an state profile, `i` is the index of a firm, and `s` is the state of the firm.
 
 ```{r}
-output <- compute_action_state_space(L, K, N)
+output <- 
+  compute_action_state_space(
+    L = L,
+    K = K, 
+    N = N
+    )
 A <- output$A
 head(A)
 tail(A)
@@ -105,14 +110,23 @@ S <- output$S
 head(S)
 tail(S)
 # dimension
-m_a <- max(A$k); m_a
-m_s <- max(S$l); m_s
+m_a <- max(A$k); 
+m_a
+m_s <- max(S$l); 
+m_s
 ```
 
 3. Write function `compute_PI_game(alpha, beta, eta, L, K, N)` that returns a list of $\Pi_i$.
 
 ```{r}
-PI <- compute_PI_game(alpha, beta, eta, A, S)
+PI <- 
+  compute_PI_game(
+    alpha = alpha, 
+    beta = beta, 
+    eta = eta, 
+    A = A,
+    S = S
+    )
 head(PI[[N]])
 dim(PI[[N]])[1] == m_s * m_a
 ```
@@ -120,8 +134,19 @@ dim(PI[[N]])[1] == m_s * m_a
 4. Write function `compute_G_game(g, A, S)` that converts an individual transition probability matrix into a joint transition probability matrix $G$.
 
 ```{r}
-G_marginal <- compute_G(kappa, gamma, L, K)
-G <- compute_G_game(G_marginal, A, S)
+G_marginal <- 
+  compute_G(
+    kappa = kappa,
+    gamma = gamma, 
+    L = L, 
+    K = K
+    )
+G <- 
+  compute_G_game(
+    G_marginal = G_marginal, 
+    A = A, 
+    S = S
+    )
 head(G)
 dim(G)[1] == m_s * m_a
 dim(G)[2] == m_s
@@ -180,27 +205,46 @@ $$
 
 ```{r}
 # define a conditional choice probability for each firm
-p_marginal <- initialize_p_marginal(A, S)
+p_marginal <- 
+  initialize_p_marginal(
+    A = A,
+    S = S
+    )
 p_marginal
 dim(p_marginal)[1] == N * m_s * (K + 1)
 # compute joint conitional choice probability from marginal probability
-p_joint <- compute_p_joint(p_marginal, A, S)
+p_joint <- 
+  compute_p_joint(
+    p_marginal = p_marginal, 
+    A = A, 
+    S = S
+    )
 p_joint
 dim(p_joint)[1] == m_s * m_a
 # compute marginal conditional chocie probability from joint probability
-p_marginal_2 <- compute_p_marginal(p_joint, A, S)
+p_marginal_2 <- 
+  compute_p_marginal(
+    p_joint = p_joint, 
+    A = A,
+    S = S
+    )
 max(abs(p_marginal - p_marginal_2))
 ```
 
 
-6. Write a function `compute_Sigma(p_marginal, A, S)` that computes $\Sigma(p)$ given a joint conditional choice probability. Then, write a function `compute_D(p_marginal)` that returns a list of $D_i(p)$.
+6. Write a function `compute_sigma(p_marginal, A, S)` that computes $\Sigma(p)$ given a joint conditional choice probability. Then, write a function `compute_D(p_marginal)` that returns a list of $D_i(p)$.
 
 ```{r}
 # compute Sigma for ex-ante value function calculation
-Sigma <- compute_Sigma(p_marginal, A, S)
-head(Sigma)
-dim(Sigma)[1] == m_s
-dim(Sigma)[2] == m_s * m_a
+sigma <- 
+  compute_sigma(
+    p_marginal = p_marginal,
+    A = A,
+    S = S
+    )
+head(sigma)
+dim(sigma)[1] == m_s
+dim(sigma)[2] == m_s * m_a
 # compute D for ex-ante value function calculation
 D <- compute_D(p_marginal)
 head(D[[N]])
@@ -212,7 +256,15 @@ dim(D[[N]])[1] == m_s
 
 ```{r}
 # compute ex-ante value funciton for each firm
-V <- compute_exante_value_game(p_marginal, A, S, PI, G, delta)
+V <- 
+  compute_exante_value_game(
+    p_marginal = p_marginal,
+    A = A,
+    S = S,
+    PI = PI,
+    G = G,
+    delta = delta
+    )
 head(V[[N]])
 dim(V[[N]])[1] == m_s
 ```
@@ -227,7 +279,15 @@ where $V$ is an ex-ante value function.
 
 ```{r}
 # compute state-action-profile value function
-value <- compute_profile_value_game(V, PI, G, delta, S, A)
+value <- 
+  compute_profile_value_game(
+    V = V, 
+    PI = PI,
+    G = G, 
+    delta = delta, 
+    S = S, 
+    A = A
+    )
 value
 dim(value)[1] == N * m_s * m_a
 ```
@@ -236,7 +296,16 @@ dim(value)[1] == N * m_s * m_a
 
 ```{r}
 # compute choice-specific value function
-value <- compute_choice_value_game(p_marginal, V, PI, G, delta, A, S)
+value <- 
+  compute_choice_value_game(
+    p_marginal = p_marginal,
+    V = V,
+    PI = PI,
+    G = G, 
+    delta = delta, 
+    A = A, 
+    S = S
+    )
 value
 ```
 
@@ -244,7 +313,16 @@ value
 
 ```{r}
 # compute conditional choice probability 
-p_marginal <- compute_ccp_game(p_marginal, V, PI, G, delta, A, S)
+p_marginal <- 
+  compute_ccp_game(
+    p_marginal = p_marginal,
+    V = V,
+    PI = PI,
+    G = G,
+    delta = delta,
+    A = A,
+    S = S
+    )
 p_marginal
 ```
 
@@ -257,19 +335,40 @@ p_marginal
 ```{r, eval = FALSE}
 # solve the dynamic game model
 output <-
-  solve_dynamic_game(PI, G, L, K, delta, lambda, A, S)
-save(output, file = "data/A8_equilibrium.RData")
+  solve_dynamic_game(
+    PI = PI,
+    G = G, 
+    L = L,
+    K = K,
+    delta = delta,
+    lambda = lambda,
+    A = A,
+    S = S
+    )
+saveRDS(
+  output, 
+  file = "data/a8/A8_equilibrium.rds"
+  )
 ```
 
 ```{r}
-load(file = "data/A8_equilibrium.RData")
-p_marginal <- output$p_marginal; head(p_marginal)
-V <- output$V[[N]]; head(V)
+output <- 
+  readRDS(file = "data/a8/A8_equilibrium.rds")
+p_marginal <- output$p_marginal;
+head(p_marginal)
+V <- output$V[[N]];
+head(V)
 # compute joint conitional choice probability
-p_joint <- compute_p_joint(p_marginal, A, S); head(p_joint)
+p_joint <- 
+  compute_p_joint(
+    p_marginal = p_marginal, 
+    A = A, 
+    S = S
+    );
+head(p_joint)
 ```
 
-12. Write a function `simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)` that simulate the data for a market starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
+12. Write a function `simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)` that simulate the data for a market starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using `dplyr::sample_n` and then state using `rmultinom`.
 
 ```{r}
 # simulate a dynamic game
@@ -277,7 +376,17 @@ p_joint <- compute_p_joint(p_marginal, A, S); head(p_joint)
 l <- 1
 # draw simulation for a firm
 seed <- 1
-df <- simulate_dynamic_game(p_joint, l, G, N, T, S, A, seed)
+df <- 
+  simulate_dynamic_game(
+    p_joint = p_joint,
+    l = l,
+    G = G,
+    N = N,
+    T = T,
+    S = S, 
+    A = A,
+    seed = seed
+    )
 df
 ```
 
@@ -285,11 +394,25 @@ df
 
 ```{r, eval = FALSE}
 # simulate data across markets
-df <- simulate_dynamic_decision_across_markets(p_joint, l, G, N, T, M, S, A)
-save(df, file = "data/A8_df.RData")
+df <- 
+  simulate_dynamic_decision_across_markets(
+    p_joint = p_joint,
+    l = l,
+    G = G,
+    N = N,
+    T = T,
+    M = M,
+    S = S,
+    A = A
+    )
+saveRDS(
+  df,
+  file = "data/a8/A8_df.rds"
+  )
 ```
 ```{r}
-load(file = "data/A8_df.RData")
+df <- 
+  readRDS(file = "data/a8/A8_df.rds")
 df
 summary(df)
 ```
@@ -299,15 +422,32 @@ summary(df)
 
 ```{r}
 # non-parametrically estimate the conditional choice probability
-p_marginal_est <- estimate_ccp_marginal_game(df)
-check_ccp <- p_marginal_est %>%
+p_marginal_est <- 
+  estimate_ccp_marginal_game(df = df)
+check_ccp <- 
+  p_marginal_est %>%
   dplyr::rename(estimate = p) %>%
-  dplyr::left_join(p_marginal, by = c("i", "l", "a")) %>%
+  dplyr::left_join(
+    p_marginal, 
+    by = c(
+           "i",
+           "l", 
+           "a"
+           )
+    ) %>%
   dplyr::rename(true = p) %>%
   dplyr::filter(a == 1)
-ggplot(data = check_ccp, aes(x = true, y = estimate)) +
+ggplot(
+  data = check_ccp, 
+  aes(
+    x = true, 
+    y = estimate
+    )
+  ) +
   geom_point() +
-  labs(fill = "Value") + xlab("true") + ylab("estimate")
+  labs(fill = "Value") +
+  xlab("true") + 
+  ylab("estimate")
 ```
 
 15. Write a function `estimate_G_marginal(df)` that returns a non-parametric estimate of the marginal transition probability matrix. Compare the estimated transition matrix and the true transition matrix by a bar plot.
@@ -315,15 +455,44 @@ ggplot(data = check_ccp, aes(x = true, y = estimate)) +
 
 ```{r}
 # non-parametrically estimate individual transition probability
-G_marginal_est <- estimate_G_marginal(df)
-check_G <- data.frame(type = "true", reshape2::melt(G_marginal))
-check_G_est <- data.frame(type = "estimate", reshape2::melt(G_marginal_est))
-check_G <- rbind(check_G, check_G_est)
-check_G$variable = paste(check_G$Var1, check_G$Var2, sep = "_")
-ggplot(data = check_G, aes(x = variable, y = value,
-                           fill = type)) +
-    geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Value") + xlab("action/state/state") + ylab("probability") +
+G_marginal_est <- 
+  estimate_G_marginal(df = df)
+check_G <- 
+  data.frame(
+    type = "true",
+    reshape2::melt(G_marginal)
+    )
+check_G_est <- 
+  data.frame(
+    type = "estimate",
+    reshape2::melt(G_marginal_est)
+    )
+check_G <- 
+  rbind(
+    check_G, 
+    check_G_est
+    )
+check_G$variable <- 
+  paste(
+    check_G$Var1,
+    check_G$Var2, 
+    sep = "_"
+    )
+ggplot(
+  data = check_G, 
+  aes(
+    x = variable, 
+    y = value,
+    fill = type
+    )
+  ) +
+    geom_bar(
+      stat = "identity",
+      position = "dodge"
+      ) +
+  labs(fill = "Value") + 
+  xlab("action/state/state") +
+  ylab("probability") +
   theme(axis.text.x = element_blank())
 ```
 
@@ -333,9 +502,22 @@ ggplot(data = check_G, aes(x = variable, y = value,
 1. Vectorize the parameters as follows:
 
 ```{r}
-theta_1 <- c(alpha, beta, eta)
-theta_2 <- c(kappa, gamma)
-theta <- c(theta_1, theta_2)
+theta_1 <- 
+  c(
+    alpha, 
+    beta, 
+    eta
+    )
+theta_2 <- 
+  c(
+    kappa, 
+    gamma
+    )
+theta <- 
+  c(
+    theta_1, 
+    theta_2
+    )
 ```
 
 We estimate the parameters by a CCP approach.
@@ -343,7 +525,9 @@ We estimate the parameters by a CCP approach.
 1. Write a function `estimate_theta_2_game(df)` that returns the estimates of $\kappa$ and $\gamma$ directly from data by counting relevant events.
 ```{r}
 # estimate theta_2
-theta_2_est <- estimate_theta_2_game(df); theta_2_est
+theta_2_est <- 
+  estimate_theta_2_game(df); 
+theta_2_est
 ```
 
 The objective function of the minimum distance estimator based on the conditional choice probability approach is:
@@ -357,11 +541,24 @@ where $\hat{p}_i$ is the non-parametric estimate of the marginal conditional cho
 
 ```{r, eval = FALSE}
 # compute the objective function of the minimum distance estimator based on the CCP approach
-objective <- compute_CCP_objective_game(theta_1, theta_2, p_marginal_est, A, S, delta, lambda)
-save(objective, file = "data/A8_objective.RData")
+objective <- 
+  compute_CCP_objective_game(
+    theta_1 = theta_1,
+    theta_2 = theta_2, 
+    p_marginal_est = p_marginal_est,
+    A = A,
+    S = S, 
+    delta = delta, 
+    lambda = lambda
+    )
+saveRDS(
+  objective,
+  file = "data/a8/A8_objective.rds"
+  )
 ```
 ```{r}
-load(file = "data/A8_objective.RData")
+objective <- 
+  readRDS(file = "data/a8/A8_objective.rds")
 objective
 ```
 
@@ -369,43 +566,96 @@ objective
 
 ```{r, eval = FALSE}
 # label
-label <- c("\\alpha", "\\beta", "\\eta")
-label <- paste("$", label, "$", sep = "")
+label <- 
+  c(
+    "\\alpha",
+    "\\beta",
+    "\\eta"
+    )
+label <- 
+  paste(
+    "$",
+    label,
+    "$", 
+    sep = ""
+    )
 # compute the graph
-graph <- foreach (i = 1:length(theta_1)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta_1)
+    ) %do% {
   theta_i <- theta_1[i]
-  theta_i_list <- theta_i * seq(0.5, 2, by = 0.2)
+  theta_i_list <- 
+    theta_i * seq(
+      0.5, 
+      2,
+      by = 0.2
+      )
   objective_i <-
-    foreach (j = 1:length(theta_i_list),
-             .combine = "rbind") %dopar% {
+    foreach (
+      j = 1:length(theta_i_list),
+      .combine = "rbind"
+      ) %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta_1
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 compute_CCP_objective_game(theta_j, theta_2, p_marginal_est, A, S, delta, lambda)
+                 compute_CCP_objective_game(
+                   theta_j,
+                   theta_2,
+                   p_marginal_est, 
+                   A,
+                   S,
+                   delta,
+                   lambda
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i)
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) +
+  df_graph <- 
+    data.frame(
+      x = theta_i_list, 
+      y = objective_i
+      )
+  g <- 
+    ggplot(
+      data = df_graph, 
+      aes(
+        x = x,
+        y = y
+        )
+      ) +
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i,
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i]))
   return(g)
 }
-save(graph, file = "data/A8_CCP_graph.RData")
+saveRDS(
+  graph,
+  file = "data/a8/A8_CCP_graph.rds"
+  )
 ```
 ```{r}
-load(file = "data/A8_CCP_graph.RData")
+graph <- 
+  readRDS(file = "data/a8/A8_CCP_graph.rds")
 graph
 ```
 
 4. Estimate the parameters by minimizing the objective function. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5], \delta \in [0, 1]$.
 
 ```{r, eval = FALSE}
-lower <- rep(0, length(theta_1))
+lower <- 
+  rep(
+    0, 
+    length(theta_1)
+    )
 upper <- c(1, 5, 0.3)
 CCP_result <-
-  optim(par = theta_1,
+  optim(
+        par = theta_1,
         fn = compute_CCP_objective_game,
         method = "L-BFGS-B",
         lower = lower,
@@ -415,18 +665,24 @@ CCP_result <-
         A = A,
         S = S,
         delta = delta,
-        lambda = lambda)
-save(CCP_result, file = "data/A8_CCP_result.RData")
+        lambda = lambda
+        )
+saveRDS(
+  CCP_result, 
+  file = "data/a8/A8_CCP_result.rds"
+  )
 ```
 
 ```{r}
-load(file = "data/A8_CCP_result.RData")
+CCP_result <- 
+  readRDS(file = "data/a8/A8_CCP_result.rds")
 CCP_result
 compare <-
   data.frame(
     true = theta_1,
     estimate = CCP_result$par
-  ); compare
+  ); 
+compare
 ```
 
 
