@@ -954,17 +954,13 @@ and then continue the process by typing <code>c</code> in the terminal.
 <span id="cb447-2"><a href="rcpp.html#cb447-2" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric vector </span></span>
 <span id="cb447-3"><a href="rcpp.html#cb447-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>)</span>
 <span id="cb447-4"><a href="rcpp.html#cb447-4" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
-<pre><code>## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388</code></pre>
+<pre><code>## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388</code></pre>
 <div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="rcpp.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric matrix</span></span>
 <span id="cb449-2"><a href="rcpp.html#cb449-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
 <span id="cb449-3"><a href="rcpp.html#cb449-3" aria-hidden="true" tabindex="-1"></a>Y</span></code></pre></div>
-<pre><code>##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494</code></pre>
+<pre><code>##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494</code></pre>
 <ul>
 <li>Let’s write a C++ function that just receives a numeric vector and returns the numeric vector, and receives a numeric matrix and returns the numeric matrix.</li>
 </ul>
@@ -1005,16 +1001,12 @@ Rcpp::NumericMatrix pass_numeric_matrix_to_rcpp(Rcpp::NumericMatrix Y) {
 <span id="cb460-2"><a href="rcpp.html#cb460-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">Y =</span> Y, <span class="at">z =</span> z)</span>
 <span id="cb460-3"><a href="rcpp.html#cb460-3" aria-hidden="true" tabindex="-1"></a>L</span></code></pre></div>
 <pre><code>## $x
-## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388
+## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388
 ## 
 ## $Y
-##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494
+##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494
 ## 
 ## $z
 ## [1] 1 2 3 4 5</code></pre>
@@ -1141,16 +1133,12 @@ Rcpp::List pass_list_to_eigen(Rcpp::List L) {
 <span id="cb487-6"><a href="rcpp.html#cb487-6" aria-hidden="true" tabindex="-1"></a>list_1[[<span class="dv">4</span>]] <span class="ot">&lt;-</span> W</span>
 <span id="cb487-7"><a href="rcpp.html#cb487-7" aria-hidden="true" tabindex="-1"></a>list_1</span></code></pre></div>
 <pre><code>## [[1]]
-## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388
+## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388
 ## 
 ## [[2]]
-##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494
+##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494
 ## 
 ## [[3]]
 ## [1] 1 2 3 4 5
@@ -1192,16 +1180,12 @@ Rcpp::List pass_named_list_to_eigen(Rcpp::List L) {
 <span id="cb492-6"><a href="rcpp.html#cb492-6" aria-hidden="true" tabindex="-1"></a>list_2<span class="sc">$</span>W <span class="ot">&lt;-</span> W</span>
 <span id="cb492-7"><a href="rcpp.html#cb492-7" aria-hidden="true" tabindex="-1"></a>list_2</span></code></pre></div>
 <pre><code>## $x
-## [1]  0.00837096 -0.88087172  0.59625902  0.11971764
-## [5] -0.28217388
+## [1]  0.00837096 -0.88087172  0.59625902  0.11971764 -0.28217388
 ## 
 ## $Y
-##           [,1]      [,2]       [,3]       [,4]
-## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803
-## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858
-##            [,5]
-## [1,]  0.5767188
-## [2,] -1.2807494
+##           [,1]      [,2]       [,3]       [,4]       [,5]
+## [1,] 1.4559884 0.9965439 -0.7767766  0.0465803  0.5767188
+## [2,] 0.2290196 0.7818592 -0.6159899 -1.1303858 -1.2807494
 ## 
 ## $z
 ## [1] 1 2 3 4 5

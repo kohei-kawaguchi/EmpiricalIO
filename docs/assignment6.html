@@ -762,12 +762,10 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <span id="cb307-6"><a href="assignment6.html#cb307-6" aria-hidden="true" tabindex="-1"></a>    N</span>
 <span id="cb307-7"><a href="assignment6.html#cb307-7" aria-hidden="true" tabindex="-1"></a>    ); </span>
 <span id="cb307-8"><a href="assignment6.html#cb307-8" aria-hidden="true" tabindex="-1"></a>E</span></code></pre></div>
-<pre><code>##   [1]  3  1  5  5 10  6 10  7  9  5  5  9  9  5  5  2 10
-##  [18]  9  1  4  3  6 10 10  6  4  4 10  9  7  6  9  8  9
-##  [35]  7  8  6 10  7  3 10  6  8  2  2  6  6  1  3  3  8
-##  [52]  6  7  6  8  7  1  4  8  9  9  7  4  7  6  1  5  6
-##  [69]  1  9  7  7  3  6  2 10 10  7  3  2 10  1 10 10  8
-##  [86] 10  5  7  8  5  6  8  1  3 10  3  1  6  6  4</code></pre>
+<pre><code>##   [1]  3  1  5  5 10  6 10  7  9  5  5  9  9  5  5  2 10  9  1  4  3  6 10 10  6  4  4 10  9  7  6  9  8
+##  [34]  9  7  8  6 10  7  3 10  6  8  2  2  6  6  1  3  3  8  6  7  6  8  7  1  4  8  9  9  7  4  7  6  1
+##  [67]  5  6  1  9  7  7  3  6  2 10 10  7  3  2 10  1 10 10  8 10  5  7  8  5  6  8  1  3 10  3  1  6  6
+## [100]  4</code></pre>
 <div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="assignment6.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="co"># market attributes</span></span>
 <span id="cb309-2"><a href="assignment6.html#cb309-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> </span>
 <span id="cb309-3"><a href="assignment6.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
@@ -820,9 +818,8 @@ where <span class="math inline">\(y_{im} \in \{0, 1\}\)</span> is the indicator 
 <span id="cb313-5"><a href="assignment6.html#cb313-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> M</span>
 <span id="cb313-6"><a href="assignment6.html#cb313-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb313-7"><a href="assignment6.html#cb313-7" aria-hidden="true" tabindex="-1"></a>EP[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ]</span></code></pre></div>
-<pre><code>##  [1] -1.1131230  0.6169665  0.5134937  0.3694591
-##  [5]  1.7238941 -0.2061446 -1.3141951  0.0634741
-##  [9] -0.2319775  0.6350603</code></pre>
+<pre><code>##  [1] -1.1131230  0.6169665  0.5134937  0.3694591  1.7238941 -0.2061446 -1.3141951  0.0634741 -0.2319775
+## [10]  0.6350603</code></pre>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="assignment6.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unobserved entrant attributes</span></span>
 <span id="cb315-2"><a href="assignment6.html#cb315-2" aria-hidden="true" tabindex="-1"></a>NU <span class="ot">&lt;-</span></span>
 <span id="cb315-3"><a href="assignment6.html#cb315-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
@@ -1358,8 +1355,7 @@ where <span class="math inline">\(y_{im}^{(r)}\)</span> is the entry decision in
 <div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="assignment6.html#cb368-1" aria-hidden="true" tabindex="-1"></a>result_sequential <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;data/a6/A6_estimate_sequential.rds&quot;</span>)</span>
 <span id="cb368-2"><a href="assignment6.html#cb368-2" aria-hidden="true" tabindex="-1"></a>result_sequential</span></code></pre></div>
 <pre><code>## $par
-## [1] 0.7761887 0.2204343 1.0747480 2.0150864 0.9116741
-## [6] 0.2875538
+## [1] 0.7761887 0.2204343 1.0747480 2.0150864 0.9116741 0.2875538
 ## 
 ## $value
 ## [1] 0.2638
