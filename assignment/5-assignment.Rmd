@@ -396,9 +396,7 @@ M_counterfactual[M_counterfactual$j > 0, "producer_surplus_counterfactual"] <-
   producer_surplus_counterfactual
 producer_surplus_change <- M_counterfactual %>%
   dplyr::filter(j > 0) %>%
-  dplyr::mutate(producer_surplus_change = 
-                  (producer_surplus_counterfactual - producer_surplus_actual) /
-                  producer_surplus_actual) %>%
+  dplyr::mutate(producer_surplus_change = producer_surplus_counterfactual - producer_surplus_actual) %>%
   dplyr::group_by(j) %>%
   dplyr::summarise(producer_surplus_change = mean(producer_surplus_change)) %>%
   dplyr::ungroup()
@@ -423,8 +421,7 @@ summary(consumer_surplus_counterfactual)
 ```{r, echo = TRUE}
 consumer_surplus_change <- 
   (sum(consumer_surplus_counterfactual) - 
-     sum(consumer_surplus_actual)) /
-  sum(consumer_surplus_actual)
+     sum(consumer_surplus_actual)) 
 consumer_surplus_change
 ```
 
