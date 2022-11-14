@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Assignment 2: Production Function Estimation | ECON5630 Topics in Empirical Industrial Organization</title>
+  <meta name="description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
+  <meta name="generator" content="bookdown 0.28 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Assignment 2: Production Function Estimation | ECON5630 Topics in Empirical Industrial Organization" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Assignment 2: Production Function Estimation | ECON5630 Topics in Empirical Industrial Organization" />
+  
+  <meta name="twitter:description" content="Thie is a lecture note for ECON5630 at Hong Kong University of Science and Technology." />
+  
+
+<meta name="author" content="Kohei Kawaguchi" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="assignment1.html"/>
+<link rel="next" href="assignment3.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ECON5630</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Syllabus</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#instructor-information"><i class="fa fa-check"></i><b>1.1</b> Instructor Information</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#general-information"><i class="fa fa-check"></i><b>1.2</b> General Information</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#class-time"><i class="fa fa-check"></i><b>1.2.1</b> Class Time</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#description"><i class="fa fa-check"></i><b>1.2.2</b> Description</a></li>
+<li class="chapter" data-level="1.2.3" data-path="index.html"><a href="index.html#expectation-and-goals"><i class="fa fa-check"></i><b>1.2.3</b> Expectation and Goals</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#required-environment"><i class="fa fa-check"></i><b>1.3</b> Required Environment</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#evaluation"><i class="fa fa-check"></i><b>1.4</b> Evaluation</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#academic-integrity"><i class="fa fa-check"></i><b>1.5</b> Academic Integrity</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i><b>1.6</b> Schedule</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#course-materials"><i class="fa fa-check"></i><b>1.7</b> Course Materials</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.7.1</b> R and RStudio</a></li>
+<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#handbook-chapters"><i class="fa fa-check"></i><b>1.7.2</b> Handbook Chapters</a></li>
+<li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#books"><i class="fa fa-check"></i><b>1.7.3</b> Books</a></li>
+<li class="chapter" data-level="1.7.4" data-path="index.html"><a href="index.html#papers"><i class="fa fa-check"></i><b>1.7.4</b> Papers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#structural-estimation-and-counterfactual-analysis"><i class="fa fa-check"></i><b>2.1</b> Structural Estimation and Counterfactual Analysis</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#recap"><i class="fa fa-check"></i><b>2.1.2</b> Recap</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#historical-remark"><i class="fa fa-check"></i><b>2.1.3</b> Historical Remark</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#setting-up-the-environment"><i class="fa fa-check"></i><b>2.2</b> Setting Up The Environment</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#rstudio-project"><i class="fa fa-check"></i><b>2.2.1</b> RStudio Project</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#basic-programming-in-r"><i class="fa fa-check"></i><b>2.2.2</b> Basic Programming in R</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#reproducible-reports-using-rmarkdown"><i class="fa fa-check"></i><b>2.2.3</b> Reproducible Reports using Rmarkdown</a></li>
+<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#coding-rule"><i class="fa fa-check"></i><b>2.2.4</b> Coding rule</a></li>
+<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#github-and-github-classroom"><i class="fa fa-check"></i><b>2.2.5</b> GitHub and GitHub Classroom</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="production.html"><a href="production.html"><i class="fa fa-check"></i><b>3</b> Production and Cost Function Estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="production.html"><a href="production.html#motivations"><i class="fa fa-check"></i><b>3.1</b> Motivations</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="production.html"><a href="production.html#io"><i class="fa fa-check"></i><b>3.1.1</b> IO</a></li>
+<li class="chapter" data-level="3.1.2" data-path="production.html"><a href="production.html#development"><i class="fa fa-check"></i><b>3.1.2</b> Development</a></li>
+<li class="chapter" data-level="3.1.3" data-path="production.html"><a href="production.html#trade"><i class="fa fa-check"></i><b>3.1.3</b> Trade</a></li>
+<li class="chapter" data-level="3.1.4" data-path="production.html"><a href="production.html#management"><i class="fa fa-check"></i><b>3.1.4</b> Management</a></li>
+<li class="chapter" data-level="3.1.5" data-path="production.html"><a href="production.html#education"><i class="fa fa-check"></i><b>3.1.5</b> Education</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="production.html"><a href="production.html#analyzing-producer-behaviors"><i class="fa fa-check"></i><b>3.2</b> Analyzing Producer Behaviors</a></li>
+<li class="chapter" data-level="3.3" data-path="production.html"><a href="production.html#production-function-estimation"><i class="fa fa-check"></i><b>3.3</b> Production Function Estimation</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="production.html"><a href="production.html#cobb-douglas-specification-as-a-benchmark"><i class="fa fa-check"></i><b>3.3.1</b> Cobb-Douglas Specification as a Benchmark</a></li>
+<li class="chapter" data-level="3.3.2" data-path="production.html"><a href="production.html#potential-bias-i-endogeneity"><i class="fa fa-check"></i><b>3.3.2</b> Potential Bias I: Endogeneity</a></li>
+<li class="chapter" data-level="3.3.3" data-path="production.html"><a href="production.html#potential-bias-ii-selection"><i class="fa fa-check"></i><b>3.3.3</b> Potential Bias II: Selection</a></li>
+<li class="chapter" data-level="3.3.4" data-path="production.html"><a href="production.html#how-to-resolve-endogeneity-bias"><i class="fa fa-check"></i><b>3.3.4</b> How to Resolve Endogeneity Bias?</a></li>
+<li class="chapter" data-level="3.3.5" data-path="production.html"><a href="production.html#panel-data"><i class="fa fa-check"></i><b>3.3.5</b> Panel Data</a></li>
+<li class="chapter" data-level="3.3.6" data-path="production.html"><a href="production.html#first-order-condition-for-inputs"><i class="fa fa-check"></i><b>3.3.6</b> First-Order Condition for Inputs</a></li>
+<li class="chapter" data-level="3.3.7" data-path="production.html"><a href="production.html#productioniv"><i class="fa fa-check"></i><b>3.3.7</b> Instrumental Variable</a></li>
+<li class="chapter" data-level="3.3.8" data-path="production.html"><a href="production.html#olley-pakes-approach"><i class="fa fa-check"></i><b>3.3.8</b> Olley-Pakes Approach</a></li>
+<li class="chapter" data-level="3.3.9" data-path="production.html"><a href="production.html#assumption-i-information-set"><i class="fa fa-check"></i><b>3.3.9</b> Assumption I: Information Set</a></li>
+<li class="chapter" data-level="3.3.10" data-path="production.html"><a href="production.html#assumption-ii-first-order-markov"><i class="fa fa-check"></i><b>3.3.10</b> Assumption II: First Order Markov</a></li>
+<li class="chapter" data-level="3.3.11" data-path="production.html"><a href="production.html#assumption-iii-timing-of-input-choices"><i class="fa fa-check"></i><b>3.3.11</b> Assumption III: Timing of Input Choices</a></li>
+<li class="chapter" data-level="3.3.12" data-path="production.html"><a href="production.html#assumption-iv-scalar-unobservable"><i class="fa fa-check"></i><b>3.3.12</b> Assumption IV: Scalar Unobservable</a></li>
+<li class="chapter" data-level="3.3.13" data-path="production.html"><a href="production.html#assumption-iv-strict-monotonicity"><i class="fa fa-check"></i><b>3.3.13</b> Assumption IV: Strict Monotonicity</a></li>
+<li class="chapter" data-level="3.3.14" data-path="production.html"><a href="production.html#two-step-approach-the-first-step"><i class="fa fa-check"></i><b>3.3.14</b> Two-step Approach: The First Step</a></li>
+<li class="chapter" data-level="3.3.15" data-path="production.html"><a href="production.html#two-step-approach-the-second-step"><i class="fa fa-check"></i><b>3.3.15</b> Two-step Approach: The Second Step</a></li>
+<li class="chapter" data-level="3.3.16" data-path="production.html"><a href="production.html#identification-of-the-anticipated-shocks"><i class="fa fa-check"></i><b>3.3.16</b> Identification of the Anticipated Shocks</a></li>
+<li class="chapter" data-level="3.3.17" data-path="production.html"><a href="production.html#two-step-estimation-of-olley1996."><i class="fa fa-check"></i><b>3.3.17</b> Two-Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span>.</a></li>
+<li class="chapter" data-level="3.3.18" data-path="production.html"><a href="production.html#from-an-economic-models-to-an-econometric-model"><i class="fa fa-check"></i><b>3.3.18</b> From An Economic Models to An Econometric Model</a></li>
+<li class="chapter" data-level="3.3.19" data-path="production.html"><a href="production.html#how-to-resolve-selection-bias"><i class="fa fa-check"></i><b>3.3.19</b> How to Resolve Selection Bias</a></li>
+<li class="chapter" data-level="3.3.20" data-path="production.html"><a href="production.html#correction-in-the-first-step"><i class="fa fa-check"></i><b>3.3.20</b> Correction in the First Step</a></li>
+<li class="chapter" data-level="3.3.21" data-path="production.html"><a href="production.html#correction-in-the-second-step-i-the-source-of-bias"><i class="fa fa-check"></i><b>3.3.21</b> Correction in the Second Step I: The Source of Bias</a></li>
+<li class="chapter" data-level="3.3.22" data-path="production.html"><a href="production.html#correction-in-the-second-step-ii-conditional-exit-probability"><i class="fa fa-check"></i><b>3.3.22</b> Correction in the Second Step II: Conditional Exit Probability</a></li>
+<li class="chapter" data-level="3.3.23" data-path="production.html"><a href="production.html#correction-in-the-second-step-iii-invertibility-in-threshold"><i class="fa fa-check"></i><b>3.3.23</b> Correction in the Second Step III: Invertibility in Threshold</a></li>
+<li class="chapter" data-level="3.3.24" data-path="production.html"><a href="production.html#correction-in-the-second-step-iv-controlling-the-threshold"><i class="fa fa-check"></i><b>3.3.24</b> Correction in the Second Step IV: Controlling the Threshold</a></li>
+<li class="chapter" data-level="3.3.25" data-path="production.html"><a href="production.html#three-step-estimation-of-olley1996"><i class="fa fa-check"></i><b>3.3.25</b> Three Step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span></a></li>
+<li class="chapter" data-level="3.3.26" data-path="production.html"><a href="production.html#zero-investment-problem"><i class="fa fa-check"></i><b>3.3.26</b> Zero Investment Problem</a></li>
+<li class="chapter" data-level="3.3.27" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-i-discard-some-data"><i class="fa fa-check"></i><b>3.3.27</b> Tackle Zero Investment Problem I: Discard Some Data</a></li>
+<li class="chapter" data-level="3.3.28" data-path="production.html"><a href="production.html#tackle-zero-investment-problem-ii-use-another-proxy"><i class="fa fa-check"></i><b>3.3.28</b> Tackle Zero Investment Problem II: Use Another Proxy</a></li>
+<li class="chapter" data-level="3.3.29" data-path="production.html"><a href="production.html#one-step-estimation-of-olley1996-and-levinsohn2003"><i class="fa fa-check"></i><b>3.3.29</b> One-step Estimation of <span class="citation">Olley &amp; Pakes (<span>1996</span>)</span> and <span class="citation">Levinsohn &amp; Petrin (<span>2003</span>)</span></a></li>
+<li class="chapter" data-level="3.3.30" data-path="production.html"><a href="production.html#scalar-unobservable-problem-finite-order-markov-process"><i class="fa fa-check"></i><b>3.3.30</b> Scalar Unobservable Problem: Finite-order Markov Process</a></li>
+<li class="chapter" data-level="3.3.31" data-path="production.html"><a href="production.html#scalar-unobservable-problem-demand-and-productivity-shocks"><i class="fa fa-check"></i><b>3.3.31</b> Scalar Unobservable Problem: Demand and Productivity Shocks</a></li>
+<li class="chapter" data-level="3.3.32" data-path="production.html"><a href="production.html#collinearity-problem"><i class="fa fa-check"></i><b>3.3.32</b> Collinearity Problem</a></li>
+<li class="chapter" data-level="3.3.33" data-path="production.html"><a href="production.html#tackle-collinearity-problem-peculiar-assumptions"><i class="fa fa-check"></i><b>3.3.33</b> Tackle Collinearity Problem: Peculiar Assumptions</a></li>
+<li class="chapter" data-level="3.3.34" data-path="production.html"><a href="production.html#tackle-collinearity-problem-share-regression"><i class="fa fa-check"></i><b>3.3.34</b> Tackle Collinearity Problem: Share Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="production.html"><a href="production.html#cost-function-estimation"><i class="fa fa-check"></i><b>3.4</b> Cost Function Estimation</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="production.html"><a href="production.html#cost-function-duality"><i class="fa fa-check"></i><b>3.4.1</b> Cost Function: Duality</a></li>
+<li class="chapter" data-level="3.4.2" data-path="production.html"><a href="production.html#translog-cost-function"><i class="fa fa-check"></i><b>3.4.2</b> Translog Cost Function</a></li>
+<li class="chapter" data-level="3.4.3" data-path="production.html"><a href="production.html#translog-cost-function-integrability"><i class="fa fa-check"></i><b>3.4.3</b> Translog Cost Function: Integrability</a></li>
+<li class="chapter" data-level="3.4.4" data-path="production.html"><a href="production.html#two-approaches"><i class="fa fa-check"></i><b>3.4.4</b> Two Approaches</a></li>
+<li class="chapter" data-level="3.4.5" data-path="production.html"><a href="production.html#cost-data-approach"><i class="fa fa-check"></i><b>3.4.5</b> Cost Data Approach</a></li>
+<li class="chapter" data-level="3.4.6" data-path="production.html"><a href="production.html#revealed-preference-approach"><i class="fa fa-check"></i><b>3.4.6</b> Revealed Preference Approach</a></li>
+<li class="chapter" data-level="3.4.7" data-path="production.html"><a href="production.html#single-product-monopolist"><i class="fa fa-check"></i><b>3.4.7</b> Single-product Monopolist</a></li>
+<li class="chapter" data-level="3.4.8" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>3.4.8</b> Unobserved Heterogeneity in the Cost Function</a></li>
+<li class="chapter" data-level="3.4.9" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>3.4.9</b> Multi-product Monopolist Case</a></li>
+<li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.10</b> Oligopoly</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="demand.html"><a href="demand.html#motivations-1"><i class="fa fa-check"></i><b>4.1</b> Motivations</a></li>
+<li class="chapter" data-level="4.2" data-path="demand.html"><a href="demand.html#analyzing-consumer-behaviors"><i class="fa fa-check"></i><b>4.2</b> Analyzing Consumer Behaviors</a></li>
+<li class="chapter" data-level="4.3" data-path="demand.html"><a href="demand.html#continuous-choice"><i class="fa fa-check"></i><b>4.3</b> Continuous Choice</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="demand.html"><a href="demand.html#duality-between-utility-and-expenditure-functions"><i class="fa fa-check"></i><b>4.3.1</b> Duality between Utility and Expenditure Functions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="demand.html"><a href="demand.html#deriving-other-functions"><i class="fa fa-check"></i><b>4.3.2</b> Deriving Other Functions</a></li>
+<li class="chapter" data-level="4.3.3" data-path="demand.html"><a href="demand.html#starting-from-an-indirect-utility-function"><i class="fa fa-check"></i><b>4.3.3</b> Starting from an Indirect Utility Function</a></li>
+<li class="chapter" data-level="4.3.4" data-path="demand.html"><a href="demand.html#expenditure-share-equation"><i class="fa fa-check"></i><b>4.3.4</b> Expenditure Share Equation</a></li>
+<li class="chapter" data-level="4.3.5" data-path="demand.html"><a href="demand.html#almost-ideal-demand-system-aids"><i class="fa fa-check"></i><b>4.3.5</b> Almost Ideal Demand System (AIDS)</a></li>
+<li class="chapter" data-level="4.3.6" data-path="demand.html"><a href="demand.html#piglog-class"><i class="fa fa-check"></i><b>4.3.6</b> PIGLOG Class</a></li>
+<li class="chapter" data-level="4.3.7" data-path="demand.html"><a href="demand.html#derive-the-share-equation-i"><i class="fa fa-check"></i><b>4.3.7</b> Derive the Share Equation I</a></li>
+<li class="chapter" data-level="4.3.8" data-path="demand.html"><a href="demand.html#derive-the-share-equation-ii"><i class="fa fa-check"></i><b>4.3.8</b> Derive the Share Equation II</a></li>
+<li class="chapter" data-level="4.3.9" data-path="demand.html"><a href="demand.html#specify-the-detail-ii"><i class="fa fa-check"></i><b>4.3.9</b> Specify the Detail II</a></li>
+<li class="chapter" data-level="4.3.10" data-path="demand.html"><a href="demand.html#estimation"><i class="fa fa-check"></i><b>4.3.10</b> Estimation</a></li>
+<li class="chapter" data-level="4.3.11" data-path="demand.html"><a href="demand.html#from-product-space-approach-to-characteristics-space-approach"><i class="fa fa-check"></i><b>4.3.11</b> From Product Space Approach to Characteristics Space Approach</a></li>
+<li class="chapter" data-level="4.3.12" data-path="demand.html"><a href="demand.html#from-continuous-choice-approach-to-discrete-choice-approach"><i class="fa fa-check"></i><b>4.3.12</b> From Continuous Choice Approach to Discrete Choice Approach</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="demand.html"><a href="demand.html#discrete-choice"><i class="fa fa-check"></i><b>4.4</b> Discrete Choice</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="demand.html"><a href="demand.html#discrete-choice-approach"><i class="fa fa-check"></i><b>4.4.1</b> Discrete Choice Approach</a></li>
+<li class="chapter" data-level="4.4.2" data-path="demand.html"><a href="demand.html#discrete-choice-approach-1"><i class="fa fa-check"></i><b>4.4.2</b> Discrete Choice Approach</a></li>
+<li class="chapter" data-level="4.4.3" data-path="demand.html"><a href="demand.html#discrete-choice-approach-2"><i class="fa fa-check"></i><b>4.4.3</b> Discrete Choice Approach</a></li>
+<li class="chapter" data-level="4.4.4" data-path="demand.html"><a href="demand.html#characteristics-space-approach"><i class="fa fa-check"></i><b>4.4.4</b> Characteristics Space Approach</a></li>
+<li class="chapter" data-level="4.4.5" data-path="demand.html"><a href="demand.html#weak-separability-and-income-effect"><i class="fa fa-check"></i><b>4.4.5</b> Weak Separability and Income Effect</a></li>
+<li class="chapter" data-level="4.4.6" data-path="demand.html"><a href="demand.html#weak-separability-and-income-effect-1"><i class="fa fa-check"></i><b>4.4.6</b> Weak Separability and Income Effect</a></li>
+<li class="chapter" data-level="4.4.7" data-path="demand.html"><a href="demand.html#utility-function-normalization"><i class="fa fa-check"></i><b>4.4.7</b> Utility Function Normalization</a></li>
+<li class="chapter" data-level="4.4.8" data-path="demand.html"><a href="demand.html#aggregation-of-the-individual-demand"><i class="fa fa-check"></i><b>4.4.8</b> Aggregation of the Individual Demand</a></li>
+<li class="chapter" data-level="4.4.9" data-path="demand.html"><a href="demand.html#horizontal-product-differentiation"><i class="fa fa-check"></i><b>4.4.9</b> Horizontal Product Differentiation</a></li>
+<li class="chapter" data-level="4.4.10" data-path="demand.html"><a href="demand.html#horizontal-product-differentiation-1"><i class="fa fa-check"></i><b>4.4.10</b> Horizontal Product Differentiation</a></li>
+<li class="chapter" data-level="4.4.11" data-path="demand.html"><a href="demand.html#vertical-product-differentiation"><i class="fa fa-check"></i><b>4.4.11</b> Vertical Product Differentiation</a></li>
+<li class="chapter" data-level="4.4.12" data-path="demand.html"><a href="demand.html#vertical-product-differentiation-1"><i class="fa fa-check"></i><b>4.4.12</b> Vertical Product Differentiation</a></li>
+<li class="chapter" data-level="4.4.13" data-path="demand.html"><a href="demand.html#econometric-models"><i class="fa fa-check"></i><b>4.4.13</b> Econometric Models</a></li>
+<li class="chapter" data-level="4.4.14" data-path="demand.html"><a href="demand.html#multinomial-logit-model-preference-shock"><i class="fa fa-check"></i><b>4.4.14</b> Multinomial Logit Model: Preference Shock</a></li>
+<li class="chapter" data-level="4.4.15" data-path="demand.html"><a href="demand.html#multinomial-logit-model-distributional-assumption"><i class="fa fa-check"></i><b>4.4.15</b> Multinomial Logit Model: Distributional Assumption</a></li>
+<li class="chapter" data-level="4.4.16" data-path="demand.html"><a href="demand.html#multinomial-logit-model-choice-probability"><i class="fa fa-check"></i><b>4.4.16</b> Multinomial Logit Model: Choice Probability</a></li>
+<li class="chapter" data-level="4.4.17" data-path="demand.html"><a href="demand.html#multinomial-logit-model-inclusive-value"><i class="fa fa-check"></i><b>4.4.17</b> Multinomial Logit Model: Inclusive Value</a></li>
+<li class="chapter" data-level="4.4.18" data-path="demand.html"><a href="demand.html#maximum-likelihood-estimation-of-multinomial-logit-model"><i class="fa fa-check"></i><b>4.4.18</b> Maximum Likelihood Estimation of Multinomial Logit Model</a></li>
+<li class="chapter" data-level="4.4.19" data-path="demand.html"><a href="demand.html#nonlinear-least-square-estimation-of-multinomial-logit-model"><i class="fa fa-check"></i><b>4.4.19</b> Nonlinear Least Square Estimation of Multinomial Logit Model</a></li>
+<li class="chapter" data-level="4.4.20" data-path="demand.html"><a href="demand.html#iia-problem"><i class="fa fa-check"></i><b>4.4.20</b> IIA Problem</a></li>
+<li class="chapter" data-level="4.4.21" data-path="demand.html"><a href="demand.html#blue-bus-and-red-bus-problem"><i class="fa fa-check"></i><b>4.4.21</b> Blue Bus and Red Bus Problem</a></li>
+<li class="chapter" data-level="4.4.22" data-path="demand.html"><a href="demand.html#restrictive-price-elasticity"><i class="fa fa-check"></i><b>4.4.22</b> Restrictive Price Elasticity</a></li>
+<li class="chapter" data-level="4.4.23" data-path="demand.html"><a href="demand.html#monotonic-inclusive-value"><i class="fa fa-check"></i><b>4.4.23</b> Monotonic Inclusive Value</a></li>
+<li class="chapter" data-level="4.4.24" data-path="demand.html"><a href="demand.html#the-source-of-the-problem"><i class="fa fa-check"></i><b>4.4.24</b> The Source of the Problem</a></li>
+<li class="chapter" data-level="4.4.25" data-path="demand.html"><a href="demand.html#correlation-in-preference-shocks"><i class="fa fa-check"></i><b>4.4.25</b> Correlation in Preference Shocks</a></li>
+<li class="chapter" data-level="4.4.26" data-path="demand.html"><a href="demand.html#observed-and-unobserved-consumer-heterogeneity"><i class="fa fa-check"></i><b>4.4.26</b> Observed and Unobserved Consumer Heterogeneity</a></li>
+<li class="chapter" data-level="4.4.27" data-path="demand.html"><a href="demand.html#mixed-logit-model"><i class="fa fa-check"></i><b>4.4.27</b> Mixed Logit Model</a></li>
+<li class="chapter" data-level="4.4.28" data-path="demand.html"><a href="demand.html#mixed-logit-model-parametric-assumptions"><i class="fa fa-check"></i><b>4.4.28</b> Mixed Logit Model : Parametric Assumptions</a></li>
+<li class="chapter" data-level="4.4.29" data-path="demand.html"><a href="demand.html#mixed-logit-model-iia"><i class="fa fa-check"></i><b>4.4.29</b> Mixed Logit Model: IIA</a></li>
+<li class="chapter" data-level="4.4.30" data-path="demand.html"><a href="demand.html#mixed-logit-moel-price-elasticities"><i class="fa fa-check"></i><b>4.4.30</b> Mixed Logit Moel: Price Elasticities</a></li>
+<li class="chapter" data-level="4.4.31" data-path="demand.html"><a href="demand.html#simulated-maximum-likelihood-estimation-of-the-mixed-logit-model"><i class="fa fa-check"></i><b>4.4.31</b> Simulated Maximum Likelihood Estimation of the Mixed Logit Model</a></li>
+<li class="chapter" data-level="4.4.32" data-path="demand.html"><a href="demand.html#simulated-maximum-likelihood-estimation-of-the-mixed-logit-model-1"><i class="fa fa-check"></i><b>4.4.32</b> Simulated Maximum Likelihood Estimation of the Mixed Logit Model</a></li>
+<li class="chapter" data-level="4.4.33" data-path="demand.html"><a href="demand.html#simulated-non-linear-least-square-estimation-of-the-mixed-logit-model"><i class="fa fa-check"></i><b>4.4.33</b> Simulated Non-linear Least Square Estimation of the Mixed Logit Model</a></li>
+<li class="chapter" data-level="4.4.34" data-path="demand.html"><a href="demand.html#nested-logit-model-a-special-case-of-mixed-logit-model"><i class="fa fa-check"></i><b>4.4.34</b> Nested Logit Model: A Special Case of Mixed Logit Model</a></li>
+<li class="chapter" data-level="4.4.35" data-path="demand.html"><a href="demand.html#nested-logit-model-distributional-assumption"><i class="fa fa-check"></i><b>4.4.35</b> Nested Logit Model: Distributional Assumption</a></li>
+<li class="chapter" data-level="4.4.36" data-path="demand.html"><a href="demand.html#nested-logit-model-choice-probability"><i class="fa fa-check"></i><b>4.4.36</b> Nested Logit Model: Choice Probability</a></li>
+<li class="chapter" data-level="4.4.37" data-path="demand.html"><a href="demand.html#nested-logit-model-decomposition-of-the-choice-probability"><i class="fa fa-check"></i><b>4.4.37</b> Nested Logit Model: Decomposition of the Choice Probability</a></li>
+<li class="chapter" data-level="4.4.38" data-path="demand.html"><a href="demand.html#discrete-choice-model-with-unobserved-fixed-effects"><i class="fa fa-check"></i><b>4.4.38</b> Discrete Choice Model with Unobserved Fixed Effects</a></li>
+<li class="chapter" data-level="4.4.39" data-path="demand.html"><a href="demand.html#unobserved-fixed-effects-in-multinomial-logit-model"><i class="fa fa-check"></i><b>4.4.39</b> Unobserved Fixed Effects in Multinomial Logit Model</a></li>
+<li class="chapter" data-level="4.4.40" data-path="demand.html"><a href="demand.html#instrumental-variables-and-inversion"><i class="fa fa-check"></i><b>4.4.40</b> Instrumental Variables and Inversion</a></li>
+<li class="chapter" data-level="4.4.41" data-path="demand.html"><a href="demand.html#inversion-in-multinomial-logit-model"><i class="fa fa-check"></i><b>4.4.41</b> Inversion in Multinomial Logit Model</a></li>
+<li class="chapter" data-level="4.4.42" data-path="demand.html"><a href="demand.html#market-invariant-product-specific-fixed-effects"><i class="fa fa-check"></i><b>4.4.42</b> Market-invariant Product-specific Fixed Effects</a></li>
+<li class="chapter" data-level="4.4.43" data-path="demand.html"><a href="demand.html#unobserved-consumer-heterogeneity-and-unobserved-fixed-effects-in-mixed-logit-model"><i class="fa fa-check"></i><b>4.4.43</b> Unobserved Consumer Heterogeneity and Unobserved Fixed Effects in Mixed-logit Model</a></li>
+<li class="chapter" data-level="4.4.44" data-path="demand.html"><a href="demand.html#unobserved-fixed-effects-in-mixed-logit-model"><i class="fa fa-check"></i><b>4.4.44</b> Unobserved Fixed Effects in Mixed-logit Model</a></li>
+<li class="chapter" data-level="4.4.45" data-path="demand.html"><a href="demand.html#representing-xi_jt-as-a-function-of-parameters-of-interest"><i class="fa fa-check"></i><b>4.4.45</b> Representing <span class="math inline">\(\xi_{jt}\)</span> as a Function of Parameters of Interest</a></li>
+<li class="chapter" data-level="4.4.46" data-path="demand.html"><a href="demand.html#summarizing-the-conditional-mean-term"><i class="fa fa-check"></i><b>4.4.46</b> Summarizing the Conditional Mean Term</a></li>
+<li class="chapter" data-level="4.4.47" data-path="demand.html"><a href="demand.html#contraction-mapping-for-delta_t."><i class="fa fa-check"></i><b>4.4.47</b> Contraction Mapping for <span class="math inline">\(\delta_t\)</span>.</a></li>
+<li class="chapter" data-level="4.4.48" data-path="demand.html"><a href="demand.html#solving-for-xi_jttheta"><i class="fa fa-check"></i><b>4.4.48</b> Solving for <span class="math inline">\(\xi_{jt}(\theta)\)</span></a></li>
+<li class="chapter" data-level="4.4.49" data-path="demand.html"><a href="demand.html#solving-for-xi_jttheta-summary"><i class="fa fa-check"></i><b>4.4.49</b> Solving for <span class="math inline">\(\xi_{jt}(\theta)\)</span>: Summary</a></li>
+<li class="chapter" data-level="4.4.50" data-path="demand.html"><a href="demand.html#gmm-objective-function"><i class="fa fa-check"></i><b>4.4.50</b> GMM Objective Function</a></li>
+<li class="chapter" data-level="4.4.51" data-path="demand.html"><a href="demand.html#estimating-linear-parameters"><i class="fa fa-check"></i><b>4.4.51</b> Estimating Linear Parameters</a></li>
+<li class="chapter" data-level="4.4.52" data-path="demand.html"><a href="demand.html#blp-algorithm"><i class="fa fa-check"></i><b>4.4.52</b> BLP Algorithm</a></li>
+<li class="chapter" data-level="4.4.53" data-path="demand.html"><a href="demand.html#mathematical-program-with-equilibrium-constraints-mpec"><i class="fa fa-check"></i><b>4.4.53</b> Mathematical Program with Equilibrium Constraints (MPEC)</a></li>
+<li class="chapter" data-level="4.4.54" data-path="demand.html"><a href="demand.html#control-function-approach"><i class="fa fa-check"></i><b>4.4.54</b> Control Function Approach</a></li>
+<li class="chapter" data-level="4.4.55" data-path="demand.html"><a href="demand.html#control-function-approach-1"><i class="fa fa-check"></i><b>4.4.55</b> Control Function Approach</a></li>
+<li class="chapter" data-level="4.4.56" data-path="demand.html"><a href="demand.html#instrumental-variables"><i class="fa fa-check"></i><b>4.4.56</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.4.57" data-path="demand.html"><a href="demand.html#pyblp"><i class="fa fa-check"></i><b>4.4.57</b> PyBLP</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="merger.html"><a href="merger.html"><i class="fa fa-check"></i><b>5</b> Merger Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="merger.html"><a href="merger.html#motivations-2"><i class="fa fa-check"></i><b>5.1</b> Motivations</a></li>
+<li class="chapter" data-level="5.2" data-path="merger.html"><a href="merger.html#identification-of-conduct"><i class="fa fa-check"></i><b>5.2</b> Identification of Conduct</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="merger.html"><a href="merger.html#identification-of-conduct-1"><i class="fa fa-check"></i><b>5.2.1</b> Identification of Conduct</a></li>
+<li class="chapter" data-level="5.2.2" data-path="merger.html"><a href="merger.html#marginal-revenue-function"><i class="fa fa-check"></i><b>5.2.2</b> Marginal Revenue Function</a></li>
+<li class="chapter" data-level="5.2.3" data-path="merger.html"><a href="merger.html#first-order-condition"><i class="fa fa-check"></i><b>5.2.3</b> First-Order Condition</a></li>
+<li class="chapter" data-level="5.2.4" data-path="merger.html"><a href="merger.html#linear-model"><i class="fa fa-check"></i><b>5.2.4</b> Linear Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="merger.html"><a href="merger.html#pricing-equation"><i class="fa fa-check"></i><b>5.2.5</b> Pricing Equation</a></li>
+<li class="chapter" data-level="5.2.6" data-path="merger.html"><a href="merger.html#identification-of-inverse-demand-function-and-pricing-equation"><i class="fa fa-check"></i><b>5.2.6</b> Identification of Inverse Demand Function and Pricing Equation</a></li>
+<li class="chapter" data-level="5.2.7" data-path="merger.html"><a href="merger.html#the-conduct-parameter-is-unidentified"><i class="fa fa-check"></i><b>5.2.7</b> The Conduct Parameter is Unidentified</a></li>
+<li class="chapter" data-level="5.2.8" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-available"><i class="fa fa-check"></i><b>5.2.8</b> Identification of the Conduct Parameter: When Cost Data is Available</a></li>
+<li class="chapter" data-level="5.2.9" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-when-cost-data-is-not-available"><i class="fa fa-check"></i><b>5.2.9</b> Identification of the Conduct Parameter: When Cost Data is Not Available</a></li>
+<li class="chapter" data-level="5.2.10" data-path="merger.html"><a href="merger.html#identification-of-the-conduct-parameter-demand-rotater-is-available"><i class="fa fa-check"></i><b>5.2.10</b> Identification of the Conduct Parameter: Demand Rotater is Available</a></li>
+<li class="chapter" data-level="5.2.11" data-path="merger.html"><a href="merger.html#identification-of-conduct-in-differentiated-product-market"><i class="fa fa-check"></i><b>5.2.11</b> Identification of Conduct in Differentiated Product Market</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="merger.html"><a href="merger.html#merger-simulation"><i class="fa fa-check"></i><b>5.3</b> Merger Simulation</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="merger.html"><a href="merger.html#unilateral-and-coordinated-effects-of-a-horizontal-merger"><i class="fa fa-check"></i><b>5.3.1</b> Unilateral and Coordinated Effects of a Horizontal Merger</a></li>
+<li class="chapter" data-level="5.3.2" data-path="merger.html"><a href="merger.html#merger-simulation-1"><i class="fa fa-check"></i><b>5.3.2</b> Merger Simulation</a></li>
+<li class="chapter" data-level="5.3.3" data-path="merger.html"><a href="merger.html#quantifying-the-unilateral-effect"><i class="fa fa-check"></i><b>5.3.3</b> Quantifying the Unilateral Effect</a></li>
+<li class="chapter" data-level="5.3.4" data-path="merger.html"><a href="merger.html#pre-merger-equilibrium"><i class="fa fa-check"></i><b>5.3.4</b> Pre-Merger Equilibrium</a></li>
+<li class="chapter" data-level="5.3.5" data-path="merger.html"><a href="merger.html#post-merger-equilibrium"><i class="fa fa-check"></i><b>5.3.5</b> Post-Merger Equilibrium</a></li>
+<li class="chapter" data-level="5.3.6" data-path="merger.html"><a href="merger.html#consumer-surplus"><i class="fa fa-check"></i><b>5.3.6</b> Consumer Surplus</a></li>
+<li class="chapter" data-level="5.3.7" data-path="merger.html"><a href="merger.html#quantifying-the-coordinated-effect"><i class="fa fa-check"></i><b>5.3.7</b> Quantifying the Coordinated Effect</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="entryexit.html"><a href="entryexit.html"><i class="fa fa-check"></i><b>6</b> Entry and Exit</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="entryexit.html"><a href="entryexit.html#motivations-3"><i class="fa fa-check"></i><b>6.1</b> Motivations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="entryexit.html"><a href="entryexit.html#entry-cost-mode-of-competition-and-market-structure"><i class="fa fa-check"></i><b>6.1.1</b> Entry Cost, Mode of Competition, and Market Structure</a></li>
+<li class="chapter" data-level="6.1.2" data-path="entryexit.html"><a href="entryexit.html#exogenous-and-endogenous-entry-cost"><i class="fa fa-check"></i><b>6.1.2</b> Exogenous and Endogenous Entry Cost</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="entryexit.html"><a href="entryexit.html#monopoly-entry"><i class="fa fa-check"></i><b>6.2</b> Monopoly Entry</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="entryexit.html"><a href="entryexit.html#variable-profits-and-fixed-costs"><i class="fa fa-check"></i><b>6.2.1</b> Variable Profits and Fixed Costs</a></li>
+<li class="chapter" data-level="6.2.2" data-path="entryexit.html"><a href="entryexit.html#non-identification"><i class="fa fa-check"></i><b>6.2.2</b> Non-Identification</a></li>
+<li class="chapter" data-level="6.2.3" data-path="entryexit.html"><a href="entryexit.html#restrictions-for-identification."><i class="fa fa-check"></i><b>6.2.3</b> Restrictions for Identification.</a></li>
+<li class="chapter" data-level="6.2.4" data-path="entryexit.html"><a href="entryexit.html#homogeneous-of-degree-1-variable-profits"><i class="fa fa-check"></i><b>6.2.4</b> Homogeneous of Degree 1 Variable Profits</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="entryexit.html"><a href="entryexit.html#complete-information-homogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.3</b> Complete-Information Homogeneous Oligopoly Entry</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="entryexit.html"><a href="entryexit.html#variable-and-fixed-costs"><i class="fa fa-check"></i><b>6.3.1</b> Variable and Fixed Costs</a></li>
+<li class="chapter" data-level="6.3.2" data-path="entryexit.html"><a href="entryexit.html#equilibrium-condition"><i class="fa fa-check"></i><b>6.3.2</b> Equilibrium Condition</a></li>
+<li class="chapter" data-level="6.3.3" data-path="entryexit.html"><a href="entryexit.html#identification-under-a-shape-restriction"><i class="fa fa-check"></i><b>6.3.3</b> Identification under a Shape Restriction</a></li>
+<li class="chapter" data-level="6.3.4" data-path="entryexit.html"><a href="entryexit.html#log-likelihood-function"><i class="fa fa-check"></i><b>6.3.4</b> Log Likelihood Function</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="entryexit.html"><a href="entryexit.html#complete-information-heterogeneous-oligopoly-entry"><i class="fa fa-check"></i><b>6.4</b> Complete-Information Heterogeneous Oligopoly Entry</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="entryexit.html"><a href="entryexit.html#bivartiate-game-with-heterogeneous-profits"><i class="fa fa-check"></i><b>6.4.1</b> Bivartiate Game with Heterogeneous Profits</a></li>
+<li class="chapter" data-level="6.4.2" data-path="entryexit.html"><a href="entryexit.html#sampling-assumption-and-observations"><i class="fa fa-check"></i><b>6.4.2</b> Sampling Assumption and Observations</a></li>
+<li class="chapter" data-level="6.4.3" data-path="entryexit.html"><a href="entryexit.html#identification-assuming-pure-strategy-equilibrium"><i class="fa fa-check"></i><b>6.4.3</b> Identification Assuming Pure-Strategy Equilibrium</a></li>
+<li class="chapter" data-level="6.4.4" data-path="entryexit.html"><a href="entryexit.html#heterogeneous-independent-fixed-costs"><i class="fa fa-check"></i><b>6.4.4</b> Heterogeneous Independent Fixed Costs</a></li>
+<li class="chapter" data-level="6.4.5" data-path="entryexit.html"><a href="entryexit.html#heterogenous-and-market-level-correlated-fixed-costs"><i class="fa fa-check"></i><b>6.4.5</b> Heterogenous and Market-Level Correlated Fixed Costs</a></li>
+<li class="chapter" data-level="6.4.6" data-path="entryexit.html"><a href="entryexit.html#inference-based-on-a-unique-prediction"><i class="fa fa-check"></i><b>6.4.6</b> Inference Based On a Unique Prediction</a></li>
+<li class="chapter" data-level="6.4.7" data-path="entryexit.html"><a href="entryexit.html#entry-in-the-airline-industry-one-shot-game"><i class="fa fa-check"></i><b>6.4.7</b> Entry in the Airline Industry: One-shot Game</a></li>
+<li class="chapter" data-level="6.4.8" data-path="entryexit.html"><a href="entryexit.html#entry-in-the-airline-industry-profit-function"><i class="fa fa-check"></i><b>6.4.8</b> Entry in the Airline Industry: Profit Function</a></li>
+<li class="chapter" data-level="6.4.9" data-path="entryexit.html"><a href="entryexit.html#entry-in-the-airline-industry-profit-function-1"><i class="fa fa-check"></i><b>6.4.9</b> Entry in the Airline Industry: Profit Function</a></li>
+<li class="chapter" data-level="6.4.10" data-path="entryexit.html"><a href="entryexit.html#entry-in-the-airline-industry-likelihood-function"><i class="fa fa-check"></i><b>6.4.10</b> Entry in the Airline Industry: Likelihood Function</a></li>
+<li class="chapter" data-level="6.4.11" data-path="entryexit.html"><a href="entryexit.html#is-the-equilibrium-number-of-firms-unique"><i class="fa fa-check"></i><b>6.4.11</b> Is the Equilibrium Number of Firms Unique?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction"><i class="fa fa-check"></i><b>6.5</b> Multiple Prediction</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="entryexit.html"><a href="entryexit.html#multiple-equilibria-in-bivariate-game-with-heterogenous-profits"><i class="fa fa-check"></i><b>6.5.1</b> Multiple Equilibria in Bivariate Game with Heterogenous Profits</a></li>
+<li class="chapter" data-level="6.5.2" data-path="entryexit.html"><a href="entryexit.html#multiple-prediction-in-bivariate-game-with-heterogenous-profits"><i class="fa fa-check"></i><b>6.5.2</b> Multiple Prediction in Bivariate Game with Heterogenous Profits</a></li>
+<li class="chapter" data-level="6.5.3" data-path="entryexit.html"><a href="entryexit.html#inference-based-on-moment-inequalities"><i class="fa fa-check"></i><b>6.5.3</b> Inference Based on Moment Inequalities</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="entryexit.html"><a href="entryexit.html#incompelete-information-heterogenous-oligopoly-entry"><i class="fa fa-check"></i><b>6.6</b> Incompelete-Information Heterogenous Oligopoly Entry</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="entryexit.html"><a href="entryexit.html#bivariate-case"><i class="fa fa-check"></i><b>6.6.1</b> Bivariate Case</a></li>
+<li class="chapter" data-level="6.6.2" data-path="entryexit.html"><a href="entryexit.html#the-equilibrium-strategy-and-belief"><i class="fa fa-check"></i><b>6.6.2</b> The Equilibrium Strategy and Belief</a></li>
+<li class="chapter" data-level="6.6.3" data-path="entryexit.html"><a href="entryexit.html#equilibrium-selection-and-likelihood"><i class="fa fa-check"></i><b>6.6.3</b> Equilibrium Selection and Likelihood</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="dynamics.html"><a href="dynamics.html"><i class="fa fa-check"></i><b>7</b> Dynamic Decision Model</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="dynamics.html"><a href="dynamics.html#motivations-4"><i class="fa fa-check"></i><b>7.1</b> Motivations</a></li>
+<li class="chapter" data-level="7.2" data-path="dynamics.html"><a href="dynamics.html#single-agent-model"><i class="fa fa-check"></i><b>7.2</b> Single-Agent Model</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="dynamics.html"><a href="dynamics.html#setting"><i class="fa fa-check"></i><b>7.2.1</b> Setting</a></li>
+<li class="chapter" data-level="7.2.2" data-path="dynamics.html"><a href="dynamics.html#timing-of-the-model"><i class="fa fa-check"></i><b>7.2.2</b> Timing of the Model</a></li>
+<li class="chapter" data-level="7.2.3" data-path="dynamics.html"><a href="dynamics.html#period-payoff"><i class="fa fa-check"></i><b>7.2.3</b> Period Payoff</a></li>
+<li class="chapter" data-level="7.2.4" data-path="dynamics.html"><a href="dynamics.html#markovian-framework"><i class="fa fa-check"></i><b>7.2.4</b> Markovian Framework</a></li>
+<li class="chapter" data-level="7.2.5" data-path="dynamics.html"><a href="dynamics.html#belief"><i class="fa fa-check"></i><b>7.2.5</b> Belief</a></li>
+<li class="chapter" data-level="7.2.6" data-path="dynamics.html"><a href="dynamics.html#decision-problem"><i class="fa fa-check"></i><b>7.2.6</b> Decision Problem</a></li>
+<li class="chapter" data-level="7.2.7" data-path="dynamics.html"><a href="dynamics.html#value-function-and-ex-ante-value-function"><i class="fa fa-check"></i><b>7.2.7</b> Value Function and Ex-ante Value Function</a></li>
+<li class="chapter" data-level="7.2.8" data-path="dynamics.html"><a href="dynamics.html#choice-specific-value-function"><i class="fa fa-check"></i><b>7.2.8</b> Choice-specific Value Function</a></li>
+<li class="chapter" data-level="7.2.9" data-path="dynamics.html"><a href="dynamics.html#optimality-condition"><i class="fa fa-check"></i><b>7.2.9</b> Optimality Condition</a></li>
+<li class="chapter" data-level="7.2.10" data-path="dynamics.html"><a href="dynamics.html#optimal-conditional-choice-probability"><i class="fa fa-check"></i><b>7.2.10</b> Optimal Conditional Choice Probability</a></li>
+<li class="chapter" data-level="7.2.11" data-path="dynamics.html"><a href="dynamics.html#optimality-condition-1"><i class="fa fa-check"></i><b>7.2.11</b> Optimality Condition</a></li>
+<li class="chapter" data-level="7.2.12" data-path="dynamics.html"><a href="dynamics.html#mapping-from-a-conditional-choice-probability-to-an-ex-ante-value-function"><i class="fa fa-check"></i><b>7.2.12</b> Mapping from a Conditional Choice Probability to an Ex-ante Value Function</a></li>
+<li class="chapter" data-level="7.2.13" data-path="dynamics.html"><a href="dynamics.html#mapping-from-an-ex-ante-value-function-to-an-optimal-conditional-choice-probability"><i class="fa fa-check"></i><b>7.2.13</b> Mapping from an Ex-ante Value Function to an Optimal Conditional Choice Probability</a></li>
+<li class="chapter" data-level="7.2.14" data-path="dynamics.html"><a href="dynamics.html#the-optimality-conditions"><i class="fa fa-check"></i><b>7.2.14</b> The Optimality Conditions</a></li>
+<li class="chapter" data-level="7.2.15" data-path="dynamics.html"><a href="dynamics.html#fixed-point-algorithm"><i class="fa fa-check"></i><b>7.2.15</b> Fixed-point Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="dynamics.html"><a href="dynamics.html#identification"><i class="fa fa-check"></i><b>7.3</b> Identification</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="dynamics.html"><a href="dynamics.html#unidentification-result"><i class="fa fa-check"></i><b>7.3.1</b> Unidentification Result</a></li>
+<li class="chapter" data-level="7.3.2" data-path="dynamics.html"><a href="dynamics.html#identification-when-beta-and-f-is-known"><i class="fa fa-check"></i><b>7.3.2</b> Identification when <span class="math inline">\(\beta\)</span> and <span class="math inline">\(F\)</span> is Known</a></li>
+<li class="chapter" data-level="7.3.3" data-path="dynamics.html"><a href="dynamics.html#crucial-assumptions-for-the-argument"><i class="fa fa-check"></i><b>7.3.3</b> Crucial Assumptions for the Argument</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4</b> Estimation by Nested Fixed-point Algorithm</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="dynamics.html"><a href="dynamics.html#nested-fixed-point-algorithm"><i class="fa fa-check"></i><b>7.4.1</b> Nested Fixed-Point Algorithm</a></li>
+<li class="chapter" data-level="7.4.2" data-path="dynamics.html"><a href="dynamics.html#solving-for-the-ex-ante-value-function"><i class="fa fa-check"></i><b>7.4.2</b> Solving for the Ex-ante Value Function</a></li>
+<li class="chapter" data-level="7.4.3" data-path="dynamics.html"><a href="dynamics.html#estimation-by-nested-fixed-point-algorithm-1"><i class="fa fa-check"></i><b>7.4.3</b> Estimation by Nested Fixed-Point Algorithm</a></li>
+<li class="chapter" data-level="7.4.4" data-path="dynamics.html"><a href="dynamics.html#full-and-partial-likelihood"><i class="fa fa-check"></i><b>7.4.4</b> Full and Partial Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="dynamics.html"><a href="dynamics.html#estimation-by-conditional-choice-probability-ccp-approach"><i class="fa fa-check"></i><b>7.5</b> Estimation by Conditional Choice Probability (CCP) Approach</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="dynamics.html"><a href="dynamics.html#ccp-approach"><i class="fa fa-check"></i><b>7.5.1</b> CCP Approach</a></li>
+<li class="chapter" data-level="7.5.2" data-path="dynamics.html"><a href="dynamics.html#first-step-estimating-ccp"><i class="fa fa-check"></i><b>7.5.2</b> First Step: Estimating CCP</a></li>
+<li class="chapter" data-level="7.5.3" data-path="dynamics.html"><a href="dynamics.html#first-step-estimating-ccp-1"><i class="fa fa-check"></i><b>7.5.3</b> First Step: Estimating CCP</a></li>
+<li class="chapter" data-level="7.5.4" data-path="dynamics.html"><a href="dynamics.html#second-step-estimating-structural-parameters"><i class="fa fa-check"></i><b>7.5.4</b> Second Step: Estimating Structural Parameters</a></li>
+<li class="chapter" data-level="7.5.5" data-path="dynamics.html"><a href="dynamics.html#second-step-estimating-structural-parameters-1"><i class="fa fa-check"></i><b>7.5.5</b> Second Step: Estimating Structural Parameters</a></li>
+<li class="chapter" data-level="7.5.6" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution"><i class="fa fa-check"></i><b>7.5.6</b> Type-I Extreme Value Distribution</a></li>
+<li class="chapter" data-level="7.5.7" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution-1"><i class="fa fa-check"></i><b>7.5.7</b> Type-I Extreme Value Distribution</a></li>
+<li class="chapter" data-level="7.5.8" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution-2"><i class="fa fa-check"></i><b>7.5.8</b> Type-I Extreme Value Distribution</a></li>
+<li class="chapter" data-level="7.5.9" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution-3"><i class="fa fa-check"></i><b>7.5.9</b> Type-I Extreme Value Distribution</a></li>
+<li class="chapter" data-level="7.5.10" data-path="dynamics.html"><a href="dynamics.html#type-i-extreme-value-distribution-4"><i class="fa fa-check"></i><b>7.5.10</b> Type-I Extreme Value Distribution</a></li>
+<li class="chapter" data-level="7.5.11" data-path="dynamics.html"><a href="dynamics.html#general-distribution"><i class="fa fa-check"></i><b>7.5.11</b> General Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="dynamics.html"><a href="dynamics.html#unobserved-heterogeneity"><i class="fa fa-check"></i><b>7.6</b> Unobserved Heterogeneity</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="dynamics.html"><a href="dynamics.html#dynamic-decision-model-with-a-finite-mixture"><i class="fa fa-check"></i><b>7.6.1</b> Dynamic Decision Model with a Finite Mixture</a></li>
+<li class="chapter" data-level="7.6.2" data-path="dynamics.html"><a href="dynamics.html#setting-1"><i class="fa fa-check"></i><b>7.6.2</b> Setting</a></li>
+<li class="chapter" data-level="7.6.3" data-path="dynamics.html"><a href="dynamics.html#observation"><i class="fa fa-check"></i><b>7.6.3</b> Observation</a></li>
+<li class="chapter" data-level="7.6.4" data-path="dynamics.html"><a href="dynamics.html#assumptions-finite-mixture"><i class="fa fa-check"></i><b>7.6.4</b> Further Assumptions</a></li>
+<li class="chapter" data-level="7.6.5" data-path="dynamics.html"><a href="dynamics.html#lower-dimensional-submodels"><i class="fa fa-check"></i><b>7.6.5</b> Lower-dimensional Submodels</a></li>
+<li class="chapter" data-level="7.6.6" data-path="dynamics.html"><a href="dynamics.html#notations"><i class="fa fa-check"></i><b>7.6.6</b> Notations</a></li>
+<li class="chapter" data-level="7.6.7" data-path="dynamics.html"><a href="dynamics.html#notations-for-parameters-to-be-identified"><i class="fa fa-check"></i><b>7.6.7</b> Notations for Parameters to be Identified</a></li>
+<li class="chapter" data-level="7.6.8" data-path="dynamics.html"><a href="dynamics.html#notations-for-observables"><i class="fa fa-check"></i><b>7.6.8</b> Notations for Observables</a></li>
+<li class="chapter" data-level="7.6.9" data-path="dynamics.html"><a href="dynamics.html#sufficient-condition-for-identification"><i class="fa fa-check"></i><b>7.6.9</b> Sufficient Condition for Identification</a></li>
+<li class="chapter" data-level="7.6.10" data-path="dynamics.html"><a href="dynamics.html#remarks-on-the-theorem"><i class="fa fa-check"></i><b>7.6.10</b> Remarks on the Theorem</a></li>
+<li class="chapter" data-level="7.6.11" data-path="dynamics.html"><a href="dynamics.html#factorization-equations"><i class="fa fa-check"></i><b>7.6.11</b> Factorization Equations</a></li>
+<li class="chapter" data-level="7.6.12" data-path="dynamics.html"><a href="dynamics.html#sketch-of-the-proof"><i class="fa fa-check"></i><b>7.6.12</b> Sketch of the Proof</a></li>
+<li class="chapter" data-level="7.6.13" data-path="dynamics.html"><a href="dynamics.html#constructive-estimation"><i class="fa fa-check"></i><b>7.6.13</b> Constructive Estimation</a></li>
+<li class="chapter" data-level="7.6.14" data-path="dynamics.html"><a href="dynamics.html#estimation-by-an-em-algorithm"><i class="fa fa-check"></i><b>7.6.14</b> Estimation by an EM Algorithm</a></li>
+<li class="chapter" data-level="7.6.15" data-path="dynamics.html"><a href="dynamics.html#idea"><i class="fa fa-check"></i><b>7.6.15</b> Idea</a></li>
+<li class="chapter" data-level="7.6.16" data-path="dynamics.html"><a href="dynamics.html#optimal-conditional-choice-probability-1"><i class="fa fa-check"></i><b>7.6.16</b> Optimal Conditional Choice Probability</a></li>
+<li class="chapter" data-level="7.6.17" data-path="dynamics.html"><a href="dynamics.html#likelihood-functions"><i class="fa fa-check"></i><b>7.6.17</b> Likelihood Functions</a></li>
+<li class="chapter" data-level="7.6.18" data-path="dynamics.html"><a href="dynamics.html#expectation-step"><i class="fa fa-check"></i><b>7.6.18</b> Expectation Step</a></li>
+<li class="chapter" data-level="7.6.19" data-path="dynamics.html"><a href="dynamics.html#maximization-step"><i class="fa fa-check"></i><b>7.6.19</b> Maximization Step</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="dynamicgame.html"><a href="dynamicgame.html"><i class="fa fa-check"></i><b>8</b> Dynamic Game</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="dynamicgame.html"><a href="dynamicgame.html#multiple-agent-model"><i class="fa fa-check"></i><b>8.1</b> Multiple-Agent Model</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-2"><i class="fa fa-check"></i><b>8.1.1</b> Setting</a></li>
+<li class="chapter" data-level="8.1.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-model-1"><i class="fa fa-check"></i><b>8.1.2</b> Timing of the Model</a></li>
+<li class="chapter" data-level="8.1.3" data-path="dynamicgame.html"><a href="dynamicgame.html#period-profit"><i class="fa fa-check"></i><b>8.1.3</b> Period Profit</a></li>
+<li class="chapter" data-level="8.1.4" data-path="dynamicgame.html"><a href="dynamicgame.html#belief-1"><i class="fa fa-check"></i><b>8.1.4</b> Belief</a></li>
+<li class="chapter" data-level="8.1.5" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium"><i class="fa fa-check"></i><b>8.1.5</b> Markov Perfect Equilibrium</a></li>
+<li class="chapter" data-level="8.1.6" data-path="dynamicgame.html"><a href="dynamicgame.html#ex-ante-value-function"><i class="fa fa-check"></i><b>8.1.6</b> Ex-ante Value Function</a></li>
+<li class="chapter" data-level="8.1.7" data-path="dynamicgame.html"><a href="dynamicgame.html#choice-specific-value-function-1"><i class="fa fa-check"></i><b>8.1.7</b> Choice-specific Value Function</a></li>
+<li class="chapter" data-level="8.1.8" data-path="dynamicgame.html"><a href="dynamicgame.html#optimality-condition-2"><i class="fa fa-check"></i><b>8.1.8</b> Optimality Condition</a></li>
+<li class="chapter" data-level="8.1.9" data-path="dynamicgame.html"><a href="dynamicgame.html#optimal-conditional-choice-probability-2"><i class="fa fa-check"></i><b>8.1.9</b> Optimal Conditional Choice Probability</a></li>
+<li class="chapter" data-level="8.1.10" data-path="dynamicgame.html"><a href="dynamicgame.html#equilibrium-condition-1"><i class="fa fa-check"></i><b>8.1.10</b> Equilibrium Condition</a></li>
+<li class="chapter" data-level="8.1.11" data-path="dynamicgame.html"><a href="dynamicgame.html#equilibrium-condition-2"><i class="fa fa-check"></i><b>8.1.11</b> Equilibrium Condition</a></li>
+<li class="chapter" data-level="8.1.12" data-path="dynamicgame.html"><a href="dynamicgame.html#single-path-of-play"><i class="fa fa-check"></i><b>8.1.12</b> Single Path of Play</a></li>
+<li class="chapter" data-level="8.1.13" data-path="dynamicgame.html"><a href="dynamicgame.html#identification-1"><i class="fa fa-check"></i><b>8.1.13</b> Identification</a></li>
+<li class="chapter" data-level="8.1.14" data-path="dynamicgame.html"><a href="dynamicgame.html#estimation-ccp-approach"><i class="fa fa-check"></i><b>8.1.14</b> Estimation: CCP Approach</a></li>
+<li class="chapter" data-level="8.1.15" data-path="dynamicgame.html"><a href="dynamicgame.html#computing-psi"><i class="fa fa-check"></i><b>8.1.15</b> Computing <span class="math inline">\(\Psi\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="dynamicgame.html"><a href="dynamicgame.html#with-continuous-dynamic-choice"><i class="fa fa-check"></i><b>8.2</b> With Continuous Dynamic Choice</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="dynamicgame.html"><a href="dynamicgame.html#continuous-control"><i class="fa fa-check"></i><b>8.2.1</b> Continuous Control</a></li>
+<li class="chapter" data-level="8.2.2" data-path="dynamicgame.html"><a href="dynamicgame.html#period-payoff-1"><i class="fa fa-check"></i><b>8.2.2</b> Period Payoff</a></li>
+<li class="chapter" data-level="8.2.3" data-path="dynamicgame.html"><a href="dynamicgame.html#policy-function-estimation-with-continuous-control"><i class="fa fa-check"></i><b>8.2.3</b> Policy Function Estimation with Continuous Control</a></li>
+<li class="chapter" data-level="8.2.4" data-path="dynamicgame.html"><a href="dynamicgame.html#converting-to-the-standard-discrete-choice-model"><i class="fa fa-check"></i><b>8.2.4</b> Converting to the Standard Discrete Choice Model</a></li>
+<li class="chapter" data-level="8.2.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function-based-ccp-approach"><i class="fa fa-check"></i><b>8.2.5</b> Value Function Based CCP Approach</a></li>
+<li class="chapter" data-level="8.2.6" data-path="dynamicgame.html"><a href="dynamicgame.html#approximating-the-ex-ante-value-function"><i class="fa fa-check"></i><b>8.2.6</b> Approximating the Ex-ante Value Function</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-model"><i class="fa fa-check"></i><b>8.3</b> Dynamic Oligopoly Model</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="dynamicgame.html"><a href="dynamicgame.html#ryancostenvironmentregulation2012"><i class="fa fa-check"></i><b>8.3.1</b> <span class="citation">Ryan (<span>2012</span>)</span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-3"><i class="fa fa-check"></i><b>8.3.2</b> Setting</a></li>
+<li class="chapter" data-level="8.3.3" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game"><i class="fa fa-check"></i><b>8.3.3</b> Timing of the Game</a></li>
+<li class="chapter" data-level="8.3.4" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-function"><i class="fa fa-check"></i><b>8.3.4</b> Demand Function</a></li>
+<li class="chapter" data-level="8.3.5" data-path="dynamicgame.html"><a href="dynamicgame.html#production-cost-function"><i class="fa fa-check"></i><b>8.3.5</b> Production Cost Function</a></li>
+<li class="chapter" data-level="8.3.6" data-path="dynamicgame.html"><a href="dynamicgame.html#investment-cost"><i class="fa fa-check"></i><b>8.3.6</b> Investment Cost</a></li>
+<li class="chapter" data-level="8.3.7" data-path="dynamicgame.html"><a href="dynamicgame.html#entry-and-exit-costs"><i class="fa fa-check"></i><b>8.3.7</b> Entry and Exit Costs</a></li>
+<li class="chapter" data-level="8.3.8" data-path="dynamicgame.html"><a href="dynamicgame.html#period-profit-function"><i class="fa fa-check"></i><b>8.3.8</b> Period Profit Function</a></li>
+<li class="chapter" data-level="8.3.9" data-path="dynamicgame.html"><a href="dynamicgame.html#transition"><i class="fa fa-check"></i><b>8.3.9</b> Transition</a></li>
+<li class="chapter" data-level="8.3.10" data-path="dynamicgame.html"><a href="dynamicgame.html#equilibrium"><i class="fa fa-check"></i><b>8.3.10</b> Equilibrium</a></li>
+<li class="chapter" data-level="8.3.11" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function-for-incumbents"><i class="fa fa-check"></i><b>8.3.11</b> Value Function for Incumbents</a></li>
+<li class="chapter" data-level="8.3.12" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function-for-entrants"><i class="fa fa-check"></i><b>8.3.12</b> Value Function for Entrants</a></li>
+<li class="chapter" data-level="8.3.13" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium-1"><i class="fa fa-check"></i><b>8.3.13</b> Markov Perfect Equilibrium</a></li>
+<li class="chapter" data-level="8.3.14" data-path="dynamicgame.html"><a href="dynamicgame.html#demand-and-production-cost-estimation"><i class="fa fa-check"></i><b>8.3.14</b> Demand and Production Cost Estimation</a></li>
+<li class="chapter" data-level="8.3.15" data-path="dynamicgame.html"><a href="dynamicgame.html#investment-policy-function-estimation"><i class="fa fa-check"></i><b>8.3.15</b> Investment Policy Function Estimation</a></li>
+<li class="chapter" data-level="8.3.16" data-path="dynamicgame.html"><a href="dynamicgame.html#investment-policy-function-estimation-1"><i class="fa fa-check"></i><b>8.3.16</b> Investment Policy Function Estimation</a></li>
+<li class="chapter" data-level="8.3.17" data-path="dynamicgame.html"><a href="dynamicgame.html#entry-and-exit-policy-functions"><i class="fa fa-check"></i><b>8.3.17</b> Entry and Exit Policy Functions</a></li>
+<li class="chapter" data-level="8.3.18" data-path="dynamicgame.html"><a href="dynamicgame.html#bbl-estimation"><i class="fa fa-check"></i><b>8.3.18</b> BBL Estimation</a></li>
+<li class="chapter" data-level="8.3.19" data-path="dynamicgame.html"><a href="dynamicgame.html#structural-parameters-estimation-results"><i class="fa fa-check"></i><b>8.3.19</b> Structural Parameters Estimation Results</a></li>
+<li class="chapter" data-level="8.3.20" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation"><i class="fa fa-check"></i><b>8.3.20</b> Counterfactual Simulation</a></li>
+<li class="chapter" data-level="8.3.21" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation-results"><i class="fa fa-check"></i><b>8.3.21</b> Counterfactual Simulation Results</a></li>
+<li class="chapter" data-level="8.3.22" data-path="dynamicgame.html"><a href="dynamicgame.html#counterfactual-simulation-estimation-results"><i class="fa fa-check"></i><b>8.3.22</b> Counterfactual Simulation Estimation Results</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="dynamicgame.html"><a href="dynamicgame.html#dynamic-oligopoly-with-many-firms"><i class="fa fa-check"></i><b>8.4</b> Dynamic Oligopoly with Many Firms</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="dynamicgame.html"><a href="dynamicgame.html#setting-4"><i class="fa fa-check"></i><b>8.4.1</b> Setting</a></li>
+<li class="chapter" data-level="8.4.2" data-path="dynamicgame.html"><a href="dynamicgame.html#timing-of-the-game-1"><i class="fa fa-check"></i><b>8.4.2</b> Timing of the Game</a></li>
+<li class="chapter" data-level="8.4.3" data-path="dynamicgame.html"><a href="dynamicgame.html#assumptions"><i class="fa fa-check"></i><b>8.4.3</b> Assumptions</a></li>
+<li class="chapter" data-level="8.4.4" data-path="dynamicgame.html"><a href="dynamicgame.html#strategy-profile"><i class="fa fa-check"></i><b>8.4.4</b> Strategy Profile</a></li>
+<li class="chapter" data-level="8.4.5" data-path="dynamicgame.html"><a href="dynamicgame.html#value-function"><i class="fa fa-check"></i><b>8.4.5</b> Value Function</a></li>
+<li class="chapter" data-level="8.4.6" data-path="dynamicgame.html"><a href="dynamicgame.html#markov-perfect-equilibrium-2"><i class="fa fa-check"></i><b>8.4.6</b> Markov-perfect Equilibrium</a></li>
+<li class="chapter" data-level="8.4.7" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-strategy"><i class="fa fa-check"></i><b>8.4.7</b> Oblivious Strategy</a></li>
+<li class="chapter" data-level="8.4.8" data-path="dynamicgame.html"><a href="dynamicgame.html#long-run-average-industry-state"><i class="fa fa-check"></i><b>8.4.8</b> Long-run Average Industry State</a></li>
+<li class="chapter" data-level="8.4.9" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-value-function"><i class="fa fa-check"></i><b>8.4.9</b> Oblivious Value Function</a></li>
+<li class="chapter" data-level="8.4.10" data-path="dynamicgame.html"><a href="dynamicgame.html#oblivious-equilibrium"><i class="fa fa-check"></i><b>8.4.10</b> Oblivious Equilibrium</a></li>
+<li class="chapter" data-level="8.4.11" data-path="dynamicgame.html"><a href="dynamicgame.html#asymptotic-results-and-extensions"><i class="fa fa-check"></i><b>8.4.11</b> Asymptotic Results and Extensions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="auction.html"><a href="auction.html"><i class="fa fa-check"></i><b>9</b> Auction</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="auction.html"><a href="auction.html#general-symmetric-information-model"><i class="fa fa-check"></i><b>9.1</b> General symmetric information model</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="auction.html"><a href="auction.html#setting-5"><i class="fa fa-check"></i><b>9.1.1</b> Setting</a></li>
+<li class="chapter" data-level="9.1.2" data-path="auction.html"><a href="auction.html#discussion-about-the-asssumptions"><i class="fa fa-check"></i><b>9.1.2</b> Discussion About the Asssumptions</a></li>
+<li class="chapter" data-level="9.1.3" data-path="auction.html"><a href="auction.html#bidding-strategy"><i class="fa fa-check"></i><b>9.1.3</b> Bidding Strategy</a></li>
+<li class="chapter" data-level="9.1.4" data-path="auction.html"><a href="auction.html#special-cases"><i class="fa fa-check"></i><b>9.1.4</b> Special Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="auction.html"><a href="auction.html#second-price-auctions"><i class="fa fa-check"></i><b>9.2</b> Second-Price Auctions</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="auction.html"><a href="auction.html#the-button-auction"><i class="fa fa-check"></i><b>9.2.1</b> The Button Auction</a></li>
+<li class="chapter" data-level="9.2.2" data-path="auction.html"><a href="auction.html#equilibrium-bidding-strategies"><i class="fa fa-check"></i><b>9.2.2</b> Equilibrium Bidding Strategies</a></li>
+<li class="chapter" data-level="9.2.3" data-path="auction.html"><a href="auction.html#reserve-price"><i class="fa fa-check"></i><b>9.2.3</b> Reserve Price</a></li>
+<li class="chapter" data-level="9.2.4" data-path="auction.html"><a href="auction.html#variations"><i class="fa fa-check"></i><b>9.2.4</b> Variations</a></li>
+<li class="chapter" data-level="9.2.5" data-path="auction.html"><a href="auction.html#estimation-of-a-ipv-button-auction"><i class="fa fa-check"></i><b>9.2.5</b> Estimation of a IPV Button Auction</a></li>
+<li class="chapter" data-level="9.2.6" data-path="auction.html"><a href="auction.html#likelihood-of-ipv-button-auction"><i class="fa fa-check"></i><b>9.2.6</b> Likelihood of IPV Button Auction</a></li>
+<li class="chapter" data-level="9.2.7" data-path="auction.html"><a href="auction.html#optimal-reserve-price"><i class="fa fa-check"></i><b>9.2.7</b> Optimal Reserve Price</a></li>
+<li class="chapter" data-level="9.2.8" data-path="auction.html"><a href="auction.html#likelihood-of-ipv-english-auction-with-bid-data"><i class="fa fa-check"></i><b>9.2.8</b> Likelihood of IPV English Auction with Bid Data</a></li>
+<li class="chapter" data-level="9.2.9" data-path="auction.html"><a href="auction.html#observed-heterogeneity"><i class="fa fa-check"></i><b>9.2.9</b> Observed Heterogeneity</a></li>
+<li class="chapter" data-level="9.2.10" data-path="auction.html"><a href="auction.html#identification-2"><i class="fa fa-check"></i><b>9.2.10</b> Identification</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="auction.html"><a href="auction.html#first-price-auctions"><i class="fa fa-check"></i><b>9.3</b> First-Price Auctions</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="auction.html"><a href="auction.html#first-price-sealed-bid-auction"><i class="fa fa-check"></i><b>9.3.1</b> First-Price Sealed Bid Auction</a></li>
+<li class="chapter" data-level="9.3.2" data-path="auction.html"><a href="auction.html#equilibrium-bidding-strategies-1"><i class="fa fa-check"></i><b>9.3.2</b> Equilibrium Bidding Strategies</a></li>
+<li class="chapter" data-level="9.3.3" data-path="auction.html"><a href="auction.html#maximum-likelihood-estimation-of-the-ipv-first-price-auction"><i class="fa fa-check"></i><b>9.3.3</b> Maximum Likelihood Estimation of the IPV First-Price Auction</a></li>
+<li class="chapter" data-level="9.3.4" data-path="auction.html"><a href="auction.html#non-parametric-approach"><i class="fa fa-check"></i><b>9.3.4</b> Non-Parametric Approach</a></li>
+<li class="chapter" data-level="9.3.5" data-path="auction.html"><a href="auction.html#non-parmaetric-approach-estimation"><i class="fa fa-check"></i><b>9.3.5</b> Non-Parmaetric Approach: Estimation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>10</b> Applications</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="applications.html"><a href="applications.html#section"><i class="fa fa-check"></i><b>10.1</b> 2018-2019</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="applications.html"><a href="applications.html#american-economic-review"><i class="fa fa-check"></i><b>10.1.1</b> American Economic Review</a></li>
+<li class="chapter" data-level="10.1.2" data-path="applications.html"><a href="applications.html#econometrica"><i class="fa fa-check"></i><b>10.1.2</b> Econometrica</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="applications.html"><a href="applications.html#asymmetric-information-and-market-power"><i class="fa fa-check"></i><b>10.2</b> Asymmetric Information and Market Power</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="applications.html"><a href="applications.html#motivation"><i class="fa fa-check"></i><b>10.2.1</b> Motivation</a></li>
+<li class="chapter" data-level="10.2.2" data-path="applications.html"><a href="applications.html#question-method-and-materials"><i class="fa fa-check"></i><b>10.2.2</b> Question, Method, and Materials</a></li>
+<li class="chapter" data-level="10.2.3" data-path="applications.html"><a href="applications.html#findings"><i class="fa fa-check"></i><b>10.2.3</b> Findings</a></li>
+<li class="chapter" data-level="10.2.4" data-path="applications.html"><a href="applications.html#policy-experiments"><i class="fa fa-check"></i><b>10.2.4</b> Policy Experiments</a></li>
+<li class="chapter" data-level="10.2.5" data-path="applications.html"><a href="applications.html#source"><i class="fa fa-check"></i><b>10.2.5</b> Source</a></li>
+<li class="chapter" data-level="10.2.6" data-path="applications.html"><a href="applications.html#loan-data"><i class="fa fa-check"></i><b>10.2.6</b> Loan Data</a></li>
+<li class="chapter" data-level="10.2.7" data-path="applications.html"><a href="applications.html#firm-data"><i class="fa fa-check"></i><b>10.2.7</b> Firm Data</a></li>
+<li class="chapter" data-level="10.2.8" data-path="applications.html"><a href="applications.html#default-data"><i class="fa fa-check"></i><b>10.2.8</b> Default Data</a></li>
+<li class="chapter" data-level="10.2.9" data-path="applications.html"><a href="applications.html#positive-correlation-tests"><i class="fa fa-check"></i><b>10.2.9</b> Positive Correlation Tests</a></li>
+<li class="chapter" data-level="10.2.10" data-path="applications.html"><a href="applications.html#setting-6"><i class="fa fa-check"></i><b>10.2.10</b> Setting</a></li>
+<li class="chapter" data-level="10.2.11" data-path="applications.html"><a href="applications.html#firm-preference-over-banks"><i class="fa fa-check"></i><b>10.2.11</b> Firm Preference over Banks</a></li>
+<li class="chapter" data-level="10.2.12" data-path="applications.html"><a href="applications.html#required-loand-amount"><i class="fa fa-check"></i><b>10.2.12</b> Required Loand Amount</a></li>
+<li class="chapter" data-level="10.2.13" data-path="applications.html"><a href="applications.html#default-decision"><i class="fa fa-check"></i><b>10.2.13</b> Default Decision</a></li>
+<li class="chapter" data-level="10.2.14" data-path="applications.html"><a href="applications.html#information-structure"><i class="fa fa-check"></i><b>10.2.14</b> Information Structure</a></li>
+<li class="chapter" data-level="10.2.15" data-path="applications.html"><a href="applications.html#moral-hazard"><i class="fa fa-check"></i><b>10.2.15</b> Moral Hazard</a></li>
+<li class="chapter" data-level="10.2.16" data-path="applications.html"><a href="applications.html#bank-problem"><i class="fa fa-check"></i><b>10.2.16</b> Bank Problem</a></li>
+<li class="chapter" data-level="10.2.17" data-path="applications.html"><a href="applications.html#the-effect-of-price-on-default-probability"><i class="fa fa-check"></i><b>10.2.17</b> The Effect of Price on Default Probability</a></li>
+<li class="chapter" data-level="10.2.18" data-path="applications.html"><a href="applications.html#the-first-order-condition"><i class="fa fa-check"></i><b>10.2.18</b> The First-Order Condition</a></li>
+<li class="chapter" data-level="10.2.19" data-path="applications.html"><a href="applications.html#the-effect-of-higher-adverse-selection"><i class="fa fa-check"></i><b>10.2.19</b> The Effect of Higher Adverse Selection</a></li>
+<li class="chapter" data-level="10.2.20" data-path="applications.html"><a href="applications.html#estimating-equilibrium-pricing-strategy-and-augmenting-missing-price-data"><i class="fa fa-check"></i><b>10.2.20</b> Estimating Equilibrium Pricing Strategy and Augmenting Missing Price Data</a></li>
+<li class="chapter" data-level="10.2.21" data-path="applications.html"><a href="applications.html#inserting-pricing-estimates-into-the-utility"><i class="fa fa-check"></i><b>10.2.21</b> Inserting Pricing Estimates into the Utility</a></li>
+<li class="chapter" data-level="10.2.22" data-path="applications.html"><a href="applications.html#choice-probability"><i class="fa fa-check"></i><b>10.2.22</b> Choice Probability</a></li>
+<li class="chapter" data-level="10.2.23" data-path="applications.html"><a href="applications.html#equilibrium-loan-strategy"><i class="fa fa-check"></i><b>10.2.23</b> Equilibrium Loan Strategy</a></li>
+<li class="chapter" data-level="10.2.24" data-path="applications.html"><a href="applications.html#equilibrium-default-strategy"><i class="fa fa-check"></i><b>10.2.24</b> Equilibrium Default Strategy</a></li>
+<li class="chapter" data-level="10.2.25" data-path="applications.html"><a href="applications.html#control-function-approach-to-deal-with-endogeneity-in-loand-and-defaulty-equations"><i class="fa fa-check"></i><b>10.2.25</b> Control Function Approach to Deal with Endogeneity in Loand and Defaulty Equations</a></li>
+<li class="chapter" data-level="10.2.26" data-path="applications.html"><a href="applications.html#first-stage-estimation"><i class="fa fa-check"></i><b>10.2.26</b> First-Stage Estimation</a></li>
+<li class="chapter" data-level="10.2.27" data-path="applications.html"><a href="applications.html#second-stage-estimation"><i class="fa fa-check"></i><b>10.2.27</b> Second-Stage Estimation</a></li>
+<li class="chapter" data-level="10.2.28" data-path="applications.html"><a href="applications.html#estimation-results"><i class="fa fa-check"></i><b>10.2.28</b> Estimation Results</a></li>
+<li class="chapter" data-level="10.2.29" data-path="applications.html"><a href="applications.html#findings-from-estimation-results"><i class="fa fa-check"></i><b>10.2.29</b> Findings from Estimation Results</a></li>
+<li class="chapter" data-level="10.2.30" data-path="applications.html"><a href="applications.html#fit-of-the-model"><i class="fa fa-check"></i><b>10.2.30</b> Fit of the Model</a></li>
+<li class="chapter" data-level="10.2.31" data-path="applications.html"><a href="applications.html#counterfactuals"><i class="fa fa-check"></i><b>10.2.31</b> Counterfactuals</a></li>
+<li class="chapter" data-level="10.2.32" data-path="applications.html"><a href="applications.html#what-if-adverse-selection-got-severer"><i class="fa fa-check"></i><b>10.2.32</b> What if Adverse Selection Got Severer?</a></li>
+<li class="chapter" data-level="10.2.33" data-path="applications.html"><a href="applications.html#what-if-cost-of-capital-increased"><i class="fa fa-check"></i><b>10.2.33</b> What if Cost of Capital Increased?</a></li>
+<li class="chapter" data-level="10.2.34" data-path="applications.html"><a href="applications.html#merger-simulation-2"><i class="fa fa-check"></i><b>10.2.34</b> Merger Simulation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="assignment1.html"><a href="assignment1.html"><i class="fa fa-check"></i><b>11</b> Assignment 1: Basic Programming in R</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="assignment1.html"><a href="assignment1.html#simulate-data"><i class="fa fa-check"></i><b>11.1</b> Simulate data</a></li>
+<li class="chapter" data-level="11.2" data-path="assignment1.html"><a href="assignment1.html#estimate-the-parameter"><i class="fa fa-check"></i><b>11.2</b> Estimate the parameter</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="assignment2.html"><a href="assignment2.html"><i class="fa fa-check"></i><b>12</b> Assignment 2: Production Function Estimation</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="assignment2.html"><a href="assignment2.html#simulate-data-1"><i class="fa fa-check"></i><b>12.1</b> Simulate data</a></li>
+<li class="chapter" data-level="12.2" data-path="assignment2.html"><a href="assignment2.html#estimate-the-parameters"><i class="fa fa-check"></i><b>12.2</b> Estimate the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="assignment3.html"><a href="assignment3.html"><i class="fa fa-check"></i><b>13</b> Assignment 3: Demand Function Estimation I</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="assignment3.html"><a href="assignment3.html#simulate-data-2"><i class="fa fa-check"></i><b>13.1</b> Simulate data</a></li>
+<li class="chapter" data-level="13.2" data-path="assignment3.html"><a href="assignment3.html#estimate-the-parameters-1"><i class="fa fa-check"></i><b>13.2</b> Estimate the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="assignment4.html"><a href="assignment4.html"><i class="fa fa-check"></i><b>14</b> Assignment 4: Demand Function Estimation II</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="assignment4.html"><a href="assignment4.html#simulate-data-3"><i class="fa fa-check"></i><b>14.1</b> Simulate data</a></li>
+<li class="chapter" data-level="14.2" data-path="assignment4.html"><a href="assignment4.html#estimate-the-parameters-2"><i class="fa fa-check"></i><b>14.2</b> Estimate the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="assignment5.html"><a href="assignment5.html"><i class="fa fa-check"></i><b>15</b> Assignment 5: Merger Simulation</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="assignment5.html"><a href="assignment5.html#simulate-data-4"><i class="fa fa-check"></i><b>15.1</b> Simulate data</a></li>
+<li class="chapter" data-level="15.2" data-path="assignment5.html"><a href="assignment5.html#estimate-the-parameters-3"><i class="fa fa-check"></i><b>15.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="15.3" data-path="assignment5.html"><a href="assignment5.html#conduct-counterfactual-simulation"><i class="fa fa-check"></i><b>15.3</b> Conduct counterfactual simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="assignment6.html"><a href="assignment6.html"><i class="fa fa-check"></i><b>16</b> Assignment 6: Entry and Exit Analysis</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="assignment6.html"><a href="assignment6.html#simulate-data-5"><i class="fa fa-check"></i><b>16.1</b> Simulate data</a></li>
+<li class="chapter" data-level="16.2" data-path="assignment6.html"><a href="assignment6.html#estimate-the-parameters-4"><i class="fa fa-check"></i><b>16.2</b> Estimate the parameters</a></li>
+<li class="chapter" data-level="16.3" data-path="assignment6.html"><a href="assignment6.html#conduct-counterfactual-simulations"><i class="fa fa-check"></i><b>16.3</b> Conduct counterfactual simulations</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="assignment7.html"><a href="assignment7.html"><i class="fa fa-check"></i><b>17</b> Assignment 7: Dynamic Decision</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="assignment7.html"><a href="assignment7.html#simulate-data-6"><i class="fa fa-check"></i><b>17.1</b> Simulate data</a></li>
+<li class="chapter" data-level="17.2" data-path="assignment7.html"><a href="assignment7.html#estimate-parameters"><i class="fa fa-check"></i><b>17.2</b> Estimate parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="assignment8.html"><a href="assignment8.html"><i class="fa fa-check"></i><b>18</b> Assignment 8: Dynamic Game</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="assignment8.html"><a href="assignment8.html#simulate-data-7"><i class="fa fa-check"></i><b>18.1</b> Simulate data</a></li>
+<li class="chapter" data-level="18.2" data-path="assignment8.html"><a href="assignment8.html#estimate-parameters-1"><i class="fa fa-check"></i><b>18.2</b> Estimate parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>19</b> Integrating with C++ using Rcpp and RcppEigen</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="rcpp.html"><a href="rcpp.html#prerequisite"><i class="fa fa-check"></i><b>19.1</b> Prerequisite</a></li>
+<li class="chapter" data-level="19.2" data-path="rcpp.html"><a href="rcpp.html#workflow"><i class="fa fa-check"></i><b>19.2</b> Workflow</a></li>
+<li class="chapter" data-level="19.3" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-rcpp-objects"><i class="fa fa-check"></i><b>19.3</b> Passing R Objects as Rcpp Objects</a></li>
+<li class="chapter" data-level="19.4" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-as-eigen-objects"><i class="fa fa-check"></i><b>19.4</b> Passing R Objects as Eigen Objects</a></li>
+<li class="chapter" data-level="19.5" data-path="rcpp.html"><a href="rcpp.html#passing-r-objects-in-other-objects-in-cc"><i class="fa fa-check"></i><b>19.5</b> Passing R Objects in Other Objects in C/C++</a></li>
+<li class="chapter" data-level="19.6" data-path="rcpp.html"><a href="rcpp.html#manipulating-objects-in-a-c-function"><i class="fa fa-check"></i><b>19.6</b> Manipulating Objects in a C++ Function</a>
+<ul>
+<li class="chapter" data-level="19.6.1" data-path="rcpp.html"><a href="rcpp.html#matrix-and-vector-arithmetic"><i class="fa fa-check"></i><b>19.6.1</b> Matrix and Vector Arithmetic</a></li>
+<li class="chapter" data-level="19.6.2" data-path="rcpp.html"><a href="rcpp.html#the-array-class-and-coefficient-wise-operations"><i class="fa fa-check"></i><b>19.6.2</b> The Array Class and Coefficient-wise Operations</a></li>
+<li class="chapter" data-level="19.6.3" data-path="rcpp.html"><a href="rcpp.html#solving-linear-least-squares-systems"><i class="fa fa-check"></i><b>19.6.3</b> Solving Linear Least Squares Systems</a></li>
+<li class="chapter" data-level="19.6.4" data-path="rcpp.html"><a href="rcpp.html#accessing-to-elements-of-a-matrix-and-vector"><i class="fa fa-check"></i><b>19.6.4</b> Accessing to Elements of a Matrix and Vector</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>20</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ECON5630 Topics in Empirical Industrial Organization</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="assignment2" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Assignment 2: Production Function Estimation<a href="assignment2.html#assignment2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="simulate-data-1" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Simulate data<a href="assignment2.html#simulate-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider the following production and investment process for <span class="math inline">\(j = 1, \cdots, 1000\)</span> firms across <span class="math inline">\(t = 1, \cdots, 10\)</span> periods.</p>
+<p>The log production function is of the form:
+<span class="math display">\[
+y_{jt} = \beta_0 + \beta_l l_{jt} + \beta_k k_{jt} + \omega_{jt} + \eta_{jt},
+\]</span>
+where <span class="math inline">\(\omega_{jt}\)</span> is an anticipated shock and <span class="math inline">\(\eta_{jt}\)</span> is an ex post shock.</p>
+<p>The anticipated shocks evolve as:
+<span class="math display">\[
+\omega_{jt} = \alpha \omega_{j, t - 1} + \nu_{jt},
+\]</span>
+where <span class="math inline">\(\nu_{jt}\)</span> is an i.i.d. normal random variable with mean 0 and standard deviation <span class="math inline">\(\sigma_\nu\)</span>. The ex post shock is an i.i.d. normal random variable with mean 0 and standard deviation <span class="math inline">\(\sigma_{\eta}\)</span>.</p>
+<p>The product price the same across firms and normalized at 1. The price is normalized at 1. The wage <span class="math inline">\(w_t\)</span> is constant at 0.5.</p>
+<p>Finally, the capital accumulate according to:
+<span class="math display">\[
+K_{j, t + 1} = (1 - \delta) K_{jt} + I_{jt}.
+\]</span></p>
+<p>We set the parameters as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>parameter</th>
+<th>variable</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta_0\)</span></td>
+<td><code>beta_0</code></td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_l\)</span></td>
+<td><code>beta_l</code></td>
+<td>0.2</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\beta_k\)</span></td>
+<td><code>beta_k</code></td>
+<td>0.7</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\alpha\)</span></td>
+<td><code>alpha</code></td>
+<td>0.7</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_{\eta}\)</span></td>
+<td><code>sigma_eta</code></td>
+<td>0.2</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\sigma_{\nu}\)</span></td>
+<td><code>sigma_nu</code></td>
+<td>0.5</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_{w}\)</span></td>
+<td><code>sigma_w</code></td>
+<td>0.1</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\delta\)</span></td>
+<td><code>delta</code></td>
+<td>0.05</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p>Define the parameter variables as above.</p></li>
+<li><p>Write a function that returns the log output given <span class="math inline">\(l_{jt}\)</span>, <span class="math inline">\(k_{jt}\)</span>, <span class="math inline">\(\omega_{jt}\)</span>, and <span class="math inline">\(\eta_{jt}\)</span> under the given parameter values according to the above production function and name it <code>log_production(l, k, omega, eta, beta_0, beta_l, beta_k)</code>.</p></li>
+</ol>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="assignment2.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_production</span>(</span>
+<span id="cb74-2"><a href="assignment2.html#cb74-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">l =</span> <span class="dv">1</span>,</span>
+<span id="cb74-3"><a href="assignment2.html#cb74-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> <span class="dv">1</span>,</span>
+<span id="cb74-4"><a href="assignment2.html#cb74-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">omega =</span> <span class="dv">1</span>,</span>
+<span id="cb74-5"><a href="assignment2.html#cb74-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">eta =</span> <span class="dv">1</span>,</span>
+<span id="cb74-6"><a href="assignment2.html#cb74-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_0 =</span> beta_0,</span>
+<span id="cb74-7"><a href="assignment2.html#cb74-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_l =</span> beta_l,</span>
+<span id="cb74-8"><a href="assignment2.html#cb74-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta_k =</span> beta_k</span>
+<span id="cb74-9"><a href="assignment2.html#cb74-9" aria-hidden="true" tabindex="-1"></a>    ) </span></code></pre></div>
+<pre><code>## [1] 3.9</code></pre>
+<p>Suppose that the labor is determined after <span class="math inline">\(\omega_{jt}\)</span> is observed, but before <span class="math inline">\(\eta_{jt}\)</span> is observed, given the log capital level <span class="math inline">\(k_{jt}\)</span>.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Derive the optimal log labor as a function of <span class="math inline">\(\omega_{jt}\)</span>, <span class="math inline">\(\eta_{jt}\)</span>, <span class="math inline">\(k_{jt}\)</span>, and wage. Write a function to return the optimal log labor given the variables and parameters and name it <code>log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)</code>.</li>
+</ol>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="assignment2.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_labor_choice</span>(</span>
+<span id="cb76-2"><a href="assignment2.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
+<span id="cb76-3"><a href="assignment2.html#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wage =</span> <span class="dv">1</span>, </span>
+<span id="cb76-4"><a href="assignment2.html#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
+<span id="cb76-5"><a href="assignment2.html#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
+<span id="cb76-6"><a href="assignment2.html#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_l =</span> beta_l, </span>
+<span id="cb76-7"><a href="assignment2.html#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
+<span id="cb76-8"><a href="assignment2.html#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma_eta =</span> sigma_eta</span>
+<span id="cb76-9"><a href="assignment2.html#cb76-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## [1] 1.388203</code></pre>
+<p>As discussed in the class, if there is no additional variation in labor, the coefficient on the labor <span class="math inline">\(\beta_l\)</span> is not identified. Thus, if we generate labor choice from the previous function, <span class="math inline">\(\beta_l\)</span> will not be identified from the simulated data. To see this, we write a modified version of the previous function in which <span class="math inline">\(\omega_{jt}\)</span> is replaced with <span class="math inline">\(\omega_{jt} + \iota_{jt}\)</span>, where <span class="math inline">\(\iota_{jt}\)</span> is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is <span class="math inline">\(\omega_{jt} + \iota_{jt}\)</span>, even though the true shock is <span class="math inline">\(\omega_{jt}\)</span>.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Modify the previous function by including <span class="math inline">\(\iota_{jt}\)</span> as an additional input and name it <code>log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)</code>.</li>
+</ol>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="assignment2.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log_labor_choice_error</span>(</span>
+<span id="cb78-2"><a href="assignment2.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
+<span id="cb78-3"><a href="assignment2.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">wage =</span> <span class="dv">1</span>, </span>
+<span id="cb78-4"><a href="assignment2.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
+<span id="cb78-5"><a href="assignment2.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
+<span id="cb78-6"><a href="assignment2.html#cb78-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_l =</span> beta_l, </span>
+<span id="cb78-7"><a href="assignment2.html#cb78-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
+<span id="cb78-8"><a href="assignment2.html#cb78-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">iota =</span> <span class="dv">1</span>, </span>
+<span id="cb78-9"><a href="assignment2.html#cb78-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma_eta =</span> sigma_eta</span>
+<span id="cb78-10"><a href="assignment2.html#cb78-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## [1] 2.638203</code></pre>
+<p>Consider an investment process such that:
+<span class="math display">\[
+I_{jt} = (\delta + \gamma \omega_{jt}) K_{jt},
+\]</span>
+where <span class="math inline">\(I_{jt}\)</span> and <span class="math inline">\(K_{jt}\)</span> are investment and capital in level. Set <span class="math inline">\(\gamma = 0.1\)</span>, i.e., the investment is strictly increasing in <span class="math inline">\(\omega_{jt}\)</span>. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Define variable <span class="math inline">\(\gamma\)</span> and assign it the value. Write a function that returns the investment given <span class="math inline">\(K_{jt}\)</span>, <span class="math inline">\(\omega_{jt}\)</span>, and parameter values, according to the previous equation, and name it <code>investment_choice(k, omega, gamma, delta)</code>.</li>
+</ol>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="assignment2.html#cb80-1" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb80-2"><a href="assignment2.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">investment_choice</span>(</span>
+<span id="cb80-3"><a href="assignment2.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">1</span>, </span>
+<span id="cb80-4"><a href="assignment2.html#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="dv">1</span>, </span>
+<span id="cb80-5"><a href="assignment2.html#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gamma =</span> gamma, </span>
+<span id="cb80-6"><a href="assignment2.html#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
+<span id="cb80-7"><a href="assignment2.html#cb80-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## [1] 0.4077423</code></pre>
+<p>Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables <span class="math inline">\(k_{jt}\)</span> and <span class="math inline">\(\omega_{jt}\)</span> as follows.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Draw <span class="math inline">\(k_{j1}\)</span> from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw <span class="math inline">\(\omega_{j1}\)</span> from its stationary distribution (check the stationary distribution of AR(1) process). Draw a wage. Before simulating the rest of the data, set the seed at 1.</li>
+</ol>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="assignment2.html#cb82-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 1,000 × 5
+##        j     t     k   omega  wage
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5
+##  2     2     1 1.09   0.779    0.5
+##  3     3     1 0.582 -0.610    0.5
+##  4     4     1 1.80   0.148    0.5
+##  5     5     1 1.16   0.0486   0.5
+##  6     6     1 0.590 -1.16     0.5
+##  7     7     1 1.24   0.568    0.5
+##  8     8     1 1.37  -1.34     0.5
+##  9     9     1 1.29  -0.873    0.5
+## 10    10     1 0.847  0.699    0.5
+## # … with 990 more rows</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Draw optimization error <span class="math inline">\(\iota_{jt}\)</span> and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.</li>
+</ol>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="assignment2.html#cb84-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 1,000 × 9
+##        j     t     k   omega  wage     iota      l l_error     inv
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120 
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330 
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280 
+## # … with 990 more rows</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Draw ex post shock and compute the output according to the production function for both labor without optimization error and with optimization error. Name the output without optimization error <code>y</code> and the one with optimization error <code>y_error</code>.</li>
+</ol>
+<pre><code>## # A tibble: 1,000 × 12
+##        j     t     k   omega  wage     iota      l l_error     inv     eta     y y_error
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76 
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01 
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05 
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63 
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78 
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19 
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41 
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95 
+## # … with 990 more rows</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Repeat this procedure for <span class="math inline">\(t = 1, \cdots 10\)</span> by updating the capital and anticipated shocks, and name the resulting data frame <code>df_all</code>. Use the previously generated <code>df</code> as the data for <code>t = 1</code>. In each perio, generate <code>nu</code>, <code>iota</code>, and <code>eta</code> in this order, if you want to match the realization of the random variables.</li>
+</ol>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="assignment2.html#cb87-1" aria-hidden="true" tabindex="-1"></a>df_all</span></code></pre></div>
+<pre><code>## # A tibble: 10,000 × 13
+##        j     t     k   omega  wage     iota      l l_error     inv     eta     y y_error    nu
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1 0.687  0.795    0.5 -0.0443   1.72   1.67    0.257   0.148  2.77    2.76     NA
+##  2     2     1 1.09   0.779    0.5 -0.0961   2.06   1.94    0.381   0.0773 3.03    3.01     NA
+##  3     3     1 0.582 -0.610    0.5  0.0810  -0.123 -0.0218 -0.0196  0.259  1.03    1.05     NA
+##  4     4     1 1.80   0.148    0.5  0.0260   1.89   1.92    0.391  -0.161  2.62    2.63     NA
+##  5     5     1 1.16   0.0486   0.5 -0.00279  1.21   1.21    0.176  -0.321  1.79    1.78     NA
+##  6     6     1 0.590 -1.16     0.5  0.0348  -0.809 -0.766  -0.120   0.187  0.274   0.282    NA
+##  7     7     1 1.24   0.568    0.5  0.00268  1.93   1.93    0.370   0.361  3.19    3.19     NA
+##  8     8     1 1.37  -1.34     0.5 -0.0655  -0.346 -0.428  -0.330  -0.0113 0.539   0.523    NA
+##  9     9     1 1.29  -0.873    0.5 -0.106    0.165  0.0327 -0.135   0.377  1.44    1.41     NA
+## 10    10     1 0.847  0.699    0.5 -0.0104   1.74   1.73    0.280   0.316  2.96    2.95     NA
+## # … with 9,990 more rows</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Check the simulated data by making summary table.</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">N</th>
+<th align="right">Mean</th>
+<th align="right">Sd</th>
+<th align="right">Min</th>
+<th align="right">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">j</td>
+<td align="right">10000</td>
+<td align="right">500.5000000</td>
+<td align="right">288.6894251</td>
+<td align="right">1.0000000</td>
+<td align="right">1000.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">t</td>
+<td align="right">10000</td>
+<td align="right">5.5000000</td>
+<td align="right">2.8724249</td>
+<td align="right">1.0000000</td>
+<td align="right">10.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">k</td>
+<td align="right">10000</td>
+<td align="right">0.9797900</td>
+<td align="right">0.5838949</td>
+<td align="right">-1.2822534</td>
+<td align="right">3.2332312</td>
+</tr>
+<tr class="even">
+<td align="left">omega</td>
+<td align="right">10000</td>
+<td align="right">-0.0055826</td>
+<td align="right">0.7025102</td>
+<td align="right">-2.5894171</td>
+<td align="right">2.6281307</td>
+</tr>
+<tr class="odd">
+<td align="left">wage</td>
+<td align="right">10000</td>
+<td align="right">0.5000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.5000000</td>
+<td align="right">0.5000000</td>
+</tr>
+<tr class="even">
+<td align="left">iota</td>
+<td align="right">10000</td>
+<td align="right">-0.0000696</td>
+<td align="right">0.0502883</td>
+<td align="right">-0.1841453</td>
+<td align="right">0.1715419</td>
+</tr>
+<tr class="odd">
+<td align="left">l</td>
+<td align="right">10000</td>
+<td align="right">0.9799746</td>
+<td align="right">1.0965108</td>
+<td align="right">-3.3281023</td>
+<td align="right">4.9679634</td>
+</tr>
+<tr class="even">
+<td align="left">l_error</td>
+<td align="right">10000</td>
+<td align="right">0.9798876</td>
+<td align="right">1.0971595</td>
+<td align="right">-3.3765433</td>
+<td align="right">4.9520674</td>
+</tr>
+<tr class="odd">
+<td align="left">inv</td>
+<td align="right">10000</td>
+<td align="right">0.1793502</td>
+<td align="right">0.3006526</td>
+<td align="right">-1.2722627</td>
+<td align="right">3.2975332</td>
+</tr>
+<tr class="even">
+<td align="left">eta</td>
+<td align="right">10000</td>
+<td align="right">0.0015825</td>
+<td align="right">0.2001539</td>
+<td align="right">-0.7650371</td>
+<td align="right">0.7455922</td>
+</tr>
+<tr class="odd">
+<td align="left">y</td>
+<td align="right">10000</td>
+<td align="right">1.8778479</td>
+<td align="right">1.1171035</td>
+<td align="right">-2.4680251</td>
+<td align="right">6.1228291</td>
+</tr>
+<tr class="even">
+<td align="left">y_error</td>
+<td align="right">10000</td>
+<td align="right">1.8778305</td>
+<td align="right">1.1169266</td>
+<td align="right">-2.4777133</td>
+<td align="right">6.1196499</td>
+</tr>
+<tr class="odd">
+<td align="left">nu</td>
+<td align="right">10000</td>
+<td align="right">-0.0021155</td>
+<td align="right">0.4984324</td>
+<td align="right">-2.1513907</td>
+<td align="right">1.8253882</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="estimate-the-parameters" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Estimate the parameters<a href="assignment2.html#estimate-the-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For now, use the labor choice with optimization error.</p>
+<ol style="list-style-type: decimal">
+<li>First, simply regress <span class="math inline">\(y_{jt}\)</span> on <span class="math inline">\(l_{jt}\)</span> and <span class="math inline">\(k_{jt}\)</span> using the least square method.</li>
+</ol>
+<pre><code>## 
+## Call:
+## lm(formula = y_error ~ l_error + k, data = df_all)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.73002 -0.14117 -0.00071  0.13743  0.87983 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.892542   0.004058 219.966   &lt;2e-16 ***
+## l_error     0.997913   0.002396 416.454   &lt;2e-16 ***
+## k           0.007599   0.004503   1.688   0.0915 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.2068 on 9997 degrees of freedom
+## Multiple R-squared:  0.9657, Adjusted R-squared:  0.9657 
+## F-statistic: 1.408e+05 on 2 and 9997 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Second, take within-transformation on <span class="math inline">\(y_{jt}\)</span>, <span class="math inline">\(l_{jt}\)</span>, and <span class="math inline">\(k_{jt}\)</span> and let <span class="math inline">\(\Delta y_{jt}\)</span>, <span class="math inline">\(\Delta l_{jt}\)</span>, and <span class="math inline">\(\Delta k_{jt}\)</span> denote them. Then, regress <span class="math inline">\(\Delta y_{jt}\)</span> on <span class="math inline">\(\Delta l_{jt}\)</span>, and <span class="math inline">\(\Delta k_{jt}\)</span> by the least squares method.</li>
+</ol>
+<pre><code>## 
+## Call:
+## lm(formula = dy_error ~ -1 + dl_error + dk, data = df_all_within)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.72450 -0.13285 -0.00244  0.12931  0.77657 
+## 
+## Coefficients:
+##            Estimate Std. Error t value Pr(&gt;|t|)    
+## dl_error  0.9910916  0.0029548 335.413   &lt;2e-16 ***
+## dk       -0.0009029  0.0127539  -0.071    0.944    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1961 on 9998 degrees of freedom
+## Multiple R-squared:  0.9184, Adjusted R-squared:  0.9184 
+## F-statistic: 5.629e+04 on 2 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Next, we attempt to estimate the parameters using Olley-Pakes method. Estimate the first-step model of Olley-Pakes method:
+<span class="math display">\[
+y_{jt} = \beta_1 l_{jt} + \phi(k_{jt}, I_{jt}) + \eta_{jt},
+\]</span>
+by approximating <span class="math inline">\(\phi_t\)</span> by a kernel function.</p>
+<p>Remark that <span class="math inline">\(\phi\)</span> in general depends on observed and unobserved state variables. For this reason, in theory, <span class="math inline">\(\phi\)</span> should be estimated for each period. In this exercise, we assume <span class="math inline">\(\phi\)</span> is common across periods because we know that there is no unobserved state variables in the true data generating process. Moreover, we do not include <span class="math inline">\(w_t\)</span> because we know that it is time -invariant. Do not forget to consider them in the actual data analysis.</p>
+<p>You can use <code>npplreg</code> function of <code>np</code> package to estimate a partially linear model with a multivariate kernel. You first use <code>npplregbw</code> to obtain the optimal band width and then use <code>npplreg</code> to estimate the model under the optimal bandwidth. The computation of the optimal bandwidth is time consuming.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Return the summary of the first stage estimation and plot the fitted values against the data points.</li>
+</ol>
+<pre><code>## 
+## Partially Linear Model
+## Regression data: 10000 training points, in 3 variable(s)
+## With 1 linear parametric regressor(s), 2 nonparametric regressor(s)
+## 
+##                     y(z)           
+## Bandwidth(s): 0.07355058 0.01435558
+## 
+##                     x(z)           
+## Bandwidth(s): 0.03908594 0.01191551
+## 
+##                   l_error
+## Coefficient(s): 0.2493396
+## 
+## Kernel Regression Estimator: Local-Constant
+## Bandwidth Type: Fixed
+## 
+## Residual standard error: 0.1934778
+## R-squared: 0.9700706
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 2</code></pre>
+<p><img src="lecture_files/figure-html/unnamed-chunk-64-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Check that <span class="math inline">\(\beta_l\)</span> is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.</li>
+</ol>
+<pre><code>## 
+## Partially Linear Model
+## Regression data: 10000 training points, in 3 variable(s)
+## With 1 linear parametric regressor(s), 2 nonparametric regressor(s)
+## 
+##                     y(z)           
+## Bandwidth(s): 0.07347226 0.01437256
+## 
+##                     x(z)            
+## Bandwidth(s): 0.02960262 0.009987366
+## 
+##                        l
+## Coefficient(s): 1.187301
+## 
+## Kernel Regression Estimator: Local-Constant
+## Bandwidth Type: Fixed
+## 
+## Residual standard error: 0.1932366
+## R-squared: 0.9701184
+## 
+## Continuous Kernel Type: Second-Order Gaussian
+## No. Continuous Explanatory Vars.: 2</code></pre>
+<p>Then, we estimate the second stage model of Olley-Pakes method:
+<span class="math display">\[
+y_{jt} - \hat{\beta_l} l_{jt} = \beta_0 + \beta_k k_{jt} + \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j, t-1}] + \nu_{jt} + \eta_{jt}.
+\]</span></p>
+<p>In this model, we do not have to non-parametetrically estimate the conditional expectation of <span class="math inline">\(\omega_{jt}\)</span> on <span class="math inline">\(\omega_{j, t - 1}\)</span>, because we know that the anticipated shock follows an AR(1) process. Remark that we in general have to non-parametrically estimate it.</p>
+<p>The model is non-linear in parameters, because of the term <span class="math inline">\(\alpha \beta_0\)</span> and <span class="math inline">\(\alpha \beta_k\)</span>. We estimate <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> by a GMM estimator. The moment is:
+<span class="math display">\[
+g_{JT}(\alpha, \beta_0, \beta_k) \equiv \frac{1}{JT}\sum_{j = 1}^J \sum_{t = 1}^T \{y_{jt} - \hat{\beta_l} l_{jt} - \beta_0 - \beta_k k_{jt} - \alpha[\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}) - \beta_0 - \beta_k k_{j, t-1}]\}
+\begin{bmatrix}
+k_{jt} \\
+k_{j, t - 1} \\
+I_{j, t - 1}
+\end{bmatrix}.
+\]</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Using the estimates in the first step, compute:
+<span class="math display">\[
+y_{jt} - \hat{\beta_l} l_{jt},
+\]</span>
+and:
+<span class="math display">\[
+\hat{\phi}(k_{j, t - 1}, I_{j, t - 1}),
+\]</span>
+for each <span class="math inline">\(j\)</span> and <span class="math inline">\(t\)</span> and save it as a data frame names <code>df_all_1st</code>.</li>
+</ol>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="assignment2.html#cb93-1" aria-hidden="true" tabindex="-1"></a>df_all_1st</span></code></pre></div>
+<pre><code>## # A tibble: 10,000 × 4
+##        j     t y_error_tilde phi_t_1
+##    &lt;int&gt; &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1     1         2.34   NA    
+##  2     1     2         1.37    2.21 
+##  3     1     3         0.621   1.49 
+##  4     1     4         0.447   0.880
+##  5     1     5         0.878   0.611
+##  6     1     6         1.62    0.926
+##  7     1     7         0.558   1.40 
+##  8     1     8         0.684   0.439
+##  9     1     9         0.939   0.525
+## 10     1    10         1.49    0.838
+## # … with 9,990 more rows</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Compute a function that returns the value of <span class="math inline">\(g_{JT}(\alpha, \beta_0, \beta_k)\)</span> given parameter values, data, and <code>df_all_1st</code>, and name it <code>moment_olleypakes_2nd</code>. Show the values of the moments evaluated at the true parameters.</li>
+</ol>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="assignment2.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moment_olleypakes_2nd</span>(</span>
+<span id="cb95-2"><a href="assignment2.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb95-3"><a href="assignment2.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_0 =</span> beta_0, </span>
+<span id="cb95-4"><a href="assignment2.html#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">beta_k =</span> beta_k, </span>
+<span id="cb95-5"><a href="assignment2.html#cb95-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all =</span> df_all, </span>
+<span id="cb95-6"><a href="assignment2.html#cb95-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all_1st =</span> df_all_1st</span>
+<span id="cb95-7"><a href="assignment2.html#cb95-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## [1] -0.018459481 -0.019010969 -0.003815687</code></pre>
+<p>Based on the moment, we can define the objective function of a generalized method of moments estimator with a weighting matrix <span class="math inline">\(W\)</span> as:
+<span class="math display">\[
+Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)&#39; W g_{JT}(\alpha, \beta_0, \beta_k).
+\]</span></p>
+<ol start="7" style="list-style-type: decimal">
+<li>Write a function that returns the value of <span class="math inline">\(Q_{JT}(\alpha, \beta_0, \beta_k)\)</span> given the vector of parameter values, data, and <code>df_all_1st</code>, and name it <code>objective_olleypakes_2nd</code>. Setting <span class="math inline">\(W\)</span> at the identity matrix, show the value of the objective function evaluated at the true parameters.</li>
+</ol>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="assignment2.html#cb97-1" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">3</span>)</span>
+<span id="cb97-2"><a href="assignment2.html#cb97-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb97-3"><a href="assignment2.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb97-4"><a href="assignment2.html#cb97-4" aria-hidden="true" tabindex="-1"></a>    alpha, </span>
+<span id="cb97-5"><a href="assignment2.html#cb97-5" aria-hidden="true" tabindex="-1"></a>    beta_0, </span>
+<span id="cb97-6"><a href="assignment2.html#cb97-6" aria-hidden="true" tabindex="-1"></a>    beta_k</span>
+<span id="cb97-7"><a href="assignment2.html#cb97-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb97-8"><a href="assignment2.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="fu">objective_olleypakes_2nd</span>(</span>
+<span id="cb97-9"><a href="assignment2.html#cb97-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
+<span id="cb97-10"><a href="assignment2.html#cb97-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all =</span> df_all, </span>
+<span id="cb97-11"><a href="assignment2.html#cb97-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_all_1st =</span> df_all_1st,</span>
+<span id="cb97-12"><a href="assignment2.html#cb97-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> W</span>
+<span id="cb97-13"><a href="assignment2.html#cb97-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>##              [,1]
+## [1,] 0.0007167288</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li><p>Draw the graph of the objective function when one of <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta_0\)</span>, and <span class="math inline">\(\beta_k\)</span> are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
+<img src="lecture_files/figure-html/unnamed-chunk-72-1.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-72-2.png" width="672" style="display: block; margin: auto;" /><img src="lecture_files/figure-html/unnamed-chunk-72-3.png" width="672" style="display: block; margin: auto;" /></p></li>
+<li><p>Find the parameters that minimize the objective function using <code>optim</code>. You may use <code>L-BFGS-B</code> method to solve it.</p></li>
+</ol>
+<pre><code>## $par
+## [1] 0.7023647 0.9766275 0.6694232
+## 
+## $value
+## [1] 2.027934e-07
+## 
+## $counts
+## function gradient 
+##       10       10 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="assignment1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="assignment3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["lecture.pdf", "lecture.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
