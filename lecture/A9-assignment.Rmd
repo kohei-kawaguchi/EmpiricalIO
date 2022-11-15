@@ -343,7 +343,7 @@ saveRDS(
 ```
 ```{r}
 graph <- 
-  readRDS(file = "data/A9_second_parametric_graph.rds")
+  readRDS(file = "data/a9/A9_second_parametric_graph.rds")
 graph
 ```
 
@@ -416,57 +416,121 @@ where the second equation is from the first-order condition.
 ```{r}
 # compute probability density for a winning bid from a first-price auction
 w <- 0.5
-compute_p_first_w(w, r, alpha, beta, n)
-upper <- bid_first(1, r, alpha, beta, n)
-compute_p_first_w(upper + 1, r, alpha, beta, n)
+compute_p_first_w(
+  w = w, 
+  r = r, 
+  alpha = alpha, 
+  beta = beta, 
+  n = n
+  )
+upper <- bid_first(
+  x = 1, 
+  r = r, 
+  alpha = alpha, 
+  beta = beta, 
+  n = n
+  )
+compute_p_first_w(
+  w = upper + 1, 
+  r = r, 
+  alpha = alpha, 
+  beta = beta, 
+  n = n
+  )
 ```
 
 7. Write a function `compute_loglikelihood_first_price_w(theta, df_first_w)` that computes the log-likelihood for a first-price auction winning bid data.
 
 ```{r}
 # compute log-likelihood for winning bids for first-price auctions
-compute_loglikelihood_first_price_w(theta, df_first_w)
+compute_loglikelihood_first_price_w(
+  theta = theta, 
+  df_first_w = df_first_w
+  )
 ```
 
 8. Compare the value of the objective function around the true parameters.
 
 ```{r}
-theta <- c(alpha, beta)
+theta <- 
+  c(
+    alpha,
+    beta
+    )
 # label
-label <- c("\\alpha", "\\beta")
-label <- paste("$", label, "$", sep = "")
+label <- 
+  c(
+    "\\alpha",
+    "\\beta"
+    )
+label <- 
+  paste(
+    "$",
+    label,
+    "$", 
+    sep = ""
+    )
 # compute the graph
-graph <- foreach (i = 1:length(theta)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
   theta_i <- theta[i]
-  theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
+  theta_i_list <- 
+    theta_i * seq(
+      0.8,
+      1.2,
+      by = 0.05
+      )
   objective_i <-
-    foreach (j = 1:length(theta_i_list),
-             .packages = c(
-               "EmpiricalIO",
-               "foreach",
-               "magrittr"
-               ),
-             .combine = "rbind") %dopar% {
+    foreach (
+      j = 1:length(theta_i_list),
+      .packages = c(
+        "EmpiricalIO",
+        "foreach",
+        "magrittr"
+        ),
+      .combine = "rbind") %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
                  compute_loglikelihood_first_price_w(
-                   theta_j, df_first_w)
+                   theta_j,
+                   df_first_w
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = as.numeric(theta_i_list), 
-                         y = as.numeric(objective_i))
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) +
+  df_graph <- 
+    data.frame(
+      x = as.numeric(theta_i_list), 
+      y = as.numeric(objective_i)
+      )
+  g <-
+    ggplot(
+      data = df_graph,
+      aes(
+        x = x,
+        y = y
+        )
+      ) +
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i, 
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i]))
   return(g)
 }
-save(graph, file = "data/A9_first_parametric_graph.RData")
+saveRDS(
+  graph,
+  file = "data/a9/A9_first_parametric_graph.rds"
+  )
 ```
 ```{r}
-load(file = "data/A9_first_parametric_graph.RData")
+graph <- 
+  readRDS(file = "data/a9/A9_first_parametric_graph.rds")
 graph
 ```
 
@@ -481,10 +545,14 @@ result_first_parametric <-
     method = "Nelder-Mead",
     control = list(fnscale = -1)
   )
-save(result_first_parametric, file = "data/A9_result_first_parametric.RData")
+saveRDS(
+  result_first_parametric,
+  file = "data/a9/A9_result_first_parametric.rds"
+  )
 ```
 ```{r}
-load(file = "data/A9_result_first_parametric.RData")
+result_first_parametric <- 
+  readRDS(file = "data/a9/A9_result_first_parametric.rds")
 result_first_parametric
 comparison <-
   data.frame(
@@ -501,13 +569,22 @@ Also, write a function `f_b(b)` that returns an empirical probability density at
 
 ```{r}
 # cumulative distribution
-ggplot(df_first, aes(x = b)) + stat_ecdf(color = "steelblue") +
-  xlab("bid") + ylab("cumulative distribution")
+ggplot(
+  df_first, 
+  aes(x = b)
+  ) + 
+  stat_ecdf(color = "steelblue") +
+  xlab("bid") + 
+  ylab("cumulative distribution")
 F_b <- ecdf(df_first$b)
 F_b(0.4)
 F_b(0.6)
 # probability density
-ggplot(df_first, aes(x = b)) + geom_density(fill = "steelblue")
+ggplot(
+  df_first, 
+  aes(x = b)
+  ) + 
+  geom_density(fill = "steelblue")
 f_b <- approxfun(density(df_first$b))
 f_b(0.4)
 f_b(0.6)
@@ -538,23 +615,50 @@ $$
 ```{r}
 r <- df_first[1, "r"]
 n <- df_first[1, "n"]
-compute_implied_valuation(0.4, n, r, F_b, f_b)
+compute_implied_valuation(
+  b = 0.4,
+  n = n, 
+  r = r, 
+  F_b = F_b, 
+  f_b = f_b
+  )
 ```
 
 13. Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.
 
 ```{r}
-valuation_implied <- df_first %>%
+valuation_implied <- 
+  df_first %>%
   dplyr::rowwise() %>%
-  dplyr::mutate(x = compute_implied_valuation(b, n, r, F_b, f_b)) %>%
+  dplyr::mutate(
+    x = compute_implied_valuation(
+      b, 
+      n,
+      r,
+      F_b, 
+      f_b
+      )
+    ) %>%
   dplyr::ungroup() %>%
   dplyr::select(x) %>%
   dplyr::mutate(type = "estimate")
-valuation_true <- valuation %>%
+valuation_true <- 
+  valuation %>%
   dplyr::select(x) %>%
   dplyr::mutate(type = "true")
-valuation_plot <- rbind(valuation_true, valuation_implied)
-ggplot(valuation_plot, aes(x = x, color = type)) + stat_ecdf()
+valuation_plot <- 
+  rbind(
+    valuation_true,
+    valuation_implied
+    )
+ggplot(
+  valuation_plot,
+  aes(
+    x = x, 
+    color = type
+    )
+  ) + 
+  stat_ecdf()
 ```
 
 
