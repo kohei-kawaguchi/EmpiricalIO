@@ -695,12 +695,12 @@ simulate_dynamic_game <-
         p_joint %>%
         dplyr::filter(l == l_t)
       k_t <- 
-        p_t %>%
-        dplyr::sample_n(
+          rmultinom(
+          1,
           1, 
-          weight = p
+          prob = p_t$p
           ) 
-      k_t <- k_t$k
+      k_t <- which(as.logical(k_t))
       df_base[df_base$t == tt, "k"] <- k_t
       # draw next state
       if (tt < T) {
