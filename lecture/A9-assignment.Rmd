@@ -35,7 +35,7 @@ lambda <- 10
 
 2. Draw a vector of valuations and reservation prices.
 
-```{r}
+```{r, echo = TRUE}
 # number of bidders
 N <- 
   rpois(
@@ -65,16 +65,16 @@ valuation <-
 valuation <- 
   valuation %>%
   tibble::as_tibble() %>%
-  dplyr::mutate(
-    x = rbeta(
-      length(i),
-      alpha,
-      beta
-      )
-    )
+  dplyr::mutate(x = 
+                  rbeta(
+                    length(i),
+                    alpha,beta
+                    )
+                )
 ggplot(
   valuation, 
-  aes(x = x)) + 
+  aes(x = x)
+  ) + 
   geom_histogram(
     fill = "steelblue",
     alpha = 0.8
@@ -392,9 +392,22 @@ n <- df_first_w[1, "n"] %>%
 b <- 0.5 * r + 0.5 
 x <- 0.5
 # compute invecrse bid equation
-inverse_bid_equation(x, b, r, alpha, beta, n)
+inverse_bid_equation(
+  x = x,
+  b = b,
+  r = r,
+  alpha = alpha, 
+  beta = beta,
+  n = n
+  )
 # compute inverse bid
-inverse_bid_first(b, r, alpha, beta, n)
+inverse_bid_first(
+  b = b, 
+  r = r,
+  alpha = alpha,
+  beta = beta,
+  n = n
+  )
 ```
 
 The log-likelihood conditional on $m_t \ge 1$ is:
@@ -423,7 +436,8 @@ compute_p_first_w(
   beta = beta, 
   n = n
   )
-upper <- bid_first(
+upper <- 
+  bid_first(
   x = 1, 
   r = r, 
   alpha = alpha, 
@@ -490,7 +504,8 @@ graph <-
         "foreach",
         "magrittr"
         ),
-      .combine = "rbind") %dopar% {
+      .combine = "rbind"
+      ) %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
@@ -598,11 +613,20 @@ $$
 h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 $$
 
-11. Write a function `H_b(b, n, F_b)` and `h_b(b, F_b, f_b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
+11. Write a function `H_b(b, n, F_b)` and `h_b(b, n, F_b, f_b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
 
 ```{r}
-H_b(0.4, n, F_b)
-h_b(0.4, n, F_b, f_b)
+H_b(
+  b = 0.4,
+  n = n,
+  F_b = F_b
+  )
+h_b(
+  b = 0.4,
+  n = n,
+  F_b = F_b, 
+  f_b
+  )
 ```
 
 When a bidder bids $b$, the implied valuation of her is:

@@ -44,7 +44,8 @@ compute_winning_bids_second <-
     return(df_second_w)
   }
 
-f <- function(
+f <- 
+  function(
   t,
   alpha,
   beta,
@@ -349,21 +350,36 @@ compute_loglikelihood_first_price_w <-
 
 # distribution of the highest rival's bid
 H_b <-
-  function(b, n, F_b) {
+  function(
+    b, 
+    n,
+    F_b
+    ) {
     H <- F_b(b)^(n - 1)
     return(H)
   }
 
 # density of the highest rival's bid
 h_b <-
-  function(b, n, F_b, f_b) {
+  function(
+    b,
+    n,
+    F_b,
+    f_b
+    ) {
     h <- (n - 1) * f_b(b) * F_b(b)^(n - 2)
     return(h)
   }
 
 # compute implied valuation
 compute_implied_valuation <-
-  function(b, n, r, F_b, f_b) {
+  function(
+    b,
+    n,
+    r,
+    F_b,
+    f_b
+    ) {
     if (b >= r) {
       x <- b + H_b(b, n, F_b) / h_b(b, n, F_b, f_b)
     } else {
