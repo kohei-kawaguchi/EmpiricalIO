@@ -353,7 +353,8 @@ compute_sigma <-
       foreach (
         ll = 1:m_s
         ) %do% {
-        p_joint_l <- p_joint %>%
+        p_joint_l <- 
+          p_joint %>%
           dplyr::filter(ll == l) %>%
           dplyr::arrange(k)
         p_joint_l <- t(matrix(p_joint_l$p))
@@ -537,7 +538,7 @@ compute_choice_value_game <-
         ) %>%
       # probability that an action profile realizes conditional on i having a
       dplyr::mutate(p_others = p / p_marginal) %>%
-      # choice-specific value on each state profiel for each firm 
+      # choice-specific value on each state profile for each firm 
       dplyr::group_by(
         i,
         l,
@@ -571,7 +572,7 @@ compute_ccp_game <-
         A,
         S
         )
-    # compute conditional choice probabiltiy
+    # compute conditional choice probability
     p_marginal <- 
       value %>%
       dplyr::group_by(
