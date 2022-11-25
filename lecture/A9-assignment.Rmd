@@ -382,7 +382,7 @@ $$
 \eta(b) := \beta^{-1}(b).
 $$
 
-To do so, we can use a built-in function called `uniroot`, which solves $x$ such that $f(x) = 0$ for scalar $x$. In `uniroot`, `lower` and `upper` are set at $r_t$ and $\beta(1)$, respectively.
+To do so, we can use a built-in function called `uniroot`, which solves $x$ such that $f(x) = 0$ for scalar $x$. In `uniroot`, `lower` and `upper` are set at $r_t$ and $1$, respectively.
 
 ```{r}
 r <- df_first_w[1, "r"] %>%
@@ -391,7 +391,7 @@ n <- df_first_w[1, "n"] %>%
   as.integer()
 b <- 0.5 * r + 0.5 
 x <- 0.5
-# compute invecrse bid equation
+# compute inverse bid equation
 inverse_bid_equation(
   x = x,
   b = b,
