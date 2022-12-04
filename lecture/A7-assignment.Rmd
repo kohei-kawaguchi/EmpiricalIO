@@ -286,7 +286,8 @@ ggplot(
     ) +
   labs(fill = "Value") + 
   xlab("action/state") + 
-  ylab("probability")
+  ylab("probability")  + 
+  theme_classic()
 ```
 
 10. Write a function `estimate_G(df)` that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.
@@ -331,7 +332,8 @@ ggplot(
   labs(fill = "Value") + 
   xlab("action/state/state") + 
   ylab("probability") +
-  theme(axis.text.x = element_blank())
+  theme(axis.text.x = element_blank())  + 
+  theme_classic()
 ```
 
 
@@ -448,7 +450,8 @@ graph <-
       linetype = "dotted"
       ) +
     ylab("objective function") +
-    xlab(TeX(label[i]))
+    xlab(TeX(label[i]))  + 
+    theme_classic()
   return(g)
 }
 saveRDS(
@@ -589,7 +592,8 @@ graph <-
       linetype = "dotted"
       ) +
     ylab("objective function") + 
-    xlab(TeX(label[i]))
+    xlab(TeX(label[i]))  + 
+    theme_classic()
   return(g)
 }
 saveRDS(

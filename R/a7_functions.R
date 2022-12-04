@@ -91,7 +91,7 @@ compute_exante_value <-
     K, 
     delta
     ) {
-    # construct E_p and Sigma_p
+    # construct E_p and sigma_p
     E_p <- -digamma(1) - log(p)
     E_p <- 
       ifelse(
@@ -99,7 +99,7 @@ compute_exante_value <-
         E_p,
         0
         )
-    Sigma_p <- 
+    sigma_p <- 
       foreach (
         l = 1:L
         ) %do% {
@@ -108,13 +108,13 @@ compute_exante_value <-
       p_l <- t(matrix(p_l))
       return(p_l)
     }
-    Sigma_p <-
-      Matrix::bdiag(Sigma_p) %>%
+    sigma_p <-
+      Matrix::bdiag(sigma_p) %>%
       as.matrix()
     # compute exante value function
-    term_1 <- diag(dim(Sigma_p)[1]) - 
-                delta * Sigma_p %*% G
-    term_2 <- Sigma_p %*% (PI + E_p)
+    term_1 <- diag(dim(sigma_p)[1]) - 
+                delta * sigma_p %*% G
+    term_2 <- sigma_p %*% (PI + E_p)
     V <- 
       solve(
         term_1, 

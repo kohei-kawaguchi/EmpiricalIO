@@ -78,7 +78,8 @@ ggplot(
   geom_histogram(
     fill = "steelblue",
     alpha = 0.8
-    )
+    ) + 
+  theme_classic()
 # draw reserve prices
 reserve <- 0.2
 reserve <- 
@@ -105,7 +106,8 @@ ggplot(
   geom_histogram(
     fill = "steelblue",
     alpha = 0.8
-    )
+    ) + 
+  theme_classic()
 ```
 
 Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
@@ -176,7 +178,8 @@ ggplot(
   geom_histogram(
     fill = "steelblue",
     alpha = 0.8
-    )
+    ) + 
+  theme_classic()
 ```
 
 6. Write a function `compute_winning_bids_first(valuation, reserve, alpha, beta)` that returns only the winning bids from each first-price auction. It will call `compute_bids_first` inside the function. It does not return anything when no bidder bids above the reserve price.
@@ -198,7 +201,8 @@ ggplot(
   geom_histogram(
     fill = "steelblue", 
     alpha = 0.8
-    )
+    ) + 
+  theme_classic()
 ```
 
 ## Estimate the parameters
@@ -333,7 +337,8 @@ graph <-
       linetype = "dotted"
       ) +
     ylab("objective function") + 
-    xlab(TeX(label[i]))
+    xlab(TeX(label[i])) + 
+    theme_classic()
   return(g)
 }
 saveRDS(
@@ -535,7 +540,8 @@ graph <-
       linetype = "dotted"
       ) +
     ylab("objective function") + 
-    xlab(TeX(label[i]))
+    xlab(TeX(label[i])) + 
+    theme_classic()
   return(g)
 }
 saveRDS(
@@ -590,7 +596,8 @@ ggplot(
   ) + 
   stat_ecdf(color = "steelblue") +
   xlab("bid") + 
-  ylab("cumulative distribution")
+  ylab("cumulative distribution") + 
+  theme_classic()
 F_b <- ecdf(df_first$b)
 F_b(0.4)
 F_b(0.6)
@@ -599,7 +606,8 @@ ggplot(
   df_first, 
   aes(x = b)
   ) + 
-  geom_density(fill = "steelblue")
+  geom_density(fill = "steelblue") + 
+  theme_classic()
 f_b <- approxfun(density(df_first$b))
 f_b(0.4)
 f_b(0.6)
@@ -682,7 +690,8 @@ ggplot(
     color = type
     )
   ) + 
-  stat_ecdf()
+  stat_ecdf() + 
+  theme_classic()
 ```
 
 
