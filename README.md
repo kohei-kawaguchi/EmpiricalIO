@@ -24,3 +24,5 @@ The source files for assignment are in `/assignment`.
 The R functions used in the assignment are defined in files in `/R`.
 
 The lecture note can be compiled by running commands in `/lecture/build_book.R`, which generate html and pd files in `docs/`.
+
+The rendered lecture note is available at [https://kohei-kawaguchi.github.io/EmpiricalIO/](https://kohei-kawaguchi.github.io/EmpiricalIO/)
