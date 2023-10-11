@@ -19,7 +19,7 @@ R CMD INSTALL --preclean .
 
 The source files of the lecture note are in `/lecture`.
 
-The source files for assignment are in `/assignment`.
+The source files for assignment are also found in `/lecture`. The files in `/assignment` are currently slightly obsolete.
 
 The R functions used in the assignment are defined in files in `/R`.
 
