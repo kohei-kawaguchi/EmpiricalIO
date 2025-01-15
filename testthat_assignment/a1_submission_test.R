@@ -1,12 +1,12 @@
 simulate_data <- function(num_obs) {
     df <- expand.grid(i = 1:num_obs, k = 1:2) %>%
-        as_tibble() %>%
-        mutate(x = ifelse(k == 1, 0, 1)) %>%
-        mutate(e = evd::rgev(n = nrow(.), loc = 0, scale = 1, shape = 0)) %>%
-        mutate(latent = 0.2 * x + e) %>%
-        group_by(i) %>%
-        mutate(y = as.numeric(latent == max(latent))) %>%
-        ungroup()
+        dplyr::as_tibble() %>%
+        dplyr::mutate(x = ifelse(k == 1, 0, 1)) %>%
+        dplyr::mutate(e = evd::rgev(n = nrow(.), loc = 0, scale = 1, shape = 0)) %>%
+        dplyr::mutate(latent = 0.2 * x + e) %>%
+        dplyr::group_by(i) %>%
+        dplyr::mutate(y = as.numeric(latent == max(latent))) %>%
+        dplyr::ungroup()
     return(df)
 }
 
@@ -29,7 +29,7 @@ compute_loglikelihood_a1 <-
 plot_loglikelihood_a1 <- function(df) {
     b_seq <- seq(0, 1, 0.1)
     output <- 
-    foreach (
+    foreach::foreach (
         b = b_seq,
         .combine = "rbind"
         ) %do% {
@@ -47,7 +47,7 @@ plot_loglikelihood_a1 <- function(df) {
         )
     plot <- 
     output %>%
-    ggplot(
+    ggplot2::ggplot(
         aes(
         x = x, 
         y = y
