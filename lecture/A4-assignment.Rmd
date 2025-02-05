@@ -11,8 +11,13 @@ library(latex2exp)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-dir.create("data/a4", showWarnings = FALSE)
+dir.create(
+  "lecture/data/a4" %>% here::here(), 
+  showWarnings = FALSE,
+  recursive = TRUE
+)
 ```
+
 
 ## Simulate data
 
@@ -439,16 +444,19 @@ result_nlls <-
     )
 saveRDS(
   result_nlls, 
-  file = "data/a4/result_nlls.rds"
-  )
+  file = "lecture/data/a4/result_nlls.rds" %>% here::here()
+)
 ```
 
 
 ```{r}
 result_nlls <- 
-  readRDS(file = "data/a4/result_nlls.rds")
+  readRDS(
+    file = "lecture/data/a4/result_nlls.rds" %>% here::here()
+    )
 result_nlls
 result <- 
+
   data.frame(
     true = theta, 
     estimates = result_nlls$par
@@ -584,17 +592,19 @@ delta_new <-
     )
 saveRDS(
   delta_new, 
-  file = "data/a4/delta_new.rds"
-  )
+  file = "lecture/data/a4/delta_new.rds" %>% here::here()
+)
 ```
-
 
 
 ```{r, echo = TRUE}
 delta_new <- 
-  readRDS(file = "data/a4/delta_new.rds")
+  readRDS(
+    file = "lecture/data/a4/delta_new.rds" %>% here::here()
+  )
 summary(delta_new$delta - delta$delta)
 ```
+
 
 
 
@@ -718,16 +728,15 @@ objective <-
     ) 
 saveRDS(
   objective, 
-  file = "data/a4/objective.rds"
-  )
+  file = "lecture/data/a4/objective.rds" %>% here::here()
+)
 ```
 ```{r, echo = TRUE}
-objective <- readRDS(file = "data/a4/objective.rds")
+objective <- readRDS(
+  file = "lecture/data/a4/objective.rds" %>% here::here()
+)
 objective
 ```
-
-
-
 
 12. Draw a graph of the objective function that varies each non-linear parameter from 0, 0.2, $\cdots$, 2.0 of the true value. Try with the actual shocks `V`. 
 
@@ -806,14 +815,14 @@ graph_true <-
 }
 saveRDS(
   graph_true, 
-  file = "data/a4/graph_true.rds"
-  )
+  file = "lecture/data/a4/graph_true.rds" %>% here::here()
+)
 ```
 ```{r}
 graph_true <- 
   readRDS(
-    file = "data/a4/graph_true.rds"
-    )
+    file = "lecture/data/a4/graph_true.rds" %>% here::here()
+  )
 graph_true
 ```
 
@@ -838,14 +847,17 @@ result <-
 
 saveRDS(
   result, 
-  file = "data/a4/result.rds"
-  )
+  file = "lecture/data/a4/result.rds" %>% here::here()
+)
 ```
 
 ```{r}
-result <- readRDS(file = "data/a4/result.rds")
+result <- readRDS(
+  file = "lecture/data/a4/result.rds" %>% here::here()
+)
 result
 comparison <- 
+
   cbind(
     theta_nonlinear, 
     abs(result$par)
