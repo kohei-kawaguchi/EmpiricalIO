@@ -1,1 +1,1 @@
-compile_chapter("lecture/09-econometrics.Rmd")
+compile_chapter("lecture/01-intro.Rmd")
