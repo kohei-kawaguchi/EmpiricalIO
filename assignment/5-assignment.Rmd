@@ -7,7 +7,7 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -19,7 +19,13 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+dir.create(
+  "lecture/data/a5" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+  )
 ```
+
 
 ## Simulate data
 
@@ -131,18 +137,28 @@ sd_p <- 0.05
 2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
 
 
-```{r}
+```{r, echo = TRUE}
 # make product characteristics data
-X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
-X <- cbind(rep(1, J), X)
+X <- 
+  matrix(
+       sd_x * rnorm(J * (K - 1)), 
+       nrow = J
+       )
+X <- 
+  cbind(
+       rep(1, J),
+       X
+       )
 colnames(X) <- paste("x", 1:K, sep = "_")
-X <- data.frame(j = 1:J, X) %>%
+X <- 
+  data.frame(j = 1:J, X) %>%
   tibble::as_tibble()
 # add outside option
-X <- rbind(
+X <- 
+  rbind(
   rep(0, dim(X)[2]),
   X
-) 
+  ) 
 ```
 
 ```{r, echo = TRUE}
@@ -151,26 +167,42 @@ X
 
 3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. For now, set $p_{jt} = 0$ and fill the equilibrium price later. After generating the variables, drop some products in each market. In order to change the number of available products in each market, for each market, first draw $J_t$ from a discrete uniform distribution between $1$ and $J$. Then, drop products from each market using `dplyr::sample_frac` function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
 
-```{r}
+```{r, echo = TRUE}
 # make market-product data
-M <- expand.grid(j = 1:J, t = 1:T) %>%
+M <- 
+  expand.grid(
+    j = 1:J, 
+    t = 1:T
+    ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
     xi = sd_xi * rnorm(J*T),
     c = exp(sd_c * rnorm(J*T)),
     p = 0
   ) 
-M <- M %>%
+M <- 
+  M %>%
   dplyr::group_by(t) %>%
   dplyr::sample_frac(size = purrr::rdunif(1, J)/J) %>%
   dplyr::ungroup()
 # add outside option
-outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
-M <- rbind(
-  M,
-  outside
-) %>%
-  dplyr::arrange(t, j)
+outside <- 
+  data.frame(
+    j = 0, 
+    t = 1:T, 
+    xi = 0, 
+    c = 0, 
+    p = 0
+    )
+M <- 
+  rbind(
+    M,
+    outside
+    ) %>%
+  dplyr::arrange(
+    t, 
+    j
+    )
 ```
 
 ```{r, echo = TRUE}
@@ -179,14 +211,26 @@ M
 
 4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
 
-```{r}
+```{r, echo = TRUE}
 # make consumer-market data
-V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
-colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V <- data.frame(
-  expand.grid(i = 1:N, t = 1:T),
+V <- 
+  matrix(
+    rnorm(N * T * (K + 1)), 
+    nrow = N * T
+    ) 
+colnames(V) <- 
+  c(
+    paste("v_x", 1:K, sep = "_"), 
+    "v_p"
+    )
+V <- 
+  data.frame(
+  expand.grid(
+    i = 1:N, 
+    t = 1:T
+    ),
   V
-) %>%
+  ) %>%
   tibble::as_tibble()
 ```
 
@@ -206,77 +250,119 @@ $$
 
 The returned object should be a list across markets and each element of the list should be $J_t \times J_t$ matrix whose $(j, k)$-th element is $\partial s_{jt}/\partial p_{it}$ (do not include the outside option). The computation will be looped across markets. I recommend to use a parallel computing for this loop.
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, eval = TRUE}
 derivative_share_smooth <-
-  compute_derivative_share_smooth(X, M, V, beta, sigma, mu, omega)
+  compute_derivative_share_smooth(
+    X = X,
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
+```
+```{r, eval = TRUE}
+saveRDS(
+  derivative_share_smooth,
+  file = "data/a5/derivative_share_smooth.rds"
+)
+```
+```{r}
+derivative_share_smooth <-
+  readRDS(
+    file = "data/a5/derivative_share_smooth.rds"
+  )
+```
+
+
+```{r, echo = TRUE}
 derivative_share_smooth[[1]]
 derivative_share_smooth[[T]]
 ```
 
-6. Make a list `Delta` such that each element of the list is $J_t \times J_t$ matrix $\Delta_t$.
+6. Make a list `delta` such that each element of the list is $J_t \times J_t$ matrix $\delta_t$.
 ```{r}
-Delta <- 
-  foreach (tt = 1:T) %do% {
-    J_t <- M %>%
+delta <- 
+  foreach (
+    tt = 1:T
+    ) %do% {
+    J_t <- 
+      M %>%
       dplyr::filter(t == tt) %>%
       dplyr::filter(j > 0) 
     J_t <- dim(J_t)[1]
-    Delta_t <- diag(rep(1, J_t))
-    return(Delta_t)
+    delta_t <- diag(rep(1, J_t))
+    return(delta_t)
   }
 ```
 
 ```{r, echo = TRUE}
-Delta[[1]]
-Delta[[T]]
+delta[[1]]
+delta[[T]]
 ```
 
-7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
+7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
 $$
 p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
 $$
 The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector, we pass log price and exponentiate inside the function. Iterate this until $\max_{jt}|p_{jt}^{(r + 1)} - p_{jt}^{(r)}| < \lambda$, for example with $\lambda = 10^{-6}$. This iteration may or may not converge. The convergence depends on the parameters and the realization of the shocks. If the algorithm does not converge, first check the code. 
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 # set the threshold
 lambda <- 1e-6
 # set the initial price
 p <- M[M$j > 0, "p"]
 logp <- log(rep(1, dim(p)[1]))
-p_new <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)
+p_new <- 
+  update_price(
+    logp = logp, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega, 
+    delta = delta
+    )
 # iterate
 distance <- 10000
 while (distance > lambda) {
   p_old <- p_new
-  p_new <- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta)
+  p_new <- 
+    update_price(
+      log(p_old), 
+      X, 
+      M, 
+      V, 
+      beta, 
+      sigma, 
+      mu, 
+      omega, 
+      delta
+      )
   distance <- max(abs(p_new - p_old))
   print(distance)
 }
 # save
 p_actual <- p_new
-save(p_actual, file = "data/A5_price_actual.RData")
+saveRDS(
+  p_actual, 
+  file = "lecture/data/a5/A5_price_actual.rds" %>% here::here()
+)
+```
+
+```{r, echo = TRUE}
+# load
+p_actual <- 
+  readRDS(
+    file = "lecture/data/a5/A5_price_actual.rds" %>% here::here()
+  )
+p_actual %>% head()
 ```
 
 
-<!-- 10. Write a function `compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta)` that computes: -->
-<!-- $$ -->
-<!-- p_t - [c_t + \Omega_t(p_t, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t, x_t, \xi_t)]. -->
-<!-- $$ -->
-<!-- mainly as a function of $p_t$. The returned object should be a vector whose row represents the condition for an inside product of each market. To impose non-negativity constraint on the price vector in the following optimization problem, we pass log price and exponentiate inside the function. -->
-
-<!-- ```{r, echo = TRUE} -->
-<!-- equilibrium_condition <- compute_equilibrium_condition(logp, X, M, V, beta, sigma, mu, omega, Delta) -->
-<!-- head(equilibrium_condition) -->
-<!-- summary(equilibrium_condition) -->
-<!-- ``` -->
-
-<!-- 11. Write a function `compute_equilibrium_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that find a price vector that makes the `compute_equilibrium_condition` zero. To solve a system of non-linear equations, you can call `nleqslv::nleqslv` inside `compute_equilibrium_price`. If `update_price` converged, use the limit as the initial price vector. Even if `update_price` did not converge, use a price vcector after several iterations for the initial price vector. -->
-
-<!-- ```{r, echo = TRUE} -->
-<!-- load(file = "data/A4_price_iteration.RData") -->
-<!-- p_equilibrium_2 <- compute_equilibrium_price(log(p_new), X, M, V, beta, sigma, mu, omega, Delta) -->
-<!-- save(p_equilibrium_2, file = "data/A5_price_nleqslv.RData") -->
-<!-- ``` -->
 
 ## Estimate the parameters
 
@@ -289,82 +375,136 @@ Of course, in reality, we first draw Monte Carlo shocks to approximate the share
 
 
 ```{r, echo = TRUE}
-# load
-load(file = "data/A5_price_actual.RData")
 # take the logarithm
 logp <- log(p_actual)
 # estimate the marginal cost
-marginal_cost_estimate <- estimate_marginal_cost(logp, X, M, V, beta, sigma, mu, omega, Delta)
+marginal_cost_estimate <- 
+  estimate_marginal_cost(
+    logp = logp, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega, 
+    delta = delta)
 marginal_cost_actual <- M[M$j > 0, ]$c
 # plot the estimate vs actual marginal costs
 marginal_cost_df <-
-  data.frame(actual = marginal_cost_actual,
-             estimate = marginal_cost_estimate)
-ggplot(marginal_cost_df, aes(x = estimate, y = actual)) +
-  geom_point()
+  data.frame(
+    actual = marginal_cost_actual,
+    estimate = marginal_cost_estimate
+    )
+ggplot(
+  marginal_cost_df, 
+  aes(
+    x = estimate, 
+    y = actual
+    )
+  ) +
+  geom_point() + 
+  theme_classic()
 ```
 
 2. (Optional) Translate `compute_indirect_utility`, `compute_choice_smooth`, `compute_derivative_share_smooth`, `update_price` into C++ using Rcpp and Eigen. Check that the outputs coincide at the machine precision level. I give you extra 2 points for this task on top of the usual 10 points for this assignment.
 
 ## Conduct counterfactual simulation
 
-1. Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let `Delta_counterfactual` be the relevant ownership matrix. Make `Delta_counterfactual`.
+1. Suppose that the firm of product 1 owner purchase the firms that own product 2 and 3. Let `delta_counterfactual` be the relevant ownership matrix. Make `delta_counterfactual`.
 
 ```{r}
-Delta_counterfactual <-
-  foreach (tt = 1:T) %dopar% {
+delta_counterfactual <-
+  foreach (
+    tt = 1:T
+    ) %dopar% {
     # product indice
-    J_t <- M %>%
+    J_t <- 
+      M %>%
       dplyr::filter(t == tt, j > 0)
     J_t <- J_t$j
     # baseline ownership
-    Delta_counterfactual_t <- diag(rep(1, length(J_t)))
+    delta_counterfactual_t <- diag(rep(1, length(J_t)))
     # merged product indice
     merged <- which(J_t %in% c(1, 2, 3))
     # change ownership
     if (length(merged) > 1) {
-      merged <- gtools::permutations(
+      merged <- 
+        gtools::permutations(
         n = length(merged), 
         v = merged, 
-        r = 2)
-      Delta_counterfactual_t[merged] <- 1
+        r = 2
+        )
+      delta_counterfactual_t[merged] <- 1
     }
     # return
-    return(Delta_counterfactual_t)
+    return(delta_counterfactual_t)
   }
 ```
 
 ```{r, echo = TRUE}
-Delta_counterfactual[[1]]
-Delta_counterfactual[[T]]
+delta_counterfactual[[1]]
+delta_counterfactual[[T]]
 ```
 
 2. Compute the counterfactual price using the iteration with `update_price`. You can start the iteration from the equilibrium price. Show the average percentage change in the price for each product. In theory, the price of any product should not drop. But some prices can slightly drop because of the numerical errors.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 logp <- log(p_actual)
-p_new <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
+p_new <- 
+  update_price(
+    logp = logp, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega, 
+    delta = delta_counterfactual
+    )
 distance <- 10000
 while (distance > lambda) {
   p_old <- p_new
-  p_new <- update_price(log(p_old), X, M, V, beta, sigma, mu, omega, Delta_counterfactual)
+  p_new <- 
+    update_price(
+      log(p_old), 
+      X, 
+      M, 
+      V, 
+      beta, 
+      sigma, 
+      mu, 
+      omega, 
+      delta_counterfactual
+      )
   distance <- max(abs(p_new - p_old))
   print(distance)
 }
 p_counterfactual <- p_new
-save(p_counterfactual, file = "data/A5_price_counterfactual.RData")
+saveRDS(
+  p_counterfactual, 
+  file = "lecture/data/a5/A5_price_counterfactual.rds" %>% here::here()
+)
 ```
+
 
 ```{r}
 # load
-load(file = "data/A5_price_counterfactual.RData")
+p_counterfactual <- 
+  readRDS(
+    file = "lecture/data/a5/A5_price_counterfactual.rds" %>% here::here()
+  )
+
+
 # make new data frame
 M_counterfactual <- M 
 M_counterfactual[, "p_actual"] <- 0
 M_counterfactual[M_counterfactual$j > 0, "p_actual"] <- p_actual
 M_counterfactual[, "p_counterfactual"] <- 0
 M_counterfactual[M_counterfactual$j > 0, "p_counterfactual"] <- p_counterfactual
-p_change <- M_counterfactual %>%
+p_change <- 
+  M_counterfactual %>%
   dplyr::filter(j > 0) %>%
   dplyr::mutate(p_change = (p_counterfactual - p_actual) / p_actual) %>%
   dplyr::group_by(j) %>%
@@ -380,11 +520,31 @@ kable(p_change)
 ```{r, echo = TRUE}
 # compute actual producer surplus
 producer_surplus_actual <-
-  compute_producer_surplus(p_actual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)
+  compute_producer_surplus(
+    p = p_actual, 
+    marginal_cost = marginal_cost_estimate, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 summary(producer_surplus_actual)
 # compute counterfactual producer surplus
 producer_surplus_counterfactual <-
-  compute_producer_surplus(p_counterfactual, marginal_cost_estimate, X, M, V, beta, sigma, mu, omega)
+  compute_producer_surplus(
+    p = p_counterfactual, 
+    marginal_cost = marginal_cost_estimate, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 summary(producer_surplus_counterfactual)
 ```
 ```{r}
@@ -394,9 +554,12 @@ M_counterfactual[M_counterfactual$j > 0, "producer_surplus_actual"] <-
 M_counterfactual[, "producer_surplus_counterfactual"] <- 0
 M_counterfactual[M_counterfactual$j > 0, "producer_surplus_counterfactual"] <- 
   producer_surplus_counterfactual
-producer_surplus_change <- M_counterfactual %>%
+producer_surplus_change <- 
+  M_counterfactual %>%
   dplyr::filter(j > 0) %>%
-  dplyr::mutate(producer_surplus_change = producer_surplus_counterfactual - producer_surplus_actual) %>%
+  dplyr::mutate(producer_surplus_change = 
+                  (producer_surplus_counterfactual - producer_surplus_actual) /
+                  producer_surplus_actual) %>%
   dplyr::group_by(j) %>%
   dplyr::summarise(producer_surplus_change = mean(producer_surplus_change)) %>%
   dplyr::ungroup()
@@ -410,18 +573,37 @@ kable(producer_surplus_change)
 ```{r, echo = TRUE}
 # compute actual consumer surplus
 consumer_surplus_actual <- 
-  compute_consumer_surplus(p_actual, X, M, V, beta, sigma, mu, omega)
+  compute_consumer_surplus(
+    p = p_actual, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 summary(consumer_surplus_actual)
 # compute counterfactual consumer surplus
 consumer_surplus_counterfactual <- 
-  compute_consumer_surplus(p_counterfactual, X, M, V, beta, sigma, mu, omega)
+  compute_consumer_surplus(
+    p = p_counterfactual, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 summary(consumer_surplus_counterfactual)
 ```
 
 ```{r, echo = TRUE}
 consumer_surplus_change <- 
   (sum(consumer_surplus_counterfactual) - 
-     sum(consumer_surplus_actual)) 
+     sum(consumer_surplus_actual)) /
+  sum(consumer_surplus_actual)
 consumer_surplus_change
 ```
 

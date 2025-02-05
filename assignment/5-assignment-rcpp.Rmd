@@ -6,7 +6,6 @@ output:
   html_document: default
   pdf_document: default
 ---
-
 ```{r setup, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
@@ -18,8 +17,14 @@ library(latex2exp)
 library(codetools)
 library(doParallel)
 registerDoParallel()
-knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+dir.create(
+  "lecture/data/a5" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+  )
 ```
+
 
 ## Simulate data
 
@@ -133,13 +138,23 @@ sd_p <- 0.05
 
 ```{r}
 # make product characteristics data
-X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
-X <- cbind(rep(1, J), X)
+X <- 
+  matrix(
+    sd_x * rnorm(J * (K - 1)), 
+    nrow = J
+    )
+X <- 
+  cbind(
+    rep(1, J), 
+    X
+    )
 colnames(X) <- paste("x", 1:K, sep = "_")
-X <- data.frame(j = 1:J, X) %>%
+X <- 
+  data.frame(j = 1:J, X) %>%
   tibble::as_tibble()
 # add outside option
-X <- rbind(
+X <- 
+  rbind(
   rep(0, dim(X)[2]),
   X
 ) 
@@ -153,24 +168,40 @@ X
 
 ```{r}
 # make market-product data
-M <- expand.grid(j = 1:J, t = 1:T) %>%
+M <- 
+  expand.grid(
+    j = 1:J, 
+    t = 1:T
+    ) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(
     xi = sd_xi * rnorm(J*T),
     c = exp(sd_c * rnorm(J*T)),
     p = 0
   ) 
-M <- M %>%
+M <- 
+  M %>%
   dplyr::group_by(t) %>%
   dplyr::sample_frac(size = purrr::rdunif(1, J)/J) %>%
   dplyr::ungroup()
 # add outside option
-outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
-M <- rbind(
-  M,
-  outside
-) %>%
-  dplyr::arrange(t, j)
+outside <- 
+  data.frame(
+    j = 0, 
+    t = 1:T, 
+    xi = 0, 
+    c = 0, 
+    p = 0
+    )
+M <- 
+  rbind(
+    M,
+    outside
+    ) %>%
+  dplyr::arrange(
+    t, 
+    j
+    )
 ```
 
 ```{r, echo = TRUE}
@@ -181,12 +212,24 @@ M
 
 ```{r}
 # make consumer-market data
-V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
-colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V <- data.frame(
-  expand.grid(i = 1:N, t = 1:T),
+V <- 
+  matrix(
+    rnorm(N * T * (K + 1)), 
+    nrow = N * T
+    ) 
+colnames(V) <- 
+  c(
+    paste("v_x", 1:K, sep = "_"), 
+    "v_p"
+    )
+V <- 
+  data.frame(
+  expand.grid(
+    i = 1:N, 
+    t = 1:T
+    ),
   V
-) %>%
+  ) %>%
   tibble::as_tibble()
 ```
 
@@ -214,33 +257,98 @@ T <- max(M$t)
 N <- max(V$i)
 J <- max(X$j)
 # make choice data
-df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
+df <- 
+  expand.grid(
+    t = 1:T, 
+    i = 1:N, 
+    j = 0:J
+    ) %>%
   tibble::as_tibble() %>%
-  dplyr::left_join(V, by = c("i", "t")) %>%
-  dplyr::left_join(X, by = c("j")) %>%
-  dplyr::left_join(M, by = c("j", "t")) %>%
+  dplyr::left_join(
+    V, 
+    by = c("i", "t")
+    ) %>%
+  dplyr::left_join(
+    X, 
+    by = c("j")
+    ) %>%
+  dplyr::left_join(
+    M, 
+    by = c("j", "t")
+    ) %>%
   dplyr::filter(!is.na(p)) %>%
-  dplyr::arrange(t, i, j)
+  dplyr::arrange(
+    t, 
+    i, 
+    j
+    )
 # make list of matrices
 J_start <- 1
 df_list <-
-  foreach (tt = 1:T) %do% {
+  foreach (
+    tt = 1:T
+    ) %do% {
     df_ti <-
       df %>%
-      dplyr::filter(t == tt, i == 1)
+      dplyr::filter(
+        t == tt, 
+        i == 1
+        )
     J_t <- dim(df_ti)[1] - 1
     J_end <- J_start + J_t - 1
     df_list_t <-
-      foreach (ii = 1:N) %dopar% {
+      foreach (
+        ii = 1:N,
+        .packages = "dplyr"
+        ) %dopar% {
         df_ti <-
           df %>%
-          dplyr::filter(t == tt, i == ii)
-        XX <- as.matrix(dplyr::select(df_ti, dplyr::starts_with("x_")))
-        p <- as.matrix(dplyr::select(df_ti, p)) 
-        v_x <- as.matrix(dplyr::select(df_ti, dplyr::starts_with("v_x")))
-        v_p <- as.matrix(dplyr::select(df_ti, v_p))
-        xi <- as.matrix(dplyr::select(df_ti, xi))
-        c <- as.matrix(dplyr::select(df_ti, c))
+          dplyr::filter(
+            t == tt, 
+            i == ii
+            )
+        XX <- 
+          as.matrix(
+            dplyr::select(
+              df_ti, 
+              dplyr::starts_with("x_")
+              )
+            )
+        p <- 
+          as.matrix(
+            dplyr::select(
+              df_ti, 
+              p
+              )
+            ) 
+        v_x <- 
+          as.matrix(
+            dplyr::select(
+              df_ti, 
+              dplyr::starts_with("v_x")
+              )
+            )
+        v_p <- 
+          as.matrix(
+            dplyr::select(
+              df_ti, 
+              v_p
+              )
+            )
+        xi <- 
+          as.matrix(
+            dplyr::select(
+              df_ti, 
+              xi
+              )
+            )
+        c <- 
+          as.matrix(
+            dplyr::select(
+              df_ti, 
+              c
+              )
+            )
         df_list_ti <-
           list(
             XX = XX,
@@ -249,7 +357,10 @@ df_list <-
             v_p = v_p,
             xi = xi,
             c = c,
-            j = seq(J_start, J_end)
+            j = seq(
+              J_start, 
+              J_end
+              )
           )
         return(df_list_ti)
       }
@@ -261,87 +372,42 @@ df_list <-
 
 
 ```{r}
-# compute indirect utility
-compute_indirect_utility_matrix <- 
-  function(df_list, beta, sigma, mu, omega) {
-    value <-
-      foreach (t = 1:length(df_list)) %dopar% {
-        value_t <- 
-          foreach (i = 1:length(df_list[[t]])) %do% {
-            # extrast matrices
-            XX <- df_list[[t]][[i]]$XX
-            p <- df_list[[t]][[i]]$p
-            v_x <- df_list[[t]][[i]]$v_x
-            v_p <- df_list[[t]][[i]]$v_p
-            xi <- df_list[[t]][[i]]$xi
-            # random coefficients
-            beta_i <- as.matrix(rep(1, dim(v_x)[1])) %*% t(as.matrix(beta)) + v_x %*% diag(sigma) 
-            alpha_i <- - exp(mu + omega * v_p)
-            # conditional mean indirect utility
-            value_ti <- as.matrix(rowSums(beta_i * XX) + p * alpha_i + xi) 
-            colnames(value_ti) <- "u"
-            # return
-            return(value_ti)
-        }
-        return(value_t)
-      }
-    return(value)
-  }
 # check
-u_1 <- compute_indirect_utility(df, beta, sigma, mu, omega)
-u_2 <- compute_indirect_utility_matrix(df_list, beta, sigma, mu, omega)
-u_2 <- u_2 %>%
+u_1 <- 
+  compute_indirect_utility(
+    df = df, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
+u_2 <- 
+  compute_indirect_utility_matrix(
+    df_list = df_list, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
+u_2 <- 
+  u_2 %>%
   unlist() %>%
   as.matrix()
 max(abs(u_1 - u_2))
 ```
 
-```
-// src/A5_functions.cpp
-// compute indirect utility
-// [[Rcpp::export]]
-Rcpp::List compute_indirect_utility_matrix_rcpp(
-  Rcpp::List df_list,
-  Eigen::VectorXd beta,
-  Eigen::VectorXd sigma,
-  double mu,
-  double omega
-) {
-  Rcpp::List value;
-  for (int t = 0; t < df_list.size(); t++) {
-    Rcpp::List df_list_t = df_list[t];
-    Rcpp::List value_t;
-    for (int i = 0; i < df_list_t.size(); i++) {
-      // extrast matrices
-      Rcpp::List df_list_ti = df_list_t[i];
-      Eigen::MatrixXd XX(Rcpp::as<Eigen::MatrixXd>(df_list_ti["XX"]));
-      Eigen::MatrixXd p(Rcpp::as<Eigen::MatrixXd>(df_list_ti["p"]));
-      Eigen::MatrixXd v_x(Rcpp::as<Eigen::MatrixXd>(df_list_ti["v_x"]));
-      Eigen::MatrixXd v_p(Rcpp::as<Eigen::MatrixXd>(df_list_ti["v_p"]));
-      Eigen::MatrixXd xi(Rcpp::as<Eigen::MatrixXd>(df_list_ti["xi"]));
-      // random coefficients
-      Eigen::MatrixXd beta_i = v_x * sigma.asDiagonal();
-      beta_i = beta_i.rowwise() + beta.transpose();
-      Eigen::MatrixXd alpha_i = - (mu + (omega * v_p).array()).exp();
-      // conditional mean indirect utility
-      Eigen::MatrixXd temp_1 = beta_i.array() * XX.array();
-      Eigen::MatrixXd value = temp_1.rowwise().sum();
-      value = value + (p.array() * alpha_i.array()).matrix() + xi;
-      // return
-      value_t.push_back(value);
-    }
-    // return
-    value.push_back(value_t);
-  }
-  // return
-  return(value);
-}
-```
-
 ```{r}
 # check Rcpp function
-u_3 <- compute_indirect_utility_matrix_rcpp(df_list, beta, sigma, mu, omega)
-u_3 <- u_3 %>%
+u_3 <- 
+  compute_indirect_utility_matrix_rcpp(
+    df_list = df_list, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
+u_3 <- 
+  u_3 %>%
   unlist() %>%
   as.matrix()
 max(abs(u_2 - u_3))
@@ -349,141 +415,78 @@ max(abs(u_2 - u_3))
 
 
 ```{r}
-# compute choice
-compute_choice_smooth_matrix <-
-  function(df_list, beta, sigma, 
-           mu, omega) {
-    # compute indirect utility
-    u <- compute_indirect_utility_matrix(
-      df_list, beta, sigma, mu, omega)
-    # make choice
-    q <-
-      foreach (t = 1:length(u)) %dopar% {
-        q_t <-
-          foreach (i = 1:length(u[[t]])) %do% {
-            u_ti <- u[[t]][[i]]
-            q_ti <- exp(u_ti) / sum(exp(u_ti))
-            return(q_ti)
-          }
-        return(q_t)
-      }
-    # return
-    return(q)
-  }
+
 # check
-q_1 <- compute_choice_smooth(
-  X, M, V, beta, sigma, mu, omega) 
+q_1 <- 
+  compute_choice_smooth(
+  X = X, 
+  M = M, 
+  V = V, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  ) 
 q_1 <- q_1$q
-q_2 <- compute_choice_smooth_matrix(
-  df_list, beta, sigma, mu, omega)
+q_2 <- 
+  compute_choice_smooth_matrix(
+  df_list = df_list, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
 q_2 <- unlist(q_2)
 max(abs(q_1 - q_2))
 ```
 
-```
-// src/A5_functions.cpp
-// compute choice
-// [[Rcpp::export]]
-Rcpp::List compute_choice_smooth_matrix_rcpp(
-    Rcpp::List df_list,
-    Eigen::VectorXd beta,
-    Eigen::VectorXd sigma,
-    double mu,
-    double omega 
-) {
-  // compute indirect utility
-  Rcpp::List u = compute_indirect_utility_matrix_rcpp(
-    df_list, beta, sigma, mu, omega);
-  // make choice
-  Rcpp::List q;
-  for (int t = 0; t < u.size(); t++) {
-    Rcpp::List u_t = u[t];
-    Rcpp::List q_t;
-    for (int i = 0; i < u_t.size(); i++) {
-      Eigen::MatrixXd u_ti(Rcpp::as<Eigen::MatrixXd>(u_t[i]));
-      Eigen::MatrixXd q_ti = u_ti.array().exp();
-      q_ti = q_ti / q_ti.sum();
-      q_t.push_back(q_ti);
-    }
-    q.push_back(q_t);
-  }
-  // return
-  return(q);
-}
-```
-
-
 ```{r}
-q_3 <- compute_choice_smooth_matrix_rcpp(
-  df_list, beta, sigma, mu, omega)
+q_3 <- 
+  compute_choice_smooth_matrix_rcpp(
+  df_list = df_list, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
 q_3 <- unlist(q_3)
 max(abs(q_2 - q_3))
 ```
 
 ```{r}
-# compute share
-compute_share_smooth_matrix <-
-  function(df_list, beta, sigma, 
-           mu, omega) {
-    # compute choice
-    df_choice <- 
-      compute_choice_smooth_matrix(df_list, beta, sigma, 
-                            mu, omega)
-    # make share data
-    df_share_smooth <-
-      foreach (t = 1:length(df_choice)) %dopar% {
-        q_t <- df_choice[[t]]
-        q_t <- q_t %>%
-          purrr::reduce(`+`)
-        s_t <- q_t / sum(q_t)
-        return(s_t)
-      }
-    
-    return(df_share_smooth)
-  }
-s_1 <- compute_share_smooth(
-  X, M, V, beta, sigma, mu, omega) 
+
+s_1 <- 
+  compute_share_smooth(
+  X = X, 
+  M = M, 
+  V = V, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  ) 
 s_1 <- s_1$s
-s_2 <- compute_share_smooth_matrix(
-  df_list, beta, sigma, mu, omega)
+s_2 <- 
+  compute_share_smooth_matrix(
+  df_list = df_list, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
 s_2 <- unlist(s_2)
 max(abs(s_1 - s_2))
 ```
-```
-// src/A5_functions.cpp
-// compute share
-// [[Rcpp::export]]
-Rcpp::List compute_share_smooth_matrix_rcpp(
-    Rcpp::List df_list,
-    Eigen::VectorXd beta,
-    Eigen::VectorXd sigma,
-    double mu,
-    double omega 
-) {
-  // compute choice
-  Rcpp::List df_choice = compute_choice_smooth_matrix_rcpp(
-    df_list, beta, sigma, mu, omega);
-  // make share data
-  Rcpp::List df_share_smooth;
-  for (int t = 0; t < df_choice.size(); t++) {
-    Rcpp::List q_t = df_choice[t];
-    Eigen::MatrixXd s_t(Rcpp::as<Eigen::MatrixXd>(q_t[0]));
-    for (int i = 1; i < q_t.size(); i++) {
-      Eigen::MatrixXd s_ti(Rcpp::as<Eigen::MatrixXd>(q_t[i]));
-      s_t = s_t + s_ti;
-    }
-    s_t = s_t / q_t.size();
-    s_t = s_t / s_t.sum();
-    df_share_smooth.push_back(s_t);
-  }
-  return(df_share_smooth);
-}
-```
-
 
 ```{r}
-s_3 <- compute_share_smooth_matrix_rcpp(
-  df_list, beta, sigma, mu, omega)
+s_3 <- 
+  compute_share_smooth_matrix_rcpp(
+  df_list = df_list, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
 s_3 <- unlist(s_3)
 max(abs(s_2 - s_3))
 ```
@@ -491,150 +494,82 @@ max(abs(s_2 - s_3))
 
 
 ```{r}
-# compute the derivatives of the smooth share
-compute_derivative_share_smooth_matrix <-
-  function(df_list, beta, sigma, mu, omega) {
-    q <- compute_choice_smooth_matrix(df_list, beta, sigma, mu, omega)
-    derivative_choice_smooth <-
-      foreach (t = 1:length(q)) %dopar% {
-        # extract data for market t
-        q_t <- q[[t]]
-        # compute the derivative matrix for each market
-        derivative_choice_smooth_t <-
-          foreach (i = 1:length(q_t)) %do% {
-            # extract data for consumer i
-            q_ti <- q_t[[i]]
-            # drop the outside option
-            s_ti <- q_ti[2:length(q_ti)]
-            # extract alpha_i
-            v_pi <- df_list[[t]][[i]]$v_p
-            alpha_i <- - exp(mu + omega * v_pi[1])
-            # compute the derivatice matrix for each consumer
-            ss_ti <- tcrossprod(s_ti, s_ti)
-            if (length(s_ti) > 1) {
-              derivative_choice_smooth_ti <-
-                diag(s_ti) - ss_ti
-            } else {
-              derivative_choice_smooth_ti <-
-                s_ti - ss_ti
-            }
-            derivative_choice_smooth_ti <-
-              alpha_i * derivative_choice_smooth_ti
-            # return
-            return(derivative_choice_smooth_ti)
-          }
-        # take average
-        N <- length(derivative_choice_smooth_t)
-        derivative_choice_smooth_t <-
-          derivative_choice_smooth_t %>%
-          purrr::reduce(`+`)
-        derivative_choice_smooth_t <-
-          derivative_choice_smooth_t / N
-        # return
-        return(derivative_choice_smooth_t)
-      }
-    # return
-    return(derivative_choice_smooth)
-  }
-ds_1 <- compute_derivative_share_smooth(
-  X, M, V, beta, sigma, mu, omega)
-ds_2 <- compute_derivative_share_smooth_matrix(
-  df_list, beta, sigma, mu, omega)
+
+ds_1 <- 
+  compute_derivative_share_smooth(
+  X = X, 
+  M = M, 
+  V = V, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
+ds_2 <- 
+  compute_derivative_share_smooth_matrix(
+  df_list = df_list, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
 max(abs(unlist(ds_1) - unlist(ds_2)))
-```
-
-```
-// src/A5_functions.cpp
-// compute the derivatives of the smooth share
-// [[Rcpp::export]]
-Rcpp::List compute_derivative_share_smooth_matrix_rcpp(
-    Rcpp::List df_list,
-    Eigen::VectorXd beta,
-    Eigen::VectorXd sigma,
-    double mu,
-    double omega   
-) {
-  //     q <- compute_choice_smooth_matrix(df_list, beta, sigma, mu, omega)
-  Rcpp::List q = compute_choice_smooth_matrix_rcpp(
-    df_list, beta, sigma, mu, omega);
-  Rcpp::List derivative_choice_smooth;
-  for (int t = 0; t < q.size(); t++) {
-    // extract data for market t
-    Rcpp::List q_t = q[t];
-    Rcpp::List df_list_t = df_list[t];
-    // compute the derivative matrix for each market
-    Eigen::VectorXd q_ti(Rcpp::as<Eigen::VectorXd>(q_t[0]));
-    int J = q_ti.size() - 1;
-    Eigen::MatrixXd derivative_choice_smooth_t = 
-      Eigen::MatrixXd::Zero(J, J);
-    for (int i = 0; i < q_t.size(); i++) {
-      // extract data for consumer i
-      Eigen::VectorXd q_ti(Rcpp::as<Eigen::VectorXd>(q_t[i]));
-      // drop the outside option
-      Eigen::MatrixXd s_ti = q_ti.tail(J);
-      // extract alpha_i
-      Rcpp::List df_list_ti = df_list_t[i];
-      Eigen::VectorXd v_pi(Rcpp::as<Eigen::VectorXd>(df_list_ti["v_p"]));
-      double alpha_i = - (mu + omega * v_pi.array()).exp()(0);
-      // compute the derivatice matrix for each consumer
-      Eigen::MatrixXd ss_ti = s_ti * s_ti.transpose();
-      Eigen::MatrixXd derivative_choice_smooth_ti;
-      if (J > 1) {
-        derivative_choice_smooth_ti = s_ti.asDiagonal();
-        derivative_choice_smooth_ti = derivative_choice_smooth_ti - ss_ti;
-      } else {
-        derivative_choice_smooth_ti = s_ti - ss_ti;
-      }
-      derivative_choice_smooth_ti = alpha_i * derivative_choice_smooth_ti;
-      // add
-      derivative_choice_smooth_t = derivative_choice_smooth_t +
-        derivative_choice_smooth_ti;
-    }
-    derivative_choice_smooth_t = derivative_choice_smooth_t / q_t.size();
-    // return
-    derivative_choice_smooth.push_back(derivative_choice_smooth_t);
-  }
-  // return
-  return(derivative_choice_smooth);
-}
-
-
 ```
 
 
 ```{r}
-ds_3 <- compute_derivative_share_smooth_matrix_rcpp(
-  df_list, beta, sigma, mu, omega)
+ds_3 <- 
+  compute_derivative_share_smooth_matrix_rcpp(
+  df_list = df_list, 
+  beta = beta, 
+  sigma = sigma, 
+  mu = mu, 
+  omega = omega
+  )
 max(abs(unlist(ds_2) - unlist(ds_3)))
 ```
 
 
 ```{r, echo = TRUE}
 derivative_share_smooth <-
-  compute_derivative_share_smooth_matrix_rcpp(df_list, beta, sigma, mu, omega)
+  compute_derivative_share_smooth_matrix_rcpp(
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 derivative_share_smooth[[1]]
 derivative_share_smooth[[T]]
 ```
 
-6. Make a list `Delta` such that each element of the list is $J_t \times J_t$ matrix $\Delta_t$.
+6. Make a list `delta` such that each element of the list is $J_t \times J_t$ matrix $\delta_t$.
 ```{r}
-Delta <- 
-  foreach (tt = 1:T) %do% {
+delta <- 
+  foreach (
+    tt = 1:T
+    ) %do% {
     J_t <- M %>%
       dplyr::filter(t == tt) %>%
       dplyr::filter(j > 0) 
     J_t <- dim(J_t)[1]
-    Delta_t <- diag(rep(1, J_t))
-    return(Delta_t)
+    delta_t <- 
+      diag(
+        rep(
+          1, 
+          J_t
+          )
+        )
+    return(delta_t)
   }
 ```
 
 ```{r, echo = TRUE}
-Delta[[1]]
-Delta[[T]]
+delta[[1]]
+delta[[T]]
 ```
 
-7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
+7. Write a function `update_price(logp, X, M, V, beta, sigma, mu, omega, delta)` that receives a price vector $p_t^{(r)}$ and returns $p_t^{(r + 1)}$ by:
 $$
 p_t^{(r + 1)} = c_t + \Omega_t(p_t^{(r)}, x_t, \xi_t, \Delta_t)^{-1} s_t(p_t^{(r)}, x_t, \xi_t).
 $$
@@ -645,106 +580,105 @@ The returned object should be a vector whose row represents the condition for an
 p <- M[M$j > 0, "p"]
 logp <- log(rep(1, dim(p)[1]))
 system.time(
-p_1 <- update_price(logp, X, M, V, beta, sigma, mu, omega, Delta)
+p_1 <- 
+  update_price(
+    logp = logp, 
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega, 
+    delta = delta
+    )
 )
-p_2 <- update_price_matrix(logp, df_list, beta, sigma, mu, omega, Delta) 
-p_2 <- purrr::reduce(p_2, rbind)
+p_2 <- 
+  update_price_matrix(
+    logp = logp, 
+    df_list = df_list, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega, 
+    delta = delta
+    ) 
+p_2 <- 
+  purrr::reduce(
+    p_2, 
+    rbind
+    )
 max(abs(p_1 - p_2))
-```
-
-```
-// src/A5_functions.cpp
-// evaluate the equilibrium condition
-// [[Rcpp::export]]
-Rcpp::List update_price_matrix_rcpp(
-  Eigen::VectorXd logp,
-  Rcpp::List df_list,
-  Eigen::VectorXd beta,
-  Eigen::VectorXd sigma,
-  double mu,
-  double omega,
-  Rcpp::List Delta
-) {
-  // exponentiate
-  Eigen::VectorXd p = logp.array().exp();
-  // replace price
-  for (int t = 0; t < df_list.size(); t++) {
-    Rcpp::List df_list_t = df_list[t];
-    for (int i = 0; i < df_list_t.size(); i++) {
-      Rcpp::List df_list_ti = df_list_t[i];
-      Eigen::ArrayXi j(Rcpp::as<Eigen::ArrayXi>(df_list_ti["j"]));
-      j = j - 1;
-      int start = j(0);
-      Eigen::VectorXd p_j = p.segment(start, j.size());
-      Eigen::MatrixXd p_j0 = Eigen::VectorXd::Zero(p_j.size() + 1, 1);
-      p_j0.block(1, 0, p_j.size(), 1) = p_j;
-      df_list_ti["p"] = Rcpp::wrap(p_j0);
-      df_list_t[i] = Rcpp::wrap(df_list_ti);
-    }
-    df_list[t] = Rcpp::wrap(df_list_t);
-  }
-  Rcpp::List p_new;
-  // compute the share and the derivative
-  Rcpp::List share = compute_share_smooth_matrix_rcpp(df_list, beta, sigma, mu, omega);
-  Rcpp::List ds = compute_derivative_share_smooth_matrix_rcpp(df_list, beta, sigma, mu, omega);
-  // evaluate equilibrium condition
-  for (int t = 0; t < ds.size(); t++) {
-    // extract
-    Rcpp::List df_list_t = df_list[t];
-    Rcpp::List df_list_ti = df_list_t[0];
-    Eigen::VectorXd s_t(Rcpp::as<Eigen::VectorXd>(share[t]));
-    Eigen::VectorXd c_t(Rcpp::as<Eigen::VectorXd>(df_list_ti["c"]));
-    Eigen::VectorXd p_t(Rcpp::as<Eigen::VectorXd>(df_list_ti["p"]));
-    Eigen::VectorXd s_t0 = s_t.segment(1, s_t.size() - 1);
-    Eigen::VectorXd c_t0 = c_t.segment(1, c_t.size() - 1);
-    Eigen::VectorXd p_t0 = p_t.segment(1, p_t.size() - 1);
-    // make Omega in market t
-    Eigen::MatrixXd Delta_t(Rcpp::as<Eigen::MatrixXd>(Delta[t]));
-    Eigen::MatrixXd ds_t(Rcpp::as<Eigen::MatrixXd>(ds[t]));
-    Eigen::MatrixXd Omega_t = - Delta_t.array() * ds_t.array();
-    // markup
-    Eigen::VectorXd markup_t = Omega_t.colPivHouseholderQr().solve(s_t0);
-    // equilibrium condition
-    Eigen::MatrixXd p_new_t = c_t0 + markup_t;
-    // return
-    p_new.push_back(p_new_t);
-  }
-  // return
-  return(p_new);
-}
-
 ```
 
 
 ```{r}
 system.time(
-p_3 <- update_price_matrix_rcpp(logp, df_list, beta, sigma, mu, omega, Delta)
+p_3 <- 
+  update_price_matrix_rcpp(
+    logp, 
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    delta
+    )
 )
 p_3 <- purrr::reduce(p_3, rbind)
 max(abs(p_2 - p_3))
 ```
 
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = TRUE, eval = TRUE}
 # set the threshold
 lambda <- 1e-6
 # set the initial price
 p <- M[M$j > 0, "p"]
 logp <- log(rep(1, dim(p)[1]))
-p_new <- update_price_matrix_rcpp(logp, df_list, beta, sigma, mu, omega, Delta)
-p_new <- purrr::reduce(p_new, rbind)
+p_new <- 
+  update_price_matrix_rcpp(
+    logp, 
+    df_list, 
+    beta, 
+    sigma, 
+    mu, 
+    omega, 
+    delta
+    )
+p_new <- 
+  purrr::reduce(
+    p_new, 
+    rbind
+    )
 # iterate
 distance <- 10000
 while (distance > lambda) {
   p_old <- p_new
-  p_new <- update_price_matrix_rcpp(log(p_old), df_list, beta, sigma, mu, omega, Delta)
-  p_new <- purrr::reduce(p_new, rbind)
+  p_new <- 
+    update_price_matrix_rcpp(
+      log(p_old), 
+      df_list, 
+      beta, 
+      sigma, 
+      mu, 
+      omega, 
+      delta
+      )
+  p_new <- 
+    purrr::reduce(
+      p_new, 
+      rbind
+      )
   distance <- max(abs(p_new - p_old))
   print(distance)
 }
 # save
 p_actual <- p_new
-save(p_actual, file = "data/A5_price_actual_rcpp.RData")
+saveRDS(
+  p_actual, 
+  file = "lecture/data/a5/A5_price_actual_rcpp.rds" %>% here::here()
+  )
 ```
 
 

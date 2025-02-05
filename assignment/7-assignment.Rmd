@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -19,6 +19,11 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+dir.create(
+  "lecture/data/a7" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+)
 ```
 
 ## Simulate data
@@ -98,13 +103,27 @@ delta <- 0.95
 2. Write function `compute_pi(alpha, beta, L, K)` that computes $\Pi$ given parameters and compute the true $\Pi$ under the true parameters. Don't use methods in `dplyr` and deal with matrix operations.
 
 ```{r}
-PI <- compute_PI(alpha, beta, L, K); PI
+PI <- 
+  compute_PI(
+    alpha = alpha, 
+    beta = beta, 
+    L = L, 
+    K = K
+    ); 
+PI
 ```
 
 3. Write function `compute_G(kappa, gamma, L, K)` that computes $G$ given parameters and compute the true $G$ under the true parameters. Don't use methods in `dplyr` and deal with matrix operations.
 
 ```{r}
-G <- compute_G(kappa, gamma, L, K); G
+G <- 
+  compute_G(
+    kappa = kappa, 
+    gamma = gamma, 
+    L = L, 
+    K = K
+    ); 
+G
 ```
 
 The exante-value function is written as a function of a conditional choice probability as follows:
@@ -125,12 +144,27 @@ $$
 E(p) = 
 \gamma - \ln p.
 $$
+Note that $\gamma$ in the formula of $E(p)$ refers to the Euler constant, not the parameter defined before.
 
-3. Write a function `compute_exante_value(p, PI, G, L, K, delta)` that returns the exante value function given a conditional choice probability. Don't use methods in `dplyr` and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of $E(p)$ can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in $E(p)$ does not affect the result.
+4. Write a function `compute_exante_value(p, PI, G, L, K, delta)` that returns the exante value function given a conditional choice probability. Don't use methods in `dplyr` and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of $E(p)$ can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in $E(p)$ does not affect the result.
 
 ```{r}
-p <- matrix(rep(0.5, L * (K + 1)), ncol = 1); p
-V <- compute_exante_value(p, PI, G, L, K, delta); V
+p <- 
+  matrix(
+    rep(0.5, L * (K + 1)), 
+    ncol = 1
+    ); 
+p
+V <- 
+  compute_exante_value(
+    p = p, 
+    PI = PI, 
+    G = G, 
+    L = L, 
+    K = K, 
+    delta = delta
+    ); 
+V
 ```
 
 The optimal conditional choice probability is written as a function of an exante value function as follows:
@@ -139,72 +173,183 @@ $$
 $$
 where $V$ is an exante value function.
 
-4. Write a function `compute_ccp(V, PI, G, L, K, delta)` that returns the optimal conditional choice probability given an exante value function. Don't use methods in `dplyr` and deal with matrix operations. To do so, write a function `compute_choice_value(V, PI, G, delta)` that returns the choice-specific value function. Use this for debugging by checking if the results are intuitive.
+5. Write a function `compute_ccp(V, PI, G, L, K, delta)` that returns the optimal conditional choice probability given an exante value function. Don't use methods in `dplyr` and deal with matrix operations. To do so, write a function `compute_choice_value(V, PI, G, delta)` that returns the choice-specific value function. Use this for debugging by checking if the results are intuitive.
 
 ```{r}
-value <- compute_choice_value(V, PI, G, delta); value
-p <- compute_ccp(V, PI, G, L, K, delta); p
+value <- 
+  compute_choice_value(
+    V = V, 
+    PI = PI, 
+    G = G, 
+    delta = delta
+    ); 
+value
+p <- 
+  compute_ccp(
+    V = V, 
+    PI = PI, 
+    G = G, 
+    L = L, 
+    K = K, 
+    delta = delta
+    ); 
+p
 ```
 
-5. Write a function that find the equilibrium conditional choice probability and ex-ante value function by iterating the update of an exante value function and an optimal conditional choice probability. The iteration should stop when $\max_s|V^{(r + 1)}(s) - V^{(r)}(s)| < \lambda$ with $\lambda = 10^{-10}$.
+6. Write a function that find the equilibrium conditional choice probability and ex-ante value function by iterating the update of an exante value function and an optimal conditional choice probability. The iteration should stop when $\max_s|V^{(r + 1)}(s) - V^{(r)}(s)| < \lambda$ with $\lambda = 10^{-10}$.
 
 ```{r}
-output <- solve_dynamic_decision(PI, G, L, K, delta, lambda); output
+output <- 
+  solve_dynamic_decision(
+    PI = PI, 
+    G = G, 
+    L = L, 
+    K = K, 
+    delta = delta, 
+    lambda = lambda
+    ); 
+output
 p <- output$p
 V <- output$V
-value <- compute_choice_value(V, PI, G, delta); value
+value <- 
+  compute_choice_value(
+    V = V, 
+    PI = PI, 
+    G = G, 
+    delta = delta
+    ); 
+value
 ```
 
-6. Write a function `simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)` that simulate the data for a single firm starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic.
+7. Write a function `simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)` that simulate the data for a single firm starting from an initial state for $T$ periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using `rmultinom` and then state using `rmultinom`.
 
 ```{r}
 # set initial value
 s <- 1
 # draw simulation for a firm
 seed <- 1
-df <- simulate_dynamic_decision(p, s, G, L, K, T, delta, seed); df
+df <- 
+  simulate_dynamic_decision(
+    p = p, 
+    s = s, 
+    G = G, 
+    L = L, 
+    K = K, 
+    T = T, 
+    delta = delta, 
+    seed = seed
+    ); 
+df
 ```
 
-7. Write a function `simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
+8. Write a function `simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
 
-```{r, eval = FALSE}
-df <- simulate_dynamic_decision_across_firms(p, s,  G, L, K, T, N, delta)
-save(df, file = "data/A7_df.RData")
+```{r, eval = TRUE}
+df <- 
+  simulate_dynamic_decision_across_firms(
+    p = p, 
+    s = s,  
+    G = G, 
+    L = L, 
+    K = K, 
+    T = T, 
+    N = N, 
+    delta = delta
+    )
+saveRDS(
+  df, 
+  file = "lecture/data/a7/A7_df.rds" %>% here::here()
+)
 ```
 ```{r}
-load(file = "data/A7_df.RData")
+df <- 
+  readRDS(
+    file = "lecture/data/a7/A7_df.rds" %>% here::here()
+  )
 df
 ```
 
 
-8. Write a function `estimate_ccp(df)` that returns a non-parametric estimate of the conditional choice probability in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.
+
+9. Write a function `estimate_ccp(df)` that returns a non-parametric estimate of the conditional choice probability in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.
 
 ```{r}
-p_est <- estimate_ccp(df)
-check_ccp <- cbind(p, p_est)
-colnames(check_ccp) <- c("true", "estimate")
-check_ccp <- check_ccp %>%
+p_est <- estimate_ccp(df = df)
+check_ccp <- 
+  cbind(
+    p, 
+    p_est
+    )
+colnames(check_ccp) <- 
+  c(
+    "true", 
+    "estimate"
+    )
+check_ccp <- 
+  check_ccp %>%
   reshape2::melt()
-ggplot(data = check_ccp, aes(x = Var1, y = value, 
-                             fill = Var2)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Value") + xlab("action/state") + ylab("probability")
+ggplot(
+  data = check_ccp, 
+  aes(
+    x = Var1, 
+    y = value, 
+    fill = Var2
+    )
+  ) +
+  geom_bar(
+    stat = "identity", 
+    position = "dodge"
+    ) +
+  labs(fill = "Value") + 
+  xlab("action/state") + 
+  ylab("probability")  + 
+  theme_classic()
 ```
 
-9. Write a function `estimate_G(df)` that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.
+10. Write a function `estimate_G(df)` that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.
 
 
 ```{r}
-G_est <- estimate_G(df); G_est
-check_G <- data.frame(type = "true", reshape2::melt(G))
-check_G_est <- data.frame(type = "estimate", reshape2::melt(G_est))
-check_G <- rbind(check_G, check_G_est)
-check_G$variable = paste(check_G$Var1, check_G$Var2, sep = "_")
-ggplot(data = check_G, aes(x = variable, y = value,
-                           fill = type)) +
-    geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Value") + xlab("action/state/state") + ylab("probability") +
-  theme(axis.text.x = element_blank())
+G_est <- estimate_G(df = df); 
+G_est
+check_G <- 
+  data.frame(
+    type = "true", 
+    reshape2::melt(G)
+    )
+check_G_est <- 
+  data.frame(
+    type = "estimate", 
+    reshape2::melt(G_est)
+    )
+check_G <- 
+  rbind(
+    check_G, 
+    check_G_est
+    )
+check_G$variable <-
+  paste(
+    check_G$Var1, 
+    check_G$Var2, 
+    sep = "_"
+    )
+ggplot(
+  data = check_G, 
+  aes(
+    x = variable, 
+    y = value,
+    fill = type
+    )
+  ) +
+    geom_bar(
+      stat = "identity", 
+      position = "dodge"
+      ) +
+  labs(fill = "Value") + 
+  xlab("action/state/state") + 
+  ylab("probability") +
+  theme(axis.text.x = element_blank())  + 
+  theme_classic()
 ```
 
 
@@ -213,9 +358,21 @@ ggplot(data = check_G, aes(x = variable, y = value,
 1. Vectorize the parameters as follows:
 
 ```{r}
-theta_1 <- c(alpha, beta)
-theta_2 <- c(kappa, gamma)
-theta <- c(theta_1, theta_2)
+theta_1 <- 
+  c(
+    alpha, 
+    beta
+    )
+theta_2 <- 
+  c(
+    kappa, 
+    gamma
+    )
+theta <- 
+  c(
+    theta_1, 
+    theta_2
+    )
 ```
 
 
@@ -229,52 +386,112 @@ with $\mathbb{P}\{s_{i, T + 1}|a_{iT}, s_{iT}\} = 1$ for all $i$ as $s_{i, T + 1
 
 
 ```{r}
-loglikelihood <- compute_loglikelihood_NFP(theta, df, delta, L, K); loglikelihood
+loglikelihood <- 
+  compute_loglikelihood_NFP(
+    theta = theta, 
+    df = df, 
+    delta = delta, 
+    L = L,
+    K = K
+    ); 
+loglikelihood
 ```
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 # label
-label <- c("\\alpha", "\\beta", "\\kappa", "\\gamma")
-label <- paste("$", label, "$", sep = "")
+label <- 
+  c(
+    "\\alpha", 
+    "\\beta", 
+    "\\kappa", 
+    "\\gamma"
+    )
+label <- 
+  paste(
+    "$", 
+    label, 
+    "$", 
+    sep = ""
+    )
 # compute the graph
-graph <- foreach (i = 1:length(theta)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
   theta_i <- theta[i]
-  theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
+  theta_i_list <- 
+    theta_i * seq(
+    0.8, 
+    1.2, 
+    by = 0.05
+    )
   objective_i <- 
-    foreach (j = 1:length(theta_i_list),
-             .combine = "rbind") %do% {
+    foreach (
+      j = 1:length(theta_i_list),
+      .combine = "rbind"
+      ) %do% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
                  compute_loglikelihood_NFP(
-                   theta_j, df, delta, L, K); loglikelihood
+                   theta_j, 
+                   df, 
+                   delta, 
+                   L, 
+                   K
+                   ); 
+               loglikelihood
 
                return(objective_ij)
              }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+  df_graph <- 
+    data.frame(
+      x = theta_i_list, 
+      y = objective_i
+      ) 
+  g <- 
+    ggplot(
+      data = df_graph, 
+      aes(
+        x = x, 
+        y = y
+        )
+      ) + 
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i, 
+      linetype = "dotted"
+      ) +
+    ylab("objective function") +
+    xlab(TeX(label[i]))  + 
+    theme_classic()
   return(g)
 }
-save(graph, file = "data/A7_NFP_graph.RData")
+saveRDS(
+  graph, 
+  file = "lecture/data/a7/A7_NFP_graph.rds" %>% here::here()
+)
 ```
 ```{r}
-load(file = "data/A7_NFP_graph.RData")
+graph <- 
+  readRDS(
+    file = "lecture/data/a7/A7_NFP_graph.rds" %>% here::here()
+  )
 graph
 ```
 
+
 4. Estiamte the parameters by maximizing the loglikelihood. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5], \kappa \in [0, 0.2], \gamma \in [0, 0.7]$.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 lower <- rep(0, length(theta))
 upper <- c(1, 5, 0.2, 0.7)
 NFP_result <-
-  optim(par = theta,
+  optim(
+        par = theta,
         fn = compute_loglikelihood_NFP,
         method = "L-BFGS-B",
         lower = lower,
@@ -283,25 +500,35 @@ NFP_result <-
         df = df, 
         delta = delta,
         L = L,
-        K = K)
-save(NFP_result, file = "data/A7_NFP_result.RData")
+        K = K
+        )
+saveRDS(
+  NFP_result, 
+  file = "lecture/data/a7/A7_NFP_result.rds" %>% here::here()
+)
 ```
 
 ```{r}
-load(file = "data/A7_NFP_result.RData")
+NFP_result <- 
+  readRDS(
+    file = "lecture/data/a7/A7_NFP_result.rds" %>% here::here()
+  )
 NFP_result
 compare <-
+
   data.frame(
     true = theta,
     estimate = NFP_result$par
-  ); compare
+  ); 
+compare
 ```
 
 Next, we estimate the parameters by CCP approach.
 
 5. Write a function `estimate_theta_2(df)` that returns the estimates of $\kappa$ and $\gamma$ directly from data by counting relevant events.
 ```{r}
-theta_2_est <- estimate_theta_2(df); theta_2_est
+theta_2_est <- estimate_theta_2(df = df); 
+theta_2_est
 ```
 
 The objective function of the minimum distance estimator based on the conditional choice probability approach is:
@@ -314,50 +541,107 @@ where $\hat{p}$ is the non-parametric estimate of the conditional choice probabi
 
 
 ```{r}
-compute_CCP_objective(theta_1, theta_2, p_est, L, K, delta)
+compute_CCP_objective(
+  theta_1 = theta_1, 
+  theta_2 = theta_2, 
+  p_est = p_est,
+  L = L, 
+  K = K, 
+  delta = delta
+  )
 ```
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 # label
-label <- c("\\alpha", "\\beta")
-label <- paste("$", label, "$", sep = "")
+label <- 
+  c(
+    "\\alpha", 
+    "\\beta"
+    )
+label <- 
+  paste(
+    "$", 
+    label, 
+    "$", 
+    sep = ""
+    )
 # compute the graph
-graph <- foreach (i = 1:length(theta_1)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta_1)
+    ) %do% {
   theta_i <- theta_1[i]
-  theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
+  theta_i_list <- 
+    theta_i * seq(
+      0.8, 
+      1.2, 
+      by = 0.05
+      )
   objective_i <- 
-    foreach (j = 1:length(theta_i_list),
-             .combine = "rbind") %do% {
+    foreach (
+      j = 1:length(theta_i_list),
+      .combine = "rbind"
+      ) %do% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta_1
                theta_j[i] <- theta_ij
                objective_ij <- 
-                 compute_CCP_objective(theta_j, theta_2, p_est, L, K, delta)
+                 compute_CCP_objective(
+                   theta_j, 
+                   theta_2, 
+                   p_est, 
+                   L, 
+                   K, 
+                   delta
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = theta_i_list, y = objective_i) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
+  df_graph <- 
+    data.frame(
+      x = theta_i_list, 
+      y = objective_i
+      ) 
+  g <- 
+    ggplot(
+      data = df_graph, 
+      aes(
+        x = x, 
+        y = y)
+      ) + 
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i, 
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i]))  + 
+    theme_classic()
   return(g)
 }
-save(graph, file = "data/A7_CCP_graph.RData")
+saveRDS(
+  graph, 
+  file = "lecture/data/a7/A7_CCP_graph.rds" %>% here::here()
+)
 ```
 ```{r}
-load(file = "data/A7_CCP_graph.RData")
+graph <- 
+  readRDS(
+    file = "lecture/data/a7/A7_CCP_graph.rds" %>% here::here()
+  )
 graph
 ```
 
+
 4. Estiamte the parameters by minimizing the objective function. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5]$.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 lower <- rep(0, length(theta_1))
 upper <- c(1, 5)
 CCP_result <-
-  optim(par = theta_1,
+  optim(
+        par = theta_1,
         fn = compute_CCP_objective,
         method = "L-BFGS-B",
         lower = lower,
@@ -366,18 +650,27 @@ CCP_result <-
         p_est = p_est, 
         L = L, 
         K = K, 
-        delta = delta)
-save(CCP_result, file = "data/A7_CCP_result.RData")
+        delta = delta
+        )
+saveRDS(
+  CCP_result, 
+  file = "lecture/data/a7/A7_CCP_result.rds" %>% here::here()
+)
 ```
 
 ```{r}
-load(file = "data/A7_CCP_result.RData")
+CCP_result <- 
+  readRDS(
+    file = "lecture/data/a7/A7_CCP_result.rds" %>% here::here()
+  )
 CCP_result
 compare <-
+
   data.frame(
     true = theta_1,
     estimate = CCP_result$par
-  ); compare
+  ); 
+compare
 ```
 
 
