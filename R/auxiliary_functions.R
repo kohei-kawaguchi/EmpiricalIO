@@ -36,3 +36,17 @@ compile_chapter <-
     
     message("Successfully compiled: ", file.path(output_dir, output_file))
 }
+
+# Function to render an Rmd file and handle errors gracefully
+render_file <- 
+  function(
+    file_path
+  ) {
+  tryCatch({
+    message(paste("Rendering:", file_path))
+    rmarkdown::render(file_path)
+    message(paste("Successfully rendered:", file_path))
+  }, error = function(e) {
+    warning(paste("Error rendering", file_path, ":", e$message))
+  })
+}
