@@ -1,22 +1,14 @@
 # Install renv if not already installed
 if (!require("renv")) install.packages("renv")
 
-# Initialize renv
-renv::init()
+# Initialize renv (use bare=TRUE to avoid installing packages immediately)
+renv::init(bare = TRUE)
 
-# Install required packages
-renv::install(c(
-  "EmpiricalIO",
-  "magrittr",
-  "stargazer", 
-  "knitr",
-  "foreach",
-  "ggplot2",
-  "latex2exp",
-  "np",
-  "tibble",
-  "dplyr"
-))
+# Install this project EmpiricalIO
+renv::install(".")
+
+# Install dependencies from DESCRIPTION file (if it exists)
+renv::restore()
 
 # Snapshot the current state
 renv::snapshot() 
