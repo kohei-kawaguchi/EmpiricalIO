@@ -143,18 +143,184 @@ knitr::write_bib(c(
 
 # Introduction {#intro}
 
+## What are structural models?
+
+- An economic model is a mapping from exogenous variables (including shocks and parameters) to endogenous variables.
+- This mapping is derived from a solution concept (optimality and equilibrium).
+- The structural estimation approach starts from an economic model and derives an econometric model.
+- The __structural-form__ of an economic model is the equilibrium condition for the endogenous variables given the exogenous variables.
+- The __reduced-form__ of an economic model is the solution of the structural-form for the endogenous variables in terms of the exogenous variables.
+
+
+## Example: Linear demand and supply model
+
+- Consider a linear demand and supply model:
+  \begin{align}
+      Q_i^d = \alpha + \beta P_i + \gamma X_i + \epsilon_i \\
+      Q_i^s = \delta + \theta P_i + \zeta Z_i + \nu_i
+  \end{align}
+
+- The parameters of the model are: $\alpha, \beta, \gamma, \delta, \theta, \zeta$
+- The observed exogenous variables are: $X_i, Z_i$
+- The unobserved exogenous variables (shocks) are: $\epsilon_i, \nu_i$ (assume standard deviations of 1 for simplicity and mutually i.i.d.)
+- The endogenous variables are: $P_i, Q_i$
+- The solution concept is the market clearing condition:
+  \begin{align}
+    &Q_i^d = Q_i^s \\
+    &\Leftrightarrow \alpha + \beta P_i + \gamma X_i + \epsilon_i = \delta + \theta P_i + \zeta Z_i + \nu_i
+  \end{align}
+- So far this is the structural-form of the model.
+- The solution is obtained by solving the endogenous variables for the exogenous variables:
+  \begin{align}
+    P_i = \frac{\alpha - \delta + \gamma X_i - \zeta Z_i + \epsilon_i - \nu_i}{\theta - \beta} \\
+    Q_i = \frac{\alpha \theta - \beta \delta + \theta \gamma X_i - \beta \zeta Z_i + \theta \epsilon_i - \beta \nu_i}{\theta - \beta}
+  \end{align}
+- This is the mapping from the exogenous variables to the endogenous variables in the structural model.
+- This is the reduced-form of the model.
+
+
+## Ordinary-Least-Squares (OLS) estimation of the demand and supply model
+
+- OLS is applied to the reduced-form of the model.
+- The reduced-form model is represented by the following equation:
+  \begin{align}
+    P_i &= \pi_1 + \pi_2 X_i + \pi_3 Z_i + \sigma_1 \varepsilon_i\\
+    Q_i &= \pi_4 + \pi_5 X_i + \pi_6 Z_i + \sigma_2 \upsilon_i
+  \end{align}
+- The parameters of the reduced-form model are: $\pi_0, \pi_1, \pi_2, \pi_3, \pi_4, \pi_5, \sigma_1, \sigma_2$ are related to the parameters of the structural-form model as follows:
+  \begin{align}
+    \pi_1 = \frac{\alpha - \delta}{\theta - \beta} \\
+    \pi_2 = \frac{\gamma}{\theta - \beta} \\
+    \pi_3 = \frac{-\zeta}{\theta - \beta} \\
+    \pi_4 = \frac{\alpha \theta - \beta \delta}{\theta - \beta} \\
+    \pi_5 = \frac{\theta \gamma}{\theta - \beta} \\
+    \pi_6 = \frac{- \beta \zeta}{\theta - \beta} \\
+    \sigma_1 = \frac{1}{\theta - \beta} \\
+    \sigma_2 = \frac{\sqrt{\theta^2 + \beta^2}}{\theta - \beta}
+  \end{align}
+- Because the right-hand side of the reduced-form model only includes exogenous variables, the OLS estimators can consistently estimate the reduced-form parameters.
+- From the known 6 reduced-form parameters $\pi_1, \pi_2, \pi_3, \pi_4, \pi_5, \pi_6$, we can recover 6 structural-form parameters $\alpha, \beta, \gamma, \delta, \theta, \zeta$.
+- This is the original idea of OLS in the context of structural estimation.
+- You may be concerned that the right-hand side of the reduced-form model may include some endogenous variables --- it's just because you have not fully solved the model.
+
+## Maximum-Likelihood Estimation (MLE) of the demand and supply model
+
+
+- The MLE is not very different from the above approach.
+- We derive the reduced-form model.
+- Then, under the distributional assumptions on the shocks, we can derive the likelihood function:
+  \begin{align}
+    L(\alpha, \beta, \gamma, \delta, \theta, \zeta) = \prod_{i=1}^n f(P_i, Q_i | X_i, Z_i)
+  \end{align}
+- The distributional assumptions on the shocks could be:
+  \begin{align}
+    \epsilon_i \sim N(0, 1) \\
+    \nu_i \sim N(0, 1)
+  \end{align}
+- If the structural-form parameters could be identified by the OLS estimator, then the MLE estimator should also identify them because you have the same information with a stronger distributional assumption.
+
+## Simulation-based (Simulated-Likelihood or Simulated-Method-of-Moments) methods 
+
+
+- In the current example, the reduced-form model is analytically derived and the likelihood function is also analytically derived.
+- However, in many cases, the reduced-form model is not analytically derived and the likelihood function is not analytically derived.
+- Even in this case, if we can simulate the endogenous variables solving the equilibrium condition, we can use the simulation-based methods to estimate the parameters.
+- For example, by simulating shocks $\epsilon_i$ and $\nu_i$ from the distributional assumptions, we can simulate the endogenous variables $P_i$ and $Q_i$.
+- Then, we can approximate the likelihood function by the empirical distribution of the simulated data.
+- Or, we can find parameters that minimize the distance between the observed and simulated endogenous variables.
+
+
+## Two-Stage Least Squares (2SLS) estimation of the demand and supply model
+
+- The OLS and ML estimators relied on the reduced-form model.
+- The 2SLS estimator is a method to estimate the structural-form parameters of the equation of interest by representing the other equations in the reduced-form.
+- Suppose that we are interested in estimating the structural-form parameters of the demand equation.
+- The demand equation is:
+  \begin{align}
+    Q_i = \alpha + \beta P_i + \gamma X_i + \epsilon_i
+  \end{align}
+- The 2SLS estimator first runs the reduced-form model for the other equation:
+  \begin{align}
+    P_i = \pi_1 + \pi_2 X_i + \pi_3 Z_i + \sigma_1 \varepsilon_i
+  \end{align}
+- Then, the 2SLS estimator uses the predicted values of the endogenous variables from the reduced-form model for the supply equation to estimate the structural-form parameters of the demand equation.
+- In this estimation, $Z_i$ is used as an instrument for $P_i$, which is an exogenous variable excluded from the demand equation.
+- Instead, suppose that we are interested in estimating the structural-form parameters of the supply equation.
+- The supply equation is:
+  \begin{align}
+    Q_i = \delta + \theta P_i + \zeta Z_i + \nu_i
+  \end{align}
+- The 2SLS estimator first runs the reduced-form model for the other equation:
+  \begin{align}
+    P_i = \pi_1 + \pi_2 X_i + \pi_3 Z_i + \sigma_1 \varepsilon_i
+  \end{align}
+- Then, the 2SLS estimator uses the predicted values of the endogenous variables from the reduced-form model for the demand equation to estimate the structural-form parameters of the supply equation.
+- In this estimation, $X_i$ is used as an instrument for $P_i$, which is an exogenous variable excluded from the supply equation.
+
+## Instrumental-Variables (IV) and Generalized Method of Moments (GMM) estimation of the demand and supply model
+
+- The IV and GMM estimators rely on another representation of the economic model.
+- It relies on the __moment condition__ of the economic model.
+- In the current example, the moment condition is:
+  \begin{align}
+    & E[\epsilon_i | X_i, Z_i] = 0\\
+    & E[\nu_i | X_i, Z_i] = 0
+  \end{align}
+- The IV and GMM estimators find the parameters that make the empirical-analogue of the moment condition zero.
+- To compute the empirical-analogue of the moment condition, this time, we solve the equilibrium condition for the shocks (not for the endogenous variables).
+- For example, for the demand equation, we solve the following equation for $\epsilon_i$:
+  \begin{align}
+    \epsilon_i &= Q_i - \alpha - \beta P_i - \gamma X_i\\
+    \nu_i &= Q_i - \delta - \theta P_i - \zeta Z_i
+  \end{align}
+- Then, the right-hand side includes only observed variables and the parameters.
+- Then, we can compute the implied shock from the data for candidate parameters as:
+  \begin{align}
+    \hat{\epsilon}_i &= Q_i - \hat{\alpha} - \hat{\beta} P_i - \hat{\gamma} X_i\\
+    \hat{\nu}_i &= Q_i - \hat{\delta} - \hat{\theta} P_i - \hat{\zeta} Z_i
+  \end{align}
+- Then, we can compute the empirical-analogue of the moment condition:
+  \begin{align}
+    \frac{1}{n} \sum_{i=1}^n \hat{\epsilon}_i A(Z_i, X_i) = 0\\
+    \frac{1}{n} \sum_{i=1}^n \hat{\nu}_i B(Z_i, X_i) = 0
+  \end{align}
+  where $A(Z_i, X_i)$ and $B(Z_i, X_i)$ are some known functions of the observed variables and the parameters.
+- The IV and GMM estimators find the parameters that make the empirical-analogue of the moment condition zero.
+
+
+## General Case
+
+- In general, the structural-form model is represented by the following equation:
+  \begin{align}
+    f(Y_i, X_i, \epsilon_i, \theta) = 0
+  \end{align}
+  for endogenous variables $Y_i$, exogenous variables $X_i$, shocks $\epsilon_i$, and the parameters $\theta$.
+- The reduced-form model is represented by the following equation:
+  \begin{align}
+    Y_i = g(X_i, \epsilon_i, \theta) = f_1^{-1}(X_i, \epsilon_i, \theta)
+  \end{align}
+  for exogenous variables $X_i$, shocks $\epsilon_i$, and the parameters $\theta$.
+- We can apply OLS, ML, Simulated-Likelihood to this form.
+- The moment condition is:
+  \begin{align}
+    E[h(Y_i, X_i, \theta) | X_i, \nu_i] = E[f_3^{-1}(Y_i, X_i, \theta) | X_i, \nu_i] = 0
+  \end{align}
+- We can apply IV and GMM to this form.
+- Thus, structural estimation is a general framework to estimate the parameters of the economic model by transforming it in either form and applying the corresponding estimation method.
+
+
 ## Structural Estimation and Counterfactual Analysis
 
 ### Example
 
-- @Igami2017 "Estimating the Innovator's Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981-1998".
+- @Igami2017 "Estimating the Innovator's Dilemma: Structural Analysis of Creative Destruction in the Hard Disk Drive Industry, 1981-1998"
 
-- __Question__: 
-  - Does "Innovator's Dilemma" [@Christensen1997] or the delay of innovation among incumbents exist? 
+- __Question__:
+  - Does the "Innovator's Dilemma" [@Christensen1997] or the delay of innovation among incumbents exist?
   - Christensen argued that old winners tend to lag behind entrants even when introducing a new technology is not too difficult, with a case study of the HDD industry.
-- Apple's smartphone vs. Nokia's feature phones.
-- Amazon vs. Borders.
-- Kodak's digital camera.
+- Apple's smartphones vs. Nokia's feature phones
+- Amazon vs. Borders
+- Kodak's digital cameras
 - If it exists, what is the reason for that?
 - How do we empirically answer this question?
 
@@ -166,12 +332,12 @@ knitr::include_graphics("figuretable/Igam2017Fig1.png")
 - __Hypotheses__:
 - Identify potentially competing hypotheses to explain the phenomenon.
     1. Cannibalization: Because of cannibalization, the benefits of introducing a new product are smaller for incumbents than for entrants.
-    1. Different costs: The incumbents may have higher costs for innovation due to the organizational inertia, but at the same time they may have some cost advantage due to accumulated R\&D and better financial access.
+    1. Different costs: The incumbents may have higher costs for innovation due to organizational inertia, but at the same time they may have some cost advantage due to accumulated R&D and better financial access.
     1. Preemption: The incumbents have additional incentive for innovation to preempt potential rivals.
     1. Institutional environment: The impacts of the three components differ across different institutional contexts such as the rules governing patents and market size.
 - Casual empiricists pick up their favorite factors to make up a story.
 - Serious empiricists should try to separate the contributions of each factor from data.
-- To do so, the author develops an economic model that explicitly incorporates the above mentioned factors, while keeping the model parameters flexible enough to let the data tell the sign and size of the effects of each factor on innovation.
+- To do so, the author develops an economic model that explicitly incorporates the above-mentioned factors, while keeping the model parameters flexible enough to let the data tell the sign and size of the effects of each factor on innovation.
 
 - __Economic model__:
 
@@ -198,15 +364,15 @@ where the first two states are for incumbents (stick to the old technology or st
     - The existence of cannibalization is represented by the assumption that an incumbent maximizes the joint profits of old and new technology products. 
     - The size of cannibalization is captured by the shape of profit function.
     - The difference in the cost of innovation is captured by the difference in the sunk costs of innovation.
-    - The preemptive incentive for incumbents are embodied in the dynamic optimization problem for each incumbent.
+    - The preemptive incentive for incumbents is embodied in the dynamic optimization problem for each incumbent.
 
 - __Econometric model__:
 
 - The author then turns the economic model into an econometric model.
-- This amounts to specify which part of the economic model is observed/known and which part is unobserved/unknown.
+- This amounts to specifying which part of the economic model is observed/known and which part is unobserved/unknown.
 - The author collects the data set of the HDD industry during 1977-99. 
-- Based on the data, the author specify the identities of active firms and their products and the technologies embodied in the products in each year to code their __state variables__.
-- Moreover, by tracking the change in the state, the author code their __action variables__.
+- Based on the data, the author specifies the identities of active firms and their products and the technologies embodied in the products in each year to code their __state variables__.
+- Moreover, by tracking the change in the state, the author codes their __action variables__.
 - Thus, the state and action variables, $s_t$ and $a_t$. These are the __observables__.
 - The author does not observe:
     - Profit function $\pi_t(\cdot)$.
@@ -214,37 +380,37 @@ where the first two states are for incumbents (stick to the old technology or st
     - Sunk cost of entry for potential entrants $\kappa^{net}$.
     - Private cost shocks.
 - These are the __unobservables__.
-- Among the unobservables, the profit function and sunk costs are the __parameter of interets__ and the private cost shocks are __nuissance parameters__ in the sense only the knowledge about the distribution of the latter is demanded. 
+- Among the unobservables, the profit function and sunk costs are the __parameters of interest__ and the private cost shocks are __nuisance parameters__ in the sense only the knowledge about the distribution of the latter is demanded. 
 
 - __Identification__:
 
-- Can we infer the unobservables from the observables and the restrictions on the distribution of observable by the economic theory?
+- Can we infer the unobservables from the observables and the restrictions on the distribution of observables by the economic theory?
 - The profit function is identified from estimating the demand function for each firm's product, and estimating the cost function for each firm from using their price setting behavior.
 - The sunk costs of innovation are identified from the conditional probability of innovation across various states. If the cost is low, the probability should be high.
 
 - __Estimation__:
   
-  - The identification established that in principle we can uncover the parameters of interests from observables under the restrictions of economic theory.
+  - The identification established that in principle we can uncover the parameters of interest from observables under the restrictions of economic theory.
 - Finally, we apply a statistical method to the econometric model and infer the parameters of interest.
 
 - __Counterfactual analysis__:
   
-  - If we can uncover the parameters of interest, we can conduct __comparative statics__: study the change in the endogenous variables when the exogenous variables including the model parameters are set different. In the current framework, this exercise is often called the __counterfactual analysis__.
+  - If we can uncover the parameters of interest, we can conduct __comparative statics__: study the change in the endogenous variables when the exogenous variables including the model parameters are set differently. In the current framework, this exercise is often called the __counterfactual analysis__.
 
 - What if there was no cannibalization?: 
-  - An incumbents separately maximizes the profit from old technology and new technology instead of jointly maximizing the profits. Solve the model under this new assumption everything else being equal.
+  - An incumbent separately maximizes the profit from old technology and new technology instead of jointly maximizing the profits. Solve the model under this new assumption everything else being equal.
 - Free of cannibalization concerns, 8.95 incumbents start producing new HDDs in the first 10 years, compared with 6.30 in the baseline.
 - The cumulative numbers of innovators among incumbents and entrants differ only by 2.8 compared with 6.45 in the baseline.
 - Thus cannibalization can explain a significant part of the incumbent-entrant innovation gap.
 - What if there was no preemption?:
   - A potential entrant ignores the incumbents' innovations upon making entry decisions.
-    - Without the preemptive motives, only 6.02 incumbents would innovate in the first 10 7ears, compared with 6.30 in the baseline.
-    - The cumulative incumbent-entrant innovation gap widen to 8.91 compared with 6.45 in the baseline.
+    - Without the preemptive motives, only 6.02 incumbents would innovate in the first 10 years, compared with 6.30 in the baseline.
+    - The cumulative incumbent-entrant innovation gap widens to 8.91 compared with 6.45 in the baseline.
 - The sunk cost of entry is smaller for incumbents than for entrants in the baseline.
 
-- __Interpretations and policy/managerial implication__: 
+- __Interpretations and policy/managerial implications__: 
 - Despite the cost advantage and the preemptive motives, the speed of innovation is slower among incumbents due to the strong cannibalization effect.
-- Incumbents that attempt to avoid the "innovator's dilemma" should separate the decision makings between old and new sections inside the organization so that it can avoid the concern for cannibalization.
+- Incumbents that attempt to avoid the "innovator's dilemma" should separate the decision making between old and new sections inside the organization so that they can avoid the concern for cannibalization.
 
 ### Recap
 
@@ -252,7 +418,7 @@ where the first two states are for incumbents (stick to the old technology or st
 1. Research question.
 1. Competing hypotheses.
 1. Economic model.
-1. Econometric model
+1. Econometric model.
 1. Identification.
 1. Data collection.
 1. Data cleaning.
@@ -262,330 +428,16 @@ where the first two states are for incumbents (stick to the old technology or st
 1. Interpretations and policy/managerial implications.
 
 - The goal of this course is to be familiar with the standard methodology to complete this process.
-- The methodology covered in this class is mostly developed to analyze the standard framework to dynamic or oligopoly competition. 
+- The methodology covered in this class is mostly developed to analyze the standard framework of dynamic or oligopoly competition. 
 - The policy implications are centered around competition policies.
-- But the basic idea can be extend to different class of situations such as auction, matching, voting, contract, marketing, and so on.
-- Note that the depth of the research question and the relevance of the policy/managerial implications are the most important part of the research.
-- Focusing on the methodology in this class is to minimize the time to allocate to less important issues and maximize the attention and time to the most valuable part in the future research.
+- But the basic idea can be extended to different classes of situations such as auction, matching, voting, contract, marketing, and so on.
+- Note that the depth of the research question and the relevance of the policy/managerial implications are the most important parts of the research.
+- Focusing on the methodology in this class is to minimize the time allocated to less important issues and maximize the attention and time to the most valuable part in future research.
 - Given a research question, what kind of data is necessary to answer the question? 
-- Given data, what kind of research questions can you address? Which question can be credibly answered? Which question can be an over-stretch?
-- Given a research question and data, what is the best way to answer the question? What type of problem can you avoid using the method? What is the limitation of your approach? How will you defend the possible referee comments? 
-- Given a result, what kinds of interpretation can you credibly derive? What kinds of interpretation can be contested by potential opponents? What kinds of contribution can you claim?
+- Given data, what kind of research questions can you address? Which questions can be credibly answered? Which questions can be an over-stretch?
+- Given a research question and data, what is the best way to answer the question? What type of problems can you avoid using the method? What is the limitation of your approach? How will you defend against possible referee comments? 
+- Given a result, what kinds of interpretations can you credibly derive? What kinds of interpretations can be contested by potential opponents? What kinds of contributions can you claim?
 - To address these issues is __necessary__ to publish a paper and it is __necessary__ to be familiar with the methodology to do so.
-
-### Historical Remark
-
-- The words __reduced-form__ and __structural-form__ date back to the literature of estimation of simultaneous equations in macroeconomics [@Hsiao1983].
-- Let $y$ be the vector of observed endogenous variables, $x$ be the vector of observed exogenous variables, and $\epsilon$ be  the vector of unobserved exogenous variables.
-- The equilibrium condition for $y$ on $x$ and $\epsilon$ is often written as:
-\begin{equation}
-Ay + Bx = \Sigma \epsilon. (\#eq:structuralform)
-\end{equation}
-- These equations __implicitly__ determine the vector of endogenous variables $y$ .
-- If $A$ is invertible, we can solve the equations for $y$ to obtain:
-\begin{equation}
-y = - A^{-1} B x + A^{-1} \Sigma \epsilon. (\#eq:reducedform)
-\end{equation}
-- These equations __explicitly__ determine the vector of endogenous variables $y$.
-- Equation \@ref(eq:structuralform) is the __structural-form__ and \@ref(eq:reducedform) is the __reduced-form__.
-- If $y$ and $x$ are observed and $x$ is of full column rank, then $A^{-1}B$ and $A^{-1} \Sigma A^{-1}$ will be estimated by regression for \@ref(eq:reducedform). But this does not mean that $A, B$ and $\Sigma$ are separately estimated.
-- This was the traditional identification problems.
-- Thus, reduced-form does not mean either of:
-    - Regression analysis;
-    - Statistical analysis free from economic assumptions.
-- Recent development in this line of literature of identification is found in @Matzkin2007.
-- In econometrics, the idea of imposing restrictions from economic theories seems to have been formalized by the work of @Manski1994a and @Matzkin1994b.
-
-## Setting Up The Environment
-
-- Assume that R, RStudio and LaTex are all installed in the local computer.
-
-
-### RStudio Project
-
-- The assignments should be conducted inside a project folder for this course.
-- `File > New Project...> New Directory > New Directory > R Package using RcppEigen`.
-- Name the directory `EmpiricalIO` and place in your favorite location.
-- You can open this project from the upper right menu of RStudio or by double clicking the `EmpiricalIO.Rproj` file in the `EmpiricalIO` directory.
-- This navigates you to the root directory of the project.
-- In the root directory, make folders named:
-    - `assignment`.
-    - `input`.
-    - `output`.
-    - `figuretable`.
-- We will store R functions in `R` folder, C/C++ functions in `src` folder, and data in `input` folder, data generated from the code in `output`, and figures and tables in `figurtable` folder.
-- Open `src/Makevars` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11 -O3`
-- Open `src/Makevars.win` and erase the content. Then, write: `PKG_CPPFLAGS = -w -std=c++11`
-
-### Basic Programming in R
-
-- `File > New File > R Script` to open `Untitled` file.
-- `Ctrl (Cmd) + S` to save it with `test.R` in `assignment` folder.
-- In the console, type and push enter:
-
-```{r}
-1 + 1
-```
-
-```{r}
-100:130
-```
-- This is the interactive way of using R functionalities.
-- In `test.R`, write:
-```{r, eval = FALSE}
-1 + 1
-```
-- Then, save the file and push `Run`.
-- Alternatively, place the mouse over the `1 + 1` line in `test.R` file.
-- Then, `Ctrl (Cmd) + Enter` to run the line.
-- In this way, we can write procedures in the file and send to the console to run.
-
-- There are functions to conduct basic calculations:
-```{r}
-1 + 2
-```
-
-```{r}
-2 * 3
-```
-
-```{r}
-4 - 1
-```
-
-```{r}
-6 / 2
-```
-
-```{r}
-2^3
-```
-
-
-- We can define objects and assign values to them.
-```{r}
-a <- 1
-a
-a + 2
-```
-- In addition to scalar object, we can define a vector by:
-```{r}
-2:10
-3:20
-c(2, 3, 5, 9, 10)
-seq(1, 10, 2)
-```
-- `seq` is a function with initial value, end values, and the increment value.
-- By typing `seq` in the `help`, we can read the manual page of the function.
-- `seq {base}` means that this function is named `seq` and is contained in the library called `base`.
-- Some libraries are automatically called when the R is launched, but some are not.
-- Some libraries are even not installed.
-- We can install a library from a repository called `CRAN`.
-```{r, eval = FALSE}
-install.packages("ggplot2")
-```
-- To use the package, we have to load by:
-```{r}
-library(ggplot2)
-```
-- Use `qplot` function in `ggplot2` library to draw a scatter plot.
-```{r}
-x <- c(-1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.7, 1)
-y <- x^3
-qplot(x, y)
-```
-- Instead of loading a package by `library`, you can directly call it as:
-```{r}
-ggplot2::qplot(x, y)
-```
-
-
-- We can write own functions.
-```{r}
-roll <- function(n) {
-  die <- 1:6
-  dice <- sample(die, size = n, replace = TRUE)
-  y <- sum(dice)
-  return(y)
-}
-roll(1)
-roll(2)
-roll(10)
-roll(10)
-```
-- We can `set.seed` to obtain the same realization of random variables.
-```{r}
-set.seed(1)
-roll(10)
-set.seed(1)
-roll(10)
-```
-
-- When a variable used in a function is not given as its argument, the function calls the variable in the global environment:
-```{r}
-y <- 1
-plus_1 <- function(x) {
-  return(x + y)
-}
-plus_1(1)
-plus_1(2)
-```
-- However, you should NOT do this. All variables used in a function should be given as its arguments:
-```{r}
-y <- 1
-plus_2 <- function(x, y) {
-  return(x + y)
-}
-plus_2(2, 3)
-plus_2(2, 4)
-```
-
-- The best practice is to use `findGlobals` function in `codetools` to check global variables in a funciton:
-```{r}
-library(codetools)
-findGlobals(plus_1)
-findGlobals(plus_2)
-```
-- This function returns the list of global variables used in a function. If this returns a global variable other than the system global gariables, you should include it as the argument of the function.
-
-- You can write the functions in the files with executing codes.
-- But I recommend you to separate files for writing functions and executing codes.
-- `File > New File > R Rcript` and name it as `functions.R` and save to `R` folder.
-- Cut the function you wrote and paste it in `functions.R`.
-- There are two ways of calling a function in `functions.R` from `test.R`.
-- One way is to use `source` function.
-```{r, eval = FALSE}
-source("R/functions.R")
-```
-- When this line is read, the codes in the file are executed.
-- The other way is to bundle functions as a package and load it.
-- Choose `Build > Clean and Rebuild`.
-- This compiles files in `src` folder and bundle functions in `R` folder and build a package named `ECON6120I`.
-- Now, the functions in `R` folder and `src` folder can be used by loading the package by:
-```{r, eval = FALSE}
-library(EmpiricalIO)
-```
-- Best practice:
-    1. Write functions in the scratch file.
-    1. As the functions are tested, move them to `R/functions.R`.
-    1. Clean and rebuild and load them as a package.
-
-
-### Reproducible Reports using Rmarkdown
-
-- Reporting in empirical studies involves:
-1. Writing texts;
-1. Writing formulas;
-1. Writing and implementing programs;
-1. Demonstrating the results with figures and tables.
-
-- Moreover, this has to be done in a __reproducible__ manner: Whoever can reproduce the output from the scratch.
-- "Whoever" includes yourself in the future. Because the revision process of structural papers is usually lengthy, you often have to remember the content few weeks or few months later. It is inefficient if you cannot recall what you have done.
-
-- We use `Rmarkdown` to achieve this goal.
-- This assumes that you have LaTex installed.
-- Install package `Rmarkdown`:
-```{r, eval = FALSE}
-install.packages("rmarkdown")
-```
-- `File > New File > R Markdown... > HTML` with title `Test`.
-- Save it in `assignment` folder with name `test.Rmd`.
-- From `Knit` tab, choose `Knit to HTML`.
-- This outputs the content to html file.
-- You can also choose `Knit to PDF` from `Knit` tab to obtain output in pdf file.
-- Reports should be knit to pdf or html to submit.
-<!-- - But you can use html output while writing a report because html is lighter to compile. -->
-- Refer to the [help page](https://rmarkdown.rstudio.com/lesson-1.html) for further information.
-
-
-### Coding rule
-
-- Use verb in the file name, section name, and function name
-    - `8_entry_model` to `8_estimate_entry_model`
-    - `# travel frequency to adjecent mesh` to `# make travel frequency to adjecent mesh`
-- Do not use `.` in the file, object, and variable names. Use `_` instead.
-    - `_` works in C/C++ but `.` does not. Write object names robust to translation into C/C++.
-- Use Ctrl+Shift+R to make a section.
-    - By doing so, the table of contents are automatically generated in RStudio.
-    - When making a subsection, add one `#` and remove one `-`.
-- Put a space after `,`, `)`, `}` and so on. Put spaces before and after `=`.
-- Break lines when there are more than one arguments in a function-like:
-
-```r
-gpu_output <-
-  foreach (
-    i = 1:nrow(gpu),
-    .combine = "rbind"
-    ) %dopar% {
-    model_i <- 
-			gpu[i, ] %>% 
-			dplyr::pull(model)
-    release_i <- 
-			gpu[i, ] %>% 
-			dplyr::pull(release) 
-    time_i <- paste(release_i, current_date)
-    trend_i <- 
-      gtrendsR::gtrends(
-        keyword = model_i,
-        time = time_i
-      )
-    trend_i <- trend_i$interest_over_time
-    return(trend_i)
-  }
-```
-
-- Call a function in a library in `dplyr::mutate` format.
-    - To avoid name space conflictions.
-    - To make the dependence on library explicit.
-    - To make it compatible with a multi-node parallelization.
-    - Exceptions are `magrittr` for `%>%` and `foreach` for `%do%` and `%dopar%`, and packages for reporting such as `ggplot2`, `modelsummary`, etc.
-- Avoid using an upper case letter in the function name and variable names.
-    - Exceptions are a single letter variable for constant and matrix/dataframe to make the notations the same with the model.
-- Pipe `%>%` should be used only for a sequence of operations comprising a single meaningful task.
-    - For example, if you drop rows including NA and/or outliers and then construct some new variables, you should separate these two tasks, and should not connect with `%>%`.
-- When we join data frames, only use `dplyr::left_join`. Never use other joins such as `dplyr::full_join` and `dplyr::inner_join`.
-    - You have a list of observations on the left data frame. We never change this list by a join operation.
-    - If you need to join and drop rows with some NA, do this explicitly by `dplyr::left_join` followed by `dplyr::filter`.
-    - No operation that mystifies changes the list of observations is allowed.
-- When obtaining multiple results, standardize the format of the result and hold them as elements of a list. Write a function applicable to the standard and happy to each element of the list by `purrr::map`.
-    - For example, when running multiple regressions, prepare a list of formulas and pass it to `purrrr::map` to run multiple regressions and obtain the results in another list.
-- The file names of the same category should have the same format.
-    - For example, if there is a figure for a long window and a short window, the file name should be `figure_long.png` and `figure_short.png`. They should not be like `figure.png` and `figure_short.png`. If you added `figure_short.png` later, make sure to rename `figure.png` to `figure_long.png`.
-- Do not ignore any warnings.
-    - If you ignore "ignorable" warnings, you will also ignore dangerous warnings.
-    - Warnings are often signals of unexpected behavior or a bug.
-- Do not access columns of dataframe by index. It is not robust to the change in column structure. They should be accessed by the column name. Access by an index is in principle only allowed for the elements of a list which does not depend on the order of elements.
-- Save and read files by `saveRDS` and `readRDS` using `.rds` extension.  Do not use `save` and `load`, because the object names become unknown.
-
-
-### GitHub and GitHub Classroom
-
-
-- The assignments should be conducted through GitHub Classroom. Steps to set up Git environment and to submit assignments through Git are provided as follows. 
-- Sign up in [GitHub](https://github.com/) 
-- In the GitHub Classroom, a Rstudio project folder has been created. What you need to do is to clone the project in the GitHub (the remote repository) to your local computer so that you can work on the assignments locally. 
-- To do this, download [Git (Windows)](https://git-scm.com/download/win) or [Git (MacOS)](https://git-scm.com/download/mac). This allows you to use Git Bash. 
-- Then, set up your Git username and Git email address following the instructions: [Set up your username](https://docs.github.com/en/github/using-git/setting-your-username-in-git) and [Set up your email address](https://docs.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address).
-- To connect to GitHub, you need to generate a ssh key , add the ssh key to the ssh-agent, and also add it to your GitHub account.This saves you from entering your username and password everytime you interact with GitHub repository. A detailed instruction can be found [here](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
--  Open the [link](https://classroom.github.com/a/gyfGNzpF) and accept the invitation to an sample assignment in GitHub classroom. If you are asked to select your GitHub account, choose `skip to the next step`. The next page gives you a repository url.
-- Open Rstudio: `File > New Project...> Version Control`.
--  Copy the above-mentioned repository url into the first blank, name the directory `Assignment` and place the project in your favorite location. Now the project has been copied from GitHub.
-- You can open this project from the upper right menu of RStudio or by double clicking the `Assignment.Rproj` file in the `Assignment` directory.
-- Try `Build > Clean and Rebuild` to make sure the project can be compiled properly (or in the latest version of Rstudio `Build > Install Package`) . 
-- the `Git` option in the upper right window navigates you between your local repository and the remote repository in GitHub. Before you make any changes, use `Pull` button to pull all new changes from the remote repository so that your local repository is up to date. 
-- Use `Push` button in the `Git` option to upload your changes to the remote repository. 
-
-- To submit the assignments, please follow the steps:
-  1. Pull all new changes from the remote repository.
-  1. Work on the assignment and save your assignment.
-  1. If everything is ok, click `Commit` button, input some commit message, and commit your changes. This saves your changes locally and creates a subject to be submitted to the remote repository. 
-  1. Push your changes to the remote repository so that the instructor can view your assignment. 
-  
-- Some advice:
-1. More git command can be found [here](https://docs.github.com/en/github/using-git). They can be exerted in `Git > More > Shell`, or Rstudio terminal. You can also download [Git Desktop](https://git-scm.com/download/win) with user interface which is easy to handle. 
-1. Pull before you make new changes, otherwise there might be conflicts when you push the changes.  
-1. Commit the changes only if you want to push the changes. If you just want to temporarily save the changes locally so that they will not be covered by the remote repository in case you pull, use `git stash`. 
-1. If you are still not familiar with Git, make a copy of your changes before you try some new commands. 
 
 <!--chapter:end:01-intro.Rmd-->
 
@@ -6816,8 +6668,7 @@ result
 
 # Assignment 2: Production Function Estimation {#assignment2}
 
-
-```{r, include=FALSE}
+```{r setup, include=FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -6826,8 +6677,13 @@ library(foreach)
 library(ggplot2)
 library(latex2exp)
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-dir.create("data/a2", showWarnings = FALSE)
+dir.create(
+  "lecture/data/a2" %>% here::here(), 
+  showWarnings = FALSE,
+  recursive = TRUE
+)
 ```
+
 
 ## Simulate data
 
@@ -6867,7 +6723,7 @@ We set the parameters as follows:
 
 1. Define the parameter variables as above.
 
-```{r}
+```{r parameters}
 # size
 J <- 1000
 T <- 10
@@ -6890,7 +6746,7 @@ delta <- 0.05
 ```
 
 2. Write a function that returns the log output given $l_{jt}$, $k_{jt}$, $\omega_{jt}$, and $\eta_{jt}$ under the given parameter values according to the above production function and name it `log_production(l, k, omega, eta, beta_0, beta_l, beta_k)`.
-```{r, echo = TRUE}
+```{r test_log_production, echo = TRUE}
 log_production(
     l = 1,
     k = 1,
@@ -6906,7 +6762,7 @@ Suppose that the labor is determined after $\omega_{jt}$ is observed, but before
 
 3. Derive the optimal log labor as a function of $\omega_{jt}$, $\eta_{jt}$, $k_{jt}$, and wage. Write a function to return the optimal log labor given the variables and parameters and name it `log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)`. 
 
-```{r, echo = TRUE}
+```{r test_log_labor_choice, echo = TRUE}
 log_labor_choice(
   k = 1, 
   wage = 1, 
@@ -6922,7 +6778,7 @@ As discussed in the class, if there is no additional variation in labor, the coe
 
 4. Modify the previous function by including $\iota_{jt}$ as an additional input and name it `log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)`.
 
-```{r, echo = TRUE}
+```{r test_log_labor_choice_error, echo = TRUE}
 log_labor_choice_error(
   k = 1, 
   wage = 1, 
@@ -6944,7 +6800,7 @@ $$
 where $I_{jt}$ and $K_{jt}$ are investment and capital in level. Set $\gamma = 0.1$, i.e., the investment is strictly increasing in $\omega_{jt}$. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.
 
 5. Define variable $\gamma$ and assign it the value. Write a function that returns the investment given $K_{jt}$,  $\omega_{jt}$, and parameter values, according to the previous equation, and name it `investment_choice(k, omega, gamma, delta)`.
-```{r, echo = TRUE}
+```{r test_investment_choice, echo = TRUE}
 gamma <- 0.1
 investment_choice(
   k = 1, 
@@ -6957,7 +6813,7 @@ investment_choice(
 Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables $k_{jt}$ and $\omega_{jt}$ as follows. 
 
 6. Draw $k_{j1}$ from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw $\omega_{j1}$ from its stationary distribution (check the stationary distribution of AR(1) process). Draw a wage. Before simulating the rest of the data, set the seed at 1.
-```{r}
+```{r initial_setup}
 # optimization error
 sigma_iota <- 0.05
 
@@ -6983,12 +6839,12 @@ df <-
     wage = wage
   )
 ```
-```{r, echo = TRUE}
+```{r show_initial_df, echo = TRUE}
 df
 ```
 
 7. Draw optimization error $\iota_{jt}$ and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.
-```{r}
+```{r compute_labor_investment}
 # compute labor and investment
 df <- 
   df %>%
@@ -7001,7 +6857,7 @@ df <-
     inv = investment_choice(k, omega, gamma, delta)
   ) 
 ```
-```{r, echo = TRUE}
+```{r}
 df
 ```
 
@@ -7065,11 +6921,11 @@ for (t in 2:T) {
   # append
   df_all <- dplyr::bind_rows(df_all, df)
 }
-saveRDS(df_all, file = "data/a2/df_all.rds")
+saveRDS(df_all, file = "lecture/data/a2/df_all.rds" %>% here::here())
 ```
 
 ```{r}
-df_all <- readRDS(file = "data/a2/df_all.rds")
+df_all <- readRDS(file = "lecture/data/a2/df_all.rds" %>% here::here())
 ```
 ```{r, echo = TRUE}
 df_all
@@ -7150,7 +7006,7 @@ result_1st_bw <-
     data = df_all,
     formula = y_error ~ l_error | k + inv
     )
-saveRDS(result_1st_bw, file = "data/a2/result_1st_bw.RData")
+saveRDS(result_1st_bw, file = "lecture/data/a2/result_1st_bw.rds" %>% here::here())
 ```
 ```{r, eval = FALSE}
 result_1st <-
@@ -7159,13 +7015,14 @@ result_1st <-
     formula = y_error ~ l_error | k + inv,
     bws = result_1st_bw
     )
-saveRDS(result_1st, file = "data/a2/result_1st.rds")
+saveRDS(result_1st, file = "lecture/data/a2/result_1st.rds" %>% here::here())
 ```
 ```{r}
-result_1st_bw <- readRDS(file = "data/a2/df_all.rds")
-result_1st <- readRDS(file = "data/a2/result_1st.rds")
+result_1st_bw <- readRDS(file = "lecture/data/a2/result_1st_bw.rds" %>% here::here())
+result_1st <- readRDS(file = "lecture/data/a2/result_1st.rds" %>% here::here())
 summary(result_1st)
 result_1st_plot <-
+
   data.frame(
     actual = df_all$y_error,
     fitted = fitted(result_1st)
@@ -7191,12 +7048,13 @@ result_1st_unidentified_bw <-
     )
 saveRDS(
   result_1st_unidentified_bw, 
-  file = "data/a2/result_1st_unidentified_bw.rds"
+  file = "lecture/data/a2/result_1st_unidentified_bw.rds" %>% here::here()
   )
 ```
+
 ```{r, eval = FALSE}
 result_1st_unidentified_bw <-
-  readRDS(file = "data/a2/result_1st_unidentified_bw.rds")
+  readRDS(file = "lecture/data/a2/result_1st_unidentified_bw.rds" %>% here::here())
 result_1st_unidentified <-
   np::npplreg(
     data = df_all,
@@ -7205,12 +7063,13 @@ result_1st_unidentified <-
     )
 saveRDS(
   result_1st_unidentified, 
-  file = "data/a2/result_1st_unidentified.rds"
+  file = "lecture/data/a2/result_1st_unidentified.rds" %>% here::here()
   )
 ```
 ```{r}
+
 result_1st_unidentified <-
-  readRDS(file = "data/a2/result_1st_unidentified.rds")
+  readRDS(file = "lecture/data/a2/result_1st_unidentified.rds" %>% here::here())
 summary(result_1st_unidentified)
 ```
 
