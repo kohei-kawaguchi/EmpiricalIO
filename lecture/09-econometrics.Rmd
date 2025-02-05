@@ -3,7 +3,168 @@
 ## What are structural models?
 
 - An economic model is a mapping from exogenous variables (including shocks and parameters) to endogenous variables.
-- This mapping is derived by a solution concept (optimality and equilibrium).
-- Structural estimation approach starts from an economic model and derives an econometric model.
+- This mapping is derived from a solution concept (optimality and equilibrium).
+- The structural estimation approach starts from an economic model and derives an econometric model.
+- The __structural-form__ of an economic model is the equilibrium condition for the endogenous variables given the exogenous variables.
+- The __reduced-form__ of an economic model is the solution of the structural-form for the endogenous variables in terms of the exogenous variables.
 
-## 
+
+## Example: Linear demand and supply model
+
+- Consider a linear demand and supply model:
+  \begin{align}
+      Q_i^d = \alpha + \beta P_i + \gamma X_i + \epsilon_i \\
+      Q_i^s = \delta + \theta P_i + \zeta Z_i + \nu_i
+  \end{align}
+
+- The parameters of the model are: $\alpha, \beta, \gamma, \delta, \theta, \zeta$
+- The observed exogenous variables are: $X_i, Z_i$
+- The unobserved exogenous variables (shocks) are: $\epsilon_i, \nu_i$ (assume standard deviations of 1 for simplicity and mutually i.i.d.)
+- The endogenous variables are: $P_i, Q_i$
+- The solution concept is the market clearing condition:
+  \begin{align}
+    &Q_i^d = Q_i^s \\
+    &\Leftrightarrow \alpha + \beta P_i + \gamma X_i + \epsilon_i = \delta + \theta P_i + \zeta Z_i + \nu_i
+  \end{align}
+- So far this is the structural-form of the model.
+- The solution is obtained by solving the endogenous variables for the exogenous variables:
+  \begin{align}
+    P_i = \frac{\alpha - \delta + \gamma X_i - \zeta Z_i + \epsilon_i - \nu_i}{\theta - \beta} \\
+    Q_i = \frac{\alpha \theta - \beta \delta + \theta \gamma X_i - \beta \zeta Z_i + \theta \epsilon_i - \beta \nu_i}{\theta - \beta}
+  \end{align}
+- This is the mapping from the exogenous variables to the endogenous variables in the structural model.
+- This is the reduced-form of the model.
+
+
+## Ordinary-Least-Squares (OLS) estimation of the demand and supply model
+
+- OLS is applied to the reduced-form of the model.
+- The reduced-form model is represented by the following equation:
+  \begin{align}
+    P_i &= \pi_1 + \pi_2 X_i + \pi_3 Z_i + \sigma_1 \varepsilon_i\\
+    Q_i &= \pi_4 + \pi_5 X_i + \pi_6 Z_i + \sigma_2 \upsilon_i
+  \end{align}
+- The parameters of the reduced-form model are: $\pi_0, \pi_1, \pi_2, \pi_3, \pi_4, \pi_5, \sigma_1, \sigma_2$ are related to the parameters of the structural-form model as follows:
+  \begin{align}
+    \pi_1 = \frac{\alpha - \delta}{\theta - \beta} \\
+    \pi_2 = \frac{\gamma}{\theta - \beta} \\
+    \pi_3 = \frac{-\zeta}{\theta - \beta} \\
+    \pi_4 = \frac{\alpha \theta - \beta \delta}{\theta - \beta} \\
+    \pi_5 = \frac{\theta \gamma}{\theta - \beta} \\
+    \pi_6 = \frac{- \beta \zeta}{\theta - \beta} \\
+    \sigma_1 = \frac{1}{\theta - \beta} \\
+    \sigma_2 = \frac{\sqrt{\theta^2 + \beta^2}}{\theta - \beta}
+  \end{align}
+- Because the right-hand side of the reduced-form model only includes exogenous variables, the OLS estimators can consistently estimate the reduced-form parameters.
+- From the known 6 reduced-form parameters $\pi_1, \pi_2, \pi_3, \pi_4, \pi_5, \pi_6$, we can recover 6 structural-form parameters $\alpha, \beta, \gamma, \delta, \theta, \zeta$.
+- This is the original idea of OLS in the context of structural estimation.
+- You may be concerned that the right-hand side of the reduced-form model may include some endogenous variables --- it's just because you have not fully solved the model.
+
+## Maximum-Likelihood Estimation (MLE) of the demand and supply model
+
+
+- The MLE is not very different from the above approach.
+- We derive the reduced-form model.
+- Then, under the distributional assumptions on the shocks, we can derive the likelihood function:
+  \begin{align}
+    L(\alpha, \beta, \gamma, \delta, \theta, \zeta) = \prod_{i=1}^n f(P_i, Q_i | X_i, Z_i)
+  \end{align}
+- The distributional assumptions on the shocks could be:
+  \begin{align}
+    \epsilon_i \sim N(0, 1) \\
+    \nu_i \sim N(0, 1)
+  \end{align}
+- If the structural-form parameters could be identified by the OLS estimator, then the MLE estimator should also identify them because you have the same information with a stronger distributional assumption.
+
+## Simulation-based (Simulated-Likelihood or Simulated-Method-of-Moments) methods 
+
+
+- In the current example, the reduced-form model is analytically derived and the likelihood function is also analytically derived.
+- However, in many cases, the reduced-form model is not analytically derived and the likelihood function is not analytically derived.
+- Even in this case, if we can simulate the endogenous variables solving the equilibrium condition, we can use the simulation-based methods to estimate the parameters.
+- For example, by simulating shocks $\epsilon_i$ and $\nu_i$ from the distributional assumptions, we can simulate the endogenous variables $P_i$ and $Q_i$.
+- Then, we can approximate the likelihood function by the empirical distribution of the simulated data.
+- Or, we can find parameters that minimize the distance between the observed and simulated endogenous variables.
+
+
+## Two-Stage Least Squares (2SLS) estimation of the demand and supply model
+
+- The OLS and ML estimators relied on the reduced-form model.
+- The 2SLS estimator is a method to estimate the structural-form parameters of the equation of interest by representing the other equations in the reduced-form.
+- Suppose that we are interested in estimating the structural-form parameters of the demand equation.
+- The demand equation is:
+  \begin{align}
+    Q_i = \alpha + \beta P_i + \gamma X_i + \epsilon_i
+  \end{align}
+- The 2SLS estimator first runs the reduced-form model for the other equation:
+  \begin{align}
+    P_i = \pi_1 + \pi_2 X_i + \pi_3 Z_i + \sigma_1 \varepsilon_i
+  \end{align}
+- Then, the 2SLS estimator uses the predicted values of the endogenous variables from the reduced-form model for the supply equation to estimate the structural-form parameters of the demand equation.
+- In this estimation, $Z_i$ is used as an instrument for $P_i$, which is an exogenous variable excluded from the demand equation.
+- Instead, suppose that we are interested in estimating the structural-form parameters of the supply equation.
+- The supply equation is:
+  \begin{align}
+    Q_i = \delta + \theta P_i + \zeta Z_i + \nu_i
+  \end{align}
+- The 2SLS estimator first runs the reduced-form model for the other equation:
+  \begin{align}
+    P_i = \pi_1 + \pi_2 X_i + \pi_3 Z_i + \sigma_1 \varepsilon_i
+  \end{align}
+- Then, the 2SLS estimator uses the predicted values of the endogenous variables from the reduced-form model for the demand equation to estimate the structural-form parameters of the supply equation.
+- In this estimation, $X_i$ is used as an instrument for $P_i$, which is an exogenous variable excluded from the supply equation.
+
+## Instrumental-Variables (IV) and Generalized Method of Moments (GMM) estimation of the demand and supply model
+
+- The IV and GMM estimators rely on another representation of the economic model.
+- It relies on the __moment condition__ of the economic model.
+- In the current example, the moment condition is:
+  \begin{align}
+    & E[\epsilon_i | X_i, Z_i] = 0\\
+    & E[\nu_i | X_i, Z_i] = 0
+  \end{align}
+- The IV and GMM estimators find the parameters that make the empirical-analogue of the moment condition zero.
+- To compute the empirical-analogue of the moment condition, this time, we solve the equilibrium condition for the shocks (not for the endogenous variables).
+- For example, for the demand equation, we solve the following equation for $\epsilon_i$:
+  \begin{align}
+    \epsilon_i &= Q_i - \alpha - \beta P_i - \gamma X_i\\
+    \nu_i &= Q_i - \delta - \theta P_i - \zeta Z_i
+  \end{align}
+- Then, the right-hand side includes only observed variables and the parameters.
+- Then, we can compute the implied shock from the data for candidate parameters as:
+  \begin{align}
+    \hat{\epsilon}_i &= Q_i - \hat{\alpha} - \hat{\beta} P_i - \hat{\gamma} X_i\\
+    \hat{\nu}_i &= Q_i - \hat{\delta} - \hat{\theta} P_i - \hat{\zeta} Z_i
+  \end{align}
+- Then, we can compute the empirical-analogue of the moment condition:
+  \begin{align}
+    \frac{1}{n} \sum_{i=1}^n \hat{\epsilon}_i A(Z_i, X_i) = 0\\
+    \frac{1}{n} \sum_{i=1}^n \hat{\nu}_i B(Z_i, X_i) = 0
+  \end{align}
+  where $A(Z_i, X_i)$ and $B(Z_i, X_i)$ are some known functions of the observed variables and the parameters.
+- The IV and GMM estimators find the parameters that make the empirical-analogue of the moment condition zero.
+
+
+## General Case
+
+- In general, the structural-form model is represented by the following equation:
+  \begin{align}
+    f(Y_i, X_i, \epsilon_i, \theta) = 0
+  \end{align}
+  for endogenous variables $Y_i$, exogenous variables $X_i$, shocks $\epsilon_i$, and the parameters $\theta$.
+- The reduced-form model is represented by the following equation:
+  \begin{align}
+    Y_i = g(X_i, \epsilon_i, \theta) = f_1^{-1}(X_i, \epsilon_i, \theta)
+  \end{align}
+  for exogenous variables $X_i$, shocks $\epsilon_i$, and the parameters $\theta$.
+- We can apply OLS, ML, Simulated-Likelihood to this form.
+- The moment condition is:
+  \begin{align}
+    E[h(Y_i, X_i, \theta) | X_i, \nu_i] = E[f_3^{-1}(Y_i, X_i, \theta) | X_i, \nu_i] = 0
+  \end{align}
+- We can apply IV and GMM to this form.
+- Thus, structural estimation is a general framework to estimate the parameters of the economic model by transforming it in either form and applying the corresponding estimation method.
+
+
+
+
