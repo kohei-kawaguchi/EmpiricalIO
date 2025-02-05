@@ -1,4 +1,5 @@
 # Script to run all Rmd files in the assignment directory
+devtools::load_all()
 
 # Get list of all Rmd files in assignment directory
 rmd_files <- 
