@@ -92,7 +92,7 @@ $$
 
 1. Write a function to compute the livelihood for a given $\beta$ and data and name the function `loglikelihood_a1`. 
 ```{r, echo = FALSE}
-# loglikelihood_a1 <-
+# compute_loglikelihood_a1 <-
 #   function(
 #     b, 
 #     df
@@ -116,10 +116,11 @@ output <-
     .combine = "rbind"
     ) %do% {
       l <- 
-        loglikelihood_a1(
+        compute_loglikelihood_a1(
           b, 
           df
           )
+
       return(l)
 }
 output <- 
@@ -145,7 +146,7 @@ output %>%
 result <- 
   optim(
     par = beta,
-    fn = loglikelihood_a1,
+    fn = compute_loglikelihood_a1,
     df = df,
     method = "Brent",
     lower = -1,

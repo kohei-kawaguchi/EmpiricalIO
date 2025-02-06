@@ -265,15 +265,16 @@ derivative_share_smooth <-
 ```{r, eval = TRUE}
 saveRDS(
   derivative_share_smooth,
-  file = "data/a5/derivative_share_smooth.rds"
+  file = "lecture/data/a5/derivative_share_smooth.rds" %>% here::here()
 )
 ```
 ```{r}
 derivative_share_smooth <-
   readRDS(
-    file = "data/a5/derivative_share_smooth.rds"
+    file = "lecture/data/a5/derivative_share_smooth.rds" %>% here::here()
   )
 ```
+
 
 
 ```{r, echo = TRUE}
@@ -349,7 +350,7 @@ while (distance > lambda) {
 p_actual <- p_new
 saveRDS(
   p_actual, 
-  file = "lecture/data/a5/A5_price_actual.rds" %>% here::here()
+  file = "lecture/data/a5/price_actual.rds" %>% here::here()
 )
 ```
 
@@ -357,7 +358,7 @@ saveRDS(
 # load
 p_actual <- 
   readRDS(
-    file = "lecture/data/a5/A5_price_actual.rds" %>% here::here()
+    file = "lecture/data/a5/price_actual.rds" %>% here::here()
   )
 p_actual %>% head()
 ```
@@ -484,7 +485,7 @@ while (distance > lambda) {
 p_counterfactual <- p_new
 saveRDS(
   p_counterfactual, 
-  file = "lecture/data/a5/A5_price_counterfactual.rds" %>% here::here()
+  file = "lecture/data/a5/price_counterfactual.rds" %>% here::here()
 )
 ```
 
@@ -493,7 +494,7 @@ saveRDS(
 # load
 p_counterfactual <- 
   readRDS(
-    file = "lecture/data/a5/A5_price_counterfactual.rds" %>% here::here()
+    file = "lecture/data/a5/price_counterfactual.rds" %>% here::here()
   )
 
 

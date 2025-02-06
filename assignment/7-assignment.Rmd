@@ -258,13 +258,13 @@ df <-
     )
 saveRDS(
   df, 
-  file = "lecture/data/a7/A7_df.rds" %>% here::here()
+  file = "lecture/data/a7/df.rds" %>% here::here()
 )
 ```
 ```{r}
 df <- 
   readRDS(
-    file = "lecture/data/a7/A7_df.rds" %>% here::here()
+    file = "lecture/data/a7/df.rds" %>% here::here()
   )
 df
 ```
@@ -310,7 +310,10 @@ ggplot(
 
 
 ```{r}
-G_est <- estimate_G(df = df); 
+G_est <- 
+  estimate_G(
+    df = df
+  ); 
 G_est
 check_G <- 
   data.frame(
@@ -472,13 +475,13 @@ graph <-
 }
 saveRDS(
   graph, 
-  file = "lecture/data/a7/A7_NFP_graph.rds" %>% here::here()
+  file = "lecture/data/a7/NFP_graph.rds" %>% here::here()
 )
 ```
 ```{r}
 graph <- 
   readRDS(
-    file = "lecture/data/a7/A7_NFP_graph.rds" %>% here::here()
+    file = "lecture/data/a7/NFP_graph.rds" %>% here::here()
   )
 graph
 ```
@@ -491,31 +494,30 @@ lower <- rep(0, length(theta))
 upper <- c(1, 5, 0.2, 0.7)
 NFP_result <-
   optim(
-        par = theta,
-        fn = compute_loglikelihood_NFP,
-        method = "L-BFGS-B",
-        lower = lower,
-        upper = upper,
-        control = list(fnscale = -1),
-        df = df, 
-        delta = delta,
-        L = L,
-        K = K
-        )
+    par = theta,
+    fn = compute_loglikelihood_NFP,
+    method = "L-BFGS-B",
+    lower = lower,
+    upper = upper,
+    control = list(fnscale = -1),
+    df = df, 
+    delta = delta,
+    L = L,
+    K = K
+  )
 saveRDS(
   NFP_result, 
-  file = "lecture/data/a7/A7_NFP_result.rds" %>% here::here()
+  file = "lecture/data/a7/NFP_result.rds" %>% here::here()
 )
 ```
 
 ```{r}
 NFP_result <- 
   readRDS(
-    file = "lecture/data/a7/A7_NFP_result.rds" %>% here::here()
+    file = "lecture/data/a7/NFP_result.rds" %>% here::here()
   )
 NFP_result
 compare <-
-
   data.frame(
     true = theta,
     estimate = NFP_result$par
@@ -527,7 +529,10 @@ Next, we estimate the parameters by CCP approach.
 
 5. Write a function `estimate_theta_2(df)` that returns the estimates of $\kappa$ and $\gamma$ directly from data by counting relevant events.
 ```{r}
-theta_2_est <- estimate_theta_2(df = df); 
+theta_2_est <- 
+  estimate_theta_2(
+    df = df
+  ); 
 theta_2_est
 ```
 
@@ -622,13 +627,13 @@ graph <-
 }
 saveRDS(
   graph, 
-  file = "lecture/data/a7/A7_CCP_graph.rds" %>% here::here()
+  file = "lecture/data/a7/CCP_graph.rds" %>% here::here()
 )
 ```
 ```{r}
 graph <- 
   readRDS(
-    file = "lecture/data/a7/A7_CCP_graph.rds" %>% here::here()
+    file = "lecture/data/a7/CCP_graph.rds" %>% here::here()
   )
 graph
 ```
@@ -654,14 +659,14 @@ CCP_result <-
         )
 saveRDS(
   CCP_result, 
-  file = "lecture/data/a7/A7_CCP_result.rds" %>% here::here()
+  file = "lecture/data/a7/CCP_result.rds" %>% here::here()
 )
 ```
 
 ```{r}
 CCP_result <- 
   readRDS(
-    file = "lecture/data/a7/A7_CCP_result.rds" %>% here::here()
+    file = "lecture/data/a7/CCP_result.rds" %>% here::here()
   )
 CCP_result
 compare <-
