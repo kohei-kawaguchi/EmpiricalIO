@@ -2,7 +2,10 @@
 if (!require("renv")) install.packages("renv")
 
 # Initialize renv
-renv::init()
+renv::init(force = TRUE)
+
+# Install all currently used packages
+renv::hydrate()
 
 # Snapshot the current state
-renv::snapshot() 
+renv::snapshot(force = TRUE) 
