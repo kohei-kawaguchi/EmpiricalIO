@@ -12,6 +12,11 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+dir.create(
+  "lecture/data/a7" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+)
 ```
 
 ## Simulate data
@@ -232,7 +237,7 @@ df
 
 8. Write a function `simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)` that returns simulation data for $N$ firm. For firm $i$, set the seed at $i$
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 df <- 
   simulate_dynamic_decision_across_firms(
     p = p, 
@@ -246,13 +251,17 @@ df <-
     )
 saveRDS(
   df, 
-  file = "data/a7/A7_df.rds"
-  )
+  file = "lecture/data/a7/df.rds" %>% here::here()
+)
 ```
 ```{r}
-df <- readRDS(file = "data/a7/A7_df.rds")
+df <- 
+  readRDS(
+    file = "lecture/data/a7/df.rds" %>% here::here()
+  )
 df
 ```
+
 
 
 9. Write a function `estimate_ccp(df)` that returns a non-parametric estimate of the conditional choice probability in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.
@@ -294,7 +303,10 @@ ggplot(
 
 
 ```{r}
-G_est <- estimate_G(df = df); 
+G_est <- 
+  estimate_G(
+    df = df
+  ); 
 G_est
 check_G <- 
   data.frame(
@@ -383,7 +395,7 @@ loglikelihood
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # label
 label <- 
   c(
@@ -456,40 +468,47 @@ graph <-
 }
 saveRDS(
   graph, 
-  file = "data/a7/A7_NFP_graph.rds"
-  )
+  file = "lecture/data/a7/NFP_graph.rds" %>% here::here()
+)
 ```
 ```{r}
-graph <- readRDS(file = "data/a7/A7_NFP_graph.rds")
+graph <- 
+  readRDS(
+    file = "lecture/data/a7/NFP_graph.rds" %>% here::here()
+  )
 graph
 ```
 
+
 4. Estiamte the parameters by maximizing the loglikelihood. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5], \kappa \in [0, 0.2], \gamma \in [0, 0.7]$.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 lower <- rep(0, length(theta))
 upper <- c(1, 5, 0.2, 0.7)
 NFP_result <-
   optim(
-        par = theta,
-        fn = compute_loglikelihood_NFP,
-        method = "L-BFGS-B",
-        lower = lower,
-        upper = upper,
-        control = list(fnscale = -1),
-        df = df, 
-        delta = delta,
-        L = L,
-        K = K
-        )
+    par = theta,
+    fn = compute_loglikelihood_NFP,
+    method = "L-BFGS-B",
+    lower = lower,
+    upper = upper,
+    control = list(fnscale = -1),
+    df = df, 
+    delta = delta,
+    L = L,
+    K = K
+  )
 saveRDS(
   NFP_result, 
-  file = "data/a7/A7_NFP_result.rds"
-  )
+  file = "lecture/data/a7/NFP_result.rds" %>% here::here()
+)
 ```
 
 ```{r}
-NFP_result <- readRDS(file = "data/a7/A7_NFP_result.rds")
+NFP_result <- 
+  readRDS(
+    file = "lecture/data/a7/NFP_result.rds" %>% here::here()
+  )
 NFP_result
 compare <-
   data.frame(
@@ -503,7 +522,10 @@ Next, we estimate the parameters by CCP approach.
 
 5. Write a function `estimate_theta_2(df)` that returns the estimates of $\kappa$ and $\gamma$ directly from data by counting relevant events.
 ```{r}
-theta_2_est <- estimate_theta_2(df = df); 
+theta_2_est <- 
+  estimate_theta_2(
+    df = df
+  ); 
 theta_2_est
 ```
 
@@ -529,7 +551,7 @@ compute_CCP_objective(
 
 3. Check the value of the objective function around the true parameter.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 # label
 label <- 
   c(
@@ -598,17 +620,21 @@ graph <-
 }
 saveRDS(
   graph, 
-  file = "data/a7/A7_CCP_graph.rds"
-  )
+  file = "lecture/data/a7/CCP_graph.rds" %>% here::here()
+)
 ```
 ```{r}
-graph <- readRDS(file = "data/a7/A7_CCP_graph.rds")
+graph <- 
+  readRDS(
+    file = "lecture/data/a7/CCP_graph.rds" %>% here::here()
+  )
 graph
 ```
 
+
 4. Estiamte the parameters by minimizing the objective function. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that $\alpha \in [0, 1], \beta \in [0, 5]$.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 lower <- rep(0, length(theta_1))
 upper <- c(1, 5)
 CCP_result <-
@@ -626,14 +652,18 @@ CCP_result <-
         )
 saveRDS(
   CCP_result, 
-  file = "data/a7/A7_CCP_result.rds"
-  )
+  file = "lecture/data/a7/CCP_result.rds" %>% here::here()
+)
 ```
 
 ```{r}
-CCP_result <- readRDS(file = "data/a7/A7_CCP_result.rds")
+CCP_result <- 
+  readRDS(
+    file = "lecture/data/a7/CCP_result.rds" %>% here::here()
+  )
 CCP_result
 compare <-
+
   data.frame(
     true = theta_1,
     estimate = CCP_result$par
