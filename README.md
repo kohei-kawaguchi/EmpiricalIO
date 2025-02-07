@@ -2,27 +2,24 @@
 
 ## Installation
 
-After clone the repository by 
+After cloning the repository by 
 
 ```bash
 git clone git@github.com:kohei-kawaguchi/EmpiricalIO.git
 ```
 
-you can install the package by
+you can install the package by running `main/install_packages.R`. This installs `renv`, creates a virtual environment, and installs relevant packages. After that, you can install packages to the environment using `renv::install("PACKAGE_NAME")`. 
 
-```bash
-cd EmpiricalIO
-R CMD INSTALL --preclean .
-```
+You can install packages without using the virtual environment of `renv`. In that case, after installing relevant packages with `install.packages`, install this project by running `Rcpp::compileAttributes()` in the R terminal and then `R CMD INSTALL --preclean .` in the terminal.
 
 ## Usage
 
-The source files of the lecture note are in `/lecture`.
+The source files of the lecture notes are in `/lecture`.
 
-The source files for assignment are also found in `/lecture`. The files in `/assignment` are currently slightly obsolete.
+The source files for assignments are in `/lecture` and in `/assignment`. Files in `/lecture` are compiled as chapters of the entire book. Files in `/assignment` can be compiled separately.
 
-The R functions used in the assignment are defined in files in `/R`.
+The R functions used in the assignments are defined in files in `/R`.
 
-The lecture note can be compiled by running commands in `/lecture/build_book.R`, which generate html and pd files in `docs/`.
+The lecture notes can be compiled by running commands in `/lecture/build_book.R`, which generates html and pdf files in `docs/`.
 
-The rendered lecture note is available at [https://kohei-kawaguchi.github.io/EmpiricalIO/](https://kohei-kawaguchi.github.io/EmpiricalIO/)
+The rendered lecture notes are available at [https://kohei-kawaguchi.github.io/EmpiricalIO/](https://kohei-kawaguchi.github.io/EmpiricalIO/)
