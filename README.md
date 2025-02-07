@@ -8,7 +8,7 @@ After cloning the repository by
 git clone git@github.com:kohei-kawaguchi/EmpiricalIO.git
 ```
 
-you can install the package by running `main/install_packages.R`. This installs `renv`, creates a virtual environment, and installs relevant packages. After that, you can install packages to the environment using `renv::install("PACKAGE_NAME")`. 
+You can install the package by running `main/install_packages.R`. This installs `renv`, creates a virtual environment, and installs relevant packages. After that, you can install packages to the environment using `renv::install("PACKAGE_NAME")`. 
 
 You can install packages without using the virtual environment of `renv`. In that case, after installing relevant packages with `install.packages`, install this project by running `Rcpp::compileAttributes()` in the R terminal and then `R CMD INSTALL --preclean .` in the terminal.
 
