@@ -13,6 +13,11 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center")
+dir.create(
+  "lecture/data/a8" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+)
 ```
 
 ## Simulate data
@@ -347,18 +352,21 @@ output <-
     )
 saveRDS(
   output, 
-  file = "data/a8/A8_equilibrium.rds"
-  )
+  file = "lecture/data/a8/equilibrium.rds" %>% here::here()
+)
 ```
 
 ```{r}
 output <- 
-  readRDS(file = "data/a8/A8_equilibrium.rds")
+  readRDS(
+    file = "lecture/data/a8/equilibrium.rds" %>% here::here()
+  )
 p_marginal <- output$p_marginal;
 head(p_marginal)
 V <- output$V[[N]];
 head(V)
 # compute joint conitional choice probability
+
 p_joint <- 
   compute_p_joint(
     p_marginal = p_marginal, 
@@ -407,15 +415,18 @@ df <-
     )
 saveRDS(
   df,
-  file = "data/a8/A8_df.rds"
-  )
+  file = "lecture/data/a8/df.rds" %>% here::here()
+)
 ```
 ```{r}
 df <- 
-  readRDS(file = "data/a8/A8_df.rds")
+  readRDS(
+    file = "lecture/data/a8/df.rds" %>% here::here()
+  )
 df
 summary(df)
 ```
+
 
 
 14. Write a function `estimate_ccp_marginal_game(df)` that returns a non-parametric estimate of the marginal conditional choice probability for each firm in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.
@@ -528,7 +539,9 @@ We estimate the parameters by a CCP approach.
 ```{r}
 # estimate theta_2
 theta_2_est <- 
-  estimate_theta_2_game(df); 
+  estimate_theta_2_game(
+    df = df
+  ); 
 theta_2_est
 ```
 
@@ -555,14 +568,17 @@ objective <-
     )
 saveRDS(
   objective,
-  file = "data/a8/A8_objective.rds"
-  )
+  file = "lecture/data/a8/objective.rds" %>% here::here()
+)
 ```
 ```{r}
 objective <- 
-  readRDS(file = "data/a8/A8_objective.rds")
+  readRDS(
+    file = "lecture/data/a8/objective.rds" %>% here::here()
+  )
 objective
 ```
+
 
 3. Check the value of the objective function around the true parameter.
 
@@ -638,12 +654,14 @@ graph <-
 }
 saveRDS(
   graph,
-  file = "data/a8/A8_CCP_graph.rds"
-  )
+  file = "lecture/data/a8/CCP_graph.rds" %>% here::here()
+)
 ```
 ```{r}
 graph <- 
-  readRDS(file = "data/a8/A8_CCP_graph.rds")
+  readRDS(
+    file = "lecture/data/a8/CCP_graph.rds" %>% here::here()
+  )
 graph
 ```
 
@@ -672,13 +690,16 @@ CCP_result <-
         )
 saveRDS(
   CCP_result, 
-  file = "data/a8/A8_CCP_result.rds"
-  )
+  file = "lecture/data/a8/CCP_result.rds" %>% here::here()
+)
 ```
 
 ```{r}
 CCP_result <- 
-  readRDS(file = "data/a8/A8_CCP_result.rds")
+  readRDS(
+    file = "lecture/data/a8/CCP_result.rds" %>% here::here()
+  )
+
 CCP_result
 compare <-
   data.frame(

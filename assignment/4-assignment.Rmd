@@ -7,7 +7,7 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -18,7 +18,13 @@ library(latex2exp)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+dir.create(
+  "lecture/data/a4" %>% here::here(), 
+  showWarnings = FALSE,
+  recursive = TRUE
+)
 ```
+
 
 ## Simulate data
 
@@ -120,26 +126,36 @@ The value of the auxiliary parameters are set as follows:
 # set auxiliary parameters
 price_xi <- 1
 sd_x <- 2
-sd_xi <- 0.5
-sd_c <- 0.05
-sd_p <- 0.05
+sd_xi <- 0.1
+sd_c <- 0.5
+sd_p <- 0.01
 ```
 
 2. `X` is the data frame such that a row contains the characteristics vector $x_{j}$ of a product and columns are product index and observed product characteristics. The dimension of the characteristics $K$ is specified above. Add the row of the outside option whose index is $0$ and all the characteristics are zero.
 
 
-```{r}
+```{r, echo = TRUE}
 # make product characteristics data
-X <- matrix(sd_x * rnorm(J * (K - 1)), nrow = J)
-X <- cbind(rep(1, J), X)
+X <- 
+  matrix(
+    sd_x * rnorm(J * (K - 1)), 
+    nrow = J
+    )
+X <- 
+  cbind(
+    rep(1, J), 
+    X
+    )
 colnames(X) <- paste("x", 1:K, sep = "_")
-X <- data.frame(j = 1:J, X) %>%
+X <- 
+  data.frame(j = 1:J, X) %>%
   tibble::as_tibble()
 # add outside option
-X <- rbind(
-  rep(0, dim(X)[2]),
-  X
-) 
+X <- 
+  rbind(
+    rep(0, dim(X)[2]),
+    X
+    ) 
 ```
 
 ```{r, echo = TRUE}
@@ -148,26 +164,42 @@ X
 
 3. `M` is the data frame such that a row contains the price $\xi_{jt}$, marginal cost $c_{jt}$, and price $p_{jt}$. After generating the variables, drop some products in each market. __In this assignment, we drop products in a different way from the last assignment__. In order to change the number of available products in each market, for each market, first draw $J_t$ from a discrete uniform distribution between $1$ and $J$. Then, drop products from each market using `dplyr::sample_frac` function with the realized number of available products. The variation in the available products is important for the identification of the distribution of consumer-level unobserved heterogeneity. Add the row of the outside option to each market whose index is $0$ and all the variables take value zero.
 
-```{r}
+```{r, echo = TRUE}
 # make market-product data
-M <- expand.grid(j = 1:J, t = 1:T) %>%
-  tibble::as_tibble() %>%
-  dplyr::mutate(
-    xi = sd_xi * rnorm(J*T),
-    c = exp(sd_c * rnorm(J*T)),
-    p = exp(price_xi * xi + sd_p * rnorm(J*T)) + c
-  ) 
-M <- M %>%
+M <- 
+  expand.grid(
+    j = 1:J, 
+    t = 1:T
+    ) %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate(
+      xi = sd_xi * rnorm(J * T),
+      c = exp(sd_c * rnorm(J * T)),
+      p = exp(price_xi * xi + sd_p * rnorm(J * T)) + c
+    ) 
+M <- 
+  M %>%
   dplyr::group_by(t) %>%
-  dplyr::sample_frac(size = purrr::rdunif(1, J)/J) %>%
+  dplyr::sample_frac(size = purrr::rdunif(1, J) / J) %>%
   dplyr::ungroup()
 # add outside option
-outside <- data.frame(j = 0, t = 1:T, xi = 0, c = 0, p = 0)
-M <- rbind(
-  M,
-  outside
-) %>%
-  dplyr::arrange(t, j)
+outside <- 
+  data.frame(
+    j = 0, 
+    t = 1:T, 
+    xi = 0, 
+    c = 0, 
+    p = 0
+    )
+M <- 
+  rbind(
+    M,
+    outside
+    ) %>%
+  dplyr::arrange(
+    t, 
+    j
+    )
 ```
 
 ```{r, echo = TRUE}
@@ -177,14 +209,26 @@ M
 4. Generate the consumer-level heterogeneity. `V` is the data frame such that a row contains the vector of shocks to consumer-level heterogeneity, $(\nu_{i}', \upsilon_i)$. They are all i.i.d. standard normal random variables. 
 
 
-```{r}
+```{r, echo = TRUE}
 # make consumer-market data
-V <- matrix(rnorm(N * T * (K + 1)), nrow = N * T) 
-colnames(V) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V <- data.frame(
-  expand.grid(i = 1:N, t = 1:T),
-  V
-) %>%
+V <- 
+  matrix(
+    rnorm(N * T * (K + 1)), 
+    nrow = N * T
+    ) 
+colnames(V) <- 
+  c(
+    paste("v_x", 1:K, sep = "_"), 
+    "v_p"
+    )
+V <- 
+  data.frame(
+    expand.grid(
+      i = 1:N, 
+      t = 1:T
+      ),
+    V
+    ) %>%
   tibble::as_tibble()
 ```
 
@@ -195,15 +239,33 @@ V
 5. Join `X`, `M`, `V` using `dplyr::left_join` and name it `df`. `df` is the data frame such that a row contains variables for a consumer about a product that is available in a market.
 
 
-```{r}
+```{r, echo = TRUE}
 # make choice data
-df <- expand.grid(t = 1:T, i = 1:N, j = 0:J) %>%
-  tibble::as_tibble() %>%
-  dplyr::left_join(V, by = c("i", "t")) %>%
-  dplyr::left_join(X, by = c("j")) %>%
-  dplyr::left_join(M, by = c("j", "t")) %>%
-  dplyr::filter(!is.na(p)) %>%
-  dplyr::arrange(t, i, j)
+df <- 
+  expand.grid(
+    t = 1:T, 
+    i = 1:N, 
+    j = 0:J
+    ) %>%
+    tibble::as_tibble() %>%
+    dplyr::left_join(
+      V, 
+      by = c("i", "t")
+      ) %>%
+    dplyr::left_join(
+      X, 
+      by = c("j")
+      ) %>%
+    dplyr::left_join(
+      M, 
+      by = c("j", "t")
+      ) %>%
+    dplyr::filter(!is.na(p)) %>%
+    dplyr::arrange(
+      t, 
+      i, 
+      j
+      )
 ```
 
 ```{r, echo = TRUE}
@@ -212,7 +274,7 @@ df
 
 6. Draw a vector of preference shocks `e` whose length is the same as the number of rows of `df`.
 
-```{r}
+```{r, echo = TRUE}
 # draw idiosyncratic shocks
 e <- evd::rgev(dim(df)[1])
 ```
@@ -227,8 +289,12 @@ head(e)
 # compute indirect utility
 u <- 
   compute_indirect_utility(
-    df, beta, sigma, 
-           mu, omega)
+    df = df, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 head(u)
 ```
 
@@ -251,14 +317,31 @@ $$
 $$
 ```{r, echo = TRUE}
 df_choice_smooth <-
-  compute_choice_smooth(X, M, V, beta, sigma, mu, omega)
+  compute_choice_smooth(
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 summary(df_choice_smooth)
 ```
 
 9. Next, write a function `compute_share_smooth(X, M, V, beta, sigma, mu, omega)` that calls `compute_choice_smooth` and then returns the share based on above $\tilde{q}_{ijt}$. If we use these functions with the Monte Carlo shocks, it gives us the predicted share of the products. 
 
 ```{r, echo = TRUE}
-df_share_smooth <- compute_share_smooth(X, M, V, beta, sigma, mu, omega)
+df_share_smooth <- 
+  compute_share_smooth(
+    X = X, 
+    M = M, 
+    V = V, 
+    beta = beta, 
+    sigma = sigma, 
+    mu = mu, 
+    omega = omega
+    )
 summary(df_share_smooth)
 ```
 
@@ -269,15 +352,27 @@ Use this `df_share_smooth` as the data to estimate the parameters in the followi
 
 1. First draw Monte Carlo consumer-level heterogeneity `V_mcmc` and Monte Carlo preference shocks `e_mcmc`. The number of simulations is `L`. This does not have to be the same with the actual number of consumers `N`. 
 
-```{r}
+```{r, echo = TRUE}
 # mixed logit estimation
 ## draw mcmc V
-V_mcmc <- matrix(rnorm(L*T*(K + 1)), nrow = L*T) 
-colnames(V_mcmc) <- c(paste("v_x", 1:K, sep = "_"), "v_p")
-V_mcmc <- data.frame(
-  expand.grid(i = 1:L, t = 1:T),
+V_mcmc <- 
+  matrix(
+    rnorm(L * T * (K + 1)), 
+    nrow = L * T
+    ) 
+colnames(V_mcmc) <- 
+  c(
+    paste("v_x", 1:K, sep = "_"), 
+    "v_p"
+    )
+V_mcmc <- 
+  data.frame(
+  expand.grid(
+    i = 1:L, 
+    t = 1:T
+    ),
   V_mcmc
-) %>%
+  ) %>%
   tibble::as_tibble() 
 ```
 
@@ -285,15 +380,33 @@ V_mcmc <- data.frame(
 V_mcmc
 ```
 
-```{r}
+```{r, echo = TRUE}
 ## draw mcmc e
-df_mcmc <- expand.grid(t = 1:T, i = 1:L, j = 0:J) %>%
-  tibble::as_tibble() %>%
-  dplyr::left_join(V_mcmc, by = c("i", "t")) %>%
-  dplyr::left_join(X, by = c("j")) %>%
-  dplyr::left_join(M, by = c("j", "t")) %>%
-  dplyr::filter(!is.na(p)) %>%
-  dplyr::arrange(t, i, j)
+df_mcmc <- 
+  expand.grid(
+    t = 1:T, 
+    i = 1:L, 
+    j = 0:J
+    ) %>%
+    tibble::as_tibble() %>%
+    dplyr::left_join(
+      V_mcmc, 
+      by = c("i", "t")
+      ) %>%
+    dplyr::left_join(
+      X, 
+      by = c("j")
+      ) %>%
+    dplyr::left_join(
+      M, 
+      by = c("j", "t")
+      ) %>%
+    dplyr::filter(!is.na(p)) %>%
+    dplyr::arrange(
+      t, 
+      i, 
+      j
+      )
 # draw idiosyncratic shocks
 e_mcmc <- evd::rgev(dim(df_mcmc)[1])
 ```
@@ -305,35 +418,56 @@ head(e_mcmc)
 
 ```{r, echo = TRUE}
 # set parameters
-theta <- c(beta, sigma, mu, omega)
+theta <- 
+  c(
+    beta, 
+    sigma, 
+    mu, 
+    omega
+    )
 theta
 ```
 
 3. Estimate the parameters assuming there is no product-specific unobserved fixed effects $\xi_{jt}$, i.e., using the functions in assignment 3. To do so, first modify `M` to `M_no` in which `xi` is replaced with 0 and estimate the model with `M_no`. Otherwise, your function will compute the share with the true `xi`.
 
 ```{r, echo = TRUE}
-M_no <- M %>%
+M_no <- 
+  M %>%
   dplyr::mutate(xi = 0)
 ```
 
 ```{r, eval = TRUE}
-# find NLLS estimator
-result_NLLS <- 
-  optim(par = theta, fn = compute_nlls_objective_a3,
-        method = "Nelder-Mead",
-        df_share = df_share_smooth, 
-        X = X, 
-        M = M_no, 
-        V_mcmc = V_mcmc, 
-        e_mcmc = e_mcmc)
-save(result_NLLS, file = "data/A4_result_NLLS.RData")
+# find nlls estimator
+result_nlls <- 
+  optim(
+    par = theta, 
+    fn = compute_nlls_objective_a3,
+    method = "Nelder-Mead",
+    df_share = df_share_smooth, 
+    X = X, 
+    M = M_no, 
+    V_mcmc = V_mcmc, 
+    e_mcmc = e_mcmc
+    )
+saveRDS(
+  result_nlls, 
+  file = "lecture/data/a4/result_nlls.rds" %>% here::here()
+)
 ```
 
 
 ```{r}
-load(file = "data/A4_result_NLLS.RData")
-result_NLLS
-result <- data.frame(true = theta, estimates = result_NLLS$par)
+result_nlls <- 
+  readRDS(
+    file = "lecture/data/a4/result_nlls.rds" %>% here::here()
+    )
+result_nlls
+result <- 
+
+data.frame(
+  true = theta, 
+  estimates = result_nlls$par
+  )
 result
 ```
 
@@ -350,7 +484,12 @@ pp <- as.matrix(dplyr::select(df_share_smooth, p))
 xi <- as.matrix(dplyr::select(df_share_smooth, xi))
 alpha <- - exp(mu + omega^2/2)
 delta <- XX %*% as.matrix(beta) + pp * alpha + xi
-delta <- dplyr::select(df_share_smooth, t, j) %>%
+delta <- 
+  dplyr::select(
+    df_share_smooth, 
+    t, 
+    j
+    ) %>%
   dplyr::mutate(delta = as.numeric(delta))
 ```
 ```{r, echo = TRUE}
@@ -363,8 +502,13 @@ delta
 ```{r, echo = TRUE}
 # compute indirect utility from delta
 u_delta <-
-  compute_indirect_utility_delta(df, delta, sigma,
-                                 mu, omega)
+  compute_indirect_utility_delta(
+    df, 
+    delta, 
+    sigma,
+    mu, 
+    omega
+    )
 head(u_delta)
 summary(u - u_delta)
 ```
@@ -376,7 +520,15 @@ summary(u - u_delta)
 ```{r, echo = TRUE}
 # compute choice
 df_choice_smooth_delta <- 
-  compute_choice_smooth_delta(X, M, V, delta, sigma, mu, omega)
+  compute_choice_smooth_delta(
+    X, 
+    M, 
+    V, 
+    delta, 
+    sigma, 
+    mu, 
+    omega
+    )
 df_choice_smooth_delta
 summary(df_choice_smooth_delta)
 summary(df_choice_smooth$q - df_choice_smooth_delta$q)
@@ -388,7 +540,15 @@ summary(df_choice_smooth$q - df_choice_smooth_delta$q)
 ```{r, echo = TRUE}
 # compute share
 df_share_smooth_delta <-
-  compute_share_smooth_delta(X, M, V, delta, sigma, mu, omega) 
+  compute_share_smooth_delta(
+    X, 
+    M, 
+    V, 
+    delta, 
+    sigma, 
+    mu, 
+    omega
+    ) 
 df_share_smooth_delta
 summary(df_share_smooth_delta)
 summary(df_share_smooth$s - df_share_smooth_delta$s)
@@ -398,15 +558,26 @@ summary(df_share_smooth$s - df_share_smooth_delta$s)
 $$
 T(\delta_{jt}^{(r)}) = \delta_{jt}^{(r)} + \kappa \cdot \log\left(\frac{s_{jt}}{\sigma_{jt}[\delta^{(r)}]}\right),
 $$
-where $s_{jt}$ is the actual share of product $j$ in market $t$ and $\sigma_{jt}[\delta^{(r)}]$ is the predicted share of product $j$ in market $t$ given $\delta^{(r)}$. Multiplying $\kappa$ is for the numerical stability. I set the value at $\kappa = 1$. Adjust it if the algorithm did not work. Set the stopping criterion at $\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| < \lambda$. Set $\lambda$ at $10^{-3}$. Make sure that $\delta_{i0t}$ is always set at zero while the iteration. 
+where $s_{jt}$ is the actual share of product $j$ in market $t$ and $\sigma_{jt}[\delta^{(r)}]$ is the predicted share of product $j$ in market $t$ given $\delta^{(r)}$. Multiplying $\kappa$ is for the numerical stability. I set the value at $\kappa = 1$. Adjust it if the algorithm did not work. Set the stopping criterion at $\max_{jt}|\delta_{jt}^{(r + 1)} - \delta_{jt}^{(r)}| < \lambda$. Set $\lambda$ at $10^{-6}$. Make sure that $\delta_{i0t}$ is always set at zero while the iteration. 
 
 Start the algorithm with the true $\delta_{jt}$ and check if the algorithm returns (almost) the same $\delta_{jt}$ when the actual and predicted smooth share are equated.
 
 ```{r, echo = TRUE}
 kappa <- 1
-lambda <- 1e-3
+lambda <- 1e-4
 delta_new <-
-  solve_delta(df_share_smooth, X, M, V, delta, sigma, mu, omega, kappa, lambda)
+  solve_delta(
+    df_share_smooth, 
+    X, 
+    M, 
+    V, 
+    delta, 
+    sigma, 
+    mu, 
+    omega, 
+    kappa, 
+    lambda
+    )
 head(delta_new)
 summary(delta_new$delta - delta$delta)
 ```
@@ -414,16 +585,33 @@ summary(delta_new$delta - delta$delta)
 9. Check how long it takes to compute the limit $\delta$ under the Monte Carlo shocks starting from the true $\delta$ to match with `df_share_smooth`. This is approximately the time to evaluate the objective function.
 ```{r, echo = TRUE, eval = TRUE}
 delta_new <-
-  solve_delta(df_share_smooth, X, M, V_mcmc, delta, sigma, mu, omega, kappa, lambda)
-save(delta_new, file = "data/A4_delta_new.RData")
+  solve_delta(
+    df_share_smooth, 
+    X, 
+    M, 
+    V_mcmc, 
+    delta, 
+    sigma, 
+    mu, 
+    omega, 
+    kappa, 
+    lambda
+  )
+saveRDS(
+  delta_new, 
+  file = "lecture/data/a4/delta_new.rds" %>% here::here()
+)
 ```
-
 
 
 ```{r, echo = TRUE}
-load(file = "data/A4_delta_new.RData")
+delta_new <- 
+  readRDS(
+    file = "lecture/data/a4/delta_new.rds" %>% here::here()
+  )
 summary(delta_new$delta - delta$delta)
 ```
+
 
 
 
@@ -477,14 +665,30 @@ where $\alpha_0 = - \exp(\mu + \omega^2/2)$. Notice that $X$ and $W$ does not in
 ```{r, echo = TRUE}
 Psi <- diag(length(beta) + 1)
 theta_linear <-
-  compute_theta_linear(df_share_smooth, delta, mu, omega, Psi) 
-cbind(theta_linear, beta)
+  compute_theta_linear(
+    df_share_smooth, 
+    delta, 
+    mu, 
+    omega, 
+    Psi
+    ) 
+cbind(
+  theta_linear, 
+  beta
+  )
 ```
 
 11. Write a function `solve_xi(df_share_smooth, delta, beta, mu, omega)` that computes the values of $\xi$ that are implied from the data, $\delta$, and the linear parameters. Check that the (almost) true values are returned when true $\delta$ and the true linear parmaeters are passed to the function. Notice that the returend $\xi$ should not include rows for the outside option.
 
 ```{r, echo = TRUE}
-xi_new <- solve_xi(df_share_smooth, delta, beta, mu, omega)
+xi_new <- 
+  solve_xi(
+    df_share_smooth, 
+    delta, 
+    beta, 
+    mu, 
+    omega
+    )
 head(xi_new)
 xi_true <-
   df_share_smooth %>%
@@ -506,88 +710,168 @@ given parameters $\theta$. Note that the row of $\xi(\theta)$ and $W$ do not inc
 
 ```{r, echo = TRUE}
 # non-linear parmaeters
-theta_nonlinear <- c(mu, omega, sigma)
+theta_nonlinear <- 
+  c(
+    mu, 
+    omega, 
+    sigma
+    )
 ```
 
 
 ```{r, echo = TRUE, eval = TRUE}
 # compute GMM objective function
 objective <-
-  compute_gmm_objective_a4(theta_nonlinear, delta, df_share_smooth, Psi, 
-                   X, M, V_mcmc, kappa, lambda) 
-save(objective, file = "data/A4_objective.RData")
+  compute_gmm_objective_a4(
+    theta_nonlinear, 
+    delta, 
+    df_share_smooth, 
+    Psi, 
+    X, 
+    M, 
+    V_mcmc, 
+    kappa, 
+    lambda
+    ) 
+saveRDS(
+  objective, 
+  file = "lecture/data/a4/objective.rds" %>% here::here()
+)
 ```
 ```{r, echo = TRUE}
-load(file = "data/A4_objective.RData")
+objective <- readRDS(
+  file = "lecture/data/a4/objective.rds" %>% here::here()
+)
 objective
 ```
-
-
-
 
 12. Draw a graph of the objective function that varies each non-linear parameter from 0, 0.2, $\cdots$, 2.0 of the true value. Try with the actual shocks `V`. 
 
 ```{r, eval = TRUE}
-label <- c( "\\mu",
-           "\\omega",
-           paste("\\sigma_", 1:K, sep = ""))
-label <- paste("$", label, "$", sep = "")
-graph_true <- foreach (i = 1:length(theta_nonlinear)) %do% {
-  theta_nonlinear_i <- theta_nonlinear[i]
-  theta_nonlinear_i_list <- theta_nonlinear_i * seq(0, 2, by = 0.2)
-  objective_i <- 
-    foreach (theta_nonlinear_ij = theta_nonlinear_i_list,
-             .packages = c(
-               "EmpiricalIO",
-               "magrittr",
-               "foreach"
-               ),
-             .combine = "rbind") %dopar% {
-               theta_nonlinear_j <- theta_nonlinear
-               theta_nonlinear_j[i] <- theta_nonlinear_ij
-               objective_ij <-
-                 compute_gmm_objective_a4(theta_nonlinear_j, delta, df_share_smooth, Psi, 
-                                  X, M, V, kappa, lambda) 
-               return(objective_ij)
-             }
-  df_graph <- 
-    data.frame(x = theta_nonlinear_i_list, y = as.numeric(objective_i)) 
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) + 
-    geom_point() +
-    geom_vline(xintercept = theta_nonlinear_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
-  return(g)
+label <- 
+  c(
+    "\\mu",
+    "\\omega",
+    paste(
+      "\\sigma_", 
+      1:K, 
+      sep = ""
+      )
+    )
+label <- 
+  paste(
+    "$", 
+    label, 
+    "$", 
+    sep = ""
+    )
+graph_true <- 
+  foreach (
+    i = 1:length(theta_nonlinear)
+    ) %do% {
+      theta_nonlinear_i <- theta_nonlinear[i]
+      theta_nonlinear_i_list <- theta_nonlinear_i * seq(0, 2, by = 0.2)
+      objective_i <- 
+        foreach (
+          theta_nonlinear_ij = theta_nonlinear_i_list,
+          .packages = c(
+            "EmpiricalIO",
+            "foreach",
+            "magrittr"
+          ),
+          .combine = "rbind"
+          ) %dopar% {
+            theta_nonlinear_j <- theta_nonlinear
+            theta_nonlinear_j[i] <- theta_nonlinear_ij
+            objective_ij <-
+              compute_gmm_objective_a4(
+                theta_nonlinear_j, 
+                delta, 
+                df_share_smooth, 
+                Psi,
+                X, 
+                M, 
+                V, 
+                kappa, 
+                lambda
+                ) 
+            return(objective_ij)
+            }
+      df_graph <- 
+        data.frame(
+          x = theta_nonlinear_i_list, 
+          y = as.numeric(objective_i)
+          ) 
+      g <-
+        df_graph %>%
+        ggplot(
+          aes(
+            x = x, 
+            y = y
+            )
+          ) + 
+        geom_point() +
+        geom_vline(
+          xintercept = theta_nonlinear_i, 
+          linetype = "dotted"
+          ) +
+        ylab("objective function") + 
+        xlab(TeX(label[i])) +
+        theme_classic()
+      return(g)
 }
-save(graph_true, file = "data/A4_graph_true.RData")
+saveRDS(
+  graph_true, 
+  file = "lecture/data/a4/graph_true.rds" %>% here::here()
+)
 ```
 ```{r}
-load(file = "data/A4_graph_true.RData")
+graph_true <- 
+  readRDS(
+    file = "lecture/data/a4/graph_true.rds" %>% here::here()
+  )
 graph_true
 ```
 
-
-
 13. Find non-linear parameters that minimize the GMM objective function. Because standard deviations of the same absolute value with positive and negative values have almost the same implication for the data, you can take the absolute value if the estimates of the standard deviations happened to be negative (Another way is to set the non-negativity constraints on the standard deviations).
+
 ```{r, eval = TRUE}
 result <-
-  optim(par = theta_nonlinear,
-        fn = compute_gmm_objective_a4,
-        method = "BFGS",
-        delta = delta, 
-        df_share_smooth = df_share_smooth, 
-        Psi = Psi, 
-        X = X, M = M, 
-        V_mcmc = V_mcmc, 
-        kappa = kappa,
-        lambda = lambda)
-save(result, file = "data/A4_result.RData")
+  optim(
+    par = theta_nonlinear,
+    fn = compute_gmm_objective_a4,
+    method = "Nelder-Mead",
+    delta = delta, 
+    df_share_smooth = df_share_smooth, 
+    Psi = Psi, 
+    X = X, M = M, 
+    V_mcmc = V_mcmc, 
+    kappa = kappa,
+    lambda = lambda
+    )
+
+saveRDS(
+  result, 
+  file = "lecture/data/a4/result.rds" %>% here::here()
+)
 ```
 
 ```{r}
-load(file = "data/A4_result.RData")
+result <- readRDS(
+  file = "lecture/data/a4/result.rds" %>% here::here()
+)
 result
-comparison <- cbind(theta_nonlinear, abs(result$par))
-colnames(comparison) <- c("true", "estimate")
+comparison <- 
+
+  cbind(
+    theta_nonlinear, 
+    abs(result$par)
+    )
+colnames(comparison) <- 
+  c(
+    "true", 
+    "estimate"
+    )
 comparison
 ```
 

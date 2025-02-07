@@ -14,10 +14,15 @@ library(stargazer)
 library(knitr)
 library(foreach)
 library(ggplot2)
-library(np)
 library(latex2exp)
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+dir.create(
+  "lecture/data/a2" %>% here::here(), 
+  showWarnings = FALSE,
+  recursive = TRUE
+)
 ```
+
 
 ## Simulate data
 
@@ -57,7 +62,7 @@ We set the parameters as follows:
 
 1. Define the parameter variables as above.
 
-```{r}
+```{r parameters}
 # size
 J <- 1000
 T <- 10
@@ -80,77 +85,52 @@ delta <- 0.05
 ```
 
 2. Write a function that returns the log output given $l_{jt}$, $k_{jt}$, $\omega_{jt}$, and $\eta_{jt}$ under the given parameter values according to the above production function and name it `log_production(l, k, omega, eta, beta_0, beta_l, beta_k)`.
-```{r}
-# # moved to R/functions.R
-# # log production function
-# log_production <-
-#   function(
-#     l, 
-#     k, 
-#     omega, 
-#     eta, 
-#     beta_0, 
-#     beta_l, 
-#     beta_k
-#     ) {
-#     y <- beta_0 + beta_l * l + beta_k * k + omega + eta
-#     return(y)
-#   }
+```{r test_log_production, echo = TRUE}
+log_production(
+    l = 1,
+    k = 1,
+    omega = 1,
+    eta = 1,
+    beta_0 = beta_0,
+    beta_l = beta_l,
+    beta_k = beta_k
+    ) 
 ```
 
 Suppose that the labor is determined after $\omega_{jt}$ is observed, but before $\eta_{jt}$ is observed, given the log capital level $k_{jt}$. 
 
 3. Derive the optimal log labor as a function of $\omega_{jt}$, $\eta_{jt}$, $k_{jt}$, and wage. Write a function to return the optimal log labor given the variables and parameters and name it `log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta)`. 
 
-```{r}
-# log_labor_choice <-
-#   function(
-#     k, 
-#     wage, 
-#     omega, 
-#     beta_0, 
-#     beta_l, 
-#     beta_k, 
-#     sigma_eta
-#     ) {
-#     L <- 
-#       (
-#         (1 / wage) *
-#           exp(beta_0 + omega + sigma_eta^2 / 2) *
-#           beta_l *
-#           exp(k)^beta_k
-#         )^(1 / (1 - beta_l))
-#     l <- log(L)
-#   return(l)
-#   }
+```{r test_log_labor_choice, echo = TRUE}
+log_labor_choice(
+  k = 1, 
+  wage = 1, 
+  omega = 1, 
+  beta_0 = beta_0, 
+  beta_l = beta_l, 
+  beta_k = beta_k, 
+  sigma_eta = sigma_eta
+  )
 ```
 
 As discussed in the class, if there is no additional variation in labor, the coefficient on the labor $\beta_l$ is not identified. Thus, if we generate labor choice from the previous function, $\beta_l$ will not be identified from the simulated data. To see this, we write a modified version of the previous function in which $\omega_{jt}$ is replaced with $\omega_{jt} + \iota_{jt}$, where $\iota_{jt}$ is an optimization error that follows an i.i.d. normal distribution with mean 0 and standard deviation 0.05. That is, the manager of the firm perceives as if the shock is $\omega_{jt} + \iota_{jt}$, even though the true shock is $\omega_{jt}$. 
 
 4. Modify the previous function by including $\iota_{jt}$ as an additional input and name it `log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta)`.
-```{r}
-# log_labor_choice_error <-
-#   function(
-#     k, 
-#     wage, 
-#     omega, 
-#     beta_0, 
-#     beta_l, 
-#     beta_k, 
-#     iota, 
-#     sigma_eta
-#     ) {
-#     L <-
-#       (
-#         (1 / wage) *
-#           exp(beta_0 + omega + iota + sigma_eta^2 / 2) *
-#           beta_l *
-#           exp(k)^beta_k
-#         )^(1 / (1 - beta_l))
-#     l <- log(L)
-#     return(l)
-#   }
+
+```{r test_log_labor_choice_error, echo = TRUE}
+log_labor_choice_error(
+  k = 1, 
+  wage = 1, 
+  omega = 1, 
+  beta_0 = beta_0, 
+  beta_l = beta_l, 
+  beta_k = beta_k, 
+  iota = 1, 
+  sigma_eta = sigma_eta
+  )
 ```
+
+
 
 Consider an investment process such that:
 $$
@@ -159,24 +139,20 @@ $$
 where $I_{jt}$ and $K_{jt}$ are investment and capital in level. Set $\gamma = 0.1$, i.e., the investment is strictly increasing in $\omega_{jt}$. The investment function should be derived by solving the dynamic problem of a firm. But here, we just specify it in a reduced-form.
 
 5. Define variable $\gamma$ and assign it the value. Write a function that returns the investment given $K_{jt}$,  $\omega_{jt}$, and parameter values, according to the previous equation, and name it `investment_choice(k, omega, gamma, delta)`.
-```{r}
+```{r test_investment_choice, echo = TRUE}
 gamma <- 0.1
-# investment_choice <-
-#   function(
-#     k, 
-#     omega, 
-#     gamma, 
-#     delta
-#     ) {
-#     I <- (delta + gamma * omega) * exp(k)
-#     return(I)
-#   }
+investment_choice(
+  k = 1, 
+  omega = 1, 
+  gamma = gamma, 
+  delta = delta
+  )
 ```
 
 Simulate the data first using the labor choice without optimization error and second using the labor choice with optimization error. To do so, we specify the initial values for the state variables $k_{jt}$ and $\omega_{jt}$ as follows. 
 
 6. Draw $k_{j1}$ from an i.i.d. normal distribution with mean 1 and standard deviation 0.5. Draw $\omega_{j1}$ from its stationary distribution (check the stationary distribution of AR(1) process). Draw a wage. Before simulating the rest of the data, set the seed at 1.
-```{r}
+```{r initial_setup}
 # optimization error
 sigma_iota <- 0.05
 
@@ -201,24 +177,26 @@ df <-
     omega = rnorm(J, 0, sigma_v_initial),
     wage = wage
   )
+```
+```{r show_initial_df, echo = TRUE}
 df
 ```
 
 7. Draw optimization error $\iota_{jt}$ and compute the labor and investment choice of period 1. For labor choice, compute both types of labor choices.
-```{r}
+```{r compute_labor_investment}
 # compute labor and investment
 df <- 
   df %>%
   dplyr::mutate(
     iota = rnorm(J, 0, sigma_iota)
     ) %>%
-  dplyr::rowwise() %>%
   dplyr::mutate(
     l = log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta),
     l_error = log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta),
-    I = investment_choice(k, omega, gamma, delta)
-  ) %>%
-  dplyr::ungroup()
+    inv = investment_choice(k, omega, gamma, delta)
+  ) 
+```
+```{r}
 df
 ```
 
@@ -228,18 +206,16 @@ df
 df <- 
   df %>%
   dplyr::mutate(eta = rnorm(J, 0, sigma_eta)) %>%
-  dplyr::rowwise() %>%
   dplyr::mutate(
     y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k),
     y_error = log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k) 
-  ) %>%
-  dplyr::ungroup()
+  ) 
 df
 ```
 
-9. Repeat this procedure for $t = 1, \cdots 10$ by updating the capital and anticipated shocks, and name the resulting data frame `df_T`.
-```{r, eval = FALSE}
-df_T <- df
+9. Repeat this procedure for $t = 1, \cdots 10$ by updating the capital and anticipated shocks, and name the resulting data frame `df_all`. Use the previously generated `df` as the data for `t = 1`. In each perio, generate `nu`, `iota`, and `eta` in this order, if you want to match the realization of the random variables.
+```{r, eval = TRUE}
+df_all <- df
 for (t in 2:T) {
   # change time index
   df$t <- t
@@ -252,7 +228,7 @@ for (t in 2:T) {
   df <- 
     df %>%
     dplyr::mutate(
-      k = log((1 - delta) * exp(k) + I)
+      k = log((1 - delta) * exp(k) + inv)
     )
   
   # update omega
@@ -267,63 +243,66 @@ for (t in 2:T) {
   df <- 
     df %>%
     dplyr::mutate(iota = rnorm(J, 0, sigma_iota)) %>%
-    dplyr::rowwise() %>%
     dplyr::mutate(
       l = log_labor_choice(k, wage, omega, beta_0, beta_l, beta_k, sigma_eta),
       l_error = log_labor_choice_error(k, wage, omega, beta_0, beta_l, beta_k, iota, sigma_eta),
-      I = investment_choice(k, omega, gamma, delta)
-    ) %>%
-    dplyr::ungroup()
+      inv = investment_choice(k, omega, gamma, delta)
+    ) 
   # compute output
   df <- 
     df %>%
     dplyr::mutate(eta = rnorm(J, 0, sigma_eta)) %>%
-    dplyr::rowwise() %>%
     dplyr::mutate(
       y = log_production(l, k, omega, eta, beta_0, beta_l, beta_k),
       y_error = log_production(l_error, k, omega, eta, beta_0, beta_l, beta_k) 
-    ) %>%
-    dplyr::ungroup()
+    ) 
   
   # append
-  df_T <- dplyr::bind_rows(df_T, df)
+  df_all <- dplyr::bind_rows(df_all, df)
 }
-df_T
-save(df_T, file = "data/A2_df_T.RData")
+saveRDS(df_all, file = "lecture/data/a2/df_all.rds" %>% here::here())
 ```
+
+```{r}
+df_all <- readRDS(file = "lecture/data/a2/df_all.rds" %>% here::here())
+```
+```{r, echo = TRUE}
+df_all
+```
+
+
 
 10. Check the simulated data by making summary table.
 ```{r}
-load(file = "data/A2_df_T.RData")
-df_T_summary <-
+df_all_summary <-
   foreach (
-    i = 1:dim(df_T)[2], 
+    i = 1:dim(df_all)[2], 
     .combine = "rbind"
     ) %do% {
-    df_T_i <- as.data.frame(df_T)[, i]
+    df_all_i <- as.data.frame(df_all)[, i]
     row_i <- 
       data.frame(
-        N = length(df_T_i), 
-        Mean = mean(df_T_i, na.rm = TRUE),
-        Sd = sd(df_T_i, na.rm = TRUE),
-        Min = min(df_T_i, na.rm = TRUE),
-        Max = max(df_T_i, na.rm = TRUE)
+        N = length(df_all_i), 
+        Mean = mean(df_all_i, na.rm = TRUE),
+        Sd = sd(df_all_i, na.rm = TRUE),
+        Min = min(df_all_i, na.rm = TRUE),
+        Max = max(df_all_i, na.rm = TRUE)
         )
-    rownames(row_i) <- colnames(df_T)[i]
+    rownames(row_i) <- colnames(df_all)[i]
     return(row_i)
   }
-kable(df_T_summary)
+kable(df_all_summary)
 ```
 
 ## Estimate the parameters
 
 For now, use the labor choice with optimization error. 
 
-1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. This is likely to give an upwardly biased estimates on $\beta_l$ and $\beta_k$. Why is it?
+1. First, simply regress $y_{jt}$ on $l_{jt}$ and $k_{jt}$ using the least square method. 
 ```{r}
 result_ols <-
   lm(
-    data = df_T,
+    data = df_all,
     formula = y_error ~ l_error + k
     )
 summary(result_ols)
@@ -331,8 +310,8 @@ summary(result_ols)
 
 2. Second, take within-transformation on $y_{jt}$, $l_{jt}$, and $k_{jt}$ and let $\Delta y_{jt}$, $\Delta l_{jt}$, and $\Delta k_{jt}$ denote them. Then, regress $\Delta y_{jt}$ on $\Delta l_{jt}$, and $\Delta k_{jt}$ by the least squares method.
 ```{r}
-df_T_within <- 
-  df_T %>%
+df_all_within <- 
+  df_all %>%
   dplyr::group_by(j) %>%
   dplyr::mutate(
     dy_error = y_error - mean(y_error),
@@ -342,7 +321,7 @@ df_T_within <-
   dplyr::ungroup()
 result_within <-
   lm(
-    data = df_T_within,
+    data = df_all_within,
     formula = dy_error ~ - 1 + dl_error + dk
     )
 summary(result_within)
@@ -360,30 +339,31 @@ You can use `npplreg` function of `np` package to estimate a partially linear mo
 
 3. Return the summary of the first stage estimation and plot the fitted values against the data points.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 result_1st_bw <-
-  npplregbw(
-    data = df_T,
-    formula = y_error ~ l_error + k + I| k + I
+  np::npplregbw(
+    data = df_all,
+    formula = y_error ~ l_error | k + inv
     )
-save(result_1st_bw, file = "data/A2_result_1st_bw.RData")
+saveRDS(result_1st_bw, file = "lecture/data/a2/result_1st_bw.rds" %>% here::here())
 ```
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 result_1st <-
-  npplreg(
-    data = df_T,
-    formula = y_error ~ l_error + k + I| k + I,
+  np::npplreg(
+    data = df_all,
+    formula = y_error ~ l_error | k + inv,
     bws = result_1st_bw
     )
-save(result_1st, file = "data/A2_result_1st.RData")
+saveRDS(result_1st, file = "lecture/data/a2/result_1st.rds" %>% here::here())
 ```
 ```{r}
-load(file = "data/A2_df_T.RData")
-load(file = "data/A2_result_1st.RData")
+result_1st_bw <- readRDS(file = "lecture/data/a2/result_1st_bw.rds" %>% here::here())
+result_1st <- readRDS(file = "lecture/data/a2/result_1st.rds" %>% here::here())
 summary(result_1st)
 result_1st_plot <-
+
   data.frame(
-    actual = df_T$y_error,
+    actual = df_all$y_error,
     fitted = fitted(result_1st)
     )
 result_1st_plot %>%
@@ -393,37 +373,42 @@ result_1st_plot %>%
       y = actual
       )
     ) +
-  geom_point()
+  geom_point() +
+  theme_classic()
 ```
 
 4. Check that $\beta_l$ is not identified with the data without optimization error. Estimate the first stage model of Olley-Pakes with the labor choice without optimization error and report the result.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 result_1st_unidentified_bw <-
-  npplregbw(
-    data = df_T,
-    formula = y ~ l + k + I| k + I
+  np::npplregbw(
+    data = df_all,
+    formula = y ~ l | k + inv
     )
-save(
+saveRDS(
   result_1st_unidentified_bw, 
-  file = "data/A2_result_1st_unidentified_bw.RData"
+  file = "lecture/data/a2/result_1st_unidentified_bw.rds" %>% here::here()
   )
 ```
-```{r, eval = FALSE}
-load(file = "data/A2_result_1st_unidentified_bw.RData")
+
+```{r, eval = TRUE}
+result_1st_unidentified_bw <-
+  readRDS(file = "lecture/data/a2/result_1st_unidentified_bw.rds" %>% here::here())
 result_1st_unidentified <-
-  npplreg(
-    data = df_T,
-    formula = y ~ l + k + I| k + I,
+  np::npplreg(
+    data = df_all,
+    formula = y ~ l | k + inv,
     bws = result_1st_unidentified_bw
     )
-save(
+saveRDS(
   result_1st_unidentified, 
-  file = "data/A2_result_1st_unidentified.RData"
+  file = "lecture/data/a2/result_1st_unidentified.rds" %>% here::here()
   )
 ```
 ```{r}
-load(file = "data/A2_result_1st_unidentified.RData")
+
+result_1st_unidentified <-
+  readRDS(file = "lecture/data/a2/result_1st_unidentified.rds" %>% here::here())
 summary(result_1st_unidentified)
 ```
 
@@ -453,10 +438,10 @@ and:
 $$
 \hat{\phi}(k_{j, t - 1}, I_{j, t - 1}),
 $$
-for each $j$ and $t$ and save it as a data frame names `df_T_1st`.
+for each $j$ and $t$ and save it as a data frame names `df_all_1st`.
 ```{r}
-df_T_1st <- 
-  df_T %>%
+df_all_1st <- 
+  df_all %>%
   dplyr::mutate(
     y_error_tilde = y_error - result_1st$xcoef["l_error"] * l_error
     ) %>%
@@ -466,10 +451,10 @@ df_T_1st <-
     y_error_tilde
     )
 phi <- fitted(result_1st) - 
-  result_1st$xcoef["l_error"] * df_T$l_error
-df_T_1st$phi_t <- phi
-df_T_1st <- 
-  df_T_1st %>%
+  result_1st$xcoef["l_error"] * df_all$l_error
+df_all_1st$phi_t <- phi %>% as.numeric()
+df_all_1st <- 
+  df_all_1st %>%
   dplyr::arrange(
     j, 
     t
@@ -478,51 +463,21 @@ df_T_1st <-
   dplyr::mutate(phi_t_1 = dplyr::lag(phi_t, 1)) %>%
   dplyr::ungroup() %>%
   dplyr::select(-phi_t)
-df_T_1st
+```
+```{r, echo = TRUE}
+df_all_1st
 ```
 
 
-6. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_T_1st`, and name it `moment_OP_2nd`. Show the values of the moments evaluated at the true parameters.
-```{r}
-# moment_OP_2nd <- 
-#   function(
-#     alpha, 
-#     beta_0, 
-#     beta_k, 
-#     df_T, 
-#     df_T_1st
-#     ) {
-#     moment <- 
-#       df_T %>%
-#       dplyr::group_by(j) %>%
-#       dplyr::mutate(
-#         k_t_1 = dplyr::lag(k, 1),
-#         I_t_1 = dplyr::lag(I, 1)
-#       ) %>%
-#       dplyr::ungroup() %>%
-#       dplyr::left_join(
-#         df_T_1st, 
-#         by = c("j", "t")
-#         ) %>%
-#       dplyr::filter(!is.na(phi_t_1)) %>%
-#       dplyr::mutate(
-#         g_jt = y_error_tilde - beta_0 - beta_k * k - 
-#           alpha * (phi_t_1 - beta_0 - beta_k * k_t_1)
-#       )
-#     moment <-
-#       cbind(
-#         moment$g_jt * moment$k,
-#         moment$g_jt * moment$k_t_1,
-#         moment$g_jt * moment$I_t_1
-#         )
-#     moment <- 
-#       apply(
-#         moment, 
-#         2, 
-#         mean)
-#     return(moment)
-#   }
-moment_OP_2nd(alpha, beta_0, beta_k, df_T, df_T_1st)
+6. Compute a function that returns the value of $g_{JT}(\alpha, \beta_0, \beta_k)$ given parameter values, data, and `df_all_1st`, and name it `moment_olleypakes_2nd`. Show the values of the moments evaluated at the true parameters.
+```{r, echo = TRUE}
+moment_olleypakes_2nd(
+  alpha = alpha, 
+  beta_0 = beta_0, 
+  beta_k = beta_k, 
+  df_all = df_all, 
+  df_all_1st = df_all_1st
+  )
 ```
 
 Based on the moment, we can define the objective function of a generalized method of moments estimator with a weighting matrix $W$ as:
@@ -530,27 +485,22 @@ $$
 Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{JT}(\alpha, \beta_0, \beta_k).
 $$
 
-7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_T_1st`, and name it `objective_OP_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
+7. Write a function that returns the value of $Q_{JT}(\alpha, \beta_0, \beta_k)$ given the vector of parameter values, data, and `df_all_1st`, and name it `objective_olleypakes_2nd`. Setting $W$ at the identity matrix, show the value of the objective function evaluated at the true parameters.
 
-```{r}
-# objective_OP_2nd <-
-#   function(
-#     theta, 
-#     df_T, 
-#     df_T_1st, 
-#     W
-#     ) {
-#     alpha <- theta[1]
-#     beta_0 <- theta[2]
-#     beta_k <- theta[3]
-#     moment <-
-#       moment_OP_2nd(alpha, beta_0, beta_k, df_T, df_T_1st)
-#     objective <- t(moment) %*% W %*% moment
-#     return(objective)
-#   }
+```{r, echo = TRUE}
 W <- diag(3)
-theta <- c(alpha, beta_0, beta_k)
-objective_OP_2nd(theta, df_T, df_T_1st, W)
+theta <- 
+  c(
+    alpha, 
+    beta_0, 
+    beta_k
+    )
+objective_olleypakes_2nd(
+  theta = theta, 
+  df_all = df_all, 
+  df_all_1st = df_all_1st,
+  W = W
+  )
 ```
 
 8. Draw the graph of the objective function when one of $\alpha$, $\beta_0$, and $\beta_k$ are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
@@ -561,7 +511,7 @@ objective_alpha <-
     .combine = "rbind"
     ) %do% {
       objective_i <-
-        objective_OP_2nd(c(i, beta_0, beta_k), df_T, df_T_1st, W)
+        objective_olleypakes_2nd(c(i, beta_0, beta_k), df_all, df_all_1st, W)
       return(objective_i)
       }
 objective_beta_0 <- 
@@ -570,7 +520,7 @@ objective_beta_0 <-
     .combine = "rbind"
     ) %do% {
       objective_i <-
-        objective_OP_2nd(c(alpha, i, beta_k), df_T, df_T_1st, W)
+        objective_olleypakes_2nd(c(alpha, i, beta_k), df_all, df_all_1st, W)
       return(objective_i)
       }
 objective_beta_k <- 
@@ -579,7 +529,7 @@ objective_beta_k <-
     .combine = "rbind"
     ) %do% {
       objective_i <-
-        objective_OP_2nd(c(alpha, beta_0, i), df_T, df_T_1st, W)
+        objective_olleypakes_2nd(c(alpha, beta_0, i), df_all, df_all_1st, W)
       return(objective_i)
       }
 objective_plot <-
@@ -598,7 +548,8 @@ objective_plot %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\alpha$")) + 
-  ylab("Objective")
+  ylab("Objective") +
+  theme_classic()
 objective_plot %>%
   ggplot(
     aes(
@@ -608,7 +559,8 @@ objective_plot %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\beta_0$")) + 
-  ylab("Objective")
+  ylab("Objective") + 
+  theme_classic()
 objective_plot %>%
   ggplot(
     aes(
@@ -618,21 +570,28 @@ objective_plot %>%
     ) +
   geom_point() + 
   xlab(TeX("$\\beta_k$")) + 
-  ylab("Objective")
+  ylab("Objective") +
+  theme_classic()
 ```
 
 9. Find the parameters that minimize the objective function using `optim`. You may use `L-BFGS-B` method to solve it.
 ```{r}
-theta <- c(alpha, beta_0, beta_k)
+theta <- 
+  c(
+    alpha, 
+    beta_0, 
+    beta_k
+    )
 W <- diag(3)
 result_2nd <-
   optim(
     par = theta,
-    f = objective_OP_2nd,
+    f = objective_olleypakes_2nd,
     method = "L-BFGS-B",
-    df_T = df_T,
-    df_T_1st = df_T_1st,
+    df_all = df_all,
+    df_all_1st = df_all_1st,
     W = W
     )
 result_2nd
 ```
+

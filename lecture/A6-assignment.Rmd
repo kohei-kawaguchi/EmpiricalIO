@@ -13,7 +13,13 @@ library(doParallel)
 library(doRNG)
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 options(dplyr.summarise.inform = FALSE)
+dir.create(
+  "lecture/data/a6" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+)
 ```
+
 
 ## Simulate data
 
@@ -474,13 +480,17 @@ graph <-
 }
 saveRDS(
   graph, 
-  file = "data/a6/A6_graph_sequential.rds"
-  )
+  file = "lecture/data/a6/graph_sequential.rds" %>% here::here()
+)
 ```
+
 ```{r}
-graph <- readRDS(file = "data/a6/A6_graph_sequential.rds")
+graph <- readRDS(
+  file = "lecture/data/a6/graph_sequential.rds" %>% here::here()
+)
 graph
 ```
+
 
 5. Check the value of the objective function around the true parameter under the assumption of the simultaneous entry.
 
@@ -552,13 +562,17 @@ graph <-
 }
 saveRDS(
   graph, 
-  file = "data/a6/A6_graph_simultaneous.rds"
-  )
+  file = "lecture/data/a6/graph_simultaneous.rds" %>% here::here()
+)
 ```
 ```{r}
-graph <- readRDS(file = "data/a6/A6_graph_simultaneous.rds")
+graph <- 
+  readRDS(
+    file = "lecture/data/a6/graph_simultaneous.rds" %>% here::here()
+  )
 graph
 ```
+
 
 6. Estimate the parameters under the assumption of the sequential entry. 
 
@@ -589,13 +603,17 @@ result_sequential <-
         )
 saveRDS(
   result_sequential, 
-  file = "data/a6/A6_estimate_sequential.rds"
-  )
+  file = "lecture/data/a6/estimate_sequential.rds" %>% here::here()
+)
 ```
 ```{r}
-result_sequential <- readRDS(file = "data/a6/A6_estimate_sequential.rds")
+result_sequential <- 
+  readRDS(
+    file = "lecture/data/a6/estimate_sequential.rds" %>% here::here()
+  )
 result_sequential
 comparison <-
+
   data.frame(
     actual = theta,
     estimate = result_sequential$par
@@ -614,7 +632,7 @@ theta <-
     beta, 
     alpha, 
     delta
-    )
+  )
 ```
 
 ```{r, eval = FALSE}
@@ -631,13 +649,17 @@ result_simultaneous <-
         NU_mc = NU_mc)
 saveRDS(
   result_simultaneous, 
-  file = "data/a6/A6_estimate_simultaneous.rds"
-  )
+  file = "lecture/data/a6/estimate_simultaneous.rds" %>% here::here()
+)
 ```
 ```{r}
-result_simultaneous <- readRDS(file = "data/a6/A6_estimate_simultaneous.rds")
+result_simultaneous <- 
+  readRDS(
+    file = "lecture/data/a6/estimate_simultaneous.rds" %>% here::here()
+  )
 result_simultaneous
 comparison <-
+
   data.frame(
     actual = theta,
     estimate = result_simultaneous$par
@@ -671,7 +693,7 @@ Y_actual <-
     alpha, 
     delta, 
     rho
-    )
+  )
 Y_actual <- Y_actual[[1]]
 # monte carlo simulations under the counterfactual parameters
 delta_count <- 0.5
@@ -685,7 +707,7 @@ Y_count <-
     alpha, 
     delta_count, 
     rho
-    )
+  )
 Y_count <- Y_count[[1]]
 # histogram
 N_actual <-
@@ -708,14 +730,14 @@ N_df <- data.frame(
   dplyr::group_by(
     parameters, 
     value
-    ) %>%
+  ) %>%
   dplyr::summarise(n = length(m)) %>%
   dplyr::ungroup() %>%
   tidyr::complete(
     parameters, 
     value, 
     fill = list(n = 0)
-    )
+  )
 ggplot(
   N_df, 
   aes(
@@ -723,19 +745,19 @@ ggplot(
     y = n, 
     colour = parameters, 
     fill = parameters
-    )
+  )
+) +
+geom_bar(
+  stat = "identity", 
+  position = "dodge"
   ) +
-  geom_bar(
-    stat = "identity", 
-    position = "dodge"
-    ) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
-  ylab("count") + 
-  xlab("number of entrants") + 
-  ggtitle("Sequential entry") +
-  theme(plot.title = element_text(hjust = 0.5)) + 
-  theme_classic()
+scale_color_viridis_d() +
+scale_fill_viridis_d() +
+ylab("count") + 
+xlab("number of entrants") + 
+ggtitle("Sequential entry") +
+theme(plot.title = element_text(hjust = 0.5)) + 
+theme_classic()
 ```
 
 
@@ -758,7 +780,7 @@ Y_actual <-
     beta, 
     alpha, 
     delta
-    )
+  )
 Y_actual <- Y_actual[[1]]
 # monte carlo simulations under the counterfactual parameters
 delta_count <- 0.5
@@ -771,7 +793,7 @@ Y_count <-
     beta, 
     alpha, 
     delta_count
-    )
+  )
 Y_count <- Y_count[[1]]
 # histogram
 N_actual <-
@@ -794,14 +816,14 @@ N_df <- data.frame(
   dplyr::group_by(
     parameters, 
     value
-    ) %>%
+  ) %>%
   dplyr::summarise(n = length(m)) %>%
   dplyr::ungroup() %>%
   tidyr::complete(
     parameters, 
     value, 
     fill = list(n = 0)
-    )
+  )
 ggplot(
   N_df, 
   aes(
@@ -809,19 +831,19 @@ ggplot(
     y = n, 
     colour = parameters, 
     fill = parameters
-    )
+  )
+) +
+geom_bar(
+  stat = "identity", 
+  position = "dodge"
   ) +
-  geom_bar(
-    stat = "identity", 
-    position = "dodge"
-    ) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
-  ylab("count") + 
-  xlab("number of entrants") + 
-  ggtitle("Simultaneous entry") +
-  theme(plot.title = element_text(hjust = 0.5)) + 
-  theme_classic()
+scale_color_viridis_d() +
+scale_fill_viridis_d() +
+ylab("count") + 
+xlab("number of entrants") + 
+ggtitle("Simultaneous entry") +
+theme(plot.title = element_text(hjust = 0.5)) + 
+theme_classic()
 ```
 
 

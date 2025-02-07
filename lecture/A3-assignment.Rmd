@@ -1,5 +1,6 @@
 # Assignment 3: Demand Function Estimation I {#assignment3}
 
+
 ```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
@@ -10,7 +11,11 @@ library(ggplot2)
 library(latex2exp)
 library(doParallel)
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-dir.create("data/a3", showWarnings = FALSE)
+dir.create(
+  "lecture/data/a3" %>% here::here(), 
+  showWarnings = FALSE,
+  recursive = TRUE
+)
 ```
 
 ## Simulate data
@@ -574,10 +579,10 @@ graph_true <-
         theme_classic()
       return(g)
 }
-saveRDS(graph_true, file = "data/a3/graph_true.rds")
+saveRDS(graph_true, file = "lecture/data/a3/graph_true.rds" %>% here::here())
 ```
 ```{r}
-graph_true <- readRDS(file = "data/a3/graph_true.rds")
+graph_true <- readRDS(file = "lecture/data/a3/graph_true.rds" %>% here::here())
 graph_true
 ```
 
@@ -641,12 +646,18 @@ graph_mcmc <-
         theme_classic()
       return(g)
 }
-saveRDS(graph_mcmc, file = "data/a3/graph_mcmc.rds")
+saveRDS(
+  graph_mcmc, 
+  file = "lecture/data/a3/graph_mcmc.rds" %>% here::here()
+  )
 ```
 ```{r}
-graph_mcmc <- readRDS(file = "data/a3/graph_mcmc.rds")
+graph_mcmc <- readRDS(
+  file = "lecture/data/a3/graph_mcmc.rds" %>% here::here()
+  )
 graph_mcmc
 ```
+
 
 
 8. Use `optim` to find the minimizer of the objective function using `Nelder-Mead` method. You can start from the true parameter values. Compare the estimates with the true parameters.
@@ -663,14 +674,21 @@ result_nlls <-
     V_mcmc = V_mcmc, 
     e_mcmc = e_mcmc
     )
-saveRDS(result_nlls, file = "data/a3/result_nlls.rds")
+saveRDS(
+  result_nlls, 
+  file = "lecture/data/a3/result_nlls.rds" %>% here::here()
+  )
 ```
 
 
+
 ```{r}
-result_nlls <- readRDS(file = "data/a3/result_nlls.rds")
+result_nlls <- readRDS(
+  file = "lecture/data/a3/result_nlls.rds" %>% here::here()
+  )
 result_nlls
 result <- 
+
   data.frame(
     true = theta, 
     estimates = result_nlls$par

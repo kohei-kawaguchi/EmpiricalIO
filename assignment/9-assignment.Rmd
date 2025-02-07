@@ -4,10 +4,9 @@ author: "Kohei Kawaguchi"
 date: "2019/1/29"
 output:
   html_document: default
-  pdf_document: default
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 library(EmpiricalIO)
 library(magrittr)
 library(stargazer)
@@ -19,7 +18,13 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(cache = FALSE, echo = TRUE, fig.align = "center")
+dir.create(
+  "lecture/data/a9" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+)
 ```
+
 
 ## Simulate data
 
@@ -42,24 +47,58 @@ lambda <- 10
 
 2. Draw a vector of valuations and reservation prices.
 
-```{r}
+```{r, echo = TRUE}
 # number of bidders
-N <- rpois(T, lambda)
-N <- ifelse(N == 1, 2, N)
+N <- 
+  rpois(
+    T, 
+    lambda
+    )
+N <- 
+  ifelse(
+    N == 1, 
+    2, 
+    N
+    )
 # draw valuations
 valuation <-
-  foreach (tt = 1:T, .combine = "rbind") %do% {
+  foreach (
+    tt = 1:T, 
+    .combine = "rbind"
+    ) %do% {
     n_t <- N[tt]
-    header <- expand.grid(t = tt, i = 1:n_t) 
+    header <- 
+      expand.grid(
+        t = tt,
+        i = 1:n_t
+        ) 
     return(header)
   }
-valuation <- valuation %>%
+valuation <- 
+  valuation %>%
   tibble::as_tibble() %>%
-  dplyr::mutate(x = rbeta(length(i), alpha, beta))
-ggplot(valuation, aes(x = x)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+  dplyr::mutate(x = 
+                  rbeta(
+                    length(i),
+                    alpha,beta
+                    )
+                )
+ggplot(
+  valuation, 
+  aes(x = x)
+  ) + 
+  geom_histogram(
+    fill = "steelblue",
+    alpha = 0.8
+    ) + 
+  theme_classic()
 # draw reserve prices
 reserve <- 0.2
-reserve <- tibble::tibble(t = 1:T, r = reserve)
+reserve <- 
+  tibble::tibble(
+    t = 1:T, 
+    r = reserve
+    )
 ```
 
 
@@ -67,9 +106,20 @@ reserve <- tibble::tibble(t = 1:T, r = reserve)
 ```{r}
 # compute winning bids from second-price auction
 df_second_w <-
-  compute_winning_bids_second(valuation, reserve)
+  compute_winning_bids_second(
+    valuation = valuation, 
+    reserve = reserve
+    )
 df_second_w
-ggplot(df_second_w, aes(x = w)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+ggplot(
+  df_second_w, 
+  aes(x = w)
+  ) + 
+  geom_histogram(
+    fill = "steelblue",
+    alpha = 0.8
+    ) + 
+  theme_classic()
 ```
 
 Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
@@ -83,21 +133,65 @@ if $x \ge r$ and not to participate otherwise.
 # compute bid from first-price auction
 n <- N[1]
 m <- N[1]
-x <- valuation[1, "x"] %>% as.numeric(); x
-r <- reserve[1, "r"] %>% as.numeric(); r
-b <- bid_first(x, r, alpha, beta, n); b
-x <- r/2; x
-b <- bid_first(x, r, alpha, beta, n); b
-b <- bid_first(1, r, alpha, beta, n); b
+x <- valuation[1, "x"] %>% 
+  as.numeric();
+x
+r <- 
+  reserve[1, "r"] %>% 
+  as.numeric(); 
+r
+b <- 
+  bid_first(
+    x = x,
+    r = r,
+    alpha = alpha,
+    beta = beta,
+    n = n
+    );
+b
+x <- r/2;
+x
+b <- 
+  bid_first(
+    x = x,
+    r = r, 
+    alpha = alpha,
+    beta = beta, 
+    n = n
+    ); 
+b
+b <- 
+  bid_first(
+    x = 1, 
+    r = r, 
+    alpha = alpha, 
+    beta = beta, 
+    n = n
+    ); 
+b
 ```
 
 5. Write a function `compute_bids_first(valuation, reserve, alpha, beta)` that returns bids from each first-price auctions. It returns bids below the reserve price.
 
 ```{r}
 # compute bid data from first-price auctions
-df_first <- compute_bids_first(valuation, reserve, alpha, beta)
+df_first <- 
+  compute_bids_first(
+    valuation = valuation, 
+    reserve = reserve,
+    alpha = alpha, 
+    beta = beta
+    )
 df_first
-ggplot(df_first, aes(x = b)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+ggplot(
+  df_first,
+  aes(x = b)
+  ) + 
+  geom_histogram(
+    fill = "steelblue",
+    alpha = 0.8
+    ) + 
+  theme_classic()
 ```
 
 6. Write a function `compute_winning_bids_first(valuation, reserve, alpha, beta)` that returns only the winning bids from each first-price auction. It will call `compute_bids_first` inside the function. It does not return anything when no bidder bids above the reserve price.
@@ -105,9 +199,22 @@ ggplot(df_first, aes(x = b)) + geom_histogram(fill = "steelblue", alpha = 0.8)
 ```{r}
 # compute winning bids from first-price auctions
 df_first_w <-
-  compute_winning_bids_first(valuation, reserve, alpha, beta)
+  compute_winning_bids_first(
+    valuation = valuation,
+    reserve = reserve,
+    alpha = alpha,
+    beta = beta
+    )
 df_first_w
-ggplot(df_first_w, aes(x = w)) + geom_histogram(fill = "steelblue", alpha = 0.8)
+ggplot(
+  df_first_w, 
+  aes(x = w)
+  ) + 
+  geom_histogram(
+    fill = "steelblue", 
+    alpha = 0.8
+    ) + 
+  theme_classic()
 ```
 
 ## Estimate the parameters
@@ -137,14 +244,26 @@ w <- df_second_w[1, ]$w
 r <- df_second_w[1, ]$r
 m <- df_second_w[1, ]$m
 n <- df_second_w[1, ]$n
-compute_p_second_w(w, r, m, n, alpha, beta)
+compute_p_second_w(
+  w = w, 
+  r = r, 
+  m = m,
+  n = n,
+  alpha = alpha,
+  beta = beta
+  )
 ```
 
 2. Write a function `compute_m0(r, n, alpha, beta)` that computes $\mathbb{P}\{m_t = 0\}$. 
 
 ```{r}
 # compute non-participation probability
-compute_m0(r, n, alpha, beta)
+compute_m0(
+  r = r, 
+  n = n, 
+  alpha = alpha, 
+  beta = beta
+  )
 ```
 
 
@@ -152,49 +271,100 @@ compute_m0(r, n, alpha, beta)
 
 ```{r}
 # compute log-likelihood for winning bids from second-price auctions
-theta <- c(alpha, beta)
-compute_loglikelihood_second_price_w(theta, df_second_w)
+theta <- 
+  c(
+    alpha, 
+    beta
+    )
+compute_loglikelihood_second_price_w(
+  theta = theta, 
+  df_second_w = df_second_w
+  )
 ```
 
 3. Compare the value of objective function around the true parameters.
 
 ```{r}
 # label
-label <- c("\\alpha", "\\beta")
-label <- paste("$", label, "$", sep = "")
+label <- 
+  c(
+    "\\alpha",
+    "\\beta"
+    )
+label <- 
+  paste(
+    "$", 
+    label, 
+    "$",
+    sep = ""
+    )
 # compute the graph
-graph <- foreach (i = 1:length(theta)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
   theta_i <- theta[i]
-  theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
+  theta_i_list <- 
+    theta_i * seq(
+      0.8,
+      1.2, 
+      by = 0.05
+      )
   objective_i <-
-    foreach (j = 1:length(theta_i_list),
-             .packages = c(
-               "EmpiricalIO",
-               "foreach",
-               "magrittr"
-               ),
-             .combine = "rbind") %dopar% {
+    foreach (
+      j = 1:length(theta_i_list),
+      .packages = c(
+                    "EmpiricalIO",
+                    "foreach",
+                    "magrittr"
+                   ),
+      .combine = "rbind"
+      ) %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
                  compute_loglikelihood_second_price_w(
-                   theta_j, df_second_w)
+                   theta_j, 
+                   df_second_w
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = as.numeric(theta_i_list), 
-                         y = as.numeric(objective_i))
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) +
+  df_graph <- 
+    data.frame(
+      x = as.numeric(theta_i_list), 
+      y = as.numeric(objective_i)
+      )
+  g <- 
+    ggplot(
+      data = df_graph, 
+      aes(
+        x = x,
+        y = y
+        )
+      ) +
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i,
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i])) + 
+    theme_classic()
   return(g)
 }
-save(graph, file = "data/A9_second_parametric_graph.RData")
+saveRDS(
+  graph, 
+  file = "lecture/data/a9/second_parametric_graph.rds" %>% here::here()
+)
 ```
 ```{r}
-load(file = "data/A9_second_parametric_graph.RData")
+graph <- 
+  readRDS(
+    file = "lecture/data/a9/second_parametric_graph.rds" %>% here::here()
+  )
 graph
+
 ```
 
 4. Estimate the parameters by maximizing the log-likelihood.
@@ -208,12 +378,19 @@ result_second_parametric <-
     method = "L-BFGS-B",
     control = list(fnscale = -1)
   )
-save(result_second_parametric, file = "data/A9_result_second_parametric.RData")
+saveRDS(
+  result_second_parametric, 
+  file = "lecture/data/a9/result_second_parametric.rds" %>% here::here()
+)
 ```
 ```{r}
-load(file = "data/A9_result_second_parametric.RData")
+result_second_parametric <- 
+  readRDS(
+    file = "lecture/data/a9/result_second_parametric.rds" %>% here::here()
+  )
 result_second_parametric
 comparison <-
+
   data.frame(
     true = theta,
     estimate = result_second_parametric$par
@@ -228,7 +405,7 @@ $$
 \eta(b) := \beta^{-1}(b).
 $$
 
-To do so, we can use a built-in function called `uniroot`, which solves $x$ such that $f(x) = 0$ for scalar $x$. In `uniroot`, `lower` and `upper` are set at $r_t$ and $\beta(1)$, respectively.
+To do so, we can use a built-in function called `uniroot`, which solves $x$ such that $f(x) = 0$ for scalar $x$. In `uniroot`, `lower` and `upper` are set at $r_t$ and $1$, respectively.
 
 ```{r}
 r <- df_first_w[1, "r"] %>%
@@ -237,10 +414,23 @@ n <- df_first_w[1, "n"] %>%
   as.integer()
 b <- 0.5 * r + 0.5 
 x <- 0.5
-# compute invecrse bid equation
-inverse_bid_equation(x, b, r, alpha, beta, n)
+# compute inverse bid equation
+inverse_bid_equation(
+  x = x,
+  b = b,
+  r = r,
+  alpha = alpha, 
+  beta = beta,
+  n = n
+  )
 # compute inverse bid
-inverse_bid_first(b, r, alpha, beta, n)
+inverse_bid_first(
+  b = b, 
+  r = r,
+  alpha = alpha,
+  beta = beta,
+  n = n
+  )
 ```
 
 The log-likelihood conditional on $m_t \ge 1$ is:
@@ -262,59 +452,130 @@ where the second equation is from the first-order condition.
 ```{r}
 # compute probability density for a winning bid from a first-price auction
 w <- 0.5
-compute_p_first_w(w, r, alpha, beta, n)
-upper <- bid_first(1, r, alpha, beta, n)
-compute_p_first_w(upper + 1, r, alpha, beta, n)
+compute_p_first_w(
+  w = w, 
+  r = r, 
+  alpha = alpha, 
+  beta = beta, 
+  n = n
+  )
+upper <- 
+  bid_first(
+  x = 1, 
+  r = r, 
+  alpha = alpha, 
+  beta = beta, 
+  n = n
+  )
+compute_p_first_w(
+  w = upper + 1, 
+  r = r, 
+  alpha = alpha, 
+  beta = beta, 
+  n = n
+  )
 ```
 
 7. Write a function `compute_loglikelihood_first_price_w(theta, df_first_w)` that computes the log-likelihood for a first-price auction winning bid data.
 
 ```{r}
 # compute log-likelihood for winning bids for first-price auctions
-compute_loglikelihood_first_price_w(theta, df_first_w)
+compute_loglikelihood_first_price_w(
+  theta = theta, 
+  df_first_w = df_first_w
+  )
 ```
 
 8. Compare the value of the objective function around the true parameters.
 
 ```{r}
-theta <- c(alpha, beta)
+theta <- 
+  c(
+    alpha,
+    beta
+    )
 # label
-label <- c("\\alpha", "\\beta")
-label <- paste("$", label, "$", sep = "")
+label <- 
+  c(
+    "\\alpha",
+    "\\beta"
+    )
+label <- 
+  paste(
+    "$",
+    label,
+    "$", 
+    sep = ""
+    )
 # compute the graph
-graph <- foreach (i = 1:length(theta)) %do% {
+graph <- 
+  foreach (
+    i = 1:length(theta)
+    ) %do% {
   theta_i <- theta[i]
-  theta_i_list <- theta_i * seq(0.8, 1.2, by = 0.05)
+  theta_i_list <- 
+    theta_i * seq(
+      0.8,
+      1.2,
+      by = 0.05
+      )
   objective_i <-
-    foreach (j = 1:length(theta_i_list),
-             .packages = c(
-               "EmpiricalIO",
-               "foreach",
-               "magrittr"
-               ),
-             .combine = "rbind") %dopar% {
+    foreach (
+      j = 1:length(theta_i_list),
+      .packages = c(
+        "EmpiricalIO",
+        "foreach",
+        "magrittr"
+        ),
+      .combine = "rbind"
+      ) %dopar% {
                theta_ij <- theta_i_list[j]
                theta_j <- theta
                theta_j[i] <- theta_ij
                objective_ij <- 
                  compute_loglikelihood_first_price_w(
-                   theta_j, df_first_w)
+                   theta_j,
+                   df_first_w
+                   )
                return(objective_ij)
              }
-  df_graph <- data.frame(x = as.numeric(theta_i_list), 
-                         y = as.numeric(objective_i))
-  g <- ggplot(data = df_graph, aes(x = x, y = y)) +
+  df_graph <- 
+    data.frame(
+      x = as.numeric(theta_i_list), 
+      y = as.numeric(objective_i)
+      )
+  g <-
+    ggplot(
+      data = df_graph,
+      aes(
+        x = x,
+        y = y
+        )
+      ) +
     geom_point() +
-    geom_vline(xintercept = theta_i, linetype = "dotted") +
-    ylab("objective function") + xlab(TeX(label[i]))
+    geom_vline(
+      xintercept = theta_i, 
+      linetype = "dotted"
+      ) +
+    ylab("objective function") + 
+    xlab(TeX(label[i])) + 
+    theme_classic()
   return(g)
 }
-save(graph, file = "data/A9_first_parametric_graph.RData")
+saveRDS(
+  graph,
+  file = "lecture/data/a9/first_parametric_graph.rds" %>% here::here()
+)
 ```
+
 ```{r}
-load(file = "data/A9_first_parametric_graph.RData")
+graph <- 
+  readRDS(
+    file = "lecture/data/a9/first_parametric_graph.rds" %>% here::here()
+  )
 graph
 ```
+
 
 9. Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.
 
@@ -327,12 +588,20 @@ result_first_parametric <-
     method = "Nelder-Mead",
     control = list(fnscale = -1)
   )
-save(result_first_parametric, file = "data/A9_result_first_parametric.RData")
+saveRDS(
+  result_first_parametric,
+  file = "lecture/data/a9/result_first_parametric.rds" %>% here::here()
+)
 ```
+
 ```{r}
-load(file = "data/A9_result_first_parametric.RData")
+result_first_parametric <- 
+  readRDS(
+    file = "lecture/data/a9/result_first_parametric.rds" %>% here::here()
+  )
 result_first_parametric
 comparison <-
+
   data.frame(
     true = theta,
     estimate = result_first_parametric$par
@@ -347,13 +616,24 @@ Also, write a function `f_b(b)` that returns an empirical probability density at
 
 ```{r}
 # cumulative distribution
-ggplot(df_first, aes(x = b)) + stat_ecdf(color = "steelblue") +
-  xlab("bid") + ylab("cumulative distribution")
+ggplot(
+  df_first, 
+  aes(x = b)
+  ) + 
+  stat_ecdf(color = "steelblue") +
+  xlab("bid") + 
+  ylab("cumulative distribution") + 
+  theme_classic()
 F_b <- ecdf(df_first$b)
 F_b(0.4)
 F_b(0.6)
 # probability density
-ggplot(df_first, aes(x = b)) + geom_density(fill = "steelblue")
+ggplot(
+  df_first, 
+  aes(x = b)
+  ) + 
+  geom_density(fill = "steelblue") + 
+  theme_classic()
 f_b <- approxfun(density(df_first$b))
 f_b(0.4)
 f_b(0.6)
@@ -367,11 +647,20 @@ $$
 h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 $$
 
-11. Write a function `H_b(b, n, F_b)` and `h_b(b, F_b, f_b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
+11. Write a function `H_b(b, n, F_b)` and `h_b(b, n, F_b, f_b)` that return the equilibrium distribution and density of the highest rival's bid at point `b`.
 
 ```{r}
-H_b(0.4, n, F_b)
-h_b(0.4, n, F_b, f_b)
+H_b(
+  b = 0.4,
+  n = n,
+  F_b = F_b
+  )
+h_b(
+  b = 0.4,
+  n = n,
+  F_b = F_b, 
+  f_b
+  )
 ```
 
 When a bidder bids $b$, the implied valuation of her is:
@@ -384,23 +673,51 @@ $$
 ```{r}
 r <- df_first[1, "r"]
 n <- df_first[1, "n"]
-compute_implied_valuation(0.4, n, r, F_b, f_b)
+compute_implied_valuation(
+  b = 0.4,
+  n = n, 
+  r = r, 
+  F_b = F_b, 
+  f_b = f_b
+  )
 ```
 
 13. Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.
 
 ```{r}
-valuation_implied <- df_first %>%
+valuation_implied <- 
+  df_first %>%
   dplyr::rowwise() %>%
-  dplyr::mutate(x = compute_implied_valuation(b, n, r, F_b, f_b)) %>%
+  dplyr::mutate(
+    x = compute_implied_valuation(
+      b, 
+      n,
+      r,
+      F_b, 
+      f_b
+      )
+    ) %>%
   dplyr::ungroup() %>%
   dplyr::select(x) %>%
   dplyr::mutate(type = "estimate")
-valuation_true <- valuation %>%
+valuation_true <- 
+  valuation %>%
   dplyr::select(x) %>%
   dplyr::mutate(type = "true")
-valuation_plot <- rbind(valuation_true, valuation_implied)
-ggplot(valuation_plot, aes(x = x, color = type)) + stat_ecdf()
+valuation_plot <- 
+  rbind(
+    valuation_true,
+    valuation_implied
+    )
+ggplot(
+  valuation_plot,
+  aes(
+    x = x, 
+    color = type
+    )
+  ) + 
+  stat_ecdf() + 
+  theme_classic()
 ```
 
 
