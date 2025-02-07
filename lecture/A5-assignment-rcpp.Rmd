@@ -18,7 +18,13 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+dir.create(
+  "lecture/data/a5" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+  )
 ```
+
 
 ## Simulate data
 
@@ -671,7 +677,7 @@ while (distance > lambda) {
 p_actual <- p_new
 saveRDS(
   p_actual, 
-  file = "data/a5/A5_price_actual_rcpp.rds"
+  file = "lecture/data/a5/A5_price_actual_rcpp.rds" %>% here::here()
   )
 ```
 

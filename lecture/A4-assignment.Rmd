@@ -457,10 +457,10 @@ result_nlls <-
 result_nlls
 result <- 
 
-  data.frame(
-    true = theta, 
-    estimates = result_nlls$par
-    )
+data.frame(
+  true = theta, 
+  estimates = result_nlls$par
+  )
 result
 ```
 
@@ -589,7 +589,7 @@ delta_new <-
     omega, 
     kappa, 
     lambda
-    )
+  )
 saveRDS(
   delta_new, 
   file = "lecture/data/a4/delta_new.rds" %>% here::here()
@@ -825,8 +825,6 @@ graph_true <-
   )
 graph_true
 ```
-
-
 
 13. Find non-linear parameters that minimize the GMM objective function. Because standard deviations of the same absolute value with positive and negative values have almost the same implication for the data, you can take the absolute value if the estimates of the standard deviations happened to be negative (Another way is to set the non-negativity constraints on the standard deviations).
 

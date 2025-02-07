@@ -12,7 +12,13 @@ library(codetools)
 library(doParallel)
 registerDoParallel()
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+dir.create(
+  "lecture/data/a5" %>% here::here(), 
+  showWarnings = FALSE, 
+  recursive = TRUE
+  )
 ```
+
 
 ## Simulate data
 
@@ -252,15 +258,16 @@ derivative_share_smooth <-
 ```{r, eval = FALSE}
 saveRDS(
   derivative_share_smooth,
-  file = "data/a5/derivative_share_smooth.rds"
+  file = "lecture/data/a5/derivative_share_smooth.rds" %>% here::here()
 )
 ```
 ```{r}
 derivative_share_smooth <-
   readRDS(
-    file = "data/a5/derivative_share_smooth.rds"
+    file = "lecture/data/a5/derivative_share_smooth.rds" %>% here::here()
   )
 ```
+
 
 
 ```{r, echo = TRUE}
@@ -336,16 +343,19 @@ while (distance > lambda) {
 p_actual <- p_new
 saveRDS(
   p_actual, 
-  file = "data/a5/A5_price_actual.rds"
-  )
+  file = "lecture/data/a5/price_actual.rds" %>% here::here()
+)
 ```
 
 ```{r, echo = TRUE}
 # load
 p_actual <- 
-  readRDS(file = "data/a5/A5_price_actual.rds")
+  readRDS(
+    file = "lecture/data/a5/price_actual.rds" %>% here::here()
+  )
 p_actual %>% head()
 ```
+
 
 
 ## Estimate the parameters
@@ -468,14 +478,18 @@ while (distance > lambda) {
 p_counterfactual <- p_new
 saveRDS(
   p_counterfactual, 
-  file = "data/a5/A5_price_counterfactual.rds"
-  )
+  file = "lecture/data/a5/price_counterfactual.rds" %>% here::here()
+)
 ```
+
 
 ```{r}
 # load
 p_counterfactual <- 
-  readRDS(file = "data/a5/A5_price_counterfactual.rds")
+  readRDS(
+    file = "lecture/data/a5/price_counterfactual.rds" %>% here::here()
+  )
+
 
 # make new data frame
 M_counterfactual <- M 
