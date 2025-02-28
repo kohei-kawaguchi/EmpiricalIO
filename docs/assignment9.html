@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -127,6 +127,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -725,82 +726,81 @@ div.csl-indent {
 <ol style="list-style-type: decimal">
 <li>Set the constants and parameters as follows:</li>
 </ol>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="assignment9.html#cb457-1" tabindex="-1"></a><span class="co"># set seed</span></span>
-<span id="cb457-2"><a href="assignment9.html#cb457-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb457-3"><a href="assignment9.html#cb457-3" tabindex="-1"></a><span class="co"># number of auctions</span></span>
-<span id="cb457-4"><a href="assignment9.html#cb457-4" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb457-5"><a href="assignment9.html#cb457-5" tabindex="-1"></a><span class="co"># parameter of value distribution</span></span>
-<span id="cb457-6"><a href="assignment9.html#cb457-6" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb457-7"><a href="assignment9.html#cb457-7" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb457-8"><a href="assignment9.html#cb457-8" tabindex="-1"></a><span class="co"># prameters of number of potential bidders</span></span>
-<span id="cb457-9"><a href="assignment9.html#cb457-9" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="assignment9.html#cb459-1" tabindex="-1"></a><span class="co"># set seed</span></span>
+<span id="cb459-2"><a href="assignment9.html#cb459-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb459-3"><a href="assignment9.html#cb459-3" tabindex="-1"></a><span class="co"># number of auctions</span></span>
+<span id="cb459-4"><a href="assignment9.html#cb459-4" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb459-5"><a href="assignment9.html#cb459-5" tabindex="-1"></a><span class="co"># parameter of value distribution</span></span>
+<span id="cb459-6"><a href="assignment9.html#cb459-6" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb459-7"><a href="assignment9.html#cb459-7" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb459-8"><a href="assignment9.html#cb459-8" tabindex="-1"></a><span class="co"># prameters of number of potential bidders</span></span>
+<span id="cb459-9"><a href="assignment9.html#cb459-9" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Draw a vector of valuations and reservation prices.</li>
 </ol>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="assignment9.html#cb458-1" tabindex="-1"></a><span class="co"># number of bidders</span></span>
-<span id="cb458-2"><a href="assignment9.html#cb458-2" tabindex="-1"></a>N <span class="ot">&lt;-</span> </span>
-<span id="cb458-3"><a href="assignment9.html#cb458-3" tabindex="-1"></a>  <span class="fu">rpois</span>(</span>
-<span id="cb458-4"><a href="assignment9.html#cb458-4" tabindex="-1"></a>    T, </span>
-<span id="cb458-5"><a href="assignment9.html#cb458-5" tabindex="-1"></a>    lambda</span>
-<span id="cb458-6"><a href="assignment9.html#cb458-6" tabindex="-1"></a>    )</span>
-<span id="cb458-7"><a href="assignment9.html#cb458-7" tabindex="-1"></a>N <span class="ot">&lt;-</span> </span>
-<span id="cb458-8"><a href="assignment9.html#cb458-8" tabindex="-1"></a>  <span class="fu">ifelse</span>(</span>
-<span id="cb458-9"><a href="assignment9.html#cb458-9" tabindex="-1"></a>    N <span class="sc">==</span> <span class="dv">1</span>, </span>
-<span id="cb458-10"><a href="assignment9.html#cb458-10" tabindex="-1"></a>    <span class="dv">2</span>, </span>
-<span id="cb458-11"><a href="assignment9.html#cb458-11" tabindex="-1"></a>    N</span>
-<span id="cb458-12"><a href="assignment9.html#cb458-12" tabindex="-1"></a>    )</span>
-<span id="cb458-13"><a href="assignment9.html#cb458-13" tabindex="-1"></a><span class="co"># draw valuations</span></span>
-<span id="cb458-14"><a href="assignment9.html#cb458-14" tabindex="-1"></a>valuation <span class="ot">&lt;-</span></span>
-<span id="cb458-15"><a href="assignment9.html#cb458-15" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb458-16"><a href="assignment9.html#cb458-16" tabindex="-1"></a>    <span class="at">tt =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
-<span id="cb458-17"><a href="assignment9.html#cb458-17" tabindex="-1"></a>    <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb458-18"><a href="assignment9.html#cb458-18" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb458-19"><a href="assignment9.html#cb458-19" tabindex="-1"></a>    n_t <span class="ot">&lt;-</span> N[tt]</span>
-<span id="cb458-20"><a href="assignment9.html#cb458-20" tabindex="-1"></a>    header <span class="ot">&lt;-</span> </span>
-<span id="cb458-21"><a href="assignment9.html#cb458-21" tabindex="-1"></a>      <span class="fu">expand.grid</span>(</span>
-<span id="cb458-22"><a href="assignment9.html#cb458-22" tabindex="-1"></a>        <span class="at">t =</span> tt,</span>
-<span id="cb458-23"><a href="assignment9.html#cb458-23" tabindex="-1"></a>        <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>n_t</span>
-<span id="cb458-24"><a href="assignment9.html#cb458-24" tabindex="-1"></a>        ) </span>
-<span id="cb458-25"><a href="assignment9.html#cb458-25" tabindex="-1"></a>    <span class="fu">return</span>(header)</span>
-<span id="cb458-26"><a href="assignment9.html#cb458-26" tabindex="-1"></a>  }</span>
-<span id="cb458-27"><a href="assignment9.html#cb458-27" tabindex="-1"></a>valuation <span class="ot">&lt;-</span> </span>
-<span id="cb458-28"><a href="assignment9.html#cb458-28" tabindex="-1"></a>  valuation <span class="sc">%&gt;%</span></span>
-<span id="cb458-29"><a href="assignment9.html#cb458-29" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb458-30"><a href="assignment9.html#cb458-30" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">x =</span> </span>
-<span id="cb458-31"><a href="assignment9.html#cb458-31" tabindex="-1"></a>                  <span class="fu">rbeta</span>(</span>
-<span id="cb458-32"><a href="assignment9.html#cb458-32" tabindex="-1"></a>                    <span class="fu">length</span>(i),</span>
-<span id="cb458-33"><a href="assignment9.html#cb458-33" tabindex="-1"></a>                    alpha,beta</span>
-<span id="cb458-34"><a href="assignment9.html#cb458-34" tabindex="-1"></a>                    )</span>
-<span id="cb458-35"><a href="assignment9.html#cb458-35" tabindex="-1"></a>                )</span>
-<span id="cb458-36"><a href="assignment9.html#cb458-36" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb458-37"><a href="assignment9.html#cb458-37" tabindex="-1"></a>  valuation, </span>
-<span id="cb458-38"><a href="assignment9.html#cb458-38" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> x)</span>
-<span id="cb458-39"><a href="assignment9.html#cb458-39" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb458-40"><a href="assignment9.html#cb458-40" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb458-41"><a href="assignment9.html#cb458-41" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
-<span id="cb458-42"><a href="assignment9.html#cb458-42" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb458-43"><a href="assignment9.html#cb458-43" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb458-44"><a href="assignment9.html#cb458-44" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
-## `binwidth`.</code></pre>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="assignment9.html#cb460-1" tabindex="-1"></a><span class="co"># number of bidders</span></span>
+<span id="cb460-2"><a href="assignment9.html#cb460-2" tabindex="-1"></a>N <span class="ot">&lt;-</span> </span>
+<span id="cb460-3"><a href="assignment9.html#cb460-3" tabindex="-1"></a>  <span class="fu">rpois</span>(</span>
+<span id="cb460-4"><a href="assignment9.html#cb460-4" tabindex="-1"></a>    T, </span>
+<span id="cb460-5"><a href="assignment9.html#cb460-5" tabindex="-1"></a>    lambda</span>
+<span id="cb460-6"><a href="assignment9.html#cb460-6" tabindex="-1"></a>    )</span>
+<span id="cb460-7"><a href="assignment9.html#cb460-7" tabindex="-1"></a>N <span class="ot">&lt;-</span> </span>
+<span id="cb460-8"><a href="assignment9.html#cb460-8" tabindex="-1"></a>  <span class="fu">ifelse</span>(</span>
+<span id="cb460-9"><a href="assignment9.html#cb460-9" tabindex="-1"></a>    N <span class="sc">==</span> <span class="dv">1</span>, </span>
+<span id="cb460-10"><a href="assignment9.html#cb460-10" tabindex="-1"></a>    <span class="dv">2</span>, </span>
+<span id="cb460-11"><a href="assignment9.html#cb460-11" tabindex="-1"></a>    N</span>
+<span id="cb460-12"><a href="assignment9.html#cb460-12" tabindex="-1"></a>    )</span>
+<span id="cb460-13"><a href="assignment9.html#cb460-13" tabindex="-1"></a><span class="co"># draw valuations</span></span>
+<span id="cb460-14"><a href="assignment9.html#cb460-14" tabindex="-1"></a>valuation <span class="ot">&lt;-</span></span>
+<span id="cb460-15"><a href="assignment9.html#cb460-15" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb460-16"><a href="assignment9.html#cb460-16" tabindex="-1"></a>    <span class="at">tt =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
+<span id="cb460-17"><a href="assignment9.html#cb460-17" tabindex="-1"></a>    <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb460-18"><a href="assignment9.html#cb460-18" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb460-19"><a href="assignment9.html#cb460-19" tabindex="-1"></a>    n_t <span class="ot">&lt;-</span> N[tt]</span>
+<span id="cb460-20"><a href="assignment9.html#cb460-20" tabindex="-1"></a>    header <span class="ot">&lt;-</span> </span>
+<span id="cb460-21"><a href="assignment9.html#cb460-21" tabindex="-1"></a>      <span class="fu">expand.grid</span>(</span>
+<span id="cb460-22"><a href="assignment9.html#cb460-22" tabindex="-1"></a>        <span class="at">t =</span> tt,</span>
+<span id="cb460-23"><a href="assignment9.html#cb460-23" tabindex="-1"></a>        <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>n_t</span>
+<span id="cb460-24"><a href="assignment9.html#cb460-24" tabindex="-1"></a>        ) </span>
+<span id="cb460-25"><a href="assignment9.html#cb460-25" tabindex="-1"></a>    <span class="fu">return</span>(header)</span>
+<span id="cb460-26"><a href="assignment9.html#cb460-26" tabindex="-1"></a>  }</span>
+<span id="cb460-27"><a href="assignment9.html#cb460-27" tabindex="-1"></a>valuation <span class="ot">&lt;-</span> </span>
+<span id="cb460-28"><a href="assignment9.html#cb460-28" tabindex="-1"></a>  valuation <span class="sc">%&gt;%</span></span>
+<span id="cb460-29"><a href="assignment9.html#cb460-29" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb460-30"><a href="assignment9.html#cb460-30" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">x =</span> </span>
+<span id="cb460-31"><a href="assignment9.html#cb460-31" tabindex="-1"></a>                  <span class="fu">rbeta</span>(</span>
+<span id="cb460-32"><a href="assignment9.html#cb460-32" tabindex="-1"></a>                    <span class="fu">length</span>(i),</span>
+<span id="cb460-33"><a href="assignment9.html#cb460-33" tabindex="-1"></a>                    alpha,beta</span>
+<span id="cb460-34"><a href="assignment9.html#cb460-34" tabindex="-1"></a>                    )</span>
+<span id="cb460-35"><a href="assignment9.html#cb460-35" tabindex="-1"></a>                )</span>
+<span id="cb460-36"><a href="assignment9.html#cb460-36" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb460-37"><a href="assignment9.html#cb460-37" tabindex="-1"></a>  valuation, </span>
+<span id="cb460-38"><a href="assignment9.html#cb460-38" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> x)</span>
+<span id="cb460-39"><a href="assignment9.html#cb460-39" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb460-40"><a href="assignment9.html#cb460-40" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb460-41"><a href="assignment9.html#cb460-41" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb460-42"><a href="assignment9.html#cb460-42" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb460-43"><a href="assignment9.html#cb460-43" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb460-44"><a href="assignment9.html#cb460-44" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-227-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="assignment9.html#cb460-1" tabindex="-1"></a><span class="co"># draw reserve prices</span></span>
-<span id="cb460-2"><a href="assignment9.html#cb460-2" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb460-3"><a href="assignment9.html#cb460-3" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> </span>
-<span id="cb460-4"><a href="assignment9.html#cb460-4" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb460-5"><a href="assignment9.html#cb460-5" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
-<span id="cb460-6"><a href="assignment9.html#cb460-6" tabindex="-1"></a>    <span class="at">r =</span> reserve</span>
-<span id="cb460-7"><a href="assignment9.html#cb460-7" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="assignment9.html#cb462-1" tabindex="-1"></a><span class="co"># draw reserve prices</span></span>
+<span id="cb462-2"><a href="assignment9.html#cb462-2" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb462-3"><a href="assignment9.html#cb462-3" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> </span>
+<span id="cb462-4"><a href="assignment9.html#cb462-4" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb462-5"><a href="assignment9.html#cb462-5" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>T, </span>
+<span id="cb462-6"><a href="assignment9.html#cb462-6" tabindex="-1"></a>    <span class="at">r =</span> reserve</span>
+<span id="cb462-7"><a href="assignment9.html#cb462-7" tabindex="-1"></a>    )</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Write a function <code>compute_winning_bids_second(valuation, reserve)</code> that returns a winning bid from each second-price auction. It returns nothing for an auction in which no bid was above the reserve price. In the output, <code>t</code> refers to the auction index, <code>m</code> to the number of actual bidders, <code>r</code> to the reserve price, and <code>w</code> to the winning bid.</li>
 </ol>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="assignment9.html#cb461-1" tabindex="-1"></a><span class="co"># compute winning bids from second-price auction</span></span>
-<span id="cb461-2"><a href="assignment9.html#cb461-2" tabindex="-1"></a>df_second_w <span class="ot">&lt;-</span></span>
-<span id="cb461-3"><a href="assignment9.html#cb461-3" tabindex="-1"></a>  <span class="fu">compute_winning_bids_second</span>(</span>
-<span id="cb461-4"><a href="assignment9.html#cb461-4" tabindex="-1"></a>    <span class="at">valuation =</span> valuation, </span>
-<span id="cb461-5"><a href="assignment9.html#cb461-5" tabindex="-1"></a>    <span class="at">reserve =</span> reserve</span>
-<span id="cb461-6"><a href="assignment9.html#cb461-6" tabindex="-1"></a>    )</span>
-<span id="cb461-7"><a href="assignment9.html#cb461-7" tabindex="-1"></a>df_second_w</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="assignment9.html#cb463-1" tabindex="-1"></a><span class="co"># compute winning bids from second-price auction</span></span>
+<span id="cb463-2"><a href="assignment9.html#cb463-2" tabindex="-1"></a>df_second_w <span class="ot">&lt;-</span></span>
+<span id="cb463-3"><a href="assignment9.html#cb463-3" tabindex="-1"></a>  <span class="fu">compute_winning_bids_second</span>(</span>
+<span id="cb463-4"><a href="assignment9.html#cb463-4" tabindex="-1"></a>    <span class="at">valuation =</span> valuation, </span>
+<span id="cb463-5"><a href="assignment9.html#cb463-5" tabindex="-1"></a>    <span class="at">reserve =</span> reserve</span>
+<span id="cb463-6"><a href="assignment9.html#cb463-6" tabindex="-1"></a>    )</span>
+<span id="cb463-7"><a href="assignment9.html#cb463-7" tabindex="-1"></a>df_second_w</span></code></pre></div>
 <pre><code>## # A tibble: 100 × 5
 ##        t     n     m     r     w
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -815,17 +815,16 @@ div.csl-indent {
 ##  9     9    14    14   0.2 0.880
 ## 10    10    11     9   0.2 0.677
 ## # ℹ 90 more rows</code></pre>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="assignment9.html#cb463-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb463-2"><a href="assignment9.html#cb463-2" tabindex="-1"></a>  df_second_w, </span>
-<span id="cb463-3"><a href="assignment9.html#cb463-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> w)</span>
-<span id="cb463-4"><a href="assignment9.html#cb463-4" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb463-5"><a href="assignment9.html#cb463-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb463-6"><a href="assignment9.html#cb463-6" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
-<span id="cb463-7"><a href="assignment9.html#cb463-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb463-8"><a href="assignment9.html#cb463-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb463-9"><a href="assignment9.html#cb463-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
-## `binwidth`.</code></pre>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="assignment9.html#cb465-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb465-2"><a href="assignment9.html#cb465-2" tabindex="-1"></a>  df_second_w, </span>
+<span id="cb465-3"><a href="assignment9.html#cb465-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> w)</span>
+<span id="cb465-4"><a href="assignment9.html#cb465-4" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb465-5"><a href="assignment9.html#cb465-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb465-6"><a href="assignment9.html#cb465-6" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb465-7"><a href="assignment9.html#cb465-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb465-8"><a href="assignment9.html#cb465-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb465-9"><a href="assignment9.html#cb465-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-228-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
 <span class="math display">\[
@@ -835,63 +834,63 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>bid_first(x, r, alpha, beta, n)</code> that returns the equilibrium bid. To integrate a function, use <code>integrate</code> function in R. It returns 0 if <span class="math inline">\(x &lt; r\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="assignment9.html#cb465-1" tabindex="-1"></a><span class="co"># compute bid from first-price auction</span></span>
-<span id="cb465-2"><a href="assignment9.html#cb465-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> N[<span class="dv">1</span>]</span>
-<span id="cb465-3"><a href="assignment9.html#cb465-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> N[<span class="dv">1</span>]</span>
-<span id="cb465-4"><a href="assignment9.html#cb465-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> valuation[<span class="dv">1</span>, <span class="st">&quot;x&quot;</span>] <span class="sc">%&gt;%</span> </span>
-<span id="cb465-5"><a href="assignment9.html#cb465-5" tabindex="-1"></a>  <span class="fu">as.numeric</span>();</span>
-<span id="cb465-6"><a href="assignment9.html#cb465-6" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="assignment9.html#cb467-1" tabindex="-1"></a><span class="co"># compute bid from first-price auction</span></span>
+<span id="cb467-2"><a href="assignment9.html#cb467-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> N[<span class="dv">1</span>]</span>
+<span id="cb467-3"><a href="assignment9.html#cb467-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> N[<span class="dv">1</span>]</span>
+<span id="cb467-4"><a href="assignment9.html#cb467-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> valuation[<span class="dv">1</span>, <span class="st">&quot;x&quot;</span>] <span class="sc">%&gt;%</span> </span>
+<span id="cb467-5"><a href="assignment9.html#cb467-5" tabindex="-1"></a>  <span class="fu">as.numeric</span>();</span>
+<span id="cb467-6"><a href="assignment9.html#cb467-6" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1] 0.3902289</code></pre>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="assignment9.html#cb467-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> </span>
-<span id="cb467-2"><a href="assignment9.html#cb467-2" tabindex="-1"></a>  reserve[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="sc">%&gt;%</span> </span>
-<span id="cb467-3"><a href="assignment9.html#cb467-3" tabindex="-1"></a>  <span class="fu">as.numeric</span>(); </span>
-<span id="cb467-4"><a href="assignment9.html#cb467-4" tabindex="-1"></a>r</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="assignment9.html#cb469-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> </span>
+<span id="cb469-2"><a href="assignment9.html#cb469-2" tabindex="-1"></a>  reserve[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="sc">%&gt;%</span> </span>
+<span id="cb469-3"><a href="assignment9.html#cb469-3" tabindex="-1"></a>  <span class="fu">as.numeric</span>(); </span>
+<span id="cb469-4"><a href="assignment9.html#cb469-4" tabindex="-1"></a>r</span></code></pre></div>
 <pre><code>## [1] 0.2</code></pre>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="assignment9.html#cb469-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> </span>
-<span id="cb469-2"><a href="assignment9.html#cb469-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
-<span id="cb469-3"><a href="assignment9.html#cb469-3" tabindex="-1"></a>    <span class="at">x =</span> x,</span>
-<span id="cb469-4"><a href="assignment9.html#cb469-4" tabindex="-1"></a>    <span class="at">r =</span> r,</span>
-<span id="cb469-5"><a href="assignment9.html#cb469-5" tabindex="-1"></a>    <span class="at">alpha =</span> alpha,</span>
-<span id="cb469-6"><a href="assignment9.html#cb469-6" tabindex="-1"></a>    <span class="at">beta =</span> beta,</span>
-<span id="cb469-7"><a href="assignment9.html#cb469-7" tabindex="-1"></a>    <span class="at">n =</span> n</span>
-<span id="cb469-8"><a href="assignment9.html#cb469-8" tabindex="-1"></a>    );</span>
-<span id="cb469-9"><a href="assignment9.html#cb469-9" tabindex="-1"></a>b</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="assignment9.html#cb471-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> </span>
+<span id="cb471-2"><a href="assignment9.html#cb471-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
+<span id="cb471-3"><a href="assignment9.html#cb471-3" tabindex="-1"></a>    <span class="at">x =</span> x,</span>
+<span id="cb471-4"><a href="assignment9.html#cb471-4" tabindex="-1"></a>    <span class="at">r =</span> r,</span>
+<span id="cb471-5"><a href="assignment9.html#cb471-5" tabindex="-1"></a>    <span class="at">alpha =</span> alpha,</span>
+<span id="cb471-6"><a href="assignment9.html#cb471-6" tabindex="-1"></a>    <span class="at">beta =</span> beta,</span>
+<span id="cb471-7"><a href="assignment9.html#cb471-7" tabindex="-1"></a>    <span class="at">n =</span> n</span>
+<span id="cb471-8"><a href="assignment9.html#cb471-8" tabindex="-1"></a>    );</span>
+<span id="cb471-9"><a href="assignment9.html#cb471-9" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>## [1] 0.3596662</code></pre>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="assignment9.html#cb471-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> r<span class="sc">/</span><span class="dv">2</span>;</span>
-<span id="cb471-2"><a href="assignment9.html#cb471-2" tabindex="-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="assignment9.html#cb473-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> r<span class="sc">/</span><span class="dv">2</span>;</span>
+<span id="cb473-2"><a href="assignment9.html#cb473-2" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1] 0.1</code></pre>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="assignment9.html#cb473-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> </span>
-<span id="cb473-2"><a href="assignment9.html#cb473-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
-<span id="cb473-3"><a href="assignment9.html#cb473-3" tabindex="-1"></a>    <span class="at">x =</span> x,</span>
-<span id="cb473-4"><a href="assignment9.html#cb473-4" tabindex="-1"></a>    <span class="at">r =</span> r, </span>
-<span id="cb473-5"><a href="assignment9.html#cb473-5" tabindex="-1"></a>    <span class="at">alpha =</span> alpha,</span>
-<span id="cb473-6"><a href="assignment9.html#cb473-6" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb473-7"><a href="assignment9.html#cb473-7" tabindex="-1"></a>    <span class="at">n =</span> n</span>
-<span id="cb473-8"><a href="assignment9.html#cb473-8" tabindex="-1"></a>    ); </span>
-<span id="cb473-9"><a href="assignment9.html#cb473-9" tabindex="-1"></a>b</span></code></pre></div>
-<pre><code>## [1] 0</code></pre>
 <div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="assignment9.html#cb475-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> </span>
 <span id="cb475-2"><a href="assignment9.html#cb475-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
-<span id="cb475-3"><a href="assignment9.html#cb475-3" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">1</span>, </span>
+<span id="cb475-3"><a href="assignment9.html#cb475-3" tabindex="-1"></a>    <span class="at">x =</span> x,</span>
 <span id="cb475-4"><a href="assignment9.html#cb475-4" tabindex="-1"></a>    <span class="at">r =</span> r, </span>
-<span id="cb475-5"><a href="assignment9.html#cb475-5" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb475-5"><a href="assignment9.html#cb475-5" tabindex="-1"></a>    <span class="at">alpha =</span> alpha,</span>
 <span id="cb475-6"><a href="assignment9.html#cb475-6" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
 <span id="cb475-7"><a href="assignment9.html#cb475-7" tabindex="-1"></a>    <span class="at">n =</span> n</span>
 <span id="cb475-8"><a href="assignment9.html#cb475-8" tabindex="-1"></a>    ); </span>
 <span id="cb475-9"><a href="assignment9.html#cb475-9" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="assignment9.html#cb477-1" tabindex="-1"></a>b <span class="ot">&lt;-</span> </span>
+<span id="cb477-2"><a href="assignment9.html#cb477-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
+<span id="cb477-3"><a href="assignment9.html#cb477-3" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">1</span>, </span>
+<span id="cb477-4"><a href="assignment9.html#cb477-4" tabindex="-1"></a>    <span class="at">r =</span> r, </span>
+<span id="cb477-5"><a href="assignment9.html#cb477-5" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb477-6"><a href="assignment9.html#cb477-6" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb477-7"><a href="assignment9.html#cb477-7" tabindex="-1"></a>    <span class="at">n =</span> n</span>
+<span id="cb477-8"><a href="assignment9.html#cb477-8" tabindex="-1"></a>    ); </span>
+<span id="cb477-9"><a href="assignment9.html#cb477-9" tabindex="-1"></a>b</span></code></pre></div>
 <pre><code>## [1] 0.7978258</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Write a function <code>compute_bids_first(valuation, reserve, alpha, beta)</code> that returns bids from each first-price auctions. It returns bids below the reserve price.</li>
 </ol>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="assignment9.html#cb477-1" tabindex="-1"></a><span class="co"># compute bid data from first-price auctions</span></span>
-<span id="cb477-2"><a href="assignment9.html#cb477-2" tabindex="-1"></a>df_first <span class="ot">&lt;-</span> </span>
-<span id="cb477-3"><a href="assignment9.html#cb477-3" tabindex="-1"></a>  <span class="fu">compute_bids_first</span>(</span>
-<span id="cb477-4"><a href="assignment9.html#cb477-4" tabindex="-1"></a>    <span class="at">valuation =</span> valuation, </span>
-<span id="cb477-5"><a href="assignment9.html#cb477-5" tabindex="-1"></a>    <span class="at">reserve =</span> reserve,</span>
-<span id="cb477-6"><a href="assignment9.html#cb477-6" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb477-7"><a href="assignment9.html#cb477-7" tabindex="-1"></a>    <span class="at">beta =</span> beta</span>
-<span id="cb477-8"><a href="assignment9.html#cb477-8" tabindex="-1"></a>    )</span>
-<span id="cb477-9"><a href="assignment9.html#cb477-9" tabindex="-1"></a>df_first</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="assignment9.html#cb479-1" tabindex="-1"></a><span class="co"># compute bid data from first-price auctions</span></span>
+<span id="cb479-2"><a href="assignment9.html#cb479-2" tabindex="-1"></a>df_first <span class="ot">&lt;-</span> </span>
+<span id="cb479-3"><a href="assignment9.html#cb479-3" tabindex="-1"></a>  <span class="fu">compute_bids_first</span>(</span>
+<span id="cb479-4"><a href="assignment9.html#cb479-4" tabindex="-1"></a>    <span class="at">valuation =</span> valuation, </span>
+<span id="cb479-5"><a href="assignment9.html#cb479-5" tabindex="-1"></a>    <span class="at">reserve =</span> reserve,</span>
+<span id="cb479-6"><a href="assignment9.html#cb479-6" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb479-7"><a href="assignment9.html#cb479-7" tabindex="-1"></a>    <span class="at">beta =</span> beta</span>
+<span id="cb479-8"><a href="assignment9.html#cb479-8" tabindex="-1"></a>    )</span>
+<span id="cb479-9"><a href="assignment9.html#cb479-9" tabindex="-1"></a>df_first</span></code></pre></div>
 <pre><code>## # A tibble: 994 × 7
 ##        t     i     x     r     n     m     b
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -906,30 +905,29 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 ##  9     2     1 0.449   0.2    10    10 0.420
 ## 10     2     2 0.472   0.2    10    10 0.441
 ## # ℹ 984 more rows</code></pre>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="assignment9.html#cb479-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb479-2"><a href="assignment9.html#cb479-2" tabindex="-1"></a>  df_first,</span>
-<span id="cb479-3"><a href="assignment9.html#cb479-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> b)</span>
-<span id="cb479-4"><a href="assignment9.html#cb479-4" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb479-5"><a href="assignment9.html#cb479-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb479-6"><a href="assignment9.html#cb479-6" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
-<span id="cb479-7"><a href="assignment9.html#cb479-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb479-8"><a href="assignment9.html#cb479-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb479-9"><a href="assignment9.html#cb479-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
-## `binwidth`.</code></pre>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="assignment9.html#cb481-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb481-2"><a href="assignment9.html#cb481-2" tabindex="-1"></a>  df_first,</span>
+<span id="cb481-3"><a href="assignment9.html#cb481-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> b)</span>
+<span id="cb481-4"><a href="assignment9.html#cb481-4" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb481-5"><a href="assignment9.html#cb481-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb481-6"><a href="assignment9.html#cb481-6" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb481-7"><a href="assignment9.html#cb481-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb481-8"><a href="assignment9.html#cb481-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb481-9"><a href="assignment9.html#cb481-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-230-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_winning_bids_first(valuation, reserve, alpha, beta)</code> that returns only the winning bids from each first-price auction. It will call <code>compute_bids_first</code> inside the function. It does not return anything when no bidder bids above the reserve price.</li>
 </ol>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="assignment9.html#cb481-1" tabindex="-1"></a><span class="co"># compute winning bids from first-price auctions</span></span>
-<span id="cb481-2"><a href="assignment9.html#cb481-2" tabindex="-1"></a>df_first_w <span class="ot">&lt;-</span></span>
-<span id="cb481-3"><a href="assignment9.html#cb481-3" tabindex="-1"></a>  <span class="fu">compute_winning_bids_first</span>(</span>
-<span id="cb481-4"><a href="assignment9.html#cb481-4" tabindex="-1"></a>    <span class="at">valuation =</span> valuation,</span>
-<span id="cb481-5"><a href="assignment9.html#cb481-5" tabindex="-1"></a>    <span class="at">reserve =</span> reserve,</span>
-<span id="cb481-6"><a href="assignment9.html#cb481-6" tabindex="-1"></a>    <span class="at">alpha =</span> alpha,</span>
-<span id="cb481-7"><a href="assignment9.html#cb481-7" tabindex="-1"></a>    <span class="at">beta =</span> beta</span>
-<span id="cb481-8"><a href="assignment9.html#cb481-8" tabindex="-1"></a>    )</span>
-<span id="cb481-9"><a href="assignment9.html#cb481-9" tabindex="-1"></a>df_first_w</span></code></pre></div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="assignment9.html#cb483-1" tabindex="-1"></a><span class="co"># compute winning bids from first-price auctions</span></span>
+<span id="cb483-2"><a href="assignment9.html#cb483-2" tabindex="-1"></a>df_first_w <span class="ot">&lt;-</span></span>
+<span id="cb483-3"><a href="assignment9.html#cb483-3" tabindex="-1"></a>  <span class="fu">compute_winning_bids_first</span>(</span>
+<span id="cb483-4"><a href="assignment9.html#cb483-4" tabindex="-1"></a>    <span class="at">valuation =</span> valuation,</span>
+<span id="cb483-5"><a href="assignment9.html#cb483-5" tabindex="-1"></a>    <span class="at">reserve =</span> reserve,</span>
+<span id="cb483-6"><a href="assignment9.html#cb483-6" tabindex="-1"></a>    <span class="at">alpha =</span> alpha,</span>
+<span id="cb483-7"><a href="assignment9.html#cb483-7" tabindex="-1"></a>    <span class="at">beta =</span> beta</span>
+<span id="cb483-8"><a href="assignment9.html#cb483-8" tabindex="-1"></a>    )</span>
+<span id="cb483-9"><a href="assignment9.html#cb483-9" tabindex="-1"></a>df_first_w</span></code></pre></div>
 <pre><code>## # A tibble: 100 × 5
 ##        t     n     m     r     w
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -944,17 +942,16 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 ##  9     9    14    14   0.2 0.849
 ## 10    10    11     9   0.2 0.803
 ## # ℹ 90 more rows</code></pre>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="assignment9.html#cb483-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb483-2"><a href="assignment9.html#cb483-2" tabindex="-1"></a>  df_first_w, </span>
-<span id="cb483-3"><a href="assignment9.html#cb483-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> w)</span>
-<span id="cb483-4"><a href="assignment9.html#cb483-4" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb483-5"><a href="assignment9.html#cb483-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb483-6"><a href="assignment9.html#cb483-6" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, </span>
-<span id="cb483-7"><a href="assignment9.html#cb483-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
-<span id="cb483-8"><a href="assignment9.html#cb483-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
-<span id="cb483-9"><a href="assignment9.html#cb483-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
-## `binwidth`.</code></pre>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="assignment9.html#cb485-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb485-2"><a href="assignment9.html#cb485-2" tabindex="-1"></a>  df_first_w, </span>
+<span id="cb485-3"><a href="assignment9.html#cb485-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> w)</span>
+<span id="cb485-4"><a href="assignment9.html#cb485-4" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb485-5"><a href="assignment9.html#cb485-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb485-6"><a href="assignment9.html#cb485-6" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>, </span>
+<span id="cb485-7"><a href="assignment9.html#cb485-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
+<span id="cb485-8"><a href="assignment9.html#cb485-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
+<span id="cb485-9"><a href="assignment9.html#cb485-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-231-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="estimate-the-parameters-5" class="section level2 hasAnchor" number="19.2">
@@ -976,125 +973,125 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 <ol style="list-style-type: decimal">
 <li>Write a function <code>compute_p_second_w(w, r, m, n, alpha, beta)</code> that computes <span class="math inline">\(\mathbb{P}\{m_t = 1\}\)</span> if <span class="math inline">\(m_t = 1\)</span> and <span class="math inline">\(h_t(w_t)\)</span> if <span class="math inline">\(m_t &gt; 1\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="assignment9.html#cb485-1" tabindex="-1"></a><span class="co"># compute probability density for winning bids from a second-price auction</span></span>
-<span id="cb485-2"><a href="assignment9.html#cb485-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>w</span>
-<span id="cb485-3"><a href="assignment9.html#cb485-3" tabindex="-1"></a>r <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>r</span>
-<span id="cb485-4"><a href="assignment9.html#cb485-4" tabindex="-1"></a>m <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>m</span>
-<span id="cb485-5"><a href="assignment9.html#cb485-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>n</span>
-<span id="cb485-6"><a href="assignment9.html#cb485-6" tabindex="-1"></a><span class="fu">compute_p_second_w</span>(</span>
-<span id="cb485-7"><a href="assignment9.html#cb485-7" tabindex="-1"></a>  <span class="at">w =</span> w, </span>
-<span id="cb485-8"><a href="assignment9.html#cb485-8" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
-<span id="cb485-9"><a href="assignment9.html#cb485-9" tabindex="-1"></a>  <span class="at">m =</span> m,</span>
-<span id="cb485-10"><a href="assignment9.html#cb485-10" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
-<span id="cb485-11"><a href="assignment9.html#cb485-11" tabindex="-1"></a>  <span class="at">alpha =</span> alpha,</span>
-<span id="cb485-12"><a href="assignment9.html#cb485-12" tabindex="-1"></a>  <span class="at">beta =</span> beta</span>
-<span id="cb485-13"><a href="assignment9.html#cb485-13" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="assignment9.html#cb487-1" tabindex="-1"></a><span class="co"># compute probability density for winning bids from a second-price auction</span></span>
+<span id="cb487-2"><a href="assignment9.html#cb487-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>w</span>
+<span id="cb487-3"><a href="assignment9.html#cb487-3" tabindex="-1"></a>r <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>r</span>
+<span id="cb487-4"><a href="assignment9.html#cb487-4" tabindex="-1"></a>m <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>m</span>
+<span id="cb487-5"><a href="assignment9.html#cb487-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> df_second_w[<span class="dv">1</span>, ]<span class="sc">$</span>n</span>
+<span id="cb487-6"><a href="assignment9.html#cb487-6" tabindex="-1"></a><span class="fu">compute_p_second_w</span>(</span>
+<span id="cb487-7"><a href="assignment9.html#cb487-7" tabindex="-1"></a>  <span class="at">w =</span> w, </span>
+<span id="cb487-8"><a href="assignment9.html#cb487-8" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
+<span id="cb487-9"><a href="assignment9.html#cb487-9" tabindex="-1"></a>  <span class="at">m =</span> m,</span>
+<span id="cb487-10"><a href="assignment9.html#cb487-10" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
+<span id="cb487-11"><a href="assignment9.html#cb487-11" tabindex="-1"></a>  <span class="at">alpha =</span> alpha,</span>
+<span id="cb487-12"><a href="assignment9.html#cb487-12" tabindex="-1"></a>  <span class="at">beta =</span> beta</span>
+<span id="cb487-13"><a href="assignment9.html#cb487-13" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 2.752949</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a function <code>compute_m0(r, n, alpha, beta)</code> that computes <span class="math inline">\(\mathbb{P}\{m_t = 0\}\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="assignment9.html#cb487-1" tabindex="-1"></a><span class="co"># compute non-participation probability</span></span>
-<span id="cb487-2"><a href="assignment9.html#cb487-2" tabindex="-1"></a><span class="fu">compute_m0</span>(</span>
-<span id="cb487-3"><a href="assignment9.html#cb487-3" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
-<span id="cb487-4"><a href="assignment9.html#cb487-4" tabindex="-1"></a>  <span class="at">n =</span> n, </span>
-<span id="cb487-5"><a href="assignment9.html#cb487-5" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb487-6"><a href="assignment9.html#cb487-6" tabindex="-1"></a>  <span class="at">beta =</span> beta</span>
-<span id="cb487-7"><a href="assignment9.html#cb487-7" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="assignment9.html#cb489-1" tabindex="-1"></a><span class="co"># compute non-participation probability</span></span>
+<span id="cb489-2"><a href="assignment9.html#cb489-2" tabindex="-1"></a><span class="fu">compute_m0</span>(</span>
+<span id="cb489-3"><a href="assignment9.html#cb489-3" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
+<span id="cb489-4"><a href="assignment9.html#cb489-4" tabindex="-1"></a>  <span class="at">n =</span> n, </span>
+<span id="cb489-5"><a href="assignment9.html#cb489-5" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb489-6"><a href="assignment9.html#cb489-6" tabindex="-1"></a>  <span class="at">beta =</span> beta</span>
+<span id="cb489-7"><a href="assignment9.html#cb489-7" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 1.368569e-08</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a function <code>compute_loglikelihood_second_price_w(theta, df_second_w)</code> that computes the log-likelihood for a second-price auction winning bid data.</li>
 </ol>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="assignment9.html#cb489-1" tabindex="-1"></a><span class="co"># compute log-likelihood for winning bids from second-price auctions</span></span>
-<span id="cb489-2"><a href="assignment9.html#cb489-2" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb489-3"><a href="assignment9.html#cb489-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb489-4"><a href="assignment9.html#cb489-4" tabindex="-1"></a>    alpha, </span>
-<span id="cb489-5"><a href="assignment9.html#cb489-5" tabindex="-1"></a>    beta</span>
-<span id="cb489-6"><a href="assignment9.html#cb489-6" tabindex="-1"></a>    )</span>
-<span id="cb489-7"><a href="assignment9.html#cb489-7" tabindex="-1"></a><span class="fu">compute_loglikelihood_second_price_w</span>(</span>
-<span id="cb489-8"><a href="assignment9.html#cb489-8" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
-<span id="cb489-9"><a href="assignment9.html#cb489-9" tabindex="-1"></a>  <span class="at">df_second_w =</span> df_second_w</span>
-<span id="cb489-10"><a href="assignment9.html#cb489-10" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="assignment9.html#cb491-1" tabindex="-1"></a><span class="co"># compute log-likelihood for winning bids from second-price auctions</span></span>
+<span id="cb491-2"><a href="assignment9.html#cb491-2" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb491-3"><a href="assignment9.html#cb491-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb491-4"><a href="assignment9.html#cb491-4" tabindex="-1"></a>    alpha, </span>
+<span id="cb491-5"><a href="assignment9.html#cb491-5" tabindex="-1"></a>    beta</span>
+<span id="cb491-6"><a href="assignment9.html#cb491-6" tabindex="-1"></a>    )</span>
+<span id="cb491-7"><a href="assignment9.html#cb491-7" tabindex="-1"></a><span class="fu">compute_loglikelihood_second_price_w</span>(</span>
+<span id="cb491-8"><a href="assignment9.html#cb491-8" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
+<span id="cb491-9"><a href="assignment9.html#cb491-9" tabindex="-1"></a>  <span class="at">df_second_w =</span> df_second_w</span>
+<span id="cb491-10"><a href="assignment9.html#cb491-10" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.9849261</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Compare the value of objective function around the true parameters.</li>
 </ol>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="assignment9.html#cb491-1" tabindex="-1"></a><span class="co"># label</span></span>
-<span id="cb491-2"><a href="assignment9.html#cb491-2" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb491-3"><a href="assignment9.html#cb491-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb491-4"><a href="assignment9.html#cb491-4" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>,</span>
-<span id="cb491-5"><a href="assignment9.html#cb491-5" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span></span>
-<span id="cb491-6"><a href="assignment9.html#cb491-6" tabindex="-1"></a>    )</span>
-<span id="cb491-7"><a href="assignment9.html#cb491-7" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb491-8"><a href="assignment9.html#cb491-8" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
-<span id="cb491-9"><a href="assignment9.html#cb491-9" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
-<span id="cb491-10"><a href="assignment9.html#cb491-10" tabindex="-1"></a>    label, </span>
-<span id="cb491-11"><a href="assignment9.html#cb491-11" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>,</span>
-<span id="cb491-12"><a href="assignment9.html#cb491-12" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb491-13"><a href="assignment9.html#cb491-13" tabindex="-1"></a>    )</span>
-<span id="cb491-14"><a href="assignment9.html#cb491-14" tabindex="-1"></a><span class="co"># compute the graph</span></span>
-<span id="cb491-15"><a href="assignment9.html#cb491-15" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb491-16"><a href="assignment9.html#cb491-16" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb491-17"><a href="assignment9.html#cb491-17" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
-<span id="cb491-18"><a href="assignment9.html#cb491-18" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb491-19"><a href="assignment9.html#cb491-19" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
-<span id="cb491-20"><a href="assignment9.html#cb491-20" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
-<span id="cb491-21"><a href="assignment9.html#cb491-21" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
-<span id="cb491-22"><a href="assignment9.html#cb491-22" tabindex="-1"></a>      <span class="fl">0.8</span>,</span>
-<span id="cb491-23"><a href="assignment9.html#cb491-23" tabindex="-1"></a>      <span class="fl">1.2</span>, </span>
-<span id="cb491-24"><a href="assignment9.html#cb491-24" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">0.05</span></span>
-<span id="cb491-25"><a href="assignment9.html#cb491-25" tabindex="-1"></a>      )</span>
-<span id="cb491-26"><a href="assignment9.html#cb491-26" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span></span>
-<span id="cb491-27"><a href="assignment9.html#cb491-27" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb491-28"><a href="assignment9.html#cb491-28" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
-<span id="cb491-29"><a href="assignment9.html#cb491-29" tabindex="-1"></a>      <span class="at">.packages =</span> <span class="fu">c</span>(</span>
-<span id="cb491-30"><a href="assignment9.html#cb491-30" tabindex="-1"></a>                    <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
-<span id="cb491-31"><a href="assignment9.html#cb491-31" tabindex="-1"></a>                    <span class="st">&quot;foreach&quot;</span>,</span>
-<span id="cb491-32"><a href="assignment9.html#cb491-32" tabindex="-1"></a>                    <span class="st">&quot;magrittr&quot;</span></span>
-<span id="cb491-33"><a href="assignment9.html#cb491-33" tabindex="-1"></a>                   ),</span>
-<span id="cb491-34"><a href="assignment9.html#cb491-34" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb491-35"><a href="assignment9.html#cb491-35" tabindex="-1"></a>      ) <span class="sc">%dopar%</span> {</span>
-<span id="cb491-36"><a href="assignment9.html#cb491-36" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
-<span id="cb491-37"><a href="assignment9.html#cb491-37" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
-<span id="cb491-38"><a href="assignment9.html#cb491-38" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
-<span id="cb491-39"><a href="assignment9.html#cb491-39" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
-<span id="cb491-40"><a href="assignment9.html#cb491-40" tabindex="-1"></a>                 <span class="fu">compute_loglikelihood_second_price_w</span>(</span>
-<span id="cb491-41"><a href="assignment9.html#cb491-41" tabindex="-1"></a>                   theta_j, </span>
-<span id="cb491-42"><a href="assignment9.html#cb491-42" tabindex="-1"></a>                   df_second_w</span>
-<span id="cb491-43"><a href="assignment9.html#cb491-43" tabindex="-1"></a>                   )</span>
-<span id="cb491-44"><a href="assignment9.html#cb491-44" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
-<span id="cb491-45"><a href="assignment9.html#cb491-45" tabindex="-1"></a>             }</span>
-<span id="cb491-46"><a href="assignment9.html#cb491-46" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
-<span id="cb491-47"><a href="assignment9.html#cb491-47" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb491-48"><a href="assignment9.html#cb491-48" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">as.numeric</span>(theta_i_list), </span>
-<span id="cb491-49"><a href="assignment9.html#cb491-49" tabindex="-1"></a>      <span class="at">y =</span> <span class="fu">as.numeric</span>(objective_i)</span>
-<span id="cb491-50"><a href="assignment9.html#cb491-50" tabindex="-1"></a>      )</span>
-<span id="cb491-51"><a href="assignment9.html#cb491-51" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
-<span id="cb491-52"><a href="assignment9.html#cb491-52" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb491-53"><a href="assignment9.html#cb491-53" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
-<span id="cb491-54"><a href="assignment9.html#cb491-54" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
-<span id="cb491-55"><a href="assignment9.html#cb491-55" tabindex="-1"></a>        <span class="at">x =</span> x,</span>
-<span id="cb491-56"><a href="assignment9.html#cb491-56" tabindex="-1"></a>        <span class="at">y =</span> y</span>
-<span id="cb491-57"><a href="assignment9.html#cb491-57" tabindex="-1"></a>        )</span>
-<span id="cb491-58"><a href="assignment9.html#cb491-58" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb491-59"><a href="assignment9.html#cb491-59" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb491-60"><a href="assignment9.html#cb491-60" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb491-61"><a href="assignment9.html#cb491-61" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i,</span>
-<span id="cb491-62"><a href="assignment9.html#cb491-62" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
-<span id="cb491-63"><a href="assignment9.html#cb491-63" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb491-64"><a href="assignment9.html#cb491-64" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb491-65"><a href="assignment9.html#cb491-65" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
-<span id="cb491-66"><a href="assignment9.html#cb491-66" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb491-67"><a href="assignment9.html#cb491-67" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
-<span id="cb491-68"><a href="assignment9.html#cb491-68" tabindex="-1"></a>}</span>
-<span id="cb491-69"><a href="assignment9.html#cb491-69" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb491-70"><a href="assignment9.html#cb491-70" tabindex="-1"></a>  graph, </span>
-<span id="cb491-71"><a href="assignment9.html#cb491-71" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/second_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb491-72"><a href="assignment9.html#cb491-72" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="assignment9.html#cb492-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb492-2"><a href="assignment9.html#cb492-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb492-3"><a href="assignment9.html#cb492-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/second_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb492-4"><a href="assignment9.html#cb492-4" tabindex="-1"></a>  )</span>
-<span id="cb492-5"><a href="assignment9.html#cb492-5" tabindex="-1"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="assignment9.html#cb493-1" tabindex="-1"></a><span class="co"># label</span></span>
+<span id="cb493-2"><a href="assignment9.html#cb493-2" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb493-3"><a href="assignment9.html#cb493-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb493-4"><a href="assignment9.html#cb493-4" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>,</span>
+<span id="cb493-5"><a href="assignment9.html#cb493-5" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span></span>
+<span id="cb493-6"><a href="assignment9.html#cb493-6" tabindex="-1"></a>    )</span>
+<span id="cb493-7"><a href="assignment9.html#cb493-7" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb493-8"><a href="assignment9.html#cb493-8" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
+<span id="cb493-9"><a href="assignment9.html#cb493-9" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
+<span id="cb493-10"><a href="assignment9.html#cb493-10" tabindex="-1"></a>    label, </span>
+<span id="cb493-11"><a href="assignment9.html#cb493-11" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>,</span>
+<span id="cb493-12"><a href="assignment9.html#cb493-12" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb493-13"><a href="assignment9.html#cb493-13" tabindex="-1"></a>    )</span>
+<span id="cb493-14"><a href="assignment9.html#cb493-14" tabindex="-1"></a><span class="co"># compute the graph</span></span>
+<span id="cb493-15"><a href="assignment9.html#cb493-15" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb493-16"><a href="assignment9.html#cb493-16" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb493-17"><a href="assignment9.html#cb493-17" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
+<span id="cb493-18"><a href="assignment9.html#cb493-18" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb493-19"><a href="assignment9.html#cb493-19" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
+<span id="cb493-20"><a href="assignment9.html#cb493-20" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
+<span id="cb493-21"><a href="assignment9.html#cb493-21" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
+<span id="cb493-22"><a href="assignment9.html#cb493-22" tabindex="-1"></a>      <span class="fl">0.8</span>,</span>
+<span id="cb493-23"><a href="assignment9.html#cb493-23" tabindex="-1"></a>      <span class="fl">1.2</span>, </span>
+<span id="cb493-24"><a href="assignment9.html#cb493-24" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">0.05</span></span>
+<span id="cb493-25"><a href="assignment9.html#cb493-25" tabindex="-1"></a>      )</span>
+<span id="cb493-26"><a href="assignment9.html#cb493-26" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span></span>
+<span id="cb493-27"><a href="assignment9.html#cb493-27" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb493-28"><a href="assignment9.html#cb493-28" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
+<span id="cb493-29"><a href="assignment9.html#cb493-29" tabindex="-1"></a>      <span class="at">.packages =</span> <span class="fu">c</span>(</span>
+<span id="cb493-30"><a href="assignment9.html#cb493-30" tabindex="-1"></a>                    <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
+<span id="cb493-31"><a href="assignment9.html#cb493-31" tabindex="-1"></a>                    <span class="st">&quot;foreach&quot;</span>,</span>
+<span id="cb493-32"><a href="assignment9.html#cb493-32" tabindex="-1"></a>                    <span class="st">&quot;magrittr&quot;</span></span>
+<span id="cb493-33"><a href="assignment9.html#cb493-33" tabindex="-1"></a>                   ),</span>
+<span id="cb493-34"><a href="assignment9.html#cb493-34" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb493-35"><a href="assignment9.html#cb493-35" tabindex="-1"></a>      ) <span class="sc">%dopar%</span> {</span>
+<span id="cb493-36"><a href="assignment9.html#cb493-36" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
+<span id="cb493-37"><a href="assignment9.html#cb493-37" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
+<span id="cb493-38"><a href="assignment9.html#cb493-38" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
+<span id="cb493-39"><a href="assignment9.html#cb493-39" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
+<span id="cb493-40"><a href="assignment9.html#cb493-40" tabindex="-1"></a>                 <span class="fu">compute_loglikelihood_second_price_w</span>(</span>
+<span id="cb493-41"><a href="assignment9.html#cb493-41" tabindex="-1"></a>                   theta_j, </span>
+<span id="cb493-42"><a href="assignment9.html#cb493-42" tabindex="-1"></a>                   df_second_w</span>
+<span id="cb493-43"><a href="assignment9.html#cb493-43" tabindex="-1"></a>                   )</span>
+<span id="cb493-44"><a href="assignment9.html#cb493-44" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
+<span id="cb493-45"><a href="assignment9.html#cb493-45" tabindex="-1"></a>             }</span>
+<span id="cb493-46"><a href="assignment9.html#cb493-46" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
+<span id="cb493-47"><a href="assignment9.html#cb493-47" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb493-48"><a href="assignment9.html#cb493-48" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">as.numeric</span>(theta_i_list), </span>
+<span id="cb493-49"><a href="assignment9.html#cb493-49" tabindex="-1"></a>      <span class="at">y =</span> <span class="fu">as.numeric</span>(objective_i)</span>
+<span id="cb493-50"><a href="assignment9.html#cb493-50" tabindex="-1"></a>      )</span>
+<span id="cb493-51"><a href="assignment9.html#cb493-51" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
+<span id="cb493-52"><a href="assignment9.html#cb493-52" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb493-53"><a href="assignment9.html#cb493-53" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
+<span id="cb493-54"><a href="assignment9.html#cb493-54" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
+<span id="cb493-55"><a href="assignment9.html#cb493-55" tabindex="-1"></a>        <span class="at">x =</span> x,</span>
+<span id="cb493-56"><a href="assignment9.html#cb493-56" tabindex="-1"></a>        <span class="at">y =</span> y</span>
+<span id="cb493-57"><a href="assignment9.html#cb493-57" tabindex="-1"></a>        )</span>
+<span id="cb493-58"><a href="assignment9.html#cb493-58" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb493-59"><a href="assignment9.html#cb493-59" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb493-60"><a href="assignment9.html#cb493-60" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb493-61"><a href="assignment9.html#cb493-61" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i,</span>
+<span id="cb493-62"><a href="assignment9.html#cb493-62" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
+<span id="cb493-63"><a href="assignment9.html#cb493-63" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb493-64"><a href="assignment9.html#cb493-64" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb493-65"><a href="assignment9.html#cb493-65" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
+<span id="cb493-66"><a href="assignment9.html#cb493-66" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb493-67"><a href="assignment9.html#cb493-67" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb493-68"><a href="assignment9.html#cb493-68" tabindex="-1"></a>}</span>
+<span id="cb493-69"><a href="assignment9.html#cb493-69" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb493-70"><a href="assignment9.html#cb493-70" tabindex="-1"></a>  graph, </span>
+<span id="cb493-71"><a href="assignment9.html#cb493-71" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/second_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb493-72"><a href="assignment9.html#cb493-72" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="assignment9.html#cb494-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb494-2"><a href="assignment9.html#cb494-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb494-3"><a href="assignment9.html#cb494-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/second_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb494-4"><a href="assignment9.html#cb494-4" tabindex="-1"></a>  )</span>
+<span id="cb494-5"><a href="assignment9.html#cb494-5" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-236-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
@@ -1103,23 +1100,23 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 <ol start="4" style="list-style-type: decimal">
 <li>Estimate the parameters by maximizing the log-likelihood.</li>
 </ol>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="assignment9.html#cb495-1" tabindex="-1"></a>result_second_parametric <span class="ot">&lt;-</span></span>
-<span id="cb495-2"><a href="assignment9.html#cb495-2" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
-<span id="cb495-3"><a href="assignment9.html#cb495-3" tabindex="-1"></a>    <span class="at">par =</span> theta,</span>
-<span id="cb495-4"><a href="assignment9.html#cb495-4" tabindex="-1"></a>    <span class="at">fn =</span> compute_loglikelihood_second_price_w,</span>
-<span id="cb495-5"><a href="assignment9.html#cb495-5" tabindex="-1"></a>    <span class="at">df_second_w =</span> df_second_w,</span>
-<span id="cb495-6"><a href="assignment9.html#cb495-6" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
-<span id="cb495-7"><a href="assignment9.html#cb495-7" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb495-8"><a href="assignment9.html#cb495-8" tabindex="-1"></a>  )</span>
-<span id="cb495-9"><a href="assignment9.html#cb495-9" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb495-10"><a href="assignment9.html#cb495-10" tabindex="-1"></a>  result_second_parametric, </span>
-<span id="cb495-11"><a href="assignment9.html#cb495-11" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_second_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb495-12"><a href="assignment9.html#cb495-12" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="assignment9.html#cb496-1" tabindex="-1"></a>result_second_parametric <span class="ot">&lt;-</span> </span>
-<span id="cb496-2"><a href="assignment9.html#cb496-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb496-3"><a href="assignment9.html#cb496-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_second_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb496-4"><a href="assignment9.html#cb496-4" tabindex="-1"></a>  )</span>
-<span id="cb496-5"><a href="assignment9.html#cb496-5" tabindex="-1"></a>result_second_parametric</span></code></pre></div>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="assignment9.html#cb497-1" tabindex="-1"></a>result_second_parametric <span class="ot">&lt;-</span></span>
+<span id="cb497-2"><a href="assignment9.html#cb497-2" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
+<span id="cb497-3"><a href="assignment9.html#cb497-3" tabindex="-1"></a>    <span class="at">par =</span> theta,</span>
+<span id="cb497-4"><a href="assignment9.html#cb497-4" tabindex="-1"></a>    <span class="at">fn =</span> compute_loglikelihood_second_price_w,</span>
+<span id="cb497-5"><a href="assignment9.html#cb497-5" tabindex="-1"></a>    <span class="at">df_second_w =</span> df_second_w,</span>
+<span id="cb497-6"><a href="assignment9.html#cb497-6" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
+<span id="cb497-7"><a href="assignment9.html#cb497-7" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb497-8"><a href="assignment9.html#cb497-8" tabindex="-1"></a>  )</span>
+<span id="cb497-9"><a href="assignment9.html#cb497-9" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb497-10"><a href="assignment9.html#cb497-10" tabindex="-1"></a>  result_second_parametric, </span>
+<span id="cb497-11"><a href="assignment9.html#cb497-11" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_second_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb497-12"><a href="assignment9.html#cb497-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="assignment9.html#cb498-1" tabindex="-1"></a>result_second_parametric <span class="ot">&lt;-</span> </span>
+<span id="cb498-2"><a href="assignment9.html#cb498-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb498-3"><a href="assignment9.html#cb498-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_second_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb498-4"><a href="assignment9.html#cb498-4" tabindex="-1"></a>  )</span>
+<span id="cb498-5"><a href="assignment9.html#cb498-5" tabindex="-1"></a>result_second_parametric</span></code></pre></div>
 <pre><code>## $par
 ## [1] 2.199238 2.078327
 ## 
@@ -1135,13 +1132,13 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 ## 
 ## $message
 ## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="assignment9.html#cb498-1" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
-<span id="cb498-2"><a href="assignment9.html#cb498-2" tabindex="-1"></a></span>
-<span id="cb498-3"><a href="assignment9.html#cb498-3" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb498-4"><a href="assignment9.html#cb498-4" tabindex="-1"></a>    <span class="at">true =</span> theta,</span>
-<span id="cb498-5"><a href="assignment9.html#cb498-5" tabindex="-1"></a>    <span class="at">estimate =</span> result_second_parametric<span class="sc">$</span>par</span>
-<span id="cb498-6"><a href="assignment9.html#cb498-6" tabindex="-1"></a>  )</span>
-<span id="cb498-7"><a href="assignment9.html#cb498-7" tabindex="-1"></a>comparison</span></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="assignment9.html#cb500-1" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
+<span id="cb500-2"><a href="assignment9.html#cb500-2" tabindex="-1"></a></span>
+<span id="cb500-3"><a href="assignment9.html#cb500-3" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb500-4"><a href="assignment9.html#cb500-4" tabindex="-1"></a>    <span class="at">true =</span> theta,</span>
+<span id="cb500-5"><a href="assignment9.html#cb500-5" tabindex="-1"></a>    <span class="at">estimate =</span> result_second_parametric<span class="sc">$</span>par</span>
+<span id="cb500-6"><a href="assignment9.html#cb500-6" tabindex="-1"></a>  )</span>
+<span id="cb500-7"><a href="assignment9.html#cb500-7" tabindex="-1"></a>comparison</span></code></pre></div>
 <pre><code>##   true estimate
 ## 1    2 2.199238
 ## 2    2 2.078327</code></pre>
@@ -1153,30 +1150,30 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 \]</span></li>
 </ol>
 <p>To do so, we can use a built-in function called <code>uniroot</code>, which solves <span class="math inline">\(x\)</span> such that <span class="math inline">\(f(x) = 0\)</span> for scalar <span class="math inline">\(x\)</span>. In <code>uniroot</code>, <code>lower</code> and <code>upper</code> are set at <span class="math inline">\(r_t\)</span> and <span class="math inline">\(1\)</span>, respectively.</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="assignment9.html#cb500-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> df_first_w[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb500-2"><a href="assignment9.html#cb500-2" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
-<span id="cb500-3"><a href="assignment9.html#cb500-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> df_first_w[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>] <span class="sc">%&gt;%</span></span>
-<span id="cb500-4"><a href="assignment9.html#cb500-4" tabindex="-1"></a>  <span class="fu">as.integer</span>()</span>
-<span id="cb500-5"><a href="assignment9.html#cb500-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> r <span class="sc">+</span> <span class="fl">0.5</span> </span>
-<span id="cb500-6"><a href="assignment9.html#cb500-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb500-7"><a href="assignment9.html#cb500-7" tabindex="-1"></a><span class="co"># compute inverse bid equation</span></span>
-<span id="cb500-8"><a href="assignment9.html#cb500-8" tabindex="-1"></a><span class="fu">inverse_bid_equation</span>(</span>
-<span id="cb500-9"><a href="assignment9.html#cb500-9" tabindex="-1"></a>  <span class="at">x =</span> x,</span>
-<span id="cb500-10"><a href="assignment9.html#cb500-10" tabindex="-1"></a>  <span class="at">b =</span> b,</span>
-<span id="cb500-11"><a href="assignment9.html#cb500-11" tabindex="-1"></a>  <span class="at">r =</span> r,</span>
-<span id="cb500-12"><a href="assignment9.html#cb500-12" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb500-13"><a href="assignment9.html#cb500-13" tabindex="-1"></a>  <span class="at">beta =</span> beta,</span>
-<span id="cb500-14"><a href="assignment9.html#cb500-14" tabindex="-1"></a>  <span class="at">n =</span> n</span>
-<span id="cb500-15"><a href="assignment9.html#cb500-15" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="assignment9.html#cb502-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> df_first_w[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb502-2"><a href="assignment9.html#cb502-2" tabindex="-1"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb502-3"><a href="assignment9.html#cb502-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> df_first_w[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>] <span class="sc">%&gt;%</span></span>
+<span id="cb502-4"><a href="assignment9.html#cb502-4" tabindex="-1"></a>  <span class="fu">as.integer</span>()</span>
+<span id="cb502-5"><a href="assignment9.html#cb502-5" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> r <span class="sc">+</span> <span class="fl">0.5</span> </span>
+<span id="cb502-6"><a href="assignment9.html#cb502-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb502-7"><a href="assignment9.html#cb502-7" tabindex="-1"></a><span class="co"># compute inverse bid equation</span></span>
+<span id="cb502-8"><a href="assignment9.html#cb502-8" tabindex="-1"></a><span class="fu">inverse_bid_equation</span>(</span>
+<span id="cb502-9"><a href="assignment9.html#cb502-9" tabindex="-1"></a>  <span class="at">x =</span> x,</span>
+<span id="cb502-10"><a href="assignment9.html#cb502-10" tabindex="-1"></a>  <span class="at">b =</span> b,</span>
+<span id="cb502-11"><a href="assignment9.html#cb502-11" tabindex="-1"></a>  <span class="at">r =</span> r,</span>
+<span id="cb502-12"><a href="assignment9.html#cb502-12" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb502-13"><a href="assignment9.html#cb502-13" tabindex="-1"></a>  <span class="at">beta =</span> beta,</span>
+<span id="cb502-14"><a href="assignment9.html#cb502-14" tabindex="-1"></a>  <span class="at">n =</span> n</span>
+<span id="cb502-15"><a href="assignment9.html#cb502-15" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] -0.1421105</code></pre>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="assignment9.html#cb502-1" tabindex="-1"></a><span class="co"># compute inverse bid</span></span>
-<span id="cb502-2"><a href="assignment9.html#cb502-2" tabindex="-1"></a><span class="fu">inverse_bid_first</span>(</span>
-<span id="cb502-3"><a href="assignment9.html#cb502-3" tabindex="-1"></a>  <span class="at">b =</span> b, </span>
-<span id="cb502-4"><a href="assignment9.html#cb502-4" tabindex="-1"></a>  <span class="at">r =</span> r,</span>
-<span id="cb502-5"><a href="assignment9.html#cb502-5" tabindex="-1"></a>  <span class="at">alpha =</span> alpha,</span>
-<span id="cb502-6"><a href="assignment9.html#cb502-6" tabindex="-1"></a>  <span class="at">beta =</span> beta,</span>
-<span id="cb502-7"><a href="assignment9.html#cb502-7" tabindex="-1"></a>  <span class="at">n =</span> n</span>
-<span id="cb502-8"><a href="assignment9.html#cb502-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="assignment9.html#cb504-1" tabindex="-1"></a><span class="co"># compute inverse bid</span></span>
+<span id="cb504-2"><a href="assignment9.html#cb504-2" tabindex="-1"></a><span class="fu">inverse_bid_first</span>(</span>
+<span id="cb504-3"><a href="assignment9.html#cb504-3" tabindex="-1"></a>  <span class="at">b =</span> b, </span>
+<span id="cb504-4"><a href="assignment9.html#cb504-4" tabindex="-1"></a>  <span class="at">r =</span> r,</span>
+<span id="cb504-5"><a href="assignment9.html#cb504-5" tabindex="-1"></a>  <span class="at">alpha =</span> alpha,</span>
+<span id="cb504-6"><a href="assignment9.html#cb504-6" tabindex="-1"></a>  <span class="at">beta =</span> beta,</span>
+<span id="cb504-7"><a href="assignment9.html#cb504-7" tabindex="-1"></a>  <span class="at">n =</span> n</span>
+<span id="cb504-8"><a href="assignment9.html#cb504-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.6653238</code></pre>
 <p>The log-likelihood conditional on <span class="math inline">\(m_t \ge 1\)</span> is:
 <span class="math display">\[
@@ -1193,126 +1190,126 @@ where the second equation is from the first-order condition.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_p_first_w(w, r, alpha, beta, n)</code> that returns <span class="math inline">\(h_t(w)\)</span>. Remark that the equilibrium bid at specific parameters is <code>bid_first(1, r, alpha, beta, n)</code>. If the observed wining bid <code>w</code> is above the upper limit, the function will issue an error. Therefore, inside the function <code>compute_p_first_w(w, r, alpha, beta, n)</code>, check if <code>w</code> is above <code>bid_first(1, r, alpha, beta, n)</code> and if so return <span class="math inline">\(10^{-6}\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="assignment9.html#cb504-1" tabindex="-1"></a><span class="co"># compute probability density for a winning bid from a first-price auction</span></span>
-<span id="cb504-2"><a href="assignment9.html#cb504-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb504-3"><a href="assignment9.html#cb504-3" tabindex="-1"></a><span class="fu">compute_p_first_w</span>(</span>
-<span id="cb504-4"><a href="assignment9.html#cb504-4" tabindex="-1"></a>  <span class="at">w =</span> w, </span>
-<span id="cb504-5"><a href="assignment9.html#cb504-5" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
-<span id="cb504-6"><a href="assignment9.html#cb504-6" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb504-7"><a href="assignment9.html#cb504-7" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb504-8"><a href="assignment9.html#cb504-8" tabindex="-1"></a>  <span class="at">n =</span> n</span>
-<span id="cb504-9"><a href="assignment9.html#cb504-9" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="assignment9.html#cb506-1" tabindex="-1"></a><span class="co"># compute probability density for a winning bid from a first-price auction</span></span>
+<span id="cb506-2"><a href="assignment9.html#cb506-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb506-3"><a href="assignment9.html#cb506-3" tabindex="-1"></a><span class="fu">compute_p_first_w</span>(</span>
+<span id="cb506-4"><a href="assignment9.html#cb506-4" tabindex="-1"></a>  <span class="at">w =</span> w, </span>
+<span id="cb506-5"><a href="assignment9.html#cb506-5" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
+<span id="cb506-6"><a href="assignment9.html#cb506-6" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb506-7"><a href="assignment9.html#cb506-7" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb506-8"><a href="assignment9.html#cb506-8" tabindex="-1"></a>  <span class="at">n =</span> n</span>
+<span id="cb506-9"><a href="assignment9.html#cb506-9" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.2720049</code></pre>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="assignment9.html#cb506-1" tabindex="-1"></a>upper <span class="ot">&lt;-</span> </span>
-<span id="cb506-2"><a href="assignment9.html#cb506-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
-<span id="cb506-3"><a href="assignment9.html#cb506-3" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span>, </span>
-<span id="cb506-4"><a href="assignment9.html#cb506-4" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
-<span id="cb506-5"><a href="assignment9.html#cb506-5" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb506-6"><a href="assignment9.html#cb506-6" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb506-7"><a href="assignment9.html#cb506-7" tabindex="-1"></a>  <span class="at">n =</span> n</span>
-<span id="cb506-8"><a href="assignment9.html#cb506-8" tabindex="-1"></a>  )</span>
-<span id="cb506-9"><a href="assignment9.html#cb506-9" tabindex="-1"></a><span class="fu">compute_p_first_w</span>(</span>
-<span id="cb506-10"><a href="assignment9.html#cb506-10" tabindex="-1"></a>  <span class="at">w =</span> upper <span class="sc">+</span> <span class="dv">1</span>, </span>
-<span id="cb506-11"><a href="assignment9.html#cb506-11" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
-<span id="cb506-12"><a href="assignment9.html#cb506-12" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
-<span id="cb506-13"><a href="assignment9.html#cb506-13" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
-<span id="cb506-14"><a href="assignment9.html#cb506-14" tabindex="-1"></a>  <span class="at">n =</span> n</span>
-<span id="cb506-15"><a href="assignment9.html#cb506-15" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="assignment9.html#cb508-1" tabindex="-1"></a>upper <span class="ot">&lt;-</span> </span>
+<span id="cb508-2"><a href="assignment9.html#cb508-2" tabindex="-1"></a>  <span class="fu">bid_first</span>(</span>
+<span id="cb508-3"><a href="assignment9.html#cb508-3" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span>, </span>
+<span id="cb508-4"><a href="assignment9.html#cb508-4" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
+<span id="cb508-5"><a href="assignment9.html#cb508-5" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb508-6"><a href="assignment9.html#cb508-6" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb508-7"><a href="assignment9.html#cb508-7" tabindex="-1"></a>  <span class="at">n =</span> n</span>
+<span id="cb508-8"><a href="assignment9.html#cb508-8" tabindex="-1"></a>  )</span>
+<span id="cb508-9"><a href="assignment9.html#cb508-9" tabindex="-1"></a><span class="fu">compute_p_first_w</span>(</span>
+<span id="cb508-10"><a href="assignment9.html#cb508-10" tabindex="-1"></a>  <span class="at">w =</span> upper <span class="sc">+</span> <span class="dv">1</span>, </span>
+<span id="cb508-11"><a href="assignment9.html#cb508-11" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
+<span id="cb508-12"><a href="assignment9.html#cb508-12" tabindex="-1"></a>  <span class="at">alpha =</span> alpha, </span>
+<span id="cb508-13"><a href="assignment9.html#cb508-13" tabindex="-1"></a>  <span class="at">beta =</span> beta, </span>
+<span id="cb508-14"><a href="assignment9.html#cb508-14" tabindex="-1"></a>  <span class="at">n =</span> n</span>
+<span id="cb508-15"><a href="assignment9.html#cb508-15" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 1e-06</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>compute_loglikelihood_first_price_w(theta, df_first_w)</code> that computes the log-likelihood for a first-price auction winning bid data.</li>
 </ol>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="assignment9.html#cb508-1" tabindex="-1"></a><span class="co"># compute log-likelihood for winning bids for first-price auctions</span></span>
-<span id="cb508-2"><a href="assignment9.html#cb508-2" tabindex="-1"></a><span class="fu">compute_loglikelihood_first_price_w</span>(</span>
-<span id="cb508-3"><a href="assignment9.html#cb508-3" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
-<span id="cb508-4"><a href="assignment9.html#cb508-4" tabindex="-1"></a>  <span class="at">df_first_w =</span> df_first_w</span>
-<span id="cb508-5"><a href="assignment9.html#cb508-5" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="assignment9.html#cb510-1" tabindex="-1"></a><span class="co"># compute log-likelihood for winning bids for first-price auctions</span></span>
+<span id="cb510-2"><a href="assignment9.html#cb510-2" tabindex="-1"></a><span class="fu">compute_loglikelihood_first_price_w</span>(</span>
+<span id="cb510-3"><a href="assignment9.html#cb510-3" tabindex="-1"></a>  <span class="at">theta =</span> theta, </span>
+<span id="cb510-4"><a href="assignment9.html#cb510-4" tabindex="-1"></a>  <span class="at">df_first_w =</span> df_first_w</span>
+<span id="cb510-5"><a href="assignment9.html#cb510-5" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 1.597414</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Compare the value of the objective function around the true parameters.</li>
 </ol>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="assignment9.html#cb510-1" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb510-2"><a href="assignment9.html#cb510-2" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb510-3"><a href="assignment9.html#cb510-3" tabindex="-1"></a>    alpha,</span>
-<span id="cb510-4"><a href="assignment9.html#cb510-4" tabindex="-1"></a>    beta</span>
-<span id="cb510-5"><a href="assignment9.html#cb510-5" tabindex="-1"></a>    )</span>
-<span id="cb510-6"><a href="assignment9.html#cb510-6" tabindex="-1"></a><span class="co"># label</span></span>
-<span id="cb510-7"><a href="assignment9.html#cb510-7" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb510-8"><a href="assignment9.html#cb510-8" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb510-9"><a href="assignment9.html#cb510-9" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>,</span>
-<span id="cb510-10"><a href="assignment9.html#cb510-10" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span></span>
-<span id="cb510-11"><a href="assignment9.html#cb510-11" tabindex="-1"></a>    )</span>
-<span id="cb510-12"><a href="assignment9.html#cb510-12" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb510-13"><a href="assignment9.html#cb510-13" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
-<span id="cb510-14"><a href="assignment9.html#cb510-14" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>,</span>
-<span id="cb510-15"><a href="assignment9.html#cb510-15" tabindex="-1"></a>    label,</span>
-<span id="cb510-16"><a href="assignment9.html#cb510-16" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
-<span id="cb510-17"><a href="assignment9.html#cb510-17" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb510-18"><a href="assignment9.html#cb510-18" tabindex="-1"></a>    )</span>
-<span id="cb510-19"><a href="assignment9.html#cb510-19" tabindex="-1"></a><span class="co"># compute the graph</span></span>
-<span id="cb510-20"><a href="assignment9.html#cb510-20" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb510-21"><a href="assignment9.html#cb510-21" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb510-22"><a href="assignment9.html#cb510-22" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
-<span id="cb510-23"><a href="assignment9.html#cb510-23" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb510-24"><a href="assignment9.html#cb510-24" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
-<span id="cb510-25"><a href="assignment9.html#cb510-25" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
-<span id="cb510-26"><a href="assignment9.html#cb510-26" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
-<span id="cb510-27"><a href="assignment9.html#cb510-27" tabindex="-1"></a>      <span class="fl">0.8</span>,</span>
-<span id="cb510-28"><a href="assignment9.html#cb510-28" tabindex="-1"></a>      <span class="fl">1.2</span>,</span>
-<span id="cb510-29"><a href="assignment9.html#cb510-29" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">0.05</span></span>
-<span id="cb510-30"><a href="assignment9.html#cb510-30" tabindex="-1"></a>      )</span>
-<span id="cb510-31"><a href="assignment9.html#cb510-31" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span></span>
-<span id="cb510-32"><a href="assignment9.html#cb510-32" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb510-33"><a href="assignment9.html#cb510-33" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
-<span id="cb510-34"><a href="assignment9.html#cb510-34" tabindex="-1"></a>      <span class="at">.packages =</span> <span class="fu">c</span>(</span>
-<span id="cb510-35"><a href="assignment9.html#cb510-35" tabindex="-1"></a>        <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
-<span id="cb510-36"><a href="assignment9.html#cb510-36" tabindex="-1"></a>        <span class="st">&quot;foreach&quot;</span>,</span>
-<span id="cb510-37"><a href="assignment9.html#cb510-37" tabindex="-1"></a>        <span class="st">&quot;magrittr&quot;</span></span>
-<span id="cb510-38"><a href="assignment9.html#cb510-38" tabindex="-1"></a>        ),</span>
-<span id="cb510-39"><a href="assignment9.html#cb510-39" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb510-40"><a href="assignment9.html#cb510-40" tabindex="-1"></a>      ) <span class="sc">%dopar%</span> {</span>
-<span id="cb510-41"><a href="assignment9.html#cb510-41" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
-<span id="cb510-42"><a href="assignment9.html#cb510-42" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
-<span id="cb510-43"><a href="assignment9.html#cb510-43" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
-<span id="cb510-44"><a href="assignment9.html#cb510-44" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
-<span id="cb510-45"><a href="assignment9.html#cb510-45" tabindex="-1"></a>                 <span class="fu">compute_loglikelihood_first_price_w</span>(</span>
-<span id="cb510-46"><a href="assignment9.html#cb510-46" tabindex="-1"></a>                   theta_j,</span>
-<span id="cb510-47"><a href="assignment9.html#cb510-47" tabindex="-1"></a>                   df_first_w</span>
-<span id="cb510-48"><a href="assignment9.html#cb510-48" tabindex="-1"></a>                   )</span>
-<span id="cb510-49"><a href="assignment9.html#cb510-49" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
-<span id="cb510-50"><a href="assignment9.html#cb510-50" tabindex="-1"></a>             }</span>
-<span id="cb510-51"><a href="assignment9.html#cb510-51" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
-<span id="cb510-52"><a href="assignment9.html#cb510-52" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb510-53"><a href="assignment9.html#cb510-53" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">as.numeric</span>(theta_i_list), </span>
-<span id="cb510-54"><a href="assignment9.html#cb510-54" tabindex="-1"></a>      <span class="at">y =</span> <span class="fu">as.numeric</span>(objective_i)</span>
-<span id="cb510-55"><a href="assignment9.html#cb510-55" tabindex="-1"></a>      )</span>
-<span id="cb510-56"><a href="assignment9.html#cb510-56" tabindex="-1"></a>  g <span class="ot">&lt;-</span></span>
-<span id="cb510-57"><a href="assignment9.html#cb510-57" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb510-58"><a href="assignment9.html#cb510-58" tabindex="-1"></a>      <span class="at">data =</span> df_graph,</span>
-<span id="cb510-59"><a href="assignment9.html#cb510-59" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
-<span id="cb510-60"><a href="assignment9.html#cb510-60" tabindex="-1"></a>        <span class="at">x =</span> x,</span>
-<span id="cb510-61"><a href="assignment9.html#cb510-61" tabindex="-1"></a>        <span class="at">y =</span> y</span>
-<span id="cb510-62"><a href="assignment9.html#cb510-62" tabindex="-1"></a>        )</span>
-<span id="cb510-63"><a href="assignment9.html#cb510-63" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb510-64"><a href="assignment9.html#cb510-64" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb510-65"><a href="assignment9.html#cb510-65" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb510-66"><a href="assignment9.html#cb510-66" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
-<span id="cb510-67"><a href="assignment9.html#cb510-67" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
-<span id="cb510-68"><a href="assignment9.html#cb510-68" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb510-69"><a href="assignment9.html#cb510-69" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb510-70"><a href="assignment9.html#cb510-70" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
-<span id="cb510-71"><a href="assignment9.html#cb510-71" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb510-72"><a href="assignment9.html#cb510-72" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
-<span id="cb510-73"><a href="assignment9.html#cb510-73" tabindex="-1"></a>}</span>
-<span id="cb510-74"><a href="assignment9.html#cb510-74" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb510-75"><a href="assignment9.html#cb510-75" tabindex="-1"></a>  graph,</span>
-<span id="cb510-76"><a href="assignment9.html#cb510-76" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/first_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb510-77"><a href="assignment9.html#cb510-77" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="assignment9.html#cb511-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb511-2"><a href="assignment9.html#cb511-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb511-3"><a href="assignment9.html#cb511-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/first_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb511-4"><a href="assignment9.html#cb511-4" tabindex="-1"></a>  )</span>
-<span id="cb511-5"><a href="assignment9.html#cb511-5" tabindex="-1"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="assignment9.html#cb512-1" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb512-2"><a href="assignment9.html#cb512-2" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb512-3"><a href="assignment9.html#cb512-3" tabindex="-1"></a>    alpha,</span>
+<span id="cb512-4"><a href="assignment9.html#cb512-4" tabindex="-1"></a>    beta</span>
+<span id="cb512-5"><a href="assignment9.html#cb512-5" tabindex="-1"></a>    )</span>
+<span id="cb512-6"><a href="assignment9.html#cb512-6" tabindex="-1"></a><span class="co"># label</span></span>
+<span id="cb512-7"><a href="assignment9.html#cb512-7" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb512-8"><a href="assignment9.html#cb512-8" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb512-9"><a href="assignment9.html#cb512-9" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>,</span>
+<span id="cb512-10"><a href="assignment9.html#cb512-10" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span></span>
+<span id="cb512-11"><a href="assignment9.html#cb512-11" tabindex="-1"></a>    )</span>
+<span id="cb512-12"><a href="assignment9.html#cb512-12" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb512-13"><a href="assignment9.html#cb512-13" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
+<span id="cb512-14"><a href="assignment9.html#cb512-14" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>,</span>
+<span id="cb512-15"><a href="assignment9.html#cb512-15" tabindex="-1"></a>    label,</span>
+<span id="cb512-16"><a href="assignment9.html#cb512-16" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
+<span id="cb512-17"><a href="assignment9.html#cb512-17" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb512-18"><a href="assignment9.html#cb512-18" tabindex="-1"></a>    )</span>
+<span id="cb512-19"><a href="assignment9.html#cb512-19" tabindex="-1"></a><span class="co"># compute the graph</span></span>
+<span id="cb512-20"><a href="assignment9.html#cb512-20" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb512-21"><a href="assignment9.html#cb512-21" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb512-22"><a href="assignment9.html#cb512-22" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
+<span id="cb512-23"><a href="assignment9.html#cb512-23" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb512-24"><a href="assignment9.html#cb512-24" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
+<span id="cb512-25"><a href="assignment9.html#cb512-25" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
+<span id="cb512-26"><a href="assignment9.html#cb512-26" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
+<span id="cb512-27"><a href="assignment9.html#cb512-27" tabindex="-1"></a>      <span class="fl">0.8</span>,</span>
+<span id="cb512-28"><a href="assignment9.html#cb512-28" tabindex="-1"></a>      <span class="fl">1.2</span>,</span>
+<span id="cb512-29"><a href="assignment9.html#cb512-29" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">0.05</span></span>
+<span id="cb512-30"><a href="assignment9.html#cb512-30" tabindex="-1"></a>      )</span>
+<span id="cb512-31"><a href="assignment9.html#cb512-31" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span></span>
+<span id="cb512-32"><a href="assignment9.html#cb512-32" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb512-33"><a href="assignment9.html#cb512-33" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
+<span id="cb512-34"><a href="assignment9.html#cb512-34" tabindex="-1"></a>      <span class="at">.packages =</span> <span class="fu">c</span>(</span>
+<span id="cb512-35"><a href="assignment9.html#cb512-35" tabindex="-1"></a>        <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
+<span id="cb512-36"><a href="assignment9.html#cb512-36" tabindex="-1"></a>        <span class="st">&quot;foreach&quot;</span>,</span>
+<span id="cb512-37"><a href="assignment9.html#cb512-37" tabindex="-1"></a>        <span class="st">&quot;magrittr&quot;</span></span>
+<span id="cb512-38"><a href="assignment9.html#cb512-38" tabindex="-1"></a>        ),</span>
+<span id="cb512-39"><a href="assignment9.html#cb512-39" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb512-40"><a href="assignment9.html#cb512-40" tabindex="-1"></a>      ) <span class="sc">%dopar%</span> {</span>
+<span id="cb512-41"><a href="assignment9.html#cb512-41" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
+<span id="cb512-42"><a href="assignment9.html#cb512-42" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
+<span id="cb512-43"><a href="assignment9.html#cb512-43" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
+<span id="cb512-44"><a href="assignment9.html#cb512-44" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
+<span id="cb512-45"><a href="assignment9.html#cb512-45" tabindex="-1"></a>                 <span class="fu">compute_loglikelihood_first_price_w</span>(</span>
+<span id="cb512-46"><a href="assignment9.html#cb512-46" tabindex="-1"></a>                   theta_j,</span>
+<span id="cb512-47"><a href="assignment9.html#cb512-47" tabindex="-1"></a>                   df_first_w</span>
+<span id="cb512-48"><a href="assignment9.html#cb512-48" tabindex="-1"></a>                   )</span>
+<span id="cb512-49"><a href="assignment9.html#cb512-49" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
+<span id="cb512-50"><a href="assignment9.html#cb512-50" tabindex="-1"></a>             }</span>
+<span id="cb512-51"><a href="assignment9.html#cb512-51" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
+<span id="cb512-52"><a href="assignment9.html#cb512-52" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb512-53"><a href="assignment9.html#cb512-53" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">as.numeric</span>(theta_i_list), </span>
+<span id="cb512-54"><a href="assignment9.html#cb512-54" tabindex="-1"></a>      <span class="at">y =</span> <span class="fu">as.numeric</span>(objective_i)</span>
+<span id="cb512-55"><a href="assignment9.html#cb512-55" tabindex="-1"></a>      )</span>
+<span id="cb512-56"><a href="assignment9.html#cb512-56" tabindex="-1"></a>  g <span class="ot">&lt;-</span></span>
+<span id="cb512-57"><a href="assignment9.html#cb512-57" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb512-58"><a href="assignment9.html#cb512-58" tabindex="-1"></a>      <span class="at">data =</span> df_graph,</span>
+<span id="cb512-59"><a href="assignment9.html#cb512-59" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
+<span id="cb512-60"><a href="assignment9.html#cb512-60" tabindex="-1"></a>        <span class="at">x =</span> x,</span>
+<span id="cb512-61"><a href="assignment9.html#cb512-61" tabindex="-1"></a>        <span class="at">y =</span> y</span>
+<span id="cb512-62"><a href="assignment9.html#cb512-62" tabindex="-1"></a>        )</span>
+<span id="cb512-63"><a href="assignment9.html#cb512-63" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb512-64"><a href="assignment9.html#cb512-64" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb512-65"><a href="assignment9.html#cb512-65" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb512-66"><a href="assignment9.html#cb512-66" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
+<span id="cb512-67"><a href="assignment9.html#cb512-67" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
+<span id="cb512-68"><a href="assignment9.html#cb512-68" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb512-69"><a href="assignment9.html#cb512-69" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb512-70"><a href="assignment9.html#cb512-70" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i])) <span class="sc">+</span> </span>
+<span id="cb512-71"><a href="assignment9.html#cb512-71" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb512-72"><a href="assignment9.html#cb512-72" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb512-73"><a href="assignment9.html#cb512-73" tabindex="-1"></a>}</span>
+<span id="cb512-74"><a href="assignment9.html#cb512-74" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb512-75"><a href="assignment9.html#cb512-75" tabindex="-1"></a>  graph,</span>
+<span id="cb512-76"><a href="assignment9.html#cb512-76" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/first_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb512-77"><a href="assignment9.html#cb512-77" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="assignment9.html#cb513-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb513-2"><a href="assignment9.html#cb513-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb513-3"><a href="assignment9.html#cb513-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/first_parametric_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb513-4"><a href="assignment9.html#cb513-4" tabindex="-1"></a>  )</span>
+<span id="cb513-5"><a href="assignment9.html#cb513-5" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-243-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
@@ -1321,23 +1318,23 @@ where the second equation is from the first-order condition.</p>
 <ol start="9" style="list-style-type: decimal">
 <li>Estimate the parameters by maximizing the log-likelihood. Set the lower bounds at zero. Use the Nelder-Mead method. Otherwise the parameter search can go to extreme values because of the discontinuity at the point where the upper limit is below the observed bid.</li>
 </ol>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="assignment9.html#cb514-1" tabindex="-1"></a>result_first_parametric <span class="ot">&lt;-</span></span>
-<span id="cb514-2"><a href="assignment9.html#cb514-2" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
-<span id="cb514-3"><a href="assignment9.html#cb514-3" tabindex="-1"></a>    <span class="at">par =</span> theta,</span>
-<span id="cb514-4"><a href="assignment9.html#cb514-4" tabindex="-1"></a>    <span class="at">fn =</span> compute_loglikelihood_first_price_w,</span>
-<span id="cb514-5"><a href="assignment9.html#cb514-5" tabindex="-1"></a>    <span class="at">df_first_w =</span> df_first_w,</span>
-<span id="cb514-6"><a href="assignment9.html#cb514-6" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
-<span id="cb514-7"><a href="assignment9.html#cb514-7" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb514-8"><a href="assignment9.html#cb514-8" tabindex="-1"></a>  )</span>
-<span id="cb514-9"><a href="assignment9.html#cb514-9" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb514-10"><a href="assignment9.html#cb514-10" tabindex="-1"></a>  result_first_parametric,</span>
-<span id="cb514-11"><a href="assignment9.html#cb514-11" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_first_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb514-12"><a href="assignment9.html#cb514-12" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="assignment9.html#cb515-1" tabindex="-1"></a>result_first_parametric <span class="ot">&lt;-</span> </span>
-<span id="cb515-2"><a href="assignment9.html#cb515-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb515-3"><a href="assignment9.html#cb515-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_first_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb515-4"><a href="assignment9.html#cb515-4" tabindex="-1"></a>  )</span>
-<span id="cb515-5"><a href="assignment9.html#cb515-5" tabindex="-1"></a>result_first_parametric</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="assignment9.html#cb516-1" tabindex="-1"></a>result_first_parametric <span class="ot">&lt;-</span></span>
+<span id="cb516-2"><a href="assignment9.html#cb516-2" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
+<span id="cb516-3"><a href="assignment9.html#cb516-3" tabindex="-1"></a>    <span class="at">par =</span> theta,</span>
+<span id="cb516-4"><a href="assignment9.html#cb516-4" tabindex="-1"></a>    <span class="at">fn =</span> compute_loglikelihood_first_price_w,</span>
+<span id="cb516-5"><a href="assignment9.html#cb516-5" tabindex="-1"></a>    <span class="at">df_first_w =</span> df_first_w,</span>
+<span id="cb516-6"><a href="assignment9.html#cb516-6" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;Nelder-Mead&quot;</span>,</span>
+<span id="cb516-7"><a href="assignment9.html#cb516-7" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb516-8"><a href="assignment9.html#cb516-8" tabindex="-1"></a>  )</span>
+<span id="cb516-9"><a href="assignment9.html#cb516-9" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb516-10"><a href="assignment9.html#cb516-10" tabindex="-1"></a>  result_first_parametric,</span>
+<span id="cb516-11"><a href="assignment9.html#cb516-11" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_first_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb516-12"><a href="assignment9.html#cb516-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="assignment9.html#cb517-1" tabindex="-1"></a>result_first_parametric <span class="ot">&lt;-</span> </span>
+<span id="cb517-2"><a href="assignment9.html#cb517-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb517-3"><a href="assignment9.html#cb517-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a9/result_first_parametric.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb517-4"><a href="assignment9.html#cb517-4" tabindex="-1"></a>  )</span>
+<span id="cb517-5"><a href="assignment9.html#cb517-5" tabindex="-1"></a>result_first_parametric</span></code></pre></div>
 <pre><code>## $par
 ## [1] 1.977676 2.004715
 ## 
@@ -1353,13 +1350,13 @@ where the second equation is from the first-order condition.</p>
 ## 
 ## $message
 ## NULL</code></pre>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="assignment9.html#cb517-1" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
-<span id="cb517-2"><a href="assignment9.html#cb517-2" tabindex="-1"></a></span>
-<span id="cb517-3"><a href="assignment9.html#cb517-3" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb517-4"><a href="assignment9.html#cb517-4" tabindex="-1"></a>    <span class="at">true =</span> theta,</span>
-<span id="cb517-5"><a href="assignment9.html#cb517-5" tabindex="-1"></a>    <span class="at">estimate =</span> result_first_parametric<span class="sc">$</span>par</span>
-<span id="cb517-6"><a href="assignment9.html#cb517-6" tabindex="-1"></a>  )</span>
-<span id="cb517-7"><a href="assignment9.html#cb517-7" tabindex="-1"></a>comparison</span></code></pre></div>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="assignment9.html#cb519-1" tabindex="-1"></a>comparison <span class="ot">&lt;-</span></span>
+<span id="cb519-2"><a href="assignment9.html#cb519-2" tabindex="-1"></a></span>
+<span id="cb519-3"><a href="assignment9.html#cb519-3" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb519-4"><a href="assignment9.html#cb519-4" tabindex="-1"></a>    <span class="at">true =</span> theta,</span>
+<span id="cb519-5"><a href="assignment9.html#cb519-5" tabindex="-1"></a>    <span class="at">estimate =</span> result_first_parametric<span class="sc">$</span>par</span>
+<span id="cb519-6"><a href="assignment9.html#cb519-6" tabindex="-1"></a>  )</span>
+<span id="cb519-7"><a href="assignment9.html#cb519-7" tabindex="-1"></a>comparison</span></code></pre></div>
 <pre><code>##   true estimate
 ## 1    2 1.977676
 ## 2    2 2.004715</code></pre>
@@ -1368,33 +1365,33 @@ where the second equation is from the first-order condition.</p>
 <li>Write a function <code>F_b(b)</code> that returns an empirical cumulative distribution at <code>b</code>. This can be obtained by using a function <code>ecdf</code>.
 Also, write a function <code>f_b(b)</code> that returns an empirical probability density at <code>b</code>. This can be obtained by combining functions <code>approxfun</code> and <code>density</code>.</li>
 </ol>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="assignment9.html#cb519-1" tabindex="-1"></a><span class="co"># cumulative distribution</span></span>
-<span id="cb519-2"><a href="assignment9.html#cb519-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb519-3"><a href="assignment9.html#cb519-3" tabindex="-1"></a>  df_first, </span>
-<span id="cb519-4"><a href="assignment9.html#cb519-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> b)</span>
-<span id="cb519-5"><a href="assignment9.html#cb519-5" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb519-6"><a href="assignment9.html#cb519-6" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb519-7"><a href="assignment9.html#cb519-7" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;bid&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb519-8"><a href="assignment9.html#cb519-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;cumulative distribution&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb519-9"><a href="assignment9.html#cb519-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="assignment9.html#cb521-1" tabindex="-1"></a><span class="co"># cumulative distribution</span></span>
+<span id="cb521-2"><a href="assignment9.html#cb521-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb521-3"><a href="assignment9.html#cb521-3" tabindex="-1"></a>  df_first, </span>
+<span id="cb521-4"><a href="assignment9.html#cb521-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> b)</span>
+<span id="cb521-5"><a href="assignment9.html#cb521-5" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb521-6"><a href="assignment9.html#cb521-6" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb521-7"><a href="assignment9.html#cb521-7" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;bid&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb521-8"><a href="assignment9.html#cb521-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;cumulative distribution&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb521-9"><a href="assignment9.html#cb521-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="lecture_files/figure-html/unnamed-chunk-246-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="assignment9.html#cb520-1" tabindex="-1"></a>F_b <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(df_first<span class="sc">$</span>b)</span>
-<span id="cb520-2"><a href="assignment9.html#cb520-2" tabindex="-1"></a><span class="fu">F_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="assignment9.html#cb522-1" tabindex="-1"></a>F_b <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(df_first<span class="sc">$</span>b)</span>
+<span id="cb522-2"><a href="assignment9.html#cb522-2" tabindex="-1"></a><span class="fu">F_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
 <pre><code>## [1] 0.4104628</code></pre>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="assignment9.html#cb522-1" tabindex="-1"></a><span class="fu">F_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="assignment9.html#cb524-1" tabindex="-1"></a><span class="fu">F_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
 <pre><code>## [1] 0.7173038</code></pre>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="assignment9.html#cb524-1" tabindex="-1"></a><span class="co"># probability density</span></span>
-<span id="cb524-2"><a href="assignment9.html#cb524-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb524-3"><a href="assignment9.html#cb524-3" tabindex="-1"></a>  df_first, </span>
-<span id="cb524-4"><a href="assignment9.html#cb524-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> b)</span>
-<span id="cb524-5"><a href="assignment9.html#cb524-5" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb524-6"><a href="assignment9.html#cb524-6" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb524-7"><a href="assignment9.html#cb524-7" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="assignment9.html#cb526-1" tabindex="-1"></a><span class="co"># probability density</span></span>
+<span id="cb526-2"><a href="assignment9.html#cb526-2" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb526-3"><a href="assignment9.html#cb526-3" tabindex="-1"></a>  df_first, </span>
+<span id="cb526-4"><a href="assignment9.html#cb526-4" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> b)</span>
+<span id="cb526-5"><a href="assignment9.html#cb526-5" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb526-6"><a href="assignment9.html#cb526-6" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb526-7"><a href="assignment9.html#cb526-7" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="lecture_files/figure-html/unnamed-chunk-246-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="assignment9.html#cb525-1" tabindex="-1"></a>f_b <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(<span class="fu">density</span>(df_first<span class="sc">$</span>b))</span>
-<span id="cb525-2"><a href="assignment9.html#cb525-2" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="assignment9.html#cb527-1" tabindex="-1"></a>f_b <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(<span class="fu">density</span>(df_first<span class="sc">$</span>b))</span>
+<span id="cb527-2"><a href="assignment9.html#cb527-2" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
 <pre><code>## [1] 1.680124</code></pre>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="assignment9.html#cb527-1" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="assignment9.html#cb529-1" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
 <pre><code>## [1] 1.469983</code></pre>
 <p>The equilibrium distribution and density of the highest rival’s bid are:
 <span class="math display">\[
@@ -1406,18 +1403,18 @@ h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 <ol start="11" style="list-style-type: decimal">
 <li>Write a function <code>H_b(b, n, F_b)</code> and <code>h_b(b, n, F_b, f_b)</code> that return the equilibrium distribution and density of the highest rival’s bid at point <code>b</code>.</li>
 </ol>
-<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="assignment9.html#cb529-1" tabindex="-1"></a><span class="fu">H_b</span>(</span>
-<span id="cb529-2"><a href="assignment9.html#cb529-2" tabindex="-1"></a>  <span class="at">b =</span> <span class="fl">0.4</span>,</span>
-<span id="cb529-3"><a href="assignment9.html#cb529-3" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
-<span id="cb529-4"><a href="assignment9.html#cb529-4" tabindex="-1"></a>  <span class="at">F_b =</span> F_b</span>
-<span id="cb529-5"><a href="assignment9.html#cb529-5" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## [1] 0.001962983</code></pre>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="assignment9.html#cb531-1" tabindex="-1"></a><span class="fu">h_b</span>(</span>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="assignment9.html#cb531-1" tabindex="-1"></a><span class="fu">H_b</span>(</span>
 <span id="cb531-2"><a href="assignment9.html#cb531-2" tabindex="-1"></a>  <span class="at">b =</span> <span class="fl">0.4</span>,</span>
 <span id="cb531-3"><a href="assignment9.html#cb531-3" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
-<span id="cb531-4"><a href="assignment9.html#cb531-4" tabindex="-1"></a>  <span class="at">F_b =</span> F_b, </span>
-<span id="cb531-5"><a href="assignment9.html#cb531-5" tabindex="-1"></a>  f_b</span>
-<span id="cb531-6"><a href="assignment9.html#cb531-6" tabindex="-1"></a>  )</span></code></pre></div>
+<span id="cb531-4"><a href="assignment9.html#cb531-4" tabindex="-1"></a>  <span class="at">F_b =</span> F_b</span>
+<span id="cb531-5"><a href="assignment9.html#cb531-5" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## [1] 0.001962983</code></pre>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="assignment9.html#cb533-1" tabindex="-1"></a><span class="fu">h_b</span>(</span>
+<span id="cb533-2"><a href="assignment9.html#cb533-2" tabindex="-1"></a>  <span class="at">b =</span> <span class="fl">0.4</span>,</span>
+<span id="cb533-3"><a href="assignment9.html#cb533-3" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
+<span id="cb533-4"><a href="assignment9.html#cb533-4" tabindex="-1"></a>  <span class="at">F_b =</span> F_b, </span>
+<span id="cb533-5"><a href="assignment9.html#cb533-5" tabindex="-1"></a>  f_b</span>
+<span id="cb533-6"><a href="assignment9.html#cb533-6" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 0.05624476</code></pre>
 <p>When a bidder bids <span class="math inline">\(b\)</span>, the implied valuation of her is:
 <span class="math display">\[
@@ -1426,53 +1423,53 @@ x = b + \frac{H_b(b)}{h_b(b)}.
 <ol start="12" style="list-style-type: decimal">
 <li>Write a function <code>compute_implied_valuation(b, n, r)</code> that returns the implied valuation given a bid. Let it return <span class="math inline">\(x = 0\)</span> if <span class="math inline">\(b &lt; r\)</span>, because we cannot know the value when the bid is below the reserve price.</li>
 </ol>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="assignment9.html#cb533-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> df_first[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>]</span>
-<span id="cb533-2"><a href="assignment9.html#cb533-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> df_first[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>]</span>
-<span id="cb533-3"><a href="assignment9.html#cb533-3" tabindex="-1"></a><span class="fu">compute_implied_valuation</span>(</span>
-<span id="cb533-4"><a href="assignment9.html#cb533-4" tabindex="-1"></a>  <span class="at">b =</span> <span class="fl">0.4</span>,</span>
-<span id="cb533-5"><a href="assignment9.html#cb533-5" tabindex="-1"></a>  <span class="at">n =</span> n, </span>
-<span id="cb533-6"><a href="assignment9.html#cb533-6" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
-<span id="cb533-7"><a href="assignment9.html#cb533-7" tabindex="-1"></a>  <span class="at">F_b =</span> F_b, </span>
-<span id="cb533-8"><a href="assignment9.html#cb533-8" tabindex="-1"></a>  <span class="at">f_b =</span> f_b</span>
-<span id="cb533-9"><a href="assignment9.html#cb533-9" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="assignment9.html#cb535-1" tabindex="-1"></a>r <span class="ot">&lt;-</span> df_first[<span class="dv">1</span>, <span class="st">&quot;r&quot;</span>]</span>
+<span id="cb535-2"><a href="assignment9.html#cb535-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> df_first[<span class="dv">1</span>, <span class="st">&quot;n&quot;</span>]</span>
+<span id="cb535-3"><a href="assignment9.html#cb535-3" tabindex="-1"></a><span class="fu">compute_implied_valuation</span>(</span>
+<span id="cb535-4"><a href="assignment9.html#cb535-4" tabindex="-1"></a>  <span class="at">b =</span> <span class="fl">0.4</span>,</span>
+<span id="cb535-5"><a href="assignment9.html#cb535-5" tabindex="-1"></a>  <span class="at">n =</span> n, </span>
+<span id="cb535-6"><a href="assignment9.html#cb535-6" tabindex="-1"></a>  <span class="at">r =</span> r, </span>
+<span id="cb535-7"><a href="assignment9.html#cb535-7" tabindex="-1"></a>  <span class="at">F_b =</span> F_b, </span>
+<span id="cb535-8"><a href="assignment9.html#cb535-8" tabindex="-1"></a>  <span class="at">f_b =</span> f_b</span>
+<span id="cb535-9"><a href="assignment9.html#cb535-9" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##           n
 ## 1 0.4349007</code></pre>
 <ol start="13" style="list-style-type: decimal">
 <li>Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.</li>
 </ol>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="assignment9.html#cb535-1" tabindex="-1"></a>valuation_implied <span class="ot">&lt;-</span> </span>
-<span id="cb535-2"><a href="assignment9.html#cb535-2" tabindex="-1"></a>  df_first <span class="sc">%&gt;%</span></span>
-<span id="cb535-3"><a href="assignment9.html#cb535-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb535-4"><a href="assignment9.html#cb535-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb535-5"><a href="assignment9.html#cb535-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">compute_implied_valuation</span>(</span>
-<span id="cb535-6"><a href="assignment9.html#cb535-6" tabindex="-1"></a>      b, </span>
-<span id="cb535-7"><a href="assignment9.html#cb535-7" tabindex="-1"></a>      n,</span>
-<span id="cb535-8"><a href="assignment9.html#cb535-8" tabindex="-1"></a>      r,</span>
-<span id="cb535-9"><a href="assignment9.html#cb535-9" tabindex="-1"></a>      F_b, </span>
-<span id="cb535-10"><a href="assignment9.html#cb535-10" tabindex="-1"></a>      f_b</span>
-<span id="cb535-11"><a href="assignment9.html#cb535-11" tabindex="-1"></a>      )</span>
-<span id="cb535-12"><a href="assignment9.html#cb535-12" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb535-13"><a href="assignment9.html#cb535-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb535-14"><a href="assignment9.html#cb535-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(x) <span class="sc">%&gt;%</span></span>
-<span id="cb535-15"><a href="assignment9.html#cb535-15" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;estimate&quot;</span>)</span>
-<span id="cb535-16"><a href="assignment9.html#cb535-16" tabindex="-1"></a>valuation_true <span class="ot">&lt;-</span> </span>
-<span id="cb535-17"><a href="assignment9.html#cb535-17" tabindex="-1"></a>  valuation <span class="sc">%&gt;%</span></span>
-<span id="cb535-18"><a href="assignment9.html#cb535-18" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(x) <span class="sc">%&gt;%</span></span>
-<span id="cb535-19"><a href="assignment9.html#cb535-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;true&quot;</span>)</span>
-<span id="cb535-20"><a href="assignment9.html#cb535-20" tabindex="-1"></a>valuation_plot <span class="ot">&lt;-</span> </span>
-<span id="cb535-21"><a href="assignment9.html#cb535-21" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
-<span id="cb535-22"><a href="assignment9.html#cb535-22" tabindex="-1"></a>    valuation_true,</span>
-<span id="cb535-23"><a href="assignment9.html#cb535-23" tabindex="-1"></a>    valuation_implied</span>
-<span id="cb535-24"><a href="assignment9.html#cb535-24" tabindex="-1"></a>    )</span>
-<span id="cb535-25"><a href="assignment9.html#cb535-25" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb535-26"><a href="assignment9.html#cb535-26" tabindex="-1"></a>  valuation_plot,</span>
-<span id="cb535-27"><a href="assignment9.html#cb535-27" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb535-28"><a href="assignment9.html#cb535-28" tabindex="-1"></a>    <span class="at">x =</span> x, </span>
-<span id="cb535-29"><a href="assignment9.html#cb535-29" tabindex="-1"></a>    <span class="at">color =</span> type</span>
-<span id="cb535-30"><a href="assignment9.html#cb535-30" tabindex="-1"></a>    )</span>
-<span id="cb535-31"><a href="assignment9.html#cb535-31" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb535-32"><a href="assignment9.html#cb535-32" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span> </span>
-<span id="cb535-33"><a href="assignment9.html#cb535-33" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="assignment9.html#cb537-1" tabindex="-1"></a>valuation_implied <span class="ot">&lt;-</span> </span>
+<span id="cb537-2"><a href="assignment9.html#cb537-2" tabindex="-1"></a>  df_first <span class="sc">%&gt;%</span></span>
+<span id="cb537-3"><a href="assignment9.html#cb537-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb537-4"><a href="assignment9.html#cb537-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb537-5"><a href="assignment9.html#cb537-5" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">compute_implied_valuation</span>(</span>
+<span id="cb537-6"><a href="assignment9.html#cb537-6" tabindex="-1"></a>      b, </span>
+<span id="cb537-7"><a href="assignment9.html#cb537-7" tabindex="-1"></a>      n,</span>
+<span id="cb537-8"><a href="assignment9.html#cb537-8" tabindex="-1"></a>      r,</span>
+<span id="cb537-9"><a href="assignment9.html#cb537-9" tabindex="-1"></a>      F_b, </span>
+<span id="cb537-10"><a href="assignment9.html#cb537-10" tabindex="-1"></a>      f_b</span>
+<span id="cb537-11"><a href="assignment9.html#cb537-11" tabindex="-1"></a>      )</span>
+<span id="cb537-12"><a href="assignment9.html#cb537-12" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb537-13"><a href="assignment9.html#cb537-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb537-14"><a href="assignment9.html#cb537-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb537-15"><a href="assignment9.html#cb537-15" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;estimate&quot;</span>)</span>
+<span id="cb537-16"><a href="assignment9.html#cb537-16" tabindex="-1"></a>valuation_true <span class="ot">&lt;-</span> </span>
+<span id="cb537-17"><a href="assignment9.html#cb537-17" tabindex="-1"></a>  valuation <span class="sc">%&gt;%</span></span>
+<span id="cb537-18"><a href="assignment9.html#cb537-18" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(x) <span class="sc">%&gt;%</span></span>
+<span id="cb537-19"><a href="assignment9.html#cb537-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;true&quot;</span>)</span>
+<span id="cb537-20"><a href="assignment9.html#cb537-20" tabindex="-1"></a>valuation_plot <span class="ot">&lt;-</span> </span>
+<span id="cb537-21"><a href="assignment9.html#cb537-21" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
+<span id="cb537-22"><a href="assignment9.html#cb537-22" tabindex="-1"></a>    valuation_true,</span>
+<span id="cb537-23"><a href="assignment9.html#cb537-23" tabindex="-1"></a>    valuation_implied</span>
+<span id="cb537-24"><a href="assignment9.html#cb537-24" tabindex="-1"></a>    )</span>
+<span id="cb537-25"><a href="assignment9.html#cb537-25" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb537-26"><a href="assignment9.html#cb537-26" tabindex="-1"></a>  valuation_plot,</span>
+<span id="cb537-27"><a href="assignment9.html#cb537-27" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb537-28"><a href="assignment9.html#cb537-28" tabindex="-1"></a>    <span class="at">x =</span> x, </span>
+<span id="cb537-29"><a href="assignment9.html#cb537-29" tabindex="-1"></a>    <span class="at">color =</span> type</span>
+<span id="cb537-30"><a href="assignment9.html#cb537-30" tabindex="-1"></a>    )</span>
+<span id="cb537-31"><a href="assignment9.html#cb537-31" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb537-32"><a href="assignment9.html#cb537-32" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span> </span>
+<span id="cb537-33"><a href="assignment9.html#cb537-33" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="lecture_files/figure-html/unnamed-chunk-249-1.png" width="672" style="display: block; margin: auto;" /></p>
 
 </div>

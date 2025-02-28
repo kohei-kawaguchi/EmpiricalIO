@@ -306,8 +306,9 @@ q_{ijt} = 1\{u_{ijt} = \max_{k \in \mathcal{J}_t \cup \{0\}} u_{ikt}\},
 $$
 but
 $$
-\tilde{q}_{ijt} = \frac{\exp(u_{ijt})}{1 + \sum_{k \in \mathcal{J}_t} \exp(u_{ikt})}.
+\tilde{q}_{ijt} = \frac{\exp(\bar{u}_{ijt})}{1 + \sum_{k \in \mathcal{J}_t} \exp(\bar{u}_{ikt})},
 $$
+where $\bar{u}_{ijt} = \beta_{it}' x_j + \alpha_{it} p_{jt} + \xi_{jt}$.
 ```{r, echo = TRUE}
 df_choice_smooth <-
   compute_choice_smooth(
