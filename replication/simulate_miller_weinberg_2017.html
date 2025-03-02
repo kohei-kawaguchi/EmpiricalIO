@@ -1552,7 +1552,63 @@ border-radius: 0px;
 </div>
 
 
-
+<div id="reading" class="section level1">
+<h1>Reading</h1>
+<p>Miller, Nathan H., and Matthew C. Weinberg. “Understanding the Price
+Effects of the MillerCoors Joint Venture.” Econometrica 85, no. 6
+(2017): 1763–91. <a href="https://doi.org/10.3982/ECTA13333" class="uri">https://doi.org/10.3982/ECTA13333</a>.</p>
+</div>
+<div id="simulation" class="section level1">
+<h1>Simulation</h1>
+<p>Consider the model as described by Miller and Weinberg (2017) with
+the demand model of RCNL-4</p>
+<div id="dimensions" class="section level2">
+<h2>Dimensions</h2>
+<p>Simulate data from the following setting: There are 10 periods before
+a merger and 10 periods after the merger. There are 10 regional markets
+in each period. In the pre-merger period, there are 1-5 firms. In the
+post-merger period, firm 1 and 5 merge to be a single firm. Each firm
+produces and sells a single product in each market each year.</p>
+</div>
+<div id="exogenous-variables" class="section level2">
+<h2>Exogenous variables</h2>
+<p>Product <span class="math inline">\(j\)</span> in market <span class="math inline">\(r\)</span> in period <span class="math inline">\(t\)</span> has a demand covariate <span class="math inline">\(x_{jrt}\)</span>, which is drawn from an i.i.d.
+standard normal distribution. It also has a cost covariate <span class="math inline">\(w_{jrt}\)</span>, which is also drawn from an
+i.i.d. standard normal distribution. These are different variables,
+meaning that the demand covariate is excluded from the cost function and
+the cost covariate is excluded from the demand function. You can assume
+that the consumer demographic <span class="math inline">\(D_i\)</span>
+is at the market level, and draw it from an i.i.d. standard normal
+distribution.</p>
+<p>Draw all other shocks in the model from an i.i.d. standard normal
+distribution, too. Be careful on the unit of measurement of the
+variables. For example, the market-level demand shock is drawn for each
+market, but does not change across products nor periods.</p>
+<p>Otherwise, follow the description in the paper.</p>
+</div>
+<div id="tasks" class="section level2">
+<h2>Tasks</h2>
+<p>In R, develop functions implementing the following:</p>
+<ol style="list-style-type: decimal">
+<li>Set dimensions</li>
+<li>Set parameters</li>
+<li>Draw exogenous variables</li>
+<li>Draw shocks</li>
+<li>Solve the demand function given supply side variables (solving for
+the share)</li>
+<li>Solve equilibrium (solving for the price)</li>
+<li>Summarize the endogenous variables before and after the merger</li>
+</ol>
+</div>
+<div id="remarks" class="section level2">
+<h2>Remarks</h2>
+<p>When you do so, follow the workflow and coding rules as specified in
+<a href="https://www.notion.so/koheikawaguchi/Tutorial-Page-18e6acdb3c2e8036af3df134e088f9dd" class="uri">https://www.notion.so/koheikawaguchi/Tutorial-Page-18e6acdb3c2e8036af3df134e088f9dd</a></p>
+<p>Specifically, make sure to start with testing functions from the
+bottom to the top. Then, you move on to main execution files. The
+results will be saved and read from an Rmarkdown file to report.</p>
+</div>
+</div>
 
 
 

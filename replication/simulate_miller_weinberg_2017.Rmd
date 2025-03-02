@@ -1,0 +1,68 @@
+---
+title: "Replication of Miller and Weinberg (2017)"
+author: "Kohei Kawaguchi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: tango
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  warning = FALSE, 
+  message = FALSE,
+  fig.width = 10, 
+  fig.height = 6
+)
+
+# Load required packages
+devtools::load_all(".")
+library(foreach)
+library(magrittr)
+library(ggplot2)
+```
+
+# Reading
+
+Miller, Nathan H., and Matthew C. Weinberg. "Understanding the Price Effects of the MillerCoors Joint Venture." Econometrica 85, no. 6 (2017): 1763–91. https://doi.org/10.3982/ECTA13333.
+
+
+# Simulation
+
+Consider the model as described by Miller and Weinberg (2017) with the demand model of RCNL-4
+
+## Dimensions
+
+Simulate data from the following setting: There are 10 periods before a merger and 10 periods after the merger. There are 10 regional markets in each period. In the pre-merger period, there are 1-5 firms. In the post-merger period, firm 1 and 5 merge to be a single firm. Each firm produces and sells a single product in each market each year.
+
+## Exogenous variables
+
+Product $j$ in market $r$ in period $t$ has a demand covariate $x_{jrt}$, which is drawn from an i.i.d. standard normal distribution. It also has a cost covariate $w_{jrt}$, which is also drawn from an i.i.d. standard normal distribution. These are different variables, meaning that the demand covariate is excluded from the cost function and the cost covariate is excluded from the demand function. You can assume that the consumer demographic $D_i$ is at the market level, and draw it from an i.i.d. standard normal distribution.
+
+Draw all other shocks in the model from an i.i.d. standard normal distribution, too. Be careful on the unit of measurement of the variables. For example, the market-level demand shock is drawn for each market, but does not change across products nor periods.
+
+Otherwise, follow the description in the paper.
+
+## Tasks
+
+In R, develop functions implementing the following:
+
+1. Set dimensions
+2. Set parameters
+3. Draw exogenous variables
+4. Draw shocks
+5. Solve the demand function given supply side variables (solving for the share)
+6. Solve equilibrium (solving for the price)
+7. Summarize the endogenous variables before and after the merger
+
+## Remarks
+
+When you do so, follow the workflow and coding rules as specified in https://www.notion.so/koheikawaguchi/Tutorial-Page-18e6acdb3c2e8036af3df134e088f9dd
+
+Specifically, make sure to start with testing functions from the bottom to the top. Then, you move on to main execution files. The results will be saved and read from an Rmarkdown file to report.
+
