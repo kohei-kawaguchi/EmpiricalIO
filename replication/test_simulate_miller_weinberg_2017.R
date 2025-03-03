@@ -25,7 +25,8 @@ findGlobals(
 
 exogenous <- 
   set_exogenous(
-    constant = constant
+    constant = constant,
+    parameter = parameter
   )
 findGlobals(
   set_exogenous

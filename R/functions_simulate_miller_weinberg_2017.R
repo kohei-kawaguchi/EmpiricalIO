@@ -5,8 +5,14 @@ set_constant <-
     num_period_before <- 10
     num_period_after <- 10
     num_market <- 10
-    num_firm <- 5
+    num_firm <- 4
     num_consumer <- 1000
+    merge <-
+      c(
+        1,
+        2,
+        3
+      )
 
     return(
       list(
@@ -14,7 +20,8 @@ set_constant <-
         num_period_after = num_period_after,
         num_market = num_market,
         num_firm = num_firm,
-        num_consumer = num_consumer
+        num_consumer = num_consumer,
+        merge = merge
       )
     )
   }
@@ -29,7 +36,7 @@ set_parameter <-
     pi_alpha <- 0.01
     pi_beta <- 0.01
     gamma <- 1
-    kappa <- 0.5
+    kappa <- 1
 
     demand <-
       list(
@@ -62,7 +69,8 @@ set_parameter <-
 
 set_exogenous <-
   function(
-    constant
+    constant,
+    parameter
   ) {
     x <- 
       foreach (
@@ -124,11 +132,69 @@ set_exogenous <-
         return(z_r)
       }
 
+    owner_before <-
+      foreach (
+        t = seq_len(
+          constant$num_period_before
+        )
+      ) %do% {
+        owner_t <-
+          foreach (
+            r = seq_len(
+              constant$num_market
+            )
+          ) %do% {
+            owner_rt <-
+              rep(
+                1,
+                constant$num_firm
+              ) %>%
+              diag()
+            return(owner_rt)
+          }
+        return(owner_t)
+      }
+
+    owner_after <-
+      foreach (
+        t = seq_len(
+          constant$num_period_after
+        )
+      ) %do% {
+        owner_t <-
+          foreach (
+            r = seq_len(
+              constant$num_market
+            )
+          ) %do% {
+            owner_rt <-
+              rep(
+                1,
+                constant$num_firm
+              ) %>%
+              diag()
+            owner_rt[
+              constant$merge,
+              constant$merge
+            ] <- parameter$conduct$kappa
+            diag(owner_rt) <- 1
+            return(owner_rt)
+          }
+        return(owner_t)
+      }
+
+    owner <-
+      c(
+        owner_before,
+        owner_after
+      )
+
     return(
       list(
         x = x,
         w = w,
-        d = d
+        d = d,
+        owner = owner
       )
     )
   }
