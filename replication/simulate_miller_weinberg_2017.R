@@ -7,15 +7,13 @@ library(magrittr)
 library(codetools)
 set.seed(1)
 
-# set dimensions ---------------------------------------------------------------
+# set dimension --------------------------------------------------------------- 
 
+constant <- set_constant()
 
+# set equilibrium --------------------------------------------------------------
 
-# set parameters ---------------------------------------------------------------
-
-
-
-# draw exogenous variables -----------------------------------------------------
-
-
-
+equilibrium <-
+  set_equilibrium(
+    constant = constant
+  )
