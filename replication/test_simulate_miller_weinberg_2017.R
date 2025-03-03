@@ -51,3 +51,13 @@ endogenous <-
 findGlobals(
   set_endogenous
 )
+
+# set equilibrium --------------------------------------------------------------
+
+equilibrium <-
+  set_equilibrium(
+    constant = constant
+  )
+findGlobals(
+  set_equilibrium
+)

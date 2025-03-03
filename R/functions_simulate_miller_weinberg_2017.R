@@ -374,3 +374,43 @@ set_endogenous <-
       )
     )
   }
+
+set_equilibrium <-
+  function(
+    constant
+  ) {
+    # set parameter ---------------------------------------------------------------
+
+    parameter <- set_parameter()
+
+    # draw exogenous variable -----------------------------------------------------
+
+    exogenous <- 
+      set_exogenous(
+        constant = constant,
+        parameter = parameter
+      )
+
+    # draw shock -------------------------------------------------------------------
+
+    shock <- 
+      set_shock(
+        constant = constant
+      )
+
+    # set endogenous variable ------------------------------------------------------
+
+    endogenous <-
+      set_endogenous(
+        constant = constant
+      )
+
+    return(
+      list(
+        parameter = parameter,
+        exogenous = exogenous,
+        shock = shock,
+        endogenous = endogenous
+      )
+    )
+  }
