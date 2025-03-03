@@ -250,3 +250,61 @@ set_shock <-
       )
     )
   }
+
+set_endogenous <- 
+  function(
+    constant
+  ) {
+    share <-
+      foreach (
+        t = seq_len(
+          constant$num_period_before + 
+          constant$num_period_after
+        )
+      ) %do% {
+        share_t <-
+          foreach (
+            r = seq_len(
+              constant$num_market
+            )
+          ) %do% {
+            share_rt <-
+              rnorm(
+                constant$num_firm
+              ) %>%
+              as.matrix()
+            return(share_rt)
+          }
+        return(share_t)
+      }
+
+    price <-
+      foreach (
+        t = seq_len(
+          constant$num_period_before + 
+          constant$num_period_after
+        )
+      ) %do% {
+        price_t <-
+          foreach (
+            r = seq_len(
+              constant$num_market
+            )
+          ) %do% {
+            price_rt <-
+              rnorm(
+                constant$num_firm
+              ) %>%
+              as.matrix()
+            return(price_rt)
+          }
+        return(price_t)
+      }
+
+    return(
+      list(
+        share = share,
+        price = price
+      )
+    )
+  }

@@ -11,14 +11,14 @@ set.seed(1)
 
 constant <- set_constant()
 findGlobals(
-  constant
+  set_constant
 )
 
 # set parameter ---------------------------------------------------------------
 
 parameter <- set_parameter()
 findGlobals(
-  parameter
+  set_parameter
 )
 
 # draw exogenous variable -----------------------------------------------------
@@ -28,7 +28,7 @@ exogenous <-
     constant = constant
   )
 findGlobals(
-  exogenous
+  set_exogenous
 )
 
 # draw shock -------------------------------------------------------------------
@@ -38,6 +38,15 @@ shock <-
     constant = constant
   )
 findGlobals(
-  shock
+  set_shock
 )
 
+# set endogenous variable ------------------------------------------------------
+
+endogenous <-
+  set_endogenous(
+    constant = constant
+  )
+findGlobals(
+  set_endogenous
+)
