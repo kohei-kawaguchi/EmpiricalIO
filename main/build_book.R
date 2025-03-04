@@ -8,6 +8,7 @@ if(exists(".rs.restartR")) {
   gc()  # garbage collection
 }
 
+# Create .nojekyll file for GitHub Pages
 file.create("docs/.nojekyll")
 
 # serve book - fixed directory path
@@ -15,15 +16,15 @@ bookdown::serve_book(dir = "lecture")
 
 # render html book
 bookdown::render_book(
-  input = "lecture/index.Rmd", 
-  output = "bookdown::gitbook",
+  input = "lecture", 
+  output_format = "bookdown::gitbook",
   clean = TRUE
 )
 
 # render pdf book
 bookdown::render_book(
-  input = "lecture/index.Rmd", 
-  output = "bookdown::pdf_book",
+  input = "lecture", 
+  output_format = "bookdown::pdf_book",
   clean = TRUE
 )
 
