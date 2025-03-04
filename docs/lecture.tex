@@ -3649,6 +3649,66 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \end{equation}
 \end{itemize}
 
+\subsection{Numerical Integration with Quadrature}\label{numerical-integration-with-quadrature}
+
+\begin{itemize}
+\tightlist
+\item
+  Refer to Section 7 of \citet{Judd1998}.
+\item
+  Gauss-Hermite Quadrature uses the following approximation:
+  \begin{equation}
+  \int_{-\infty}^\infty f(x) e^{-x^2} dx \approx \sum_{i = 1}^n \omega_i f(x_i) + \frac{n\! \sqrt{\pi}}{2^n} \frac{f^{(2n)}(\xi)}{(2n)\!}
+  \end{equation}
+  for some \(\xi \in (-\infty, \infty)\).
+\item
+  \(x_i\) are the roots of the Hermite polynomial and \(w_i\) are the weights.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pracma}\SpecialCharTok{::}\FunctionTok{gaussHermite}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $x
+## [1] -2.020183e+00 -9.585725e-01  8.881784e-16  9.585725e-01  2.020183e+00
+## 
+## $w
+## [1] 0.01995324 0.39361932 0.94530872 0.39361932 0.01995324
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pracma}\SpecialCharTok{::}\FunctionTok{gaussHermite}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $x
+##  [1] -3.4361591 -2.5327317 -1.7566836 -1.0366108 -0.3429013  0.3429013
+##  [7]  1.0366108  1.7566836  2.5327317  3.4361591
+## 
+## $w
+##  [1] 7.640433e-06 1.343646e-03 3.387439e-02 2.401386e-01 6.108626e-01
+##  [6] 6.108626e-01 2.401386e-01 3.387439e-02 1.343646e-03 7.640433e-06
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  In general, when \(Y\) follows a normal distribution of mean \(\mu\) and standard deviation \(\sigma\), we have:
+  \begin{equation}
+  \begin{split}
+  \mathbb{E}\{f(Y)\} &= (2 \pi \sigma^2)^{-1/2} \int_{-\infty}^\infty f(y) e^{-\frac{(y - \mu)^2}{2\sigma^2}} dy \\
+  &=(2 \pi \sigma^2)^{-1/2} \int_{-\infty}^\infty f(\mu + \sqrt{2} \sigma z) e^{- z^2} \sqrt{2} \sigma dz \\
+  &=\pi^{-1/2} \int_{-\infty}^\infty f(\mu + \sqrt{2} \sigma z) e^{- z^2} dz \\
+  &\approx \pi^{-1/2} \sum_{i = 1}^n \omega_i f(\mu + \sqrt{2} \sigma z_i).
+  \end{split}
+  \end{equation}
+\end{itemize}
+
 \subsection{Nested Logit Model: A Special Case of Mixed Logit Model}\label{nested-logit-model-a-special-case-of-mixed-logit-model}
 
 \begin{itemize}
@@ -3660,7 +3720,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \item
   We have:
   \begin{equation}
-  v(p, x_j, y_i, z_i) = \beta'x_j - \alpha_i p_j + \sum_{g = 1}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
+  v(p, x_j, y_i, z_i) = \beta'x_j - \alpha_i p_j + \sum_{g = 0}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
   \end{equation}
 \item
   If \(\zeta_{ig}\) takes high value, the consumer attaches higher value to the category.
@@ -3675,12 +3735,12 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \item
   Let
   \begin{equation}
-  \varepsilon_{ij} \equiv \sum_{g = 1}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
+  \varepsilon_{ij} \equiv \sum_{g = 0}^G \zeta_{ig} w_{jg} + \epsilon_{ij}.
   \end{equation}
 \item
   Under certain distributional assumption on \(\zeta_{ig}\) and \(\epsilon_{ij}\), the term \(\varepsilon_{ij}\) have a cumulative distribution \citep{Cardell1997}:
   \begin{equation}
-  F(\varepsilon_i) = \exp\Bigg\{- \sum_{g = 1}^G \Bigg(\sum_{j \in \text{   category   } g} \exp[-\varepsilon_{ij}/\lambda_g] \Bigg)^{\lambda_g}  \Bigg\}.
+  F(\varepsilon_i) = \exp\Bigg\{- \sum_{g = 0}^G \Bigg(\sum_{j \in \text{   category   } g} \exp[-\varepsilon_{ij}/\lambda_g] \Bigg)^{\lambda_g}  \Bigg\}.
   \end{equation}
 \end{itemize}
 
@@ -3691,13 +3751,13 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
 \item
   Under this distributional assumption, the choice probability is:
   \begin{equation}
-  \sigma_{j}(p, x, y_i, z_i) = \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g] \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g - 1}}{\sum_{g = 1}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g}},
+  \sigma_{j}(p, x, y_i, z_i) = \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g] \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g - 1}}{\sum_{g = 0}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g}},
   \end{equation}
   if good \(j\) belongs to category \(g\).
 \item
   The higher \(\lambda_g \in [0, 1]\) implies lower correlation within category \(g\).
 \item
-  \(\lambda_g = 1\) for all \(g\) coincides with the multinomial logit model.
+  \(\lambda_g = 0\) for all \(g\) coincides with the multinomial logit model.
 \end{itemize}
 
 \subsection{Nested Logit Model: Decomposition of the Choice Probability}\label{nested-logit-model-decomposition-of-the-choice-probability}
@@ -3709,7 +3769,7 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \begin{equation}
   \begin{split}
   &\sigma_{j}(p, x, y_i, z_i)\\
-  &= \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g]}{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]} \frac{\left(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\right)^{\lambda_g}}{\sum_{g = 1}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g}}.
+  &= \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g]}{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]} \frac{\left(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\right)^{\lambda_g}}{\sum_{g = 0}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g}}.
   \end{split}
   \end{equation}
 \item
@@ -3719,10 +3779,85 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \]
   we have:
   \begin{equation}
-  \sigma_{j}(p, x, y_i, z_i) = \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g]}{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]} \frac{\exp[\lambda_g I_{g}(p, x, y_i, z_i)]}{\sum_{g = 1}^G \exp[\lambda_g I_{g}(p, x, y_i, z_i)]}.
+  \sigma_{j}(p, x, y_i, z_i) = \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g]}{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]} \frac{\exp[\lambda_g I_{g}(p, x, y_i, z_i)]}{\sum_{g = 0}^G \exp[\lambda_g I_{g}(p, x, y_i, z_i)]}.
   \end{equation}
 \item
   The second first term can be interpreted as the probability of choosing product \(j\) conditional on choosing category \(g\) and the second term as the probability of choosing category \(g\).
+\end{itemize}
+
+\subsection{Nested Logit Mode: Outside, Inside-Category, and Category-specific Shares}\label{nested-logit-mode-outside-inside-category-and-category-specific-shares}
+
+\begin{itemize}
+\tightlist
+\item
+  With the outside good as the only member of group zero and \(\delta_0 = 0\) and \(I_0 = 1\), we have:
+  \begin{equation}
+  \sigma_{0}(p, x, y_i, z_i) = \frac{1}{\sum_{g = 0}^G \exp[\lambda_g I_{g}(p, x, y_i, z_i)]}.
+  \end{equation}
+\item
+  Moreover, the inside-category share of good \(j\) is
+  \begin{equation}
+  \begin{split}
+  \sigma_{j|g}(p, x, y_i, z_i) 
+  &\equiv \frac{\sigma_{j}(p, x, y_i, z_i)}{\sum_{k \in \text{   category   } g} \sigma_{k}(p, x, y_i, z_i)}\\
+  &= \frac{v(p, x_j, y_i, z_i)/\lambda_g}{\sum_{k \in \text{   category   } g} v(p, x_k, y_i, z_i)/\lambda_g},
+  \end{split}
+  \end{equation}
+  and the share of category \(g\) is
+  \begin{equation}
+  \begin{split}
+  \sigma_g(p, x, y_i, z_i) 
+  &\equiv \frac{\sum_{j \in \text{   category   } g} \sigma_{j}(p, x, y_i, z_i)}{\sum_{g = 0}^G \sum_{j \in \text{   category   } g} \sigma_{j}(p, x, y_i, z_i)}\\
+  &= \frac{\exp[\lambda_g I_{g}(p, x, y_i, z_i)]}{\sum_{g = 0}^G \exp[\lambda_g I_{g}(p, x, y_i, z_i)]}.
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Nonlinear Least Square Estimation of Nested Logit Model}\label{nonlinear-least-square-estimation-of-nested-logit-model}
+
+\begin{itemize}
+\tightlist
+\item
+  We can estimate the parameters of nested logit model by maximum likelihood estimation.
+\item
+  In addition, we can also use the nonlinear least square estimation following \citet{berryEstimatingDiscreteChoiceModels1994}.
+\item
+  We have
+  \begin{equation}
+  \begin{split}
+  \ln \sigma_{j}(p, x, y_i, z_i) - \ln \sigma_{0}(p, x, y_i, z_i) = \frac{v(p, x_j, y_i, z_i)}{\lambda_g} - (1 - \lambda_g) I_g(p, x, y_i, z_i).
+  \end{split}
+  \end{equation}
+\item
+  Moreover,
+  \begin{equation}
+  \begin{split}
+  I_g(p, x, y_i, z_i) = \frac{\ln s_g(p, x, y_i, z_i) - \ln s_0(p, x, y_i, z_i)}{\lambda_g}.
+  \end{split}
+  \end{equation}
+\item
+  Inserting this to the former and arranging it, we get
+  \begin{equation}
+  \begin{split}
+  \ln \sigma_{j}(p, x, y_i, z_i) - \ln \sigma_{0}(p, x, y_i, z_i) = v(p, x_j, y_i, z_i) + (1 - \lambda_g) \ln s_{j|g}(p, x, y_i, z_i).
+  \end{split}
+  \end{equation}
+\item
+  Replacing shares with data, we can estimate the parameters a non-linear least square estimation.
+\item
+  If \(v\) is linear in parameters, we can use the linear least square estimation.
+\item
+  We need instruments for i) price \(p_j\) and ii) inside-category share \(s_{j|g}\), respectively.
+\item
+  If \(\lambda_g\) is heterogeneous across categories, we need instruments for each of them.
+\item
+  The number of goods in each category is often used as such instruments.
+\item
+  This requires variations in the available goods across markets, and the entry and exit to be exogenous.
+\item
+  These variations are implicitly required in the maximum likelihood estimation, too.
+\item
+  This also means that mixed-logit model also requires these variations for its identification.
 \end{itemize}
 
 \subsection{Discrete Choice Model with Unobserved Fixed Effects}\label{discrete-choice-model-with-unobserved-fixed-effects}
@@ -4569,7 +4704,7 @@ where \(f\) is the firm that owns product \(j\) and \(\mathcal{F}_{f}\) is the s
 
 }
 
-\caption{Figure 6.2 of Davis (2006)}\label{fig:unnamed-chunk-3}
+\caption{Figure 6.2 of Davis (2006)}\label{fig:unnamed-chunk-4}
 \end{figure}
 
 \subsection{Identification of the Conduct Parameter: When Cost Data is Available}\label{identification-of-the-conduct-parameter-when-cost-data-is-available}
@@ -4951,7 +5086,7 @@ where \(f\) is the firm that owns product \(j\) and \(\mathcal{F}_{f}\) is the s
 
 }
 
-\caption{Figure 1 of Sutton (2007)}\label{fig:unnamed-chunk-4}
+\caption{Figure 1 of Sutton (2007)}\label{fig:unnamed-chunk-5}
 \end{figure}
 
 \begin{itemize}
@@ -10341,7 +10476,7 @@ l(\beta) = \sum_{i = 1}^{1000}\{y_{i1}\log p_{i1}(\beta) + (1 - y_{i1})\log [1 -
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -10786,7 +10921,7 @@ You can use \texttt{npplreg} function of \texttt{np} package to estimate a parti
 ## No. Continuous Explanatory Vars.: 2
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -10945,11 +11080,11 @@ Q_{JT}(\alpha, \beta_0, \beta_k) \equiv g_{JT}(\alpha, \beta_0, \beta_k)' W g_{J
   Draw the graph of the objective function when one of \(\alpha\), \(\beta_0\), and \(\beta_k\) are changed from 0 to 1 by 0.1 while the others are set at the true value. Is the objective function minimized at around the true value?
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-41-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-42-2} \end{center}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-41-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-42-3} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -11909,56 +12044,56 @@ The graphs with the true shocks:
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-6} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[7]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-7} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-7} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[8]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-75-8} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-76-8} \end{center}
 
 The graphs with the Monte Carlo shocks:
 
@@ -11966,56 +12101,56 @@ The graphs with the Monte Carlo shocks:
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-6} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[7]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-7} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-7} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[8]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-77-8} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-78-8} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13361,35 +13496,35 @@ where \(\alpha_0 = - \exp(\mu + \omega^2/2)\). Notice that \(X\) and \(W\) does 
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-119-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-120-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-119-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-120-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-119-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-120-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-119-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-120-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-119-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-120-5} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13997,7 +14132,7 @@ Of course, in reality, we first draw Monte Carlo shocks to approximate the share
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-140-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-141-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -15098,42 +15233,42 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-164-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-165-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-164-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-165-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-164-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-165-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-164-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-165-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-164-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-165-5} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[6]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-164-6} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-165-6} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -15231,35 +15366,35 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-166-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-167-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-166-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-167-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-166-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-167-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-166-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-167-4} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[5]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-166-5} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-167-5} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -15453,9 +15588,9 @@ where \(y_{im}^{(r)}\) is the entry decision in \(r\)-th simulation. On the othe
   Fix the first draw of the Monte Carlo shocks. Suppose that the competitive effect becomes mild, i.e.~\(\delta\) is changed to 0.5. Under these shocks, compute the equilibrium number of entrants across markets and plot the histogram with the estimated and counterfactual parameters. Conduct this analysis under the assumptions of sequential and simultaneous entry.
 \end{enumerate}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-173-1} \end{center}
-
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-174-1} \end{center}
+
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-175-1} \end{center}
 
 \chapter{Assignment 7: Dynamic Decision}\label{assignment7}
 
@@ -15977,7 +16112,7 @@ where \(V\) is an exante value function.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-185-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-186-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -16054,7 +16189,7 @@ where \(V\) is an exante value function.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-186-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-187-1} \end{center}
 
 \section{Estimate parameters}\label{estimate-parameters}
 
@@ -16218,28 +16353,28 @@ with \(\mathbb{P}\{s_{i, T + 1}|a_{iT}, s_{iT}\} = 1\) for all \(i\) as \(s_{i, 
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-190-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-191-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-190-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-191-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-190-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-191-3} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[4]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-190-4} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-191-4} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -16472,14 +16607,14 @@ where \(\hat{p}\) is the non-parametric estimate of the conditional choice proba
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-196-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-197-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-196-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-197-2} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -17776,7 +17911,7 @@ where \(V\) is an ex-ante value function.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-215-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-216-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -17832,7 +17967,7 @@ where \(V\) is an ex-ante value function.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-216-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-217-1} \end{center}
 
 \section{Estimate parameters}\label{estimate-parameters-1}
 
@@ -18036,21 +18171,21 @@ where \(\hat{p}_i\) is the non-parametric estimate of the marginal conditional c
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-222-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-223-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-222-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-223-2} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[3]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-222-3} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-223-3} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -18226,7 +18361,7 @@ First, we draw bid data from a second-price sealed bid auctions. Suppose that fo
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-227-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-228-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -18295,7 +18430,7 @@ First, we draw bid data from a second-price sealed bid auctions. Suppose that fo
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-228-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-229-1} \end{center}
 
 Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
 \[
@@ -18461,7 +18596,7 @@ if \(x \ge r\) and not to participate otherwise.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-230-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-231-1} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -18520,7 +18655,7 @@ if \(x \ge r\) and not to participate otherwise.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-231-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-232-1} \end{center}
 
 \section{Estimate the parameters}\label{estimate-the-parameters-5}
 
@@ -18720,14 +18855,14 @@ h_t(w_t) := n_t (n_t - 1) F_X(w_t; \alpha, \beta)^{n_t - 2} [1 - F_X(w_t; \alpha
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-236-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-237-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-236-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-237-2} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -19045,14 +19180,14 @@ where the second equation is from the first-order condition.
 ## [[1]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-243-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-244-1} \end{center}
 
 \begin{verbatim}
 ## 
 ## [[2]]
 \end{verbatim}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-243-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-244-2} \end{center}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -19150,7 +19285,7 @@ Finally, we non-parametrically estimate the distribution of the valuation using 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-246-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-247-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -19185,7 +19320,7 @@ Finally, we non-parametrically estimate the distribution of the valuation using 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-246-2} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-247-2} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -19331,7 +19466,7 @@ x = b + \frac{H_b(b)}{h_b(b)}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-249-1} \end{center}
+\begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-250-1} \end{center}
 
 \chapter{Integrating with C++ using Rcpp and RcppEigen}\label{rcpp}
 
