@@ -852,6 +852,31 @@ where
 \min \sum_{t = 1}^T \sum_{j \in \mathcal{J}_t \cup \{0\}} \sum_{(y, z) \in \mathcal{Y} \times \mathcal{Z}} \{s_{jt}(y, z) - \hat{\sigma}_{j}(p_t, x_t, y, z)\}^2.
 \end{equation}
 
+### Numerical Integration with Quadrature
+
+- Refer to Section 7 of @Judd1998.
+- Gauss-Hermite Quadrature uses the following approximation:
+\begin{equation}
+\int_{-\infty}^\infty f(x) e^{-x^2} dx \approx \sum_{i = 1}^n \omega_i f(x_i) + \frac{n\! \sqrt{\pi}}{2^n} \frac{f^{(2n)}(\xi)}{(2n)\!}
+\end{equation}
+for some $\xi \in (-\infty, \infty)$.
+- $x_i$ are the roots of the Hermite polynomial and $w_i$ are the weights.
+```{r}
+pracma::gaussHermite(5)
+pracma::gaussHermite(10)
+```
+- In general, when $Y$ follows a normal distribution of mean $\mu$ and standard deviation $\sigma$, we have:
+\begin{equation}
+\begin{split}
+\mathbb{E}\{f(Y)\} &= (2 \pi \sigma^2)^{-1/2} \int_{-\infty}^\infty f(y) e^{-\frac{(y - \mu)^2}{2\sigma^2}} dy \\
+&=(2 \pi \sigma^2)^{-1/2} \int_{-\infty}^\infty f(\mu + \sqrt{2} \sigma z) e^{- z^2} \sqrt{2} \sigma dz \\
+&=\pi^{-1/2} \int_{-\infty}^\infty f(\mu + \sqrt{2} \sigma z) e^{- z^2} dz \\
+&\approx \pi^{-1/2} \sum_{i = 1}^n \omega_i f(\mu + \sqrt{2} \sigma z_i).
+\end{split}
+\end{equation}
+
+
+
 
 
 ### Nested Logit Model: A Special Case of Mixed Logit Model
