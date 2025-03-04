@@ -9,7 +9,6 @@ set_constant <-
     num_consumer <- 1000
     merge <-
       c(
-        1,
         2,
         3
       )
@@ -69,8 +68,7 @@ set_parameter <-
 
 set_exogenous <-
   function(
-    constant,
-    parameter
+    constant
   ) {
     x <- 
       foreach (
@@ -176,8 +174,7 @@ set_exogenous <-
             owner_rt[
               constant$merge,
               constant$merge
-            ] <- parameter$conduct$kappa
-            diag(owner_rt) <- 1
+            ] <- 1
             return(owner_rt)
           }
         return(owner_t)
@@ -387,8 +384,7 @@ set_equilibrium <-
 
     exogenous <- 
       set_exogenous(
-        constant = constant,
-        parameter = parameter
+        constant = constant
       )
 
     # draw shock -------------------------------------------------------------------
