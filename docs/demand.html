@@ -1535,7 +1535,7 @@ where <span class="math inline">\(\nu_i\)</span> and <span class="math inline">\
 <ul>
 <li>There is no IIA at the market-segment level:
 <span class="math display">\[\begin{equation}
-\frac{\sigma_{j}(p, x, y, z)}{\sigma_{l}(p, x, y_i, z_i)} = \frac{\int_{\beta_i, \alpha_i} \frac{\exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i}{\int_{\beta_i, \alpha_i} \frac{\exp[v(p_l, x_l, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|y_i) d\beta_i d\alpha_i}.
+\frac{\sigma_{j}(p, x, y, z)}{\sigma_{l}(p, x, y_i, z_i)} = \frac{\int_{\beta_i, \alpha_i} \frac{\exp[v(p_j, x_j, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|x, y_i) d\beta_i d\alpha_i}{\int_{\beta_i, \alpha_i} \frac{\exp[v(p_l, x_l, y_i, z_i, \beta_i, \alpha_i)]}{\sum_{k = 0}^J \exp[v(p_k, x_k, y_i, z_i, \beta_i, \alpha_i)]} f(\beta_i, \alpha_i|x, y_i) d\beta_i d\alpha_i}.
 \end{equation}\]</span></li>
 <li>The share ratio depends on the price and characteristics of all the other products.</li>
 </ul>
@@ -1589,7 +1589,7 @@ where
 <span class="math display">\[\begin{equation}
 \begin{split}
 &amp;\sum_{i = 1}^N \sum_{t = 1}^T \ln \mathbb{P}\{q_{it} = q(p_t, x_t, y_{it}, z_{it})|p_t, x_t, y_{it}, z_{it}\} \\
-&amp;\approx \sum_{i = 1}^N \ln \Bigg\{ \prod_{j \in \mathcal{J}_t \cup \{0\}} \hat{\sigma}_{j}(p_t, x_t, y_{it}, z_{it})^{q_{itj}} \Bigg\}.
+&amp;\approx \sum_{i = 1}^N \sum_{t = 1}^T \ln \Bigg\{ \prod_{j \in \mathcal{J}_t \cup \{0\}} \hat{\sigma}_{j}(p_t, x_t, y_{it}, z_{it})^{q_{itj}} \Bigg\}.
 \end{split}
 \end{equation}\]</span></p></li>
 <li><p>We find parameters that maximize the simulated conditional log likelihood.</p></li>
@@ -1649,7 +1649,10 @@ if good <span class="math inline">\(j\)</span> belongs to category <span class="
 <ul>
 <li>The choice probability can be decomposed into two parts:
 <span class="math display">\[\begin{equation}
-\sigma_{j}(p, x, y_i, z_i) = \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g]}{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]} \frac{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]^{\lambda_g}}{\sum_{g = 1}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g}}.
+\begin{split}
+&amp;\sigma_{j}(p, x, y_i, z_i)\\
+&amp;= \frac{\exp[v(p, x_j, y_i, z_i)/\lambda_g]}{\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]} \frac{\left(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\right)^{\lambda_g}}{\sum_{g = 1}^G \Bigg(\sum_{k \in \text{   category   } g} \exp[v(p, x_k, y_i, z_i)/\lambda_g]\Bigg)^{\lambda_g}}.
+\end{split}
 \end{equation}\]</span></li>
 <li>Letting:
 <span class="math display">\[

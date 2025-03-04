@@ -1292,8 +1292,6 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 <span id="cb88-12"><a href="assignment3.html#cb88-12" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
 <span id="cb88-13"><a href="assignment3.html#cb88-13" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
 <span id="cb88-14"><a href="assignment3.html#cb88-14" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>## Warning in e$fun(obj, substitute(ex), parent.frame(), e$data): already
-## exporting variable(s): temp_func</code></pre>
 <pre><code>## [[1]]
 ## [1] 2
 ## 
@@ -1306,21 +1304,21 @@ This can be implemented using <code>lm</code> function. Print out the estimate r
 ## [[4]]
 ## [1] 8</code></pre>
 <p>If you have called a function in a package in this way <code>dplyr::mutate</code>, then you will not have to pass <code>dplyr</code> by <code>.packages</code> option. This is one of the reasons why I prefer to explicitly call the package every time I call a function. If you have compiled your functions in a package, you will just have to pass the package as follows:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="assignment3.html#cb91-1" tabindex="-1"></a><span class="co"># this function is compiled in the package EmpiricalIO</span></span>
-<span id="cb91-2"><a href="assignment3.html#cb91-2" tabindex="-1"></a><span class="co"># temp_func &lt;- function(x) {</span></span>
-<span id="cb91-3"><a href="assignment3.html#cb91-3" tabindex="-1"></a><span class="co">#   y &lt;- 2 * x</span></span>
-<span id="cb91-4"><a href="assignment3.html#cb91-4" tabindex="-1"></a><span class="co">#   return(y)</span></span>
-<span id="cb91-5"><a href="assignment3.html#cb91-5" tabindex="-1"></a><span class="co"># }</span></span>
-<span id="cb91-6"><a href="assignment3.html#cb91-6" tabindex="-1"></a><span class="fu">foreach</span> (</span>
-<span id="cb91-7"><a href="assignment3.html#cb91-7" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
-<span id="cb91-8"><a href="assignment3.html#cb91-8" tabindex="-1"></a>  <span class="at">.packages =</span> <span class="fu">c</span>(</span>
-<span id="cb91-9"><a href="assignment3.html#cb91-9" tabindex="-1"></a>    <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
-<span id="cb91-10"><a href="assignment3.html#cb91-10" tabindex="-1"></a>    <span class="st">&quot;magrittr&quot;</span>)</span>
-<span id="cb91-11"><a href="assignment3.html#cb91-11" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
-<span id="cb91-12"><a href="assignment3.html#cb91-12" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
-<span id="cb91-13"><a href="assignment3.html#cb91-13" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
-<span id="cb91-14"><a href="assignment3.html#cb91-14" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb91-15"><a href="assignment3.html#cb91-15" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="assignment3.html#cb90-1" tabindex="-1"></a><span class="co"># this function is compiled in the package EmpiricalIO</span></span>
+<span id="cb90-2"><a href="assignment3.html#cb90-2" tabindex="-1"></a><span class="co"># temp_func &lt;- function(x) {</span></span>
+<span id="cb90-3"><a href="assignment3.html#cb90-3" tabindex="-1"></a><span class="co">#   y &lt;- 2 * x</span></span>
+<span id="cb90-4"><a href="assignment3.html#cb90-4" tabindex="-1"></a><span class="co">#   return(y)</span></span>
+<span id="cb90-5"><a href="assignment3.html#cb90-5" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb90-6"><a href="assignment3.html#cb90-6" tabindex="-1"></a><span class="fu">foreach</span> (</span>
+<span id="cb90-7"><a href="assignment3.html#cb90-7" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb90-8"><a href="assignment3.html#cb90-8" tabindex="-1"></a>  <span class="at">.packages =</span> <span class="fu">c</span>(</span>
+<span id="cb90-9"><a href="assignment3.html#cb90-9" tabindex="-1"></a>    <span class="st">&quot;EmpiricalIO&quot;</span>,</span>
+<span id="cb90-10"><a href="assignment3.html#cb90-10" tabindex="-1"></a>    <span class="st">&quot;magrittr&quot;</span>)</span>
+<span id="cb90-11"><a href="assignment3.html#cb90-11" tabindex="-1"></a>  ) <span class="sc">%dopar%</span> {</span>
+<span id="cb90-12"><a href="assignment3.html#cb90-12" tabindex="-1"></a>    <span class="co"># this part is parallelized</span></span>
+<span id="cb90-13"><a href="assignment3.html#cb90-13" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">temp_func</span>(i)</span>
+<span id="cb90-14"><a href="assignment3.html#cb90-14" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb90-15"><a href="assignment3.html#cb90-15" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] 2
 ## 
