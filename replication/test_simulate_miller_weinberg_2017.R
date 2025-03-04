@@ -1,7 +1,7 @@
 # initialize -------------------------------------------------------------------
 
 rm(list = ls())
-devtoos::load_all(".")
+devtools::load_all(".")
 library(foreach)
 library(magrittr)
 library(codetools)
