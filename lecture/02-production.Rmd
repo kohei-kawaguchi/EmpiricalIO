@@ -903,31 +903,6 @@ C'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)}
 - This identifies the marginal cost function \textit{at the equilibrium quantity when $Z = z$}.
 - If the equilibrium quantities cover the domain of the marginal cost function when the demand shifter $Z$ moves around, then it identifies the entire marginal cost function.
 
-
-### Unobserved Heterogeneity in the Cost Function
-
-- Previously we did not consider any unobserved heterogeneity in the cost function.
-- Now suppose that the cost function is given by:
-\begin{equation}
-C(q) = \tilde{C}(q) + q \epsilon + \mu,
-\end{equation}
-and $\epsilon$ and $\mu$ are not observed.
-- Moreover, because it includes anticipated shocks, it is likely to be correlated with input decisions and hence the output.
- 
-- The first-order condition w.r.t. $p$ for profit maximization is:
-\begin{equation}
-\begin{split}
-&D(p, z) + pD'(p, z) - [\tilde{C}'(D(p, z)) + \epsilon]D'(p, z) = 0.\\
-&\Leftrightarrow \tilde{C}'(D(p, z))  = \frac{D(p, z) + pD'(p, z)}{D'(p,z)} - \epsilon.
-\end{split}
-\end{equation}
-- Take the expectation conditional on $Z = z$: 
-\begin{equation}
-\tilde{C}'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)} - \mathbb{E}\{\epsilon|Z = z\}.
-\end{equation}
-- If $Z$ and $\epsilon$ is independent, then the last term becomes zero and we can follow the same argument as before to trace out the marginal cost function.
-
-
 ### Multi-product Monopolist Case
 
 - Demand for good $j$ is $D_j(p)$ given a price vector $p$.
@@ -1012,6 +987,42 @@ and $\epsilon$ and $\mu$ are not observed.
 \end{split}
 \end{equation}
 - In Nash equilibrium, these equations jointly hold for all firms $j = 1, \cdots, J$.]
-- Including unobserved heterogeneity in the cost function causes the same problem as in the previous case.
  
+### Unobserved Heterogeneity in the Cost Function
+
+- Previously we did not consider any unobserved heterogeneity in the cost function.
+- Examplify the problem with a single-product monopolist.
+- Suppose that the cost function is given by:
+\begin{equation}
+C(q) = \tilde{C}(q) + q (z' \gamma + \epsilon) + \mu,
+\end{equation}
+and $\epsilon$ and $\mu$ are not observed.
+- Moreover, because it includes anticipated shocks, it is likely to be correlated with input decisions and hence the output.
  
+- The first-order condition w.r.t. $p$ for profit maximization is:
+\begin{equation}
+\begin{split}
+&D(p, x) + pD'(p, x) - [\tilde{C}'(D(p, x)) + \epsilon]D'(p, x) = 0.\\
+&\Leftrightarrow \tilde{C}'(D(p, x)) + w'\gamma + \epsilon  = \frac{D(p, x) + pD'(p, x)}{D'(p,x)}\\
+&\Leftrightarrow z'\gamma + \epsilon = \frac{D(p, x) + pD'(p, x)}{D'(p, x)} - \tilde{C}'(D(p,  x)).
+\end{split}
+\end{equation}
+
+### Estimation of Cost Function
+
+- First elicit the constant marginal cost part:
+\begin{equation}
+    mc = \frac{D(p, x) + pD'(p, x)}{D'(p, x)} - \tilde{C}'(D(p, x)).
+\end{equation}
+- Then, regress this on $w$ to estimate the linear cost parameter $\gamma$:
+\begin{equation}
+    mc = w'\gamma + \epsilon.
+\end{equation}
+- Exploit moment condition for the marginal cost shock $\epsilon$:
+\begin{equation}
+    \mathbb{E}\{\epsilon | x\} = 0.
+\end{equation}
+- The cost shifter $z$ is already used in estimating $\gamma$.
+- Thus, we need demand shifters excluded from the cost function, $x$, to identify the non-linear cost parameters in $\tilde{C}'$.
+- If we assume constant marginal cost, which is often the case, $\tilde{C}' = 0$. Then, we can estimate the cost function without demand shifters.
+- Because the constant marginal cost assumption is common, people often forget the necessity of demand shifters in the cost function estimation.
