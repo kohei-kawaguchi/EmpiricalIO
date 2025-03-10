@@ -258,6 +258,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.7" data-path="production.html"><a href="production.html#single-product-monopolist"><i class="fa fa-check"></i><b>3.4.7</b> Single-product Monopolist</a></li>
 <li class="chapter" data-level="3.4.8" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>3.4.8</b> Multi-product Monopolist Case</a></li>
 <li class="chapter" data-level="3.4.9" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.9</b> Oligopoly</a></li>
+<li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>3.4.10</b> Unobserved Heterogeneity in the Cost Function</a></li>
+<li class="chapter" data-level="3.4.11" data-path="production.html"><a href="production.html#estimation-of-cost-function"><i class="fa fa-check"></i><b>3.4.11</b> Estimation of Cost Function</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
@@ -738,7 +740,7 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 <li>To simulate data, first make a data frame as follows:</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="assignment1.html#cb5-1" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>## # A tibble: 2,000 x 3
+<pre><code>## # A tibble: 2,000 × 3
 ##        i     k     x
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
 ##  1     1     1     0
@@ -751,13 +753,13 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1
 ##  9     5     1     0
 ## 10     5     2     1
-## # i 1,990 more rows</code></pre>
+## # ℹ 1,990 more rows</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Second, draw type-I extreme value random variables. Set the seed at 1. You can use <code>evd</code> package to draw the variables. You should get exactly the same realization if the seed is correctly set.</li>
 </ol>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="assignment1.html#cb7-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="assignment1.html#cb8-1" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>## # A tibble: 2,000 x 4
+<pre><code>## # A tibble: 2,000 × 4
 ##        i     k     x       e
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
 ##  1     1     1     0  0.281 
@@ -770,13 +772,13 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1  0.617 
 ##  9     5     1     0  0.0444
 ## 10     5     2     1  1.92  
-## # i 1,990 more rows</code></pre>
+## # ℹ 1,990 more rows</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Third, compute the latent value of each option to obtain the following data frame:</li>
 </ol>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="assignment1.html#cb10-1" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.2</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="assignment1.html#cb11-1" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>## # A tibble: 2,000 x 5
+<pre><code>## # A tibble: 2,000 × 5
 ##        i     k     x       e  latent
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
 ##  1     1     1     0  0.281   0.281 
@@ -789,12 +791,12 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1  0.617   0.817 
 ##  9     5     1     0  0.0444  0.0444
 ## 10     5     2     1  1.92    2.12  
-## # i 1,990 more rows</code></pre>
+## # ℹ 1,990 more rows</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Finally, compute <span class="math inline">\(y\)</span> by comparing the latent values of <span class="math inline">\(k = 1, 2\)</span> for each <span class="math inline">\(i\)</span> to obtain the following result:</li>
 </ol>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="assignment1.html#cb13-1" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>## # A tibble: 2,000 x 6
+<pre><code>## # A tibble: 2,000 × 6
 ##        i     k     x       e  latent     y
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ##  1     1     1     0  0.281   0.281      1
@@ -807,7 +809,7 @@ where <span class="math inline">\(\epsilon_{ik}\)</span> follows i.i.d. type-I e
 ##  8     4     2     1  0.617   0.817      1
 ##  9     5     1     0  0.0444  0.0444     0
 ## 10     5     2     1  1.92    2.12       1
-## # i 1,990 more rows</code></pre>
+## # ℹ 1,990 more rows</code></pre>
 </div>
 <div id="estimate-the-parameter" class="section level2 hasAnchor" number="11.2">
 <h2><span class="header-section-number">11.2</span> Estimate the parameter<a href="assignment1.html#estimate-the-parameter" class="anchor-section" aria-label="Anchor link to header"></a></h2>

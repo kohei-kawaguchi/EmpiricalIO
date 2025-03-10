@@ -258,6 +258,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.7" data-path="production.html"><a href="production.html#single-product-monopolist"><i class="fa fa-check"></i><b>3.4.7</b> Single-product Monopolist</a></li>
 <li class="chapter" data-level="3.4.8" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>3.4.8</b> Multi-product Monopolist Case</a></li>
 <li class="chapter" data-level="3.4.9" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.9</b> Oligopoly</a></li>
+<li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>3.4.10</b> Unobserved Heterogeneity in the Cost Function</a></li>
+<li class="chapter" data-level="3.4.11" data-path="production.html"><a href="production.html#estimation-of-cost-function"><i class="fa fa-check"></i><b>3.4.11</b> Estimation of Cost Function</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
@@ -769,31 +771,31 @@ The discount factor is denoted by <span class="math inline">\(\delta\)</span>. W
 <ol style="list-style-type: decimal">
 <li>Set constants and parameters as follows:</li>
 </ol>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="assignment7.html#cb323-1" tabindex="-1"></a><span class="co"># set seed</span></span>
-<span id="cb323-2"><a href="assignment7.html#cb323-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb323-3"><a href="assignment7.html#cb323-3" tabindex="-1"></a><span class="co"># set constants </span></span>
-<span id="cb323-4"><a href="assignment7.html#cb323-4" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb323-5"><a href="assignment7.html#cb323-5" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb323-6"><a href="assignment7.html#cb323-6" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb323-7"><a href="assignment7.html#cb323-7" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb323-8"><a href="assignment7.html#cb323-8" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">1e-10</span></span>
-<span id="cb323-9"><a href="assignment7.html#cb323-9" tabindex="-1"></a><span class="co"># set parameters</span></span>
-<span id="cb323-10"><a href="assignment7.html#cb323-10" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb323-11"><a href="assignment7.html#cb323-11" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb323-12"><a href="assignment7.html#cb323-12" tabindex="-1"></a>kappa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb323-13"><a href="assignment7.html#cb323-13" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
-<span id="cb323-14"><a href="assignment7.html#cb323-14" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fl">0.95</span></span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="assignment7.html#cb321-1" tabindex="-1"></a><span class="co"># set seed</span></span>
+<span id="cb321-2"><a href="assignment7.html#cb321-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb321-3"><a href="assignment7.html#cb321-3" tabindex="-1"></a><span class="co"># set constants </span></span>
+<span id="cb321-4"><a href="assignment7.html#cb321-4" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb321-5"><a href="assignment7.html#cb321-5" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb321-6"><a href="assignment7.html#cb321-6" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb321-7"><a href="assignment7.html#cb321-7" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb321-8"><a href="assignment7.html#cb321-8" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">1e-10</span></span>
+<span id="cb321-9"><a href="assignment7.html#cb321-9" tabindex="-1"></a><span class="co"># set parameters</span></span>
+<span id="cb321-10"><a href="assignment7.html#cb321-10" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb321-11"><a href="assignment7.html#cb321-11" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb321-12"><a href="assignment7.html#cb321-12" tabindex="-1"></a>kappa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb321-13"><a href="assignment7.html#cb321-13" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb321-14"><a href="assignment7.html#cb321-14" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fl">0.95</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Write function <code>compute_pi(alpha, beta, L, K)</code> that computes <span class="math inline">\(\Pi\)</span> given parameters and compute the true <span class="math inline">\(\Pi\)</span> under the true parameters. Don’t use methods in <code>dplyr</code> and deal with matrix operations.</li>
 </ol>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="assignment7.html#cb324-1" tabindex="-1"></a>PI <span class="ot">&lt;-</span> </span>
-<span id="cb324-2"><a href="assignment7.html#cb324-2" tabindex="-1"></a>  <span class="fu">compute_PI</span>(</span>
-<span id="cb324-3"><a href="assignment7.html#cb324-3" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
-<span id="cb324-4"><a href="assignment7.html#cb324-4" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
-<span id="cb324-5"><a href="assignment7.html#cb324-5" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb324-6"><a href="assignment7.html#cb324-6" tabindex="-1"></a>    <span class="at">K =</span> K</span>
-<span id="cb324-7"><a href="assignment7.html#cb324-7" tabindex="-1"></a>    ); </span>
-<span id="cb324-8"><a href="assignment7.html#cb324-8" tabindex="-1"></a>PI</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="assignment7.html#cb322-1" tabindex="-1"></a>PI <span class="ot">&lt;-</span> </span>
+<span id="cb322-2"><a href="assignment7.html#cb322-2" tabindex="-1"></a>  <span class="fu">compute_PI</span>(</span>
+<span id="cb322-3"><a href="assignment7.html#cb322-3" tabindex="-1"></a>    <span class="at">alpha =</span> alpha, </span>
+<span id="cb322-4"><a href="assignment7.html#cb322-4" tabindex="-1"></a>    <span class="at">beta =</span> beta, </span>
+<span id="cb322-5"><a href="assignment7.html#cb322-5" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb322-6"><a href="assignment7.html#cb322-6" tabindex="-1"></a>    <span class="at">K =</span> K</span>
+<span id="cb322-7"><a href="assignment7.html#cb322-7" tabindex="-1"></a>    ); </span>
+<span id="cb322-8"><a href="assignment7.html#cb322-8" tabindex="-1"></a>PI</span></code></pre></div>
 <pre><code>##             [,1]
 ## k0_l1  0.0000000
 ## k1_l1 -3.0000000
@@ -808,14 +810,14 @@ The discount factor is denoted by <span class="math inline">\(\delta\)</span>. W
 <ol start="3" style="list-style-type: decimal">
 <li>Write function <code>compute_G(kappa, gamma, L, K)</code> that computes <span class="math inline">\(G\)</span> given parameters and compute the true <span class="math inline">\(G\)</span> under the true parameters. Don’t use methods in <code>dplyr</code> and deal with matrix operations.</li>
 </ol>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="assignment7.html#cb326-1" tabindex="-1"></a>G <span class="ot">&lt;-</span> </span>
-<span id="cb326-2"><a href="assignment7.html#cb326-2" tabindex="-1"></a>  <span class="fu">compute_G</span>(</span>
-<span id="cb326-3"><a href="assignment7.html#cb326-3" tabindex="-1"></a>    <span class="at">kappa =</span> kappa, </span>
-<span id="cb326-4"><a href="assignment7.html#cb326-4" tabindex="-1"></a>    <span class="at">gamma =</span> gamma, </span>
-<span id="cb326-5"><a href="assignment7.html#cb326-5" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb326-6"><a href="assignment7.html#cb326-6" tabindex="-1"></a>    <span class="at">K =</span> K</span>
-<span id="cb326-7"><a href="assignment7.html#cb326-7" tabindex="-1"></a>    ); </span>
-<span id="cb326-8"><a href="assignment7.html#cb326-8" tabindex="-1"></a>G</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="assignment7.html#cb324-1" tabindex="-1"></a>G <span class="ot">&lt;-</span> </span>
+<span id="cb324-2"><a href="assignment7.html#cb324-2" tabindex="-1"></a>  <span class="fu">compute_G</span>(</span>
+<span id="cb324-3"><a href="assignment7.html#cb324-3" tabindex="-1"></a>    <span class="at">kappa =</span> kappa, </span>
+<span id="cb324-4"><a href="assignment7.html#cb324-4" tabindex="-1"></a>    <span class="at">gamma =</span> gamma, </span>
+<span id="cb324-5"><a href="assignment7.html#cb324-5" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb324-6"><a href="assignment7.html#cb324-6" tabindex="-1"></a>    <span class="at">K =</span> K</span>
+<span id="cb324-7"><a href="assignment7.html#cb324-7" tabindex="-1"></a>    ); </span>
+<span id="cb324-8"><a href="assignment7.html#cb324-8" tabindex="-1"></a>G</span></code></pre></div>
 <pre><code>##        l1  l2  l3  l4  l5
 ## k0_l1 1.0 0.0 0.0 0.0 0.0
 ## k1_l1 0.4 0.6 0.0 0.0 0.0
@@ -849,12 +851,12 @@ Note that <span class="math inline">\(\gamma\)</span> in the formula of <span cl
 <ol start="4" style="list-style-type: decimal">
 <li>Write a function <code>compute_exante_value(p, PI, G, L, K, delta)</code> that returns the exante value function given a conditional choice probability. Don’t use methods in <code>dplyr</code> and deal with matrix operations. When a choice probability is zero at some element, the corresponding element of <span class="math inline">\(E(p)\)</span> can be set at zero, because anyway we multiply the zero probability to the element and the corresponding element in <span class="math inline">\(E(p)\)</span> does not affect the result.</li>
 </ol>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="assignment7.html#cb328-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> </span>
-<span id="cb328-2"><a href="assignment7.html#cb328-2" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
-<span id="cb328-3"><a href="assignment7.html#cb328-3" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fl">0.5</span>, L <span class="sc">*</span> (K <span class="sc">+</span> <span class="dv">1</span>)), </span>
-<span id="cb328-4"><a href="assignment7.html#cb328-4" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">1</span></span>
-<span id="cb328-5"><a href="assignment7.html#cb328-5" tabindex="-1"></a>    ); </span>
-<span id="cb328-6"><a href="assignment7.html#cb328-6" tabindex="-1"></a>p</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="assignment7.html#cb326-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> </span>
+<span id="cb326-2"><a href="assignment7.html#cb326-2" tabindex="-1"></a>  <span class="fu">matrix</span>(</span>
+<span id="cb326-3"><a href="assignment7.html#cb326-3" tabindex="-1"></a>    <span class="fu">rep</span>(<span class="fl">0.5</span>, L <span class="sc">*</span> (K <span class="sc">+</span> <span class="dv">1</span>)), </span>
+<span id="cb326-4"><a href="assignment7.html#cb326-4" tabindex="-1"></a>    <span class="at">ncol =</span> <span class="dv">1</span></span>
+<span id="cb326-5"><a href="assignment7.html#cb326-5" tabindex="-1"></a>    ); </span>
+<span id="cb326-6"><a href="assignment7.html#cb326-6" tabindex="-1"></a>p</span></code></pre></div>
 <pre><code>##       [,1]
 ##  [1,]  0.5
 ##  [2,]  0.5
@@ -866,16 +868,16 @@ Note that <span class="math inline">\(\gamma\)</span> in the formula of <span cl
 ##  [8,]  0.5
 ##  [9,]  0.5
 ## [10,]  0.5</code></pre>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="assignment7.html#cb330-1" tabindex="-1"></a>V <span class="ot">&lt;-</span> </span>
-<span id="cb330-2"><a href="assignment7.html#cb330-2" tabindex="-1"></a>  <span class="fu">compute_exante_value</span>(</span>
-<span id="cb330-3"><a href="assignment7.html#cb330-3" tabindex="-1"></a>    <span class="at">p =</span> p, </span>
-<span id="cb330-4"><a href="assignment7.html#cb330-4" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
-<span id="cb330-5"><a href="assignment7.html#cb330-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb330-6"><a href="assignment7.html#cb330-6" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb330-7"><a href="assignment7.html#cb330-7" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
-<span id="cb330-8"><a href="assignment7.html#cb330-8" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
-<span id="cb330-9"><a href="assignment7.html#cb330-9" tabindex="-1"></a>    ); </span>
-<span id="cb330-10"><a href="assignment7.html#cb330-10" tabindex="-1"></a>V</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="assignment7.html#cb328-1" tabindex="-1"></a>V <span class="ot">&lt;-</span> </span>
+<span id="cb328-2"><a href="assignment7.html#cb328-2" tabindex="-1"></a>  <span class="fu">compute_exante_value</span>(</span>
+<span id="cb328-3"><a href="assignment7.html#cb328-3" tabindex="-1"></a>    <span class="at">p =</span> p, </span>
+<span id="cb328-4"><a href="assignment7.html#cb328-4" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
+<span id="cb328-5"><a href="assignment7.html#cb328-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb328-6"><a href="assignment7.html#cb328-6" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb328-7"><a href="assignment7.html#cb328-7" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
+<span id="cb328-8"><a href="assignment7.html#cb328-8" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
+<span id="cb328-9"><a href="assignment7.html#cb328-9" tabindex="-1"></a>    ); </span>
+<span id="cb328-10"><a href="assignment7.html#cb328-10" tabindex="-1"></a>V</span></code></pre></div>
 <pre><code>##         [,1]
 ## l1  5.777876
 ## l2  7.597282
@@ -890,14 +892,14 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 <ol start="5" style="list-style-type: decimal">
 <li>Write a function <code>compute_ccp(V, PI, G, L, K, delta)</code> that returns the optimal conditional choice probability given an exante value function. Don’t use methods in <code>dplyr</code> and deal with matrix operations. To do so, write a function <code>compute_choice_value(V, PI, G, delta)</code> that returns the choice-specific value function. Use this for debugging by checking if the results are intuitive.</li>
 </ol>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="assignment7.html#cb332-1" tabindex="-1"></a>value <span class="ot">&lt;-</span> </span>
-<span id="cb332-2"><a href="assignment7.html#cb332-2" tabindex="-1"></a>  <span class="fu">compute_choice_value</span>(</span>
-<span id="cb332-3"><a href="assignment7.html#cb332-3" tabindex="-1"></a>    <span class="at">V =</span> V, </span>
-<span id="cb332-4"><a href="assignment7.html#cb332-4" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
-<span id="cb332-5"><a href="assignment7.html#cb332-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb332-6"><a href="assignment7.html#cb332-6" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
-<span id="cb332-7"><a href="assignment7.html#cb332-7" tabindex="-1"></a>    ); </span>
-<span id="cb332-8"><a href="assignment7.html#cb332-8" tabindex="-1"></a>value</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="assignment7.html#cb330-1" tabindex="-1"></a>value <span class="ot">&lt;-</span> </span>
+<span id="cb330-2"><a href="assignment7.html#cb330-2" tabindex="-1"></a>  <span class="fu">compute_choice_value</span>(</span>
+<span id="cb330-3"><a href="assignment7.html#cb330-3" tabindex="-1"></a>    <span class="at">V =</span> V, </span>
+<span id="cb330-4"><a href="assignment7.html#cb330-4" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
+<span id="cb330-5"><a href="assignment7.html#cb330-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb330-6"><a href="assignment7.html#cb330-6" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
+<span id="cb330-7"><a href="assignment7.html#cb330-7" tabindex="-1"></a>    ); </span>
+<span id="cb330-8"><a href="assignment7.html#cb330-8" tabindex="-1"></a>value</span></code></pre></div>
 <pre><code>##            [,1]
 ## k0_l1  5.488982
 ## k1_l1  3.526044
@@ -909,16 +911,16 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ## k1_l4  7.481306
 ## k0_l5 10.823075
 ## k1_l5  7.823075</code></pre>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="assignment7.html#cb334-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> </span>
-<span id="cb334-2"><a href="assignment7.html#cb334-2" tabindex="-1"></a>  <span class="fu">compute_ccp</span>(</span>
-<span id="cb334-3"><a href="assignment7.html#cb334-3" tabindex="-1"></a>    <span class="at">V =</span> V, </span>
-<span id="cb334-4"><a href="assignment7.html#cb334-4" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
-<span id="cb334-5"><a href="assignment7.html#cb334-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb334-6"><a href="assignment7.html#cb334-6" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb334-7"><a href="assignment7.html#cb334-7" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
-<span id="cb334-8"><a href="assignment7.html#cb334-8" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
-<span id="cb334-9"><a href="assignment7.html#cb334-9" tabindex="-1"></a>    ); </span>
-<span id="cb334-10"><a href="assignment7.html#cb334-10" tabindex="-1"></a>p</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="assignment7.html#cb332-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> </span>
+<span id="cb332-2"><a href="assignment7.html#cb332-2" tabindex="-1"></a>  <span class="fu">compute_ccp</span>(</span>
+<span id="cb332-3"><a href="assignment7.html#cb332-3" tabindex="-1"></a>    <span class="at">V =</span> V, </span>
+<span id="cb332-4"><a href="assignment7.html#cb332-4" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
+<span id="cb332-5"><a href="assignment7.html#cb332-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb332-6"><a href="assignment7.html#cb332-6" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb332-7"><a href="assignment7.html#cb332-7" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
+<span id="cb332-8"><a href="assignment7.html#cb332-8" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
+<span id="cb332-9"><a href="assignment7.html#cb332-9" tabindex="-1"></a>    ); </span>
+<span id="cb332-10"><a href="assignment7.html#cb332-10" tabindex="-1"></a>p</span></code></pre></div>
 <pre><code>##             [,1]
 ## k0_l1 0.87685057
 ## k1_l1 0.12314943
@@ -933,16 +935,16 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function that find the equilibrium conditional choice probability and ex-ante value function by iterating the update of an exante value function and an optimal conditional choice probability. The iteration should stop when <span class="math inline">\(\max_s|V^{(r + 1)}(s) - V^{(r)}(s)| &lt; \lambda\)</span> with <span class="math inline">\(\lambda = 10^{-10}\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="assignment7.html#cb336-1" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
-<span id="cb336-2"><a href="assignment7.html#cb336-2" tabindex="-1"></a>  <span class="fu">solve_dynamic_decision</span>(</span>
-<span id="cb336-3"><a href="assignment7.html#cb336-3" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
-<span id="cb336-4"><a href="assignment7.html#cb336-4" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb336-5"><a href="assignment7.html#cb336-5" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb336-6"><a href="assignment7.html#cb336-6" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
-<span id="cb336-7"><a href="assignment7.html#cb336-7" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb336-8"><a href="assignment7.html#cb336-8" tabindex="-1"></a>    <span class="at">lambda =</span> lambda</span>
-<span id="cb336-9"><a href="assignment7.html#cb336-9" tabindex="-1"></a>    ); </span>
-<span id="cb336-10"><a href="assignment7.html#cb336-10" tabindex="-1"></a>output</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="assignment7.html#cb334-1" tabindex="-1"></a>output <span class="ot">&lt;-</span> </span>
+<span id="cb334-2"><a href="assignment7.html#cb334-2" tabindex="-1"></a>  <span class="fu">solve_dynamic_decision</span>(</span>
+<span id="cb334-3"><a href="assignment7.html#cb334-3" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
+<span id="cb334-4"><a href="assignment7.html#cb334-4" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb334-5"><a href="assignment7.html#cb334-5" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb334-6"><a href="assignment7.html#cb334-6" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
+<span id="cb334-7"><a href="assignment7.html#cb334-7" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb334-8"><a href="assignment7.html#cb334-8" tabindex="-1"></a>    <span class="at">lambda =</span> lambda</span>
+<span id="cb334-9"><a href="assignment7.html#cb334-9" tabindex="-1"></a>    ); </span>
+<span id="cb334-10"><a href="assignment7.html#cb334-10" tabindex="-1"></a>output</span></code></pre></div>
 <pre><code>## $p
 ##             [,1]
 ## k0_l1 0.82218962
@@ -963,16 +965,16 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ## l3 20.86514
 ## l4 23.33721
 ## l5 25.15557</code></pre>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="assignment7.html#cb338-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> output<span class="sc">$</span>p</span>
-<span id="cb338-2"><a href="assignment7.html#cb338-2" tabindex="-1"></a>V <span class="ot">&lt;-</span> output<span class="sc">$</span>V</span>
-<span id="cb338-3"><a href="assignment7.html#cb338-3" tabindex="-1"></a>value <span class="ot">&lt;-</span> </span>
-<span id="cb338-4"><a href="assignment7.html#cb338-4" tabindex="-1"></a>  <span class="fu">compute_choice_value</span>(</span>
-<span id="cb338-5"><a href="assignment7.html#cb338-5" tabindex="-1"></a>    <span class="at">V =</span> V, </span>
-<span id="cb338-6"><a href="assignment7.html#cb338-6" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
-<span id="cb338-7"><a href="assignment7.html#cb338-7" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb338-8"><a href="assignment7.html#cb338-8" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
-<span id="cb338-9"><a href="assignment7.html#cb338-9" tabindex="-1"></a>    ); </span>
-<span id="cb338-10"><a href="assignment7.html#cb338-10" tabindex="-1"></a>value</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="assignment7.html#cb336-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> output<span class="sc">$</span>p</span>
+<span id="cb336-2"><a href="assignment7.html#cb336-2" tabindex="-1"></a>V <span class="ot">&lt;-</span> output<span class="sc">$</span>V</span>
+<span id="cb336-3"><a href="assignment7.html#cb336-3" tabindex="-1"></a>value <span class="ot">&lt;-</span> </span>
+<span id="cb336-4"><a href="assignment7.html#cb336-4" tabindex="-1"></a>  <span class="fu">compute_choice_value</span>(</span>
+<span id="cb336-5"><a href="assignment7.html#cb336-5" tabindex="-1"></a>    <span class="at">V =</span> V, </span>
+<span id="cb336-6"><a href="assignment7.html#cb336-6" tabindex="-1"></a>    <span class="at">PI =</span> PI, </span>
+<span id="cb336-7"><a href="assignment7.html#cb336-7" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb336-8"><a href="assignment7.html#cb336-8" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
+<span id="cb336-9"><a href="assignment7.html#cb336-9" tabindex="-1"></a>    ); </span>
+<span id="cb336-10"><a href="assignment7.html#cb336-10" tabindex="-1"></a>value</span></code></pre></div>
 <pre><code>##           [,1]
 ## k0_l1 14.68700
 ## k1_l1 13.15574
@@ -987,23 +989,23 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 <ol start="7" style="list-style-type: decimal">
 <li>Write a function <code>simulate_dynamic_decision(p, s, PI, G, L, K, T, delta, seed)</code> that simulate the data for a single firm starting from an initial state for <span class="math inline">\(T\)</span> periods. The function should accept a value of seed and set the seed at the beginning of the procedure inside the function, because the process is stochastic. To match the generated random numbers, for each period, generate action using <code>rmultinom</code> and then state using <code>rmultinom</code>.</li>
 </ol>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="assignment7.html#cb340-1" tabindex="-1"></a><span class="co"># set initial value</span></span>
-<span id="cb340-2"><a href="assignment7.html#cb340-2" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb340-3"><a href="assignment7.html#cb340-3" tabindex="-1"></a><span class="co"># draw simulation for a firm</span></span>
-<span id="cb340-4"><a href="assignment7.html#cb340-4" tabindex="-1"></a>seed <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb340-5"><a href="assignment7.html#cb340-5" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
-<span id="cb340-6"><a href="assignment7.html#cb340-6" tabindex="-1"></a>  <span class="fu">simulate_dynamic_decision</span>(</span>
-<span id="cb340-7"><a href="assignment7.html#cb340-7" tabindex="-1"></a>    <span class="at">p =</span> p, </span>
-<span id="cb340-8"><a href="assignment7.html#cb340-8" tabindex="-1"></a>    <span class="at">s =</span> s, </span>
-<span id="cb340-9"><a href="assignment7.html#cb340-9" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb340-10"><a href="assignment7.html#cb340-10" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb340-11"><a href="assignment7.html#cb340-11" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
-<span id="cb340-12"><a href="assignment7.html#cb340-12" tabindex="-1"></a>    <span class="at">T =</span> T, </span>
-<span id="cb340-13"><a href="assignment7.html#cb340-13" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb340-14"><a href="assignment7.html#cb340-14" tabindex="-1"></a>    <span class="at">seed =</span> seed</span>
-<span id="cb340-15"><a href="assignment7.html#cb340-15" tabindex="-1"></a>    ); </span>
-<span id="cb340-16"><a href="assignment7.html#cb340-16" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>## # A tibble: 100 x 3
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="assignment7.html#cb338-1" tabindex="-1"></a><span class="co"># set initial value</span></span>
+<span id="cb338-2"><a href="assignment7.html#cb338-2" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb338-3"><a href="assignment7.html#cb338-3" tabindex="-1"></a><span class="co"># draw simulation for a firm</span></span>
+<span id="cb338-4"><a href="assignment7.html#cb338-4" tabindex="-1"></a>seed <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb338-5"><a href="assignment7.html#cb338-5" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
+<span id="cb338-6"><a href="assignment7.html#cb338-6" tabindex="-1"></a>  <span class="fu">simulate_dynamic_decision</span>(</span>
+<span id="cb338-7"><a href="assignment7.html#cb338-7" tabindex="-1"></a>    <span class="at">p =</span> p, </span>
+<span id="cb338-8"><a href="assignment7.html#cb338-8" tabindex="-1"></a>    <span class="at">s =</span> s, </span>
+<span id="cb338-9"><a href="assignment7.html#cb338-9" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb338-10"><a href="assignment7.html#cb338-10" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb338-11"><a href="assignment7.html#cb338-11" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
+<span id="cb338-12"><a href="assignment7.html#cb338-12" tabindex="-1"></a>    <span class="at">T =</span> T, </span>
+<span id="cb338-13"><a href="assignment7.html#cb338-13" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb338-14"><a href="assignment7.html#cb338-14" tabindex="-1"></a>    <span class="at">seed =</span> seed</span>
+<span id="cb338-15"><a href="assignment7.html#cb338-15" tabindex="-1"></a>    ); </span>
+<span id="cb338-16"><a href="assignment7.html#cb338-16" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 3
 ##        t     s     a
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1     1     1     0
@@ -1016,31 +1018,31 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ##  8     8     1     0
 ##  9     9     1     0
 ## 10    10     1     0
-## # i 90 more rows</code></pre>
+## # ℹ 90 more rows</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Write a function <code>simulate_dynamic_decision_across_firms(p, s, PI, G, L, K, T, N, delta)</code> that returns simulation data for <span class="math inline">\(N\)</span> firm. For firm <span class="math inline">\(i\)</span>, set the seed at <span class="math inline">\(i\)</span></li>
 </ol>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="assignment7.html#cb342-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
-<span id="cb342-2"><a href="assignment7.html#cb342-2" tabindex="-1"></a>  <span class="fu">simulate_dynamic_decision_across_firms</span>(</span>
-<span id="cb342-3"><a href="assignment7.html#cb342-3" tabindex="-1"></a>    <span class="at">p =</span> p, </span>
-<span id="cb342-4"><a href="assignment7.html#cb342-4" tabindex="-1"></a>    <span class="at">s =</span> s,  </span>
-<span id="cb342-5"><a href="assignment7.html#cb342-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
-<span id="cb342-6"><a href="assignment7.html#cb342-6" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
-<span id="cb342-7"><a href="assignment7.html#cb342-7" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
-<span id="cb342-8"><a href="assignment7.html#cb342-8" tabindex="-1"></a>    <span class="at">T =</span> T, </span>
-<span id="cb342-9"><a href="assignment7.html#cb342-9" tabindex="-1"></a>    <span class="at">N =</span> N, </span>
-<span id="cb342-10"><a href="assignment7.html#cb342-10" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
-<span id="cb342-11"><a href="assignment7.html#cb342-11" tabindex="-1"></a>    )</span>
-<span id="cb342-12"><a href="assignment7.html#cb342-12" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb342-13"><a href="assignment7.html#cb342-13" tabindex="-1"></a>  df, </span>
-<span id="cb342-14"><a href="assignment7.html#cb342-14" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/df.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb342-15"><a href="assignment7.html#cb342-15" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="assignment7.html#cb343-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
-<span id="cb343-2"><a href="assignment7.html#cb343-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb343-3"><a href="assignment7.html#cb343-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/df.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb343-4"><a href="assignment7.html#cb343-4" tabindex="-1"></a>  )</span>
-<span id="cb343-5"><a href="assignment7.html#cb343-5" tabindex="-1"></a>df</span></code></pre></div>
-<pre><code>## # A tibble: 100,000 x 4
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="assignment7.html#cb340-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
+<span id="cb340-2"><a href="assignment7.html#cb340-2" tabindex="-1"></a>  <span class="fu">simulate_dynamic_decision_across_firms</span>(</span>
+<span id="cb340-3"><a href="assignment7.html#cb340-3" tabindex="-1"></a>    <span class="at">p =</span> p, </span>
+<span id="cb340-4"><a href="assignment7.html#cb340-4" tabindex="-1"></a>    <span class="at">s =</span> s,  </span>
+<span id="cb340-5"><a href="assignment7.html#cb340-5" tabindex="-1"></a>    <span class="at">G =</span> G, </span>
+<span id="cb340-6"><a href="assignment7.html#cb340-6" tabindex="-1"></a>    <span class="at">L =</span> L, </span>
+<span id="cb340-7"><a href="assignment7.html#cb340-7" tabindex="-1"></a>    <span class="at">K =</span> K, </span>
+<span id="cb340-8"><a href="assignment7.html#cb340-8" tabindex="-1"></a>    <span class="at">T =</span> T, </span>
+<span id="cb340-9"><a href="assignment7.html#cb340-9" tabindex="-1"></a>    <span class="at">N =</span> N, </span>
+<span id="cb340-10"><a href="assignment7.html#cb340-10" tabindex="-1"></a>    <span class="at">delta =</span> delta</span>
+<span id="cb340-11"><a href="assignment7.html#cb340-11" tabindex="-1"></a>    )</span>
+<span id="cb340-12"><a href="assignment7.html#cb340-12" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb340-13"><a href="assignment7.html#cb340-13" tabindex="-1"></a>  df, </span>
+<span id="cb340-14"><a href="assignment7.html#cb340-14" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/df.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb340-15"><a href="assignment7.html#cb340-15" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="assignment7.html#cb341-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> </span>
+<span id="cb341-2"><a href="assignment7.html#cb341-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb341-3"><a href="assignment7.html#cb341-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/df.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb341-4"><a href="assignment7.html#cb341-4" tabindex="-1"></a>  )</span>
+<span id="cb341-5"><a href="assignment7.html#cb341-5" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>## # A tibble: 100,000 × 4
 ##        i     t     s     a
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1     1     1     1     0
@@ -1053,49 +1055,49 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ##  8     1     8     1     0
 ##  9     1     9     1     0
 ## 10     1    10     1     0
-## # i 99,990 more rows</code></pre>
+## # ℹ 99,990 more rows</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Write a function <code>estimate_ccp(df)</code> that returns a non-parametric estimate of the conditional choice probability in the data. Compare the estimated conditional choice probability and the true conditional choice probability by a bar plot.</li>
 </ol>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="assignment7.html#cb345-1" tabindex="-1"></a>p_est <span class="ot">&lt;-</span> <span class="fu">estimate_ccp</span>(<span class="at">df =</span> df)</span>
-<span id="cb345-2"><a href="assignment7.html#cb345-2" tabindex="-1"></a>check_ccp <span class="ot">&lt;-</span> </span>
-<span id="cb345-3"><a href="assignment7.html#cb345-3" tabindex="-1"></a>  <span class="fu">cbind</span>(</span>
-<span id="cb345-4"><a href="assignment7.html#cb345-4" tabindex="-1"></a>    p, </span>
-<span id="cb345-5"><a href="assignment7.html#cb345-5" tabindex="-1"></a>    p_est</span>
-<span id="cb345-6"><a href="assignment7.html#cb345-6" tabindex="-1"></a>    )</span>
-<span id="cb345-7"><a href="assignment7.html#cb345-7" tabindex="-1"></a><span class="fu">colnames</span>(check_ccp) <span class="ot">&lt;-</span> </span>
-<span id="cb345-8"><a href="assignment7.html#cb345-8" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb345-9"><a href="assignment7.html#cb345-9" tabindex="-1"></a>    <span class="st">&quot;true&quot;</span>, </span>
-<span id="cb345-10"><a href="assignment7.html#cb345-10" tabindex="-1"></a>    <span class="st">&quot;estimate&quot;</span></span>
-<span id="cb345-11"><a href="assignment7.html#cb345-11" tabindex="-1"></a>    )</span>
-<span id="cb345-12"><a href="assignment7.html#cb345-12" tabindex="-1"></a>check_ccp <span class="ot">&lt;-</span> </span>
-<span id="cb345-13"><a href="assignment7.html#cb345-13" tabindex="-1"></a>  check_ccp <span class="sc">%&gt;%</span></span>
-<span id="cb345-14"><a href="assignment7.html#cb345-14" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>()</span>
-<span id="cb345-15"><a href="assignment7.html#cb345-15" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb345-16"><a href="assignment7.html#cb345-16" tabindex="-1"></a>  <span class="at">data =</span> check_ccp, </span>
-<span id="cb345-17"><a href="assignment7.html#cb345-17" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb345-18"><a href="assignment7.html#cb345-18" tabindex="-1"></a>    <span class="at">x =</span> Var1, </span>
-<span id="cb345-19"><a href="assignment7.html#cb345-19" tabindex="-1"></a>    <span class="at">y =</span> value, </span>
-<span id="cb345-20"><a href="assignment7.html#cb345-20" tabindex="-1"></a>    <span class="at">fill =</span> Var2</span>
-<span id="cb345-21"><a href="assignment7.html#cb345-21" tabindex="-1"></a>    )</span>
-<span id="cb345-22"><a href="assignment7.html#cb345-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb345-23"><a href="assignment7.html#cb345-23" tabindex="-1"></a>  <span class="fu">geom_bar</span>(</span>
-<span id="cb345-24"><a href="assignment7.html#cb345-24" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, </span>
-<span id="cb345-25"><a href="assignment7.html#cb345-25" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span></span>
-<span id="cb345-26"><a href="assignment7.html#cb345-26" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb345-27"><a href="assignment7.html#cb345-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb345-28"><a href="assignment7.html#cb345-28" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;action/state&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb345-29"><a href="assignment7.html#cb345-29" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;probability&quot;</span>)  <span class="sc">+</span> </span>
-<span id="cb345-30"><a href="assignment7.html#cb345-30" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="assignment7.html#cb343-1" tabindex="-1"></a>p_est <span class="ot">&lt;-</span> <span class="fu">estimate_ccp</span>(<span class="at">df =</span> df)</span>
+<span id="cb343-2"><a href="assignment7.html#cb343-2" tabindex="-1"></a>check_ccp <span class="ot">&lt;-</span> </span>
+<span id="cb343-3"><a href="assignment7.html#cb343-3" tabindex="-1"></a>  <span class="fu">cbind</span>(</span>
+<span id="cb343-4"><a href="assignment7.html#cb343-4" tabindex="-1"></a>    p, </span>
+<span id="cb343-5"><a href="assignment7.html#cb343-5" tabindex="-1"></a>    p_est</span>
+<span id="cb343-6"><a href="assignment7.html#cb343-6" tabindex="-1"></a>    )</span>
+<span id="cb343-7"><a href="assignment7.html#cb343-7" tabindex="-1"></a><span class="fu">colnames</span>(check_ccp) <span class="ot">&lt;-</span> </span>
+<span id="cb343-8"><a href="assignment7.html#cb343-8" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb343-9"><a href="assignment7.html#cb343-9" tabindex="-1"></a>    <span class="st">&quot;true&quot;</span>, </span>
+<span id="cb343-10"><a href="assignment7.html#cb343-10" tabindex="-1"></a>    <span class="st">&quot;estimate&quot;</span></span>
+<span id="cb343-11"><a href="assignment7.html#cb343-11" tabindex="-1"></a>    )</span>
+<span id="cb343-12"><a href="assignment7.html#cb343-12" tabindex="-1"></a>check_ccp <span class="ot">&lt;-</span> </span>
+<span id="cb343-13"><a href="assignment7.html#cb343-13" tabindex="-1"></a>  check_ccp <span class="sc">%&gt;%</span></span>
+<span id="cb343-14"><a href="assignment7.html#cb343-14" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>()</span>
+<span id="cb343-15"><a href="assignment7.html#cb343-15" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb343-16"><a href="assignment7.html#cb343-16" tabindex="-1"></a>  <span class="at">data =</span> check_ccp, </span>
+<span id="cb343-17"><a href="assignment7.html#cb343-17" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb343-18"><a href="assignment7.html#cb343-18" tabindex="-1"></a>    <span class="at">x =</span> Var1, </span>
+<span id="cb343-19"><a href="assignment7.html#cb343-19" tabindex="-1"></a>    <span class="at">y =</span> value, </span>
+<span id="cb343-20"><a href="assignment7.html#cb343-20" tabindex="-1"></a>    <span class="at">fill =</span> Var2</span>
+<span id="cb343-21"><a href="assignment7.html#cb343-21" tabindex="-1"></a>    )</span>
+<span id="cb343-22"><a href="assignment7.html#cb343-22" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb343-23"><a href="assignment7.html#cb343-23" tabindex="-1"></a>  <span class="fu">geom_bar</span>(</span>
+<span id="cb343-24"><a href="assignment7.html#cb343-24" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, </span>
+<span id="cb343-25"><a href="assignment7.html#cb343-25" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span></span>
+<span id="cb343-26"><a href="assignment7.html#cb343-26" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb343-27"><a href="assignment7.html#cb343-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb343-28"><a href="assignment7.html#cb343-28" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;action/state&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb343-29"><a href="assignment7.html#cb343-29" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;probability&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb343-30"><a href="assignment7.html#cb343-30" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="lecture_files/figure-html/unnamed-chunk-186-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="10" style="list-style-type: decimal">
 <li>Write a function <code>estimate_G(df)</code> that returns a non-parametric estiamte of the transition matrix in the data. Compare the estimated transition matrix and the true transition matrix by a bar plot.</li>
 </ol>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="assignment7.html#cb346-1" tabindex="-1"></a>G_est <span class="ot">&lt;-</span> </span>
-<span id="cb346-2"><a href="assignment7.html#cb346-2" tabindex="-1"></a>  <span class="fu">estimate_G</span>(</span>
-<span id="cb346-3"><a href="assignment7.html#cb346-3" tabindex="-1"></a>    <span class="at">df =</span> df</span>
-<span id="cb346-4"><a href="assignment7.html#cb346-4" tabindex="-1"></a>  ); </span>
-<span id="cb346-5"><a href="assignment7.html#cb346-5" tabindex="-1"></a>G_est</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="assignment7.html#cb344-1" tabindex="-1"></a>G_est <span class="ot">&lt;-</span> </span>
+<span id="cb344-2"><a href="assignment7.html#cb344-2" tabindex="-1"></a>  <span class="fu">estimate_G</span>(</span>
+<span id="cb344-3"><a href="assignment7.html#cb344-3" tabindex="-1"></a>    <span class="at">df =</span> df</span>
+<span id="cb344-4"><a href="assignment7.html#cb344-4" tabindex="-1"></a>  ); </span>
+<span id="cb344-5"><a href="assignment7.html#cb344-5" tabindex="-1"></a>G_est</span></code></pre></div>
 <pre><code>##              l1         l2        l3         l4        l5
 ## k0_l1 1.0000000 0.00000000 0.0000000 0.00000000 0.0000000
 ## k1_l1 0.3930818 0.60691824 0.0000000 0.00000000 0.0000000
@@ -1107,44 +1109,44 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 ## k1_l4 0.0000000 0.00000000 0.1039339 0.29966003 0.5964060
 ## k0_l5 0.0000000 0.00000000 0.0000000 0.09891400 0.9010860
 ## k1_l5 0.0000000 0.00000000 0.0000000 0.09751037 0.9024896</code></pre>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="assignment7.html#cb348-1" tabindex="-1"></a>check_G <span class="ot">&lt;-</span> </span>
-<span id="cb348-2"><a href="assignment7.html#cb348-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb348-3"><a href="assignment7.html#cb348-3" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;true&quot;</span>, </span>
-<span id="cb348-4"><a href="assignment7.html#cb348-4" tabindex="-1"></a>    reshape2<span class="sc">::</span><span class="fu">melt</span>(G)</span>
-<span id="cb348-5"><a href="assignment7.html#cb348-5" tabindex="-1"></a>    )</span>
-<span id="cb348-6"><a href="assignment7.html#cb348-6" tabindex="-1"></a>check_G_est <span class="ot">&lt;-</span> </span>
-<span id="cb348-7"><a href="assignment7.html#cb348-7" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb348-8"><a href="assignment7.html#cb348-8" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;estimate&quot;</span>, </span>
-<span id="cb348-9"><a href="assignment7.html#cb348-9" tabindex="-1"></a>    reshape2<span class="sc">::</span><span class="fu">melt</span>(G_est)</span>
-<span id="cb348-10"><a href="assignment7.html#cb348-10" tabindex="-1"></a>    )</span>
-<span id="cb348-11"><a href="assignment7.html#cb348-11" tabindex="-1"></a>check_G <span class="ot">&lt;-</span> </span>
-<span id="cb348-12"><a href="assignment7.html#cb348-12" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
-<span id="cb348-13"><a href="assignment7.html#cb348-13" tabindex="-1"></a>    check_G, </span>
-<span id="cb348-14"><a href="assignment7.html#cb348-14" tabindex="-1"></a>    check_G_est</span>
-<span id="cb348-15"><a href="assignment7.html#cb348-15" tabindex="-1"></a>    )</span>
-<span id="cb348-16"><a href="assignment7.html#cb348-16" tabindex="-1"></a>check_G<span class="sc">$</span>variable <span class="ot">&lt;-</span></span>
-<span id="cb348-17"><a href="assignment7.html#cb348-17" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
-<span id="cb348-18"><a href="assignment7.html#cb348-18" tabindex="-1"></a>    check_G<span class="sc">$</span>Var1, </span>
-<span id="cb348-19"><a href="assignment7.html#cb348-19" tabindex="-1"></a>    check_G<span class="sc">$</span>Var2, </span>
-<span id="cb348-20"><a href="assignment7.html#cb348-20" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;_&quot;</span></span>
-<span id="cb348-21"><a href="assignment7.html#cb348-21" tabindex="-1"></a>    )</span>
-<span id="cb348-22"><a href="assignment7.html#cb348-22" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb348-23"><a href="assignment7.html#cb348-23" tabindex="-1"></a>  <span class="at">data =</span> check_G, </span>
-<span id="cb348-24"><a href="assignment7.html#cb348-24" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb348-25"><a href="assignment7.html#cb348-25" tabindex="-1"></a>    <span class="at">x =</span> variable, </span>
-<span id="cb348-26"><a href="assignment7.html#cb348-26" tabindex="-1"></a>    <span class="at">y =</span> value,</span>
-<span id="cb348-27"><a href="assignment7.html#cb348-27" tabindex="-1"></a>    <span class="at">fill =</span> type</span>
-<span id="cb348-28"><a href="assignment7.html#cb348-28" tabindex="-1"></a>    )</span>
-<span id="cb348-29"><a href="assignment7.html#cb348-29" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb348-30"><a href="assignment7.html#cb348-30" tabindex="-1"></a>    <span class="fu">geom_bar</span>(</span>
-<span id="cb348-31"><a href="assignment7.html#cb348-31" tabindex="-1"></a>      <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, </span>
-<span id="cb348-32"><a href="assignment7.html#cb348-32" tabindex="-1"></a>      <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span></span>
-<span id="cb348-33"><a href="assignment7.html#cb348-33" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb348-34"><a href="assignment7.html#cb348-34" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb348-35"><a href="assignment7.html#cb348-35" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;action/state/state&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb348-36"><a href="assignment7.html#cb348-36" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;probability&quot;</span>) <span class="sc">+</span></span>
-<span id="cb348-37"><a href="assignment7.html#cb348-37" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>())  <span class="sc">+</span> </span>
-<span id="cb348-38"><a href="assignment7.html#cb348-38" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="assignment7.html#cb346-1" tabindex="-1"></a>check_G <span class="ot">&lt;-</span> </span>
+<span id="cb346-2"><a href="assignment7.html#cb346-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb346-3"><a href="assignment7.html#cb346-3" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;true&quot;</span>, </span>
+<span id="cb346-4"><a href="assignment7.html#cb346-4" tabindex="-1"></a>    reshape2<span class="sc">::</span><span class="fu">melt</span>(G)</span>
+<span id="cb346-5"><a href="assignment7.html#cb346-5" tabindex="-1"></a>    )</span>
+<span id="cb346-6"><a href="assignment7.html#cb346-6" tabindex="-1"></a>check_G_est <span class="ot">&lt;-</span> </span>
+<span id="cb346-7"><a href="assignment7.html#cb346-7" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb346-8"><a href="assignment7.html#cb346-8" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;estimate&quot;</span>, </span>
+<span id="cb346-9"><a href="assignment7.html#cb346-9" tabindex="-1"></a>    reshape2<span class="sc">::</span><span class="fu">melt</span>(G_est)</span>
+<span id="cb346-10"><a href="assignment7.html#cb346-10" tabindex="-1"></a>    )</span>
+<span id="cb346-11"><a href="assignment7.html#cb346-11" tabindex="-1"></a>check_G <span class="ot">&lt;-</span> </span>
+<span id="cb346-12"><a href="assignment7.html#cb346-12" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
+<span id="cb346-13"><a href="assignment7.html#cb346-13" tabindex="-1"></a>    check_G, </span>
+<span id="cb346-14"><a href="assignment7.html#cb346-14" tabindex="-1"></a>    check_G_est</span>
+<span id="cb346-15"><a href="assignment7.html#cb346-15" tabindex="-1"></a>    )</span>
+<span id="cb346-16"><a href="assignment7.html#cb346-16" tabindex="-1"></a>check_G<span class="sc">$</span>variable <span class="ot">&lt;-</span></span>
+<span id="cb346-17"><a href="assignment7.html#cb346-17" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
+<span id="cb346-18"><a href="assignment7.html#cb346-18" tabindex="-1"></a>    check_G<span class="sc">$</span>Var1, </span>
+<span id="cb346-19"><a href="assignment7.html#cb346-19" tabindex="-1"></a>    check_G<span class="sc">$</span>Var2, </span>
+<span id="cb346-20"><a href="assignment7.html#cb346-20" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb346-21"><a href="assignment7.html#cb346-21" tabindex="-1"></a>    )</span>
+<span id="cb346-22"><a href="assignment7.html#cb346-22" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb346-23"><a href="assignment7.html#cb346-23" tabindex="-1"></a>  <span class="at">data =</span> check_G, </span>
+<span id="cb346-24"><a href="assignment7.html#cb346-24" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb346-25"><a href="assignment7.html#cb346-25" tabindex="-1"></a>    <span class="at">x =</span> variable, </span>
+<span id="cb346-26"><a href="assignment7.html#cb346-26" tabindex="-1"></a>    <span class="at">y =</span> value,</span>
+<span id="cb346-27"><a href="assignment7.html#cb346-27" tabindex="-1"></a>    <span class="at">fill =</span> type</span>
+<span id="cb346-28"><a href="assignment7.html#cb346-28" tabindex="-1"></a>    )</span>
+<span id="cb346-29"><a href="assignment7.html#cb346-29" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb346-30"><a href="assignment7.html#cb346-30" tabindex="-1"></a>    <span class="fu">geom_bar</span>(</span>
+<span id="cb346-31"><a href="assignment7.html#cb346-31" tabindex="-1"></a>      <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, </span>
+<span id="cb346-32"><a href="assignment7.html#cb346-32" tabindex="-1"></a>      <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span></span>
+<span id="cb346-33"><a href="assignment7.html#cb346-33" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb346-34"><a href="assignment7.html#cb346-34" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb346-35"><a href="assignment7.html#cb346-35" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;action/state/state&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb346-36"><a href="assignment7.html#cb346-36" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;probability&quot;</span>) <span class="sc">+</span></span>
+<span id="cb346-37"><a href="assignment7.html#cb346-37" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>())  <span class="sc">+</span> </span>
+<span id="cb346-38"><a href="assignment7.html#cb346-38" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p><img src="lecture_files/figure-html/unnamed-chunk-187-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="estimate-parameters" class="section level2 hasAnchor" number="17.2">
@@ -1152,21 +1154,21 @@ where <span class="math inline">\(V\)</span> is an exante value function.</p>
 <ol style="list-style-type: decimal">
 <li>Vectorize the parameters as follows:</li>
 </ol>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="assignment7.html#cb349-1" tabindex="-1"></a>theta_1 <span class="ot">&lt;-</span> </span>
-<span id="cb349-2"><a href="assignment7.html#cb349-2" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb349-3"><a href="assignment7.html#cb349-3" tabindex="-1"></a>    alpha, </span>
-<span id="cb349-4"><a href="assignment7.html#cb349-4" tabindex="-1"></a>    beta</span>
-<span id="cb349-5"><a href="assignment7.html#cb349-5" tabindex="-1"></a>    )</span>
-<span id="cb349-6"><a href="assignment7.html#cb349-6" tabindex="-1"></a>theta_2 <span class="ot">&lt;-</span> </span>
-<span id="cb349-7"><a href="assignment7.html#cb349-7" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb349-8"><a href="assignment7.html#cb349-8" tabindex="-1"></a>    kappa, </span>
-<span id="cb349-9"><a href="assignment7.html#cb349-9" tabindex="-1"></a>    gamma</span>
-<span id="cb349-10"><a href="assignment7.html#cb349-10" tabindex="-1"></a>    )</span>
-<span id="cb349-11"><a href="assignment7.html#cb349-11" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
-<span id="cb349-12"><a href="assignment7.html#cb349-12" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb349-13"><a href="assignment7.html#cb349-13" tabindex="-1"></a>    theta_1, </span>
-<span id="cb349-14"><a href="assignment7.html#cb349-14" tabindex="-1"></a>    theta_2</span>
-<span id="cb349-15"><a href="assignment7.html#cb349-15" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="assignment7.html#cb347-1" tabindex="-1"></a>theta_1 <span class="ot">&lt;-</span> </span>
+<span id="cb347-2"><a href="assignment7.html#cb347-2" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb347-3"><a href="assignment7.html#cb347-3" tabindex="-1"></a>    alpha, </span>
+<span id="cb347-4"><a href="assignment7.html#cb347-4" tabindex="-1"></a>    beta</span>
+<span id="cb347-5"><a href="assignment7.html#cb347-5" tabindex="-1"></a>    )</span>
+<span id="cb347-6"><a href="assignment7.html#cb347-6" tabindex="-1"></a>theta_2 <span class="ot">&lt;-</span> </span>
+<span id="cb347-7"><a href="assignment7.html#cb347-7" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb347-8"><a href="assignment7.html#cb347-8" tabindex="-1"></a>    kappa, </span>
+<span id="cb347-9"><a href="assignment7.html#cb347-9" tabindex="-1"></a>    gamma</span>
+<span id="cb347-10"><a href="assignment7.html#cb347-10" tabindex="-1"></a>    )</span>
+<span id="cb347-11"><a href="assignment7.html#cb347-11" tabindex="-1"></a>theta <span class="ot">&lt;-</span> </span>
+<span id="cb347-12"><a href="assignment7.html#cb347-12" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb347-13"><a href="assignment7.html#cb347-13" tabindex="-1"></a>    theta_1, </span>
+<span id="cb347-14"><a href="assignment7.html#cb347-14" tabindex="-1"></a>    theta_2</span>
+<span id="cb347-15"><a href="assignment7.html#cb347-15" tabindex="-1"></a>    )</span></code></pre></div>
 <p>First, we estimate the parameters by a nested fixed-point algorithm. The loglikelihood for <span class="math inline">\(\{a_{it}, s_{it}\}_{i = 1, \cdots, N, t = 1, \cdots, T}\)</span> is:
 <span class="math display">\[
 \frac{1}{NT} \sum_{i = 1}^N \sum_{t = 1}^T[\log\mathbb{P}\{a_{it}|s_{it}\} + \log \mathbb{P}\{s_{i, t + 1}|a_{it}, s_{it}\}],
@@ -1175,98 +1177,98 @@ with <span class="math inline">\(\mathbb{P}\{s_{i, T + 1}|a_{iT}, s_{iT}\} = 1\)
 <ol start="2" style="list-style-type: decimal">
 <li>Write a function <code>compute_loglikelihood_NFP(theta, df, delta, L, K)</code> that compute the loglikelihood.</li>
 </ol>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="assignment7.html#cb350-1" tabindex="-1"></a>loglikelihood <span class="ot">&lt;-</span> </span>
-<span id="cb350-2"><a href="assignment7.html#cb350-2" tabindex="-1"></a>  <span class="fu">compute_loglikelihood_NFP</span>(</span>
-<span id="cb350-3"><a href="assignment7.html#cb350-3" tabindex="-1"></a>    <span class="at">theta =</span> theta, </span>
-<span id="cb350-4"><a href="assignment7.html#cb350-4" tabindex="-1"></a>    <span class="at">df =</span> df, </span>
-<span id="cb350-5"><a href="assignment7.html#cb350-5" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
-<span id="cb350-6"><a href="assignment7.html#cb350-6" tabindex="-1"></a>    <span class="at">L =</span> L,</span>
-<span id="cb350-7"><a href="assignment7.html#cb350-7" tabindex="-1"></a>    <span class="at">K =</span> K</span>
-<span id="cb350-8"><a href="assignment7.html#cb350-8" tabindex="-1"></a>    ); </span>
-<span id="cb350-9"><a href="assignment7.html#cb350-9" tabindex="-1"></a>loglikelihood</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="assignment7.html#cb348-1" tabindex="-1"></a>loglikelihood <span class="ot">&lt;-</span> </span>
+<span id="cb348-2"><a href="assignment7.html#cb348-2" tabindex="-1"></a>  <span class="fu">compute_loglikelihood_NFP</span>(</span>
+<span id="cb348-3"><a href="assignment7.html#cb348-3" tabindex="-1"></a>    <span class="at">theta =</span> theta, </span>
+<span id="cb348-4"><a href="assignment7.html#cb348-4" tabindex="-1"></a>    <span class="at">df =</span> df, </span>
+<span id="cb348-5"><a href="assignment7.html#cb348-5" tabindex="-1"></a>    <span class="at">delta =</span> delta, </span>
+<span id="cb348-6"><a href="assignment7.html#cb348-6" tabindex="-1"></a>    <span class="at">L =</span> L,</span>
+<span id="cb348-7"><a href="assignment7.html#cb348-7" tabindex="-1"></a>    <span class="at">K =</span> K</span>
+<span id="cb348-8"><a href="assignment7.html#cb348-8" tabindex="-1"></a>    ); </span>
+<span id="cb348-9"><a href="assignment7.html#cb348-9" tabindex="-1"></a>loglikelihood</span></code></pre></div>
 <pre><code>## [1] -0.7474961</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Check the value of the objective function around the true parameter.</li>
 </ol>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="assignment7.html#cb352-1" tabindex="-1"></a><span class="co"># label</span></span>
-<span id="cb352-2"><a href="assignment7.html#cb352-2" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb352-3"><a href="assignment7.html#cb352-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb352-4"><a href="assignment7.html#cb352-4" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>, </span>
-<span id="cb352-5"><a href="assignment7.html#cb352-5" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span>, </span>
-<span id="cb352-6"><a href="assignment7.html#cb352-6" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">kappa&quot;</span>, </span>
-<span id="cb352-7"><a href="assignment7.html#cb352-7" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">gamma&quot;</span></span>
-<span id="cb352-8"><a href="assignment7.html#cb352-8" tabindex="-1"></a>    )</span>
-<span id="cb352-9"><a href="assignment7.html#cb352-9" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb352-10"><a href="assignment7.html#cb352-10" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
-<span id="cb352-11"><a href="assignment7.html#cb352-11" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
-<span id="cb352-12"><a href="assignment7.html#cb352-12" tabindex="-1"></a>    label, </span>
-<span id="cb352-13"><a href="assignment7.html#cb352-13" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
-<span id="cb352-14"><a href="assignment7.html#cb352-14" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb352-15"><a href="assignment7.html#cb352-15" tabindex="-1"></a>    )</span>
-<span id="cb352-16"><a href="assignment7.html#cb352-16" tabindex="-1"></a><span class="co"># compute the graph</span></span>
-<span id="cb352-17"><a href="assignment7.html#cb352-17" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb352-18"><a href="assignment7.html#cb352-18" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb352-19"><a href="assignment7.html#cb352-19" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
-<span id="cb352-20"><a href="assignment7.html#cb352-20" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb352-21"><a href="assignment7.html#cb352-21" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
-<span id="cb352-22"><a href="assignment7.html#cb352-22" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
-<span id="cb352-23"><a href="assignment7.html#cb352-23" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
-<span id="cb352-24"><a href="assignment7.html#cb352-24" tabindex="-1"></a>    <span class="fl">0.8</span>, </span>
-<span id="cb352-25"><a href="assignment7.html#cb352-25" tabindex="-1"></a>    <span class="fl">1.2</span>, </span>
-<span id="cb352-26"><a href="assignment7.html#cb352-26" tabindex="-1"></a>    <span class="at">by =</span> <span class="fl">0.05</span></span>
-<span id="cb352-27"><a href="assignment7.html#cb352-27" tabindex="-1"></a>    )</span>
-<span id="cb352-28"><a href="assignment7.html#cb352-28" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
-<span id="cb352-29"><a href="assignment7.html#cb352-29" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb352-30"><a href="assignment7.html#cb352-30" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
-<span id="cb352-31"><a href="assignment7.html#cb352-31" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb352-32"><a href="assignment7.html#cb352-32" tabindex="-1"></a>      ) <span class="sc">%do%</span> {</span>
-<span id="cb352-33"><a href="assignment7.html#cb352-33" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
-<span id="cb352-34"><a href="assignment7.html#cb352-34" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
-<span id="cb352-35"><a href="assignment7.html#cb352-35" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
-<span id="cb352-36"><a href="assignment7.html#cb352-36" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
-<span id="cb352-37"><a href="assignment7.html#cb352-37" tabindex="-1"></a>                 <span class="fu">compute_loglikelihood_NFP</span>(</span>
-<span id="cb352-38"><a href="assignment7.html#cb352-38" tabindex="-1"></a>                   theta_j, </span>
-<span id="cb352-39"><a href="assignment7.html#cb352-39" tabindex="-1"></a>                   df, </span>
-<span id="cb352-40"><a href="assignment7.html#cb352-40" tabindex="-1"></a>                   delta, </span>
-<span id="cb352-41"><a href="assignment7.html#cb352-41" tabindex="-1"></a>                   L, </span>
-<span id="cb352-42"><a href="assignment7.html#cb352-42" tabindex="-1"></a>                   K</span>
-<span id="cb352-43"><a href="assignment7.html#cb352-43" tabindex="-1"></a>                   ); </span>
-<span id="cb352-44"><a href="assignment7.html#cb352-44" tabindex="-1"></a>               loglikelihood</span>
-<span id="cb352-45"><a href="assignment7.html#cb352-45" tabindex="-1"></a></span>
-<span id="cb352-46"><a href="assignment7.html#cb352-46" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
-<span id="cb352-47"><a href="assignment7.html#cb352-47" tabindex="-1"></a>             }</span>
-<span id="cb352-48"><a href="assignment7.html#cb352-48" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
-<span id="cb352-49"><a href="assignment7.html#cb352-49" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb352-50"><a href="assignment7.html#cb352-50" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
-<span id="cb352-51"><a href="assignment7.html#cb352-51" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
-<span id="cb352-52"><a href="assignment7.html#cb352-52" tabindex="-1"></a>      ) </span>
-<span id="cb352-53"><a href="assignment7.html#cb352-53" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
-<span id="cb352-54"><a href="assignment7.html#cb352-54" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb352-55"><a href="assignment7.html#cb352-55" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
-<span id="cb352-56"><a href="assignment7.html#cb352-56" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
-<span id="cb352-57"><a href="assignment7.html#cb352-57" tabindex="-1"></a>        <span class="at">x =</span> x, </span>
-<span id="cb352-58"><a href="assignment7.html#cb352-58" tabindex="-1"></a>        <span class="at">y =</span> y</span>
-<span id="cb352-59"><a href="assignment7.html#cb352-59" tabindex="-1"></a>        )</span>
-<span id="cb352-60"><a href="assignment7.html#cb352-60" tabindex="-1"></a>      ) <span class="sc">+</span> </span>
-<span id="cb352-61"><a href="assignment7.html#cb352-61" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb352-62"><a href="assignment7.html#cb352-62" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb352-63"><a href="assignment7.html#cb352-63" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
-<span id="cb352-64"><a href="assignment7.html#cb352-64" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
-<span id="cb352-65"><a href="assignment7.html#cb352-65" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb352-66"><a href="assignment7.html#cb352-66" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span></span>
-<span id="cb352-67"><a href="assignment7.html#cb352-67" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i]))  <span class="sc">+</span> </span>
-<span id="cb352-68"><a href="assignment7.html#cb352-68" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb352-69"><a href="assignment7.html#cb352-69" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
-<span id="cb352-70"><a href="assignment7.html#cb352-70" tabindex="-1"></a>}</span>
-<span id="cb352-71"><a href="assignment7.html#cb352-71" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb352-72"><a href="assignment7.html#cb352-72" tabindex="-1"></a>  graph, </span>
-<span id="cb352-73"><a href="assignment7.html#cb352-73" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb352-74"><a href="assignment7.html#cb352-74" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="assignment7.html#cb353-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb353-2"><a href="assignment7.html#cb353-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb353-3"><a href="assignment7.html#cb353-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb353-4"><a href="assignment7.html#cb353-4" tabindex="-1"></a>  )</span>
-<span id="cb353-5"><a href="assignment7.html#cb353-5" tabindex="-1"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="assignment7.html#cb350-1" tabindex="-1"></a><span class="co"># label</span></span>
+<span id="cb350-2"><a href="assignment7.html#cb350-2" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb350-3"><a href="assignment7.html#cb350-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb350-4"><a href="assignment7.html#cb350-4" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>, </span>
+<span id="cb350-5"><a href="assignment7.html#cb350-5" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span>, </span>
+<span id="cb350-6"><a href="assignment7.html#cb350-6" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">kappa&quot;</span>, </span>
+<span id="cb350-7"><a href="assignment7.html#cb350-7" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">gamma&quot;</span></span>
+<span id="cb350-8"><a href="assignment7.html#cb350-8" tabindex="-1"></a>    )</span>
+<span id="cb350-9"><a href="assignment7.html#cb350-9" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb350-10"><a href="assignment7.html#cb350-10" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
+<span id="cb350-11"><a href="assignment7.html#cb350-11" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
+<span id="cb350-12"><a href="assignment7.html#cb350-12" tabindex="-1"></a>    label, </span>
+<span id="cb350-13"><a href="assignment7.html#cb350-13" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
+<span id="cb350-14"><a href="assignment7.html#cb350-14" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb350-15"><a href="assignment7.html#cb350-15" tabindex="-1"></a>    )</span>
+<span id="cb350-16"><a href="assignment7.html#cb350-16" tabindex="-1"></a><span class="co"># compute the graph</span></span>
+<span id="cb350-17"><a href="assignment7.html#cb350-17" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb350-18"><a href="assignment7.html#cb350-18" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb350-19"><a href="assignment7.html#cb350-19" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta)</span>
+<span id="cb350-20"><a href="assignment7.html#cb350-20" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb350-21"><a href="assignment7.html#cb350-21" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta[i]</span>
+<span id="cb350-22"><a href="assignment7.html#cb350-22" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
+<span id="cb350-23"><a href="assignment7.html#cb350-23" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
+<span id="cb350-24"><a href="assignment7.html#cb350-24" tabindex="-1"></a>    <span class="fl">0.8</span>, </span>
+<span id="cb350-25"><a href="assignment7.html#cb350-25" tabindex="-1"></a>    <span class="fl">1.2</span>, </span>
+<span id="cb350-26"><a href="assignment7.html#cb350-26" tabindex="-1"></a>    <span class="at">by =</span> <span class="fl">0.05</span></span>
+<span id="cb350-27"><a href="assignment7.html#cb350-27" tabindex="-1"></a>    )</span>
+<span id="cb350-28"><a href="assignment7.html#cb350-28" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
+<span id="cb350-29"><a href="assignment7.html#cb350-29" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb350-30"><a href="assignment7.html#cb350-30" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
+<span id="cb350-31"><a href="assignment7.html#cb350-31" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb350-32"><a href="assignment7.html#cb350-32" tabindex="-1"></a>      ) <span class="sc">%do%</span> {</span>
+<span id="cb350-33"><a href="assignment7.html#cb350-33" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
+<span id="cb350-34"><a href="assignment7.html#cb350-34" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta</span>
+<span id="cb350-35"><a href="assignment7.html#cb350-35" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
+<span id="cb350-36"><a href="assignment7.html#cb350-36" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
+<span id="cb350-37"><a href="assignment7.html#cb350-37" tabindex="-1"></a>                 <span class="fu">compute_loglikelihood_NFP</span>(</span>
+<span id="cb350-38"><a href="assignment7.html#cb350-38" tabindex="-1"></a>                   theta_j, </span>
+<span id="cb350-39"><a href="assignment7.html#cb350-39" tabindex="-1"></a>                   df, </span>
+<span id="cb350-40"><a href="assignment7.html#cb350-40" tabindex="-1"></a>                   delta, </span>
+<span id="cb350-41"><a href="assignment7.html#cb350-41" tabindex="-1"></a>                   L, </span>
+<span id="cb350-42"><a href="assignment7.html#cb350-42" tabindex="-1"></a>                   K</span>
+<span id="cb350-43"><a href="assignment7.html#cb350-43" tabindex="-1"></a>                   ); </span>
+<span id="cb350-44"><a href="assignment7.html#cb350-44" tabindex="-1"></a>               loglikelihood</span>
+<span id="cb350-45"><a href="assignment7.html#cb350-45" tabindex="-1"></a></span>
+<span id="cb350-46"><a href="assignment7.html#cb350-46" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
+<span id="cb350-47"><a href="assignment7.html#cb350-47" tabindex="-1"></a>             }</span>
+<span id="cb350-48"><a href="assignment7.html#cb350-48" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
+<span id="cb350-49"><a href="assignment7.html#cb350-49" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb350-50"><a href="assignment7.html#cb350-50" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
+<span id="cb350-51"><a href="assignment7.html#cb350-51" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
+<span id="cb350-52"><a href="assignment7.html#cb350-52" tabindex="-1"></a>      ) </span>
+<span id="cb350-53"><a href="assignment7.html#cb350-53" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
+<span id="cb350-54"><a href="assignment7.html#cb350-54" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb350-55"><a href="assignment7.html#cb350-55" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
+<span id="cb350-56"><a href="assignment7.html#cb350-56" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
+<span id="cb350-57"><a href="assignment7.html#cb350-57" tabindex="-1"></a>        <span class="at">x =</span> x, </span>
+<span id="cb350-58"><a href="assignment7.html#cb350-58" tabindex="-1"></a>        <span class="at">y =</span> y</span>
+<span id="cb350-59"><a href="assignment7.html#cb350-59" tabindex="-1"></a>        )</span>
+<span id="cb350-60"><a href="assignment7.html#cb350-60" tabindex="-1"></a>      ) <span class="sc">+</span> </span>
+<span id="cb350-61"><a href="assignment7.html#cb350-61" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb350-62"><a href="assignment7.html#cb350-62" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb350-63"><a href="assignment7.html#cb350-63" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
+<span id="cb350-64"><a href="assignment7.html#cb350-64" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
+<span id="cb350-65"><a href="assignment7.html#cb350-65" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb350-66"><a href="assignment7.html#cb350-66" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span></span>
+<span id="cb350-67"><a href="assignment7.html#cb350-67" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i]))  <span class="sc">+</span> </span>
+<span id="cb350-68"><a href="assignment7.html#cb350-68" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb350-69"><a href="assignment7.html#cb350-69" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb350-70"><a href="assignment7.html#cb350-70" tabindex="-1"></a>}</span>
+<span id="cb350-71"><a href="assignment7.html#cb350-71" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb350-72"><a href="assignment7.html#cb350-72" tabindex="-1"></a>  graph, </span>
+<span id="cb350-73"><a href="assignment7.html#cb350-73" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb350-74"><a href="assignment7.html#cb350-74" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="assignment7.html#cb351-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb351-2"><a href="assignment7.html#cb351-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb351-3"><a href="assignment7.html#cb351-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb351-4"><a href="assignment7.html#cb351-4" tabindex="-1"></a>  )</span>
+<span id="cb351-5"><a href="assignment7.html#cb351-5" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-191-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
@@ -1281,30 +1283,30 @@ with <span class="math inline">\(\mathbb{P}\{s_{i, T + 1}|a_{iT}, s_{iT}\} = 1\)
 <ol start="4" style="list-style-type: decimal">
 <li>Estiamte the parameters by maximizing the loglikelihood. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that <span class="math inline">\(\alpha \in [0, 1], \beta \in [0, 5], \kappa \in [0, 0.2], \gamma \in [0, 0.7]\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="assignment7.html#cb358-1" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(theta))</span>
-<span id="cb358-2"><a href="assignment7.html#cb358-2" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.7</span>)</span>
-<span id="cb358-3"><a href="assignment7.html#cb358-3" tabindex="-1"></a>NFP_result <span class="ot">&lt;-</span></span>
-<span id="cb358-4"><a href="assignment7.html#cb358-4" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
-<span id="cb358-5"><a href="assignment7.html#cb358-5" tabindex="-1"></a>    <span class="at">par =</span> theta,</span>
-<span id="cb358-6"><a href="assignment7.html#cb358-6" tabindex="-1"></a>    <span class="at">fn =</span> compute_loglikelihood_NFP,</span>
-<span id="cb358-7"><a href="assignment7.html#cb358-7" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
-<span id="cb358-8"><a href="assignment7.html#cb358-8" tabindex="-1"></a>    <span class="at">lower =</span> lower,</span>
-<span id="cb358-9"><a href="assignment7.html#cb358-9" tabindex="-1"></a>    <span class="at">upper =</span> upper,</span>
-<span id="cb358-10"><a href="assignment7.html#cb358-10" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale =</span> <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb358-11"><a href="assignment7.html#cb358-11" tabindex="-1"></a>    <span class="at">df =</span> df, </span>
-<span id="cb358-12"><a href="assignment7.html#cb358-12" tabindex="-1"></a>    <span class="at">delta =</span> delta,</span>
-<span id="cb358-13"><a href="assignment7.html#cb358-13" tabindex="-1"></a>    <span class="at">L =</span> L,</span>
-<span id="cb358-14"><a href="assignment7.html#cb358-14" tabindex="-1"></a>    <span class="at">K =</span> K</span>
-<span id="cb358-15"><a href="assignment7.html#cb358-15" tabindex="-1"></a>  )</span>
-<span id="cb358-16"><a href="assignment7.html#cb358-16" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb358-17"><a href="assignment7.html#cb358-17" tabindex="-1"></a>  NFP_result, </span>
-<span id="cb358-18"><a href="assignment7.html#cb358-18" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb358-19"><a href="assignment7.html#cb358-19" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="assignment7.html#cb359-1" tabindex="-1"></a>NFP_result <span class="ot">&lt;-</span> </span>
-<span id="cb359-2"><a href="assignment7.html#cb359-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb359-3"><a href="assignment7.html#cb359-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb359-4"><a href="assignment7.html#cb359-4" tabindex="-1"></a>  )</span>
-<span id="cb359-5"><a href="assignment7.html#cb359-5" tabindex="-1"></a>NFP_result</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="assignment7.html#cb356-1" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(theta))</span>
+<span id="cb356-2"><a href="assignment7.html#cb356-2" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.7</span>)</span>
+<span id="cb356-3"><a href="assignment7.html#cb356-3" tabindex="-1"></a>NFP_result <span class="ot">&lt;-</span></span>
+<span id="cb356-4"><a href="assignment7.html#cb356-4" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
+<span id="cb356-5"><a href="assignment7.html#cb356-5" tabindex="-1"></a>    <span class="at">par =</span> theta,</span>
+<span id="cb356-6"><a href="assignment7.html#cb356-6" tabindex="-1"></a>    <span class="at">fn =</span> compute_loglikelihood_NFP,</span>
+<span id="cb356-7"><a href="assignment7.html#cb356-7" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
+<span id="cb356-8"><a href="assignment7.html#cb356-8" tabindex="-1"></a>    <span class="at">lower =</span> lower,</span>
+<span id="cb356-9"><a href="assignment7.html#cb356-9" tabindex="-1"></a>    <span class="at">upper =</span> upper,</span>
+<span id="cb356-10"><a href="assignment7.html#cb356-10" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">fnscale =</span> <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb356-11"><a href="assignment7.html#cb356-11" tabindex="-1"></a>    <span class="at">df =</span> df, </span>
+<span id="cb356-12"><a href="assignment7.html#cb356-12" tabindex="-1"></a>    <span class="at">delta =</span> delta,</span>
+<span id="cb356-13"><a href="assignment7.html#cb356-13" tabindex="-1"></a>    <span class="at">L =</span> L,</span>
+<span id="cb356-14"><a href="assignment7.html#cb356-14" tabindex="-1"></a>    <span class="at">K =</span> K</span>
+<span id="cb356-15"><a href="assignment7.html#cb356-15" tabindex="-1"></a>  )</span>
+<span id="cb356-16"><a href="assignment7.html#cb356-16" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb356-17"><a href="assignment7.html#cb356-17" tabindex="-1"></a>  NFP_result, </span>
+<span id="cb356-18"><a href="assignment7.html#cb356-18" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb356-19"><a href="assignment7.html#cb356-19" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="assignment7.html#cb357-1" tabindex="-1"></a>NFP_result <span class="ot">&lt;-</span> </span>
+<span id="cb357-2"><a href="assignment7.html#cb357-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb357-3"><a href="assignment7.html#cb357-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/NFP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb357-4"><a href="assignment7.html#cb357-4" tabindex="-1"></a>  )</span>
+<span id="cb357-5"><a href="assignment7.html#cb357-5" tabindex="-1"></a>NFP_result</span></code></pre></div>
 <pre><code>## $par
 ## [1] 0.5273235 3.0652558 0.1000122 0.5955431
 ## 
@@ -1320,12 +1322,12 @@ with <span class="math inline">\(\mathbb{P}\{s_{i, T + 1}|a_{iT}, s_{iT}\} = 1\)
 ## 
 ## $message
 ## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="assignment7.html#cb361-1" tabindex="-1"></a>compare <span class="ot">&lt;-</span></span>
-<span id="cb361-2"><a href="assignment7.html#cb361-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb361-3"><a href="assignment7.html#cb361-3" tabindex="-1"></a>    <span class="at">true =</span> theta,</span>
-<span id="cb361-4"><a href="assignment7.html#cb361-4" tabindex="-1"></a>    <span class="at">estimate =</span> NFP_result<span class="sc">$</span>par</span>
-<span id="cb361-5"><a href="assignment7.html#cb361-5" tabindex="-1"></a>  ); </span>
-<span id="cb361-6"><a href="assignment7.html#cb361-6" tabindex="-1"></a>compare</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="assignment7.html#cb359-1" tabindex="-1"></a>compare <span class="ot">&lt;-</span></span>
+<span id="cb359-2"><a href="assignment7.html#cb359-2" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb359-3"><a href="assignment7.html#cb359-3" tabindex="-1"></a>    <span class="at">true =</span> theta,</span>
+<span id="cb359-4"><a href="assignment7.html#cb359-4" tabindex="-1"></a>    <span class="at">estimate =</span> NFP_result<span class="sc">$</span>par</span>
+<span id="cb359-5"><a href="assignment7.html#cb359-5" tabindex="-1"></a>  ); </span>
+<span id="cb359-6"><a href="assignment7.html#cb359-6" tabindex="-1"></a>compare</span></code></pre></div>
 <pre><code>##   true  estimate
 ## 1  0.5 0.5273235
 ## 2  3.0 3.0652558
@@ -1335,11 +1337,11 @@ with <span class="math inline">\(\mathbb{P}\{s_{i, T + 1}|a_{iT}, s_{iT}\} = 1\)
 <ol start="5" style="list-style-type: decimal">
 <li>Write a function <code>estimate_theta_2(df)</code> that returns the estimates of <span class="math inline">\(\kappa\)</span> and <span class="math inline">\(\gamma\)</span> directly from data by counting relevant events.</li>
 </ol>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="assignment7.html#cb363-1" tabindex="-1"></a>theta_2_est <span class="ot">&lt;-</span> </span>
-<span id="cb363-2"><a href="assignment7.html#cb363-2" tabindex="-1"></a>  <span class="fu">estimate_theta_2</span>(</span>
-<span id="cb363-3"><a href="assignment7.html#cb363-3" tabindex="-1"></a>    <span class="at">df =</span> df</span>
-<span id="cb363-4"><a href="assignment7.html#cb363-4" tabindex="-1"></a>  ); </span>
-<span id="cb363-5"><a href="assignment7.html#cb363-5" tabindex="-1"></a>theta_2_est</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="assignment7.html#cb361-1" tabindex="-1"></a>theta_2_est <span class="ot">&lt;-</span> </span>
+<span id="cb361-2"><a href="assignment7.html#cb361-2" tabindex="-1"></a>  <span class="fu">estimate_theta_2</span>(</span>
+<span id="cb361-3"><a href="assignment7.html#cb361-3" tabindex="-1"></a>    <span class="at">df =</span> df</span>
+<span id="cb361-4"><a href="assignment7.html#cb361-4" tabindex="-1"></a>  ); </span>
+<span id="cb361-5"><a href="assignment7.html#cb361-5" tabindex="-1"></a>theta_2_est</span></code></pre></div>
 <pre><code>## [1] 0.09988488 0.59551895</code></pre>
 <p>The objective function of the minimum distance estimator based on the conditional choice probability approach is:
 <span class="math display">\[
@@ -1349,93 +1351,93 @@ where <span class="math inline">\(\hat{p}\)</span> is the non-parametric estimat
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_CCP_objective(theta_1, theta_2, p_est, L, K, delta)</code> that returns the objective function of the above minimum distance estimator given a non-parametric estimate of the conditional choice probability and <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="assignment7.html#cb365-1" tabindex="-1"></a><span class="fu">compute_CCP_objective</span>(</span>
-<span id="cb365-2"><a href="assignment7.html#cb365-2" tabindex="-1"></a>  <span class="at">theta_1 =</span> theta_1, </span>
-<span id="cb365-3"><a href="assignment7.html#cb365-3" tabindex="-1"></a>  <span class="at">theta_2 =</span> theta_2, </span>
-<span id="cb365-4"><a href="assignment7.html#cb365-4" tabindex="-1"></a>  <span class="at">p_est =</span> p_est,</span>
-<span id="cb365-5"><a href="assignment7.html#cb365-5" tabindex="-1"></a>  <span class="at">L =</span> L, </span>
-<span id="cb365-6"><a href="assignment7.html#cb365-6" tabindex="-1"></a>  <span class="at">K =</span> K, </span>
-<span id="cb365-7"><a href="assignment7.html#cb365-7" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
-<span id="cb365-8"><a href="assignment7.html#cb365-8" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="assignment7.html#cb363-1" tabindex="-1"></a><span class="fu">compute_CCP_objective</span>(</span>
+<span id="cb363-2"><a href="assignment7.html#cb363-2" tabindex="-1"></a>  <span class="at">theta_1 =</span> theta_1, </span>
+<span id="cb363-3"><a href="assignment7.html#cb363-3" tabindex="-1"></a>  <span class="at">theta_2 =</span> theta_2, </span>
+<span id="cb363-4"><a href="assignment7.html#cb363-4" tabindex="-1"></a>  <span class="at">p_est =</span> p_est,</span>
+<span id="cb363-5"><a href="assignment7.html#cb363-5" tabindex="-1"></a>  <span class="at">L =</span> L, </span>
+<span id="cb363-6"><a href="assignment7.html#cb363-6" tabindex="-1"></a>  <span class="at">K =</span> K, </span>
+<span id="cb363-7"><a href="assignment7.html#cb363-7" tabindex="-1"></a>  <span class="at">delta =</span> delta</span>
+<span id="cb363-8"><a href="assignment7.html#cb363-8" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## [1] 5.000511e-06</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Check the value of the objective function around the true parameter.</li>
 </ol>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="assignment7.html#cb367-1" tabindex="-1"></a><span class="co"># label</span></span>
-<span id="cb367-2"><a href="assignment7.html#cb367-2" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb367-3"><a href="assignment7.html#cb367-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb367-4"><a href="assignment7.html#cb367-4" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>, </span>
-<span id="cb367-5"><a href="assignment7.html#cb367-5" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span></span>
-<span id="cb367-6"><a href="assignment7.html#cb367-6" tabindex="-1"></a>    )</span>
-<span id="cb367-7"><a href="assignment7.html#cb367-7" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
-<span id="cb367-8"><a href="assignment7.html#cb367-8" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
-<span id="cb367-9"><a href="assignment7.html#cb367-9" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
-<span id="cb367-10"><a href="assignment7.html#cb367-10" tabindex="-1"></a>    label, </span>
-<span id="cb367-11"><a href="assignment7.html#cb367-11" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
-<span id="cb367-12"><a href="assignment7.html#cb367-12" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb367-13"><a href="assignment7.html#cb367-13" tabindex="-1"></a>    )</span>
-<span id="cb367-14"><a href="assignment7.html#cb367-14" tabindex="-1"></a><span class="co"># compute the graph</span></span>
-<span id="cb367-15"><a href="assignment7.html#cb367-15" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb367-16"><a href="assignment7.html#cb367-16" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
-<span id="cb367-17"><a href="assignment7.html#cb367-17" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_1)</span>
-<span id="cb367-18"><a href="assignment7.html#cb367-18" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
-<span id="cb367-19"><a href="assignment7.html#cb367-19" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta_1[i]</span>
-<span id="cb367-20"><a href="assignment7.html#cb367-20" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
-<span id="cb367-21"><a href="assignment7.html#cb367-21" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
-<span id="cb367-22"><a href="assignment7.html#cb367-22" tabindex="-1"></a>      <span class="fl">0.8</span>, </span>
-<span id="cb367-23"><a href="assignment7.html#cb367-23" tabindex="-1"></a>      <span class="fl">1.2</span>, </span>
-<span id="cb367-24"><a href="assignment7.html#cb367-24" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">0.05</span></span>
-<span id="cb367-25"><a href="assignment7.html#cb367-25" tabindex="-1"></a>      )</span>
-<span id="cb367-26"><a href="assignment7.html#cb367-26" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
-<span id="cb367-27"><a href="assignment7.html#cb367-27" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
-<span id="cb367-28"><a href="assignment7.html#cb367-28" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
-<span id="cb367-29"><a href="assignment7.html#cb367-29" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
-<span id="cb367-30"><a href="assignment7.html#cb367-30" tabindex="-1"></a>      ) <span class="sc">%do%</span> {</span>
-<span id="cb367-31"><a href="assignment7.html#cb367-31" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
-<span id="cb367-32"><a href="assignment7.html#cb367-32" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta_1</span>
-<span id="cb367-33"><a href="assignment7.html#cb367-33" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
-<span id="cb367-34"><a href="assignment7.html#cb367-34" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
-<span id="cb367-35"><a href="assignment7.html#cb367-35" tabindex="-1"></a>                 <span class="fu">compute_CCP_objective</span>(</span>
-<span id="cb367-36"><a href="assignment7.html#cb367-36" tabindex="-1"></a>                   theta_j, </span>
-<span id="cb367-37"><a href="assignment7.html#cb367-37" tabindex="-1"></a>                   theta_2, </span>
-<span id="cb367-38"><a href="assignment7.html#cb367-38" tabindex="-1"></a>                   p_est, </span>
-<span id="cb367-39"><a href="assignment7.html#cb367-39" tabindex="-1"></a>                   L, </span>
-<span id="cb367-40"><a href="assignment7.html#cb367-40" tabindex="-1"></a>                   K, </span>
-<span id="cb367-41"><a href="assignment7.html#cb367-41" tabindex="-1"></a>                   delta</span>
-<span id="cb367-42"><a href="assignment7.html#cb367-42" tabindex="-1"></a>                   )</span>
-<span id="cb367-43"><a href="assignment7.html#cb367-43" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
-<span id="cb367-44"><a href="assignment7.html#cb367-44" tabindex="-1"></a>             }</span>
-<span id="cb367-45"><a href="assignment7.html#cb367-45" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
-<span id="cb367-46"><a href="assignment7.html#cb367-46" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
-<span id="cb367-47"><a href="assignment7.html#cb367-47" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
-<span id="cb367-48"><a href="assignment7.html#cb367-48" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
-<span id="cb367-49"><a href="assignment7.html#cb367-49" tabindex="-1"></a>      ) </span>
-<span id="cb367-50"><a href="assignment7.html#cb367-50" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
-<span id="cb367-51"><a href="assignment7.html#cb367-51" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
-<span id="cb367-52"><a href="assignment7.html#cb367-52" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
-<span id="cb367-53"><a href="assignment7.html#cb367-53" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
-<span id="cb367-54"><a href="assignment7.html#cb367-54" tabindex="-1"></a>        <span class="at">x =</span> x, </span>
-<span id="cb367-55"><a href="assignment7.html#cb367-55" tabindex="-1"></a>        <span class="at">y =</span> y)</span>
-<span id="cb367-56"><a href="assignment7.html#cb367-56" tabindex="-1"></a>      ) <span class="sc">+</span> </span>
-<span id="cb367-57"><a href="assignment7.html#cb367-57" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb367-58"><a href="assignment7.html#cb367-58" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
-<span id="cb367-59"><a href="assignment7.html#cb367-59" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
-<span id="cb367-60"><a href="assignment7.html#cb367-60" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
-<span id="cb367-61"><a href="assignment7.html#cb367-61" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb367-62"><a href="assignment7.html#cb367-62" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb367-63"><a href="assignment7.html#cb367-63" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i]))  <span class="sc">+</span> </span>
-<span id="cb367-64"><a href="assignment7.html#cb367-64" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb367-65"><a href="assignment7.html#cb367-65" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
-<span id="cb367-66"><a href="assignment7.html#cb367-66" tabindex="-1"></a>}</span>
-<span id="cb367-67"><a href="assignment7.html#cb367-67" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb367-68"><a href="assignment7.html#cb367-68" tabindex="-1"></a>  graph, </span>
-<span id="cb367-69"><a href="assignment7.html#cb367-69" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb367-70"><a href="assignment7.html#cb367-70" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="assignment7.html#cb368-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
-<span id="cb368-2"><a href="assignment7.html#cb368-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb368-3"><a href="assignment7.html#cb368-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb368-4"><a href="assignment7.html#cb368-4" tabindex="-1"></a>  )</span>
-<span id="cb368-5"><a href="assignment7.html#cb368-5" tabindex="-1"></a>graph</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="assignment7.html#cb365-1" tabindex="-1"></a><span class="co"># label</span></span>
+<span id="cb365-2"><a href="assignment7.html#cb365-2" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb365-3"><a href="assignment7.html#cb365-3" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb365-4"><a href="assignment7.html#cb365-4" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">alpha&quot;</span>, </span>
+<span id="cb365-5"><a href="assignment7.html#cb365-5" tabindex="-1"></a>    <span class="st">&quot;</span><span class="sc">\\</span><span class="st">beta&quot;</span></span>
+<span id="cb365-6"><a href="assignment7.html#cb365-6" tabindex="-1"></a>    )</span>
+<span id="cb365-7"><a href="assignment7.html#cb365-7" tabindex="-1"></a>label <span class="ot">&lt;-</span> </span>
+<span id="cb365-8"><a href="assignment7.html#cb365-8" tabindex="-1"></a>  <span class="fu">paste</span>(</span>
+<span id="cb365-9"><a href="assignment7.html#cb365-9" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
+<span id="cb365-10"><a href="assignment7.html#cb365-10" tabindex="-1"></a>    label, </span>
+<span id="cb365-11"><a href="assignment7.html#cb365-11" tabindex="-1"></a>    <span class="st">&quot;$&quot;</span>, </span>
+<span id="cb365-12"><a href="assignment7.html#cb365-12" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb365-13"><a href="assignment7.html#cb365-13" tabindex="-1"></a>    )</span>
+<span id="cb365-14"><a href="assignment7.html#cb365-14" tabindex="-1"></a><span class="co"># compute the graph</span></span>
+<span id="cb365-15"><a href="assignment7.html#cb365-15" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb365-16"><a href="assignment7.html#cb365-16" tabindex="-1"></a>  <span class="fu">foreach</span> (</span>
+<span id="cb365-17"><a href="assignment7.html#cb365-17" tabindex="-1"></a>    <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_1)</span>
+<span id="cb365-18"><a href="assignment7.html#cb365-18" tabindex="-1"></a>    ) <span class="sc">%do%</span> {</span>
+<span id="cb365-19"><a href="assignment7.html#cb365-19" tabindex="-1"></a>  theta_i <span class="ot">&lt;-</span> theta_1[i]</span>
+<span id="cb365-20"><a href="assignment7.html#cb365-20" tabindex="-1"></a>  theta_i_list <span class="ot">&lt;-</span> </span>
+<span id="cb365-21"><a href="assignment7.html#cb365-21" tabindex="-1"></a>    theta_i <span class="sc">*</span> <span class="fu">seq</span>(</span>
+<span id="cb365-22"><a href="assignment7.html#cb365-22" tabindex="-1"></a>      <span class="fl">0.8</span>, </span>
+<span id="cb365-23"><a href="assignment7.html#cb365-23" tabindex="-1"></a>      <span class="fl">1.2</span>, </span>
+<span id="cb365-24"><a href="assignment7.html#cb365-24" tabindex="-1"></a>      <span class="at">by =</span> <span class="fl">0.05</span></span>
+<span id="cb365-25"><a href="assignment7.html#cb365-25" tabindex="-1"></a>      )</span>
+<span id="cb365-26"><a href="assignment7.html#cb365-26" tabindex="-1"></a>  objective_i <span class="ot">&lt;-</span> </span>
+<span id="cb365-27"><a href="assignment7.html#cb365-27" tabindex="-1"></a>    <span class="fu">foreach</span> (</span>
+<span id="cb365-28"><a href="assignment7.html#cb365-28" tabindex="-1"></a>      <span class="at">j =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(theta_i_list),</span>
+<span id="cb365-29"><a href="assignment7.html#cb365-29" tabindex="-1"></a>      <span class="at">.combine =</span> <span class="st">&quot;rbind&quot;</span></span>
+<span id="cb365-30"><a href="assignment7.html#cb365-30" tabindex="-1"></a>      ) <span class="sc">%do%</span> {</span>
+<span id="cb365-31"><a href="assignment7.html#cb365-31" tabindex="-1"></a>               theta_ij <span class="ot">&lt;-</span> theta_i_list[j]</span>
+<span id="cb365-32"><a href="assignment7.html#cb365-32" tabindex="-1"></a>               theta_j <span class="ot">&lt;-</span> theta_1</span>
+<span id="cb365-33"><a href="assignment7.html#cb365-33" tabindex="-1"></a>               theta_j[i] <span class="ot">&lt;-</span> theta_ij</span>
+<span id="cb365-34"><a href="assignment7.html#cb365-34" tabindex="-1"></a>               objective_ij <span class="ot">&lt;-</span> </span>
+<span id="cb365-35"><a href="assignment7.html#cb365-35" tabindex="-1"></a>                 <span class="fu">compute_CCP_objective</span>(</span>
+<span id="cb365-36"><a href="assignment7.html#cb365-36" tabindex="-1"></a>                   theta_j, </span>
+<span id="cb365-37"><a href="assignment7.html#cb365-37" tabindex="-1"></a>                   theta_2, </span>
+<span id="cb365-38"><a href="assignment7.html#cb365-38" tabindex="-1"></a>                   p_est, </span>
+<span id="cb365-39"><a href="assignment7.html#cb365-39" tabindex="-1"></a>                   L, </span>
+<span id="cb365-40"><a href="assignment7.html#cb365-40" tabindex="-1"></a>                   K, </span>
+<span id="cb365-41"><a href="assignment7.html#cb365-41" tabindex="-1"></a>                   delta</span>
+<span id="cb365-42"><a href="assignment7.html#cb365-42" tabindex="-1"></a>                   )</span>
+<span id="cb365-43"><a href="assignment7.html#cb365-43" tabindex="-1"></a>               <span class="fu">return</span>(objective_ij)</span>
+<span id="cb365-44"><a href="assignment7.html#cb365-44" tabindex="-1"></a>             }</span>
+<span id="cb365-45"><a href="assignment7.html#cb365-45" tabindex="-1"></a>  df_graph <span class="ot">&lt;-</span> </span>
+<span id="cb365-46"><a href="assignment7.html#cb365-46" tabindex="-1"></a>    <span class="fu">data.frame</span>(</span>
+<span id="cb365-47"><a href="assignment7.html#cb365-47" tabindex="-1"></a>      <span class="at">x =</span> theta_i_list, </span>
+<span id="cb365-48"><a href="assignment7.html#cb365-48" tabindex="-1"></a>      <span class="at">y =</span> objective_i</span>
+<span id="cb365-49"><a href="assignment7.html#cb365-49" tabindex="-1"></a>      ) </span>
+<span id="cb365-50"><a href="assignment7.html#cb365-50" tabindex="-1"></a>  g <span class="ot">&lt;-</span> </span>
+<span id="cb365-51"><a href="assignment7.html#cb365-51" tabindex="-1"></a>    <span class="fu">ggplot</span>(</span>
+<span id="cb365-52"><a href="assignment7.html#cb365-52" tabindex="-1"></a>      <span class="at">data =</span> df_graph, </span>
+<span id="cb365-53"><a href="assignment7.html#cb365-53" tabindex="-1"></a>      <span class="fu">aes</span>(</span>
+<span id="cb365-54"><a href="assignment7.html#cb365-54" tabindex="-1"></a>        <span class="at">x =</span> x, </span>
+<span id="cb365-55"><a href="assignment7.html#cb365-55" tabindex="-1"></a>        <span class="at">y =</span> y)</span>
+<span id="cb365-56"><a href="assignment7.html#cb365-56" tabindex="-1"></a>      ) <span class="sc">+</span> </span>
+<span id="cb365-57"><a href="assignment7.html#cb365-57" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb365-58"><a href="assignment7.html#cb365-58" tabindex="-1"></a>    <span class="fu">geom_vline</span>(</span>
+<span id="cb365-59"><a href="assignment7.html#cb365-59" tabindex="-1"></a>      <span class="at">xintercept =</span> theta_i, </span>
+<span id="cb365-60"><a href="assignment7.html#cb365-60" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span></span>
+<span id="cb365-61"><a href="assignment7.html#cb365-61" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb365-62"><a href="assignment7.html#cb365-62" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;objective function&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb365-63"><a href="assignment7.html#cb365-63" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="fu">TeX</span>(label[i]))  <span class="sc">+</span> </span>
+<span id="cb365-64"><a href="assignment7.html#cb365-64" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb365-65"><a href="assignment7.html#cb365-65" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb365-66"><a href="assignment7.html#cb365-66" tabindex="-1"></a>}</span>
+<span id="cb365-67"><a href="assignment7.html#cb365-67" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb365-68"><a href="assignment7.html#cb365-68" tabindex="-1"></a>  graph, </span>
+<span id="cb365-69"><a href="assignment7.html#cb365-69" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb365-70"><a href="assignment7.html#cb365-70" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="assignment7.html#cb366-1" tabindex="-1"></a>graph <span class="ot">&lt;-</span> </span>
+<span id="cb366-2"><a href="assignment7.html#cb366-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb366-3"><a href="assignment7.html#cb366-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_graph.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb366-4"><a href="assignment7.html#cb366-4" tabindex="-1"></a>  )</span>
+<span id="cb366-5"><a href="assignment7.html#cb366-5" tabindex="-1"></a>graph</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-197-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>## 
@@ -1444,30 +1446,30 @@ where <span class="math inline">\(\hat{p}\)</span> is the non-parametric estimat
 <ol start="4" style="list-style-type: decimal">
 <li>Estiamte the parameters by minimizing the objective function. To keep the model to be well-defined, impose an ad hoc lower and upper bounds such that <span class="math inline">\(\alpha \in [0, 1], \beta \in [0, 5]\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="assignment7.html#cb371-1" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(theta_1))</span>
-<span id="cb371-2"><a href="assignment7.html#cb371-2" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
-<span id="cb371-3"><a href="assignment7.html#cb371-3" tabindex="-1"></a>CCP_result <span class="ot">&lt;-</span></span>
-<span id="cb371-4"><a href="assignment7.html#cb371-4" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
-<span id="cb371-5"><a href="assignment7.html#cb371-5" tabindex="-1"></a>        <span class="at">par =</span> theta_1,</span>
-<span id="cb371-6"><a href="assignment7.html#cb371-6" tabindex="-1"></a>        <span class="at">fn =</span> compute_CCP_objective,</span>
-<span id="cb371-7"><a href="assignment7.html#cb371-7" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
-<span id="cb371-8"><a href="assignment7.html#cb371-8" tabindex="-1"></a>        <span class="at">lower =</span> lower,</span>
-<span id="cb371-9"><a href="assignment7.html#cb371-9" tabindex="-1"></a>        <span class="at">upper =</span> upper,</span>
-<span id="cb371-10"><a href="assignment7.html#cb371-10" tabindex="-1"></a>        <span class="at">theta_2 =</span> theta_2_est, </span>
-<span id="cb371-11"><a href="assignment7.html#cb371-11" tabindex="-1"></a>        <span class="at">p_est =</span> p_est, </span>
-<span id="cb371-12"><a href="assignment7.html#cb371-12" tabindex="-1"></a>        <span class="at">L =</span> L, </span>
-<span id="cb371-13"><a href="assignment7.html#cb371-13" tabindex="-1"></a>        <span class="at">K =</span> K, </span>
-<span id="cb371-14"><a href="assignment7.html#cb371-14" tabindex="-1"></a>        <span class="at">delta =</span> delta</span>
-<span id="cb371-15"><a href="assignment7.html#cb371-15" tabindex="-1"></a>        )</span>
-<span id="cb371-16"><a href="assignment7.html#cb371-16" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
-<span id="cb371-17"><a href="assignment7.html#cb371-17" tabindex="-1"></a>  CCP_result, </span>
-<span id="cb371-18"><a href="assignment7.html#cb371-18" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb371-19"><a href="assignment7.html#cb371-19" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="assignment7.html#cb372-1" tabindex="-1"></a>CCP_result <span class="ot">&lt;-</span> </span>
-<span id="cb372-2"><a href="assignment7.html#cb372-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
-<span id="cb372-3"><a href="assignment7.html#cb372-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb372-4"><a href="assignment7.html#cb372-4" tabindex="-1"></a>  )</span>
-<span id="cb372-5"><a href="assignment7.html#cb372-5" tabindex="-1"></a>CCP_result</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="assignment7.html#cb369-1" tabindex="-1"></a>lower <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(theta_1))</span>
+<span id="cb369-2"><a href="assignment7.html#cb369-2" tabindex="-1"></a>upper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb369-3"><a href="assignment7.html#cb369-3" tabindex="-1"></a>CCP_result <span class="ot">&lt;-</span></span>
+<span id="cb369-4"><a href="assignment7.html#cb369-4" tabindex="-1"></a>  <span class="fu">optim</span>(</span>
+<span id="cb369-5"><a href="assignment7.html#cb369-5" tabindex="-1"></a>        <span class="at">par =</span> theta_1,</span>
+<span id="cb369-6"><a href="assignment7.html#cb369-6" tabindex="-1"></a>        <span class="at">fn =</span> compute_CCP_objective,</span>
+<span id="cb369-7"><a href="assignment7.html#cb369-7" tabindex="-1"></a>        <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>,</span>
+<span id="cb369-8"><a href="assignment7.html#cb369-8" tabindex="-1"></a>        <span class="at">lower =</span> lower,</span>
+<span id="cb369-9"><a href="assignment7.html#cb369-9" tabindex="-1"></a>        <span class="at">upper =</span> upper,</span>
+<span id="cb369-10"><a href="assignment7.html#cb369-10" tabindex="-1"></a>        <span class="at">theta_2 =</span> theta_2_est, </span>
+<span id="cb369-11"><a href="assignment7.html#cb369-11" tabindex="-1"></a>        <span class="at">p_est =</span> p_est, </span>
+<span id="cb369-12"><a href="assignment7.html#cb369-12" tabindex="-1"></a>        <span class="at">L =</span> L, </span>
+<span id="cb369-13"><a href="assignment7.html#cb369-13" tabindex="-1"></a>        <span class="at">K =</span> K, </span>
+<span id="cb369-14"><a href="assignment7.html#cb369-14" tabindex="-1"></a>        <span class="at">delta =</span> delta</span>
+<span id="cb369-15"><a href="assignment7.html#cb369-15" tabindex="-1"></a>        )</span>
+<span id="cb369-16"><a href="assignment7.html#cb369-16" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb369-17"><a href="assignment7.html#cb369-17" tabindex="-1"></a>  CCP_result, </span>
+<span id="cb369-18"><a href="assignment7.html#cb369-18" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb369-19"><a href="assignment7.html#cb369-19" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="assignment7.html#cb370-1" tabindex="-1"></a>CCP_result <span class="ot">&lt;-</span> </span>
+<span id="cb370-2"><a href="assignment7.html#cb370-2" tabindex="-1"></a>  <span class="fu">readRDS</span>(</span>
+<span id="cb370-3"><a href="assignment7.html#cb370-3" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">&quot;lecture/data/a7/CCP_result.rds&quot;</span> <span class="sc">%&gt;%</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
+<span id="cb370-4"><a href="assignment7.html#cb370-4" tabindex="-1"></a>  )</span>
+<span id="cb370-5"><a href="assignment7.html#cb370-5" tabindex="-1"></a>CCP_result</span></code></pre></div>
 <pre><code>## $par
 ## [1] 0.5271684 3.0644600
 ## 
@@ -1483,13 +1485,13 @@ where <span class="math inline">\(\hat{p}\)</span> is the non-parametric estimat
 ## 
 ## $message
 ## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="assignment7.html#cb374-1" tabindex="-1"></a>compare <span class="ot">&lt;-</span></span>
-<span id="cb374-2"><a href="assignment7.html#cb374-2" tabindex="-1"></a></span>
-<span id="cb374-3"><a href="assignment7.html#cb374-3" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb374-4"><a href="assignment7.html#cb374-4" tabindex="-1"></a>    <span class="at">true =</span> theta_1,</span>
-<span id="cb374-5"><a href="assignment7.html#cb374-5" tabindex="-1"></a>    <span class="at">estimate =</span> CCP_result<span class="sc">$</span>par</span>
-<span id="cb374-6"><a href="assignment7.html#cb374-6" tabindex="-1"></a>  ); </span>
-<span id="cb374-7"><a href="assignment7.html#cb374-7" tabindex="-1"></a>compare</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="assignment7.html#cb372-1" tabindex="-1"></a>compare <span class="ot">&lt;-</span></span>
+<span id="cb372-2"><a href="assignment7.html#cb372-2" tabindex="-1"></a></span>
+<span id="cb372-3"><a href="assignment7.html#cb372-3" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb372-4"><a href="assignment7.html#cb372-4" tabindex="-1"></a>    <span class="at">true =</span> theta_1,</span>
+<span id="cb372-5"><a href="assignment7.html#cb372-5" tabindex="-1"></a>    <span class="at">estimate =</span> CCP_result<span class="sc">$</span>par</span>
+<span id="cb372-6"><a href="assignment7.html#cb372-6" tabindex="-1"></a>  ); </span>
+<span id="cb372-7"><a href="assignment7.html#cb372-7" tabindex="-1"></a>compare</span></code></pre></div>
 <pre><code>##   true  estimate
 ## 1  0.5 0.5271684
 ## 2  3.0 3.0644600</code></pre>

@@ -258,6 +258,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.7" data-path="production.html"><a href="production.html#single-product-monopolist"><i class="fa fa-check"></i><b>3.4.7</b> Single-product Monopolist</a></li>
 <li class="chapter" data-level="3.4.8" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>3.4.8</b> Multi-product Monopolist Case</a></li>
 <li class="chapter" data-level="3.4.9" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.9</b> Oligopoly</a></li>
+<li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>3.4.10</b> Unobserved Heterogeneity in the Cost Function</a></li>
+<li class="chapter" data-level="3.4.11" data-path="production.html"><a href="production.html#estimation-of-cost-function"><i class="fa fa-check"></i><b>3.4.11</b> Estimation of Cost Function</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
@@ -1805,29 +1807,48 @@ D_J(p) + \sum_{j = 1}^J p_j \frac{\partial D_j(p)}{\partial p_J}
 \end{split}
 \end{equation}\]</span></p></li>
 <li><p>In Nash equilibrium, these equations jointly hold for all firms <span class="math inline">\(j = 1, \cdots, J\)</span>.]</p></li>
-<li><p>Including unobserved heterogeneity in the cost function causes the same problem as in the previous case.</p></li>
 </ul>
-<p>### Unobserved Heterogeneity in the Cost Function</p>
+</div>
+<div id="unobserved-heterogeneity-in-the-cost-function" class="section level3 hasAnchor" number="3.4.10">
+<h3><span class="header-section-number">3.4.10</span> Unobserved Heterogeneity in the Cost Function<a href="production.html#unobserved-heterogeneity-in-the-cost-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><p>Previously we did not consider any unobserved heterogeneity in the cost function.</p></li>
-<li><p>Now suppose that the cost function is given by:
+<li><p>Examplify the problem with a single-product monopolist.</p></li>
+<li><p>Suppose that the cost function is given by:
 <span class="math display">\[\begin{equation}
-C(q) = \tilde{C}(q) + q \epsilon + \mu,
+C(q) = \tilde{C}(q) + q (z&#39; \gamma + \epsilon) + \mu,
 \end{equation}\]</span>
 and <span class="math inline">\(\epsilon\)</span> and <span class="math inline">\(\mu\)</span> are not observed.</p></li>
 <li><p>Moreover, because it includes anticipated shocks, it is likely to be correlated with input decisions and hence the output.</p></li>
 <li><p>The first-order condition w.r.t. <span class="math inline">\(p\)</span> for profit maximization is:
 <span class="math display">\[\begin{equation}
 \begin{split}
-&amp;D(p, z) + pD&#39;(p, z) - [\tilde{C}&#39;(D(p, z)) + \epsilon]D&#39;(p, z) = 0.\\
-&amp;\Leftrightarrow \tilde{C}&#39;(D(p, z))  = \frac{D(p, z) + pD&#39;(p, z)}{D&#39;(p,z)} - \epsilon.
+&amp;D(p, x) + pD&#39;(p, x) - [\tilde{C}&#39;(D(p, x)) + \epsilon]D&#39;(p, x) = 0.\\
+&amp;\Leftrightarrow \tilde{C}&#39;(D(p, x)) + w&#39;\gamma + \epsilon  = \frac{D(p, x) + pD&#39;(p, x)}{D&#39;(p,x)}\\
+&amp;\Leftrightarrow z&#39;\gamma + \epsilon = \frac{D(p, x) + pD&#39;(p, x)}{D&#39;(p, x)} - \tilde{C}&#39;(D(p,  x)).
 \end{split}
 \end{equation}\]</span></p></li>
-<li><p>Take the expectation conditional on <span class="math inline">\(Z = z\)</span>:
+</ul>
+</div>
+<div id="estimation-of-cost-function" class="section level3 hasAnchor" number="3.4.11">
+<h3><span class="header-section-number">3.4.11</span> Estimation of Cost Function<a href="production.html#estimation-of-cost-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>First elicit the constant marginal cost part:
 <span class="math display">\[\begin{equation}
-\tilde{C}&#39;(D(p, z)) = \frac{D(p, z) + pD&#39;(p, z)}{D&#39;(p, z)} - \mathbb{E}\{\epsilon|Z = z\}.
-\end{equation}\]</span></p></li>
-<li><p>If <span class="math inline">\(Z\)</span> and <span class="math inline">\(\epsilon\)</span> is independent, then the last term becomes zero and we can follow the same argument as before to trace out the marginal cost function.</p></li>
+  mc = \frac{D(p, x) + pD&#39;(p, x)}{D&#39;(p, x)} - \tilde{C}&#39;(D(p, x)).
+\end{equation}\]</span></li>
+<li>Then, regress this on <span class="math inline">\(w\)</span> to estimate the linear cost parameter <span class="math inline">\(\gamma\)</span>:
+<span class="math display">\[\begin{equation}
+  mc = w&#39;\gamma + \epsilon.
+\end{equation}\]</span></li>
+<li>Exploit moment condition for the marginal cost shock <span class="math inline">\(\epsilon\)</span>:
+<span class="math display">\[\begin{equation}
+  \mathbb{E}\{\epsilon | x\} = 0.
+\end{equation}\]</span></li>
+<li>The cost shifter <span class="math inline">\(z\)</span> is already used in estimating <span class="math inline">\(\gamma\)</span>.</li>
+<li>Thus, we need demand shifters excluded from the cost function, <span class="math inline">\(x\)</span>, to identify the non-linear cost parameters in <span class="math inline">\(\tilde{C}&#39;\)</span>.</li>
+<li>If we assume constant marginal cost, which is often the case, <span class="math inline">\(\tilde{C}&#39; = 0\)</span>. Then, we can estimate the cost function without demand shifters.</li>
+<li>Because the constant marginal cost assumption is common, people often forget the necessity of demand shifters in the cost function estimation.</li>
 </ul>
 
 </div>
