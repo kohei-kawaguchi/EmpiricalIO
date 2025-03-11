@@ -1,10 +1,11 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-%
 \documentclass[
 ]{book}
+\usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -35,7 +36,6 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -88,27 +88,25 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-\usepackage{booktabs}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage[]{natbib}
 \bibliographystyle{plainnat}
+\usepackage{booktabs}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -120,7 +118,7 @@
 
 \title{ECON5630 Topics in Empirical Industrial Organization}
 \author{Kohei Kawaguchi}
-\date{Last updated: 2025-03-04}
+\date{Last updated: 2025-03-11}
 
 \begin{document}
 \maketitle
@@ -2263,36 +2261,6 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   If the equilibrium quantities cover the domain of the marginal cost function when the demand shifter \(Z\) moves around, then it identifies the entire marginal cost function.
 \end{itemize}
 
-\subsection{Unobserved Heterogeneity in the Cost Function}\label{unobserved-heterogeneity-in-the-cost-function}
-
-\begin{itemize}
-\item
-  Previously we did not consider any unobserved heterogeneity in the cost function.
-\item
-  Now suppose that the cost function is given by:
-  \begin{equation}
-  C(q) = \tilde{C}(q) + q \epsilon + \mu,
-  \end{equation}
-  and \(\epsilon\) and \(\mu\) are not observed.
-\item
-  Moreover, because it includes anticipated shocks, it is likely to be correlated with input decisions and hence the output.
-\item
-  The first-order condition w.r.t. \(p\) for profit maximization is:
-  \begin{equation}
-  \begin{split}
-  &D(p, z) + pD'(p, z) - [\tilde{C}'(D(p, z)) + \epsilon]D'(p, z) = 0.\\
-  &\Leftrightarrow \tilde{C}'(D(p, z))  = \frac{D(p, z) + pD'(p, z)}{D'(p,z)} - \epsilon.
-  \end{split}
-  \end{equation}
-\item
-  Take the expectation conditional on \(Z = z\):
-  \begin{equation}
-  \tilde{C}'(D(p, z)) = \frac{D(p, z) + pD'(p, z)}{D'(p, z)} - \mathbb{E}\{\epsilon|Z = z\}.
-  \end{equation}
-\item
-  If \(Z\) and \(\epsilon\) is independent, then the last term becomes zero and we can follow the same argument as before to trace out the marginal cost function.
-\end{itemize}
-
 \subsection{Multi-product Monopolist Case}\label{multi-product-monopolist-case}
 
 \begin{itemize}
@@ -2391,8 +2359,61 @@ Honor Code at all time (see \url{http://www.ust.hk/vpaao/integrity/}).
   \end{equation}
 \item
   In Nash equilibrium, these equations jointly hold for all firms \(j = 1, \cdots, J\).{]}
+\end{itemize}
+
+\subsection{Unobserved Heterogeneity in the Cost Function}\label{unobserved-heterogeneity-in-the-cost-function}
+
+\begin{itemize}
 \item
-  Including unobserved heterogeneity in the cost function causes the same problem as in the previous case.
+  Previously we did not consider any unobserved heterogeneity in the cost function.
+\item
+  Examplify the problem with a single-product monopolist.
+\item
+  Suppose that the cost function is given by:
+  \begin{equation}
+  C(q) = \tilde{C}(q) + q (z' \gamma + \epsilon) + \mu,
+  \end{equation}
+  and \(\epsilon\) and \(\mu\) are not observed.
+\item
+  Moreover, because it includes anticipated shocks, it is likely to be correlated with input decisions and hence the output.
+\item
+  The first-order condition w.r.t. \(p\) for profit maximization is:
+  \begin{equation}
+  \begin{split}
+  &D(p, x) + pD'(p, x) - [\tilde{C}'(D(p, x)) + \epsilon]D'(p, x) = 0.\\
+  &\Leftrightarrow \tilde{C}'(D(p, x)) + w'\gamma + \epsilon  = \frac{D(p, x) + pD'(p, x)}{D'(p,x)}\\
+  &\Leftrightarrow z'\gamma + \epsilon = \frac{D(p, x) + pD'(p, x)}{D'(p, x)} - \tilde{C}'(D(p,  x)).
+  \end{split}
+  \end{equation}
+\end{itemize}
+
+\subsection{Estimation of Cost Function}\label{estimation-of-cost-function}
+
+\begin{itemize}
+\tightlist
+\item
+  First elicit the constant marginal cost part:
+  \begin{equation}
+    mc = \frac{D(p, x) + pD'(p, x)}{D'(p, x)} - \tilde{C}'(D(p, x)).
+  \end{equation}
+\item
+  Then, regress this on \(w\) to estimate the linear cost parameter \(\gamma\):
+  \begin{equation}
+    mc = w'\gamma + \epsilon.
+  \end{equation}
+\item
+  Exploit moment condition for the marginal cost shock \(\epsilon\):
+  \begin{equation}
+    \mathbb{E}\{\epsilon | x\} = 0.
+  \end{equation}
+\item
+  The cost shifter \(z\) is already used in estimating \(\gamma\).
+\item
+  Thus, we need demand shifters excluded from the cost function, \(x\), to identify the non-linear cost parameters in \(\tilde{C}'\).
+\item
+  If we assume constant marginal cost, which is often the case, \(\tilde{C}' = 0\). Then, we can estimate the cost function without demand shifters.
+\item
+  Because the constant marginal cost assumption is common, people often forget the necessity of demand shifters in the cost function estimation.
 \end{itemize}
 
 \chapter{Demand Function Estimation}\label{demand}
@@ -8352,7 +8373,6 @@ a function of \(\epsilon_i\).
 
   \begin{enumerate}
   \def\labelenumi{\arabic{enumi}.}
-  \setcounter{enumi}{1}
   \tightlist
   \item
   \end{enumerate}
@@ -8498,7 +8518,7 @@ a function of \(\epsilon_i\).
 \tightlist
 \item
   The notion of unique investment choice admissibility is introduced
-  by @2 and means that
+  by @1 and means that
   under the investment function firms' investment decision problem has
   a unique solution.
 \item
@@ -10151,7 +10171,7 @@ a function of \(\epsilon_i\).
 
 \subsection{Estimation Results}\label{estimation-results}
 
-\includegraphics{figuretable/Crawford_2018_Table4.png}
+\pandocbounded{\includegraphics[keepaspectratio]{figuretable/Crawford_2018_Table4.png}}
 
 \subsection{Findings from Estimation Results}\label{findings-from-estimation-results}
 
@@ -10179,13 +10199,13 @@ a function of \(\epsilon_i\).
 
 \subsection{Fit of the Model}\label{fit-of-the-model}
 
-\includegraphics{figuretable/Crawford_2018_Table5.png}
+\pandocbounded{\includegraphics[keepaspectratio]{figuretable/Crawford_2018_Table5.png}}
 
 \subsection{Counterfactuals}\label{counterfactuals}
 
-\includegraphics{figuretable/Crawford_2018_Table6.png}
+\pandocbounded{\includegraphics[keepaspectratio]{figuretable/Crawford_2018_Table6.png}}
 
-\includegraphics{figuretable/Crawford_2018_Table7.png}
+\pandocbounded{\includegraphics[keepaspectratio]{figuretable/Crawford_2018_Table7.png}}
 
 \subsection{What if Adverse Selection Got Severer?}\label{what-if-adverse-selection-got-severer}
 
@@ -10231,7 +10251,7 @@ a function of \(\epsilon_i\).
 
 \subsection{Merger Simulation}\label{merger-simulation-2}
 
-\includegraphics{figuretable/Crawford_2018_Table8.png}
+\pandocbounded{\includegraphics[keepaspectratio]{figuretable/Crawford_2018_Table8.png}}
 
 \begin{itemize}
 \tightlist
@@ -18358,7 +18378,8 @@ First, we draw bid data from a second-price sealed bid auctions. Suppose that fo
 \end{Shaded}
 
 \begin{verbatim}
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.
 \end{verbatim}
 
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-228-1} \end{center}
@@ -18427,7 +18448,8 @@ First, we draw bid data from a second-price sealed bid auctions. Suppose that fo
 \end{Shaded}
 
 \begin{verbatim}
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.
 \end{verbatim}
 
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-229-1} \end{center}
@@ -18593,7 +18615,8 @@ if \(x \ge r\) and not to participate otherwise.
 \end{Shaded}
 
 \begin{verbatim}
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.
 \end{verbatim}
 
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-231-1} \end{center}
@@ -18652,7 +18675,8 @@ if \(x \ge r\) and not to participate otherwise.
 \end{Shaded}
 
 \begin{verbatim}
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.
 \end{verbatim}
 
 \begin{center}\includegraphics{lecture_files/figure-latex/unnamed-chunk-232-1} \end{center}
@@ -19330,7 +19354,7 @@ Finally, we non-parametrically estimate the distribution of the valuation using 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.680124
+## [1] 1.678718
 \end{verbatim}
 
 \begin{Shaded}
@@ -19340,7 +19364,7 @@ Finally, we non-parametrically estimate the distribution of the valuation using 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.469983
+## [1] 1.468564
 \end{verbatim}
 
 The equilibrium distribution and density of the highest rival's bid are:
@@ -19385,7 +19409,7 @@ h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.05624476
+## [1] 0.0561977
 \end{verbatim}
 
 When a bidder bids \(b\), the implied valuation of her is:
@@ -19417,7 +19441,7 @@ x = b + \frac{H_b(b)}{h_b(b)}.
 
 \begin{verbatim}
 ##           n
-## 1 0.4349007
+## 1 0.4349299
 \end{verbatim}
 
 \begin{enumerate}
@@ -20983,6 +21007,6 @@ Rcpp::List access_rcpp(
 ## [1]  0.3295078 -0.8204684  0.4874291  0.7383247
 \end{verbatim}
 
-  \bibliography{PhDIO3.bib,packages.bib}
+\bibliography{PhDIO3.bib,packages.bib}
 
 \end{document}
