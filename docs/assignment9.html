@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -257,9 +258,10 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.5" data-path="production.html"><a href="production.html#cost-data-approach"><i class="fa fa-check"></i><b>3.4.5</b> Cost Data Approach</a></li>
 <li class="chapter" data-level="3.4.6" data-path="production.html"><a href="production.html#revealed-preference-approach"><i class="fa fa-check"></i><b>3.4.6</b> Revealed Preference Approach</a></li>
 <li class="chapter" data-level="3.4.7" data-path="production.html"><a href="production.html#single-product-monopolist"><i class="fa fa-check"></i><b>3.4.7</b> Single-product Monopolist</a></li>
-<li class="chapter" data-level="3.4.8" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>3.4.8</b> Unobserved Heterogeneity in the Cost Function</a></li>
-<li class="chapter" data-level="3.4.9" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>3.4.9</b> Multi-product Monopolist Case</a></li>
-<li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.10</b> Oligopoly</a></li>
+<li class="chapter" data-level="3.4.8" data-path="production.html"><a href="production.html#multi-product-monopolist-case"><i class="fa fa-check"></i><b>3.4.8</b> Multi-product Monopolist Case</a></li>
+<li class="chapter" data-level="3.4.9" data-path="production.html"><a href="production.html#oligopoly"><i class="fa fa-check"></i><b>3.4.9</b> Oligopoly</a></li>
+<li class="chapter" data-level="3.4.10" data-path="production.html"><a href="production.html#unobserved-heterogeneity-in-the-cost-function"><i class="fa fa-check"></i><b>3.4.10</b> Unobserved Heterogeneity in the Cost Function</a></li>
+<li class="chapter" data-level="3.4.11" data-path="production.html"><a href="production.html#estimation-of-cost-function"><i class="fa fa-check"></i><b>3.4.11</b> Estimation of Cost Function</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="demand.html"><a href="demand.html"><i class="fa fa-check"></i><b>4</b> Demand Function Estimation</a>
@@ -785,7 +787,8 @@ div.csl-indent {
 <span id="cb462-42"><a href="assignment9.html#cb462-42" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
 <span id="cb462-43"><a href="assignment9.html#cb462-43" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
 <span id="cb462-44"><a href="assignment9.html#cb462-44" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-228-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="assignment9.html#cb464-1" tabindex="-1"></a><span class="co"># draw reserve prices</span></span>
 <span id="cb464-2"><a href="assignment9.html#cb464-2" tabindex="-1"></a>reserve <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
@@ -827,7 +830,8 @@ div.csl-indent {
 <span id="cb467-7"><a href="assignment9.html#cb467-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
 <span id="cb467-8"><a href="assignment9.html#cb467-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
 <span id="cb467-9"><a href="assignment9.html#cb467-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-229-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Next, we simulate bid data from first-price sealed bid auctions. The setting is the same as the second-price auctions expect for the auction rule. An equilibrium bidding strategy is to participate and bid:
 <span class="math display">\[
@@ -917,7 +921,8 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 <span id="cb483-7"><a href="assignment9.html#cb483-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
 <span id="cb483-8"><a href="assignment9.html#cb483-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
 <span id="cb483-9"><a href="assignment9.html#cb483-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-231-1.png" width="672" style="display: block; margin: auto;" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Write a function <code>compute_winning_bids_first(valuation, reserve, alpha, beta)</code> that returns only the winning bids from each first-price auction. It will call <code>compute_bids_first</code> inside the function. It does not return anything when no bidder bids above the reserve price.</li>
@@ -954,7 +959,8 @@ if <span class="math inline">\(x \ge r\)</span> and not to participate otherwise
 <span id="cb487-7"><a href="assignment9.html#cb487-7" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span></span>
 <span id="cb487-8"><a href="assignment9.html#cb487-8" tabindex="-1"></a>    ) <span class="sc">+</span> </span>
 <span id="cb487-9"><a href="assignment9.html#cb487-9" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
 <p><img src="lecture_files/figure-html/unnamed-chunk-232-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="estimate-the-parameters-5" class="section level2 hasAnchor" number="19.2">
@@ -1393,9 +1399,9 @@ Also, write a function <code>f_b(b)</code> that returns an empirical probability
 <p><img src="lecture_files/figure-html/unnamed-chunk-247-2.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="assignment9.html#cb529-1" tabindex="-1"></a>f_b <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(<span class="fu">density</span>(df_first<span class="sc">$</span>b))</span>
 <span id="cb529-2"><a href="assignment9.html#cb529-2" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.4</span>)</span></code></pre></div>
-<pre><code>## [1] 1.680124</code></pre>
+<pre><code>## [1] 1.678718</code></pre>
 <div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="assignment9.html#cb531-1" tabindex="-1"></a><span class="fu">f_b</span>(<span class="fl">0.6</span>)</span></code></pre></div>
-<pre><code>## [1] 1.469983</code></pre>
+<pre><code>## [1] 1.468564</code></pre>
 <p>The equilibrium distribution and density of the highest rival’s bid are:
 <span class="math display">\[
 H_b(b) := F_b(b)^{n - 1},
@@ -1418,7 +1424,7 @@ h_b(b) := (n - 1) f_b(b) F_b(b)^{n - 2}.
 <span id="cb535-4"><a href="assignment9.html#cb535-4" tabindex="-1"></a>  <span class="at">F_b =</span> F_b, </span>
 <span id="cb535-5"><a href="assignment9.html#cb535-5" tabindex="-1"></a>  f_b</span>
 <span id="cb535-6"><a href="assignment9.html#cb535-6" tabindex="-1"></a>  )</span></code></pre></div>
-<pre><code>## [1] 0.05624476</code></pre>
+<pre><code>## [1] 0.0561977</code></pre>
 <p>When a bidder bids <span class="math inline">\(b\)</span>, the implied valuation of her is:
 <span class="math display">\[
 x = b + \frac{H_b(b)}{h_b(b)}.
@@ -1436,7 +1442,7 @@ x = b + \frac{H_b(b)}{h_b(b)}.
 <span id="cb537-8"><a href="assignment9.html#cb537-8" tabindex="-1"></a>  <span class="at">f_b =</span> f_b</span>
 <span id="cb537-9"><a href="assignment9.html#cb537-9" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>##           n
-## 1 0.4349007</code></pre>
+## 1 0.4349299</code></pre>
 <ol start="13" style="list-style-type: decimal">
 <li>Obtain the vector of implied valuations from the vector of bids and draw the empirical cumulative distribution. Overlay it with the true empirical cumulative distribution of the valuations.</li>
 </ol>
